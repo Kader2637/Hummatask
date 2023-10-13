@@ -6,7 +6,7 @@
     data-template="blank-menu-theme-default-light">
 
 
-<!-- Mirrored from demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/auth/login-cover by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Oct 2023 03:49:34 GMT -->
+<!-- Mirrored from demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/auth/register-cover by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Oct 2023 03:49:35 GMT -->
 <!-- Added by HTTrack -->
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 
@@ -15,7 +15,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>Login Cover - Pages |
+    <title>Register Cover - Pages |
         Vuexy -
         Bootstrap Admin Template
     </title>
@@ -144,17 +144,18 @@
 <!-- Content -->
 <div class="authentication-wrapper authentication-cover authentication-bg">
   <div class="authentication-inner row">
+
     <!-- /Left Text -->
     <div class="d-none d-lg-flex col-lg-7 p-0">
       <div class="auth-cover-bg auth-cover-bg-color d-flex justify-content-center align-items-center">
-        <img src="{{ asset('assets/img/illustrations/auth-login-illustration-light.png') }}" alt="auth-login-cover" class="img-fluid my-5 auth-illustration" data-app-light-img="illustrations/auth-login-illustration-light.png" data-app-dark-img="illustrations/auth-login-illustration-dark.html">
+        <img src="{{ asset('assets/img/illustrations/auth-register-illustration-light.png') }}" alt="auth-register-cover" class="img-fluid my-5 auth-illustration" data-app-light-img="illustrations/auth-register-illustration-light.png" data-app-dark-img="illustrations/auth-register-illustration-dark.html">
 
-        <img src="{{ asset('assets/img/illustrations/bg-shape-image-light.png') }}" alt="auth-login-cover" class="platform-bg" data-app-light-img="illustrations/bg-shape-image-light.png" data-app-dark-img="illustrations/bg-shape-image-dark.html">
+        <img src="{{ asset('assets/img/illustrations/bg-shape-image-light.png') }}" alt="auth-register-cover" class="platform-bg" data-app-light-img="illustrations/bg-shape-image-light.png" data-app-dark-img="illustrations/bg-shape-image-dark.html">
       </div>
     </div>
     <!-- /Left Text -->
 
-    <!-- Login -->
+    <!-- Register -->
     <div class="d-flex col-12 col-lg-5 align-items-center p-sm-5 p-4">
       <div class="w-px-400 mx-auto">
         <!-- Logo -->
@@ -170,43 +171,44 @@
           </a>
         </div>
         <!-- /Logo -->
-        <h3 class=" mb-1">Selamat datang! 👋</h3>
-        <p class="mb-4">Masuk dan mulai berpetualang.</p>
+        <h3 class="mb-1">Petualangan dimulai di sini 🚀</h3>
+        <p class="mb-4">Jadikan pengelolaan tugas Anda mudah dan menyenangkan!</p>
 
         <form id="formAuthentication" class="mb-3" action="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1" method="GET">
           <div class="mb-3">
-            <label for="email" class="form-label">Email atau Nama Pengguna</label>
-            <input type="text" class="form-control" id="email" name="email-username" placeholder="Masukkan email atau nama pengguna Anda" autofocus>
+            <label for="username" class="form-label">Nama Pengguna</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan Nama Pengguna Anda" autofocus>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="text" class="form-control" id="email" name="email" placeholder="Masukkan Email Anda">
           </div>
           <div class="mb-3 form-password-toggle">
-            <div class="d-flex justify-content-between">
-              <label class="form-label" for="password">Kata Sandi</label>
-              <a href="forgot-password-cover.html">
-                <small>Lupa Sandi?</small>
-              </a>
-            </div>
+            <label class="form-label" for="password">Kata Sandi</label>
             <div class="input-group input-group-merge">
               <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
               <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
             </div>
           </div>
+
           <div class="mb-3">
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="remember-me">
-              <label class="form-check-label" for="remember-me">
-                Ingat Saya
+              <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms">
+              <label class="form-check-label" for="terms-conditions">
+                Saya menyetujui
+                <a href="javascript:void(0);">Syarat & Ketentuan</a>
               </label>
             </div>
           </div>
           <button class="btn btn-primary d-grid w-100">
-            Sign in
+            Sign up
           </button>
         </form>
 
         <p class="text-center">
-          <span>Belum punya akun?</span>
-          <a href="{{ route('register') }}">
-            <span>Buat akun</span>
+          <span>Sudah punya akun?</span>
+          <a href="{{ route('login') }}">
+            <span>Masuk</span>
           </a>
         </p>
 
@@ -229,7 +231,7 @@
         </div>
       </div>
     </div>
-    <!-- /Login -->
+    <!-- /Register -->
   </div>
 </div>
 <!--/ Content -->
@@ -262,11 +264,9 @@
 <!-- Pricing Modal JS-->
 <!-- END: Pricing Modal JS-->
 <!-- BEGIN: Page JS-->
-<script src="assets/js/pages-auth.js"></script>
+<script src="{{ asset('assets/js/pages-auth.js') }}"></script>
 <!-- END: Page JS-->
 
 </body>
 
-
-<!-- Mirrored from demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/auth/login-cover by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Oct 2023 03:49:35 GMT -->
 </html>
