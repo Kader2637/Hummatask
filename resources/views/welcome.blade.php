@@ -1,140 +1,1405 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+<html lang="en" class="light-style  layout-navbar-fixed    " dir="ltr" data-theme="theme-default" data-assets-path="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/" data-base-url="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1" data-framework="laravel" data-template="front-menu-theme-default-light">
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
-        <!-- Styles -->
-        <style>
-            /* ! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Figtree, sans-serif;font-feature-settings:normal}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;font-weight:inherit;line-height:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]{display:none}*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }::-webkit-backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }.relative{position:relative}.mx-auto{margin-left:auto;margin-right:auto}.mx-6{margin-left:1.5rem;margin-right:1.5rem}.ml-4{margin-left:1rem}.mt-16{margin-top:4rem}.mt-6{margin-top:1.5rem}.mt-4{margin-top:1rem}.-mt-px{margin-top:-1px}.mr-1{margin-right:0.25rem}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.h-16{height:4rem}.h-7{height:1.75rem}.h-6{height:1.5rem}.h-5{height:1.25rem}.min-h-screen{min-height:100vh}.w-auto{width:auto}.w-16{width:4rem}.w-7{width:1.75rem}.w-6{width:1.5rem}.w-5{width:1.25rem}.max-w-7xl{max-width:80rem}.shrink-0{flex-shrink:0}.scale-100{--tw-scale-x:1;--tw-scale-y:1;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.items-center{align-items:center}.justify-center{justify-content:center}.gap-6{gap:1.5rem}.gap-4{gap:1rem}.self-center{align-self:center}.rounded-lg{border-radius:0.5rem}.rounded-full{border-radius:9999px}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity))}.bg-red-50{--tw-bg-opacity:1;background-color:rgb(254 242 242 / var(--tw-bg-opacity))}.bg-dots-darker{background-image:url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(0,0,0,0.07)'/%3E%3C/svg%3E")}.from-gray-700\/50{--tw-gradient-from:rgb(55 65 81 / 0.5);--tw-gradient-to:rgb(55 65 81 / 0);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-transparent{--tw-gradient-to:rgb(0 0 0 / 0);--tw-gradient-stops:var(--tw-gradient-from), transparent, var(--tw-gradient-to)}.bg-center{background-position:center}.stroke-red-500{stroke:#ef4444}.stroke-gray-400{stroke:#9ca3af}.p-6{padding:1.5rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.text-center{text-align:center}.text-right{text-align:right}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.font-semibold{font-weight:600}.leading-relaxed{line-height:1.625}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity))}.text-gray-900{--tw-text-opacity:1;color:rgb(17 24 39 / var(--tw-text-opacity))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity))}.underline{-webkit-text-decoration-line:underline;text-decoration-line:underline}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-gray-500\/20{--tw-shadow-color:rgb(107 114 128 / 0.2);--tw-shadow:var(--tw-shadow-colored)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.selection\:bg-red-500 *::selection{--tw-bg-opacity:1;background-color:rgb(239 68 68 / var(--tw-bg-opacity))}.selection\:text-white *::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.selection\:bg-red-500::selection{--tw-bg-opacity:1;background-color:rgb(239 68 68 / var(--tw-bg-opacity))}.selection\:text-white::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.hover\:text-gray-900:hover{--tw-text-opacity:1;color:rgb(17 24 39 / var(--tw-text-opacity))}.hover\:text-gray-700:hover{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity))}.focus\:rounded-sm:focus{border-radius:0.125rem}.focus\:outline:focus{outline-style:solid}.focus\:outline-2:focus{outline-width:2px}.focus\:outline-red-500:focus{outline-color:#ef4444}.group:hover .group-hover\:stroke-gray-600{stroke:#4b5563}.z-10{z-index: 10}@media (prefers-reduced-motion: no-preference){.motion-safe\:hover\:scale-\[1\.01\]:hover{--tw-scale-x:1.01;--tw-scale-y:1.01;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}}@media (prefers-color-scheme: dark){.dark\:bg-gray-900{--tw-bg-opacity:1;background-color:rgb(17 24 39 / var(--tw-bg-opacity))}.dark\:bg-gray-800\/50{background-color:rgb(31 41 55 / 0.5)}.dark\:bg-red-800\/20{background-color:rgb(153 27 27 / 0.2)}.dark\:bg-dots-lighter{background-image:url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(255,255,255,0.07)'/%3E%3C/svg%3E")}.dark\:bg-gradient-to-bl{background-image:linear-gradient(to bottom left, var(--tw-gradient-stops))}.dark\:stroke-gray-600{stroke:#4b5563}.dark\:text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity))}.dark\:text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.dark\:shadow-none{--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.dark\:ring-1{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.dark\:ring-inset{--tw-ring-inset:inset}.dark\:ring-white\/5{--tw-ring-color:rgb(255 255 255 / 0.05)}.dark\:hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.group:hover .dark\:group-hover\:stroke-gray-400{stroke:#9ca3af}}@media (min-width: 640px){.sm\:fixed{position:fixed}.sm\:top-0{top:0px}.sm\:right-0{right:0px}.sm\:ml-0{margin-left:0px}.sm\:flex{display:flex}.sm\:items-center{align-items:center}.sm\:justify-center{justify-content:center}.sm\:justify-between{justify-content:space-between}.sm\:text-left{text-align:left}.sm\:text-right{text-align:right}}@media (min-width: 768px){.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}}@media (min-width: 1024px){.lg\:gap-8{gap:2rem}.lg\:p-8{padding:2rem}}
-        </style>
-    </head>
-    <body class="antialiased">
-        <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
-            @if (Route::has('login'))
-                <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
-                    @auth
-                        <a href="{{ url('/home') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Home</a>
-                    @else
-                        <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a>
+<!-- Mirrored from demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/front-pages/landing by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Oct 2023 03:45:23 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
+  <title>Landing - Front Pages |
+    Vuexy -
+    Bootstrap Admin Template
+  </title>
+  <meta name="description" content="Start your development with a Dashboard for Bootstrap 5" />
+  <meta name="keywords" content="dashboard, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
+  <!-- laravel CRUD token -->
+  <meta name="csrf-token" content="y0lzh53YmoH0xFgY2vFjhD4S1TOiq6lE58zbW7ec">
+  <!-- Canonical SEO -->
+  <link rel="canonical" href="https://1.envato.market/vuexy_admin">
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/favicon/favicon.ico" />
 
-            <div class="max-w-7xl mx-auto p-6 lg:p-8">
-                <div class="flex justify-center">
-                    <svg viewBox="0 0 62 65" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-16 w-auto bg-gray-100 dark:bg-gray-900">
-                        <path d="M61.8548 14.6253C61.8778 14.7102 61.8895 14.7978 61.8897 14.8858V28.5615C61.8898 28.737 61.8434 28.9095 61.7554 29.0614C61.6675 29.2132 61.5409 29.3392 61.3887 29.4265L49.9104 36.0351V49.1337C49.9104 49.4902 49.7209 49.8192 49.4118 49.9987L25.4519 63.7916C25.3971 63.8227 25.3372 63.8427 25.2774 63.8639C25.255 63.8714 25.2338 63.8851 25.2101 63.8913C25.0426 63.9354 24.8666 63.9354 24.6991 63.8913C24.6716 63.8838 24.6467 63.8689 24.6205 63.8589C24.5657 63.8389 24.5084 63.8215 24.456 63.7916L0.501061 49.9987C0.348882 49.9113 0.222437 49.7853 0.134469 49.6334C0.0465019 49.4816 0.000120578 49.3092 0 49.1337L0 8.10652C0 8.01678 0.0124642 7.92953 0.0348998 7.84477C0.0423783 7.8161 0.0598282 7.78993 0.0697995 7.76126C0.0884958 7.70891 0.105946 7.65531 0.133367 7.6067C0.152063 7.5743 0.179485 7.54812 0.20192 7.51821C0.230588 7.47832 0.256763 7.43719 0.290416 7.40229C0.319084 7.37362 0.356476 7.35243 0.388883 7.32751C0.425029 7.29759 0.457436 7.26518 0.498568 7.2415L12.4779 0.345059C12.6296 0.257786 12.8015 0.211853 12.9765 0.211853C13.1515 0.211853 13.3234 0.257786 13.475 0.345059L25.4531 7.2415H25.4556C25.4955 7.26643 25.5292 7.29759 25.5653 7.32626C25.5977 7.35119 25.6339 7.37362 25.6625 7.40104C25.6974 7.43719 25.7224 7.47832 25.7523 7.51821C25.7735 7.54812 25.8021 7.5743 25.8196 7.6067C25.8483 7.65656 25.8645 7.70891 25.8844 7.76126C25.8944 7.78993 25.9118 7.8161 25.9193 7.84602C25.9423 7.93096 25.954 8.01853 25.9542 8.10652V33.7317L35.9355 27.9844V14.8846C35.9355 14.7973 35.948 14.7088 35.9704 14.6253C35.9792 14.5954 35.9954 14.5692 36.0053 14.5405C36.0253 14.4882 36.0427 14.4346 36.0702 14.386C36.0888 14.3536 36.1163 14.3274 36.1375 14.2975C36.1674 14.2576 36.1923 14.2165 36.2272 14.1816C36.2559 14.1529 36.292 14.1317 36.3244 14.1068C36.3618 14.0769 36.3942 14.0445 36.4341 14.0208L48.4147 7.12434C48.5663 7.03694 48.7383 6.99094 48.9133 6.99094C49.0883 6.99094 49.2602 7.03694 49.4118 7.12434L61.3899 14.0208C61.4323 14.0457 61.4647 14.0769 61.5021 14.1055C61.5333 14.1305 61.5694 14.1529 61.5981 14.1803C61.633 14.2165 61.6579 14.2576 61.6878 14.2975C61.7103 14.3274 61.7377 14.3536 61.7551 14.386C61.7838 14.4346 61.8 14.4882 61.8199 14.5405C61.8312 14.5692 61.8474 14.5954 61.8548 14.6253ZM59.893 27.9844V16.6121L55.7013 19.0252L49.9104 22.3593V33.7317L59.8942 27.9844H59.893ZM47.9149 48.5566V37.1768L42.2187 40.4299L25.953 49.7133V61.2003L47.9149 48.5566ZM1.99677 9.83281V48.5566L23.9562 61.199V49.7145L12.4841 43.2219L12.4804 43.2194L12.4754 43.2169C12.4368 43.1945 12.4044 43.1621 12.3682 43.1347C12.3371 43.1097 12.3009 43.0898 12.2735 43.0624L12.271 43.0586C12.2386 43.0275 12.2162 42.9888 12.1887 42.9539C12.1638 42.9203 12.1339 42.8916 12.114 42.8567L12.1127 42.853C12.0903 42.8156 12.0766 42.7707 12.0604 42.7283C12.0442 42.6909 12.023 42.656 12.013 42.6161C12.0005 42.5688 11.998 42.5177 11.9931 42.4691C11.9881 42.4317 11.9781 42.3943 11.9781 42.3569V15.5801L6.18848 12.2446L1.99677 9.83281ZM12.9777 2.36177L2.99764 8.10652L12.9752 13.8513L22.9541 8.10527L12.9752 2.36177H12.9777ZM18.1678 38.2138L23.9574 34.8809V9.83281L19.7657 12.2459L13.9749 15.5801V40.6281L18.1678 38.2138ZM48.9133 9.14105L38.9344 14.8858L48.9133 20.6305L58.8909 14.8846L48.9133 9.14105ZM47.9149 22.3593L42.124 19.0252L37.9323 16.6121V27.9844L43.7219 31.3174L47.9149 33.7317V22.3593ZM24.9533 47.987L39.59 39.631L46.9065 35.4555L36.9352 29.7145L25.4544 36.3242L14.9907 42.3482L24.9533 47.987Z" fill="#FF2D20"/>
-                    </svg>
-                </div>
 
-                <div class="mt-16">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-                        <a href="https://laravel.com/docs" class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
-                            <div>
-                                <div class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-7 h-7 stroke-red-500">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-                                    </svg>
-                                </div>
+    <!-- Google Tag Manager (Default ThemeSelection: GTM-5DDHKGP, PixInvent: GTM-5J3LMKC) -->
+  <script>
+    (function(w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({
+        'gtm.start': new Date().getTime(),
+        event: 'gtm.js'
+      });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != 'dataLayer' ? '&l=' + l : '';
+      j.async = true;
+      j.src =
+        '../../../../www.googletagmanager.com/gtm5445.html?id=' + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-5J3LMKC');
+  </script>
+  <!-- End Google Tag Manager -->
 
-                                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Documentation</h2>
 
-                                <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                    Laravel has wonderful documentation covering every aspect of the framework. Whether you are a newcomer or have prior experience with Laravel, we recommend reading our documentation from beginning to end.
-                                </p>
-                            </div>
+  <!-- Include Styles -->
+  <!-- $isFront is used to append the front layout styles only on the front layout otherwise the variable will be blank -->
+  <!-- BEGIN: Theme CSS-->
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;ampdisplay=swap" rel="stylesheet">
 
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="self-center shrink-0 stroke-red-500 w-6 h-6 mx-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
-                            </svg>
-                        </a>
+<link rel="stylesheet" href="{{ asset('assets/vendor/fonts/tabler-iconsea04.css?id=6ad8bc28559d005d792d577cf02a2116"') }}" />
+<!-- Core CSS -->
+<link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/core6cc1.css?id=9dd8321ea008145745a7d78e072a6e36')}}" class="template-customizer-core-css" />
+{{-- <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/theme-defaultfc79.css?id=a4539ede8fbe0ee4ea3a81f2c89f07d9') }}" class="template-customizer-theme-css" /> --}}
+<link rel="stylesheet" href="{{ asset('assets/css/demof1ed.css?id=ddd2feb83a604f9e432cdcb29815ed44') }}" />
+<link rel="stylesheet" href="{{ asset('assets/vendor/libs/node-waves/node-wavesd178.css?id=aa72fb97dfa8e932ba88c8a3c04641bc') }}" />
+<link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/front-pagee721.css?id=360d017735733ce726893ee5acf0aa07') }}" />
+<!-- Vendor Styles -->
+<link rel="stylesheet" href="{{ asset('assets/vendor/libs/nouislider/nouislider.css') }}" />
+<link rel="stylesheet" href="{{ asset('assets/vendor/libs/swiper/swiper.css') }}" />
 
-                        <a href="https://laracasts.com" class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
-                            <div>
-                                <div class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-7 h-7 stroke-red-500">
-                                        <path stroke-linecap="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" />
-                                    </svg>
-                                </div>
 
-                                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Laracasts</h2>
+<!-- Page Styles -->
+<link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/front-page-landing.css') }}" />
 
-                                <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                    Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript development. Check them out, see for yourself, and massively level up your development skills in the process.
-                                </p>
-                            </div>
+  <!-- Include Scripts for customizer, helper, analytics, config -->
+  <!-- $isFront is used to append the front layout scriptsIncludes only on the front layout otherwise the variable will be blank -->
+  <!-- laravel style -->
+<script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
+<!-- beautify ignore:start -->
+  <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+  <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
+  <script src="{{ asset('assets/vendor/js/template-customizer.js') }}"></script>
 
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="self-center shrink-0 stroke-red-500 w-6 h-6 mx-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
-                            </svg>
-                        </a>
+  <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+  <script src="{{ asset('assets/js/front-config.js') }}"></script>
 
-                        <a href="https://laravel-news.com" class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
-                            <div>
-                                <div class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-7 h-7 stroke-red-500">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
-                                    </svg>
-                                </div>
+  <script>
+    window.templateCustomizer = new TemplateCustomizer({
+      cssPath: '',
+      themesPath: '',
+      defaultStyle: "light",
+      displayCustomizer: "true",
+      lang: 'en',
+      pathResolver: function(path) {
+        var resolvedPaths = {
+          // Core stylesheets
+                      'core.css': 'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/core.css?id=9dd8321ea008145745a7d78e072a6e36',
+            'core-dark.css': 'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/core-dark.css?id=d661bae1d0ada9f7e9e3685a3e1f427e',
 
-                                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Laravel News</h2>
+          // Themes
+                      'theme-default.css': 'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/theme-default.css?id=a4539ede8fbe0ee4ea3a81f2c89f07d9',
+            'theme-default-dark.css':
+            'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/theme-default-dark.css?id=ce86d777a4c5030f51d0f609f202bcc5',
+                      'theme-bordered.css': 'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/theme-bordered.css?id=786794ca0c68d96058e8ceeb20f4e7c5',
+            'theme-bordered-dark.css':
+            'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/theme-bordered-dark.css?id=e7122ef6338b22f7cea9eaff5a96aa8b',
+                      'theme-semi-dark.css': 'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/theme-semi-dark.css?id=a0a317e88e943fdd62d514e00deebb22',
+            'theme-semi-dark-dark.css':
+            'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/theme-semi-dark-dark.css?id=e9a2f7cd6ace727264936f6bf93ab1e2',
+                  }
+        return resolvedPaths[path] || path;
+      },
+      'controls': ["rtl","style"],
 
-                                <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                    Laravel News is a community driven portal and newsletter aggregating all of the latest and most important news in the Laravel ecosystem, including new package releases and tutorials.
-                                </p>
-                            </div>
+    });
+  </script>
+</head>
 
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="self-center shrink-0 stroke-red-500 w-6 h-6 mx-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
-                            </svg>
-                        </a>
+<body>
 
-                        <div class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
-                            <div>
-                                <div class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-7 h-7 stroke-red-500">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.115 5.19l.319 1.913A6 6 0 008.11 10.36L9.75 12l-.387.775c-.217.433-.132.956.21 1.298l1.348 1.348c.21.21.329.497.329.795v1.089c0 .426.24.815.622 1.006l.153.076c.433.217.956.132 1.298-.21l.723-.723a8.7 8.7 0 002.288-4.042 1.087 1.087 0 00-.358-1.099l-1.33-1.108c-.251-.21-.582-.299-.905-.245l-1.17.195a1.125 1.125 0 01-.98-.314l-.295-.295a1.125 1.125 0 010-1.591l.13-.132a1.125 1.125 0 011.3-.21l.603.302a.809.809 0 001.086-1.086L14.25 7.5l1.256-.837a4.5 4.5 0 001.528-1.732l.146-.292M6.115 5.19A9 9 0 1017.18 4.64M6.115 5.19A8.965 8.965 0 0112 3c1.929 0 3.716.607 5.18 1.64" />
-                                    </svg>
-                                </div>
+    <!-- Google Tag Manager (noscript) (Default ThemeSelection: GTM-5DDHKGP, PixInvent: GTM-5J3LMKC) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5J3LMKC" height="0" width="0" style="display: none; visibility: hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
 
-                                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Vibrant Ecosystem</h2>
 
-                                <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                    Laravel's robust library of first-party tools and libraries, such as <a href="https://forge.laravel.com" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Forge</a>, <a href="https://vapor.laravel.com" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Vapor</a>, <a href="https://nova.laravel.com" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Nova</a>, and <a href="https://envoyer.io" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Envoyer</a> help you take your projects to the next level. Pair them with powerful open source libraries like <a href="https://laravel.com/docs/billing" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Cashier</a>, <a href="https://laravel.com/docs/dusk" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dusk</a>, <a href="https://laravel.com/docs/broadcasting" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Echo</a>, <a href="https://laravel.com/docs/horizon" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Horizon</a>, <a href="https://laravel.com/docs/sanctum" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Sanctum</a>, <a href="https://laravel.com/docs/telescope" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Telescope</a>, and more.
-                                </p>
-                            </div>
-                        </div>
+  <!-- Layout Content -->
+
+
+
+<!-- Navbar: Start -->
+<nav class="layout-navbar shadow-none py-0">
+  <div class="">
+    <div class="navbar navbar-expand-lg landing-navbar px-3 mt-0 border-0">
+      <!-- Menu logo wrapper: Start -->
+      <div class="navbar-brand app-brand demo d-flex py-0 py-lg-2 me-4">
+        <!-- Mobile menu toggle: Start-->
+        <button class="navbar-toggler border-0 px-0 me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="ti ti-menu-2 ti-sm align-middle"></i>
+        </button>
+        <!-- Mobile menu toggle: End-->
+        <a href="landing.html" class="app-brand-link">
+          <span class="app-brand-logo demo"><svg width="32" height="20" viewBox="0 0 32 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M0.00172773 0V6.85398C0.00172773 6.85398 -0.133178 9.01207 1.98092 10.8388L13.6912 21.9964L19.7809 21.9181L18.8042 9.88248L16.4951 7.17289L9.23799 0H0.00172773Z" fill="#7367F0" />
+  <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd" d="M7.69824 16.4364L12.5199 3.23696L16.5541 7.25596L7.69824 16.4364Z" fill="#161616" />
+  <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd" d="M8.07751 15.9175L13.9419 4.63989L16.5849 7.28475L8.07751 15.9175Z" fill="#161616" />
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z" fill="#7367F0" />
+</svg>
+</span>
+          <span class="app-brand-text demo menu-text fw-bold ms-2 ps-1">HummaTask</span>
+        </a>
+      </div>
+      <!-- Menu logo wrapper: End -->
+      <!-- Menu wrapper: Start -->
+      <div class="collapse navbar-collapse landing-nav-menu" id="navbarSupportedContent">
+        <button class="navbar-toggler border-0 text-heading position-absolute end-0 top-0 scaleX-n1-rtl" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="ti ti-x ti-sm"></i>
+        </button>
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link fw-medium" aria-current="page" href="landing.html#landingHero">Beranda</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fw-medium" href="landing.html#landingFeatures">Fitur</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fw-medium" href="landing.html#landingTeam">Tim</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fw-medium" href="landing.html#landingFAQ">Pertanyaan</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fw-medium" href="landing.html#landingContact">Hubungi kami</a>
+          </li>
+          <li class="nav-item mega-dropdown ">
+            <a href="javascript:void(0);" class="nav-link dropdown-toggle navbar-ex-14-mega-dropdown mega-dropdown fw-medium" aria-expanded="false" data-bs-toggle="mega-dropdown" data-trigger="hover">
+              <span>Halaman</span>
+            </a>
+            <div class="dropdown-menu p-4">
+              <div class="row gy-4">
+                <div class="col-12 col-lg">
+                  <div class="h6 d-flex align-items-center mb-2 mb-lg-3">
+                    <div class="avatar avatar-sm flex-shrink-0 me-2">
+                      <span class="avatar-initial rounded bg-label-primary"><i class='ti ti-layout-grid'></i></span>
                     </div>
+                    <span class="ps-1">Other</span>
+                  </div>
+                  <ul class="nav flex-column">
+                    <li class="nav-item ">
+                      <a class="nav-link mega-dropdown-link" href="pricing.html">
+                        <i class='ti ti-circle me-1'></i>
+                        <span>Pricing</span>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a class="nav-link mega-dropdown-link" href="payment.html">
+                        <i class='ti ti-circle me-1'></i>
+                        <span>Payment</span>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a class="nav-link mega-dropdown-link" href="checkout.html">
+                        <i class='ti ti-circle me-1'></i>
+                        <span>Checkout</span>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a class="nav-link mega-dropdown-link" href="help-center.html">
+                        <i class='ti ti-circle me-1'></i>
+                        <span>Help Center</span>
+                      </a>
+                    </li>
+                  </ul>
                 </div>
-
-                <div class="flex justify-center mt-16 px-0 sm:items-center sm:justify-between">
-                    <div class="text-center text-sm text-gray-500 dark:text-gray-400 sm:text-left">
-                        <div class="flex items-center gap-4">
-                            <a href="https://github.com/sponsors/taylorotwell" class="group inline-flex items-center hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="-mt-px mr-1 w-5 h-5 stroke-gray-400 dark:stroke-gray-600 group-hover:stroke-gray-600 dark:group-hover:stroke-gray-400">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-                                </svg>
-                                Sponsor
-                            </a>
-                        </div>
+                <div class="col-12 col-lg">
+                  <div class="h6 d-flex align-items-center mb-2 mb-lg-3">
+                    <div class="avatar avatar-sm flex-shrink-0 me-2">
+                      <span class="avatar-initial rounded bg-label-primary"><i class='ti ti-lock-open'></i></span>
                     </div>
-
-                    <div class="ml-4 text-center text-sm text-gray-500 dark:text-gray-400 sm:text-right sm:ml-0">
-                        Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
-                    </div>
+                    <span class="ps-1">Auth Demo</span>
+                  </div>
+                  <ul class="nav flex-column">
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="../auth/login-basic.html" target="_blank">
+                        <i class='ti ti-circle me-1'></i>
+                        Login (Basic)
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="../auth/login-cover.html" target="_blank">
+                        <i class='ti ti-circle me-1'></i>
+                        Login (Cover)
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="../auth/register-basic.html" target="_blank">
+                        <i class='ti ti-circle me-1'></i>
+                        Register (Basic)
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="../auth/register-cover.html" target="_blank">
+                        <i class='ti ti-circle me-1'></i>
+                        Register (Cover)
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="../auth/register-multisteps.html" target="_blank">
+                        <i class='ti ti-circle me-1'></i>
+                        Register (Multi-steps)
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="../auth/forgot-password-basic.html" target="_blank">
+                        <i class='ti ti-circle me-1'></i>
+                        Forgot Password (Basic)
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="../auth/forgot-password-cover.html" target="_blank">
+                        <i class='ti ti-circle me-1'></i>
+                        Forgot Password (Cover)
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="../auth/reset-password-basic.html" target="_blank">
+                        <i class='ti ti-circle me-1'></i>
+                        Reset Password (Basic)
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="../auth/reset-password-cover.html" target="_blank">
+                        <i class='ti ti-circle me-1'></i>
+                        Reset Password (Cover)
+                      </a>
+                    </li>
+                  </ul>
                 </div>
+                <div class="col-12 col-lg">
+                  <div class="h6 d-flex align-items-center mb-2 mb-lg-3">
+                    <div class="avatar avatar-sm flex-shrink-0 me-2">
+                      <span class="avatar-initial rounded bg-label-primary"><i class='ti ti-file-analytics'></i></span>
+                    </div>
+                    <span class="ps-1">Other</span>
+                  </div>
+                  <ul class="nav flex-column">
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="../pages/misc-error.html" target="_blank">
+                        <i class='ti ti-circle me-1'></i>
+                        Error
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="../pages/misc-under-maintenance.html" target="_blank">
+                        <i class='ti ti-circle me-1'></i>
+                        Under Maintenance
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="../pages/misc-comingsoon.html" target="_blank">
+                        <i class='ti ti-circle me-1'></i>
+                        Coming Soon
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="../pages/misc-not-authorized.html" target="_blank">
+                        <i class='ti ti-circle me-1'></i>
+                        Not Authorized
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="../auth/verify-email-basic.html" target="_blank">
+                        <i class='ti ti-circle me-1'></i>
+                        Verify Email (Basic)
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="../auth/verify-email-cover.html" target="_blank">
+                        <i class='ti ti-circle me-1'></i>
+                        Verify Email (Cover)
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="../auth/two-steps-basic.html" target="_blank">
+                        <i class='ti ti-circle me-1'></i>
+                        Two Steps (Basic)
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mega-dropdown-link" href="../auth/two-steps-cover.html" target="_blank">
+                        <i class='ti ti-circle me-1'></i>
+                        Two Steps (Cover)
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-4 d-none d-lg-block">
+                  <div class="bg-body nav-img-col p-2">
+                    <img src="{{ asset('assets/img/front-pages/misc/nav-item-col-img.png') }}" alt="nav item col image" class="w-100">
+                  </div>
+                </div>
+              </div>
             </div>
+          </li>
+        </ul>
+      </div>
+      <div class="landing-menu-overlay d-lg-none"></div>
+      <!-- Menu wrapper: End -->
+      <!-- Toolbar: Start -->
+      <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <!-- Style Switcher -->
+        <li class="nav-item dropdown-style-switcher dropdown me-2 me-xl-0">
+          <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+            <i class='ti ti-sm'></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end dropdown-styles">
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);" data-theme="light">
+                <span class="align-middle"><i class='ti ti-sun me-2'></i>Light</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);" data-theme="dark">
+                <span class="align-middle"><i class="ti ti-moon me-2"></i>Dark</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);" data-theme="system">
+                <span class="align-middle"><i class="ti ti-device-desktop me-2"></i>System</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- / Style Switcher-->
+                <!-- navbar button: Start -->
+        <li>
+          <a href="../auth/login-cover.html" class="btn btn-primary" target="_blank"><span class="tf-icons ti ti-login scaleX-n1-rtl me-md-1"></span><span class="d-none d-md-block">Login/Register</span></a>
+        </li>
+        <!-- navbar button: End -->
+      </ul>
+      <!-- Toolbar: End -->
+    </div>
+  </div>
+</nav>
+<!-- Navbar: End -->
+
+<!-- Sections:Start -->
+<div data-bs-spy="scroll" class="scrollspy-example">
+  <!-- Hero: Start -->
+  <section id="hero-animation">
+    <div id="landingHero" class="section-py landing-hero position-relative">
+      <div class="container">
+        <div class="hero-text-box text-center">
+          <h1 class="text-primary hero-title display-6 fw-bold">Hummatech Task Management</h1>
+          <h2 class="hero-sub-title h6 mb-4 pb-1">
+           Aplikasi web yang membantu tugas keseharian anda<br class="d-none d-lg-block" />
+            Mencatat, Menyimpan dan Mengingatkan tugas Anda
+          </h2>
+          <div class="landing-hero-btn d-inline-block position-relative">
+            <span class="hero-btn-item position-absolute d-none d-md-flex text-heading">Masuk Komunitas
+              <img src="{{ asset('assets/img/front-pages/icons/Join-community-arrow.png') }}" alt="Join community arrow" class="scaleX-n1-rtl" /></span>
+            <a href="#landingPricing" class="btn btn-primary btn-lg">Dapatkan Akses Awal</a>
+          </div>
         </div>
-    </body>
+        <div id="heroDashboardAnimation" class="hero-animation-img">
+          <a href="../app/ecommerce/dashboard.html" target="_blank">
+            <div id="heroAnimationImg" class="position-relative hero-dashboard-img">
+              <img src="{{ asset('assets/img/front-pages/landing-page/hero-dashboard-light.png') }}" alt="hero dashboard" class="animation-img" data-app-light-img="front-pages/landing-page/hero-dashboard-light.png" data-app-dark-img="front-pages/landing-page/hero-dashboard-light.png" />
+              <img src="{{ asset('assets/img/front-pages/landing-page/hero-elements-light.png') }}" alt="hero elements" class="position-absolute hero-elements-img animation-img top-0 start-0" data-app-light-img="front-pages/landing-page/hero-elements-light.png" data-app-dark-img="front-pages/landing-page/hero-elements-light.png" />
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="landing-hero-blank"></div>
+  </section>
+  <!-- Hero: End -->
+
+  <!-- Useful features: Start -->
+  <section id="landingFeatures" class="section-py landing-features">
+    <div class="container">
+      <div class="text-center mb-3 pb-1">
+        <span class="badge bg-label-primary">Fitur bermanfaat</span>
+      </div>
+      <h3 class="text-center mb-1">
+        <span class="section-title">Semua yang kamu butuhkan</span> untuk menjadi lebih produktif
+      </h3>
+      <p class="text-center mb-3 mb-md-5 pb-3">
+        Tidak hanya menjadi alat, kami adalah teman anda menjadi lebih produktif
+      </p>
+      <div class="features-icon-wrapper row gx-0 gy-4 g-sm-5">
+        <div class="col-lg-4 col-sm-6 text-center features-icon-box">
+          <div class="text-center mb-3">
+            <img src="{{ asset('assets/img/front-pages/icons/laptop.png') }}" alt="laptop charging" />
+          </div>
+          <h5 class="mb-3">Dashboard Pribadi</h5>
+          <p class="features-icon-description">
+            Semua tools yang anda butuhkan dibungkus rapi dalam dashboard pribadi milik anda
+          </p>
+        </div>
+        <div class="col-lg-4 col-sm-6 text-center features-icon-box">
+          <div class="text-center mb-3">
+            <img src="{{ asset('assets/img/front-pages/icons/rocket.png') }}" alt="transition up" />
+          </div>
+          <h5 class="mb-3">Catatan dan Dokumen</h5>
+          <p class="features-icon-description">
+            Kegiatan menulis menggunakan alat konvensional sudah terlalu kuno di zaman sekarang ganti dengan mengetik
+          </p>
+        </div>
+        <div class="col-lg-4 col-sm-6 text-center features-icon-box">
+          <div class="text-center mb-3">
+            <img src="{{ asset('assets/img/front-pages/icons/paper.png') }}" alt="edit" />
+          </div>
+          <h5 class="mb-3">Managemen Tugas</h5>
+          <p class="features-icon-description">
+           Mulai Kelola tugasmu dengan Hummatask menjadi lebih mudah dan tanpa kata ribet
+          </p>
+        </div>
+        <div class="col-lg-4 col-sm-6 text-center features-icon-box">
+          <div class="text-center mb-3">
+            <img src="{{ asset('assets/img/front-pages/icons/check.png') }}" alt="3d select solid" />
+          </div>
+          <h5 class="mb-3">Penyimpanan file</h5>
+          <p class="features-icon-description">
+            Simpan semua materi dan tugasmu di HummaTask dan tidak ada lagi lupa membawa Pekerjaan dan Buku
+          </p>
+        </div>
+        <div class="col-lg-4 col-sm-6 text-center features-icon-box">
+          <div class="text-center mb-3">
+            <img src="{{asset('assets/img/front-pages/icons/user.png')}}" alt="lifebelt" />
+          </div>
+          <h5 class="mb-3">Notifikasi dan Pengingat</h5>
+          <p class="features-icon-description">HummaTask akan selalu mengingatkanmu bahkan 3 hari sebelum deadline</p>
+        </div>
+        <div class="col-lg-4 col-sm-6 text-center features-icon-box">
+          <div class="text-center mb-3">
+            <img src="{{ asset('assets/img/front-pages/icons/keyboard.png') }}" alt="google docs" />
+          </div>
+          <h5 class="mb-3">Visualisasi dan Grafik</h5>
+          <p class="features-icon-description">Selalu lihat tugasmu setiap Semester,Bulan bahkan hari dengan visual dan grafik yang membuat mata nyaman</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Useful features: End -->
+
+  <!-- Real customers reviews: Start -->
+  <section id="landingReviews" class="section-py bg-body landing-reviews pb-0">
+    <!-- What people say slider: Start -->
+    <div class="container">
+      <div class="row align-items-center gx-0 gy-4 g-lg-5">
+        <div class="col-md-6 col-lg-5 col-xl-3">
+          <div class="mb-3 pb-1">
+            <span class="badge bg-label-primary">Penilaian Pengguna</span>
+          </div>
+          <h3 class="mb-1"><span class="section-title">Apa yang mereka katakan</span></h3>
+          <p class="mb-3 mb-md-5">
+            Lihat dan ketahui apa yang mereka dapatkan<br class="d-none d-xl-block" />
+            dan jangan lupa merasakan pengalaman mereka juga
+          </p>
+          <div class="landing-reviews-btns">
+            <button id="reviews-previous-btn" class="btn btn-label-primary reviews-btn me-3 scaleX-n1-rtl" type="button">
+              <i class="ti ti-chevron-left ti-sm"></i>
+            </button>
+            <button id="reviews-next-btn" class="btn btn-label-primary reviews-btn scaleX-n1-rtl" type="button">
+              <i class="ti ti-chevron-right ti-sm"></i>
+            </button>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-7 col-xl-9">
+          <div class="swiper-reviews-carousel overflow-hidden mb-5 pb-md-2 pb-md-3">
+            <div class="swiper" id="swiper-reviews">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <div class="card h-100">
+                    <div class="card-body text-body d-flex flex-column justify-content-between h-100">
+                      <div class="mb-3">
+                        <img src="{{ asset('assets/img/front-pages/branding/logo-1.png') }}" alt="client logo" class="client-logo img-fluid" />
+                      </div>
+                      <p>
+                        “Vuexy is hands down the most useful front end Bootstrap theme I've ever used. I can't wait
+                        to use it again for my next project.”
+                      </p>
+                      <div class="text-warning mb-3">
+                        <i class="ti ti-star-filled ti-sm"></i>
+                        <i class="ti ti-star-filled ti-sm"></i>
+                        <i class="ti ti-star-filled ti-sm"></i>
+                        <i class="ti ti-star-filled ti-sm"></i>
+                        <i class="ti ti-star-filled ti-sm"></i>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <div class="avatar me-2 avatar-sm">
+                          <img src="{{ asset('assets/img/avatars/1.png') }}" alt="Avatar" class="rounded-circle" />
+                        </div>
+                        <div>
+                          <h6 class="mb-0">Cecilia Payne</h6>
+                          <p class="small text-muted mb-0">CEO of Airbnb</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div class="card h-100">
+                    <div class="card-body text-body d-flex flex-column justify-content-between h-100">
+                      <div class="mb-3">
+                        <img src=".{{ asset('assets/img/front-pages/branding/logo-2.png') }}" alt="client logo" class="client-logo img-fluid" />
+                      </div>
+                      <p>
+                        “I've never used a theme as versatile and flexible as Vuexy. It's my go to for building
+                        dashboard sites on almost any project.”
+                      </p>
+                      <div class="text-warning mb-3">
+                        <i class="ti ti-star-filled ti-sm"></i>
+                        <i class="ti ti-star-filled ti-sm"></i>
+                        <i class="ti ti-star-filled ti-sm"></i>
+                        <i class="ti ti-star-filled ti-sm"></i>
+                        <i class="ti ti-star-filled ti-sm"></i>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <div class="avatar me-2 avatar-sm">
+                          <img src="{{ asset('assets/img/avatars/2.png') }}" alt="Avatar" class="rounded-circle" />
+                        </div>
+                        <div>
+                          <h6 class="mb-0">Eugenia Moore</h6>
+                          <p class="small text-muted mb-0">Founder of Hubspot</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div class="card h-100">
+                    <div class="card-body text-body d-flex flex-column justify-content-between h-100">
+                      <div class="mb-3">
+                        <img src="{{ asset('assets/img/front-pages/branding/logo-3.png') }}" alt="client logo" class="client-logo img-fluid" />
+                      </div>
+                      <p>
+                        This template is really clean & well documented. The docs are really easy to understand and
+                        it's always easy to find a screenshot from their website.
+                      </p>
+                      <div class="text-warning mb-3">
+                        <i class="ti ti-star-filled ti-sm"></i>
+                        <i class="ti ti-star-filled ti-sm"></i>
+                        <i class="ti ti-star-filled ti-sm"></i>
+                        <i class="ti ti-star-filled ti-sm"></i>
+                        <i class="ti ti-star-filled ti-sm"></i>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <div class="avatar me-2 avatar-sm">
+                          <img src="{{ asset('assets/img/avatars/3.png') }}" alt="Avatar" class="rounded-circle" />
+                        </div>
+                        <div>
+                          <h6 class="mb-0">Curtis Fletcher</h6>
+                          <p class="small text-muted mb-0">Design Lead at Dribbble</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div class="card h-100">
+                    <div class="card-body text-body d-flex flex-column justify-content-between h-100">
+                      <div class="mb-3">
+                        <img src="{{ asset('assets/img/front-pages/branding/logo-4.png') }}" alt="client logo" class="client-logo img-fluid" />
+                      </div>
+                      <p>
+                        All the requirements for developers have been taken into consideration, so I’m able to build
+                        any interface I want.
+                      </p>
+                      <div class="text-warning mb-3">
+                        <i class="ti ti-star-filled ti-sm"></i>
+                        <i class="ti ti-star-filled ti-sm"></i>
+                        <i class="ti ti-star-filled ti-sm"></i>
+                        <i class="ti ti-star-filled ti-sm"></i>
+                        <i class="ti ti-star ti-sm"></i>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <div class="avatar me-2 avatar-sm">
+                          <img src="{{ asset('assets/img/avatars/4.png') }}" alt="Avatar" class="rounded-circle" />
+                        </div>
+                        <div>
+                          <h6 class="mb-0">Sara Smith</h6>
+                          <p class="small text-muted mb-0">Founder of Continental</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div class="card h-100">
+                    <div class="card-body text-body d-flex flex-column justify-content-between h-100">
+                      <div class="mb-3">
+                        <img src="{{ asset('assets/img/front-pages/branding/logo-5.png') }}" alt="client logo" class="client-logo img-fluid" />
+                      </div>
+                      <p>
+                        “I've never used a theme as versatile and flexible as Vuexy. It's my go to for building
+                        dashboard sites on almost any project.”
+                      </p>
+                      <div class="text-warning mb-3">
+                        <i class="ti ti-star-filled ti-sm"></i>
+                        <i class="ti ti-star-filled ti-sm"></i>
+                        <i class="ti ti-star-filled ti-sm"></i>
+                        <i class="ti ti-star-filled ti-sm"></i>
+                        <i class="ti ti-star-filled ti-sm"></i>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <div class="avatar me-2 avatar-sm">
+                          <img src="{{ asset('assets/img/avatars/5.png') }}" alt="Avatar" class="rounded-circle" />
+                        </div>
+                        <div>
+                          <h6 class="mb-0">Eugenia Moore</h6>
+                          <p class="small text-muted mb-0">Founder of Hubspot</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div class="card h-100">
+                    <div class="card-body text-body d-flex flex-column justify-content-between h-100">
+                      <div class="mb-3">
+                        <img src="{{ asset('assets/img/front-pages/branding/logo-6.png') }}" alt="client logo" class="client-logo img-fluid" />
+                      </div>
+                      <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam nemo mollitia, ad eum
+                        officia numquam nostrum repellendus consequuntur!
+                      </p>
+                      <div class="text-warning mb-3">
+                        <i class="ti ti-star-filled ti-sm"></i>
+                        <i class="ti ti-star-filled ti-sm"></i>
+                        <i class="ti ti-star-filled ti-sm"></i>
+                        <i class="ti ti-star-filled ti-sm"></i>
+                        <i class="ti ti-star ti-sm"></i>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <div class="avatar me-2 avatar-sm">
+                          <img src="{{ asset('assets/img/avatars/1.png') }}" alt="Avatar" class="rounded-circle" />
+                        </div>
+                        <div>
+                          <h6 class="mb-0">Sara Smith</h6>
+                          <p class="small text-muted mb-0">Founder of Continental</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="swiper-button-next"></div>
+              <div class="swiper-button-prev"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- What people say slider: End -->
+    <hr class="m-0" />
+    <!-- Logo slider: Start -->
+    <div class="container">
+      <div class="swiper-logo-carousel py-4 my-lg-2">
+        <div class="swiper" id="swiper-clients-logos">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <img src="{{ asset('assets/img/front-pages/branding/logo_1-light.png') }}" alt="client logo" class="client-logo" data-app-light-img="front-pages/branding/logo_1-light.png" data-app-dark-img="front-pages/branding/logo_1-light.png" />
+            </div>
+            <div class="swiper-slide">
+              <img src="{{ asset('assets/img/front-pages/branding/logo_2-light.png') }}" alt="client logo" class="client-logo" data-app-light-img="front-pages/branding/logo_2-light.png" data-app-dark-img="front-pages/branding/logo_2-light.png" />
+            </div>
+            <div class="swiper-slide">
+              <img src="{{ asset('assets/img/front-pages/branding/logo_3-light.png') }}" alt="client logo" class="client-logo" data-app-light-img="front-pages/branding/logo_3-light.png" data-app-dark-img="front-pages/branding/logo_3-light.png" />
+            </div>
+            <div class="swiper-slide">
+              <img src="{{ asset('assets/img/front-pages/branding/logo_4-light.png') }}" alt="client logo" class="client-logo" data-app-light-img="front-pages/branding/logo_4-light.png" data-app-dark-img="front-pages/branding/logo_4-light.png" />
+            </div>
+            <div class="swiper-slide">
+              <img src="{{ asset('assets/img/front-pages/branding/logo_5-light.png') }}" alt="client logo" class="client-logo" data-app-light-img="front-pages/branding/logo_5-light.png" data-app-dark-img="front-pages/branding/logo_5-light.png" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Logo slider: End -->
+  </section>
+  <!-- Real customers reviews: End -->
+
+  <!-- Our great team: Start -->
+  <section id="landingTeam" class="section-py landing-team">
+    <div class="container">
+      <div class="text-center mb-3 pb-1">
+        <span class="badge bg-label-primary">Our Great Team</span>
+      </div>
+      <h3 class="text-center mb-1"><span class="section-title">Supported</span> by Real People</h3>
+      <p class="text-center mb-md-5 pb-3">Who is behind these great-looking interfaces?</p>
+      <div class="row gy-5 mt-2">
+        <div class="col-lg-3 col-sm-6">
+          <div class="card mt-3 mt-lg-0 shadow-none">
+            <div class="bg-label-primary position-relative team-image-box">
+              <img src="{{ asset('assets/img/front-pages/landing-page/team-member-1.png') }}" class="position-absolute card-img-position bottom-0 start-50 scaleX-n1-rtl" alt="human image" />
+            </div>
+            <div class="card-body border border-top-0 border-label-primary text-center">
+              <h5 class="card-title mb-0">Sophie Gilbert</h5>
+              <p class="text-muted mb-0">Project Manager</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+          <div class="card mt-3 mt-lg-0 shadow-none">
+            <div class="bg-label-info position-relative team-image-box">
+              <img src="{{ asset('assets/img/front-pages/landing-page/team-member-2.png') }}" class="position-absolute card-img-position bottom-0 start-50 scaleX-n1-rtl" alt="human image" />
+            </div>
+            <div class="card-body border border-top-0 border-label-info text-center">
+              <h5 class="card-title mb-0">Paul Miles</h5>
+              <p class="text-muted mb-0">UI Designer</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+          <div class="card mt-3 mt-lg-0 shadow-none">
+            <div class="bg-label-danger position-relative team-image-box">
+              <img src="{{ asset('assets/img/front-pages/landing-page/team-member-3.png') }}" class="position-absolute card-img-position bottom-0 start-50 scaleX-n1-rtl" alt="human image" />
+            </div>
+            <div class="card-body border border-top-0 border-label-danger text-center">
+              <h5 class="card-title mb-0">Nannie Ford</h5>
+              <p class="text-muted mb-0">Development Lead</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+          <div class="card mt-3 mt-lg-0 shadow-none">
+            <div class="bg-label-success position-relative team-image-box">
+              <img src="{{ asset('assets/img/front-pages/landing-page/team-member-4.png') }}" class="position-absolute card-img-position bottom-0 start-50 scaleX-n1-rtl" alt="human image" />
+            </div>
+            <div class="card-body border border-top-0 border-label-success text-center">
+              <h5 class="card-title mb-0">Chris Watkins</h5>
+              <p class="text-muted mb-0">Marketing Manager</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Our great team: End -->
+
+  <!-- Pricing plans: Start -->
+  <section id="landingPricing" class="section-py bg-body landing-pricing">
+    <div class="container">
+      <div class="text-center mb-3 pb-1">
+        <span class="badge bg-label-primary">Pricing Plans</span>
+      </div>
+      <h3 class="text-center mb-1"><span class="section-title">Tailored pricing plans</span> designed for you</h3>
+      <p class="text-center mb-4 pb-3">
+        All plans include 40+ advanced tools and features to boost your product.<br />Choose the best plan to fit
+        your needs.
+      </p>
+      <div class="text-center mb-5">
+        <div class="position-relative d-inline-block pt-3 pt-md-0">
+          <label class="switch switch-primary me-0">
+            <span class="switch-label">Pay Monthly</span>
+            <input type="checkbox" class="switch-input price-duration-toggler" checked />
+            <span class="switch-toggle-slider">
+              <span class="switch-on"></span>
+              <span class="switch-off"></span>
+            </span>
+            <span class="switch-label">Pay Annual</span>
+          </label>
+          <div class="pricing-plans-item position-absolute d-flex">
+            <img src="{{ asset('assets/img/front-pages/icons/pricing-plans-arrow.png') }}" alt="pricing plans arrow" class="scaleX-n1-rtl" />
+            <span class="fw-semibold mt-2 ms-1"> Save 25%</span>
+          </div>
+        </div>
+      </div>
+      <div class="row gy-4 pt-lg-3">
+        <!-- Basic Plan: Start -->
+        <div class="col-xl-4 col-lg-6">
+          <div class="card">
+            <div class="card-header">
+              <div class="text-center">
+                <img src="{{ asset('assets/img/front-pages/icons/paper-airplane.png') }}" alt="paper airplane icon" class="mb-4 pb-2" />
+                <h4 class="mb-1">Basic</h4>
+                <div class="d-flex align-items-center justify-content-center">
+                  <span class="price-monthly h1 text-primary fw-bold mb-0">$19</span>
+                  <span class="price-yearly h1 text-primary fw-bold mb-0 d-none">$14</span>
+                  <sub class="h6 text-muted mb-0 ms-1">/mo</sub>
+                </div>
+                <div class="position-relative pt-2">
+                  <div class="price-yearly text-muted price-yearly-toggle d-none">$ 168 / year</div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <ul class="list-unstyled">
+                <li>
+                  <h5>
+                    <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i class="ti ti-check ti-xs"></i></span>
+                    Timeline
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i class="ti ti-check ti-xs"></i></span>
+                    Basic search
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i class="ti ti-check ti-xs"></i></span>
+                    Live chat widget
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i class="ti ti-check ti-xs"></i></span>
+                    Email marketing
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i class="ti ti-check ti-xs"></i></span>
+                    Custom Forms
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i class="ti ti-check ti-xs"></i></span>
+                    Traffic analytics
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i class="ti ti-check ti-xs"></i></span>
+                    Basic Support
+                  </h5>
+                </li>
+              </ul>
+              <div class="d-grid mt-4 pt-3">
+                <a href="payment.html" class="btn btn-label-primary">Get Started</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Basic Plan: End -->
+
+        <!-- Favourite Plan: Start -->
+        <div class="col-xl-4 col-lg-6">
+          <div class="card border border-primary shadow-lg">
+            <div class="card-header">
+              <div class="text-center">
+                <img src="{{ asset('assets/img/front-pages/icons/plane.png') }}" alt="plane icon" class="mb-4 pb-2" />
+                <h4 class="mb-1">Team</h4>
+                <div class="d-flex align-items-center justify-content-center">
+                  <span class="price-monthly h1 text-primary fw-bold mb-0">$29</span>
+                  <span class="price-yearly h1 text-primary fw-bold mb-0 d-none">$22</span>
+                  <sub class="h6 text-muted mb-0 ms-1">/mo</sub>
+                </div>
+                <div class="position-relative pt-2">
+                  <div class="price-yearly text-muted price-yearly-toggle d-none">$ 264 / year</div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <ul class="list-unstyled">
+                <li>
+                  <h5>
+                    <span class="badge badge-center rounded-pill bg-primary p-0 me-2"><i class="ti ti-check ti-xs"></i></span>
+                    Everything in basic
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    <span class="badge badge-center rounded-pill bg-primary p-0 me-2"><i class="ti ti-check ti-xs"></i></span>
+                    Timeline with database
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    <span class="badge badge-center rounded-pill bg-primary p-0 me-2"><i class="ti ti-check ti-xs"></i></span>
+                    Advanced search
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    <span class="badge badge-center rounded-pill bg-primary p-0 me-2"><i class="ti ti-check ti-xs"></i></span>
+                    Marketing automation
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    <span class="badge badge-center rounded-pill bg-primary p-0 me-2"><i class="ti ti-check ti-xs"></i></span>
+                    Advanced chatbot
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    <span class="badge badge-center rounded-pill bg-primary p-0 me-2"><i class="ti ti-check ti-xs"></i></span>
+                    Campaign management
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    <span class="badge badge-center rounded-pill bg-primary p-0 me-2"><i class="ti ti-check ti-xs"></i></span>
+                    Collaboration tools
+                  </h5>
+                </li>
+              </ul>
+              <div class="d-grid mt-4 pt-3">
+                <a href="payment.html" class="btn btn-primary">Get Started</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Favourite Plan: End -->
+
+        <!-- Standard Plan: Start -->
+        <div class="col-xl-4 col-lg-6">
+          <div class="card">
+            <div class="card-header">
+              <div class="text-center">
+                <img src="{{ asset('assets/img/front-pages/icons/shuttle-rocket.png') }}" alt="shuttle rocket icon" class="mb-4 pb-2" />
+                <h4 class="mb-1">Enterprise</h4>
+                <div class="d-flex align-items-center justify-content-center">
+                  <span class="price-monthly h1 text-primary fw-bold mb-0">$49</span>
+                  <span class="price-yearly h1 text-primary fw-bold mb-0 d-none">$37</span>
+                  <sub class="h6 text-muted mb-0 ms-1">/mo</sub>
+                </div>
+                <div class="position-relative pt-2">
+                  <div class="price-yearly text-muted price-yearly-toggle d-none">$ 444 / year</div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <ul class="list-unstyled">
+                <li>
+                  <h5>
+                    <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i class="ti ti-check ti-xs"></i></span>
+                    Everything in premium
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i class="ti ti-check ti-xs"></i></span>
+                    Timeline with database
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i class="ti ti-check ti-xs"></i></span>
+                    Fuzzy search
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i class="ti ti-check ti-xs"></i></span>
+                    A/B testing sanbox
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i class="ti ti-check ti-xs"></i></span>
+                    Custom permissions
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i class="ti ti-check ti-xs"></i></span>
+                    Social media automation
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i class="ti ti-check ti-xs"></i></span>
+                    Sales automation tools
+                  </h5>
+                </li>
+              </ul>
+              <div class="d-grid mt-4 pt-3">
+                <a href="payment.html" class="btn btn-label-primary">Get Started</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Standard Plan: End -->
+      </div>
+    </div>
+  </section>
+  <!-- Pricing plans: End -->
+
+  <!-- Fun facts: Start -->
+  <section id="landingFunFacts" class="section-py landing-fun-facts">
+    <div class="container">
+      <div class="row gy-3">
+        <div class="col-sm-6 col-lg-3">
+          <div class="card border border-label-primary shadow-none">
+            <div class="card-body text-center">
+              <img src="{{ asset('assets/img/front-pages/icons/laptop.png') }}" alt="laptop" class="mb-2" />
+              <h5 class="h2 mb-1">7.1k+</h5>
+              <p class="fw-medium mb-0">
+                Support Tickets<br />
+                Resolved
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="card border border-label-success shadow-none">
+            <div class="card-body text-center">
+              <img src="{{ asset('assets/img/front-pages/icons/user-success.png') }}" alt="laptop" class="mb-2" />
+              <h5 class="h2 mb-1">50k+</h5>
+              <p class="fw-medium mb-0">
+                Join creatives<br />
+                community
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="card border border-label-info shadow-none">
+            <div class="card-body text-center">
+              <img src="{{ asset('assets/img/front-pages/icons/diamond-info.png') }}" alt="laptop" class="mb-2" />
+              <h5 class="h2 mb-1">4.8/5</h5>
+              <p class="fw-medium mb-0">
+                Highly Rated<br />
+                Products
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="card border border-label-warning shadow-none">
+            <div class="card-body text-center">
+              <img src="{{ asset('assets/img/front-pages/icons/check-warning.png') }}" alt="laptop" class="mb-2" />
+              <h5 class="h2 mb-1">100%</h5>
+              <p class="fw-medium mb-0">
+                Money Back<br />
+                Guarantee
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Fun facts: End -->
+
+  <!-- FAQ: Start -->
+  <section id="landingFAQ" class="section-py bg-body landing-faq">
+    <div class="container">
+      <div class="text-center mb-3 pb-1">
+        <span class="badge bg-label-primary">Pertanyaan</span>
+      </div>
+      <h3 class="text-center mb-1">Beberapa persoalan yang sering <span class="section-title">ditanyakan</span></h3>
+      <p class="text-center mb-5 pb-3">Jelajahi bagian ini dan hilangkan rasa penasaran yang ada dibenakmu</p>
+      <div class="row gy-5">
+        <div class="col-lg-5">
+          <div class="text-center">
+            <img src="{{ asset('assets/img/front-pages/landing-page/faq-boy-with-logos.png') }}" alt="faq boy with logos" class="faq-image" />
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="accordion" id="accordionExample">
+            <div class="card accordion-item active">
+              <h2 class="accordion-header" id="headingOne">
+                <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionOne" aria-expanded="true" aria-controls="accordionOne">
+                  Do you charge for each upgrade?
+                </button>
+              </h2>
+
+              <div id="accordionOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  Lemon drops chocolate cake gummies carrot cake chupa chups muffin topping. Sesame snaps icing
+                  marzipan gummi bears macaroon dragée danish caramels powder. Bear claw dragée pastry topping
+                  soufflé. Wafer gummi bears marshmallow pastry pie.
+                </div>
+              </div>
+            </div>
+            <div class="card accordion-item">
+              <h2 class="accordion-header" id="headingTwo">
+                <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionTwo" aria-expanded="false" aria-controls="accordionTwo">
+                  Do I need to purchase a license for each website?
+                </button>
+              </h2>
+              <div id="accordionTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  Dessert ice cream donut oat cake jelly-o pie sugar plum cheesecake. Bear claw dragée oat cake
+                  dragée ice cream halvah tootsie roll. Danish cake oat cake pie macaroon tart donut gummies. Jelly
+                  beans candy canes carrot cake. Fruitcake chocolate chupa chups.
+                </div>
+              </div>
+            </div>
+            <div class="card accordion-item">
+              <h2 class="accordion-header" id="headingThree">
+                <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionThree" aria-expanded="false" aria-controls="accordionThree">
+                  What is regular license?
+                </button>
+              </h2>
+              <div id="accordionThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  Regular license can be used for end products that do not charge users for access or service(access
+                  is free and there will be no monthly subscription fee). Single regular license can be used for
+                  single end product and end product can be used by you or your client. If you want to sell end
+                  product to multiple clients then you will need to purchase separate license for each client. The
+                  same rule applies if you want to use the same end product on multiple domains(unique setup). For
+                  more info on regular license you can check official description.
+                </div>
+              </div>
+            </div>
+            <div class="card accordion-item">
+              <h2 class="accordion-header" id="headingFour">
+                <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionFour" aria-expanded="false" aria-controls="accordionFour">
+                  What is extended license?
+                </button>
+              </h2>
+              <div id="accordionFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis et aliquid quaerat possimus maxime!
+                  Mollitia reprehenderit neque repellat deleniti delectus architecto dolorum maxime, blanditiis
+                  earum ea, incidunt quam possimus cumque.
+                </div>
+              </div>
+            </div>
+            <div class="card accordion-item">
+              <h2 class="accordion-header" id="headingFive">
+                <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionFive" aria-expanded="false" aria-controls="accordionFive">
+                  Which license is applicable for SASS application?
+                </button>
+              </h2>
+              <div id="accordionFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sequi molestias exercitationem ab cum
+                  nemo facere voluptates veritatis quia, eveniet veniam at et repudiandae mollitia ipsam quasi
+                  labore enim architecto non!
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- FAQ: End -->
+
+  <!-- CTA: Start -->
+  <section id="landingCTA" class="section-py landing-cta p-lg-0 pb-0">
+    <div class="container">
+      <div class="row align-items-center gy-5 gy-lg-0">
+        <div class="col-lg-6 text-center text-lg-start">
+          <h6 class="h2 text-primary fw-bold mb-1">Mulai semua dengan premium akun!</h6>
+          <p class="fw-medium mb-4">Dengan premium dapatkan semua fitur yang tersedia tanpa batasan</p>
+          <a href="payment.html" class="btn btn-lg btn-primary">Mulai pembayaran</a>
+        </div>
+        <div class="col-lg-6 pt-lg-5 text-center text-lg-end">
+          <img src="{{ asset('assets/img/front-pages/landing-page/cta-dashboard.png') }}" alt="cta dashboard" class="img-fluid" />
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- CTA: End -->
+
+  <!-- Contact Us: Start -->
+  <section id="landingContact" class="section-py bg-body landing-contact">
+    <div class="container">
+      <div class="text-center mb-3 pb-1">
+        <span class="badge bg-label-primary">Hubungi Kami</span>
+      </div>
+      <h3 class="text-center mb-1"><span class="section-title">Mari bekerja</span> sama</h3>
+      <p class="text-center mb-4 mb-lg-5 pb-md-3">Ada pertanyaan ? kirimkan saja email ke kami</p>
+      <div class="row gy-4">
+        <div class="col-lg-5">
+          <div class="contact-img-box position-relative border p-2 h-100">
+            <img src="{{ asset('assets/img/front-pages/landing-page/contact-customer-service.png') }}" alt="contact customer service" class="contact-img w-100 scaleX-n1-rtl" />
+            <div class="pt-3 px-4 pb-1">
+              <div class="row gy-3 gx-md-4">
+                <div class="col-md-6 col-lg-12 col-xl-6">
+                  <div class="d-flex align-items-center">
+                    <div class="badge bg-label-primary rounded p-2 me-2"><i class="ti ti-mail ti-sm"></i></div>
+                    <div>
+                      <p class="mb-0">Email</p>
+                      <h5 class="mb-0">
+                        <a href="mailto:example@gmail.com" class="text-heading">example@gmail.com</a>
+                      </h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-12 col-xl-6">
+                  <div class="d-flex align-items-center">
+                    <div class="badge bg-label-success rounded p-2 me-2">
+                      <i class="ti ti-phone-call ti-sm"></i>
+                    </div>
+                    <div>
+                      <p class="mb-0">Phone</p>
+                      <h5 class="mb-0"><a href="tel:+1234-568-963" class="text-heading">+1234 568 963</a></h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="mb-1">Kirimkan pesan</h4>
+              <p class="mb-4">
+               Jika kamu ingin berdiskusi tentan pembayaran,akun,lisensi<br class="d-none d-lg-block" />
+                Kerjasama atau ide usaha kamu ditempat yang benar
+              </p>
+              <form>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label" for="contact-form-fullname">Nama lengkap</label>
+                    <input type="text" class="form-control" id="contact-form-fullname" placeholder="john" />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="contact-form-email">Email</label>
+                    <input type="text" id="contact-form-email" class="form-control" placeholder="johndoe@gmail.com" />
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label" for="contact-form-message">Pesan</label>
+                    <textarea id="contact-form-message" class="form-control" rows="8" placeholder="Write a message"></textarea>
+                  </div>
+                  <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Kirim pesan</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Contact Us: End -->
+</div>
+<!-- / Sections:End -->
+
+<!-- Footer: Start -->
+<footer class="landing-footer bg-body footer-text">
+  <div class="footer-top">
+    <div class="container">
+      <div class="row gx-0 gy-4 g-md-5">
+        <div class="col-lg-5">
+          <a href="landing.html" class="app-brand-link mb-4">
+            <span class="app-brand-logo demo"><svg width="32" height="20" viewBox="0 0 32 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M0.00172773 0V6.85398C0.00172773 6.85398 -0.133178 9.01207 1.98092 10.8388L13.6912 21.9964L19.7809 21.9181L18.8042 9.88248L16.4951 7.17289L9.23799 0H0.00172773Z" fill="#7367F0" />
+  <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd" d="M7.69824 16.4364L12.5199 3.23696L16.5541 7.25596L7.69824 16.4364Z" fill="#161616" />
+  <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd" d="M8.07751 15.9175L13.9419 4.63989L16.5849 7.28475L8.07751 15.9175Z" fill="#161616" />
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z" fill="#7367F0" />
+</svg>
+</span>
+            <span class="app-brand-text demo footer-link fw-bold ms-2 ps-1">HummaTask</span>
+          </a>
+          <p class="footer-text footer-logo-description mb-4">
+            Aplikasi pengelola dan pengingat tugasmu, kami adalah temanmu menjadi produktif
+          </p>
+          <form class="footer-form">
+            <label for="footer-email" class="small">Berlangganan untuk hal terbaru</label>
+            <div class="d-flex mt-1">
+              <input type="email" class="form-control rounded-0 rounded-start-bottom rounded-start-top" id="footer-email" placeholder="Emailmu" />
+              <button type="submit" class="btn btn-primary shadow-none rounded-0 rounded-end-bottom rounded-end-top">
+                Berlangganan
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6">
+          <h6 class="footer-title mb-4">Demos</h6>
+          <ul class="list-unstyled">
+            <li class="mb-3">
+              <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1" target="_blank" class="footer-link">Vertical Layout</a>
+            </li>
+            <li class="mb-3">
+              <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-5" target="_blank" class="footer-link">Horizontal Layout</a>
+            </li>
+            <li class="mb-3">
+              <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-2" target="_blank" class="footer-link">Bordered Layout</a>
+            </li>
+            <li class="mb-3">
+              <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-3" target="_blank" class="footer-link">Semi Dark Layout</a>
+            </li>
+            <li class="mb-3">
+              <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-4" target="_blank" class="footer-link">Dark Layout</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6">
+          <h6 class="footer-title mb-4">Pages</h6>
+          <ul class="list-unstyled">
+            <li class="mb-3">
+              <a href="pricing.html" class="footer-link">Pricing</a>
+            </li>
+            <li class="mb-3">
+              <a href="payment.html" class="footer-link">Payment<span class="badge rounded bg-primary ms-2">New</span></a>
+            </li>
+            <li class="mb-3">
+              <a href="checkout.html" class="footer-link">Checkout</a>
+            </li>
+            <li class="mb-3">
+              <a href="help-center.html" class="footer-link">Help Center</a>
+            </li>
+            <li class="mb-3">
+              <a href="../auth/login-cover.html" target="_blank" class="footer-link">Login/Register</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-4">
+          <h6 class="footer-title mb-4">Download our app</h6>
+          <a href="javascript:void(0);" class="d-block footer-link mb-3 pb-2"><img src="../../demo/assets/img/front-pages/landing-page/apple-icon.png" alt="apple icon" /></a>
+          <a href="javascript:void(0);" class="d-block footer-link"><img src="../../demo/assets/img/front-pages/landing-page/google-play-icon.png" alt="google play icon" /></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom py-3">
+    <div class="container d-flex flex-wrap justify-content-between flex-md-row flex-column text-center text-md-start">
+      <div class="mb-2 mb-md-0">
+        <span class="footer-text">©
+          <script>
+          document.write(new Date().getFullYear());
+
+          </script>
+        </span>
+        <a href="https://pixinvent.com/" target="_blank" class="fw-medium text-white footer-link">Pixinvent,</a>
+        <span class="footer-text"> Made with ❤️ for a better web.</span>
+      </div>
+      <div>
+        <a href="https://tools.pixinvent.com/github/github-access" class="footer-link me-3" target="_blank">
+          <img src="{{asset('assets/img/front-pages/icons/github-light.png')}}" alt="github icon" data-app-light-img="front-pages/icons/github-light.png" data-app-dark-img="front-pages/icons/github-dark.png" />
+        </a>
+        <a href="https://www.facebook.com/pixinvents/" class="footer-link me-3" target="_blank">
+          <img src="{{ asset('assets/img/front-pages/icons/facebook-light.png') }}" alt="facebook icon" data-app-light-img="front-pages/icons/facebook-light.png" data-app-dark-img="front-pages/icons/facebook-dark.png" />
+        </a>
+        <a href="https://twitter.com/pixinvents" class="footer-link me-3" target="_blank">
+          <img src="{{asset('assets/img/front-pages/icons/twitter-light.png')}}" alt="twitter icon" data-app-light-img="front-pages/icons/twitter-light.png" data-app-dark-img="front-pages/icons/twitter-dark.png" />
+        </a>
+        <a href="https://www.instagram.com/pixinvents/" class="footer-link" target="_blank">
+          <img src="{{ asset('assets/img/front-pages/icons/instagram-light.png') }}" alt="google icon" data-app-light-img="front-pages/icons/instagram-light.png" data-app-dark-img="front-pages/icons/instagram-dark.png" />
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- Footer: End -->
+  <!--/ Layout Content -->
+
+
+
+
+  <!-- Include Scripts -->
+  <!-- $isFront is used to append the front layout scripts only on the front layout otherwise the variable will be blank -->
+  <!-- BEGIN: Vendor JS-->
+<script src="{{ asset('assets/vendor/js/dropdown-hover.js') }}"></script>
+<script src="{{ asset('assets/vendor/js/mega-dropdown.js') }}"></script>
+<script src="{{ asset('assets/vendor/libs/node-waves/node-waves259f.js?id=4fae469a3ded69fb59fce3dcc14cd638') }}"></script>
+<script src="{{ asset('assets/vendor/libs/popper/popper0a73.js?id=baf82d96b7771efbcc05c3b77135d24c') }}"></script>
+<script src="{{ asset('assets/vendor/js/bootstraped84.js?id=9a6c701557297a042348b5aea69e9b76') }}"></script>
+
+<script src="{{ asset('assets/vendor/libs/nouislider/nouislider.js') }}"></script>
+<script src="{{ asset('assets/vendor/libs/swiper/swiper.js') }}"></script>
+<!-- END: Page Vendor JS-->
+<!-- BEGIN: Theme JS-->
+<script src="{{ asset('assets/js/front-main1b3c.js?id=2c2564d4c142df108c8f3152af8e0460') }}"></script>
+<!-- END: Theme JS-->
+<!-- Pricing Modal JS-->
+<!-- END: Pricing Modal JS-->
+<!-- BEGIN: Page JS-->
+<script src="{{ asset('demo/assets/js/front-page-landing.js') }}"></script>
+<!-- END: Page JS-->
+
+</body>
+
+
+<!-- Mirrored from demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/front-pages/landing by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Oct 2023 03:45:43 GMT -->
 </html>
