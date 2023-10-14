@@ -262,7 +262,7 @@
 <!-- Pricing Modal JS-->
 <!-- END: Pricing Modal JS-->
 <!-- BEGIN: Page JS-->
-<script src="assets/js/pages-auth.js"></script>
+<script src="{{asset('assets/js/pages-auth.js')}}"></script>
 <!-- END: Page JS-->
 
 </body>

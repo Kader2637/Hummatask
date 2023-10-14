@@ -24,7 +24,7 @@
 
 
     <!-- Google Tag Manager (Default ThemeSelection: GTM-5DDHKGP, PixInvent: GTM-5J3LMKC) -->
-  <script>
+  {{-- <script>
     (function(w, d, s, l, i) {
       w[l] = w[l] || [];
       w[l].push({
@@ -39,7 +39,7 @@
         '../../../../www.googletagmanager.com/gtm5445.html?id=' + i + dl;
       f.parentNode.insertBefore(j, f);
     })(window, document, 'script', 'dataLayer', 'GTM-5J3LMKC');
-  </script>
+  </script> --}}
   <!-- End Google Tag Manager -->
 
 
@@ -151,19 +151,19 @@
         </button>
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link fw-medium" aria-current="page" href="landing.html#landingHero">Beranda</a>
+            <a class="nav-link fw-medium" aria-current="page" href="#landingHero">Beranda</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link fw-medium" href="landing.html#landingFeatures">Fitur</a>
+            <a class="nav-link fw-medium" href="#landingFeatures">Fitur</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link fw-medium" href="landing.html#landingTeam">Tim</a>
+            <a class="nav-link fw-medium" href="#landingTeam">Tim</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link fw-medium" href="landing.html#landingFAQ">Pertanyaan</a>
+            <a class="nav-link fw-medium" href="#landingFAQ">Pertanyaan</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link fw-medium" href="landing.html#landingContact">Hubungi kami</a>
+            <a class="nav-link fw-medium" href="#landingContact">Hubungi kami</a>
           </li>
           <li class="nav-item mega-dropdown ">
             <a href="javascript:void(0);" class="nav-link dropdown-toggle navbar-ex-14-mega-dropdown mega-dropdown fw-medium" aria-expanded="false" data-bs-toggle="mega-dropdown" data-trigger="hover">
@@ -367,7 +367,7 @@
         <!-- / Style Switcher-->
                 <!-- navbar button: Start -->
         <li>
-          <a href="../auth/login-cover.html" class="btn btn-primary" target="_blank"><span class="tf-icons ti ti-login scaleX-n1-rtl me-md-1"></span><span class="d-none d-md-block">Login/Register</span></a>
+          <a href="{{route('login')}}" class="btn btn-primary"><span class="tf-icons ti ti-login scaleX-n1-rtl me-md-1"></span><span class="d-none d-md-block">Login/Register</span></a>
         </li>
         <!-- navbar button: End -->
       </ul>
@@ -537,7 +537,7 @@
                   <div class="card h-100">
                     <div class="card-body text-body d-flex flex-column justify-content-between h-100">
                       <div class="mb-3">
-                        <img src=".{{ asset('assets/img/front-pages/branding/logo-2.png') }}" alt="client logo" class="client-logo img-fluid" />
+                        <img src="{{ asset('assets/img/front-pages/branding/logo-2.png') }}" alt="client logo" class="client-logo img-fluid" />
                       </div>
                       <p>
                         “I've never used a theme as versatile and flexible as Vuexy. It's my go to for building
@@ -1336,8 +1336,8 @@
         </div>
         <div class="col-lg-3 col-md-4">
           <h6 class="footer-title mb-4">Download our app</h6>
-          <a href="javascript:void(0);" class="d-block footer-link mb-3 pb-2"><img src="../../demo/assets/img/front-pages/landing-page/apple-icon.png" alt="apple icon" /></a>
-          <a href="javascript:void(0);" class="d-block footer-link"><img src="../../demo/assets/img/front-pages/landing-page/google-play-icon.png" alt="google play icon" /></a>
+          <a href="javascript:void(0);" class="d-block footer-link mb-3 pb-2"><img src="{{asset('assets/img/front-pages/landing-page/apple-icon.png')}}" alt="apple icon" /></a>
+          <a href="javascript:void(0);" class="d-block footer-link"><img src="{{asset('assets/img/front-pages/landing-page/google-play-icon.png')}}" alt="google play icon" /></a>
         </div>
       </div>
     </div>
@@ -1395,7 +1395,7 @@
 <!-- Pricing Modal JS-->
 <!-- END: Pricing Modal JS-->
 <!-- BEGIN: Page JS-->
-<script src="{{ asset('demo/assets/js/front-page-landing.js') }}"></script>
+<script src="{{ asset('assets/js/front-page-landing.js') }}"></script>
 <!-- END: Page JS-->
 
 </body>
