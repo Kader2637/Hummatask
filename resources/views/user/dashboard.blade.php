@@ -14,7 +14,7 @@
  <main class="container-fluid p-3">
 
     <div class="row">
-        <div class=" jumbotron col-12 d-flex flex-column align-items-center justify-content-center">
+        <div class="jumbotron col-12 d-flex flex-column align-items-center justify-content-center">
             <p>Senin,19 oktober 2023</p>
             <p class="fs-3">Selamat datang, Adi Kurniawan</p>
         </div>
@@ -28,7 +28,7 @@
 
         </div>
         <div class="col-lg-4">
-            
+
         </div>
     </div>
 
