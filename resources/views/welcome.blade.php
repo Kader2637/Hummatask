@@ -9,44 +9,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>Landing - Front Pages |
-    Vuexy -
-    Bootstrap Admin Template
-  </title>
+  <title>{{ $title }}</title>
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 5" />
   <meta name="keywords" content="dashboard, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
-  <!-- laravel CRUD token -->
   <meta name="csrf-token" content="y0lzh53YmoH0xFgY2vFjhD4S1TOiq6lE58zbW7ec">
-  <!-- Canonical SEO -->
   <link rel="canonical" href="https://1.envato.market/vuexy_admin">
-  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/favicon/favicon.ico" />
-
-
-    <!-- Google Tag Manager (Default ThemeSelection: GTM-5DDHKGP, PixInvent: GTM-5J3LMKC) -->
-  {{-- <script>
-    (function(w, d, s, l, i) {
-      w[l] = w[l] || [];
-      w[l].push({
-        'gtm.start': new Date().getTime(),
-        event: 'gtm.js'
-      });
-      var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s),
-        dl = l != 'dataLayer' ? '&l=' + l : '';
-      j.async = true;
-      j.src =
-        '../../../../www.googletagmanager.com/gtm5445.html?id=' + i + dl;
-      f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-5J3LMKC');
-  </script> --}}
-  <!-- End Google Tag Manager -->
-
-
-  <!-- Include Styles -->
-  <!-- $isFront is used to append the front layout styles only on the front layout otherwise the variable will be blank -->
-  <!-- BEGIN: Theme CSS-->
-<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com/">
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;ampdisplay=swap" rel="stylesheet">
