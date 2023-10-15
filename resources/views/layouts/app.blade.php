@@ -102,14 +102,7 @@
   </script>
 </head>
 
-<style>
-
-/* Navigation */
-@yield('style');
-
-/* Akhir Navigation */
-
-</style>
+@yield('style')
 
 <body>
 
@@ -1034,17 +1027,7 @@
 <script src="{{ asset('assets/js/dashboards-crm.js') }}"></script>
 <!-- END: Page JS-->
 
-
-<script>
-
-    const listMenuItem = document.getElementsByClassName('menu-item');
-    listMenuItem.addEventListener('mouseenter',(e)=>{
-        e.classList.toggle('active')
-    })
-
-    @yield('script')
-</script>
-
+@yield('script')
 
 </body>
 
