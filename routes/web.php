@@ -12,3 +12,7 @@ Route::controller(authController::class)->group(function () {
     Route::get('steps', 'stepsPage');
     Route::get('verify', 'verifyPage');
 });
+
+Route::get('/atur-jadwal',function(){
+    return view('user.jadwal.aturJadwal');
+});
