@@ -20,7 +20,7 @@
                         style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; border-radius: 10px"
                         action="{{ route('login') }}" method="POST">
                         @csrf
-                        <div class="my-4">
+                        <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input type="text" class="form-control" id="email" name="email"
                                 placeholder="Masukkan email Anda" autofocus>
