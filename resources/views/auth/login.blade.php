@@ -41,8 +41,13 @@
                         @csrf
                         <div class="my-4">
                             <label for="email" class="form-label">Email</label>
-                            <input type="text" class="form-control" id="email" name="email-username"
+                            <input type="text" class="form-control" id="email" name="email"
                                 placeholder="Masukkan email Anda" autofocus>
+                            @error('username')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                         <div class="my-4 form-password-toggle">
                             <label for="email" class="form-label">Password</label>
@@ -50,6 +55,11 @@
                                 <input type="password" id="password" class="form-control" name="password"
                                     placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                     aria-describedby="password" />
+                                @error('password')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                                 <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
                             </div>
                         </div>

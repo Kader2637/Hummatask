@@ -153,7 +153,27 @@ class authController extends Controller
 
     protected function login(Request $request)
     {
-        dd($request->all());
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ], [
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'password.required' => 'Password wajib diisi.',
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            User::where('id', auth()->user()->id)->update(['is_login' => true]);
+            $user = auth()->user();
+
+            return match ($user->peran_id) {
+                2 => redirect()->intended(route('dashboard.mentor')),
+                1 => redirect()->intended(route('dashboard.siswa')),
+                default => redirect()->route('login'),
+            };
+        }
+
+        return redirect()->route('login')->withErrors(['password' => 'Email atau password tidak valid.'])->withInput();
     }
 
     protected function register(Request $request)

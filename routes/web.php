@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\authController;
+use App\Http\Controllers\mentorController;
+use App\Http\Controllers\siswaController;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(authController::class)->group(function () {
@@ -21,6 +23,10 @@ Route::controller(authController::class)->group(function () {
     Route::post('register', 'register')->name('register.store');
 });
 
-Route::get('/atur-jadwal', function () {
-    return view('user.jadwal.aturJadwal');
+Route::controller(siswaController::class)->group(function () {
+    Route::get('dashboard', 'dashboard')->name('dashboard.siswa');
+});
+
+Route::controller(mentorController::class)->group(function () {
+    Route::get('dashboard', 'dashboard')->name('dashboard.mentor');
 });
