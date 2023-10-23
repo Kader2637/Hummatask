@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(authController::class)->group(function () {
     Route::get('/', 'welcomePage');
-    Route::get('login', 'loginPage')->name('login');
+    Route::get('login', 'loginPage');
     Route::get('register', 'registerPage')->name('register');
     Route::get('forgot', 'lupaPasswordPage')->name('lupa-password');
     Route::get('reset', 'resetPasswordPage');
@@ -23,10 +23,10 @@ Route::controller(authController::class)->group(function () {
     Route::post('register', 'register')->name('register.store');
 });
 
-Route::controller(siswaController::class)->group(function () {
+Route::prefix('siswa')->controller(siswaController::class)->group(function () {
     Route::get('dashboard', 'dashboard')->name('dashboard.siswa');
 });
 
-Route::controller(mentorController::class)->group(function () {
+Route::prefix('mentor')->controller(mentorController::class)->group(function () {
     Route::get('dashboard', 'dashboard')->name('dashboard.mentor');
 });

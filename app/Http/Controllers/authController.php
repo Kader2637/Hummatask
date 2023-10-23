@@ -162,18 +162,20 @@ class authController extends Controller
             'password.required' => 'Password wajib diisi.',
         ]);
 
-        if (Auth::attempt($credentials)) {
-            User::where('id', auth()->user()->id)->update(['is_login' => true]);
-            $user = auth()->user();
+        try {
+            if (Auth::attempt($credentials)) {
+                User::where('id', auth()->user()->id)->update(['is_login' => true]);
+                $user = auth()->user();
 
-            return match ($user->peran_id) {
-                2 => redirect()->intended(route('dashboard.mentor')),
-                1 => redirect()->intended(route('dashboard.siswa')),
-                default => redirect()->route('login'),
-            };
+                return match ($user->peran_id) {
+                    2 => redirect()->intended(route('dashboard.mentor')),
+                    1 => redirect()->intended(route('dashboard.siswa')),
+                };
+            }
+        } catch (\Throwable $th) {
+            return abort(404);
         }
-
-        return redirect()->route('login')->withErrors(['password' => 'Email atau password tidak valid.'])->withInput();
+        return redirect()->route('login')->withErrors(['password' => 'Email atau password tidak sesuai.'])->withInput();
     }
 
     protected function register(Request $request)
