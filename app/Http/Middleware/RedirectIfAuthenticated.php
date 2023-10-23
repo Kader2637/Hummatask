@@ -21,7 +21,7 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                return Auth::user()->peran_id == 1 ? redirect()->intended(route('dashboard.mentor')) : redirect()->intended(route('dashboard.siswa'));
             }
         }
 

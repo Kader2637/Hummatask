@@ -1,25 +1,6 @@
 @extends('auth.templates.template')
 
 @section('content')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        @if (session('success'))
-            Swal.fire({
-                icon: 'success',
-                title: 'Registrasi Berhasil',
-                text: '{{ session('success') }}',
-            });
-        @elseif (session('error'))
-            Swal.fire({
-                icon: 'error',
-                title: 'Terjadi Kesalahan',
-                text: '{{ session('error') }}',
-            });
-        @endif
-    </script>
-
-
-
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5J3LMKC" height="0" width="0"
             style="display: none; visibility: hidden"></iframe></noscript>
     <div class="authentication-wrapper authentication-cover authentication-bg">
@@ -55,12 +36,12 @@
                                 <input type="password" id="password" class="form-control" name="password"
                                     placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                     aria-describedby="password" />
-                                    <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
-                                    @error('password')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
+                                <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
+                                @error('password')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary d-grid w-100">
@@ -71,10 +52,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            localStorage.clear();
-        })
-    </script>
 @endsection

@@ -166,16 +166,13 @@ class authController extends Controller
             if (Auth::attempt($credentials)) {
                 User::where('id', auth()->user()->id)->update(['is_login' => true]);
                 $user = auth()->user();
-
-                return match ($user->peran_id) {
-                    2 => redirect()->intended(route('dashboard.mentor')),
-                    1 => redirect()->intended(route('dashboard.siswa')),
-                };
+                return $user->peran_id == 1 ? redirect()->intended(route('dashboard.mentor')) : redirect()->intended(route('dashboard.siswa'));
             }
         } catch (\Throwable $th) {
             return abort(404);
         }
-        return redirect()->route('login')->withErrors(['password' => 'Email atau password tidak sesuai.'])->withInput();
+        return redirect('/login');
+        // return redirect()->route('login')->withErrors(['password' => 'Email atau password tidak sesuai.'])->withInput();
     }
 
     protected function register(Request $request)
