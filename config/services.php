@@ -31,4 +31,23 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID', '495055477660-9nh90qatf25ecrknm278lqipca5ue9lt.apps.googleusercontent.com'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET', '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'),
+        'redirect' => env('GOOGLE_REDIRECT', 'http://localhost:8000/auth/google/callback'),
+    ],
+
+    'twitter' => [
+        'client_id' => env('TWITTER_CLIENT_ID'),
+        'client_secret' => env('TWITTER_CLIENT_SECRET'),
+        'redirect' => env('TWITTER_REDIRECT'),
+    ],
+
+    'facebook' => [
+        'client_id' => env('FACEBOOK_CLIENT_ID'),
+        'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
+        'redirect' => env('FACEBOOK_REDIRECT'),
+    ],
+
+
 ];

@@ -8,14 +8,7 @@
             <div class="d-none d-lg-flex col-lg-7 p-0">
                 <div class="auth-cover-bg auth-cover-bg-color d-flex justify-content-center align-items-center">
                     <img src="{{ asset('assets/img/illustrations/auth-forgot-password-illustration-light.png') }}"
-                        alt="auth-forgot-password-cover" class="img-fluid my-5 auth-illustration"
-                        data-app-light-img="illustrations/auth-forgot-password-illustration-light.png"
-                        data-app-dark-img="illustrations/auth-forgot-password-illustration-dark.html">
-
-                    <img src="{{ asset('assets/img/illustrations/bg-shape-image-light.png') }}"
-                        alt="auth-forgot-password-cover" class="platform-bg"
-                        data-app-light-img="illustrations/bg-shape-image-light.png"
-                        data-app-dark-img="illustrations/bg-shape-image-dark.html">
+                        alt="auth-forgot-password-cover" class="img-fluid my-5 auth-illustration">
                 </div>
             </div>
             <div class="d-flex col-12 col-lg-5 align-items-center p-sm-5 p-4">
@@ -38,7 +31,7 @@
                         <button class="btn btn-primary d-grid w-100">Send Reset Link</button>
                     </form>
                     <div class="text-center">
-                        <a href="login-cover.html" class="d-flex align-items-center justify-content-center">
+                        <a href="{{ route('login') }}" class="d-flex align-items-center justify-content-center">
                             <i class="ti ti-chevron-left scaleX-n1-rtl"></i>
                             Back to login
                         </a>

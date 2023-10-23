@@ -4,21 +4,22 @@
     data-assets-path="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/"
     data-base-url="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1" data-framework="laravel"
     data-template="blank-menu-theme-default-light">
-<meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <head>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="utf-8" />
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>{{ $title }}</title>
+    <title>Not Found
+    </title>
     <meta name="description" content="Start your development with a Dashboard for Bootstrap 5" />
     <meta name="keywords" content="dashboard, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
     <meta name="csrf-token" content="y0lzh53YmoH0xFgY2vFjhD4S1TOiq6lE58zbW7ec">
     <link rel="canonical" href="https://1.envato.market/vuexy_admin">
     <link rel="icon" type="image/x-icon"
         href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/favicon/favicon.ico" />
+
 
     <script>
         (function(w, d, s, l, i) {
@@ -36,6 +37,7 @@
             f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-5J3LMKC');
     </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link
@@ -48,7 +50,6 @@
         href="{{ asset('assets/vendor/fonts/fontawesome8a69.css?id=a2997cb6a1c98cc3c85f4c99cdea95b5') }}" />
     <link rel="stylesheet"
         href="{{ asset('assets/vendor/fonts/flag-icons80a8.css?id=121bcc3078c6c2f608037fb9ca8bce8d') }}" />
-    <!-- Core CSS -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/core6cc1.css?id=9dd8321ea008145745a7d78e072a6e36') }}"
         class="template-customizer-core-css" />
     <link rel="stylesheet"
@@ -62,20 +63,11 @@
     <link rel="stylesheet"
         href="{{ asset('assets/vendor/libs/typeahead-js/typeaheadb5e1.css?id=2603197f6b29a6654cb700bd9367e2a3') }}" />
 
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/%40form-validation/umd/styles/index.min.css') }}" />
-
-    <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/page-auth.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/page-misc.css') }}">
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('assets/vendor/js/template-customizer.js') }}"></script>
 
     <script src="{{ asset('assets/js/config.js') }}"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
 
     <script>
         window.templateCustomizer = new TemplateCustomizer({
@@ -87,7 +79,6 @@
             lang: 'en',
             pathResolver: function(path) {
                 var resolvedPaths = {
-                    // Core stylesheets
                     'core.css': 'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/core.css?id=9dd8321ea008145745a7d78e072a6e36',
                     'core-dark.css': 'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/core-dark.css?id=d661bae1d0ada9f7e9e3685a3e1f427e',
 
@@ -108,10 +99,27 @@
     </script>
 </head>
 
-<body style="background-color: rgb(255, 255, 255)">
+<body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5J3LMKC" height="0" width="0"
+            style="display: none; visibility: hidden"></iframe></noscript>
 
-    @yield('content')
-
+    <div class="container-xxl container-p-y">
+        <div class="misc-wrapper">
+            <h2 class="mb-1 mt-4">Page Not Found :(</h2>
+            <p class="mb-4 mx-2">Oops! 😖 Halaman tidak ditemukan.</p>
+            <a onclick="back()"
+                class="btn btn-primary mb-4">Back to home</a>
+            <div class="mt-4">
+                <img src="{{ asset('assets/img/illustrations/page-misc-error.png') }}" alt="page-misc-error" width="225"
+                    class="img-fluid">
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid misc-bg-wrapper">
+        <img src="{{ asset('assets/img/illustrations/bg-shape-image-light.png') }}" alt="page-misc-error"
+            data-app-light-img="illustrations/bg-shape-image-light.png"
+            data-app-dark-img="illustrations/bg-shape-image-dark.html">
+    </div>
     <script src="{{ asset('assets/vendor/libs/jquery/jquery1e84.js?id=0f7eb1f3a93e3e19e8505fd8c175925a') }}"></script>
     <script src="{{ asset('assets/vendor/libs/popper/popper0a73.js?id=baf82d96b7771efbcc05c3b77135d24c') }}"></script>
     <script src="{{ asset('assets/vendor/js/bootstraped84.js?id=9a6c701557297a042348b5aea69e9b76') }}"></script>
@@ -129,9 +137,14 @@
     <script src="{{ asset('assets/vendor/libs/%40form-validation/umd/plugin-auto-focus/index.min.js') }}"></script>
     <script src="{{ asset('assets/js/mainf696.js?id=8bd0165c1c4340f4d4a66add0761ae8a') }}"></script>
     <script src="{{ asset('assets/js/pages-auth.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="{{ asset('assets/js/extended-ui-sweetalert2.js') }}"></script>
+
+    <script>
+        function back() {
+            window.history.back()
+        }
+    </script>
 
 </body>
+
 
 </html>

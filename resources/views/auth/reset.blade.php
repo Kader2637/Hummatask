@@ -9,13 +9,7 @@
                 <div class="auth-cover-bg auth-cover-bg-color d-flex justify-content-center align-items-center">
                     <img src="{{ asset('assets/img/illustrations/auth-reset-password-illustration-light.png') }}"
                         alt="auth-reset-password-cover" class="img-fluid my-5 auth-illustration"
-                        data-app-light-img="illustrations/auth-reset-password-illustration-light.png"
                         data-app-dark-img="illustrations/auth-reset-password-illustration-dark.html">
-
-                    <img src="{{ asset('assets/img/illustrations/bg-shape-image-light.png') }}"
-                        alt="auth-reset-password-cover" class="platform-bg"
-                        data-app-light-img="illustrations/bg-shape-image-light.png"
-                        data-app-dark-img="illustrations/bg-shape-image-dark.html">
                 </div>
             </div>
             <div class="d-flex col-12 col-lg-5 align-items-center p-4 p-sm-5">
@@ -52,7 +46,7 @@
                             Set new password
                         </button>
                         <div class="text-center">
-                            <a href="login-cover.html">
+                            <a href="{{ route('login') }}">
                                 <i class="ti ti-chevron-left scaleX-n1-rtl"></i>
                                 Kembali ke login
                             </a>
