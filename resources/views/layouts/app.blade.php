@@ -158,7 +158,7 @@
                     <li class="menu-item">
                         <ul class="">
                                 <li class="menu-item ">
-                                    <a href="../front-pages/pricing.html"
+                                    <a href="{{ route('tim.board') }}"
                                         class="menu-link d-flex align-items-center gap-2" target="_blank">
                                         <img style="width: 30px" class="rounded-circle border border-primary"
                                             src="{{ asset('assets/logo.png') }}" alt="">
