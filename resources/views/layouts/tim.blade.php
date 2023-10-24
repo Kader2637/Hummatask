@@ -122,52 +122,102 @@
                 </div>
                 <div class="menu-inner-shadow"></div>
 
-                <ul class="menu-inner py-1">
-                    <li class="menu-item menu-toggle">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons ti ti-layout-sidebar"></i>
-                            <div class="w-100 d-flex align-items-center justify-content-between">Dashboard</div>
+                <ul class="menu-inner py-1 ">
+
+
+
+                    <li class="menu-item @if ($title == 'Tim/board')
+                    active
+                    @endif ">
+                        <a href="{{ route('tim.board') }}" class="menu-link d-flex align-items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path fill="currentColor" d="M5 21q-.825 0-1.413-.588T3 19V5q0-.825.588-1.413T5 3h4q.825 0 1.413.588T11 5v14q0 .825-.588 1.413T9 21H5Zm10 0q-.825 0-1.413-.588T13 19v-5q0-.825.588-1.413T15 12h4q.825 0 1.413.588T21 14v5q0 .825-.588 1.413T19 21h-4Zm0-11q-.825 0-1.413-.588T13 8V5q0-.825.588-1.413T15 3h4q.825 0 1.413.588T21 5v3q0 .825-.588 1.413T19 10h-4Z"/></svg>
+                            <div class="w-100 d-flex align-items-center justify-content-between">Board</div>
+                        </a>
+                    </li>
+                    <li class="menu-item ">
+                        <a href="" class="menu-link d-flex align-items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-miterlimit="5.759" d="M3 3v16a2 2 0 0 0 2 2h16"/><path stroke-miterlimit="5.759" d="m7 14l4-4l4 4l6-6"/><path d="M18 8h3v3"/></g></svg>
+                            <div class="w-100 d-flex align-items-center justify-content-between">Statistik Project</div>
+                        </a>
+                    </li>
+                    <li class="menu-item @if ($title == 'Tim/kalender')
+                    active
+                    @endif ">
+                        <a href="{{ route('tim.kalender') }}" class="menu-link d-flex align-items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path fill="currentColor" d="M11 14v-2h2v2h-2Zm-4 0v-2h2v2H7Zm8 0v-2h2v2h-2Zm-4 4v-2h2v2h-2Zm-4 0v-2h2v2H7Zm8 0v-2h2v2h-2ZM3 22V4h3V2h2v2h8V2h2v2h3v18H3Zm2-2h14V10H5v10Z"/></svg>
+                            <div class="w-100 d-flex align-items-center justify-content-between">Kalender</div>
+                        </a>
+                    </li>
+                    <li class="menu-item @if ($title == 'Tim/project')
+                    active
+                    @endif ">
+                        <a href="{{ route('tim.project') }}" class="menu-link d-flex align-items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 16 16"><path fill="currentColor" d="M4.75 7a.75.75 0 0 0 0 1.5h4.5a.75.75 0 0 0 0-1.5h-4.5ZM5 4.75A.75.75 0 0 1 5.75 4h5.5a.75.75 0 0 1 0 1.5h-5.5A.75.75 0 0 1 5 4.75ZM6.75 10a.75.75 0 0 0 0 1.5h4.5a.75.75 0 0 0 0-1.5h-4.5Z"/><path fill="currentColor" d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v12.5A1.75 1.75 0 0 1 14.25 16H1.75A1.75 1.75 0 0 1 0 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25Z"/></svg>
+                            <div class="w-100 d-flex align-items-center justify-content-between">Project</div>
+                        </a>
+                    </li>
+                    <li class="menu-item @if ($title == 'Tim/history')
+                    active
+                    @endif ">
+                        <a href="{{ route('tim.history') }}" class="menu-link d-flex align-items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M4 19V8v11v-.375V19Zm0 2q-.825 0-1.413-.588T2 19V8q0-.825.588-1.413T4 6h4V4q0-.825.588-1.413T10 2h4q.825 0 1.413.588T16 4v2h4q.825 0 1.413.588T22 8v4.275q-.45-.325-.95-.563T20 11.3V8H4v11h7.075q.075.525.225 1.025t.375.975H4Zm6-15h4V4h-4v2Zm8 17q-2.075 0-3.538-1.463T13 18q0-2.075 1.463-3.538T18 13q2.075 0 3.538 1.463T23 18q0 2.075-1.463 3.538T18 23Zm.5-5.2v-2.3q0-.2-.15-.35T18 15q-.2 0-.35.15t-.15.35v2.275q0 .2.075.388t.225.337l1.5 1.5q.15.15.35.15T20 20q.15-.15.15-.35T20 19.3l-1.5-1.5Z"/></svg>
+                            <div class="w-100 d-flex align-items-center justify-content-between">History</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle d-flex align-items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><g fill="#888888"><path d="M6 6a1 1 0 0 1 1-1h10a1 1 0 1 1 0 2H7a1 1 0 0 1-1-1Zm0 4a1 1 0 0 1 1-1h10a1 1 0 1 1 0 2H7a1 1 0 0 1-1-1Zm1 3a1 1 0 1 0 0 2h10a1 1 0 1 0 0-2H7Zm-1 5a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2H7a1 1 0 0 1-1-1Z"/><path fill-rule="evenodd" d="M2 4a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v16a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V4Zm3-1h14a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" clip-rule="evenodd"/></g></svg>
+                            <div>Catatan</div>
                         </a>
                         <ul class="menu-sub">
-                            <li class="menu-item active">
-                                <a href=""
+                            <li class="menu-item">
+                                <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1"
+                                    class="menu-link">
+                                    <div>Buat Catatan</div>
+                                </a>
+                            </li>
+                            <li class="menu-item @if ($title == 'Tim/catatan')
+                            active
+                            @endif ">
+                                <a href="{{ route('tim.historyCatatan') }}" class="menu-link">
+                                    <div>History Catatan</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle d-flex align-items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 256 256"><path fill="#888888" d="M216 40h-80V24a8 8 0 0 0-16 0v16H40a16 16 0 0 0-16 16v120a16 16 0 0 0 16 16h39.36l-21.61 27a8 8 0 0 0 12.5 10l29.59-37h56.32l29.59 37a8 8 0 1 0 12.5-10l-21.61-27H216a16 16 0 0 0 16-16V56a16 16 0 0 0-16-16ZM104 144a8 8 0 0 1-16 0v-24a8 8 0 0 1 16 0Zm32 0a8 8 0 0 1-16 0v-40a8 8 0 0 1 16 0Zm32 0a8 8 0 0 1-16 0V88a8 8 0 0 1 16 0Z"/></svg>
+                            <div>Presentasi</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1"
                                     class="menu-link">
                                     <div>Atur Presentasi</div>
                                 </a>
                             </li>
-                            <li class="menu-item ">
-                                <a href="crm.html" class="menu-link">
-                                    <div>History</div>
+                            <li class="menu-item @if ($title == 'Tim/presentasi')
+                            active
+                            @endif ">
+                                <a href="{{ route('tim.historyPresentasi') }}" class="menu-link">
+                                    <div>History Presentasi</div>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li class="menu-item ">
-                        <a class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-layout-sidebar"></i>
-                            <div class="w-100 d-flex align-items-center justify-content-between">Tim
-                                <svg data-bs-toggle="modal" data-bs-target="#editUser"
-                                    style="position: relative; right: -10px;" xmlns="http://www.w3.org/2000/svg"
-                                    width="20" height="20" viewBox="0 0 1024 1024">
-                                    <path fill="#888888"
-                                        d="M512 64a448 448 0 1 1 0 896a448 448 0 0 1 0-896zm-38.4 409.6H326.4a38.4 38.4 0 1 0 0 76.8h147.2v147.2a38.4 38.4 0 0 0 76.8 0V550.4h147.2a38.4 38.4 0 0 0 0-76.8H550.4V326.4a38.4 38.4 0 1 0-76.8 0v147.2z" />
-                                </svg>
-                            </div>
+                    <li class="menu-item active mt-5">
+                        <a href="{{ route('dashboard.siswa') }}" class="menu-link d-flex align-items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="currentColor" d="M12 9.059V6.5a1.001 1.001 0 0 0-1.707-.708L4 12l6.293 6.207a.997.997 0 0 0 1.414 0A.999.999 0 0 0 12 17.5v-2.489c2.75.068 5.755.566 8 3.989v-1c0-4.633-3.5-8.443-8-8.941z"/></svg>
+                            <div class="w-100 d-flex align-items-center justify-content-between">Kembali</div>
                         </a>
                     </li>
-                    <li class="menu-item">
-                        <ul class="">
-                                <li class="menu-item ">
-                                    <a href="{{ route('tim.board') }}"
-                                        class="menu-link d-flex align-items-center gap-2" target="_blank">
-                                        <img style="width: 30px" class="rounded-circle border border-primary"
-                                            src="{{ asset('assets/logo.png') }}" alt="">
-                                        <div class="">Hummatask</div>
-                                    </a>
-                                </li>
+
                         </ul>
                     </li>
                 </ul>
+
+
             </aside>
 
             <div class="layout-page">
@@ -493,72 +543,8 @@
                     </div>
                 </nav>
 
-                @yield('content')
 
-                <div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-lg modal-simple modal-edit-user">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                                <form id="editUserForm" class="row g-2 p-0 m-0" onsubmit="return false">
-                                    <div class="col-12 col-md-12 d-flex flex-row gap-3 align-items-center">
-                                        <div class="col-12 col-md-3 align-items-center">
-                                            <label class="form-label text-white" for="image-input">
-                                                <img id="preview-image" src="{{ asset('assets/img/avatars/pen.png') }}"
-                                                    alt="example placeholder"
-                                                    style="width: 150px; height: 150px; border-radius: 10px" />
-                                                <input type="file" class="form-control d-none" id="image-input"
-                                                    name="avatar" />
-                                            </label>
-                                        </div>
-                                        <div class="col-12 col-md-9 d-flex flex-wrap flex-col align-items-center">
-                                            <label class="form-label m-0 p-0" for="modalEditUserLastName">Name
-                                                Team</label>
-                                            <input type="text" id="modalEditUserLastName" name="modalEditUserLastName"
-                                                class="form-control" placeholder="Hummatask" />
-                                            <label class="form-label m-0 p-0 mt-2" for="modalEditUserLastName">Link Repository
-                                                Github</label>
-                                            <input type="text" id="modalEditUserLastName" name="modalEditUserLastName"
-                                                class="form-control" placeholder="https://.." />
-                                        </div>
-                                    </div>
-                                    <div class="col-12 justify-content-center">
-                                        <div class="row">
-                                            <div class="mb-3 col-lg-6 col-xl-5 col-12 mb-0">
-                                                <label class="form-label" for="form-repeater-1-1">Username</label>
-                                                <input type="text" id="form-repeater-1-1" class="form-control"
-                                                    placeholder="john.doe" />
-                                            </div>
-                                            <div class="mb-3 col-lg-6 col-xl-5 col-12 mb-0">
-                                                <label class="form-label" for="form-repeater-1-2">Password</label>
-                                                <input type="password" id="form-repeater-1-2" class="form-control"
-                                                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
-                                            </div>
-                                            <div class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
-                                                <button class="btn btn-label-danger mt-4" data-repeater-delete>
-                                                    <i class="ti ti-x ti-xs me-1"></i>
-                                                    <span class="align-middle">Delete</span>
-                                                </button>
-                                            </div>
-                                            <div class="mb-0">
-                                                <button class="btn btn-primary" data-repeater-create>
-                                                    <i class="ti ti-plus me-1"></i>
-                                                    <span class="align-middle">Add</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 d-flex flex-row flex-wrap justify-content-end">
-                                        <button type="submit" class="btn btn-primary me-sm-3 me-1">Unggah</button>
-                                        <button type="reset" class="btn btn-danger"
-                                            data-bs-dismiss="modal" aria-label="Close">Batal</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @yield('content')
 
             </div>
         </div>
