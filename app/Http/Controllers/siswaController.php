@@ -11,4 +11,5 @@ class siswaController extends Controller
         $title = "Dashboard";
         return response()->view('siswa.dashboard', compact('title'));
     }
+
 }
