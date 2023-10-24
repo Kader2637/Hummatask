@@ -1,3 +1,5 @@
-Hello Mentor
+@extends('layoutsMentor.app')
 
-<a href="{{ route('logout') }}">logout</a>
+@section('content')
+
+@endsection
