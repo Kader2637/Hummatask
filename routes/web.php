@@ -31,6 +31,8 @@ Route::prefix('siswa')->middleware(['auth', 'siswa'])->controller(siswaControlle
 
 Route::prefix('mentor')->middleware(['auth', 'mentor'])->controller(mentorController::class)->group(function () {
     Route::get('dashboard', 'dashboard')->name('dashboard.mentor');
+    Route::get('pengguna', 'pengguna')->name('pengguna.mentor');
+    Route::get('history', 'history')->name('history.mentor');
 });
 
 Route::get('dashboard',function(){

@@ -61,7 +61,10 @@
 
     <!-- Vendor Styles -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/apex-charts/apex-charts.css') }}" />
-
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/flatpickr/flatpickr.css') }}" />
 
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
 
@@ -166,14 +169,14 @@
                             <div>Projek</div>
                         </a>
                     </li>
-                    <li class="menu-item">
-                        <a href="#" class="menu-link">
+                    <li class="menu-item {{ request()->routeIs('pengguna.mentor') ? 'active' : '' }}">
+                        <a href="{{ route('pengguna.mentor') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-smart-home"></i>
                             <div>Pengguna</div>
                         </a>
                     </li>
-                    <li class="menu-item">
-                        <a href="#" class="menu-link">
+                    <li class="menu-item {{ request()->routeIs('history.mentor') ? 'active' : '' }}">
+                        <a href="{{ route('history.mentor') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-smart-home"></i>
                             <div>Histori</div>
                         </a>
@@ -659,6 +662,11 @@
     </script>
     <script src="{{ asset('assets/vendor/js/menu2dc9.js?id=c6ce30ded4234d0c4ca0fb5f2a2990d8') }}"></script>
     <script src="{{ asset('assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
+    <!-- Flat Picker -->
+    <script src="{{ asset('assets/vendor/libs/moment/moment.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+
     <!-- END: Page Vendor JS-->
     <!-- BEGIN: Theme JS-->
     <script src="{{ asset('assets/js/mainf696.js?id=8bd0165c1c4340f4d4a66add0761ae8a') }}"></script>
@@ -668,6 +676,7 @@
     <!-- END: Pricing Modal JS-->
     <!-- BEGIN: Page JS-->
     <script src="{{ asset('assets/js/dashboards-crm.js') }}"></script>
+    <script src="{{ asset('assets/js/tables-datatables-advanced.js') }}"></script>
     <!-- END: Page JS-->
 
     @yield('script')
