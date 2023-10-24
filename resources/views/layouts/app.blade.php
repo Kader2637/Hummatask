@@ -130,28 +130,7 @@
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item active">
-                                <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1"
-                                    class="menu-link">
-                                    <div>Atur Presentasi</div>
-                                </a>
-                            </li>
-                            <li class="menu-item ">
-                                <a href="crm.html" class="menu-link">
-                                    <div>History</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    {{-- <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                            <div>Presentasi</div>
-                            <div class="badge bg-primary rounded-pill ms-auto">5</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item active">
-                                <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1"
+                                <a href=""
                                     class="menu-link">
                                     <div>Atur Presentasi</div>
                                 </a>
@@ -164,38 +143,20 @@
                         </ul>
                     </li>
                     <li class="menu-item ">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons ti ti-files"></i>
-                            <div>Catatan</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item ">
-                                <a href="../front-pages/landing.html" class="menu-link" target="_blank">
-                                    <div>Buat Catatan</div>
-                                </a>
-                            </li>
-                            <li class="menu-item ">
-                                <a href="../front-pages/pricing.html" class="menu-link" target="_blank">
-                                    <div>History Catatan</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li> --}}
-
-                    <li class="menu-item ">
-                        <a href="javascript:void(0);" class="menu-link">
+                        <a class="menu-link">
                             <i class="menu-icon tf-icons ti ti-layout-sidebar"></i>
-                            <div class="w-100 d-flex align-items-center justify-content-between">Tim <svg
+                            <div class="w-100 d-flex align-items-center justify-content-between">Tim
+                                <svg data-bs-toggle="modal" data-bs-target="#editUser"
                                     style="position: relative; right: -10px;" xmlns="http://www.w3.org/2000/svg"
                                     width="20" height="20" viewBox="0 0 1024 1024">
                                     <path fill="#888888"
                                         d="M512 64a448 448 0 1 1 0 896a448 448 0 0 1 0-896zm-38.4 409.6H326.4a38.4 38.4 0 1 0 0 76.8h147.2v147.2a38.4 38.4 0 0 0 76.8 0V550.4h147.2a38.4 38.4 0 0 0 0-76.8H550.4V326.4a38.4 38.4 0 1 0-76.8 0v147.2z" />
-                                </svg></div>
+                                </svg>
+                            </div>
                         </a>
                     </li>
                     <li class="menu-item">
                         <ul class="">
-                            @for ($i = 0; $i < 4; $i++)
                                 <li class="menu-item ">
                                     <a href="../front-pages/pricing.html"
                                         class="menu-link d-flex align-items-center gap-2" target="_blank">
@@ -204,12 +165,9 @@
                                         <div class="">Hummatask</div>
                                     </a>
                                 </li>
-                            @endfor
                         </ul>
                     </li>
                 </ul>
-
-
             </aside>
 
             <div class="layout-page">
@@ -535,8 +493,72 @@
                     </div>
                 </nav>
 
-
                 @yield('content')
+
+                <div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                                <form id="editUserForm" class="row g-2 p-0 m-0" onsubmit="return false">
+                                    <div class="col-12 col-md-12 d-flex flex-row gap-3 align-items-center">
+                                        <div class="col-12 col-md-3 align-items-center">
+                                            <label class="form-label text-white" for="image-input">
+                                                <img id="preview-image" src="{{ asset('assets/img/avatars/pen.png') }}"
+                                                    alt="example placeholder"
+                                                    style="width: 150px; height: 150px; border-radius: 10px" />
+                                                <input type="file" class="form-control d-none" id="image-input"
+                                                    name="avatar" />
+                                            </label>
+                                        </div>
+                                        <div class="col-12 col-md-9 d-flex flex-wrap flex-col align-items-center">
+                                            <label class="form-label m-0 p-0" for="modalEditUserLastName">Name
+                                                Team</label>
+                                            <input type="text" id="modalEditUserLastName" name="modalEditUserLastName"
+                                                class="form-control" placeholder="Hummatask" />
+                                            <label class="form-label m-0 p-0 mt-2" for="modalEditUserLastName">Link Repository
+                                                Github</label>
+                                            <input type="text" id="modalEditUserLastName" name="modalEditUserLastName"
+                                                class="form-control" placeholder="https://.." />
+                                        </div>
+                                    </div>
+                                    <div class="col-12 justify-content-center">
+                                        <div class="row">
+                                            <div class="mb-3 col-lg-6 col-xl-5 col-12 mb-0">
+                                                <label class="form-label" for="form-repeater-1-1">Username</label>
+                                                <input type="text" id="form-repeater-1-1" class="form-control"
+                                                    placeholder="john.doe" />
+                                            </div>
+                                            <div class="mb-3 col-lg-6 col-xl-5 col-12 mb-0">
+                                                <label class="form-label" for="form-repeater-1-2">Password</label>
+                                                <input type="password" id="form-repeater-1-2" class="form-control"
+                                                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                                            </div>
+                                            <div class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
+                                                <button class="btn btn-label-danger mt-4" data-repeater-delete>
+                                                    <i class="ti ti-x ti-xs me-1"></i>
+                                                    <span class="align-middle">Delete</span>
+                                                </button>
+                                            </div>
+                                            <div class="mb-0">
+                                                <button class="btn btn-primary" data-repeater-create>
+                                                    <i class="ti ti-plus me-1"></i>
+                                                    <span class="align-middle">Add</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 d-flex flex-row flex-wrap justify-content-end">
+                                        <button type="submit" class="btn btn-primary me-sm-3 me-1">Unggah</button>
+                                        <button type="reset" class="btn btn-danger"
+                                            data-bs-dismiss="modal" aria-label="Close">Batal</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>

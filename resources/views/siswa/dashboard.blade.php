@@ -9,15 +9,21 @@
     </style>
 @endsection
 
-@section('script')
-    
+@section('link')
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/jkanban/jkanban.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/flatpickr/flatpickr.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/typography.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/katex.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/editor.css') }}" />
+
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/app-kanban.cs') }}s" />
 @endsection
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
 @section('content')
     <main class="container-fluid p-3">
-
         <div class="row">
             <div class=" jumbotron col-12 d-flex flex-column align-items-center justify-content-center">
                 <p>Senin,19 oktober 2023</p>
@@ -27,85 +33,38 @@
 
         <div class="row">
             <div class="col-lg-4">
-                <ul class="nav nav-tabs card-header-tabs">
-                    <li class="nav-item">
-                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
-                            data-bs-target="#navs-tab-sesijalani" aria-controls="" aria-selected="true" tabindex="-1">Sesi
-                            Yang Kamu Jalani</button>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-lg-4">
-                <ul class="nav nav-tabs card-header-tabs">
-                    <li class="nav-item">
-                        <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                            data-bs-target="#navs-tab-progress" aria-controls="" aria-selected="true"
-                            tabindex="-1">Progress</button>
-                    </li>
-                </ul>
-            </div>
-            <div class="col d-flex justify-content-end dropdown">
-                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownbutton" data-bs-toggle="dropdown"
-                    aria-expanded="false"><i class="fa-solid fa-gear px-2"></i>Setting</button>
-                <ul name="" id="" class="dropdown-menu" aria-labelledby="dropdownbutton">
-                    <li><a href="" class="dropdown-item">Full</a></li>
-                    <li><a href="" class="dropdown-item">Setengah</a></li>
-                </ul>
+                <div class="kanban-title-board fs-5" contenteditable="true">Tugas yang belum selesai</div>
             </div>
         </div>
-        <div class="row mt-4 justify-content-center" id="navs-tab-sesijalani">
+        <div class="row mt-4 justify-content-center mb-2" id="navs-tab-sesijalani">
             @for ($i = 0; $i < 3; $i++)
                 <div class="col-lg-4">
                     <div class="card text-center mb-3">
-                        <div class="card-header pt-1">
-                            <ul class="nav nav-tabs card-header-tabs" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
-                                        data-bs-target="#navs-tab-sesi{{ $i }}"
-                                        aria-controls="navs-tab-sesi{{ $i }}" aria-selected="true"
-                                        tabindex="-1">Sesi</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button type="button" class="nav-link " role="tab" data-bs-toggle="tab"
-                                        data-bs-target="#navs-tab-materi{{ $i }}"
-                                        aria-selected="false">Materi</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button type="button" class="nav-link" data-bs-toggle="tab"
-                                        data-bs-target="#navs-tab-tugas{{ $i }}" role="tab"
-                                        aria-selected="false" tabindex="-1">Tugas</button>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="card-body pt-3">
-                            <div class="tab-content p-0">
-                                <div class="tab-pane fade show active" id="navs-tab-sesi{{ $i }}"
-                                    role="tabpanel">
-                                    <h5 class="card-title">Sesi hari ini</h5>
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional
-                                        content.</p>
-                                    <a href="javascript:void(0);" class="btn btn-primary waves-effect waves-light">Go
-                                        home</a>
+                        <div class="kanban-item" data-eid="in-progress-1" data-comments="12" data-badge-text="UX"
+                            data-badge="success" data-due-date="5 April" data-attachments="4" data-assigned="12.png,5.png"
+                            data-members="Bruce,Clark">
+                            <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
+                                <div class="item-badges">
+                                    <div class="badge rounded-pill bg-label-success"> UX</div>
                                 </div>
-                                <div style="text-align: start;" class="tab-pane fade  "
-                                    id="navs-tab-materi{{ $i }}" role="tabpanel">
-                                    <h5 class="card-title">Materi</h5>
-                                    <p class="card-text">Uploadlah materi yang kamu dapatkan hari ini</p>
-                                    <form action="" method="post" class="d-flex gap-2">
-                                        @csrf
-                                        <input type="file" name="materi" id="materi" class="form-control">
-                                        <button type="submit" class="btn btn-primary">kirim</button>
-                                    </form>
+                            </div>
+                            <span class="kanban-text text-left">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
+                                impedit!</span>
+                            <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
+                                <div class="d-flex"> <span class="d-flex align-items-center me-2"><i
+                                            class="ti ti-paperclip ti-xs me-1"></i><span class="attachments">4</span></span>
+                                    <span class="d-flex align-items-center ms-1"><i
+                                            class="ti ti-message-dots ti-xs me-1"></i><span> 12 </span></span>
                                 </div>
-                                <div style="text-align: start;" class="tab-pane fade  "
-                                    id="navs-tab-tugas{{ $i }}" role="tabpanel">
-                                    <h5 class="card-title">Tugas</h5>
-                                    <p class="card-text">Upload tugas yang kamu kerjakan untuk sesi ini</p>
-                                    <form action="" method="post" class="d-flex gap-2">
-                                        @csrf
-                                        <input type="file" name="materi" id="materi" class="form-control">
-                                        <button type="submit" class="btn btn-primary">kirim</button>
-                                    </form>
+                                <div class="avatar-group d-flex align-items-center assigned-avatar">
+                                    <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        aria-label="Bruce" data-bs-original-title="Bruce"><img
+                                            src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png"
+                                            alt="Avatar" class="rounded-circle  pull-up"></div>
+                                    <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        aria-label="Clark" data-bs-original-title="Clark"><img
+                                            src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png"
+                                            alt="Avatar" class="rounded-circle  pull-up"></div>
                                 </div>
                             </div>
                         </div>
@@ -113,10 +72,50 @@
                 </div>
             @endfor
         </div>
-
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="kanban-title-board fs-5" contenteditable="true">Tugas terbaru</div>
+            </div>
+        </div>
+        <div class="row mt-4 justify-content-center" id="navs-tab-sesijalani">
+            @for ($i = 0; $i < 3; $i++)
+                <div class="col-lg-4">
+                    <div class="card text-center mb-3">
+                        <div class="kanban-item" data-eid="in-progress-1" data-comments="12" data-badge-text="UX"
+                            data-badge="success" data-due-date="5 April" data-attachments="4" data-assigned="12.png,5.png"
+                            data-members="Bruce,Clark">
+                            <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
+                                <div class="item-badges">
+                                    <div class="badge rounded-pill bg-label-success"> UX</div>
+                                </div>
+                            </div>
+                            <span class="kanban-text text-left">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
+                                impedit!</span>
+                            <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
+                                <div class="d-flex"> <span class="d-flex align-items-center me-2"><i
+                                            class="ti ti-paperclip ti-xs me-1"></i><span class="attachments">4</span></span>
+                                    <span class="d-flex align-items-center ms-1"><i
+                                            class="ti ti-message-dots ti-xs me-1"></i><span> 12 </span></span>
+                                </div>
+                                <div class="avatar-group d-flex align-items-center assigned-avatar">
+                                    <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        aria-label="Bruce" data-bs-original-title="Bruce"><img
+                                            src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png"
+                                            alt="Avatar" class="rounded-circle  pull-up"></div>
+                                    <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        aria-label="Clark" data-bs-original-title="Clark"><img
+                                            src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png"
+                                            alt="Avatar" class="rounded-circle  pull-up"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endfor
+        </div>
     </main>
 @endsection
 
-
 @section('script')
+    <script src="{{ asset('assets/js/forms-extras.js') }}"></script>
 @endsection
