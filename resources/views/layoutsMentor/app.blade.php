@@ -17,7 +17,7 @@
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
     <title>
-        Dashboard Mentor
+        Hummatask
     </title>
     <meta name="description" content="Start your development with a Dashboard for Bootstrap 5" />
     <meta name="keywords" content="dashboard, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
@@ -150,31 +150,32 @@
                     </li>
                     <li class="menu-item">
                         <a href="#" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                            <i class="menu-icon tf-icons ti ti-presentation"></i>
                             <div>Presentasi</div>
                         </a>
                     </li>
-                    <li class="menu-item">
-                        <a href="#" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                    <li
+                        class="menu-item {{ request()->routeIs('pengajuan-projek', 'detail-pengajuan-projek') ? 'active' : '' }}">
+                        <a href="{{ route('pengajuan-projek') }}" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-report-analytics"></i>
                             <div>Pengajuan Projek</div>
                         </a>
                     </li>
-                    <li class="menu-item">
-                        <a href="#" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                    <li class="menu-item {{ request()->routeIs('projek') ? 'active' : '' }}">
+                        <a href="{{ route('projek') }}" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-folder-cog"></i>
                             <div>Projek</div>
                         </a>
                     </li>
                     <li class="menu-item">
                         <a href="#" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                            <i class="menu-icon tf-icons ti ti-users-group"></i>
                             <div>Pengguna</div>
                         </a>
                     </li>
                     <li class="menu-item">
                         <a href="#" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                            <i class="menu-icon tf-icons ti ti-history"></i>
                             <div>Histori</div>
                         </a>
                     </li>
