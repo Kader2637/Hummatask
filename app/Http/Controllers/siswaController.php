@@ -8,6 +8,7 @@ class siswaController extends Controller
 {
     protected function dashboard()
     {
-        return response()->view('siswa.dashboard');
+        $title = "Dashboard";
+        return response()->view('siswa.dashboard', compact('title'));
     }
 }

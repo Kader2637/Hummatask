@@ -32,17 +32,3 @@ Route::prefix('siswa')->middleware(['auth', 'siswa'])->controller(siswaControlle
 Route::prefix('mentor')->middleware(['auth', 'mentor'])->controller(mentorController::class)->group(function () {
     Route::get('dashboard', 'dashboard')->name('dashboard.mentor');
 });
-
-Route::get('dashboard',function(){
-    return view('user.dashboard');
-});
-
-
-
-Route::get('/catatan',function(){
-    return view('user.catatan/index');
-});
-
-Route::get('/ajukan-presentasi',function(){
-    return view('user.presentasi.ajukan-presentasi');
-});
