@@ -25,15 +25,8 @@ class authController extends Controller
 
     protected function loginPage(Request $request)
     {
-        try {
-            foreach (Cookie::get() as $name => $value) {
-                Cookie::queue(Cookie::forget($name));
-            }
-            $title = 'Login';
-            return response()->view('auth.login', compact('title'));
-        } catch (\Throwable $th) {
-            return response()->back();
-        }
+        $title = 'Login';
+        return response()->view('auth.login', compact('title'));
     }
 
     protected function registerPage(Request $request)
@@ -164,15 +157,20 @@ class authController extends Controller
 
         try {
             if (Auth::attempt($credentials)) {
-                User::where('id', auth()->user()->id)->update(['is_login' => true]);
                 $user = auth()->user();
-                return $user->peran_id == 1 ? redirect()->intended(route('dashboard.mentor')) : redirect()->intended(route('dashboard.siswa'));
+                User::where('id', $user->id)->update(['is_login' => true]);
+                switch ($user->peran_id) {
+                    case 1:
+                        return redirect()->intended(route('dashboard.siswa'));
+                    case 2:
+                        return redirect()->intended(route('dashboard.mentor'));
+                }
             }
         } catch (\Throwable $th) {
             return abort(404);
         }
-        return redirect('/login');
-        // return redirect()->route('login')->withErrors(['password' => 'Email atau password tidak sesuai.'])->withInput();
+
+        return redirect()->route('login')->withErrors(['password' => 'Email atau password tidak sesuai.'])->withInput();
     }
 
     protected function register(Request $request)
@@ -228,5 +226,16 @@ class authController extends Controller
         }
 
         return redirect()->route('login')->with('success', 'Registrasi berhasil. Silakan login.');
+    }
+
+    protected function logout()
+    {
+        try {
+            User::where('id', auth()->user()->id)->update(['is_login' => false]);
+            Auth::logout();
+            return redirect()->route('login');
+        } catch (\Throwable $th) {
+            return back();
+        }
     }
 }

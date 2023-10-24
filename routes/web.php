@@ -23,6 +23,8 @@ Route::middleware('guest')->controller(authController::class)->group(function ()
     Route::post('register', 'register')->name('register.store');
 });
 
+Route::get('logout', [authController::class, 'logout'])->name('logout');
+
 Route::prefix('siswa')->middleware('auth')->controller(siswaController::class)->group(function () {
     Route::get('dashboard', 'dashboard')->name('dashboard.siswa');
 });
