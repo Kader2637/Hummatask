@@ -170,210 +170,81 @@
                 <div class="menu-inner-shadow"></div>
 
                 <ul class="menu-inner py-1">
-                    <li class="menu-item active open">
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-layout-sidebar"></i>
+                            <div class="w-100 d-flex align-items-center justify-content-between">Dashboard </div>
+                        </a>
+                    </li>
+
+
+                    <li class="menu-item ">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                            <div>Jadwal</div>
+                            <div>Presentasi</div>
                             <div class="badge bg-primary rounded-pill ms-auto">5</div>
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item active">
                                 <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1"
                                     class="menu-link">
-                                    <div>Hari ini</div>
-                                </a>
-                            </li>
-                            <li class="menu-item ">
-                                <a href="../app/academy/dashboard.html" class="menu-link">
-                                    <div>Atur Jadwal</div>
+                                    <div>Atur Presentasi</div>
                                 </a>
                             </li>
                             <li class="menu-item ">
                                 <a href="crm.html" class="menu-link">
-                                    <div>Senin</div>
+                                    <div>History</div>
                                 </a>
                             </li>
-                            <li class="menu-item ">
-                                <a href="../app/ecommerce/dashboard.html" class="menu-link">
-                                    <div>Selasa</div>
-                                </a>
-                            </li>
-                            <li class="menu-item ">
-                                <a href="../app/logistics/dashboard.html" class="menu-link">
-                                    <div>Rabu</div>
-                                </a>
-                            </li>
-                            <li class="menu-item ">
-                                <a href="../app/logistics/dashboard.html" class="menu-link">
-                                    <div>Kamis</div>
-                                </a>
-                            </li>
-                    </li>
+                        </ul>
+
+
                     <li class="menu-item ">
-                        <a href="../app/logistics/dashboard.html" class="menu-link">
-                            <div>Jumat</div>
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons ti ti-files"></i>
+                            <div>Catatan</div>
                         </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item ">
+                                <a href="../front-pages/landing.html" class="menu-link" target="_blank">
+                                    <div>Buat Catatan</div>
+                                </a>
+                            </li>
+                            <li class="menu-item ">
+                                <a href="../front-pages/pricing.html" class="menu-link" target="_blank">
+                                    <div>History Catatan</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="menu-item ">
+                        <a href="javascript:void(0);" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-layout-sidebar"></i>
+                            <div class="w-100 d-flex align-items-center justify-content-between">Tim <svg
+                                    style="position: relative; right: -10px;" xmlns="http://www.w3.org/2000/svg"
+                                    width="20" height="20" viewBox="0 0 1024 1024">
+                                    <path fill="#888888"
+                                        d="M512 64a448 448 0 1 1 0 896a448 448 0 0 1 0-896zm-38.4 409.6H326.4a38.4 38.4 0 1 0 0 76.8h147.2v147.2a38.4 38.4 0 0 0 76.8 0V550.4h147.2a38.4 38.4 0 0 0 0-76.8H550.4V326.4a38.4 38.4 0 1 0-76.8 0v147.2z" />
+                                </svg></div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <ul class="">
+                            @for ($i = 0; $i < 4; $i++)
+                                <li class="menu-item ">
+                                    <a href="../front-pages/pricing.html" class="menu-link d-flex align-items-center gap-2" target="_blank">
+                                            <img style="width: 30px" class="rounded-circle border border-primary"
+                                                src="{{ asset('assets/logo.png') }}" alt="">
+                                            <div class="">Hummatask</div>
+                                    </a>
+                                </li>
+                            @endfor
+                        </ul>
                     </li>
                 </ul>
 
-                <li class="menu-item ">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons ti ti-layout-sidebar"></i>
-                        <div>Pengelola Tugas</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item ">
-                            <a href="../layouts/collapsed-menu.html" class="menu-link">
-                                <div>Collapsed menu</div>
-                            </a>
-                        </li>
-                        <li class="menu-item ">
-                            <a href="../layouts/content-navbar.html" class="menu-link">
-                                <div>Content navbar</div>
-                            </a>
-                        </li>
-                        <li class="menu-item ">
-                            <a href="../layouts/content-nav-sidebar.html" class="menu-link">
-                                <div>Content nav + Sidebar</div>
-                            </a>
-                        </li>
-                        <li class="menu-item ">
-                            <a href="../layouts/horizontal.html" class="menu-link" target="_blank">
-                                <div>Horizontal</div>
-                            </a>
-                        </li>
-                        <li class="menu-item ">
-                            <a href="../layouts/without-menu.html" class="menu-link">
-                                <div>Without menu</div>
-                            </a>
-                        </li>
-                        <li class="menu-item ">
-                            <a href="../layouts/without-navbar.html" class="menu-link">
-                                <div>Without navbar</div>
-                            </a>
-                        </li>
-                        <li class="menu-item ">
-                            <a href="../layouts/fluid.html" class="menu-link">
-                                <div>Fluid</div>
-                            </a>
-                        </li>
-                        <li class="menu-item ">
-                            <a href="../layouts/container.html" class="menu-link">
-                                <div>Container</div>
-                            </a>
-                        </li>
-                        <li class="menu-item ">
-                            <a href="../layouts/blank.html" class="menu-link" target="_blank">
-                                <div>Blank</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
 
-                <li class="menu-item ">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons ti ti-files"></i>
-                        <div>History</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item ">
-                            <a href="../front-pages/landing.html" class="menu-link" target="_blank">
-                                <div>Landing</div>
-                            </a>
-                        </li>
-                        <li class="menu-item ">
-                            <a href="../front-pages/pricing.html" class="menu-link" target="_blank">
-                                <div>Pricing</div>
-                            </a>
-                        </li>
-                        <li class="menu-item ">
-                            <a href="../front-pages/payment.html" class="menu-link" target="_blank">
-                                <div>Payments</div>
-                            </a>
-                        </li>
-                        <li class="menu-item ">
-                            <a href="../front-pages/checkout.html" class="menu-link" target="_blank">
-                                <div>Checkout</div>
-                            </a>
-                        </li>
-                        <li class="menu-item ">
-                            <a href="../front-pages/help-center.html" class="menu-link" target="_blank">
-                                <div>Help Center</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="menu-item ">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons ti ti-brand-php"></i>
-                        <div>Laravel Example</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item ">
-                            <a href="../laravel/user-management.html" class="menu-link">
-                                <div>User Management</div>
-                            </a>
-                        </li>
-                    </ul>
-
-                <li class="menu-item ">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons ti ti-toggle-left"></i>
-                        <div>Form Elements</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item ">
-                            <a href="../forms/basic-inputs.html" class="menu-link">
-                                <div>Basic Inputs</div>
-                            </a>
-                        </li>
-                        <li class="menu-item ">
-                            <a href="../forms/input-groups.html" class="menu-link">
-                                <div>Input groups</div>
-                            </a>
-                        </li>
-                        <li class="menu-item ">
-                            <a href="../forms/custom-options.html" class="menu-link">
-                                <div>Custom Options</div>
-                            </a>
-                        </li>
-                        <li class="menu-item ">
-                            <a href="../forms/editors.html" class="menu-link">
-                                <div>Editors</div>
-                            </a>
-                        </li>
-                        <li class="menu-item ">
-                            <a href="../forms/file-upload.html" class="menu-link">
-                                <div>File Upload</div>
-                            </a>
-                        </li>
-                        <li class="menu-item ">
-                            <a href="../forms/pickers.html" class="menu-link">
-                                <div>Pickers</div>
-                            </a>
-                        </li>
-                        <li class="menu-item ">
-                            <a href="../forms/selects.html" class="menu-link">
-                                <div>Select &amp; Tags</div>
-                            </a>
-                        </li>
-                        <li class="menu-item ">
-                            <a href="../forms/sliders.html" class="menu-link">
-                                <div>Sliders</div>
-                            </a>
-                        </li>
-                        <li class="menu-item ">
-                            <a href="../forms/switches.html" class="menu-link">
-                                <div>Switches</div>
-                            </a>
-                        </li>
-                        <li class="menu-item ">
-                            <a href="../forms/extras.html" class="menu-link">
-                                <div>Extras</div>
-                            </a>
-                        </li>
-                    </ul>
             </aside>
 
             <!-- Layout page -->
