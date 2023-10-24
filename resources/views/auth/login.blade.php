@@ -16,9 +16,7 @@
                 <div class="w-px-400 mx-auto">
                     <h3 class=" mb-1">Selamat datang! 👋</h3>
                     <p class="mb-4">Masuk dan mulai berpetualang.</p>
-                    <form id="formAuthentication" class="mb-3 px-5 py-5"
-                        style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; border-radius: 10px"
-                        action="{{ route('login') }}" method="POST">
+                    <form id="formAuthentication" class="mb-3 px-5 py-5" action="{{ route('login') }}" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>

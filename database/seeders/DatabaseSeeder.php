@@ -66,7 +66,7 @@ class DatabaseSeeder extends Seeder
             [
                 'uuid' => Str::uuid(),
                 'username' => 'Mas Jefri',
-                'email' => 'bangJefri@gmail.com',
+                'email' => 'mentor@gmail.com',
                 'password' => Hash::make('password'),
                 'peran_id' => 2,
                 'deskripsi' => 'none',

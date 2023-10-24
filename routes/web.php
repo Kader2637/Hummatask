@@ -25,11 +25,11 @@ Route::middleware('guest')->controller(authController::class)->group(function ()
 
 Route::get('logout', [authController::class, 'logout'])->name('logout');
 
-Route::prefix('siswa')->middleware('auth')->controller(siswaController::class)->group(function () {
+Route::prefix('siswa')->middleware(['auth', 'siswa'])->controller(siswaController::class)->group(function () {
     Route::get('dashboard', 'dashboard')->name('dashboard.siswa');
 });
 
-Route::prefix('mentor')->middleware('auth')->controller(mentorController::class)->group(function () {
+Route::prefix('mentor')->middleware(['auth', 'mentor'])->controller(mentorController::class)->group(function () {
     Route::get('dashboard', 'dashboard')->name('dashboard.mentor');
 });
 
