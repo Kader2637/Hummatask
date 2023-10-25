@@ -129,26 +129,7 @@
                                 <div class="card">
                                     <h5 class="card-header">Progres Tim</h5>
                                     <div class="card-body">
-                                        <canvas id="doughnutChart" class="chartjs mb-4" data-height="350" height="794"
-                                            width="794"
-                                            style="display: block; box-sizing: border-box; height: 200px; width: 200px;"></canvas>
-                                        <ul class="doughnut-legend d-flex justify-content-around ps-0 mb-2 pt-1">
-                                            <li class="ct-series-0 d-flex flex-column">
-                                                <h5 class="mb-0" style="font-size: 15px">Proses</h5>
-                                                <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                                    style="background-color: rgb(102, 110, 232);width:35px; height:6px;"></span>
-                                            </li>
-                                            <li class="ct-series-1 d-flex flex-column">
-                                                <h5 class="mb-0" style="font-size: 15px">Selesai</h5>
-                                                <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                                    style="background-color: rgb(40, 208, 148);width:35px; height:6px;"></span>
-                                            </li>
-                                            <li class="ct-series-2 d-flex flex-column">
-                                                <h5 class="mb-0" style="font-size: 15px">Revisi</h5>
-                                                <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                                    style="background-color: rgb(253, 172, 52);width:35px; height:6px;"></span>
-                                            </li>
-                                        </ul>
+                                      <canvas id="project" class="chartjs mb-4" data-height="267"  style="display: block; box-sizing: border-box; height: 200px; width: 200px;"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -271,66 +252,33 @@
     <script src="{{ asset('assets/vendor/libs/typeahead-js/typeahead60e7.js?id=f6bda588c16867a6cc4158cb4ed37ec6') }}">
     </script>
     <script src="{{ asset('assets/vendor/js/menu2dc9.js?id=c6ce30ded4234d0c4ca0fb5f2a2990d8') }}"></script>
-    {{-- <script src="{{ asset('assets/js/charts-chartjs.js') }}"></script> --}}
-    {{-- <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}"><script> --}}
-    <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}"></script>
+    <script src="{{ asset('assets/js/charts-chartjs.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}"><script>
+<script src="{{asset('assets/vendor/libs/chartjs/chartjs.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        // Color Variables
-        const cyanColor = '#28dac6',
-            orangeLightColor = '#FDAC34';
-        let cardColor, headingColor, labelColor, borderColor, legendColor;
-
-
-        cardColor = config.colors.cardColor;
-        headingColor = config.colors.headingColor;
-        labelColor = config.colors.textMuted;
-        legendColor = config.colors.bodyColor;
-        borderColor = config.colors.borderColor;
-
-        const doughnutChart = document.getElementById('doughnutChart');
-        if (doughnutChart) {
-            const doughnutChartVar = new Chart(doughnutChart, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Selesai', 'Revisi', 'Progres'],
-                    datasets: [{
-                        data: [10, 10, 80],
-                        backgroundColor: [cyanColor, orangeLightColor, config.colors.primary],
-                        borderWidth: 0,
-                        pointStyle: 'rectRounded'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    animation: {
-                        duration: 500
-                    },
-                    cutout: '68%',
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const label = context.labels || '',
-                                        value = context.parsed;
-                                    const output = ' ' + label + ' : ' + value + ' %';
-                                    return output;
-                                }
-                            },
-                            // Updated default tooltip UI
-                            //   rtl: isRtl,
-                            backgroundColor: cardColor,
-                            titleColor: headingColor,
-                            bodyColor: legendColor,
-                            borderWidth: 1,
-                            borderColor: borderColor
-                        }
-                    }
-                }
-            });
-        }
+        const project = document.getElementById('project');
+        const data = {
+  labels: [
+    'Progres',
+    'Selesai',
+    'Revisi'
+  ],
+  datasets: [{
+    label: 'My First Dataset',
+    data: [12, 8, 2],
+    backgroundColor: [
+    'rgb(102, 110, 232)',
+      'rgb(54, 162, 235)',
+      'rgb(255, 205, 86)'
+    ],
+    hoverOffset: 4
+  }]
+};
+        new Chart(project,{
+            type: 'pie',
+            data: data
+        })
     </script>
 @endsection
