@@ -3,6 +3,7 @@
 use App\Http\Controllers\authController;
 use App\Http\Controllers\mentorController;
 use App\Http\Controllers\PengajuanProjekController;
+use App\Http\Controllers\ProfileMentor;
 use App\Http\Controllers\ProjekController;
 use App\Http\Controllers\siswaController;
 use App\Http\Controllers\timController;
@@ -48,4 +49,5 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::get('detail-pengajuan-projek', [PengajuanProjekController::class, 'detailPengajuanPage'])->name('detail-pengajuan-projek');
     Route::get('projek', [ProjekController::class, 'projekPage'])->name('projek');
     Route::get('detail-projek', [ProjekController::class, 'detailProjekPage'])->name('detail-projek');
+    Route::get('profile-mentor', [ProfileMentor::class, 'profilePage'])->name('profile-mentor');
 });

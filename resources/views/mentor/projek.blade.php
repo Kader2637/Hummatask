@@ -37,10 +37,12 @@
                             <div
                                 style="display: flex; flex-direction: column; justify-content: center; align-items: center">
                                 <span class="text-black fs-5">Hummatask</span>
-                                <span>Ketua : Rafli</span>
+                                <div class="d-flex align-items-center mt-2">
+                                    <a href="#"><span class="badge bg-label-warning mb-3">Big Project</span></a>
+                                </div>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex align-items-center justify-content-center">
                             <div class="d-flex align-items-center pt-1 mb-3 justify-content-center">
                                 <div class="d-flex align-items-center">
                                     <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
@@ -69,14 +71,20 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="d-flex align-items-center">
-                                <a href="#"><span class="badge bg-label-warning mb-3">Big Project</span></a>
-                            </div>
                         </div>
                         <div id="info" class="mb-3">
-                            <div>Mulai : 24 Januari 2023</div>
-                            <div>Akhir : 24 Januari 2024</div>
-                            <div>Tema : Pengelolaan Tugas</div>
+                            <div class="d-flex justify-content-between">
+                                <span>Mulai : </span>
+                                <div>24 Januari 2023</div>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span>Akhir : </span>
+                                <div>24 Januari 2024</div>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span>Tema : </span>
+                                <div>Pengelolaan Tugas</div>
+                            </div>
                         </div>
                         <a href="{{ route('detail-projek') }}" class="btn btn-primary">Detail</a>
                     </div>

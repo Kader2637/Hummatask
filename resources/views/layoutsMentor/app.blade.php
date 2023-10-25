@@ -474,7 +474,7 @@
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end">
                                         <li>
-                                            <a class="dropdown-item" href="../pages/profile-user.html">
+                                            <a class="dropdown-item" href="{{route('profile-mentor')}}">
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar avatar-online">
@@ -486,7 +486,7 @@
                                                         <span class="fw-medium d-block">
                                                             John Doe
                                                         </span>
-                                                        <small class="text-muted">Admin</small>
+                                                        <small class="text-muted">Mentor</small>
                                                     </div>
                                                 </div>
                                             </a>
@@ -495,7 +495,7 @@
                                             <div class="dropdown-divider"></div>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="../pages/profile-user.html">
+                                            <a class="dropdown-item" href="{{route('profile-mentor')}}">
                                                 <i class="ti ti-user-check me-2 ti-sm"></i>
                                                 <span class="align-middle">My Profile</span>
                                             </a>
