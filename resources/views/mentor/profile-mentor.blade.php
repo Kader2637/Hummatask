@@ -20,8 +20,12 @@
                     </div>
                     <div class="user-profile-header d-flex flex-column flex-sm-row text-sm-start text-center mb-4">
                         <div class="flex-shrink-0 mt-n2 mx-sm-0 mx-auto">
-                            <img src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/14.png"
-                                alt="user image" class="d-block h-auto ms-0 ms-sm-4 rounded user-profile-img">
+                            <label class="form-label text-white" for="image-input">
+                                <img id="preview-image"
+                                    src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/14.png"
+                                    alt="example placeholder" style="width: 150px; height: 150px; border-radius: 10px" class="d-block ms-0 ms-sm-4 rounded user-profile-img" />
+                                <input type="file" class="form-control d-none" id="image-input" name="avatar" />
+                            </label>
                         </div>
                         <div class="flex-grow-1 mt-3 mt-sm-5">
                             <div
@@ -48,17 +52,6 @@
             </div>
         </div>
         <!--/ Header -->
-
-        <!-- Navbar pills -->
-        <div class="row">
-            <div class="col-md-12">
-                <ul class="nav nav-pills flex-column flex-sm-row mb-4">
-                    <li class="nav-item"><a class="nav-link active" href="javascript:void(0);"><i
-                                class='ti-xs ti ti-user-check me-1'></i> Profile</a></li>
-                </ul>
-            </div>
-        </div>
-        <!--/ Navbar pills -->
 
         <!-- User Profile Content -->
         <div class="card">
@@ -107,4 +100,22 @@
 
 @section('script')
     {{-- <script src="{{ asset('assets/js/pages-profile.js') }}"></script> --}}
+    <script>
+        let imageInput = $("#image-input");
+
+        imageInput.on('change', function() {
+            let previewImage = $("#preview-image");
+            let file = imageInput[0].files[0];
+
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.attr('src', e.target.result);
+                }
+                reader.readAsDataURL(file);
+            } else {
+                previewImage.attr('src', '');
+            }
+        });
+    </script>
 @endsection

@@ -484,7 +484,7 @@
                                                     </div>
                                                     <div class="flex-grow-1">
                                                         <span class="fw-medium d-block">
-                                                            John Doe
+                                                            {{Auth::user()->username}}
                                                         </span>
                                                         <small class="text-muted">Mentor</small>
                                                     </div>

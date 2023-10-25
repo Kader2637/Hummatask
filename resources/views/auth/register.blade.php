@@ -244,10 +244,6 @@
     <script src="{{ asset('assets/js/form-wizard-icons.js') }}"></script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            localStorage.clear();
-        })
-
         let imageInput = $("#image-input");
 
         imageInput.on('change', function() {
