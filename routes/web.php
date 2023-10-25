@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\authController;
 use App\Http\Controllers\mentorController;
+use App\Http\Controllers\PengajuanProjekController;
+use App\Http\Controllers\ProfileMentor;
+use App\Http\Controllers\ProjekController;
 use App\Http\Controllers\siswaController;
 use App\Http\Controllers\timController;
 use Illuminate\Support\Facades\Route;
@@ -31,21 +34,15 @@ Route::prefix('siswa')->middleware(['auth', 'siswa'])->controller(siswaControlle
 });
 
 // halaman Tim
-Route::prefix('tim')->middleware(['auth','siswa'])->controller(timController::class)->group(function(){
-
-    Route::get('board','boardPage')->name('tim.board');
-    Route::get('kalender','kalenderPage')->name('tim.kalender');
-    Route::get('project','projectPage')->name('tim.project');
-    Route::get('history','historyPage')->name('tim.history');
-    Route::get('history-presentasi','historyPresentasiPage')->name('tim.historyPresentasi');
-    Route::get('history-catatan','historyCatatanPage')->name('tim.historyCatatan');
-
-
+Route::prefix('tim')->middleware(['auth', 'siswa'])->controller(timController::class)->group(function () {
+    Route::get('board', 'boardPage')->name('tim.board');
+    Route::get('kalender', 'kalenderPage')->name('tim.kalender');
+    Route::get('project', 'projectPage')->name('tim.project');
+    Route::get('history', 'historyPage')->name('tim.history');
+    Route::get('history-presentasi', 'historyPresentasiPage')->name('tim.historyPresentasi');
+    Route::get('history-catatan', 'historyCatatanPage')->name('tim.historyCatatan');
 });
-
 
 Route::prefix('mentor')->middleware(['auth', 'mentor'])->controller(mentorController::class)->group(function () {
     Route::get('dashboard', 'dashboard')->name('dashboard.mentor');
-    Route::get('pengguna', 'pengguna')->name('pengguna.mentor');
-    Route::get('history', 'history')->name('history.mentor');
 });

@@ -130,8 +130,7 @@
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item active">
-                                <a href=""
-                                    class="menu-link">
+                                <a href="" class="menu-link">
                                     <div>Atur Presentasi</div>
                                 </a>
                             </li>
@@ -157,14 +156,14 @@
                     </li>
                     <li class="menu-item">
                         <ul class="">
-                                <li class="menu-item ">
-                                    <a href="{{ route('tim.board') }}"
-                                        class="menu-link d-flex align-items-center gap-2" target="_blank">
-                                        <img style="width: 30px" class="rounded-circle border border-primary"
-                                            src="{{ asset('assets/logo.png') }}" alt="">
-                                        <div class="">Hummatask</div>
-                                    </a>
-                                </li>
+                            <li class="menu-item ">
+                                <a href="{{ route('tim.board') }}" class="menu-link d-flex align-items-center gap-2"
+                                    target="_blank">
+                                    <img style="width: 30px" class="rounded-circle border border-primary"
+                                        src="{{ asset('assets/logo.png') }}" alt="">
+                                    <div class="">Hummatask</div>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -476,9 +475,9 @@
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="../auth/login-basic.html">
-                                            <i class='ti ti-login me-2'></i>
-                                            <span class="align-middle">Login</span>
+                                        <a class="dropdown-item" href="{{ route('logout') }}">
+                                            <i class='ti ti-logout me-2'></i>
+                                            <span class="align-middle">Logout</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -495,6 +494,7 @@
 
                 @yield('content')
 
+                {{-- Modal Tambah Tim --}}
                 <div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-simple modal-edit-user">
                         <div class="modal-content">
@@ -505,7 +505,8 @@
                                     <div class="col-12 col-md-12 d-flex flex-row gap-3 align-items-center">
                                         <div class="col-12 col-md-3 align-items-center">
                                             <label class="form-label text-white" for="image-input">
-                                                <img id="preview-image" src="{{ asset('assets/img/avatars/pen.png') }}"
+                                                <img id="preview-image"
+                                                    src="{{ asset('assets/img/avatars/pen.png') }}"
                                                     alt="example placeholder"
                                                     style="width: 150px; height: 150px; border-radius: 10px" />
                                                 <input type="file" class="form-control d-none" id="image-input"
@@ -515,12 +516,15 @@
                                         <div class="col-12 col-md-9 d-flex flex-wrap flex-col align-items-center">
                                             <label class="form-label m-0 p-0" for="modalEditUserLastName">Name
                                                 Team</label>
-                                            <input type="text" id="modalEditUserLastName" name="modalEditUserLastName"
-                                                class="form-control" placeholder="Hummatask" />
-                                            <label class="form-label m-0 p-0 mt-2" for="modalEditUserLastName">Link Repository
+                                            <input type="text" id="modalEditUserLastName"
+                                                name="modalEditUserLastName" class="form-control"
+                                                placeholder="Hummatask" />
+                                            <label class="form-label m-0 p-0 mt-2" for="modalEditUserLastName">Link
+                                                Repository
                                                 Github</label>
-                                            <input type="text" id="modalEditUserLastName" name="modalEditUserLastName"
-                                                class="form-control" placeholder="https://.." />
+                                            <input type="text" id="modalEditUserLastName"
+                                                name="modalEditUserLastName" class="form-control"
+                                                placeholder="https://.." />
                                         </div>
                                     </div>
                                     <div class="col-12 justify-content-center">
@@ -551,14 +555,15 @@
                                     </div>
                                     <div class="col-12 d-flex flex-row flex-wrap justify-content-end">
                                         <button type="submit" class="btn btn-primary me-sm-3 me-1">Unggah</button>
-                                        <button type="reset" class="btn btn-danger"
-                                            data-bs-dismiss="modal" aria-label="Close">Batal</button>
+                                        <button type="reset" class="btn btn-danger" data-bs-dismiss="modal"
+                                            aria-label="Close">Batal</button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
+                {{-- Modal Tambah Tim --}}
 
             </div>
         </div>
@@ -585,6 +590,24 @@
     <script src="{{ asset('assets/js/dashboards-crm.js') }}"></script>
 
     @yield('script')
+    <script>
+        let imageInput = $("#image-input");
+
+        imageInput.on('change', function() {
+            let previewImage = $("#preview-image");
+            let file = imageInput[0].files[0];
+
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.attr('src', e.target.result);
+                }
+                reader.readAsDataURL(file);
+            } else {
+                previewImage.attr('src', '');
+            }
+        });
+    </script>
 
 </body>
 
