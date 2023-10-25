@@ -20,7 +20,7 @@
                                 class="tf-icons ti ti-users ti-xs me-1"></i> Anggota</button>
                     </li>
                 </ul>
-                <div class="tab-content">
+                <div class="tab-content bg-transparent py-0 px-0" style="box-shadow: none">
                     {{-- tab project --}}
                     <div class="tab-pane fade show active" id="tab-projek" role="tabpanel">
                         <div class="row">
@@ -56,7 +56,7 @@
                             </div>
                             <div class="col-8">
                                 {{-- card projects --}}
-                                <div class="card" style="padding-bottom: 2.8vh">
+                                <div class="card" style="padding-bottom: 8.6vh">
                                     <div class="card-header">
                                         <div class="d-flex flex-row align-items-center justify-content-between">
                                             <div class="fs-4 text-black">
@@ -132,7 +132,7 @@
                     <div class="tab-pane fade" id="tab-anggota" role="tabpanel">
 
                         {{-- card logo tim --}}
-                        <div class="card" id="logo-tim">
+                        <div class="card py-3" id="logo-tim">
                             <div class="card-body text-center">
                                 <img src="{{ asset('assets/img/avatars/2.png') }}" alt class="h-auto rounded-circle"
                                     style="width: 150px">

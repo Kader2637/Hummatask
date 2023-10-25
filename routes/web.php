@@ -4,6 +4,7 @@ use App\Http\Controllers\authController;
 use App\Http\Controllers\mentorController;
 use App\Http\Controllers\PengajuanProjekController;
 use App\Http\Controllers\ProfileMentor;
+use App\Http\Controllers\ProfileSiswaController;
 use App\Http\Controllers\ProjekController;
 use App\Http\Controllers\siswaController;
 use App\Http\Controllers\timController;
@@ -29,8 +30,9 @@ Route::middleware('guest')->controller(authController::class)->group(function ()
 
 Route::get('logout', [authController::class, 'logout'])->name('logout');
 
-Route::prefix('siswa')->middleware(['auth', 'siswa'])->controller(siswaController::class)->group(function () {
-    Route::get('dashboard', 'dashboard')->name('dashboard.siswa');
+Route::prefix('siswa')->middleware(['auth', 'siswa'])->group(function () {
+    Route::get('dashboard', [siswaController::class, 'dashboard'])->name('dashboard.siswa');
+    Route::get('profile', [ProfileSiswaController::class, 'profilePage'])->name('profile.siswa');
 });
 
 // halaman Tim

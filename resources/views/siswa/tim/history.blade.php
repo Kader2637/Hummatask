@@ -21,7 +21,7 @@
                             aria-selected="false" tabindex="-1">Semua</button>
                     </li>
                 </ul>
-                <div class="tab-content" style="border: none; background: none; box-shadow: none;">
+                <div class="tab-content py-0 px-0" style="border: none; background: none; box-shadow: none;">
                     <div class="tab-pane fade active show" id="navs-pills-top-home" role="tabpanel">
                         <div class="row">
                             @for ($i = 0; $i < 3; $i++)

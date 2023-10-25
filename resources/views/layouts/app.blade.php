@@ -93,8 +93,7 @@
             <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
 
                 <div class="app-brand demo">
-                    <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1"
-                        class="app-brand-link">
+                    <a href="{{ route('dashboard.siswa') }}" class="app-brand-link">
                         <span class="app-brand-logo demo">
                             <svg width="32" height="20" viewBox="0 0 32 22" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -125,18 +124,18 @@
                 <ul class="menu-inner py-1">
                     <li class="menu-item menu-toggle">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons ti ti-layout-sidebar"></i>
+                            <i class="menu-icon tf-icons ti ti-category"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Dashboard</div>
                         </a>
                         <ul class="menu-sub">
-                            <li class="menu-item active">
+                            <li class="menu-item">
                                 <a href="" class="menu-link">
                                     <div>Atur Presentasi</div>
                                 </a>
                             </li>
                             <li class="menu-item ">
                                 <a href="crm.html" class="menu-link">
-                                    <div>History</div>
+                                    <div>Histori</div>
                                 </a>
                             </li>
                         </ul>
@@ -146,8 +145,9 @@
                             <i class="menu-icon tf-icons ti ti-layout-sidebar"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Tim
                                 <svg data-bs-toggle="modal" data-bs-target="#editUser"
-                                    style="position: relative; right: -10px;" xmlns="http://www.w3.org/2000/svg"
-                                    width="20" height="20" viewBox="0 0 1024 1024">
+                                    style="position: relative; right: -10px; cursor: pointer"
+                                    xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                    viewBox="0 0 1024 1024">
                                     <path fill="#888888"
                                         d="M512 64a448 448 0 1 1 0 896a448 448 0 0 1 0-896zm-38.4 409.6H326.4a38.4 38.4 0 1 0 0 76.8h147.2v147.2a38.4 38.4 0 0 0 76.8 0V550.4h147.2a38.4 38.4 0 0 0 0-76.8H550.4V326.4a38.4 38.4 0 1 0-76.8 0v147.2z" />
                                 </svg>
@@ -157,8 +157,7 @@
                     <li class="menu-item">
                         <ul class="">
                             <li class="menu-item ">
-                                <a href="{{ route('tim.board') }}" class="menu-link d-flex align-items-center gap-2"
-                                    target="_blank">
+                                <a href="{{ route('tim.board') }}" class="menu-link d-flex align-items-center gap-2">
                                     <img style="width: 30px" class="rounded-circle border border-primary"
                                         src="{{ asset('assets/logo.png') }}" alt="">
                                     <div class="">Hummatask</div>
@@ -445,7 +444,7 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
-                                        <a class="dropdown-item" href="../pages/profile-user.html">
+                                        <a class="dropdown-item" href="{{ route('profile.siswa') }}">
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
@@ -455,7 +454,7 @@
                                                 </div>
                                                 <div class="flex-grow-1">
                                                     <span class="fw-medium d-block">
-                                                        John Doe
+                                                        {{ Auth::user()->username }}
                                                     </span>
                                                     <small class="text-muted">Admin</small>
                                                 </div>
@@ -466,7 +465,7 @@
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="../pages/profile-user.html">
+                                        <a class="dropdown-item" href="{{ route('profile.siswa') }}">
                                             <i class="ti ti-user-check me-2 ti-sm"></i>
                                             <span class="align-middle">My Profile</span>
                                         </a>
@@ -496,7 +495,7 @@
 
                 {{-- Modal Tambah Tim --}}
                 <div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+                    <div class="modal-dialog modal-dialog-centered modal-lg modal-simple modal-edit-user">
                         <div class="modal-content">
                             <div class="modal-body">
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -508,14 +507,14 @@
                                                 <img id="preview-image"
                                                     src="{{ asset('assets/img/avatars/pen.png') }}"
                                                     alt="example placeholder"
-                                                    style="width: 150px; height: 150px; border-radius: 10px" />
+                                                    style="width: 150px; height: 150px; border-radius: 10px; cursor: pointer" />
                                                 <input type="file" class="form-control d-none" id="image-input"
                                                     name="avatar" />
                                             </label>
                                         </div>
                                         <div class="col-12 col-md-9 d-flex flex-wrap flex-col align-items-center">
-                                            <label class="form-label m-0 p-0" for="modalEditUserLastName">Name
-                                                Team</label>
+                                            <label class="form-label m-0 p-0" for="modalEditUserLastName">Nama
+                                                Tim</label>
                                             <input type="text" id="modalEditUserLastName"
                                                 name="modalEditUserLastName" class="form-control"
                                                 placeholder="Hummatask" />
@@ -609,24 +608,6 @@
     </script>
 
     @yield('script')
-    <script>
-        let imageInput = $("#image-input");
-
-        imageInput.on('change', function() {
-            let previewImage = $("#preview-image");
-            let file = imageInput[0].files[0];
-
-            if (file) {
-                let reader = new FileReader();
-                reader.onload = function(e) {
-                    previewImage.attr('src', e.target.result);
-                }
-                reader.readAsDataURL(file);
-            } else {
-                previewImage.attr('src', '');
-            }
-        });
-    </script>
 
 </body>
 

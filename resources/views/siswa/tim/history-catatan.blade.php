@@ -1,6 +1,6 @@
 @extends('layouts.tim')
 
-@section('content')
+@section('link')
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}">
@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-rowgroup-bs5/rowgroup.bootstrap5.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/%40form-validation/umd/styles/index.min.css') }}" />
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+@endsection
 
+@section('content')
     <div class="modal fade" id="edit-catatan" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-simple modal-edit-user">
             <div class="modal-content">
@@ -29,7 +31,8 @@
                             <div class="card-body mt-[-100px]">
                                 <div id="editor" style="max-height: 50rem; overflow-y: auto;">
                                     <div>
-                                        <p> Cupcake ipsum dolor sit amet. Halvah cheesecake chocolate bar gummi bears cupcake. Pie macaroon
+                                        <p> Cupcake ipsum dolor sit amet. Halvah cheesecake chocolate bar gummi bears
+                                            cupcake. Pie macaroon
                                             bear claw. Soufflé I love candy canes I love cotton candy I love. </p>
                                     </div>
                                 </div>
@@ -49,7 +52,7 @@
     <div class="container d-flex mt-5 justify-content-center">
         <div class="col-12">
             <div class="card">
-                <h5 class="card-header">Multilingual</h5>
+                <h5 class="card-header">Histori Catatan</h5>
                 <div class="card-datatable table-responsive">
                     <table id="jstabel" class="table">
                         <thead>
@@ -68,7 +71,8 @@
                                 <td class="d-flex flex-wrap flex-row">
                                     <a class="d-block" data-bs-toggle="modal" data-bs-target="#edit-catatan"><i
                                             class="ti ti-pencil me-1 text-primary"></i></a>
-                                    <a class="d-block" href="javascript:void(0);"><i class="ti ti-trash me-1 text-danger"></i></a>
+                                    <a class="d-block" href="javascript:void(0);"><i
+                                            class="ti ti-trash me-1 text-danger"></i></a>
                                 </td>
                             </tr>
                         </tbody>
@@ -106,7 +110,7 @@
                     "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
                     "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
                     "sInfoPostFix": "",
-                    "sSearch": "Cari:",
+                    "sSearch": "Cari :",
                     "sUrl": "",
                     "oPaginate": {
                         "sFirst": "Pertama",
@@ -118,6 +122,9 @@
             });
         });
     </script>
+@endsection
+
+@section('script')
     <script src="{{ asset('assets/vendor/libs/moment/moment.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/%40form-validation/umd/bundle/popular.min.js') }}"></script>

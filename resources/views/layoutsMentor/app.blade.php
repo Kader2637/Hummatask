@@ -161,24 +161,24 @@
                         class="menu-item {{ request()->routeIs('pengajuan-projek', 'detail-pengajuan-projek') ? 'active' : '' }}">
                         <a href="{{ route('pengajuan-projek') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-report-analytics"></i>
-                            <div>Pengajuan Projek</div>
+                            <div>Pengajuan Project</div>
                         </a>
                     </li>
                     <li class="menu-item {{ request()->routeIs('projek', 'detail-projek') ? 'active' : '' }}">
                         <a href="{{ route('projek') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-folder-cog"></i>
-                            <div>Projek</div>
+                            <div>Project</div>
                         </a>
                     </li>
                     <li class="menu-item {{ request()->routeIs('pengguna.mentor') ? 'active' : '' }}">
                         <a href="{{ route('pengguna.mentor') }}" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                            <i class="menu-icon tf-icons ti ti-users-group"></i>
                             <div>Pengguna</div>
                         </a>
                     </li>
                     <li class="menu-item {{ request()->routeIs('history.mentor') ? 'active' : '' }}">
                         <a href="{{ route('history.mentor') }}" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                            <i class="menu-icon tf-icons ti ti-history"></i>
                             <div>Histori</div>
                         </a>
                     </li>
@@ -508,7 +508,7 @@
                                         </li>
                                         <li>
                                             <a class="dropdown-item" href="{{ route('logout') }}">
-                                                <i class='ti ti-login me-2'></i>
+                                                <i class='ti ti-logout me-2'></i>
                                                 <span class="align-middle">Logout</span>
                                             </a>
                                         </li>
