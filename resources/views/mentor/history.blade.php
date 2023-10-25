@@ -64,7 +64,7 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
                         type="button" role="tab" aria-controls="pills-profile" aria-selected="false"><i
-                            class="fa-solid fa-person-chalkboard icon-text"></i>Seleasi
+                            class="fa-solid fa-person-chalkboard icon-text"></i>Selesai
                         Presentasi</button>
                 </li>
                 <li class="nav-item" role="presentation">

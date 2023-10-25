@@ -201,9 +201,9 @@
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                                 data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                        class="ti ti-eye me-1"data-bs-toggle="modal"
-                                                        data-bs-target="#detail-ketua"></i> Detail cok</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                                                data-bs-target="#detail-ketua"><i
+                                                        class="ti ti-eye me-1"></i> Detail cok</a>
                                                 <a class="dropdown-item" href="javascript:void(0);"><i
                                                         class="ti ti-pencil me-1"></i> Edit</a>
                                                 <a class="dropdown-item" href="javascript:void(0);"><i
