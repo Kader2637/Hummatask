@@ -10,4 +10,10 @@ class ProjekController extends Controller
     {
         return view('mentor.projek');
     }
+
+    protected function detailProjekPage()
+    {
+        return view('mentor.detail-projek');
+    }
+
 }

@@ -47,4 +47,5 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::get('pengajuan-projek', [PengajuanProjekController::class, 'pengajuanProjekPage'])->name('pengajuan-projek');
     Route::get('detail-pengajuan-projek', [PengajuanProjekController::class, 'detailPengajuanPage'])->name('detail-pengajuan-projek');
     Route::get('projek', [ProjekController::class, 'projekPage'])->name('projek');
+    Route::get('detail-projek', [ProjekController::class, 'detailProjekPage'])->name('detail-projek');
 });

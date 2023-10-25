@@ -45,7 +45,7 @@
                         </div>
                         <a href="#"><span class="badge bg-label-warning mb-3">Big Project</span></a>
                         <p class="card-text">20 Januari 2000</p>
-                        <a href="{{route('detail-pengajuan-projek')}}" class="btn btn-primary">Detail</a>
+                        <a href="{{ route('detail-pengajuan-projek') }}" class="btn btn-primary">Detail</a>
                     </div>
                 </div>
             </div>
@@ -84,7 +84,7 @@
                         </div>
                         <a href="#"><span class="badge bg-label-warning mb-3">Big Project</span></a>
                         <p class="card-text">20 Januari 2000</p>
-                        <a href="{{route('detail-pengajuan-projek')}}" class="btn btn-primary">Detail</a>
+                        <a href="{{ route('detail-pengajuan-projek') }}" class="btn btn-primary">Detail</a>
                     </div>
                 </div>
             </div>
@@ -123,7 +123,7 @@
                         </div>
                         <a href="#"><span class="badge bg-label-warning mb-3">Big Project</span></a>
                         <p class="card-text">20 Januari 2000</p>
-                        <a href="{{route('detail-pengajuan-projek')}}" class="btn btn-primary">Detail</a>
+                        <a href="{{ route('detail-pengajuan-projek') }}" class="btn btn-primary">Detail</a>
                     </div>
                 </div>
             </div>
@@ -162,7 +162,7 @@
                         </div>
                         <a href="#"><span class="badge bg-label-warning mb-3">Big Project</span></a>
                         <p class="card-text">20 Januari 2000</p>
-                        <a href="{{route('detail-pengajuan-projek')}}" class="btn btn-primary">Detail</a>
+                        <a href="{{ route('detail-pengajuan-projek') }}" class="btn btn-primary">Detail</a>
                     </div>
                 </div>
             </div>
@@ -170,7 +170,8 @@
             {{-- for each end --}}
 
         </div>
-        <!-- Basic Pagination -->
+
+        {{-- pagination --}}
         <nav aria-label="Page navigation">
             <ul class="pagination justify-content-end">
                 <li class="page-item first">
@@ -202,6 +203,8 @@
                 </li>
             </ul>
         </nav>
+        {{-- pagination --}}
+
     </div>
 @endsection
 

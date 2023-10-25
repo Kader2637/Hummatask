@@ -476,9 +476,9 @@
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="../auth/login-basic.html">
-                                            <i class='ti ti-login me-2'></i>
-                                            <span class="align-middle">Login</span>
+                                        <a class="dropdown-item" href="{{route('logout')}}">
+                                            <i class='ti ti-logout me-2'></i>
+                                            <span class="align-middle">Logout</span>
                                         </a>
                                     </li>
                                 </ul>

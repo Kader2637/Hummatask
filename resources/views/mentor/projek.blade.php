@@ -78,7 +78,7 @@
                             <div>Akhir : 24 Januari 2024</div>
                             <div>Tema : Pengelolaan Tugas</div>
                         </div>
-                        <a href="{{ route('detail-pengajuan-projek') }}" class="btn btn-primary">Detail</a>
+                        <a href="{{ route('detail-projek') }}" class="btn btn-primary">Detail</a>
                     </div>
                 </div>
             </div>
@@ -140,6 +140,40 @@
             </div>
         </div>
         {{-- Modal Buat Tim --}}
+
+        {{-- pagination --}}
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-end">
+                <li class="page-item first">
+                    <a class="page-link" href="javascript:void(0);"><i class="ti ti-chevrons-left ti-xs"></i></a>
+                </li>
+                <li class="page-item prev">
+                    <a class="page-link" href="javascript:void(0);"><i class="ti ti-chevron-left ti-xs"></i></a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);">1</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);">2</a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link" href="javascript:void(0);">3</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);">4</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);">5</a>
+                </li>
+                <li class="page-item next">
+                    <a class="page-link" href="javascript:void(0);"><i class="ti ti-chevron-right ti-xs"></i></a>
+                </li>
+                <li class="page-item last">
+                    <a class="page-link" href="javascript:void(0);"><i class="ti ti-chevrons-right ti-xs"></i></a>
+                </li>
+            </ul>
+        </nav>
+        {{-- pagination --}}
 
     </div>
 @endsection

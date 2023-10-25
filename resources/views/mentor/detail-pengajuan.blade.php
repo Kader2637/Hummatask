@@ -7,7 +7,7 @@
 
 @section('content')
     <div class="container-fluid mt-4">
-        <h5 class="header">Detail Pengajusn Projek</h5>
+        <h5 class="header">Detail Pengajuan Projek</h5>
         <div class="card">
             <div class="card-body">
                 <div class="d-flex flex-wrap flex-row gap-4 justify-content-between">
