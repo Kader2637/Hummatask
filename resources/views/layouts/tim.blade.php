@@ -52,6 +52,16 @@
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('assets/js/config.js') }}"></script>
 
+    <!-- Vendor Styles -->
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/fullcalendar/fullcalendar.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/flatpickr/flatpickr.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/editor.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/%40form-validation/umd/styles/index.min.css') }}" />
+
+
+    <!-- Page Styles -->
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/app-calendar.css') }}" />
     @yield('link')
 
 
@@ -87,7 +97,8 @@
                     <div class="row">
                         <div class="col">
                             <label for="jadwal" class="form-label">Atur Jadwal</label>
-                            <input type="date" name="jadwal" id="jadwal" class="form-control datepicker-days">
+                            <input type="date" name="jadwal" id="jadwal"
+                                class="form-control datepicker-days">
                         </div>
                     </div>
                 </div>
@@ -873,12 +884,20 @@
     <script src="{{ asset('assets/js/mainf696.js?id=8bd0165c1c4340f4d4a66add0761ae8a') }}"></script>
 
     <script src="{{ asset('assets/js/dashboards-crm.js') }}"></script>
-    <script src="{{ asset('assets/js/charts-chartjs.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}">
-        < script >
-            <
-            script src = "{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}" >
-    </script>
+
+    <script src="{{ asset('assets/vendor/libs/fullcalendar/fullcalendar.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/%40form-validation/umd/bundle/popular.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/%40form-validation/umd/plugin-bootstrap5/index.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/%40form-validation/umd/plugin-auto-focus/index.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/moment/moment.js') }}"></script>
+
+    <!-- BEGIN: Page JS-->
+    <script src="{{ asset('assets/js/app-calendar-events.js') }}"></script>
+    <script src="{{ asset('assets/js/app-calendar.js') }}"></script>
+    <!-- END: Page JS-->
+
     @yield('script')
 
     <script>
