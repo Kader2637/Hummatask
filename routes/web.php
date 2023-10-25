@@ -43,6 +43,13 @@ Route::prefix('tim')->middleware(['auth', 'siswa'])->controller(timController::c
     Route::get('history-catatan', 'historyCatatanPage')->name('tim.historyCatatan');
 });
 
-Route::prefix('mentor')->middleware(['auth', 'mentor'])->controller(mentorController::class)->group(function () {
-    Route::get('dashboard', 'dashboard')->name('dashboard.mentor');
+Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
+    Route::get('dashboard', [mentorController::class, 'dashboard'])->name('dashboard.mentor');
+    Route::get('pengajuan-projek', [PengajuanProjekController::class, 'pengajuanProjekPage'])->name('pengajuan-projek');
+    Route::get('detail-pengajuan-projek', [PengajuanProjekController::class, 'detailPengajuanPage'])->name('detail-pengajuan-projek');
+    Route::get('projek', [ProjekController::class, 'projekPage'])->name('projek');
+    Route::get('detail-projek', [ProjekController::class, 'detailProjekPage'])->name('detail-projek');
+    Route::get('profile-mentor', [ProfileMentor::class, 'profilePage'])->name('profile-mentor');
+    Route::get('pengguna', [mentorController::class, 'pengguna'])->name('pengguna.mentor');
+    Route::get('history', [mentorController::class, 'history'])->name('history.mentor');
 });
