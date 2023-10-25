@@ -18,6 +18,72 @@
 @endsection
 
 @section('content')
+
+
+{{-- Modal --}}
+<div class="modal fade" id="ajukanModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+                <form id="editUserForm" class="row g-2 p-0 m-0" onsubmit="return false">
+                    <div class="col-12 col-md-12 d-flex flex-row gap-3 align-items-center">
+                        <div class="col-12 col-md-3 align-items-center">
+                            <label class="form-label text-white " for="image-input">
+                            <label class="form-label text-white rounded" for="image-input">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="120px" height="120px" class="bg-primary d-flex align-items-center justify-center p-4 rounded" viewBox="0 0 24 24"><path fill="currentColor" d="M5 23.7q-.825 0-1.413-.587T3 21.7v-14q0-.825.588-1.413T5 5.7h8.925l-2 2H5v14h14v-6.95l2-2v8.95q0 .825-.588 1.413T19 23.7H5Zm7-9Zm4.175-8.425l1.425 1.4l-6.6 6.6V15.7h1.4l6.625-6.625l1.425 1.4l-7.2 7.225H9v-4.25l7.175-7.175Zm4.275 4.2l-4.275-4.2l2.5-2.5q.6-.6 1.438-.6t1.412.6l1.4 1.425q.575.575.575 1.4T22.925 8l-2.475 2.475Z"/></svg>
+                                <input type="file" class="form-control d-none" id="image-input"
+                                    name="avatar" />
+                            </label>
+                        </div>
+                        <div class="col-12 col-md-9 d-flex flex-wrap flex-col align-items-center">
+                            <label class="form-label m-0 p-0" for="modalEditUserLastName">Name
+                                Team</label>
+                            <input type="text" id="modalEditUserLastName" name="modalEditUserLastName"
+                                class="form-control" placeholder="Hummatask" />
+                            <label class="form-label m-0 p-0 mt-2" for="modalEditUserLastName">Link Repository
+                                Github</label>
+                            <input type="text" id="modalEditUserLastName" name="modalEditUserLastName"
+                                class="form-control" placeholder="https://.." />
+                        </div>
+                    </div>
+                    <div class="col-12 justify-content-center">
+                        <div class="row">
+                            <div class="mb-3 col-lg-6 col-xl-5 col-12 mb-0">
+                                <label class="form-label" for="form-repeater-1-1">Username</label>
+                                <input type="text" id="form-repeater-1-1" class="form-control"
+                                    placeholder="john.doe" />
+                            </div>
+                            <div class="mb-3 col-lg-6 col-xl-5 col-12 mb-0">
+                                <label class="form-label" for="form-repeater-1-2">Password</label>
+                                <input type="password" id="form-repeater-1-2" class="form-control"
+                                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                            </div>
+                            <div class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
+                                <button class="btn btn-label-danger mt-4" data-repeater-delete>
+                                    <i class="ti ti-x ti-xs me-1"></i>
+                                    <span class="align-middle">Delete</span>
+                                </button>
+                            </div>
+                            <div class="mb-0">
+                                <button class="btn btn-primary" data-repeater-create>
+                                    <i class="ti ti-plus me-1"></i>
+                                    <span class="align-middle">Add</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 d-flex flex-row flex-wrap justify-content-end">
+                        <button type="submit" class="btn btn-primary me-sm-3 me-1">Unggah</button>
+                        <button type="reset" class="btn btn-danger"
+                            data-bs-dismiss="modal" aria-label="Close">Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
     <div class="container mt-5">
         <div class="col-12">
             <div class="nav-align-top d-flex justify-between">
@@ -36,7 +102,7 @@
                     </div>
 
                     <div class="" role="presentation">
-                        <button class="btn btn-primary">
+                        <button class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#ajukanModal">
                             Ajukan Project
                         </button>
                     </div>
@@ -167,5 +233,69 @@
     <script src="{{ asset('assets/vendor/libs/hammer/hammer2de0.js?id=0a520e103384b609e3c9eb3b732d1be8') }}"></script>
     <script src="{{ asset('assets/vendor/libs/typeahead-js/typeahead60e7.js?id=f6bda588c16867a6cc4158cb4ed37ec6') }}"></script>
     <script src="{{ asset('assets/vendor/js/menu2dc9.js?id=c6ce30ded4234d0c4ca0fb5f2a2990d8') }}"></script>
-    <script src="{{ asset('assets/js/charts-chartjs.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/charts-chartjs.js') }}"></script> --}}
+    {{-- <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}"><script> --}}
+    <script src="{{asset('assets/vendor/libs/chartjs/chartjs.js')}}"></script>
+
+    <script>
+        // Color Variables
+const cyanColor = '#28dac6',
+  orangeLightColor = '#FDAC34';
+let cardColor, headingColor, labelColor, borderColor, legendColor;
+
+
+  cardColor = config.colors.cardColor;
+  headingColor = config.colors.headingColor;
+  labelColor = config.colors.textMuted;
+  legendColor = config.colors.bodyColor;
+  borderColor = config.colors.borderColor;
+
+const doughnutChart = document.getElementById('doughnutChart');
+if (doughnutChart) {
+  const doughnutChartVar = new Chart(doughnutChart, {
+    type: 'doughnut',
+    data: {
+      labels: ['Selesai', 'Revisi', 'Progres'],
+      datasets: [
+        {
+          data: [10, 10, 80],
+          backgroundColor: [cyanColor, orangeLightColor, config.colors.primary],
+          borderWidth: 0,
+          pointStyle: 'rectRounded'
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      animation: {
+        duration: 500
+      },
+      cutout: '68%',
+      plugins: {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              const label = context.labels || '',
+                value = context.parsed;
+              const output = ' ' + label + ' : ' + value + ' %';
+              return output;
+            }
+          },
+          // Updated default tooltip UI
+        //   rtl: isRtl,
+          backgroundColor: cardColor,
+          titleColor: headingColor,
+          bodyColor: legendColor,
+          borderWidth: 1,
+          borderColor: borderColor
+        }
+      }
+    }
+  });
+}
+    </script>
+
 @endsection
