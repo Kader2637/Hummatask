@@ -33,7 +33,7 @@
 
         <div class="row">
             <div class="col-lg-4">
-                <div class="kanban-title-board fs-5" contenteditable="true">Tugas yang belum selesai</div>
+                <div class="kanban-title-board fs-5">Tugas yang belum selesai</div>
             </div>
         </div>
         <div class="row mt-4 justify-content-center mb-2" id="navs-tab-sesijalani">
@@ -74,7 +74,7 @@
         </div>
         <div class="row">
             <div class="col-lg-4">
-                <div class="kanban-title-board fs-5" contenteditable="true">Tugas terbaru</div>
+                <div class="kanban-title-board fs-5">Tugas terbaru</div>
             </div>
         </div>
         <div class="row mt-4 justify-content-center" id="navs-tab-sesijalani">

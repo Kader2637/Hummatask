@@ -37,6 +37,7 @@ Route::prefix('siswa')->middleware(['auth', 'siswa'])->controller(siswaControlle
 Route::prefix('tim')->middleware(['auth', 'siswa'])->controller(timController::class)->group(function () {
     Route::get('board', 'boardPage')->name('tim.board');
     Route::get('kalender', 'kalenderPage')->name('tim.kalender');
+    Route::get('catatan','catatanPage')->name('tim.catatan');
     Route::get('project', 'projectPage')->name('tim.project');
     Route::get('history', 'historyPage')->name('tim.history');
     Route::get('history-presentasi', 'historyPresentasiPage')->name('tim.historyPresentasi');

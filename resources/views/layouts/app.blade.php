@@ -589,6 +589,25 @@
 
     <script src="{{ asset('assets/js/dashboards-crm.js') }}"></script>
 
+    <script>
+        let imageInput = $("#image-input");
+
+        imageInput.on('change', function() {
+            let previewImage = $("#preview-image");
+            let file = imageInput[0].files[0];
+
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.attr('src', e.target.result);
+                }
+                reader.readAsDataURL(file);
+            } else {
+                previewImage.attr('src', '');
+            }
+        });
+    </script>
+
     @yield('script')
     <script>
         let imageInput = $("#image-input");
