@@ -151,8 +151,8 @@
                             <div>Dashboard</div>
                         </a>
                     </li>
-                    <li class="menu-item">
-                        <a href="#" class="menu-link">
+                    <li class="menu-item {{ request()->routeIs('presentasi.mentor') ? 'active' : '' }}">
+                        <a href="{{ route('presentasi.mentor') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-presentation"></i>
                             <div>Presentasi</div>
                         </a>
