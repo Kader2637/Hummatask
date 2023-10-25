@@ -676,7 +676,7 @@
     <!-- END: Pricing Modal JS-->
     <!-- BEGIN: Page JS-->
     <script src="{{ asset('assets/js/dashboards-crm.js') }}"></script>
-    <script src="{{ asset('assets/js/tables-datatables-advanced.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/tables-datatables-advanced.js') }}"></script> --}}
     <!-- END: Page JS-->
 
     @yield('script')
