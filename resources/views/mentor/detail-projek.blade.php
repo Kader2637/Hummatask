@@ -24,7 +24,7 @@
                     {{-- tab project --}}
                     <div class="tab-pane fade show active" id="tab-projek" role="tabpanel">
                         <div class="row">
-                            <div class="col-lg-4">
+                            <div class="col-lg-4 mb-3">
                                 <!-- Doughnut Chart -->
                                 <div class="card">
                                     <h5 class="card-header">Progres Tim</h5>
@@ -56,7 +56,7 @@
                             </div>
                             <div class="col-lg-8">
                                 {{-- card projects --}}
-                                <div class="card" style="padding-bottom: 8.6vh">
+                                <div class="card" style="padding-bottom: 12.1vh">
                                     <div class="card-header">
                                         <div class="d-flex flex-row align-items-center justify-content-between">
                                             <div class="fs-4 text-black">
@@ -72,7 +72,7 @@
                                     <hr class="my-0">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-6">
+                                            <div class="col-lg-6">
                                                 <div class="d-flex flex-row gap-3">
                                                     <img src="{{ asset('assets/img/avatars/2.png') }}" alt
                                                         class="h-auto rounded-circle" style="width: 60px">
@@ -86,7 +86,7 @@
                                                     <div>Tema : Pengelolaan tugas</div>
                                                 </div>
                                             </div>
-                                            <div class="col-6">
+                                            <div class="col-lg-6">
                                                 <div class="progres-bar">
                                                     <div class="d-flex justify-content-between">
                                                         <span>Hari</span>

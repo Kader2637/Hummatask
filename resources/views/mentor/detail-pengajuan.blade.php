@@ -6,19 +6,55 @@
 @endsection
 
 @section('content')
+    <style>
+        @media (max-width: 590px) {
+            .content-1 {
+                width: 100%;
+            }
+
+            .content-profile {
+                display: flex;
+                justify-items: center justify-content: center;
+                align-items: center;
+                align-content: center
+            }
+
+            @media (max-width: 767px) {
+                .content-profile {
+                    flex-direction: column;
+                    gap: 0;
+                    padding: 10px;
+                }
+
+                .content-profile>div {
+                    width: 100%;
+                    text-align: center;
+                }
+
+                .content-profile img {
+                    width: 100px;
+                }
+
+                .content-profile span {
+                    text-align: center;
+                }
+            }
+        }
+    </style>
+
     <div class="container-fluid mt-4">
         <h5 class="header">Detail Pengajuan Projek</h5>
         <div class="card">
             <div class="card-body">
-                <div class="d-flex flex-wrap flex-row gap-4 justify-content-between">
-                    <div class="d-flex flex-row gap-3">
+                <div class="content-profile d-flex flex-wrap flex-row justify-content-between">
+                    <div class="d-flex flex-row gap-3 justify-content-center">
                         <img src="{{ asset('assets/img/avatars/2.png') }}" alt class="h-auto rounded-circle mb-3">
                         <div style="display: flex; flex-direction: column; justify-content: center; align-items: center">
                             <span class="d-block text-black fs-4">Hummatask</span>
                             <span class="d-block">Big Project</span>
                         </div>
                     </div>
-                    <div
+                    <div class="d-flex flex-wrap"
                         style="display: flex; flex-direction: column; justify-items: center; align-items: center; padding: 30px 5px">
                         <span class="d-block text-black fs-5">Tanggal Pengajuan</span>
                         <span class="d-block" style="font-size: 13px">10 Januari 2022</span>
@@ -35,9 +71,9 @@
                             data-bs-target="#modalTerima">Terima</button>
                     </div>
                 </div>
-                <div class="d-flex flex-row gap-1 mt-3">
+                <div class="d-flex flex-row flex-wrap mt-3 justify-content-center align-content-center">
                     <!-- Anggota Tim -->
-                    <div class="col-md-4 col-xl-3 mb-4">
+                    <div class="content-1 col-md-3 col-xl-4 col-sm-12 mb-4">
                         <div class="card h-100">
                             <div class="table-responsive">
                                 <table class="table table-borderless">
@@ -136,7 +172,7 @@
                     <!--/ Anggota Tim -->
 
                     {{-- List Tema --}}
-                    <div class="col-md-8 col-xl-9 mb-4">
+                    <div class="col-md-8 col-xl-8 col-sm-12 mb-4">
                         <div class="card h-100">
                             <h5 class="card-header">List Tema Projek</h5>
                             <div class="table-responsive">

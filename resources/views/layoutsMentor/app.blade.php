@@ -494,7 +494,7 @@
                                     <li>
                                         <a class="dropdown-item" href="{{ route('profile-mentor') }}">
                                             <i class="ti ti-user-check me-2 ti-sm"></i>
-                                            <span class="align-middle">My Profile</span>
+                                            <span class="align-middle">Profil Saya</span>
                                         </a>
                                     </li>
                                     <li>

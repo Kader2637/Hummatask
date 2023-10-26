@@ -122,22 +122,10 @@
 
                 <ul class="menu-inner py-1">
                     <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <a href="{{route('dashboard.siswa')}}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-category"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Dashboard</div>
                         </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="" class="menu-link">
-                                    <div>Atur Presentasi</div>
-                                </a>
-                            </li>
-                            <li class="menu-item ">
-                                <a href="" class="menu-link">
-                                    <div>Histori</div>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
 
                     {{-- Navigasi ke ketua magang --}}
@@ -147,7 +135,7 @@
                             $title === 'Presentasi Ketua Magang' ||
                             $title === 'Project Ketua Magang' ||
                             $title === 'History Ketua Magang') open @endif">
-                        <a href="" class="menu-link menu-toggle d-flex gap-2">
+                        <a href="" class="menu-link menu-toggle d-flex">
                             <i class="menu-icon tf-icons ti ti-crown"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Ketua Magang</div>
                         </a>
@@ -501,7 +489,7 @@
                                     <li>
                                         <a class="dropdown-item" href="{{ route('profile.siswa') }}">
                                             <i class="ti ti-user-check me-2 ti-sm"></i>
-                                            <span class="align-middle">My Profile</span>
+                                            <span class="align-middle">Profil Saya</span>
                                         </a>
                                     </li>
                                     <li>
