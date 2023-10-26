@@ -51,7 +51,7 @@
                                 <div class="col" style="padding-left: auto">
                                     <button class="btn btn-success"><i
                                             class="fa-regular fa-file icon-text"></i>Import</button>
-                                    <button class="btn btn-primary"><i
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-data"><i
                                             class="fa-solid fa-plus icon-text"></i>Tambah</button>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
                                                     data-bs-target="#detail"><i class="ti ti-eye me-1"></i> Detail</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
+                                                <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#edit-data"><i
                                                         class="ti ti-pencil me-1"></i> Edit</a>
                                                 <a class="dropdown-item" href="javascript:void(0);"><i
                                                         class="ti ti-trash me-1"></i> Delete</a>
@@ -167,7 +167,7 @@
                                 <div class="col" style="padding-left: auto">
                                     <button class="btn btn-success"><i
                                             class="fa-regular fa-file icon-text"></i>Import</button>
-                                    <button class="btn btn-primary"><i
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-data"><i
                                             class="fa-solid fa-plus icon-text"></i>Tambah</button>
                                 </div>
                             </div>
@@ -201,10 +201,10 @@
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                                 data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
-                                                data-bs-target="#detail-ketua"><i
-                                                        class="ti ti-eye me-1"></i> Detail cok</a>
                                                 <a class="dropdown-item" href="javascript:void(0);"><i
+                                                        class="ti ti-eye me-1"data-bs-toggle="modal"
+                                                        data-bs-target="#detail-ketua"></i> Detail</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#edit-data"><i
                                                         class="ti ti-pencil me-1"></i> Edit</a>
                                                 <a class="dropdown-item" href="javascript:void(0);"><i
                                                         class="ti ti-trash me-1"></i> Delete</a>
@@ -257,7 +257,7 @@
                                 <div class="col" style="padding-left: auto">
                                     <button class="btn btn-success"><i
                                             class="fa-regular fa-file icon-text"></i>Import</button>
-                                    <button class="btn btn-primary"><i
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-data"><i
                                             class="fa-solid fa-plus icon-text"></i>Tambah</button>
                                 </div>
                             </div>
@@ -291,7 +291,7 @@
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                                 data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
+                                                <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#edit-data"><i
                                                         class="ti ti-pencil me-1"></i> Edit</a>
                                                 <a class="dropdown-item" href="javascript:void(0);"><i
                                                         class="ti ti-trash me-1"></i> Delete</a>
@@ -386,40 +386,95 @@
             </div>
 
             {{-- modal add data --}}
-            <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+            <div class="modal fade" id="add-data" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="modalCenterTitle">Modal title</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <div class="row">
-                        <div class="col mb-3">
-                          <label for="nameWithTitle" class="form-label">Name</label>
-                          <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Name">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalCenterTitle">Edit User</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
-                      </div>
-                      <div class="row">
-                        <div class="col mb-3">
-                          <label for="nameWithTitle" class="form-label">Email</label>
-                          <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Email">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="nameWithTitle" class="form-label">Name</label>
+                                    <input type="text" id="nameWithTitle" class="form-control"
+                                        placeholder="Enter Name">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="nameWithTitle" class="form-label">Email</label>
+                                    <input type="text" id="nameWithTitle" class="form-control"
+                                        placeholder="Enter Email">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <label for="select2Basic" class="form-label">Status Role</label>
+                                    <select id="select2Basic" class="select2 form-select form-select-lg"
+                                        data-allow-clear="true">
+                                        <option value="AK">Alaska</option>
+                                        <option value="HI">Hawaii</option>
+                                        <option value="CA">California</option>
+                                        <option value="NV">Nevada</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                      <div class="row">
-                        <div class="col mb-3">
-                          <label for="nameWithTitle" class="form-label">Status</label>
-                          <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Name">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
                         </div>
-                      </div>
                     </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                  </div>
                 </div>
-              </div>
+            </div>
+
+             {{-- modal edit data --}}
+             <div class="modal fade" id="edit-data" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalCenterTitle">Edit User</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="nameWithTitle" class="form-label">Name</label>
+                                    <input type="text" id="nameWithTitle" class="form-control"
+                                        placeholder="Enter Name">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="nameWithTitle" class="form-label">Email</label>
+                                    <input type="text" id="nameWithTitle" class="form-control"
+                                        placeholder="Enter Email">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <label for="select2Basic" class="form-label">Status Role</label>
+                                    <select id="select2Basic" class="select2 form-select form-select-lg"
+                                        data-allow-clear="true">
+                                        <option value="AK">Alaska</option>
+                                        <option value="HI">Hawaii</option>
+                                        <option value="CA">California</option>
+                                        <option value="NV">Nevada</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
             {{-- modal team --}}
             <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
@@ -545,7 +600,8 @@
                     </div>
                 </div>
             </div>
-            {{-- modal detail ketua dan wakil--}}
+
+            {{-- modal detail ketua dan wakil --}}
             <div class="modal fade" id="detail-ketua" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -603,5 +659,5 @@
                     </div>
                 </div>
             </div>
-
+        </div>
         @endsection
