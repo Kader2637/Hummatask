@@ -24,7 +24,7 @@
                     {{-- tab project --}}
                     <div class="tab-pane fade show active" id="tab-projek" role="tabpanel">
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-lg-4">
                                 <!-- Doughnut Chart -->
                                 <div class="card">
                                     <h5 class="card-header">Progres Tim</h5>
@@ -54,7 +54,7 @@
                                 </div>
                                 <!-- /Doughnut Chart -->
                             </div>
-                            <div class="col-8">
+                            <div class="col-lg-8">
                                 {{-- card projects --}}
                                 <div class="card" style="padding-bottom: 8.6vh">
                                     <div class="card-header">
@@ -106,7 +106,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="deskripsi mt-2">
-                                                    <div class="title text-dark fw-bold">
+                                                    <div class="title text-dark">
                                                         Deskripsi :
                                                     </div>
                                                     <div class="isi">

@@ -453,17 +453,8 @@
                         </a>
                     </li>
                     <li class="menu-item ">
-                        <a data-bs-target="#offcanvasEnd" data-bs-toggle="offcanvas" aria-controls="offcanvas"
-                            class="menu-link d-flex align-items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
-                                viewBox="0 0 24 24">
-                                <g fill="none" stroke="currentColor" stroke-linecap="round"
-                                    stroke-linejoin="round" stroke-width="2">
-                                    <path stroke-miterlimit="5.759" d="M3 3v16a2 2 0 0 0 2 2h16" />
-                                    <path stroke-miterlimit="5.759" d="m7 14l4-4l4 4l6-6" />
-                                    <path d="M18 8h3v3" />
-                                </g>
-                            </svg>
+                        <a href="" class="menu-link d-flex align-items-center gap-2">
+                            <i class="menu-icon tf-icons ti ti-chart-line"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Statistik Project
                             </div>
                         </a>
@@ -477,7 +468,7 @@
                     <li class="menu-item @if ($title == 'Tim/project') active @endif ">
                         <a href="{{ route('tim.project') }}" class="menu-link d-flex align-items-center gap-2">
                             <i class="menu-icon tf-icons ti ti-folder-cog"></i>
-                            <div class="w-100 d-flex align-items-center justify-content-between">Projek</div>
+                            <div class="w-100 d-flex align-items-center justify-content-between">Project</div>
                         </a>
                     </li>
                     <li class="menu-item @if ($title == 'Tim/history') active @endif ">
@@ -823,7 +814,7 @@
                                                 </div>
                                                 <div class="flex-grow-1">
                                                     <span class="fw-medium d-block">
-                                                        John Doe
+                                                        {{Auth::user()->username}}
                                                     </span>
                                                     <small class="text-muted">Admin</small>
                                                 </div>

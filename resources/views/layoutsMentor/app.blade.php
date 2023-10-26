@@ -176,7 +176,7 @@
                     </li>
                     <li class="menu-item {{ request()->routeIs('pengguna.mentor') ? 'active' : '' }}">
                         <a href="{{ route('pengguna.mentor') }}" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-users-group"></i>
+                            <i class="menu-icon tf-icons ti ti-users-plus"></i>
                             <div>Pengguna</div>
                         </a>
                     </li>
