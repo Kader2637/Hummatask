@@ -208,7 +208,7 @@
                                 <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Siswa Magang</span>
                             </li>
                             <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
-                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
+                                <a class="nav-link dropdown-toggle hide-arrow mx-3" href="javascript:void(0);"
                                     data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                                     <i class="ti ti-bell ti-md"></i>
                                     <span class="badge bg-danger rounded-pill badge-notifications">5</span>

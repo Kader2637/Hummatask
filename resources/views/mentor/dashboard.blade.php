@@ -4,9 +4,12 @@
     <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}"></script>
 
     <div class="container mt-3">
-        <h5 class="fw-bold">Dashboard</h5>
+        <h5 class="">Dashboard</h5>
         <div class="card">
-            <h5 class="card-header">Tabel Presentasi</h5>
+            <div class="d-flex justify-content-between mx-3 my-4">
+                <h5 class="pb-0">Tabel Presentasi</h5>
+                <a href="{{ route('presentasi.mentor') }}" class="btn btn-primary d-flex justify-content-end">Detail</a>
+            </div>
             <div class="table-responsive text-nowrap">
                 <table class="table">
                     <thead>
@@ -72,9 +75,6 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="d-flex justify-content-end me-3 mb-3">
-                    <a href="{{ route('presentasi.mentor') }}" class="btn btn-primary d-flex justify-content-end">Detail</a>
-                </div>
             </div>
         </div>
         <div class="row mt-3">
