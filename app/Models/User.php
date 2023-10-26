@@ -7,7 +7,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
+// $ketuaMagang = Role::create(['name'=>'Ketua']);
+// $wakilKetuaMagang = Role::create(['name'=>'Wakil Ketua Magang']);
+// $permission = Permission::create(['name'=>'kelola siswa']);
+
+// $permission->syncRoles([$ketuaMagang,$wakilKetuaMagang]);
 
 class User extends Authenticatable
 {
@@ -49,4 +58,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+
+
 }

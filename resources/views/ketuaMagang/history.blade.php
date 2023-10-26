@@ -48,14 +48,42 @@
         .nama-anggota {
             margin-top: 15px;
         }
+
+        @media (min-width: 320px) and (max-width: 450px){
+
+            .navbar-ul{
+                flex-direction: column;
+                width: 100%;
+                padding-left: 0px;
+            }
+
+            .navbar-ul li{
+                font-size: 13px;
+                display: 'flex';
+                justify-content: 'center';
+                align-content: 'center';
+            }
+
+            .button-document{
+                width: 100%;
+                margin-bottom: 8px;
+            }
+
+            .button-document button{
+                width: 100%;
+            }
+
+
+        }
+
     </style>
     <!-- Content -->
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-3 mb-4">
             <span class="text-muted fw-light"></span> History
         </h4>
-        <div class="d-flex card">
-            <ul class="nav nav-pills mb-3 mt-3 " style="padding-left: 20px" id="pills-tab" role="tablist">
+        <div class="d-flex card flex-md-row align-items-center justify-content-between">
+            <div class=" nav nav-pills mb-3 mt-3 d-flex flex-wrap navbar-ul px-3" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
                         type="button" role="tab" aria-controls="pills-home" aria-selected="true"><i
@@ -78,10 +106,10 @@
                         type="button" role="tab" aria-controls="pills-contact" aria-selected="false"><i
                             class="fa-solid fa-users icon-text"></i>Team</button>
                 </li>
-                <div class="px-3" style="margin-left: auto">
-                    <button class="btn btn-success"><i class="fa-regular fa-file icon-text"></i>document</i></button>
-                </div>
-            </ul>
+            </div>
+            <div class="px-3 button-document" style="margin-left: auto">
+                <button class="btn btn-success"><i class="fa-regular fa-file icon-text"></i>document</i></button>
+            </div>
         </div>
         <div class="tab-content px-0" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"

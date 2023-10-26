@@ -142,7 +142,7 @@
                         <ul class="menu-sub">
                             <li class="menu-item">
                                 <a href="{{ route('ketua.dashboard') }}" class="menu-link">
-                                    <div>Dashboard</div>
+                                     <div>Dashboard</div>
                                 </a>
                             </li>
                             <li class="menu-item ">
@@ -162,6 +162,7 @@
                             </li>
                         </ul>
                     </li>
+                    {{-- @endcan --}}
                     <li class="menu-item ">
                         <a class="menu-link">
                             <i class="menu-icon tf-icons ti ti-users-group"></i>

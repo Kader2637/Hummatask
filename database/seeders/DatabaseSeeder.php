@@ -2,10 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -27,14 +30,6 @@ class DatabaseSeeder extends Seeder
                 'uuid' => Str::uuid(),
                 'username' => 'Rafliansyah',
                 'email' => 'Rafliansyah@gmail.com',
-                'password' => Hash::make('password'),
-                'peran_id' => 1,
-                'deskripsi' => 'none',
-            ],
-            [
-                'uuid' => Str::uuid(),
-                'username' => 'Adi Kurniawan',
-                'email' => 'Kurniawan@gmail.com',
                 'password' => Hash::make('password'),
                 'peran_id' => 1,
                 'deskripsi' => 'none',
@@ -72,5 +67,18 @@ class DatabaseSeeder extends Seeder
                 'deskripsi' => 'none',
             ],
         ]);
+
+        // app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+
+        // Permission::create(['name'=>'kelola siswa']);
+
+        // $role = Role::create(['name'=>'ketua']);
+        // $role->givePermissionTo(Permission::all());
+
+        // // $user->
+        // $user->assignRole($role);
+
+
+
     }
 }
