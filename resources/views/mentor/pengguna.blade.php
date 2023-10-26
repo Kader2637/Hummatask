@@ -16,7 +16,7 @@
                 height: 40px;
             }
 
-            .kontol {
+            .search {
                 display: none !important;
             }
             .saputra {
@@ -56,9 +56,9 @@
                     {{-- <div class="card"> --}}
                     <div class="row g-3 align-items-center">
                         <div class="d-flex flex-row gap-2 justify-content-between py-3 px-4">
-                            <div class="d-flex flex-row gap-1 kontol">
-                                <label for="inputPassword6" class="col-form-label"
-                                    style="padding-right: 5px;padding-left: 5px">Search Filter</label>
+                            <div class="d-flex flex-row gap-1 search">
+                                <label for="inputPassword6" class="col-form-label col-md-4"
+                                    style="padding-right: 0px;padding-left: 5px">Search Filter</label>
                                 <input type="text" class="form-control pencarian">
                             </div>
                             <div class="d-flex">
@@ -172,9 +172,9 @@
                     {{-- <div class="card"> --}}
                     <div class="row g-3 align-items-center">
                         <div class="d-flex flex-row gap-2 justify-content-between py-3 px-4">
-                            <div class="d-flex flex-row gap-1">
-                                <label for="inputPassword6" class="col-form-label"
-                                    style="padding-right: 5px;padding-left: 5px">Search Filter</label>
+                            <div class="d-flex flex-row gap-1 search">
+                                <label for="inputPassword6" class="col-form-label col-md-4"
+                                    style="padding-right: 0px;padding-left: 5px">Search Filter</label>
                                 <input type="text" class="form-control" style="width:200px;">
                             </div>
                             <div class="d-flex">
@@ -263,9 +263,9 @@
                     {{-- <div class="card"> --}}
                     <div class="row g-3 align-items-center">
                         <div class="d-flex flex-row gap-2 justify-content-between py-3 px-4">
-                            <div class="d-flex flex-row gap-1">
-                                <label for="inputPassword6" class="col-form-label"
-                                    style="padding-right: 5px;padding-left: 5px">Search Filter</label>
+                            <div class="d-flex flex-row gap-1 search">
+                                <label for="inputPassword6" class="col-form-label col-md-4"
+                                    style="padding-right: 0px;padding-left: 5px">Search Filter</label>
                                 <input type="text" class="form-control" style="width:200px;">
                             </div>
                             <div class="d-flex">
@@ -349,9 +349,9 @@
                     {{-- <div class="card"> --}}
                     <div class="row g-3 align-items-center">
                         <div class="d-flex flex-row gap-2 justify-content-between py-3 px-4">
-                            <div class="d-flex flex-row gap-1">
-                                <label for="inputPassword6" class="col-form-label"
-                                    style="padding-right: 5px;padding-left: 5px">Search Filter</label>
+                            <div class="d-flex flex-row gap-1 search">
+                                <label for="inputPassword6" class="col-form-label col-md-4"
+                                    style="padding-right: 0px;padding-left: 5px">Search Filter</label>
                                 <input type="text" class="form-control" style="width:200px;">
                             </div>
                         </div>
