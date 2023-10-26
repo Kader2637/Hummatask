@@ -48,7 +48,7 @@
                                 <input type="text" class="form-control" style="width:200px;">
                             </div>
                             <div class="d-flex">
-                                <div class="col" style="padding-left: auto">
+                                <div class="col ">
                                     <button class="btn btn-success"><i
                                             class="fa-regular fa-file icon-text"></i>Import</button>
                                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-data"><i
@@ -390,23 +390,23 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modalCenterTitle">Edit User</h5>
+                            <h5 class="modal-title" id="modalCenterTitle">Tambah Pengguna</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col mb-3">
-                                    <label for="nameWithTitle" class="form-label">Name</label>
+                                    <label for="nameWithTitle" class="form-label">Nama</label>
                                     <input type="text" id="nameWithTitle" class="form-control"
-                                        placeholder="Enter Name">
+                                        placeholder="Masukkan nama pengguna">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="nameWithTitle" class="form-label">Email</label>
                                     <input type="text" id="nameWithTitle" class="form-control"
-                                        placeholder="Enter Email">
+                                        placeholder="Masukkan email">
                                 </div>
                             </div>
                             <div class="row">
@@ -423,8 +423,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
+                            <button type="button" class="btn btn-primary">Simpan</button>
                         </div>
                     </div>
                 </div>
@@ -468,8 +468,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
+                            <button type="button" class="btn btn-primary">Simpan</button>
                         </div>
                     </div>
                 </div>

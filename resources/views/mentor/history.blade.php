@@ -32,7 +32,6 @@
             /* Warna thumb saat dihover */
         }
 
-
         .avatar {
             width: 30px;
             height: 30px;
@@ -44,6 +43,7 @@
         .icon-text {
             margin-right: 5px;
         }
+
         .nama-anggota {
             margin-top: 15px;
         }
@@ -59,7 +59,7 @@
                     <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
                         type="button" role="tab" aria-controls="pills-home" aria-selected="true"><i
                             class="fa-solid fa-calendar-xmark icon-text"></i>Telat
-                        Deddline</button>
+                        Deadline</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
@@ -77,24 +77,12 @@
                         type="button" role="tab" aria-controls="pills-contact" aria-selected="false"><i
                             class="fa-solid fa-users icon-text"></i>Team</button>
                 </li>
-                <div class="px-3" style="margin-left: auto">
-                    <button class="btn btn-success"><i class="fa-regular fa-file icon-text"></i>document</i></button>
-                </div>
             </ul>
         </div>
-        <div class="tab-content" id="pills-tabContent">
+        <div class="tab-content px-0" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
                 tabindex="0">
                 <div class="card">
-                    <div class="row g-3 align-items-center">
-                        <div class="d-flex justify-content-between" style="padding-bottom: 15px;padding-top:15px">
-                            <label for="inputPassword6" class="col-form-label" style="padding-left:15px">Presentasi</label>
-                            <div class="d-flex" style="padding-right:15px;">
-                                <label for="inputPassword6" class="col-form-label" style="padding-right: 5px">Filter</label>
-                                <input type="text" class="form-control" style="width:200px;">
-                            </div>
-                        </div>
-                    </div>
                     <div class="card-datatable table-responsive">
                         <table class="dt-responsive table">
                             <thead>
@@ -159,17 +147,6 @@
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
                 tabindex="0">
                 <div class="card">
-                    <div class="row g-3 align-items-center">
-                        <div class="d-flex justify-content-between" style="padding-bottom: 15px;padding-top:15px">
-                            <label for="inputPassword6" class="col-form-label"
-                                style="padding-left:15px">Presentasi</label>
-                            <div class="d-flex" style="padding-right:15px;">
-                                <label for="inputPassword6" class="col-form-label"
-                                    style="padding-right: 5px">Filter</label>
-                                <input type="text" class="form-control" style="width:200px;">
-                            </div>
-                        </div>
-                    </div>
                     <div class="card-datatable table-responsive">
                         <table class="dt-responsive table">
                             <thead>
@@ -507,7 +484,8 @@
                                 <label for="emailWithTitle"
                                 class="form-label">STATUS</label>
                                 <button disabled="disabled" class="btn"
-                                    style="background-color:  rgb(255, 231, 187);color:rgb(255, 149, 0);width: fit-content;margin-top: 4px">Big Project</button>
+                                    style="background-color:  rgb(255, 231, 187);color:rgb(255, 149, 0);width: fit-content;margin-top: 4px">Big
+                                    Project</button>
                             </div>
                             <div class="col mb-0" style="display: flex; flex-direction: column;">
                                 <label for="dobWithTitle" class="form-label">TEMA</label>
