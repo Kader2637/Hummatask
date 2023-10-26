@@ -159,7 +159,7 @@
                                     <div>Presentasi</div>
                                 </a>
                             </li>
-                            <li class="menu-item ">
+                            <li class="menu-item {{ request()->routeIs('ketua.project') ? 'active' : '' }}">
                                 <a href="{{ route('ketua.project') }}" class="menu-link">
                                     <div>Project</div>
                                 </a>

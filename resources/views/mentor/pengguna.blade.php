@@ -9,10 +9,24 @@
         .icon-text {
             margin-right: 5px;
         }
+
+        @media (min-width: 320px) and (max-width: 767px) {
+            .pencarian {
+                width: 100px;
+                height: 40px;
+            }
+
+            .kontol {
+                display: none !important;
+            }
+            .saputra {
+                flex-direction: column;
+            }
+        }
     </style>
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="card">
-            <ul class="nav nav-pills mb-3 mt-3" style="padding-left: 20px" id="pills-tab" role="tablist">
+            <ul class="nav nav-pills mb-3 mt-3 saputra" style="padding-left: 20px" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
                         type="button" role="tab" aria-controls="pills-home" aria-selected="true"><i
@@ -42,10 +56,10 @@
                     {{-- <div class="card"> --}}
                     <div class="row g-3 align-items-center">
                         <div class="d-flex flex-row gap-2 justify-content-between py-3 px-4">
-                            <div class="d-flex flex-row gap-1">
+                            <div class="d-flex flex-row gap-1 kontol">
                                 <label for="inputPassword6" class="col-form-label"
                                     style="padding-right: 5px;padding-left: 5px">Search Filter</label>
-                                <input type="text" class="form-control" style="width:200px;">
+                                <input type="text" class="form-control pencarian">
                             </div>
                             <div class="d-flex">
                                 <div class="col" style="padding-left: auto">
@@ -87,8 +101,8 @@
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
                                                     data-bs-target="#detail"><i class="ti ti-eye me-1"></i> Detail</a>
-                                                <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#edit-data"><i
-                                                        class="ti ti-pencil me-1"></i> Edit</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                                                    data-bs-target="#edit-data"><i class="ti ti-pencil me-1"></i> Edit</a>
                                                 <a class="dropdown-item" href="javascript:void(0);"><i
                                                         class="ti ti-trash me-1"></i> Delete</a>
                                             </div>
@@ -204,7 +218,8 @@
                                                 <a class="dropdown-item" href="javascript:void(0);"><i
                                                         class="ti ti-eye me-1"data-bs-toggle="modal"
                                                         data-bs-target="#detail-ketua"></i> Detail</a>
-                                                <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#edit-data"><i
+                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                    data-bs-toggle="modal" data-bs-target="#edit-data"><i
                                                         class="ti ti-pencil me-1"></i> Edit</a>
                                                 <a class="dropdown-item" href="javascript:void(0);"><i
                                                         class="ti ti-trash me-1"></i> Delete</a>
@@ -291,7 +306,8 @@
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                                 data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#edit-data"><i
+                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                    data-bs-toggle="modal" data-bs-target="#edit-data"><i
                                                         class="ti ti-pencil me-1"></i> Edit</a>
                                                 <a class="dropdown-item" href="javascript:void(0);"><i
                                                         class="ti ti-trash me-1"></i> Delete</a>
@@ -430,8 +446,8 @@
                 </div>
             </div>
 
-             {{-- modal edit data --}}
-             <div class="modal fade" id="edit-data" tabindex="-1" aria-hidden="true">
+            {{-- modal edit data --}}
+            <div class="modal fade" id="edit-data" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -660,4 +676,4 @@
                 </div>
             </div>
         </div>
-        @endsection
+    @endsection

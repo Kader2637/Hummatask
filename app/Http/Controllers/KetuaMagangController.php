@@ -19,6 +19,10 @@ class KetuaMagangController extends Controller
         $title = "ketua.project";
         return view('ketuaMagang.project',compact('title'));
     }
+    protected function detailProject(){
+        $title = "ketua.detail_project";
+        return view('ketuaMagang.detail_project',compact('title'));
+    }
     protected function historyPage(){
         $title = "ketua.history";
         return view('ketuaMagang.history',compact('title'));

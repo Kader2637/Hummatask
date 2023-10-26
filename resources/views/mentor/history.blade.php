@@ -47,6 +47,15 @@
         .nama-anggota {
             margin-top: 15px;
         }
+
+        @media (min-width: 320px) and (max-width: 767px) {
+            .saputra {
+                flex-direction: column;
+            }
+            .longor {
+                display: none;
+            }
+        }
     </style>
     <!-- Content -->
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -54,7 +63,7 @@
             <span class="text-muted fw-light"></span> History
         </h4>
         <div class="d-flex card">
-            <ul class="nav nav-pills mb-3 mt-3 " style="padding-left: 20px" id="pills-tab" role="tablist">
+            <ul class="nav nav-pills mb-3 mt-3 saputra" style="padding-left: 20px" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
                         type="button" role="tab" aria-controls="pills-home" aria-selected="true"><i
@@ -82,14 +91,14 @@
                 </div>
             </ul>
         </div>
-        <div class="tab-content" id="pills-tabContent">
+        <div class="tab-content mt-2" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
                 tabindex="0">
                 <div class="card">
                     <div class="row g-3 align-items-center">
                         <div class="d-flex justify-content-between" style="padding-bottom: 15px;padding-top:15px">
-                            <label for="inputPassword6" class="col-form-label" style="padding-left:15px">Presentasi</label>
-                            <div class="d-flex" style="padding-right:15px;">
+                            <label for="inputPassword6" class="col-form-label longor" style="padding-left:15px">Presentasi</label>
+                            <div class="d-flex px-2" style="padding-right:15px;">
                                 <label for="inputPassword6" class="col-form-label" style="padding-right: 5px">Filter</label>
                                 <input type="text" class="form-control" style="width:200px;">
                             </div>
