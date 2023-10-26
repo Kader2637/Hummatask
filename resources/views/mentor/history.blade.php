@@ -77,6 +77,9 @@
                         type="button" role="tab" aria-controls="pills-contact" aria-selected="false"><i
                             class="fa-solid fa-users icon-text"></i>Team</button>
                 </li>
+                <div class="px-3" style="margin-left: auto" data-bs-toggle="modal" data-bs-target="">
+                    <button class="btn btn-success"><i class="fa-regular fa-file icon-text"></i>document</i></button>
+                </div>
             </ul>
         </div>
         <div class="tab-content px-0" id="pills-tabContent">
