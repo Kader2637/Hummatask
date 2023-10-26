@@ -54,7 +54,7 @@ Route::prefix('ketuaMagang')->middleware(['auth', 'siswa'])->controller(KetuaMag
     Route::get('dashboard','dashboardPage')->name('ketua.dashboard');
     Route::get('presentasi','presentasiPage')->name('ketua.presentasi');
     Route::get('project','projectPage')->name('ketua.project');
-    Route::get('history','ketua.history')->name('ketua.history');
+    Route::get('history','historyPage')->name('ketua.history');
 });
 
 Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
