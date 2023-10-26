@@ -87,8 +87,8 @@
                 </div>
                 <div class="d-flex my-2">
                     <div class="button ms-auto">
-                        <button class="btn btn-outline-danger me-2">Reset</button>
-                        <button class="btn btn-outline-primary">Simpan</button>
+                        <button class="btn btn-danger me-2">Reset</button>
+                        <button class="btn btn-primary">Simpan</button>
                     </div>
                 </div>
             </div>

@@ -37,7 +37,7 @@ Route::prefix('siswa')->middleware(['auth', 'siswa'])->group(function () {
     Route::get('profile', [ProfileSiswaController::class, 'profilePage'])->name('profile.siswa');
 });
 
-// halaman Tim
+// Halaman Tim
 Route::prefix('tim')->middleware(['auth', 'siswa'])->controller(timController::class)->group(function () {
     Route::get('board', 'boardPage')->name('tim.board');
     Route::get('kalender', 'kalenderPage')->name('tim.kalender');
@@ -48,17 +48,16 @@ Route::prefix('tim')->middleware(['auth', 'siswa'])->controller(timController::c
     Route::get('history-catatan', 'historyCatatanPage')->name('tim.historyCatatan');
 });
 
-// halaman Ketua Magang
-
+// Halaman Ketua Magang
 Route::prefix('ketuaMagang')->middleware(['auth', 'siswa'])->controller(KetuaMagangController::class)->group(function () {
     Route::get('dashboard','dashboardPage')->name('ketua.dashboard');
     Route::get('presentasi','presentasiPage')->name('ketua.presentasi');
     Route::get('project','projectPage')->name('ketua.project');
     Route::get('detail_project','detailProject')->name('ketua.detail_project');
-    Route::get('history','ketua.history')->name('ketua.history');
+    Route::get('history','historyPage')->name('ketua.history');
 });
 
-
+// Halaman Mentor
 Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::get('dashboard', [mentorController::class, 'dashboard'])->name('dashboard.mentor');
     Route::get('pengajuan-projek', [PengajuanProjekController::class, 'pengajuanProjekPage'])->name('pengajuan-projek');

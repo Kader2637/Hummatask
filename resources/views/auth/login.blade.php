@@ -14,8 +14,8 @@
             </div>
             <div class="d-flex col-12 col-lg-5 align-items-center p-sm-5 p-4">
                 <div class="w-px-400 mx-auto">
-                    <h3 class=" mb-1">Selamat datang! 👋</h3>
-                    <p class="mb-4">Masuk dan mulai berpetualang.</p>
+                    <h3 class="mb-1 text-center">Selamat datang! 👋</h3>
+                    <p class="text-center">Masuk dan mulai berpetualang.</p>
                     <form id="formAuthentication" class="mb-3 px-5 py-5" action="{{ route('login') }}" method="POST">
                         @csrf
                         <div class="mb-3">

@@ -111,7 +111,9 @@ return [
      * 'model_has_permissions'(view the latest version of package's migration file)
      */
 
-    'teams' => true,
+     'register_octane_reset_listener' => false,
+
+    'teams' => false,
 
     /*
      * When set to true, the required permission names are added to the exception

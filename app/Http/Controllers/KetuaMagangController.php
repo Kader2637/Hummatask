@@ -8,15 +8,15 @@ class KetuaMagangController extends Controller
 {
 
     protected function dashboardPage(){
-        $title = "ketua.dashboard";
+        $title = "Dashboard Ketua Magang";
         return view('ketuaMagang.dashboard',compact('title'));
     }
     protected function presentasiPage(){
-        $title = "ketua.presentasi";
+        $title = "Presentasi Ketua Magang";
         return view('ketuaMagang.presentasi',compact('title'));
     }
     protected function projectPage(){
-        $title = "ketua.project";
+        $title = "Project Ketua Magang";
         return view('ketuaMagang.project',compact('title'));
     }
     protected function detailProject(){
@@ -24,7 +24,7 @@ class KetuaMagangController extends Controller
         return view('ketuaMagang.detail_project',compact('title'));
     }
     protected function historyPage(){
-        $title = "ketua.history";
+        $title = "History Ketua Magang";
         return view('ketuaMagang.history',compact('title'));
     }
 }

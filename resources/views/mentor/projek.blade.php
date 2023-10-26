@@ -9,7 +9,7 @@
         <h5 class="header">List Project</h5>
         {{-- Header --}}
         <div class="d-flex justify-content-between">
-            <div class="filter col-3">
+            <div class="filter col-lg-3 col-md-3 col-sm-3">
                 <label for="select2Basic" class="form-label">Filter</label>
                 <select id="select2Basic" name="temaProjek" class="select2 form-select form-select-lg"
                     data-allow-clear="true">
