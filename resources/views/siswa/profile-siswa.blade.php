@@ -1,10 +1,13 @@
-@extends('layoutsMentor.app')
+@extends('layouts.app')
 
 @section('style')
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/page-profile.css') }}" />
+@endsection
+
+@section('link')
 @endsection
 
 @section('content')
@@ -22,7 +25,8 @@
                             <label class="form-label text-white" for="image-input">
                                 <img id="preview-image"
                                     src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/14.png"
-                                    alt="example placeholder" style="width: 150px; height: 150px; border-radius: 10px; cursor: pointer;" class="d-block ms-0 ms-sm-4 rounded user-profile-img" />
+                                    alt="example placeholder" style="width: 150px; height: 150px; border-radius: 10px; cursor: pointer;"
+                                    class="d-block ms-0 ms-sm-4 rounded user-profile-img" />
                                 <input type="file" class="form-control d-none" id="image-input" name="avatar" />
                             </label>
                         </div>

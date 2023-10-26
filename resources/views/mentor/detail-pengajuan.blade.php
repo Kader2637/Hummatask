@@ -309,7 +309,7 @@
                         consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Tutuo</button>
+                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Tutup</button>
                 </div>
             </div>
         </div>

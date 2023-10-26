@@ -155,33 +155,34 @@
                             <div>Dashboard</div>
                         </a>
                     </li>
-                    <li class="menu-item">
-                        <a href="#" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                    <li class="menu-item {{ request()->routeIs('presentasi.mentor') ? 'active' : '' }}">
+                        <a href="{{ route('presentasi.mentor') }}" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-presentation"></i>
                             <div>Presentasi</div>
                         </a>
                     </li>
-                    <li class="menu-item">
-                        <a href="#" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                            <div>Pengajuan Projek</div>
+                    <li
+                        class="menu-item {{ request()->routeIs('pengajuan-projek', 'detail-pengajuan-projek') ? 'active' : '' }}">
+                        <a href="{{ route('pengajuan-projek') }}" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-report-analytics"></i>
+                            <div>Pengajuan Project</div>
                         </a>
                     </li>
-                    <li class="menu-item">
-                        <a href="#" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                            <div>Projek</div>
+                    <li class="menu-item {{ request()->routeIs('projek', 'detail-projek') ? 'active' : '' }}">
+                        <a href="{{ route('projek') }}" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-folder-cog"></i>
+                            <div>Project</div>
                         </a>
                     </li>
                     <li class="menu-item {{ request()->routeIs('pengguna.mentor') ? 'active' : '' }}">
                         <a href="{{ route('pengguna.mentor') }}" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                            <i class="menu-icon tf-icons ti ti-users-group"></i>
                             <div>Pengguna</div>
                         </a>
                     </li>
                     <li class="menu-item {{ request()->routeIs('history.mentor') ? 'active' : '' }}">
                         <a href="{{ route('history.mentor') }}" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                            <i class="menu-icon tf-icons ti ti-history"></i>
                             <div>Histori</div>
                         </a>
                     </li>
@@ -365,267 +366,30 @@
                                                                 class="ti ti-x"></span></a>
                                                     </div>
                                                 </div>
-                                            </li>
-                                            <li
-                                                class="list-group-item list-group-item-action dropdown-notifications-item">
-                                                <div class="d-flex">
-                                                    <div class="flex-shrink-0 me-3">
-                                                        <div class="avatar">
-                                                            <span
-                                                                class="avatar-initial rounded-circle bg-label-danger">CF</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <h6 class="mb-1">Charles Franklin</h6>
-                                                        <p class="mb-0">Accepted your connection</p>
-                                                        <small class="text-muted">12hr ago</small>
-                                                    </div>
-                                                    <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-read"><span
-                                                                class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-archive"><span
-                                                                class="ti ti-x"></span></a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li
-                                                class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
-                                                <div class="d-flex">
-                                                    <div class="flex-shrink-0 me-3">
-                                                        <div class="avatar">
-                                                            <img src="{{ asset('assets/img/avatars/2.png') }}" alt
-                                                                class="h-auto rounded-circle">
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <h6 class="mb-1">New Message ✉️</h6>
-                                                        <p class="mb-0">You have new message from Natalie</p>
-                                                        <small class="text-muted">1h ago</small>
-                                                    </div>
-                                                    <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-read"><span
-                                                                class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-archive"><span
-                                                                class="ti ti-x"></span></a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li
-                                                class="list-group-item list-group-item-action dropdown-notifications-item">
-                                                <div class="d-flex">
-                                                    <div class="flex-shrink-0 me-3">
-                                                        <div class="avatar">
-                                                            <span
-                                                                class="avatar-initial rounded-circle bg-label-success"><i
-                                                                    class="ti ti-cart"></i></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <h6 class="mb-1">Whoo! You have new order 🛒 </h6>
-                                                        <p class="mb-0">ACME Inc. made new order $1,154</p>
-                                                        <small class="text-muted">1 day ago</small>
-                                                    </div>
-                                                    <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-read"><span
-                                                                class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-archive"><span
-                                                                class="ti ti-x"></span></a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li
-                                                class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
-                                                <div class="d-flex">
-                                                    <div class="flex-shrink-0 me-3">
-                                                        <div class="avatar">
-                                                            <img src="{{ asset('assets/img/avatars/9.png') }}" alt
-                                                                class="h-auto rounded-circle">
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <h6 class="mb-1">Application has been approved 🚀 </h6>
-                                                        <p class="mb-0">Your ABC project application has been
-                                                            approved.</p>
-                                                        <small class="text-muted">2 days ago</small>
-                                                    </div>
-                                                    <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-read"><span
-                                                                class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-archive"><span
-                                                                class="ti ti-x"></span></a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li
-                                                class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
-                                                <div class="d-flex">
-                                                    <div class="flex-shrink-0 me-3">
-                                                        <div class="avatar">
-                                                            <span
-                                                                class="avatar-initial rounded-circle bg-label-success"><i
-                                                                    class="ti ti-chart-pie"></i></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <h6 class="mb-1">Monthly report is generated</h6>
-                                                        <p class="mb-0">July monthly financial report is generated
-                                                        </p>
-                                                        <small class="text-muted">3 days ago</small>
-                                                    </div>
-                                                    <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-read"><span
-                                                                class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-archive"><span
-                                                                class="ti ti-x"></span></a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li
-                                                class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
-                                                <div class="d-flex">
-                                                    <div class="flex-shrink-0 me-3">
-                                                        <div class="avatar">
-                                                            <img src="{{ asset('assets/img/avatars/5.png') }}" alt
-                                                                class="h-auto rounded-circle">
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <h6 class="mb-1">Send connection request</h6>
-                                                        <p class="mb-0">Peter sent you connection request</p>
-                                                        <small class="text-muted">4 days ago</small>
-                                                    </div>
-                                                    <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-read"><span
-                                                                class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-archive"><span
-                                                                class="ti ti-x"></span></a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li
-                                                class="list-group-item list-group-item-action dropdown-notifications-item">
-                                                <div class="d-flex">
-                                                    <div class="flex-shrink-0 me-3">
-                                                        <div class="avatar">
-                                                            <img src="{{ asset('assets/img/avatars/6.png') }}" alt
-                                                                class="h-auto rounded-circle">
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <h6 class="mb-1">New message from Jane</h6>
-                                                        <p class="mb-0">Your have new message from Jane</p>
-                                                        <small class="text-muted">5 days ago</small>
-                                                    </div>
-                                                    <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-read"><span
-                                                                class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-archive"><span
-                                                                class="ti ti-x"></span></a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li
-                                                class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
-                                                <div class="d-flex">
-                                                    <div class="flex-shrink-0 me-3">
-                                                        <div class="avatar">
-                                                            <span
-                                                                class="avatar-initial rounded-circle bg-label-warning"><i
-                                                                    class="ti ti-alert-triangle"></i></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <h6 class="mb-1">CPU is running high</h6>
-                                                        <p class="mb-0">CPU Utilization Percent is currently at
-                                                            88.63%,</p>
-                                                        <small class="text-muted">5 days ago</small>
-                                                    </div>
-                                                    <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-read"><span
-                                                                class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-archive"><span
-                                                                class="ti ti-x"></span></a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-menu-footer border-top">
-                                        <a href="javascript:void(0);"
-                                            class="dropdown-item d-flex justify-content-center text-primary p-2 h-px-40 mb-1 align-items-center">
-                                            View all notifications
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!--/ Notification -->
-
-                            <!-- User -->
-                            <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
-                                    data-bs-toggle="dropdown">
-                                    <div class="avatar avatar-online">
-                                        <img src="{{ asset('assets/img/avatars/1.png') }}" alt
-                                            class="h-auto rounded-circle">
-                                    </div>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li>
-                                        <a class="dropdown-item" href="../pages/profile-user.html">
-                                            <div class="d-flex">
-                                                <div class="flex-shrink-0 me-3">
-                                                    <div class="avatar avatar-online">
-                                                        <img src="{{ asset('assets/img/avatars/1.png') }}" alt
-                                                            class="h-auto rounded-circle">
-                                                    </div>
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <span class="fw-medium d-block">
-                                                        John Doe
-                                                    </span>
-                                                    <small class="text-muted">Admin</small>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown-divider"></div>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="../pages/profile-user.html">
-                                            <i class="ti ti-user-check me-2 ti-sm"></i>
-                                            <span class="align-middle">My Profile</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown-divider"></div>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('logout') }}">
-                                            <i class='ti ti-login me-2'></i>
-                                            <span class="align-middle">Logout</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!--/ User -->
-                        </ul>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <div class="dropdown-divider"></div>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{route('profile-mentor')}}">
+                                                <i class="ti ti-user-check me-2 ti-sm"></i>
+                                                <span class="align-middle">My Profile</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <div class="dropdown-divider"></div>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('logout') }}">
+                                                <i class='ti ti-logout me-2'></i>
+                                                <span class="align-middle">Logout</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <!--/ User -->
+                            </ul>
                     </div>
                 </nav>
                 <!-- / Navbar -->

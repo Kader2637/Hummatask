@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/typography.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/katex.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/editor.css') }}" />
-
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/app-kanban.cs') }}s" />
 @endsection
 
@@ -26,14 +25,14 @@
     <main class="container-fluid p-3">
         <div class="row">
             <div class=" jumbotron col-12 d-flex flex-column align-items-center justify-content-center">
-                <p>Senin,19 oktober 2023</p>
-                <p class="fs-3">Selamat datang, Adi Kurniawan</p>
+                <p>{{ \Carbon\Carbon::now()->translatedFormat('l, j F Y') }}</p>
+                <p class="fs-3">Selamat datang, {{ Auth::user()->username }}</p>
             </div>
         </div>
 
         <div class="row">
             <div class="col-lg-4">
-                <div class="kanban-title-board fs-5" contenteditable="true">Tugas yang belum selesai</div>
+                <div class="kanban-title-board fs-5">Tugas yang belum selesai</div>
             </div>
         </div>
         <div class="row mt-4 justify-content-center mb-2" id="navs-tab-sesijalani">
@@ -74,7 +73,7 @@
         </div>
         <div class="row">
             <div class="col-lg-4">
-                <div class="kanban-title-board fs-5" contenteditable="true">Tugas terbaru</div>
+                <div class="kanban-title-board fs-5">Tugas terbaru</div>
             </div>
         </div>
         <div class="row mt-4 justify-content-center" id="navs-tab-sesijalani">

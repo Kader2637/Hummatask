@@ -93,8 +93,7 @@
             <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
 
                 <div class="app-brand demo">
-                    <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1"
-                        class="app-brand-link">
+                    <a href="{{ route('dashboard.siswa') }}" class="app-brand-link">
                         <span class="app-brand-logo demo">
                             <svg width="32" height="20" viewBox="0 0 32 22" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -125,17 +124,48 @@
                 <ul class="menu-inner py-1">
                     <li class="menu-item menu-toggle">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons ti ti-layout-sidebar"></i>
+                            <i class="menu-icon tf-icons ti ti-category"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Dashboard</div>
                         </a>
                         <ul class="menu-sub">
-                            <li class="menu-item active">
+                            <li class="menu-item">
                                 <a href="" class="menu-link">
                                     <div>Atur Presentasi</div>
                                 </a>
                             </li>
                             <li class="menu-item ">
-                                <a href="crm.html" class="menu-link">
+                                <a href="" class="menu-link">
+                                    <div>Histori</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    {{-- Navigasi ke ketua magang --}}
+
+                    <li class="menu-item">
+                        <a href="" class="menu-link menu-toggle d-flex gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M13 3c3.88 0 7 3.14 7 7c0 2.8-1.63 5.19-4 6.31V21H9v-3H8c-1.11 0-2-.89-2-2v-3H4.5c-.42 0-.66-.5-.42-.81L6 9.66A7.003 7.003 0 0 1 13 3m0-2C8.42 1 4.61 4.43 4.06 8.91L2.5 11c-.58.72-.68 1.72-.26 2.59c.36.72 1 1.21 1.76 1.36V16c0 1.86 1.28 3.43 3 3.87V23h11v-5.53c2.5-1.64 4-4.41 4-7.47c0-4.96-4.04-9-9-9m3.1 8.42V9c0-.15 0-.24-.06-.38l.89-.66c.07-.04.07-.18.07-.28l-.82-1.36c-.05-.09-.18-.14-.28-.09l-.99.42c-.18-.19-.41-.33-.65-.42L14.1 5.2c-.03-.14-.1-.2-.22-.2h-1.59c-.1 0-.19.06-.19.2l-.14 1.03c-.23.09-.46.23-.66.42l-1.03-.42c-.09-.05-.17 0-.23.09l-.8 1.36c-.05.14-.05.24.05.28l.84.66c0 .14-.03.28-.03.38c0 .14.03.28.03.42l-.84.65c-.1.05-.1.14-.05.24l.8 1.4c.06.1.14.1.23.1l.99-.43c.24.19.42.29.7.38l.14 1.08c0 .09.09.16.19.16h1.59c.12 0 .19-.07.22-.16l.16-1.08c.24-.09.47-.19.65-.37l.99.42c.1 0 .23 0 .28-.1l.82-1.4c0-.1 0-.19-.07-.24l-.83-.65m-3 1.03c-.78 0-1.42-.66-1.42-1.45s.61-1.41 1.42-1.41c.78 0 1.44.61 1.44 1.41s-.66 1.45-1.44 1.45Z"/></svg>
+                            <div class="w-100 d-flex align-items-center justify-content-between">Ketua Magang</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="{{ route('ketua.dashboard') }}" class="menu-link">
+                                    <div>Dashboard</div>
+                                </a>
+                            </li>
+                            <li class="menu-item ">
+                                <a href="{{ route('ketua.presentasi') }}" class="menu-link">
+                                    <div>Presentasi</div>
+                                </a>
+                            </li>
+                            <li class="menu-item ">
+                                <a href="{{ route('ketua.project') }}" class="menu-link">
+                                    <div>Project</div>
+                                </a>
+                            </li>
+                            <li class="menu-item ">
+                                <a href="{{ route('ketua.history') }}" class="menu-link">
                                     <div>History</div>
                                 </a>
                             </li>
@@ -146,8 +176,9 @@
                             <i class="menu-icon tf-icons ti ti-layout-sidebar"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Tim
                                 <svg data-bs-toggle="modal" data-bs-target="#editUser"
-                                    style="position: relative; right: -10px;" xmlns="http://www.w3.org/2000/svg"
-                                    width="20" height="20" viewBox="0 0 1024 1024">
+                                    style="position: relative; right: -10px; cursor: pointer"
+                                    xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                    viewBox="0 0 1024 1024">
                                     <path fill="#888888"
                                         d="M512 64a448 448 0 1 1 0 896a448 448 0 0 1 0-896zm-38.4 409.6H326.4a38.4 38.4 0 1 0 0 76.8h147.2v147.2a38.4 38.4 0 0 0 76.8 0V550.4h147.2a38.4 38.4 0 0 0 0-76.8H550.4V326.4a38.4 38.4 0 1 0-76.8 0v147.2z" />
                                 </svg>
@@ -157,8 +188,7 @@
                     <li class="menu-item">
                         <ul class="">
                             <li class="menu-item ">
-                                <a href="{{ route('tim.board') }}" class="menu-link d-flex align-items-center gap-2"
-                                    target="_blank">
+                                <a href="{{ route('tim.board') }}" class="menu-link d-flex align-items-center gap-2">
                                     <img style="width: 30px" class="rounded-circle border border-primary"
                                         src="{{ asset('assets/logo.png') }}" alt="">
                                     <div class="">Hummatask</div>
@@ -445,7 +475,7 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
-                                        <a class="dropdown-item" href="../pages/profile-user.html">
+                                        <a class="dropdown-item" href="{{ route('profile.siswa') }}">
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
@@ -455,7 +485,7 @@
                                                 </div>
                                                 <div class="flex-grow-1">
                                                     <span class="fw-medium d-block">
-                                                        John Doe
+                                                        {{ Auth::user()->username }}
                                                     </span>
                                                     <small class="text-muted">Admin</small>
                                                 </div>
@@ -466,7 +496,7 @@
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="../pages/profile-user.html">
+                                        <a class="dropdown-item" href="{{ route('profile.siswa') }}">
                                             <i class="ti ti-user-check me-2 ti-sm"></i>
                                             <span class="align-middle">My Profile</span>
                                         </a>
@@ -496,7 +526,7 @@
 
                 {{-- Modal Tambah Tim --}}
                 <div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+                    <div class="modal-dialog modal-dialog-centered modal-lg modal-simple modal-edit-user">
                         <div class="modal-content">
                             <div class="modal-body">
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -508,14 +538,14 @@
                                                 <img id="preview-image"
                                                     src="{{ asset('assets/img/avatars/pen.png') }}"
                                                     alt="example placeholder"
-                                                    style="width: 150px; height: 150px; border-radius: 10px" />
+                                                    style="width: 150px; height: 150px; border-radius: 10px; cursor: pointer" />
                                                 <input type="file" class="form-control d-none" id="image-input"
                                                     name="avatar" />
                                             </label>
                                         </div>
                                         <div class="col-12 col-md-9 d-flex flex-wrap flex-col align-items-center">
-                                            <label class="form-label m-0 p-0" for="modalEditUserLastName">Name
-                                                Team</label>
+                                            <label class="form-label m-0 p-0" for="modalEditUserLastName">Nama
+                                                Tim</label>
                                             <input type="text" id="modalEditUserLastName"
                                                 name="modalEditUserLastName" class="form-control"
                                                 placeholder="Hummatask" />
@@ -589,7 +619,6 @@
 
     <script src="{{ asset('assets/js/dashboards-crm.js') }}"></script>
 
-    @yield('script')
     <script>
         let imageInput = $("#image-input");
 
@@ -608,6 +637,8 @@
             }
         });
     </script>
+
+    @yield('script')
 
 </body>
 
