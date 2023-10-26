@@ -29,9 +29,9 @@
                         <span class="text-black fs-5">Team</span>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-label-danger mx-2" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-danger mx-2" data-bs-toggle="modal"
                             data-bs-target="#modalTolak">Tolak</button>
-                        <button type="button" class="btn btn-label-success" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
                             data-bs-target="#modalTerima">Terima</button>
                     </div>
                 </div>

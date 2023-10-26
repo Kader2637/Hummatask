@@ -122,7 +122,7 @@
                 <div class="menu-inner-shadow"></div>
 
                 <ul class="menu-inner py-1">
-                    <li class="menu-item menu-toggle">
+                    <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons ti ti-category"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Dashboard</div>
@@ -173,7 +173,7 @@
                     </li>
                     <li class="menu-item ">
                         <a class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-layout-sidebar"></i>
+                            <i class="menu-icon tf-icons ti ti-users-group"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Tim
                                 <svg data-bs-toggle="modal" data-bs-target="#editUser"
                                     style="position: relative; right: -10px; cursor: pointer"
