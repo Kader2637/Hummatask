@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\authController;
+use App\Http\Controllers\KetuaMagangController;
 use App\Http\Controllers\mentorController;
 use App\Http\Controllers\PengajuanProjekController;
 use App\Http\Controllers\PresentasiController;
@@ -46,6 +47,16 @@ Route::prefix('tim')->middleware(['auth', 'siswa'])->controller(timController::c
     Route::get('history-presentasi', 'historyPresentasiPage')->name('tim.historyPresentasi');
     Route::get('history-catatan', 'historyCatatanPage')->name('tim.historyCatatan');
 });
+
+// halaman Ketua Magang
+
+Route::prefix('ketuaMagang')->middleware(['auth', 'siswa'])->controller(KetuaMagangController::class)->group(function () {
+    Route::get('dashboard','dashboardPage')->name('ketua.dashboard');
+    Route::get('presentasi','presentasiPage')->name('ketua.presentasi');
+    Route::get('project','projectPage')->name('ketua.project');
+    Route::get('history','ketua.history')->name('ketua.history');
+});
+
 
 Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::get('dashboard', [mentorController::class, 'dashboard'])->name('dashboard.mentor');
