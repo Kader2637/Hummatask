@@ -55,10 +55,11 @@
                 flex-direction: column;
                 width: 100%;
                 padding-left: 0px;
+
             }
 
             .navbar-ul li{
-                font-size: 13px;
+                /* font-size: 10px; */
                 display: 'flex';
                 justify-content: 'center';
                 align-content: 'center';
@@ -74,6 +75,15 @@
             }
 
 
+        }
+
+        @media (min-width: 500px) and (max-width: 768px){
+            .navbar-ul li{
+                font-size: 14px;
+                display: 'flex';
+                justify-content: 'center';
+                align-content: 'center';
+            }
         }
 
     </style>
