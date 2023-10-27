@@ -141,7 +141,7 @@
                         </div>
                     </div>
                     <div class="card-body pt-2">
-                        <canvas id="barChart" class="chartjs" data-height="435"></canvas>
+                        <canvas id="barChart" class="chartjs" data-height="600" style="height:480px;"></canvas>
                     </div>
                 </div>
             </div>
