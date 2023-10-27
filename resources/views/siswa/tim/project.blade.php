@@ -28,6 +28,18 @@
         href="{{ asset('assets/vendor/libs/typeahead-js/typeaheadb5e1.css?id=2603197f6b29a6654cb700bd9367e2a3') }}" />
 @endsection
 
+@section('style')
+
+<style>
+    @media (max-width: 425px){
+        .button-nav{
+            font-size: 13px;
+        }
+    }
+</style>
+
+@endsection
+
 @section('content')
     {{-- Modal --}}
     <div class="modal fade" id="ajukanModal" tabindex="-1" aria-hidden="true">
@@ -104,11 +116,11 @@
                 <div class="nav nav-pills d-flex justify-content-between" role="tablist">
                     <div class="d-flex justify-content-between">
                         <div class="nav-item" role="presentation">
-                            <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
+                            <button type="button" class="nav-link active button-nav" role="tab" data-bs-toggle="tab"
                                 data-bs-target="#navs-pills-top-home" aria-controls="navs-pills-top-home"
                                 aria-selected="true">Project</button>
                         </div>
-                        <div class="nav-item" role="presentation">
+                        <div class="nav-item button-nav" role="presentation">
                             <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
                                 data-bs-target="#navs-pills-top-profile" aria-controls="navs-pills-top-profile"
                                 aria-selected="false" tabindex="-1">Anggota</button>
@@ -116,7 +128,7 @@
                     </div>
 
                     <div class="" role="presentation">
-                        <button class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal"
+                        <button class="btn btn-primary button-nav waves-effect waves-light" data-bs-toggle="modal"
                             data-bs-target="#ajukanModal">
                             Ajukan Project
                         </button>
@@ -125,11 +137,11 @@
                 <div class="tab-content bg-transparent pb-0" style="box-shadow: none;">
                     <div class="tab-pane fade active show" id="navs-pills-top-home" role="tabpanel">
                         <div class="row">
-                            <div class="col-lg-4">
+                            <div class="col-lg-4 mb-4">
                                 <div class="card">
                                     <h5 class="card-header">Progres Tim</h5>
                                     <div class="card-body">
-                                      <canvas id="project" class="chartjs mb-4" data-height="267"  style="display: block; box-sizing: border-box; height: 200px; width: 200px;"></canvas>
+                                      <canvas id="project" class="chartjs mb-4 mx-auto" data-height="267"  style="display: block; box-sizing: border-box; height: 200px; width: 200px;"></canvas>
                                     </div>
                                 </div>
                             </div>
