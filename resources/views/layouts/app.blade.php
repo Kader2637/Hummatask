@@ -99,8 +99,9 @@
                         </a>
                     </li>
 
-                    {{-- Navigasi ke ketua magang --}}
+                    {{-- Navigasi ketua magang --}}
 
+                    {{-- @can --}}
                     <li class="menu-item @if (
                         $title === 'Dashboard Ketua Magang' ||
                             $title === 'Presentasi Ketua Magang' ||
@@ -134,6 +135,9 @@
                         </ul>
                     </li>
                     {{-- @endcan --}}
+
+                    {{-- Navigasi ketua magang --}}
+
                     <li class="menu-item ">
                         <a class="menu-link">
                             <i class="menu-icon tf-icons ti ti-users-group"></i>
