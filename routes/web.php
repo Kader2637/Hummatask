@@ -34,7 +34,7 @@ Route::get('logout', [authController::class, 'logout'])->name('logout');
 
 Route::prefix('siswa')->middleware(['auth', 'siswa'])->group(function () {
     Route::get('dashboard', [siswaController::class, 'dashboard'])->name('dashboard.siswa');
-    Route::get('profile', [ProfileSiswaController::class, 'profilePage'])->name('profile.siswa');
+    Route::get('profile', [siswaController::class, 'profilePage'])->name('profile.siswa');
 });
 
 // Halaman Tim
@@ -60,12 +60,12 @@ Route::prefix('ketuaMagang')->middleware(['auth', 'siswa'])->controller(KetuaMag
 // Halaman Mentor
 Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::get('dashboard', [mentorController::class, 'dashboard'])->name('dashboard.mentor');
-    Route::get('pengajuan-projek', [PengajuanProjekController::class, 'pengajuanProjekPage'])->name('pengajuan-projek');
-    Route::get('detail-pengajuan-projek', [PengajuanProjekController::class, 'detailPengajuanPage'])->name('detail-pengajuan-projek');
-    Route::get('projek', [ProjekController::class, 'projekPage'])->name('projek');
-    Route::get('detail-projek', [ProjekController::class, 'detailProjekPage'])->name('detail-projek');
-    Route::get('profile-mentor', [ProfileMentor::class, 'profilePage'])->name('profile-mentor');
+    Route::get('pengajuan-projek', [mentorController::class, 'pengajuanProjekPage'])->name('pengajuan-projek');
+    Route::get('detail-pengajuan-projek', [mentorController::class, 'detailPengajuanPage'])->name('detail-pengajuan-projek');
+    Route::get('projek', [mentorController::class, 'projekPage'])->name('projek');
+    Route::get('detail-projek', [mentorController::class, 'detailProjekPage'])->name('detail-projek');
+    Route::get('profile-mentor', [mentorController::class, 'profilePage'])->name('profile-mentor');
     Route::get('pengguna', [mentorController::class, 'pengguna'])->name('pengguna.mentor');
     Route::get('history', [mentorController::class, 'history'])->name('history.mentor');
-    Route::get('presentasi', [PresentasiController::class, 'presentasi'])->name('presentasi.mentor');
+    Route::get('presentasi', [mentorController::class, 'presentasi'])->name('presentasi.mentor');
 });
