@@ -85,11 +85,11 @@
                         </div>
                     </div>
                     <div class="card-body pt-2">
-                        <canvas id="barChart" class="chartjs" data-height="435" style="height: 330px;"></canvas>
+                        <canvas id="barChart" class="chartjs" data-height="435" style="height: 395px; max-height:395px;"></canvas>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-xxl-6 mb-4 order-3 order-xxl-1">
+            <div class="col-lg-4 col-xxl-4 mb-4 order-3 order-xxl-1">
                 <div class="card card-border-shadow-primary">
                     <div class="mt-3">
                         <h5><i class="mx-3 ti ti-presentation-analytics ti-lg "></i>List Presentasi Hari Ini</h5>

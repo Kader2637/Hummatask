@@ -19,7 +19,6 @@
             .search {
                 display: none !important;
             }
-
             .saputra {
                 flex-direction: column;
             }
@@ -27,48 +26,53 @@
     </style>
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="card">
-            <ul class="nav nav-pills mb-3 mt-3 saputra justify-content-between" style="padding-left: 20px" id="pills-tab" role="tablist">
-                <div class="nav nav-pills mb-3 mt-3 saputra">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
-                            type="button" role="tab" aria-controls="pills-home" aria-selected="true"><i
-                                class="fa-solid fa-users icon-text"></i>Siswa</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
-                            data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
-                            aria-selected="false"><i class="fa-solid fa-user-group icon-text"></i>Ketua
-                            Magang</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
-                            data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact"
-                            aria-selected="false"><i class="fa-solid fa-user-tie icon-text"></i>Mentor</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-team"
-                            type="button" role="tab" aria-controls="pills-contact" aria-selected="false"><i
-                                class="fa-solid fa-user-slash icon-text"></i>Histori Ketua
-                            Magang</button>
-                    </li>
-                </div>
-                <div class="row align-items-center mx-1">
-                    <div class="d-flex flex-row gap-2 justify-content-between py-3 px-4">
-                        <div class="d-flex">
-                            <div class="col" style="padding-left: auto">
-                                <button class="btn btn-success"><i class="fa-regular fa-file icon-text"></i>Import</button>
-                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-data"><i
-                                        class="fa-solid fa-plus icon-text"></i>Tambah</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <ul class="nav nav-pills mb-3 mt-3 saputra" style="padding-left: 20px" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+                        type="button" role="tab" aria-controls="pills-home" aria-selected="true"><i
+                            class="fa-solid fa-users icon-text"></i>Siswa</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
+                        type="button" role="tab" aria-controls="pills-profile" aria-selected="false"><i
+                            class="fa-solid fa-user-group icon-text"></i>Ketua
+                        Magang</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact"
+                        type="button" role="tab" aria-controls="pills-contact" aria-selected="false"><i
+                            class="fa-solid fa-user-tie icon-text"></i>Mentor</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-team"
+                        type="button" role="tab" aria-controls="pills-contact" aria-selected="false"><i
+                            class="fa-solid fa-user-slash icon-text"></i>Histori Ketua
+                        Magang</button>
+                </li>
             </ul>
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
                     tabindex="0">
+                    {{-- <div class="card"> --}}
+                    <div class="row g-3 align-items-center">
+                        <div class="d-flex flex-row gap-2 justify-content-between py-3 px-4">
+                            <div class="d-flex flex-row gap-1 search">
+                                <label for="inputPassword6" class="col-form-label col-md-4"
+                                    style="padding-right: 0px;padding-left: 5px">Search Filter</label>
+                                <input type="text" class="form-control pencarian">
+                            </div>
+                            <div class="d-flex">
+                                <div class="col">
+                                    <button class="btn btn-success"><i
+                                            class="fa-regular fa-file icon-text"></i>Import</button>
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-data"><i
+                                            class="fa-solid fa-plus icon-text"></i>Tambah</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card-datatable table-responsive">
-                        <table id="jstabel1" class="dt-responsive table">
+                        <table class="dt-responsive table">
                             <thead>
                                 <tr>
                                     <th scope="col">NO</th>
@@ -95,12 +99,10 @@
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                                 data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="javascript:void(0);"
-                                                    data-bs-toggle="modal" data-bs-target="#detail"><i
-                                                        class="ti ti-eye me-1"></i> Detail</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"
-                                                    data-bs-toggle="modal" data-bs-target="#edit-data"><i
-                                                        class="ti ti-pencil me-1"></i> Edit</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                                                    data-bs-target="#detail"><i class="ti ti-eye me-1"></i> Detail</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                                                    data-bs-target="#edit-data"><i class="ti ti-pencil me-1"></i> Edit</a>
                                                 <a class="dropdown-item" href="javascript:void(0);"><i
                                                         class="ti ti-trash me-1"></i> Delete</a>
                                             </div>
@@ -167,8 +169,26 @@
                 </div>
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
                     tabindex="0">
+                    {{-- <div class="card"> --}}
+                    <div class="row g-3 align-items-center">
+                        <div class="d-flex flex-row gap-2 justify-content-between py-3 px-4">
+                            <div class="d-flex flex-row gap-1 search">
+                                <label for="inputPassword6" class="col-form-label col-md-4"
+                                    style="padding-right: 0px;padding-left: 5px">Search Filter</label>
+                                <input type="text" class="form-control" style="width:200px;">
+                            </div>
+                            <div class="d-flex">
+                                <div class="col" style="padding-left: auto">
+                                    <button class="btn btn-success"><i
+                                            class="fa-regular fa-file icon-text"></i>Import</button>
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-data"><i
+                                            class="fa-solid fa-plus icon-text"></i>Tambah</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card-datatable table-responsive">
-                        <table id="jstabel2" class="dt-responsive table">
+                        <table class="dt-responsive table">
                             <thead>
                                 <tr>
                                     <th scope="col">NO</th>
@@ -240,8 +260,26 @@
                 </div>
                 <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"
                     tabindex="0">
+                    {{-- <div class="card"> --}}
+                    <div class="row g-3 align-items-center">
+                        <div class="d-flex flex-row gap-2 justify-content-between py-3 px-4">
+                            <div class="d-flex flex-row gap-1 search">
+                                <label for="inputPassword6" class="col-form-label col-md-4"
+                                    style="padding-right: 0px;padding-left: 5px">Search Filter</label>
+                                <input type="text" class="form-control" style="width:200px;">
+                            </div>
+                            <div class="d-flex">
+                                <div class="col" style="padding-left: auto">
+                                    <button class="btn btn-success"><i
+                                            class="fa-regular fa-file icon-text"></i>Import</button>
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-data"><i
+                                            class="fa-solid fa-plus icon-text"></i>Tambah</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card-datatable table-responsive">
-                        <table id="jstabel3" class="dt-responsive table">
+                        <table class="dt-responsive table">
                             <thead>
                                 <tr>
                                     <th scope="col">NO</th>
@@ -308,8 +346,18 @@
                 </div>
                 <div class="tab-pane fade" id="pills-team" role="tabpanel" aria-labelledby="pills-disabled-tab"
                     tabindex="0">
+                    {{-- <div class="card"> --}}
+                    <div class="row g-3 align-items-center">
+                        <div class="d-flex flex-row gap-2 justify-content-between py-3 px-4">
+                            <div class="d-flex flex-row gap-1 search">
+                                <label for="inputPassword6" class="col-form-label col-md-4"
+                                    style="padding-right: 0px;padding-left: 5px">Search Filter</label>
+                                <input type="text" class="form-control" style="width:200px;">
+                            </div>
+                        </div>
+                    </div>
                     <div class="card-datatable table-responsive">
-                        <table id="jstabel4" class="dt-responsive table">
+                        <table class="dt-responsive table">
                             <thead>
                                 <tr>
                                     <th scope="col">NO</th>
@@ -391,8 +439,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-label-secondary"
-                                data-bs-dismiss="modal">Kembali</button>
+                            <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
                             <button type="button" class="btn btn-primary">Simpan</button>
                         </div>
                     </div>
@@ -437,8 +484,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-label-secondary"
-                                data-bs-dismiss="modal">Kembali</button>
+                            <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
                             <button type="button" class="btn btn-primary">Simpan</button>
                         </div>
                     </div>
