@@ -92,7 +92,7 @@
         <h4 class="py-3 mb-4">
             <span class="text-muted fw-light"></span> History
         </h4>
-        <div class="d-flex card flex-md-row align-items-center justify-content-between">
+        <div class="d-flex card flex-md-row align-items-center justify-content-between mb-4">
             <div class=" nav nav-pills mb-3 mt-3 d-flex flex-wrap navbar-ul px-3" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"

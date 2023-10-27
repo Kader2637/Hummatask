@@ -52,35 +52,6 @@
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('assets/js/config.js') }}"></script>
     @yield('link')
-
-    <script>
-        window.templateCustomizer = new TemplateCustomizer({
-            cssPath: '',
-            themesPath: '',
-            defaultStyle: "light",
-            defaultShowDropdownOnHover: "true",
-            displayCustomizer: "true",
-            lang: 'en',
-            pathResolver: function(path) {
-                var resolvedPaths = {
-                    'core.css': 'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/core.css?id=9dd8321ea008145745a7d78e072a6e36',
-                    'core-dark.css': 'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/core-dark.css?id=d661bae1d0ada9f7e9e3685a3e1f427e',
-
-                    // Themes
-                    'theme-default.css': 'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/theme-default.css?id=a4539ede8fbe0ee4ea3a81f2c89f07d9',
-                    'theme-default-dark.css': 'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/theme-default-dark.css?id=ce86d777a4c5030f51d0f609f202bcc5',
-                    'theme-bordered.css': 'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/theme-bordered.css?id=786794ca0c68d96058e8ceeb20f4e7c5',
-                    'theme-bordered-dark.css': 'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/theme-bordered-dark.css?id=e7122ef6338b22f7cea9eaff5a96aa8b',
-                    'theme-semi-dark.css': 'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/theme-semi-dark.css?id=a0a317e88e943fdd62d514e00deebb22',
-                    'theme-semi-dark-dark.css': 'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/theme-semi-dark-dark.css?id=e9a2f7cd6ace727264936f6bf93ab1e2',
-                }
-                return resolvedPaths[path] || path;
-            },
-            'controls': ["rtl", "style", "headerType", "contentLayout", "layoutCollapsed", "layoutNavbarOptions",
-                "themes"
-            ],
-        });
-    </script>
 </head>
 
 @yield('style')
@@ -519,12 +490,12 @@
                 {{-- Modal Tambah Tim --}}
                 <div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg modal-simple modal-edit-user">
-                        <div class="modal-content">
+                        <div class="modal-content p-2">
                             <div class="modal-body">
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                <button type="button" class="btn-close position-absolute top-0 " style="right: 0px" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                                 <form id="editUserForm" class="row g-2 p-0 m-0" onsubmit="return false">
-                                    <div class="col-12 col-md-12 d-flex flex-row gap-3 align-items-center">
+                                    <div class="col-12  gap-3 align-items-center">
                                         <div class="col-12 col-md-3 align-items-center">
                                             <label class="form-label text-white" for="image-input">
                                                 <img id="preview-image"
@@ -535,7 +506,7 @@
                                                     name="avatar" />
                                             </label>
                                         </div>
-                                        <div class="col-12 col-md-9 d-flex flex-wrap flex-col align-items-center">
+                                        <div class="col-lg-12 d-flex flex-wrap flex-col align-items-center">
                                             <label class="form-label m-0 p-0" for="modalEditUserLastName">Nama
                                                 Tim</label>
                                             <input type="text" id="modalEditUserLastName"
@@ -547,32 +518,6 @@
                                             <input type="text" id="modalEditUserLastName"
                                                 name="modalEditUserLastName" class="form-control"
                                                 placeholder="https://.." />
-                                        </div>
-                                    </div>
-                                    <div class="col-12 justify-content-center">
-                                        <div class="row">
-                                            <div class="mb-3 col-lg-6 col-xl-5 col-12 mb-0">
-                                                <label class="form-label" for="form-repeater-1-1">Username</label>
-                                                <input type="text" id="form-repeater-1-1" class="form-control"
-                                                    placeholder="john.doe" />
-                                            </div>
-                                            <div class="mb-3 col-lg-6 col-xl-5 col-12 mb-0">
-                                                <label class="form-label" for="form-repeater-1-2">Password</label>
-                                                <input type="password" id="form-repeater-1-2" class="form-control"
-                                                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
-                                            </div>
-                                            <div class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
-                                                <button class="btn btn-label-danger mt-4" data-repeater-delete>
-                                                    <i class="ti ti-x ti-xs me-1"></i>
-                                                    <span class="align-middle">Delete</span>
-                                                </button>
-                                            </div>
-                                            <div class="mb-0">
-                                                <button class="btn btn-primary" data-repeater-create>
-                                                    <i class="ti ti-plus me-1"></i>
-                                                    <span class="align-middle">Add</span>
-                                                </button>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-12 d-flex flex-row flex-wrap justify-content-end">

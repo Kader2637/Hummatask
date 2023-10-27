@@ -2,7 +2,22 @@
 
 @section('link')
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />
+
+    <style>
+        .tim-detail{
+            flex-direction: row;
+        }
+
+        @media (min-width: 768px) and (max-width: 800px){
+            .tim-detail{
+                flex-direction: column;
+            }
+        }
+
+    </style>
+
 @endsection
+
 
 @section('content')
     <div class="container-fluid mt-4">
@@ -31,12 +46,12 @@
             <div class="col-md-4 col-lg-3">
                 <div class="card text-center mb-3">
                     <div class="card-body">
-                        <div class="d-flex flex-row gap-3">
+                        <div class="d-flex gap-3 tim-detail justify-content-between">
                             <img src="{{ asset('assets/img/avatars/2.png') }}" alt
                                 class="rounded-circle mb-3">
                             <div
                                 style="display: flex; flex-direction: column; justify-content: center; align-items: center">
-                                <span class="text-black fs-5">Hummatask</span>
+                                <span class="text-black fs-5 judul">Hummatask</span>
                                 <div class="d-flex align-items-center">
                                     <a href="#"><span class="badge bg-label-warning my-1">Big Project</span></a>
                                 </div>

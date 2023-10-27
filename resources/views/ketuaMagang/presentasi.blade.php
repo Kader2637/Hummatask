@@ -8,7 +8,7 @@
 @section('content')
     <div class="container-fluid mt-3">
         <h5>Presentasi</h5>
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
@@ -44,6 +44,7 @@
             </div>
         </div>
     </div>
+   <div class="container-fluid">
     <div class="tab-content">
         <div class="tab-pane fade active show" id="navs-pills-top-home" role="tabpanel">
             <div class="card">
@@ -273,6 +274,7 @@
             </div>
         </div>
     </div>
+   </div>
 @endsection
 
 @section('script')
