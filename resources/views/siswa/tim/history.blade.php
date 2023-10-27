@@ -1,7 +1,7 @@
 @extends('layouts.tim')
 
 @section('content')
-    <div class="container d-flex mt-5 justify-content-center">
+    <div class="container-fluid d-flex mt-5 justify-content-center">
         <div class="col-12">
             <div class="nav-align-top mb-4">
                 <ul class="nav nav-pills mb-3" role="tablist">

@@ -12,6 +12,41 @@
 @endsection
 
 @section('content')
+    <div class="container-fluid d-flex mt-5 justify-content-center">
+        <div class="col-12">
+            <div class="card">
+                <h5 class="card-header">Histori Catatan</h5>
+                <div class="card-datatable table-responsive">
+                    <table id="jstabel" class="table">
+                        <thead>
+                            <tr>
+                                <th>Catatan</th>
+                                <th>Tanggal</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            <tr>
+                                <td>Albert Cook</td>
+                                <td>
+                                    <span class="badge bg-label-primary me-1">22 Januari 2022</span>
+                                </td>
+                                <td class="d-flex flex-wrap flex-row">
+                                    <a class="d-block cursor-pointer" data-bs-toggle="modal"
+                                        data-bs-target="#edit-catatan"><i class="ti ti-pencil me-1 text-primary"></i></a>
+                                    <a class="d-block cursor-pointer" href="javascript:void(0);"><i
+                                            class="ti ti-trash me-1 text-danger"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {{-- Modal edit --}}
     <div class="modal fade" id="edit-catatan" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-simple modal-edit-user">
             <div class="modal-content">
@@ -43,39 +78,7 @@
             </div>
         </div>
     </div>
-
-    <div class="container d-flex mt-5 justify-content-center">
-        <div class="col-12">
-            <div class="card">
-                <h5 class="card-header">Histori Catatan</h5>
-                <div class="card-datatable table-responsive">
-                    <table id="jstabel" class="table">
-                        <thead>
-                            <tr>
-                                <th>Catatan</th>
-                                <th>Tanggal</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-border-bottom-0">
-                            <tr>
-                                <td>Albert Cook</td>
-                                <td>
-                                    <span class="badge bg-label-primary me-1">22 Januari 2022</span>
-                                </td>
-                                <td class="d-flex flex-wrap flex-row">
-                                    <a class="d-block" data-bs-toggle="modal" data-bs-target="#edit-catatan"><i
-                                            class="ti ti-pencil me-1 text-primary"></i></a>
-                                    <a class="d-block" href="javascript:void(0);"><i
-                                            class="ti ti-trash me-1 text-danger"></i></a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+    {{-- Modal edit --}}
 @endsection
 
 @section('script')
@@ -124,6 +127,6 @@
     <script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/%40form-validation/umd/bundle/popular.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/%40form-validation/umd/plugin-bootstrap5/index.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/%40form-validation/umd/plugin-auto-focus/index.min.js') }}"></script>
+    <script s rc="{{ asset('assets/vendor/libs/%40form-validation/umd/plugin-auto-focus/index.min.js') }}"></script>
     <script src="{{ asset('assets/js/mainf696.js?id=8bd0165c1c4340f4d4a66add0761ae8a') }}"></script>
 @endsection

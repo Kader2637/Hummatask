@@ -30,7 +30,7 @@
         <div class="row mt-4">
             <table id="myTable" class="table table-striped">
             </table>
-            <div class="col-md-4 col-lg-3">
+            <div class="col-md-4 col-lg-4 col-sm-4">
                 <div class="card text-center mb-3">
                     <div class="card-body">
                         <div class="d-flex flex-row gap-3">

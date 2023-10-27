@@ -82,7 +82,7 @@
                     <div class="row">
                         <div class="col">
                             <label for="deskripsi" class="form-label">Deskripsi Presentasi</label>
-                            <textarea name="deskripsi" id="deskripsi" cols="20" rows="10" class="form-control" style="resize: none"></textarea>
+                            <textarea name="deskripsi" id="deskripsi" cols="20" rows="10" class="form-control" style="resize: none" placeholder="Isi deskripsi pengajuan anda"></textarea>
                         </div>
                     </div>
                     <div class="row">
@@ -127,7 +127,7 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane fade active show" id="navs-top-home" role="tabpanel">
-                                <div class="card">
+                                <div class="card mb-3">
                                     <h5 class="card-header">Progres Tim</h5>
                                     <div class="card-body">
                                         <canvas id="doughnutChart" class="chartjs mb-4" data-height="350"
@@ -460,7 +460,7 @@
                         </a>
                     </li>
                     <li class="menu-item ">
-                        <a href="" class="menu-link d-flex align-items-center gap-2">
+                        <a style="cursor: pointer" data-bs-toggle="offcanvas" data-bs-target="#offcanvasEnd" class="menu-link d-flex align-items-center gap-2">
                             <i class="menu-icon tf-icons ti ti-chart-line"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Statistik Project
                             </div>
@@ -841,8 +841,8 @@
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('profile.siswa') }}">
-                                            <i class='ti ti-login me-2'></i>
+                                        <a class="dropdown-item" href="{{ route('logout') }}">
+                                            <i class='ti ti-logout me-2'></i>
                                             <span class="align-middle">Logout</span>
                                         </a>
                                     </li>
