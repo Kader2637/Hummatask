@@ -178,7 +178,7 @@
                     </div>
 
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-                        <ul class="navbar-nav flex-row align-items-center ms-auto">
+                        <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Siswa Magang</span>
                             </li>

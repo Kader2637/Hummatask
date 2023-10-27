@@ -3,7 +3,7 @@
 @section('content')
     <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}"></script>
 
-    <div class="container mt-3">
+    <div class="container-fluid mt-3">
         <h5 class="">Dashboard</h5>
         <div class="card">
             <div class="d-flex justify-content-between mx-3 my-4">

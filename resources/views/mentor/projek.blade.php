@@ -28,7 +28,7 @@
 
         {{-- Card --}}
         <div class="row mt-4">
-            <div class="col-md-4 col-lg-3">
+            <div class="col-md-5 col-lg-4 col-sm-4">
                 <div class="card text-center mb-3">
                     <div class="card-body">
                         <div class="d-flex flex-row gap-3">
@@ -151,7 +151,7 @@
 
         {{-- pagination --}}
         <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-end">
+            <ul class="pagination justify-content-end overflow-auto">
                 <li class="page-item first">
                     <a class="page-link" href="javascript:void(0);"><i class="ti ti-chevrons-left ti-xs"></i></a>
                 </li>

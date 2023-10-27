@@ -71,7 +71,7 @@
                             data-bs-target="#modalTerima">Terima</button>
                     </div>
                 </div>
-                <div class="d-flex flex-row flex-wrap mt-3 justify-content-center align-content-center">
+                <div class="d-flex flex-row flex-wrap mt-3 justify-content-center align-content-center gap-2">
                     <!-- Anggota Tim -->
                     <div class="content-1 col-md-3 col-xl-4 col-sm-12 mb-4">
                         <div class="card h-100">
@@ -172,7 +172,7 @@
                     <!--/ Anggota Tim -->
 
                     {{-- List Tema --}}
-                    <div class="col-md-8 col-xl-8 col-sm-12 mb-4">
+                    <div class="content-1 col-md-7 col-xl-7 col-sm-12 mb-4">
                         <div class="card h-100">
                             <h5 class="card-header">List Tema Projek</h5>
                             <div class="table-responsive">
