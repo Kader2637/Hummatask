@@ -6,12 +6,12 @@
     <div class="container-fluid mt-3">
         <h5 class="">Dashboard</h5>
         <div class="card">
-            <div class="d-flex justify-content-between mx-3 my-4">
+            <div class="d-flex justify-content-between mx-3 mb-1 mt-4">
                 <h5 class="pb-0">Tabel Presentasi</h5>
                 <a href="{{ route('presentasi.mentor') }}" class="btn btn-primary d-flex justify-content-end">Detail</a>
             </div>
-            <div class="table-responsive text-nowrap">
-                <table class="table">
+            <div class="table-responsive text-nowrap card-datatable">
+                <table id="myTable" class="table">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -118,18 +118,21 @@
                                 <button type="button" class="btn dropdown-toggle px-0" data-bs-toggle="dropdown"
                                     aria-expanded="false"><i class="ti ti-calendar"></i></button>
                                 <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">Today</a>
+                                    <li><a href="javascript:void(0);"
+                                            class="dropdown-item d-flex align-items-center">Today</a>
                                     </li>
                                     <li><a href="javascript:void(0);"
                                             class="dropdown-item d-flex align-items-center">Yesterday</a></li>
                                     <li><a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">Last 7
                                             Days</a></li>
-                                    <li><a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">Last 30
+                                    <li><a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">Last
+                                            30
                                             Days</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">Current
+                                    <li><a href="javascript:void(0);"
+                                            class="dropdown-item d-flex align-items-center">Current
                                             Month</a></li>
                                     <li><a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">Last
                                             Month</a></li>
@@ -142,19 +145,54 @@
                     </div>
                 </div>
             </div>
-
-            <!-- /Scatter Chart -->
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="{{ asset('assets/js/forms-selects.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
+    <script>
+        jQuery(document).ready(function($) {
+            $('#myTable').DataTable({
+                "lengthMenu": [
+                    [5, 10, 15, -1],
+                    [5, 10, 15, "All"]
+                ],
+                "pageLength": 5,
 
+                "order": [],
 
+                "ordering": false,
+
+                "language": {
+                    "sProcessing": "Sedang memproses...",
+                    "sLengthMenu": "Tampilkan _MENU_ data",
+                    "sZeroRecords": "Tidak ditemukan Data",
+                    "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
+                    "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Cari :",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "Pertama",
+                        "sPrevious": "&#8592;",
+                        "sNext": "&#8594;",
+                        "sLast": "Terakhir"
+                    }
+                }
+            });
+        });
+    </script>
 
     <script>
         const cyanColor = '#28dac6',
             orangeLightColor = '#FDAC34';
         let cardColor, headingColor, labelColor, borderColor, legendColor;
-
 
         cardColor = config.colors.cardColor;
         headingColor = config.colors.headingColor;

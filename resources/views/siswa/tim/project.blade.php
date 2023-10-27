@@ -113,7 +113,7 @@
     <div class="container mt-5">
         <div class="col-12">
             <div class="nav-align-top d-flex justify-between">
-                <div class="nav nav-pills d-flex justify-content-between" role="tablist">
+                <div class="nav nav-pills d-flex justify-content-between my-4" role="tablist">
                     <div class="d-flex justify-content-between">
                         <div class="nav-item" role="presentation">
                             <button type="button" class="nav-link active button-nav" role="tab" data-bs-toggle="tab"
@@ -141,7 +141,8 @@
                                 <div class="card">
                                     <h5 class="card-header">Progres Tim</h5>
                                     <div class="card-body">
-                                      <canvas id="project" class="chartjs mb-4 mx-auto" data-height="267"  style="display: block; box-sizing: border-box; height: 200px; width: 200px;"></canvas>
+                                        <canvas id="project" class="chartjs mb-4" data-height="267"
+                                            style="display: block; box-sizing: border-box; height: 200px; width: 200px;"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -265,30 +266,33 @@
     </script>
     <script src="{{ asset('assets/vendor/js/menu2dc9.js?id=c6ce30ded4234d0c4ca0fb5f2a2990d8') }}"></script>
     <script src="{{ asset('assets/js/charts-chartjs.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}"><script>
-<script src="{{asset('assets/vendor/libs/chartjs/chartjs.js')}}"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}">
+        < script >
+            <
+            script src = "{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}" >
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
         const project = document.getElementById('project');
         const data = {
-  labels: [
-    'Progres',
-    'Selesai',
-    'Revisi'
-  ],
-  datasets: [{
-    label: 'My First Dataset',
-    data: [12, 8, 2],
-    backgroundColor: [
-    'rgb(102, 110, 232)',
-      'rgb(54, 162, 235)',
-      'rgb(255, 205, 86)'
-    ],
-    hoverOffset: 4
-  }]
-};
-        new Chart(project,{
+            labels: [
+                'Progres',
+                'Selesai',
+                'Revisi'
+            ],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [12, 8, 2],
+                backgroundColor: [
+                    'rgb(102, 110, 232)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)'
+                ],
+                hoverOffset: 4
+            }]
+        };
+        new Chart(project, {
             type: 'pie',
             data: data
         })

@@ -7,8 +7,6 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -70,15 +68,21 @@ class DatabaseSeeder extends Seeder
 
         // app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // Permission::create(['name'=>'kelola siswa']);
+        // Permission::create(['name' => 'kelola siswa']);
 
-        // $role = Role::create(['name'=>'ketua']);
+        // $role = Role::create(['name' => 'ketua magang']);
+        // $role->givePermissionTo('kelola siswa');
+        // User::create(
+        //     [
+        //         'uuid' => Str::uuid(),
+        //         'username' => 'Yafy',
+        //         'email' => 'Yaeaweffy@gmail.com',
+        //         'password' => Hash::make('password'),
+        //         'peran_id' => 1,
+        //         'deskripsi' => 'none',
+        //     ]
+        // )->assignRole($role);
+
         // $role->givePermissionTo(Permission::all());
-
-        // // $user->
-        // $user->assignRole($role);
-
-
-
     }
 }

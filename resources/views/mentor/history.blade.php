@@ -5,88 +5,73 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            /* Mengatur elemen di sebelah kiri */
             max-height: 150px;
             overflow-y: auto;
         }
 
-        /* Mengubah warna track (latar belakang scroll) */
         .avatar-container::-webkit-scrollbar {
             width: 8px;
-            /* Lebar scroll */
             background-color: #f0f0f0;
-            /* Warna latar belakang scroll */
         }
 
-        /* Mengubah tampilan thumb (bagian yang dapat digerakkan) */
         .avatar-container::-webkit-scrollbar-thumb {
             background-color: #7367f0;
-            /* Warna thumb */
             border-radius: 4px;
-            /* Sudut melengkung thumb */
         }
 
-        /* Mengubah tampilan thumb saat digulirkan */
         .avatar-container::-webkit-scrollbar-thumb:hover {
             background-color: #4838fb;
-            /* Warna thumb saat dihover */
         }
-
 
         .avatar {
             width: 30px;
             height: 30px;
             border-radius: 50%;
             margin: 5px;
-            /* Memberikan jarak antara gambar-gambar */
         }
 
         .icon-text {
             margin-right: 5px;
         }
+
         .nama-anggota {
             margin-top: 15px;
         }
 
-        @media (min-width: 320px) and (max-width: 450px){
+        @media (min-width: 320px) and (max-width: 450px) {
 
-            .navbar-ul{
+            .navbar-ul {
                 flex-direction: column;
                 width: 100%;
                 padding-left: 0px;
-
             }
 
-            .navbar-ul li{
-                /* font-size: 10px; */
+            .navbar-ul li {
                 display: 'flex';
                 justify-content: 'center';
                 align-content: 'center';
             }
 
-            .button-document{
+            .button-document {
                 width: 100%;
                 margin-bottom: 8px;
             }
 
-            .button-document button{
+            .button-document button {
                 width: 100%;
             }
-
-
         }
 
-        @media (min-width: 500px) and (max-width: 768px){
-            .navbar-ul li{
+        @media (min-width: 500px) and (max-width: 768px) {
+            .navbar-ul li {
                 font-size: 14px;
                 display: 'flex';
                 justify-content: 'center';
                 align-content: 'center';
             }
         }
-
     </style>
-    <!-- Content -->
+
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-3 mb-4">
             <span class="text-muted fw-light"></span> History
@@ -120,12 +105,12 @@
                 <button class="btn btn-success"><i class="fa-regular fa-file icon-text"></i>document</i></button>
             </div>
         </div>
-        <div class="tab-content px-0" id="pills-tabContent">
+        <div class="tab-content px-0 mt-2" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
                 tabindex="0">
                 <div class="card">
                     <div class="card-datatable table-responsive">
-                        <table class="dt-responsive table">
+                        <table id="jstabel1" class="dt-responsive table">
                             <thead>
                                 <tr>
                                     <th scope="col">NO</th>
@@ -189,7 +174,7 @@
                 tabindex="0">
                 <div class="card">
                     <div class="card-datatable table-responsive">
-                        <table class="dt-responsive table">
+                        <table id="jstabel2" class="dt-responsive table">
                             <thead>
                                 <tr>
                                     <th scope="col">NO</th>
@@ -252,7 +237,7 @@
                 tabindex="0">
                 <div class="card">
                     <div class="card-datatable table-responsive">
-                        <table class="dt-responsive table">
+                        <table id="jstabel3" class="dt-responsive table">
                             <thead>
                                 <tr>
                                     <th scope="col">NO</th>
@@ -309,7 +294,7 @@
                 tabindex="0">
                 <div class="card">
                     <div class="card-datatable table-responsive">
-                        <table class="dt-responsive table">
+                        <table id="jstabel4" class="dt-responsive table">
                             <thead>
                                 <tr>
                                     <th scope="col">NO</th>
@@ -525,7 +510,8 @@
                                 <label for="emailWithTitle"
                                 class="form-label">STATUS</label>
                                 <button disabled="disabled" class="btn"
-                                    style="background-color:  rgb(255, 231, 187);color:rgb(255, 149, 0);width: fit-content;margin-top: 4px">Big Project</button>
+                                    style="background-color:  rgb(255, 231, 187);color:rgb(255, 149, 0);width: fit-content;margin-top: 4px">Big
+                                    Project</button>
                             </div>
                             <div class="col mb-0" style="display: flex; flex-direction: column;">
                                 <label for="dobWithTitle" class="form-label">TEMA</label>
@@ -539,6 +525,143 @@
                 </div>
             </div>
         </div>
-        {{-- end modal --}}
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="{{ asset('assets/js/forms-editors.js') }}"></script>
+    <script>
+        jQuery.noConflict();
+
+        jQuery(document).ready(function($) {
+            $('#jstabel1').DataTable({
+                "lengthMenu": [
+                    [5, 10, 15, -1],
+                    [5, 10, 15, "All"]
+                ],
+                "pageLength": 5,
+
+                "order": [],
+
+                "ordering": false,
+
+                "language": {
+                    "sProcessing": "Sedang memproses...",
+                    "sLengthMenu": "Tampilkan _MENU_ data",
+                    "sZeroRecords": "Tidak ditemukan Data",
+                    "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
+                    "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Cari :",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "Pertama",
+                        "sPrevious": "&#8592;",
+                        "sNext": "&#8594;",
+                        "sLast": "Terakhir"
+                    }
+                }
+            });
+        });
+
+        jQuery(document).ready(function($) {
+            $('#jstabel2').DataTable({
+                "lengthMenu": [
+                    [5, 10, 15, -1],
+                    [5, 10, 15, "All"]
+                ],
+                "pageLength": 5,
+
+                "order": [],
+
+                "ordering": false,
+
+                "language": {
+                    "sProcessing": "Sedang memproses...",
+                    "sLengthMenu": "Tampilkan _MENU_ data",
+                    "sZeroRecords": "Tidak ditemukan Data",
+                    "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
+                    "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Cari :",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "Pertama",
+                        "sPrevious": "&#8592;",
+                        "sNext": "&#8594;",
+                        "sLast": "Terakhir"
+                    }
+                }
+            });
+        });
+
+        jQuery(document).ready(function($) {
+            $('#jstabel3').DataTable({
+                "lengthMenu": [
+                    [5, 10, 15, -1],
+                    [5, 10, 15, "All"]
+                ],
+                "pageLength": 5,
+
+                "order": [],
+
+                "ordering": false,
+
+                "language": {
+                    "sProcessing": "Sedang memproses...",
+                    "sLengthMenu": "Tampilkan _MENU_ data",
+                    "sZeroRecords": "Tidak ditemukan Data",
+                    "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
+                    "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Cari :",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "Pertama",
+                        "sPrevious": "&#8592;",
+                        "sNext": "&#8594;",
+                        "sLast": "Terakhir"
+                    }
+                }
+            });
+        });
+
+        jQuery(document).ready(function($) {
+            $('#jstabel4').DataTable({
+                "lengthMenu": [
+                    [5, 10, 15, -1],
+                    [5, 10, 15, "All"]
+                ],
+                "pageLength": 5,
+
+                "order": [],
+
+                "ordering": false,
+
+                "language": {
+                    "sProcessing": "Sedang memproses...",
+                    "sLengthMenu": "Tampilkan _MENU_ data",
+                    "sZeroRecords": "Tidak ditemukan Data",
+                    "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
+                    "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Cari :",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "Pertama",
+                        "sPrevious": "&#8592;",
+                        "sNext": "&#8594;",
+                        "sLast": "Terakhir"
+                    }
+                }
+            });
+        });
+    </script>
 @endsection

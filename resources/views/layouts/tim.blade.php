@@ -11,7 +11,6 @@
     <meta charset="utf-8" />
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-
     <title>
         {{ $title }}
     </title>
@@ -34,7 +33,6 @@
         href="{{ asset('assets/vendor/fonts/fontawesome8a69.css?id=a2997cb6a1c98cc3c85f4c99cdea95b5') }}" />
     <link rel="stylesheet"
         href="{{ asset('assets/vendor/fonts/flag-icons80a8.css?id=121bcc3078c6c2f608037fb9ca8bce8d') }}" />
-    <!-- Core CSS -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/core6cc1.css?id=9dd8321ea008145745a7d78e072a6e36') }}"
         class="template-customizer-core-css" />
     <link rel="stylesheet"
@@ -52,27 +50,20 @@
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('assets/js/config.js') }}"></script>
 
-    <!-- Vendor Styles -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/fullcalendar/fullcalendar.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/flatpickr/flatpickr.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/editor.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/%40form-validation/umd/styles/index.min.css') }}" />
 
-
-    <!-- Page Styles -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/app-calendar.css') }}" />
     @yield('link')
-
-
 </head>
 
 @yield('style')
 
 
 <body>
-
-    {{-- modal --}}
     <div class="modal fade" id="ajukanPresentasi" tabindex="-1" style="display: none;" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -110,9 +101,6 @@
             </div>
         </div>
     </div>
-    {{-- End Modal --}}
-
-    {{-- OffCanvas --}}
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEnd" aria-labelledby="offcanvasEndLabel">
         <div class="offcanvas-header">
@@ -869,7 +857,7 @@
                                     <li>
                                         <a class="dropdown-item" href="{{ route('profile.siswa') }}">
                                             <i class='ti ti-login me-2'></i>
-                                            <span class="align-middle">Login</span>
+                                            <span class="align-middle">Logout</span>
                                         </a>
                                     </li>
                                 </ul>

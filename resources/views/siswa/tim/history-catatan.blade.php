@@ -18,7 +18,7 @@
                 <div class="modal-body">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     <form id="editUserForm" class="row g-2 p-0 m-0" onsubmit="return false">
-                        <div class="card">
+                        <div class="card d-flex gap-0 m-0 p-0">
                             <div class="d-flex flex-row flex-wrap justify-content-between p-0 m-0">
                                 <span class="card-header fs-4">Catatan</span>
                                 <span class="card-header">
@@ -28,8 +28,8 @@
                                         data-bs-target="#modalTerima">Simpan</button>
                                 </span>
                             </div>
-                            <div class="card-body mt-[-100px]">
-                                <div id="editor" style="max-height: 50rem; overflow-y: auto;">
+                            <div class="card-body p-0 px-4 pb-4 m-0">
+                                <div id="editor" style="height: 400px">
                                     <div>
                                         <p> Cupcake ipsum dolor sit amet. Halvah cheesecake chocolate bar gummi bears
                                             cupcake. Pie macaroon
@@ -37,11 +37,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-12 d-flex flex-row flex-wrap justify-content-end bg-danger">
-                            <button type="submit" class="btn btn-primary me-sm-3 me-1">Unggah</button>
-                            <button type="reset" class="btn btn-danger" data-bs-dismiss="modal"
-                                aria-label="Close">Batal</button>
                         </div>
                     </form>
                 </div>
@@ -81,6 +76,9 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
@@ -122,9 +120,6 @@
             });
         });
     </script>
-@endsection
-
-@section('script')
     <script src="{{ asset('assets/vendor/libs/moment/moment.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/%40form-validation/umd/bundle/popular.min.js') }}"></script>

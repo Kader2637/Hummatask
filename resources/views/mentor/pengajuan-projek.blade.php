@@ -7,9 +7,6 @@
     <div class="container-fluid mt-4 ">
         <h5 class="header">Daftar Pengajuan Projek</h5>
         <div class="row">
-
-            {{-- for each start --}}
-
             <div class="col-md-6 col-lg-3">
                 <div class="card text-center mb-3">
                     <div class="card-body">
@@ -166,9 +163,6 @@
                     </div>
                 </div>
             </div>
-
-            {{-- for each end --}}
-
         </div>
 
         {{-- pagination --}}
@@ -209,4 +203,45 @@
 @endsection
 
 @section('script')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="{{ asset('assets/js/forms-editors.js') }}"></script>
+    <script>
+        jQuery.noConflict();
+
+        jQuery(document).ready(function($) {
+            $('#jstabel').DataTable({
+                "lengthMenu": [
+                    [5, 10, 15, -1],
+                    [5, 10, 15, "All"]
+                ],
+                "pageLength": 5,
+
+                "order": [],
+
+                "ordering": false,
+
+                "language": {
+                    "sProcessing": "Sedang memproses...",
+                    "sLengthMenu": "Tampilkan _MENU_ data",
+                    "sZeroRecords": "Tidak ditemukan Data",
+                    "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
+                    "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Cari :",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "Pertama",
+                        "sPrevious": "&#8592;",
+                        "sNext": "&#8594;",
+                        "sLast": "Terakhir"
+                    }
+                }
+            });
+        });
+    </script>
 @endsection

@@ -12,33 +12,18 @@
 <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/katex.css') }}" />
 <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/editor.css') }}" />
 
-
-<!-- Page Styles -->
 <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/app-kanban.css') }}" />
 
-  <!-- Include Scripts for customizer, helper, analytics, config -->
-  <!-- $isFront is used to append the front layout scriptsIncludes only on the front layout otherwise the variable will be blank -->
-  <!-- laravel style -->
 <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
-<!-- beautify ignore:start -->
-  <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-  <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
-  {{-- <script src="{{ asset('assets/vendor/js/template-customizer.js') }}"></script> --}}
-
-  <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-  {{-- <script src="{{ asset('assets/js/config.js') }}"></script> --}}
-
 @endsection
 
 @section('content')
 <div class="content-wrapper">
 
-    <!-- Content -->
               <div class="container-xxl flex-grow-1 container-p-y">
 
         <div class="app-kanban">
 
-<!-- Add new board -->
 <div class="row">
 <div class="col-12">
   <form class="kanban-add-new-board">
@@ -55,10 +40,8 @@
 </div>
 </div>
 
-<!-- Kanban Wrapper -->
 <div class="kanban-wrapper"></div>
 
-<!-- Edit Task & Activities -->
 <div class="offcanvas offcanvas-end kanban-update-item-sidebar">
 <div class="offcanvas-header border-bottom">
   <h5 class="offcanvas-title">Edit Task</h5>

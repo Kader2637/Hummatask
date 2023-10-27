@@ -17,8 +17,8 @@
                             data-bs-target="#modalTerima">Simpan</button>
                     </span>
                 </div>
-                <div class="card-body mt-[-100px]">
-                    <div id="editor" style="max-height: 50rem; overflow-y: auto;">
+                <div class="card-body p-0 px-3 pb-4 m-0">
+                    <div id="editor">
                         <div>
                             <p> Cupcake ipsum dolor sit amet. Halvah cheesecake chocolate bar gummi bears cupcake. Pie macaroon
                                 bear claw. Soufflé I love candy canes I love cotton candy I love. </p>
