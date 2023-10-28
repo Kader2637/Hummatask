@@ -554,7 +554,14 @@
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
                         <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Siswa Magang</span>
+                                @if (auth()->check() &&
+                                        auth()->user()->can('kelola siswa'))
+                                    <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Ketua
+                                        Magang</span>
+                                @else
+                                    <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Siswa
+                                        Magang</span>
+                                @endif
                             </li>
                             <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
@@ -828,7 +835,12 @@
                                                     <span class="fw-medium d-block">
                                                         {{ Auth::user()->username }}
                                                     </span>
-                                                    <small class="text-muted">Admin</small>
+                                                    @if (auth()->check() &&
+                                                            auth()->user()->can('kelola siswa'))
+                                                        <small class="text-muted">Ketua Magang</small>
+                                                    @else
+                                                        <small class="text-muted">Siswa Magang</small>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </a>
