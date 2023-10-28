@@ -514,7 +514,7 @@
                                             <label class="form-label m-0 p-0" for="modalEditUserLastName">Nama
                                                 Tim</label>
                                             <input type="text" id="modalEditUserLastName" name="nama"
-                                                class="form-control" placeholder="Hummatask" />
+                                                class="form-control" placeholder="Isi nama tim" />
                                             @error('nama')
                                                 <p class="text-danger">
                                                     {{ $message }}
@@ -533,7 +533,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 d-flex flex-row flex-wrap justify-content-end">
-                                        <button id="type-success" type="submit"
+                                        <button id="" type=""
                                             class="btn btn-primary me-sm-3 me-1">Unggah</button>
                                         <button type="reset" class="btn btn-danger" data-bs-dismiss="modal"
                                             aria-label="Close">Batal</button>
@@ -543,6 +543,57 @@
                         </div>
                     </div>
                 </div>
+
+                {{-- validasi --}}
+                <!-- Skrip JavaScript untuk mencegah pengiriman formulir jika ada input yang kosong, repositoryInput tidak valid sebagai URL, atau logoInput tidak valid sebagai gambar -->
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const editUserForm = document.getElementById('editUserForm');
+
+                        editUserForm.addEventListener('submit', function(event) {
+                            const namaInput = document.querySelector('input[name="nama"]');
+                            const repositoryInput = document.querySelector('input[name="repository"]');
+                            const logoInput = document.querySelector('input[name="logo"]');
+
+                            // Validasi input kosong
+                            if (namaInput.value.trim() === '' || logoInput.files.length === 0) {
+                                event.preventDefault(); // Mencegah pengiriman formulir
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: 'Peringatan',
+                                    text: 'Pastikan semua input diisi!',
+                                });
+                            }
+                            // Validasi repositoryInput sebagai URL
+                            else if (!repositoryInput.value.match(
+                                    /^(http(s)?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/)) {
+                                event.preventDefault(); // Mencegah pengiriman formulir
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: 'Peringatan',
+                                    text: 'URL Repository tidak valid!',
+                                });
+                            }
+                            // Validasi logoInput sebagai gambar (image)
+                            else {
+                                const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                                const file = logoInput.files[0];
+
+                                if (!allowedImageTypes.includes(file.type)) {
+                                    event.preventDefault(); // Mencegah pengiriman formulir
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: 'Peringatan',
+                                        text: 'File yang diunggah harus berupa gambar (jpeg, jpg, png, atau gif)!',
+                                    });
+                                }
+                            }
+                        });
+                    });
+                </script>
+
+                {{-- validasi --}}
+
                 {{-- Modal Tambah Tim --}}
 
             </div>
