@@ -21,6 +21,6 @@ class mentorMiddleware
         } else if (Auth::check() && Auth::user()->peran_id === 2) {
             return $next($request);
         }
-        return back();
+        return back()->with('unauthorize', 'Anda tidak memiliki izin untuk mengakses halaman ini.');
     }
 }

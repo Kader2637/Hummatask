@@ -55,7 +55,9 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/editor.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/%40form-validation/umd/styles/index.min.css') }}" />
-
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/app-calendar.css') }}" />
     @yield('link')
 </head>
@@ -82,7 +84,8 @@
                     <div class="row">
                         <div class="col">
                             <label for="deskripsi" class="form-label">Deskripsi Presentasi</label>
-                            <textarea name="deskripsi" id="deskripsi" cols="20" rows="10" class="form-control" style="resize: none" placeholder="Isi deskripsi pengajuan anda"></textarea>
+                            <textarea name="deskripsi" id="deskripsi" cols="20" rows="10" class="form-control" style="resize: none"
+                                placeholder="Isi deskripsi pengajuan anda"></textarea>
                         </div>
                     </div>
                     <div class="row">
@@ -440,7 +443,8 @@
                 <div class="app-brand demo">
                     <a href="{{ route('dashboard.siswa') }}" class="app-brand-link">
                         <span class="app-brand-logo demo">
-                            <img src="{{ url('assets/img/icons/icon.svg') }}" width="50" alt="" srcset="">
+                            <img src="{{ url('assets/img/icons/icon.svg') }}" width="50" alt=""
+                                srcset="">
                         </span>
                         <span class="app-brand-text demo menu-text fw-bold">HummaTask</span>
                     </a>
@@ -460,7 +464,8 @@
                         </a>
                     </li>
                     <li class="menu-item ">
-                        <a style="cursor: pointer" data-bs-toggle="offcanvas" data-bs-target="#offcanvasEnd" class="menu-link d-flex align-items-center gap-2">
+                        <a style="cursor: pointer" data-bs-toggle="offcanvas" data-bs-target="#offcanvasEnd"
+                            class="menu-link d-flex align-items-center gap-2">
                             <i class="menu-icon tf-icons ti ti-chart-line"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Statistik Project
                             </div>
@@ -890,6 +895,7 @@
     <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/moment/moment.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/extended-ui-sweetalert2.js') }}"></script> --}}
 
     <!-- BEGIN: Page JS-->
     <script src="{{ asset('assets/js/app-calendar-events.js') }}"></script>
@@ -955,6 +961,23 @@
             });
         }
     </script>
+
+    @if (session()->has('unauthorize'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Akses Ditolak',
+                text: '{{ session('unauthorize') }}', // Teks pesan dari sesi
+                showClass: {
+                    popup: "animate__animated animate__tada"
+                },
+                customClass: {
+                    confirmButton: "btn btn-primary"
+                },
+                buttonsStyling: !1,
+            });
+        </script>
+    @endif
 
 </body>
 

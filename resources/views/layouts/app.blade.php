@@ -48,8 +48,10 @@
     <link rel="stylesheet"
         href="{{ asset('assets/vendor/libs/typeahead-js/typeaheadb5e1.css?id=2603197f6b29a6654cb700bd9367e2a3') }}" />
 
-        <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" />
-<link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/apex-charts/apex-charts.css') }}" />
@@ -69,7 +71,8 @@
                 <div class="app-brand demo">
                     <a href="{{ route('dashboard.siswa') }}" class="app-brand-link">
                         <span class="app-brand-logo demo">
-                            <img src="{{ url('assets/img/icons/icon.svg') }}" width="50" alt="" srcset="">
+                            <img src="{{ url('assets/img/icons/icon.svg') }}" width="50" alt=""
+                                srcset="">
                         </span>
                         <span class="app-brand-text demo menu-text fw-bold">HummaTask</span>
                     </a>
@@ -83,7 +86,7 @@
 
                 <ul class="menu-inner py-1">
                     <li class="menu-item">
-                        <a href="{{route('dashboard.siswa')}}" class="menu-link">
+                        <a href="{{ route('dashboard.siswa') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-category"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Dashboard</div>
                         </a>
@@ -92,38 +95,38 @@
                     {{-- Navigasi ketua magang --}}
 
                     @can('kelola siswa')
-                    <li class="menu-item @if (
-                        $title === 'Dashboard Ketua Magang' ||
-                            $title === 'Presentasi Ketua Magang' ||
-                            $title === 'Project Ketua Magang' ||
-                            $title === 'History Ketua Magang') open @endif">
-                        <a href="" class="menu-link menu-toggle d-flex">
-                            <i class="menu-icon tf-icons ti ti-crown"></i>
-                            <div class="w-100 d-flex align-items-center justify-content-between">Ketua Magang</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="{{ route('ketua.dashboard') }}" class="menu-link">
-                                     <div>Dashboard</div>
-                                </a>
-                            </li>
-                            <li class="menu-item ">
-                                <a href="{{ route('ketua.presentasi') }}" class="menu-link">
-                                    <div>Presentasi</div>
-                                </a>
-                            </li>
-                            <li class="menu-item {{ request()->routeIs('ketua.project') ? 'active' : '' }}">
-                                <a href="{{ route('ketua.project') }}" class="menu-link">
-                                    <div>Project</div>
-                                </a>
-                            </li>
-                            <li class="menu-item ">
-                                <a href="{{ route('ketua.history') }}" class="menu-link">
-                                    <div>History</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                        <li class="menu-item @if (
+                            $title === 'Dashboard Ketua Magang' ||
+                                $title === 'Presentasi Ketua Magang' ||
+                                $title === 'Project Ketua Magang' ||
+                                $title === 'History Ketua Magang') open @endif">
+                            <a href="" class="menu-link menu-toggle d-flex">
+                                <i class="menu-icon tf-icons ti ti-crown"></i>
+                                <div class="w-100 d-flex align-items-center justify-content-between">Ketua Magang</div>
+                            </a>
+                            <ul class="menu-sub">
+                                <li class="menu-item">
+                                    <a href="{{ route('ketua.dashboard') }}" class="menu-link">
+                                        <div>Dashboard</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item ">
+                                    <a href="{{ route('ketua.presentasi') }}" class="menu-link">
+                                        <div>Presentasi</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item {{ request()->routeIs('ketua.project') ? 'active' : '' }}">
+                                    <a href="{{ route('ketua.project') }}" class="menu-link">
+                                        <div>Project</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item ">
+                                    <a href="{{ route('ketua.history') }}" class="menu-link">
+                                        <div>History</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     @endcan
 
                     {{-- Navigasi ketua magang --}}
@@ -486,9 +489,10 @@
                     <div class="modal-dialog modal-dialog-centered modal-lg modal-simple modal-edit-user">
                         <div class="modal-content p-2">
                             <div class="modal-body">
-                                <button type="button" class="btn-close position-absolute top-0 " style="right: 0px" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                                <form id="editUserForm" action="{{ route('buat_tim_solo') }}" method="POST" enctype="multipart/form-data" class="row g-2 p-0 m-0">
+                                <button type="button" class="btn-close position-absolute top-0 " style="right: 0px"
+                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                <form id="editUserForm" action="{{ route('buat_tim_solo') }}" method="POST"
+                                    enctype="multipart/form-data" class="row g-2 p-0 m-0">
                                     @csrf
                                     <div class="col-12  gap-3 align-items-center">
                                         <div class="col-12 col-md-3 align-items-center">
@@ -499,7 +503,7 @@
                                                     style="width: 150px; height: 150px; border-radius: 10px; cursor: pointer" />
                                                 <input type="file" class="form-control d-none" id="image-input"
                                                     name="logo" />
-                                                    @error('logo')
+                                                @error('logo')
                                                     <p class="text-danger">
                                                         {{ $message }}
                                                     </p>
@@ -509,10 +513,9 @@
                                         <div class="col-lg-12 d-flex flex-wrap flex-col align-items-center">
                                             <label class="form-label m-0 p-0" for="modalEditUserLastName">Nama
                                                 Tim</label>
-                                            <input type="text" id="modalEditUserLastName"
-                                                name="nama" class="form-control"
-                                                placeholder="Hummatask" />
-                                                @error('nama')
+                                            <input type="text" id="modalEditUserLastName" name="nama"
+                                                class="form-control" placeholder="Hummatask" />
+                                            @error('nama')
                                                 <p class="text-danger">
                                                     {{ $message }}
                                                 </p>
@@ -520,18 +523,18 @@
                                             <label class="form-label m-0 p-0 mt-2" for="modalEditUserLastName">Link
                                                 Repository
                                                 Github</label>
-                                            <input type="text" id="modalEditUserLastName"
-                                                name="repository" class="form-control"
-                                                placeholder="https://.." />
-                                                @error('repository')
-                                                    <p class="text-danger">
-                                                        {{ $message }}
-                                                    </p>
-                                                @enderror
+                                            <input type="text" id="modalEditUserLastName" name="repository"
+                                                class="form-control" placeholder="https://.." />
+                                            @error('repository')
+                                                <p class="text-danger">
+                                                    {{ $message }}
+                                                </p>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-12 d-flex flex-row flex-wrap justify-content-end">
-                                        <button id="type-success" type="submit" class="btn btn-primary me-sm-3 me-1">Unggah</button>
+                                        <button id="type-success" type="submit"
+                                            class="btn btn-primary me-sm-3 me-1">Unggah</button>
                                         <button type="reset" class="btn btn-danger" data-bs-dismiss="modal"
                                             aria-label="Close">Batal</button>
                                     </div>
@@ -586,13 +589,31 @@
             }
         });
 
-        const buatTim = () =>{
+        const buatTim = () => {
             Swal.fire({
-                icon : 'success',
-                title : 'Berhasil Membuat Tim'
+                icon: 'success',
+                title: 'Berhasil Membuat Tim'
             })
         }
     </script>
+
+    @if (session()->has('unauthorize'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Akses Ditolak',
+                text: '{{ session('unauthorize') }}', // Teks pesan dari sesi
+                showClass: {
+                    popup: "animate__animated animate__tada"
+                },
+                customClass: {
+                    confirmButton: "btn btn-primary"
+                },
+                buttonsStyling: !1,
+            });
+        </script>
+    @endif
+
 
     @yield('script')
 

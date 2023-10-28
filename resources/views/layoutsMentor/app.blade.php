@@ -71,39 +71,14 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}" />
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('assets/js/config.js') }}"></script>
 
-    <script>
-        window.templateCustomizer = new TemplateCustomizer({
-            cssPath: '',
-            themesPath: '',
-            defaultStyle: "light",
-            defaultShowDropdownOnHover: "true", // true/false (for horizontal layout only)
-            displayCustomizer: "true",
-            lang: 'en',
-            pathResolver: function(path) {
-                var resolvedPaths = {
-                    // Core stylesheets
-                    'core.css': 'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/core.css?id=9dd8321ea008145745a7d78e072a6e36',
-                    'core-dark.css': 'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/core-dark.css?id=d661bae1d0ada9f7e9e3685a3e1f427e',
-
-                    // Themes
-                    'theme-default.css': 'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/theme-default.css?id=a4539ede8fbe0ee4ea3a81f2c89f07d9',
-                    'theme-default-dark.css': 'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/theme-default-dark.css?id=ce86d777a4c5030f51d0f609f202bcc5',
-                    'theme-bordered.css': 'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/theme-bordered.css?id=786794ca0c68d96058e8ceeb20f4e7c5',
-                    'theme-bordered-dark.css': 'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/theme-bordered-dark.css?id=e7122ef6338b22f7cea9eaff5a96aa8b',
-                    'theme-semi-dark.css': 'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/theme-semi-dark.css?id=a0a317e88e943fdd62d514e00deebb22',
-                    'theme-semi-dark-dark.css': 'https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/rtl/theme-semi-dark-dark.css?id=e9a2f7cd6ace727264936f6bf93ab1e2',
-                }
-                return resolvedPaths[path] || path;
-            },
-            'controls': ["rtl", "style", "headerType", "contentLayout", "layoutCollapsed", "layoutNavbarOptions",
-                "themes"
-            ],
-        });
-    </script>
 </head>
 
 @yield('style')
@@ -120,7 +95,8 @@
                 <div class="app-brand demo">
                     <a href="{{ route('dashboard.mentor') }}" class="app-brand-link">
                         <span class="app-brand-logo demo d-flex align-items-center">
-                            <img src="{{ url('assets/img/icons/icon.svg') }}" class="d-block" width="50" alt="" srcset="">
+                            <img src="{{ url('assets/img/icons/icon.svg') }}" class="d-block" width="50"
+                                alt="" srcset="">
                         </span>
                         <span class="app-brand-text demo menu-text fw-bold">HummaTask</span>
                     </a>
@@ -558,9 +534,27 @@
     <script src="{{ asset('assets/js/forms-selects.js') }}"></script>
     <script src="{{ asset('assets/js/forms-tagify.js') }}"></script>
     <script src="{{ asset('assets/js/forms-typeahead.js') }}"></script>
+    <script src="{{ asset('assets/js/extended-ui-sweetalert2.js') }}"></script>
     <!-- END: Page JS-->
 
     @yield('script')
+
+    @if (session()->has('unauthorize'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Akses Ditolak',
+                text: '{{ session('unauthorize') }}', // Teks pesan dari sesi
+                showClass: {
+                    popup: "animate__animated animate__tada"
+                },
+                customClass: {
+                    confirmButton: "btn btn-primary"
+                },
+                buttonsStyling: !1,
+            });
+        </script>
+    @endif
 
 </body>
 
