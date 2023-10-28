@@ -4,6 +4,7 @@ use App\Http\Controllers\authController;
 use App\Http\Controllers\KetuaMagangController;
 use App\Http\Controllers\mentorController;
 use App\Http\Controllers\PengajuanProjekController;
+use App\Http\Controllers\PengajuanTimController;
 use App\Http\Controllers\PresentasiController;
 use App\Http\Controllers\ProfileMentor;
 use App\Http\Controllers\ProfileSiswaController;
@@ -35,10 +36,11 @@ Route::get('logout', [authController::class, 'logout'])->name('logout');
 Route::prefix('siswa')->middleware(['auth', 'siswa'])->group(function () {
     Route::get('dashboard', [siswaController::class, 'dashboard'])->name('dashboard.siswa');
     Route::get('profile', [siswaController::class, 'profilePage'])->name('profile.siswa');
+    Route::post('buat-tim-solo',[PengajuanTimController::class,'pengajuanSoloProject'])->name('buat_tim_solo');
 });
 
-// Halaman Tim
 Route::prefix('tim')->middleware(['auth', 'siswa'])->controller(timController::class)->group(function () {
+    // Halaman Tim
     Route::get('board', 'boardPage')->name('tim.board');
     Route::get('kalender', 'kalenderPage')->name('tim.kalender');
     Route::get('catatan','catatanPage')->name('tim.catatan');
@@ -49,7 +51,7 @@ Route::prefix('tim')->middleware(['auth', 'siswa'])->controller(timController::c
 });
 
 // Halaman Ketua Magang
-Route::prefix('ketuaMagang')->middleware(['auth', 'siswa'])->controller(KetuaMagangController::class)->group(function () {
+Route::prefix('ketuaMagang')->middleware(['auth', 'siswa','can:kelola siswa'])->controller(KetuaMagangController::class)->group(function () {
     Route::get('dashboard','dashboardPage')->name('ketua.dashboard');
     Route::get('presentasi','presentasiPage')->name('ketua.presentasi');
     Route::get('project','projectPage')->name('ketua.project');

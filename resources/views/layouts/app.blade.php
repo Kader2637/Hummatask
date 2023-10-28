@@ -48,6 +48,10 @@
     <link rel="stylesheet"
         href="{{ asset('assets/vendor/libs/typeahead-js/typeaheadb5e1.css?id=2603197f6b29a6654cb700bd9367e2a3') }}" />
 
+        <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" />
+<link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+
+
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/apex-charts/apex-charts.css') }}" />
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('assets/js/config.js') }}"></script>
@@ -87,7 +91,7 @@
 
                     {{-- Navigasi ketua magang --}}
 
-                    {{-- @can --}}
+                    @can('kelola siswa')
                     <li class="menu-item @if (
                         $title === 'Dashboard Ketua Magang' ||
                             $title === 'Presentasi Ketua Magang' ||
@@ -120,7 +124,7 @@
                             </li>
                         </ul>
                     </li>
-                    {{-- @endcan --}}
+                    @endcan
 
                     {{-- Navigasi ketua magang --}}
 
@@ -484,7 +488,8 @@
                             <div class="modal-body">
                                 <button type="button" class="btn-close position-absolute top-0 " style="right: 0px" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
-                                <form id="editUserForm" class="row g-2 p-0 m-0" onsubmit="return false">
+                                <form id="editUserForm" action="{{ route('buat_tim_solo') }}" method="POST" enctype="multipart/form-data" class="row g-2 p-0 m-0">
+                                    @csrf
                                     <div class="col-12  gap-3 align-items-center">
                                         <div class="col-12 col-md-3 align-items-center">
                                             <label class="form-label text-white" for="image-input">
@@ -493,25 +498,40 @@
                                                     alt="example placeholder"
                                                     style="width: 150px; height: 150px; border-radius: 10px; cursor: pointer" />
                                                 <input type="file" class="form-control d-none" id="image-input"
-                                                    name="avatar" />
+                                                    name="logo" />
+                                                    @error('logo')
+                                                    <p class="text-danger">
+                                                        {{ $message }}
+                                                    </p>
+                                                @enderror
                                             </label>
                                         </div>
                                         <div class="col-lg-12 d-flex flex-wrap flex-col align-items-center">
                                             <label class="form-label m-0 p-0" for="modalEditUserLastName">Nama
                                                 Tim</label>
                                             <input type="text" id="modalEditUserLastName"
-                                                name="modalEditUserLastName" class="form-control"
+                                                name="nama" class="form-control"
                                                 placeholder="Hummatask" />
+                                                @error('nama')
+                                                <p class="text-danger">
+                                                    {{ $message }}
+                                                </p>
+                                            @enderror
                                             <label class="form-label m-0 p-0 mt-2" for="modalEditUserLastName">Link
                                                 Repository
                                                 Github</label>
                                             <input type="text" id="modalEditUserLastName"
-                                                name="modalEditUserLastName" class="form-control"
+                                                name="repository" class="form-control"
                                                 placeholder="https://.." />
+                                                @error('repository')
+                                                    <p class="text-danger">
+                                                        {{ $message }}
+                                                    </p>
+                                                @enderror
                                         </div>
                                     </div>
                                     <div class="col-12 d-flex flex-row flex-wrap justify-content-end">
-                                        <button type="submit" class="btn btn-primary me-sm-3 me-1">Unggah</button>
+                                        <button id="type-success" type="submit" class="btn btn-primary me-sm-3 me-1">Unggah</button>
                                         <button type="reset" class="btn btn-danger" data-bs-dismiss="modal"
                                             aria-label="Close">Batal</button>
                                     </div>
@@ -543,6 +563,8 @@
     <script src="{{ asset('assets/vendor/js/menu2dc9.js?id=c6ce30ded4234d0c4ca0fb5f2a2990d8') }}"></script>
     <script src="{{ asset('assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
     <script src="{{ asset('assets/js/mainf696.js?id=8bd0165c1c4340f4d4a66add0761ae8a') }}"></script>
+    <script src="{{ asset('assets/js/extended-ui-sweetalert2.js') }}"></script>
+
 
     <script src="{{ asset('assets/js/dashboards-crm.js') }}"></script>
 
@@ -563,6 +585,13 @@
                 previewImage.attr('src', '');
             }
         });
+
+        const buatTim = () =>{
+            Swal.fire({
+                icon : 'success',
+                title : 'Berhasil Membuat Tim'
+            })
+        }
     </script>
 
     @yield('script')
