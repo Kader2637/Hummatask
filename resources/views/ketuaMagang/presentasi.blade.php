@@ -165,7 +165,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col mb-3">
-                                <label for="flatpickr-date" class="form-label">Tentukan ulang tanggal presentasi</label>
+                                <label for="flatpickr-date" class="form-label fs-6">Tentukan ulang tanggal presentasi</label>
                                 <input type="text" class="form-control" placeholder="YYYY-MM-DD"
                                     id="flatpickr-date" />
                             </div>
@@ -193,7 +193,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col">
-                                <label for="" class="mb-3">Feedback</label>
+                                <label for="" class="form-label fs-6">Feedback</label>
                                 <textarea type="text" class="form-control" placeholder="Beri Feedback Presentasi"
                                     style="height: 150px; resize: none"></textarea>
                             </div>
