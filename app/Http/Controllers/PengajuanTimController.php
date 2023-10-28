@@ -35,14 +35,13 @@ class PengajuanTimController extends Controller
 
         // membuat anggota
         $anggota = new Anggota;
-        $anggota->uuid = Str::uuid();
         $anggota->tim_id = $tim->id;
         $anggota->jabatan = 'ketua_tim';
         $anggota->user_id = Auth::user()->id;
         $anggota->save();
 
         // hilangkan komentar dibawah ini untuk debugging
-        dd($request,$tim,$anggota);
+        // dd($request,$tim,$anggota);
 
         return redirect()->back()->with('success','Berhasil membuat tim solo project');
 

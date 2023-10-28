@@ -458,7 +458,7 @@
 
                 <ul class="menu-inner py-1 ">
                     <li class="menu-item @if ($title == 'Tim/board') active @endif ">
-                        <a href="{{ route('tim.board') }}" class="menu-link d-flex align-items-center gap-2">
+                        <a href="{{ route('tim.board',$tim->uuid) }}" class="menu-link d-flex align-items-center gap-2">
                             <i class="menu-icon tf-icons ti ti-layout-dashboard"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Board</div>
                         </a>
@@ -472,19 +472,19 @@
                         </a>
                     </li>
                     <li class="menu-item @if ($title == 'Tim/kalender') active @endif ">
-                        <a href="{{ route('tim.kalender') }}" class="menu-link d-flex align-items-center gap-2">
+                        <a href="{{ route('tim.kalender',$tim->uuid) }}" class="menu-link d-flex align-items-center gap-2">
                             <i class="menu-icon tf-icons ti ti-calendar"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Kalender</div>
                         </a>
                     </li>
                     <li class="menu-item @if ($title == 'Tim/project') active @endif ">
-                        <a href="{{ route('tim.project') }}" class="menu-link d-flex align-items-center gap-2">
+                        <a href="{{ route('tim.project',$tim->uuid) }}" class="menu-link d-flex align-items-center gap-2">
                             <i class="menu-icon tf-icons ti ti-folder-cog"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Project</div>
                         </a>
                     </li>
                     <li class="menu-item @if ($title == 'Tim/history') active @endif ">
-                        <a href="{{ route('tim.history') }}" class="menu-link d-flex align-items-center gap-2">
+                        <a href="{{ route('tim.history',$tim->uuid) }}" class="menu-link d-flex align-items-center gap-2">
                             <i class="menu-icon tf-icons ti ti-history"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">History</div>
                         </a>
@@ -496,12 +496,12 @@
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item @if ($title == 'catatan') active @endif">
-                                <a href="{{ route('tim.catatan') }}" class="menu-link">
+                                <a href="{{ route('tim.catatan',$tim->uuid) }}" class="menu-link">
                                     <div>Buat Catatan</div>
                                 </a>
                             </li>
                             <li class="menu-item @if ($title == 'catatan history') active @endif ">
-                                <a href="{{ route('tim.historyCatatan') }}" class="menu-link">
+                                <a href="{{ route('tim.historyCatatan',$tim->uuid) }}" class="menu-link">
                                     <div>History Catatan</div>
                                 </a>
                             </li>
@@ -520,14 +520,14 @@
                                 </a>
                             </li>
                             <li class="menu-item @if ($title == 'Tim/presentasi') active @endif ">
-                                <a href="{{ route('tim.historyPresentasi') }}" class="menu-link">
+                                <a href="{{ route('tim.historyPresentasi',$tim->uuid) }}" class="menu-link">
                                     <div>History Presentasi</div>
                                 </a>
                             </li>
                         </ul>
                     </li>
                     <li class="menu-item active mt-5">
-                        <a href="{{ route('dashboard.siswa') }}" class="menu-link d-flex align-items-center gap-2">
+                        <a href="{{ route('dashboard.siswa',$tim->uuid) }}" class="menu-link d-flex align-items-center gap-2">
                             <i class="menu-icon tf-icons ti ti-arrow-back"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Kembali</div>
                         </a>

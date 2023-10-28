@@ -41,13 +41,13 @@ Route::prefix('siswa')->middleware(['auth', 'siswa'])->group(function () {
 
 Route::prefix('tim')->middleware(['auth', 'siswa'])->controller(timController::class)->group(function () {
     // Halaman Tim
-    Route::get('board', 'boardPage')->name('tim.board');
-    Route::get('kalender', 'kalenderPage')->name('tim.kalender');
-    Route::get('catatan','catatanPage')->name('tim.catatan');
-    Route::get('project', 'projectPage')->name('tim.project');
-    Route::get('history', 'historyPage')->name('tim.history');
-    Route::get('history-presentasi', 'historyPresentasiPage')->name('tim.historyPresentasi');
-    Route::get('history-catatan', 'historyCatatanPage')->name('tim.historyCatatan');
+    Route::get('board/{uuid}', 'boardPage')->name('tim.board');
+    Route::get('kalender/{uuid}', 'kalenderPage')->name('tim.kalender');
+    Route::get('catatan/{uuid}','catatanPage')->name('tim.catatan');
+    Route::get('project/{uuid}', 'projectPage')->name('tim.project');
+    Route::get('history/{uuid}', 'historyPage')->name('tim.history');
+    Route::get('history-presentasi/{uuid}', 'historyPresentasiPage')->name('tim.historyPresentasi');
+    Route::get('history-catatan/{uuid}', 'historyCatatanPage')->name('tim.historyCatatan');
 });
 
 // Halaman Ketua Magang
