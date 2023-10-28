@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileSiswaController;
 use App\Http\Controllers\ProjekController;
 use App\Http\Controllers\siswaController;
 use App\Http\Controllers\timController;
+use App\Http\Controllers\TugasController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->controller(authController::class)->group(function () {
@@ -48,6 +49,13 @@ Route::prefix('tim')->middleware(['auth', 'siswa'])->controller(timController::c
     Route::get('history/{uuid}', 'historyPage')->name('tim.history');
     Route::get('history-presentasi/{uuid}', 'historyPresentasiPage')->name('tim.historyPresentasi');
     Route::get('history-catatan/{uuid}', 'historyCatatanPage')->name('tim.historyCatatan');
+
+
+
+
+    // proses di halaman tim
+    Route::get('board/dataTugas/{uuid}',[TugasController::class,'getData'])->name('dataTugas');
+    Route::post('board/tambah-tugas',[TugasController::class,'buatTugas']);
 });
 
 // Halaman Ketua Magang

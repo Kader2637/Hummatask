@@ -18,296 +18,71 @@
 @endsection
 
 @section('content')
-<div class="content-wrapper">
-
-              <div class="container-xxl flex-grow-1 container-p-y">
-
-        <div class="app-kanban">
-
-<div class="row">
-<div class="col-12">
-  <form class="kanban-add-new-board">
-    <label class="kanban-add-board-btn" for="kanban-add-board-input">
-      <i class="ti ti-plus ti-xs"></i>
-      <span class="align-middle">Add new</span>
-    </label>
-    <input type="text" class="form-control w-px-250 kanban-add-board-input mb-2 d-none" placeholder="Add Board Title" id="kanban-add-board-input" required />
-    <div class="mb-3 kanban-add-board-input d-none">
-      <button class="btn btn-primary btn-sm me-2">Add</button>
-      <button type="button" class="btn btn-label-secondary btn-sm kanban-add-board-cancel-btn">Cancel</button>
-    </div>
-  </form>
-</div>
-</div>
-
-<div class="kanban-wrapper"></div>
-
-<div class="offcanvas offcanvas-end kanban-update-item-sidebar">
-<div class="offcanvas-header border-bottom">
-  <h5 class="offcanvas-title">Edit Task</h5>
-  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-</div>
-<div class="offcanvas-body">
-  <ul class="nav nav-tabs tabs-line">
-    <li class="nav-item">
-      <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-update">
-        <i class="ti ti-edit me-2"></i>
-        <span class="align-middle">Edit</span>
-      </button>
-    </li>
-    <li class="nav-item">
-      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-activity">
-        <i class="ti ti-trending-up me-2"></i>
-        <span class="align-middle">Activity</span>
-      </button>
-    </li>
-  </ul>
-  <div class="tab-content px-0 pb-0">
-    <!-- Update item/tasks -->
-    <div class="tab-pane fade show active" id="tab-update" role="tabpanel">
-      <form>
-        <div class="mb-3">
-          <label class="form-label" for="title">Title</label>
-          <input type="text" id="title" class="form-control" placeholder="Enter Title" />
-        </div>
-        <div class="mb-3">
-          <label class="form-label" for="due-date">Due Date</label>
-          <input type="text" id="due-date" class="form-control" placeholder="Enter Due Date" />
-        </div>
-        <div class="mb-3">
-          <label class="form-label" for="label"> Label</label>
-          <select class="select2 select2-label form-select" id="label">
-            <option data-color="bg-label-success" value="UX">UX</option>
-            <option data-color="bg-label-warning" value="Images">
-              Images
-            </option>
-            <option data-color="bg-label-info" value="Info">Info</option>
-            <option data-color="bg-label-danger" value="Code Review">
-              Code Review
-            </option>
-            <option data-color="bg-label-secondary" value="App">
-              App
-            </option>
-            <option data-color="bg-label-primary" value="Charts & Maps">
-              Charts & Maps
-            </option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Assigned</label>
-          <div class="assigned d-flex flex-wrap"></div>
-        </div>
-        <div class="mb-3">
-          <label class="form-label" for="attachments">Attachments</label>
-          <input type="file" class="form-control" id="attachments" />
-        </div>
-        <div class="mb-4">
-          <label class="form-label">Comment</label>
-          <div class="comment-editor border-bottom-0"></div>
-          <div class="d-flex justify-content-end">
-            <div class="comment-toolbar">
-              <span class="ql-formats me-0">
-                <button class="ql-bold"></button>
-                <button class="ql-italic"></button>
-                <button class="ql-underline"></button>
-                <button class="ql-link"></button>
-                <button class="ql-image"></button>
-              </span>
+    <div style="height: 80vh" class="container-fluid row mt-2">
+        <div style="" class="col-3">
+            <div class="card">
+                <div class="card-body p-2 py-2 row">
+                    <div class="col-8 d-flex align-items-center">
+                        <span style="font-size: 15px" class="">Tugas Baru</span>
+                    </div>
+                    <div class="col-4 d-flex justify-content-end">
+                        <svg onclick="showForm('tambahTugas')" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 1024 1024"><path fill="currentColor" d="M352 480h320a32 32 0 1 1 0 64H352a32 32 0 0 1 0-64z"/><path fill="currentColor" d="M480 672V352a32 32 0 1 1 64 0v320a32 32 0 0 1-64 0z"/><path fill="currentColor" d="M512 896a384 384 0 1 0 0-768a384 384 0 0 0 0 768zm0 64a448 448 0 1 1 0-896a448 448 0 0 1 0 896z"/></svg>
+                    </div>
+                </div>
+                <div class="row p-3 d-none" id="tambahTugas">
+                    <div class="col-12">
+                        <form id="formTambahTugas" method="post" >
+                           <label for="tugas">Nama Tugas</label>
+                           <input type="text" class="form-control" id="tugas" name="tugas">
+                            <div class="d-flex justify-content-end mt-3">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="d-flex flex-wrap">
-          <button type="button" class="btn btn-primary me-3" data-bs-dismiss="offcanvas">
-            Update
-          </button>
-          <button type="button" class="btn btn-label-danger" data-bs-dismiss="offcanvas">
-            Delete
-          </button>
-        </div>
-      </form>
-    </div>
-    <!-- Activities -->
-    <div class="tab-pane fade" id="tab-activity" role="tabpanel">
-      <div class="media mb-4 d-flex align-items-start">
-        <div class="avatar me-2 flex-shrink-0 mt-1">
-          <span class="avatar-initial bg-label-success rounded-circle">HJ</span>
-        </div>
-        <div class="media-body">
-          <p class="mb-0">
-            <span class="fw-medium">Jordan</span> Left the board.
-          </p>
-          <small class="text-muted">Today 11:00 AM</small>
-        </div>
-      </div>
-      <div class="media mb-4 d-flex align-items-start">
-        <div class="avatar me-2 flex-shrink-0 mt-1">
-          <img src="../../demo/assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
-        </div>
-        <div class="media-body">
-          <p class="mb-0">
-            <span class="fw-medium">Dianna</span> mentioned
-            <span class="text-primary">@bruce</span> in
-            a comment.
-          </p>
-          <small class="text-muted">Today 10:20 AM</small>
-        </div>
-      </div>
-      <div class="media mb-4 d-flex align-items-start">
-        <div class="avatar me-2 flex-shrink-0 mt-1">
-          <img src="../../demo/assets/img/avatars/2.png" alt="Avatar" class="rounded-circle" />
-        </div>
-        <div class="media-body">
-          <p class="mb-0">
-            <span class="fw-medium">Martian</span> added moved
-            Charts & Maps task to the done board.
-          </p>
-          <small class="text-muted">Today 10:00 AM</small>
-        </div>
-      </div>
-      <div class="media mb-4 d-flex align-items-start">
-        <div class="avatar me-2 flex-shrink-0 mt-1">
-          <img src="../../demo/assets/img/avatars/1.png" alt="Avatar" class="rounded-circle" />
-        </div>
-        <div class="media-body">
-          <p class="mb-0">
-            <span class="fw-medium">Barry</span> Commented on App
-            review task.
-          </p>
-          <small class="text-muted">Today 8:32 AM</small>
-        </div>
-      </div>
-      <div class="media mb-4 d-flex align-items-start">
-        <div class="avatar me-2 flex-shrink-0 mt-1">
-          <span class="avatar-initial bg-label-secondary rounded-circle">BW</span>
-        </div>
-        <div class="media-body">
-          <p class="mb-0">
-            <span class="fw-medium">Bruce</span> was assigned
-            task of code review.
-          </p>
-          <small class="text-muted">Today 8:30 PM</small>
-        </div>
-      </div>
-      <div class="media mb-4 d-flex align-items-start">
-        <div class="avatar me-2 flex-shrink-0 mt-1">
-          <span class="avatar-initial bg-label-danger rounded-circle">CK</span>
-        </div>
-        <div class="media-body">
-          <p class="mb-0">
-            <span class="fw-medium">Clark</span> assigned task UX
-            Research to
-            <span class="text-primary">@martian</span>
-          </p>
-          <small class="text-muted">Today 8:00 AM</small>
-        </div>
-      </div>
-      <div class="media mb-4 d-flex align-items-start">
-        <div class="avatar me-2 flex-shrink-0 mt-1">
-          <img src="../../demo/assets/img/avatars/4.png" alt="Avatar" class="rounded-circle" />
-        </div>
-        <div class="media-body">
-          <p class="mb-0">
-            <span class="fw-medium">Ray</span> Added moved
-            <span class="fw-medium">Forms & Tables</span> task
-            from in progress to done.
-          </p>
-          <small class="text-muted">Today 7:45 AM</small>
-        </div>
-      </div>
-      <div class="media mb-4 d-flex align-items-start">
-        <div class="avatar me-2 flex-shrink-0 mt-1">
-          <img src="../../demo/assets/img/avatars/1.png" alt="Avatar" class="rounded-circle" />
-        </div>
-        <div class="media-body">
-          <p class="mb-0">
-            <span class="fw-medium">Barry</span> Complete all the
-            tasks assigned to him.
-          </p>
-          <small class="text-muted">Today 7:17 AM</small>
-        </div>
-      </div>
-      <div class="media mb-4 d-flex align-items-start">
-        <div class="avatar me-2 flex-shrink-0 mt-1">
-          <span class="avatar-initial bg-label-success rounded-circle">HJ</span>
-        </div>
-        <div class="media-body">
-          <p class="mb-0">
-            <span class="fw-medium">Jordan</span> added task to
-            update new images.
-          </p>
-          <small class="text-muted">Today 7:00 AM</small>
-        </div>
-      </div>
-      <div class="media mb-4 d-flex align-items-start">
-        <div class="avatar me-2 flex-shrink-0 mt-1">
-          <img src="../../demo/assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
-        </div>
-        <div class="media-body">
-          <p class="mb-0">
-            <span class="fw-medium">Dianna</span> moved task
-            <span class="fw-medium">FAQ UX</span> from in
-            progress to done board.
-          </p>
-          <small class="text-muted">Today 7:00 AM</small>
-        </div>
-      </div>
-      <div class="media mb-4 d-flex align-items-start">
-        <div class="avatar me-2 flex-shrink-0 mt-1">
-          <span class="avatar-initial bg-label-danger rounded-circle">CK</span>
-        </div>
-        <div class="media-body">
-          <p class="mb-0">
-            <span class="fw-medium">Clark</span> added new board
-            with name <span class="fw-medium">Done</span>.
-          </p>
-          <small class="text-muted">Yesterday 3:00 PM</small>
-        </div>
-      </div>
-      <div class="media d-flex align-items-center">
-        <div class="avatar me-2 flex-shrink-0 mt-1">
-          <span class="avatar-initial bg-label-secondary rounded-circle">BW</span>
-        </div>
-        <div class="media-body">
-          <p class="mb-0">
-            <span class="fw-medium">Bruce</span> added new task
-            in progress board.
-          </p>
-          <small class="text-muted">Yesterday 12:00 PM</small>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-</div>
+            <div class="row mt-3">
+               <div class="col-12" id="tugas_baru" >
+                    @forelse ( $tugas as $tugas )
+                    <div class="kanban-item card p-4" data-eid="in-progress-1" data-comments="12" data-badge-text="UX" data-badge="success" data-due-date="5 April" data-attachments="4" data-assigned="12.png,5.png" data-members="Bruce,Clark">
+                        <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
+                            <div class="item-badges">
+                                <div class="badge rounded-pill bg-label-success"> UX</div>
+                            </div>
+                            <div class="dropdown kanban-tasks-item-dropdown"><i class="dropdown-toggle ti ti-dots-vertical" id="kanban-tasks-item-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="kanban-tasks-item-dropdown" style=""><a class="dropdown-item" href="javascript:void(0)">Copy task link</a><a class="dropdown-item" href="javascript:void(0)">Duplicate task</a><a class="dropdown-item delete-task" href="javascript:void(0)">Delete</a></div>
+                            </div>
+                        </div><span class="kanban-text">{{ $tugas->nama }}</span>
+                        <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
+                            <div class="d-flex"> <span class="d-flex align-items-center me-2"><i class="ti ti-paperclip ti-xs me-1"></i><span class="attachments">4</span></span> <span class="d-flex align-items-center ms-1"><i class="ti ti-message-dots ti-xs me-1"></i><span> 12 </span></span>
+                            </div>
+                            <div class="avatar-group d-flex align-items-center assigned-avatar">
+                                <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Bruce" data-bs-original-title="Bruce"><img src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png" alt="Avatar" class="rounded-circle  pull-up"></div>
+                                <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Clark" data-bs-original-title="Clark"><img src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png" alt="Avatar" class="rounded-circle  pull-up"></div>
+                            </div>
+                        </div>
+                    </div>
+                    @empty
 
-      </div>
-      <!-- / Content -->
+                    <div id="notFoundw" class="card bg-secondary">
+                        <div class="card-body">
+                            <p>Belum ada Tugas di timmu</p>
+                        </div>
+                    </div>
 
-      <!-- Footer -->
-                <!-- Footer-->
-<footer class="content-footer footer bg-footer-theme">
-<div class="container-xxl">
-<div class="footer-container d-flex align-items-center justify-content-between py-2 flex-md-row flex-column">
-  <div>
-    © <script>
-      document.write(new Date().getFullYear())
+                    @endforelse
+               </div>
+            </div>
+        </div>
+        <div style="" class=" col-3">
 
-  </script>
-  , made with ❤️ by <a href="https://pixinvent.com/" target="_blank" class="footer-link fw-medium">Pixinvent</a>
-  </div>
-  <div class="d-none d-lg-inline-block">
-    <a href="https://themeforest.net/licenses/standard" class="footer-link me-4" target="_blank">License</a>
-    <a href="https://1.envato.market/pixinvent_portfolio" target="_blank" class="footer-link me-4">More Themes</a>
-    <a href="https://demos.pixinvent.com/vuexy-html-admin-template/documentation/laravel-introduction.html" target="_blank" class="footer-link me-4">Documentation</a>
-    <a href="https://pixinvent.ticksy.com/" target="_blank" class="footer-link d-none d-sm-inline-block">Support</a>
-  </div>
-</div>
-</div>
-</footer>
-<!--/ Footer-->
-                <!-- / Footer -->
-      <div class="content-backdrop fade"></div>
+        </div>
+        <div style="" class=" col-3">
+
+        </div>
+        <div style="" class=" col-3">
+
+        </div>
     </div>
 @endsection
 
@@ -336,8 +111,102 @@
 <!-- BEGIN: Page JS-->
 <script src="{{ asset('assets/js/app-kanban.js') }}"></script>
 <!-- END: Page JS-->
-
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
+
+// let dataEmpty
+
+    axios.get("{{ route('dataTugas',$tim->uuid) }}")
+    .then(res=>{
+        const data = res.data;
+
+        console.log("{{ $tim->uuid }}");
+
+    })
+
+    function showForm(id){
+        let status = false;
+
+        if(!status){
+            document.getElementById(id).classList.toggle('d-none')
+            status = true
+        }else{
+            document.getElementById(id).classList.toggle('d-none')
+            status = false
+        }
+    }
+
+    // tambah tugas
+    const formTambahTugas = document.getElementById('formTambahTugas');
+    formTambahTugas.addEventListener('submit',(event)=>{
+        event.preventDefault();
+        const nama = document.getElementById('tugas').value
+        const tim_uuid = "{{ $tim->uuid }}"
+
+        // axios untuk tambah tugas
+        axios.post("tambah-tugas",{nama,tim_uuid})
+        .then(res=>{
+            const newData = res.data;
+
+            const newElement = document.createElement('div');
+    newElement.classList.add('kanban-item', 'card', 'p-4','mt-3');
+    newElement.setAttribute('data-eid', 'in-progress-1');
+    newElement.setAttribute('data-comments', '12');
+    newElement.setAttribute('data-badge-text', 'UX');
+    newElement.setAttribute('data-badge', 'success');
+    newElement.setAttribute('data-due-date', '5 April');
+    newElement.setAttribute('data-attachments', '4');
+    newElement.setAttribute('data-assigned', '12.png,5.png');
+    newElement.setAttribute('data-members', 'Bruce,Clark');
+
+    newElement.innerHTML = `
+      <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1 ">
+        <div class="item-badges">
+          <div class="badge rounded-pill bg-label-success">UX</div>
+        </div>
+        <div class="dropdown kanban-tasks-item-dropdown">
+          <i class="dropdown-toggle ti ti-dots-vertical" id="kanban-tasks-item-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="kanban-tasks-item-dropdown" style="">
+            <a class="dropdown-item" href="javascript:void(0)">Copy task link</a>
+            <a class="dropdown-item" href="javascript:void(0)">Duplicate task</a>
+            <a class="dropdown-item delete-task" href="javascript:void(0)">Delete</a>
+          </div>
+        </div>
+      </div>
+      <span class="kanban-text">${newData.nama}</span>
+      <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
+        <div class="d-flex">
+          <span class="d-flex align-items-center me-2">
+            <i class="ti ti-paperclip ti-xs me-1"></i>
+            <span class="attachments">4</span>
+          </span>
+          <span class="d-flex align-items-center ms-1">
+            <i class="ti ti-message-dots ti-xs me-1"></i>
+            <span>12</span>
+          </span>
+        </div>
+        <div class="avatar-group d-flex align-items-center assigned-avatar">
+          <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Bruce" data-bs-original-title="Bruce">
+            <img src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png" alt="Avatar" class="rounded-circle pull-up">
+          </div>
+          <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Clark" data-bs-original-title="Clark">
+            <img src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png" alt="Avatar" class="rounded-circle pull-up">
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Tambahkan elemen baru ke dalam div dengan id "tugas_baru"
+    const tugasBaru = document.getElementById('tugas_baru');
+    tugasBaru.appendChild(newElement);
+
+        })
+
+        .catch(error=>{
+            console.log(error)
+        })
+
+    })
 
 </script>
 @endsection

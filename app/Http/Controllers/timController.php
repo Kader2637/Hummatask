@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Anggota;
 use App\Models\Tim;
+use App\Models\Tugas;
 use Illuminate\Http\Request;
 
 class timController extends Controller
@@ -13,8 +14,12 @@ class timController extends Controller
         $title = "Tim/board";
         $tim = Tim::where('uuid', $uuid)->first();
         $anggota = $tim->user()->get();
+        $tugas = Tugas::all();
 
-        return view('siswa.tim.board', compact('title', 'tim', 'anggota'));
+        //
+
+
+        return view('siswa.tim.board', compact('title','tim','anggota','tugas'));
     }
 
     protected function kalenderPage($uuid)
@@ -23,7 +28,7 @@ class timController extends Controller
         $anggota = $tim->user()->get();
 
         $title = "Tim/kalender";
-        return view('siswa.tim.kalender', compact('title', 'tim', 'anggota'));
+        return view('siswa.tim.kalender', compact('title','tim','anggota',));
     }
 
     protected function projectPage($uuid)

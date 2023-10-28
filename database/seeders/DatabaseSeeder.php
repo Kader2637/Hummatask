@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             ],
         ]);
 
+
         DB::table('users')->insert([
             [
                 'uuid' => Str::uuid(),
