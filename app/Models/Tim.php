@@ -21,7 +21,7 @@ class Tim extends Model
     }
     public function tugas():HasMany
     {
-        return $this->tugas(Tugas::class);
+        return $this->hasMany(Tugas::class);
     }
 
 }
