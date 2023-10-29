@@ -16,10 +16,7 @@ class timController extends Controller
         $anggota = $tim->user()->get();
         $tugas = Tugas::all();
 
-        //
-
-
-        return view('siswa.tim.board', compact('title','tim','anggota','tugas'));
+        return view('siswa.tim.board', compact('title','tim','anggota','tugas_baru','tugas_dikerjakan','tugas_revisi','tugas_selesai'));
     }
 
     protected function kalenderPage($uuid)

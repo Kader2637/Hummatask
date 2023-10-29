@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('anggotas', function (Blueprint $table) {
             $table->enum('jabatan',['anggota','ketua_tim','ketua_project']);
-            $table->foreignUuid('user_id')->constrained();
-            $table->foreignUuId('tim_id')->references('id')->on('tims');
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('tim_id')->references('id')->on('tims');
             $table->timestamps();
             $table->primary(['user_id','tim_id']);
 

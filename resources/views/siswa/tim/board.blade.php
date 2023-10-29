@@ -18,70 +18,245 @@
 @endsection
 
 @section('content')
-    <div style="height: 80vh" class="container-fluid row mt-2">
-        <div style="" class="col-3">
-            <div class="card">
-                <div class="card-body p-2 py-2 row">
-                    <div class="col-8 d-flex align-items-center">
-                        <span style="font-size: 15px" class="">Tugas Baru</span>
+    <div style="height: 80vh;overflow-x: auto; " class="container-fluid row mt-2">
+        <div class="d-flex mt-3 mb-0 pb-5 " style="width: auto; overflow-x: auto ; gap:50px;">
+
+            <div style="" class="col-3">
+                <div class="card">
+                    <div class="card-body p-2 py-2 row">
+                        <div class="col-8 d-flex align-items-center">
+                            <span style="font-size: 15px" class="">Tugas Baru</span>
+                        </div>
+                        <div class="col-4 d-flex justify-content-end">
+                            <svg onclick="showForm('tambahTugas')" xmlns="http://www.w3.org/2000/svg" width="20"
+                                height="20" viewBox="0 0 1024 1024">
+                                <path fill="currentColor" d="M352 480h320a32 32 0 1 1 0 64H352a32 32 0 0 1 0-64z" />
+                                <path fill="currentColor" d="M480 672V352a32 32 0 1 1 64 0v320a32 32 0 0 1-64 0z" />
+                                <path fill="currentColor"
+                                    d="M512 896a384 384 0 1 0 0-768a384 384 0 0 0 0 768zm0 64a448 448 0 1 1 0-896a448 448 0 0 1 0 896z" />
+                            </svg>
+                        </div>
                     </div>
-                    <div class="col-4 d-flex justify-content-end">
-                        <svg onclick="showForm('tambahTugas')" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 1024 1024"><path fill="currentColor" d="M352 480h320a32 32 0 1 1 0 64H352a32 32 0 0 1 0-64z"/><path fill="currentColor" d="M480 672V352a32 32 0 1 1 64 0v320a32 32 0 0 1-64 0z"/><path fill="currentColor" d="M512 896a384 384 0 1 0 0-768a384 384 0 0 0 0 768zm0 64a448 448 0 1 1 0-896a448 448 0 0 1 0 896z"/></svg>
+                    <div class="row p-3 d-none" id="tambahTugas">
+                        <div class="col-12">
+                            <form id="formTambahTugas" method="post">
+                                <label for="tugas">Nama Tugas</label>
+                                <input type="text" class="form-control" id="tugas" name="tugas">
+                                <div class="d-flex justify-content-end mt-3">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-                <div class="row p-3 d-none" id="tambahTugas">
-                    <div class="col-12">
-                        <form id="formTambahTugas" method="post" >
-                           <label for="tugas">Nama Tugas</label>
-                           <input type="text" class="form-control" id="tugas" name="tugas">
-                            <div class="d-flex justify-content-end mt-3">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="col-12" id="tugas_baru">
+                    <div class="row mt-3">
+
+                        @forelse ($tugas_baru as $tugas)
+                            {{-- Kondisi dimana tugas yang tampil hanya tugas baru --}}
+                            <div class="kanban-item card p-4" data-eid="in-progress-1" data-comments="12"
+                                data-badge-text="UX" data-badge="success" data-due-date="5 April" data-attachments="4"
+                                data-assigned="12.png,5.png" data-members="Bruce,Clark">
+                                <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
+                                    <div class="item-badges">
+                                        <div class="badge rounded-pill bg-label-success"> UX</div>
+                                    </div>
+                                    <div class="dropdown kanban-tasks-item-dropdown">
+                                        <i class=" ti ti-dots-vertical" id="kanban-tasks-item-dropdown"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                        <div class="dropdown-menu dropdown-menu-end"
+                                            aria-labelledby="kanban-tasks-item-dropdown" style=""><a
+                                                class="dropdown-item" href="javascript:void(0)">Copy task link</a><a
+                                                class="dropdown-item" href="javascript:void(0)">Duplicate task</a><a
+                                                class="dropdown-item delete-task" href="javascript:void(0)">Delete</a></div>
+                                    </div>
+                                </div><span class="kanban-text">{{ $tugas->nama }}</span>
+                                <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
+                                    <div class="d-flex"> <span class="d-flex align-items-center me-2"><i
+                                                class="ti ti-paperclip ti-xs me-1"></i><span
+                                                class="attachments">4</span></span> <span
+                                            class="d-flex align-items-center ms-1"><i
+                                                class="ti ti-message-dots ti-xs me-1"></i><span> 12 </span></span>
+                                    </div>
+                                    <div class="avatar-group d-flex align-items-center assigned-avatar">
+                                        <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            aria-label="Bruce" data-bs-original-title="Bruce"><img
+                                                src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png"
+                                                alt="Avatar" class="rounded-circle  pull-up"></div>
+                                        <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            aria-label="Clark" data-bs-original-title="Clark"><img
+                                                src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png"
+                                                alt="Avatar" class="rounded-circle  pull-up"></div>
+                                    </div>
+                                </div>
                             </div>
-                        </form>
+                        @empty
+                            <div id="notFound" class="card bg-secondary">
+                                <div class="card-body">
+                                    <p>Belum ada Tugas di timmu</p>
+                                </div>
+                            </div>
+                        @endforelse
                     </div>
                 </div>
             </div>
-            <div class="row mt-3">
-               <div class="col-12" id="tugas_baru" >
-                    @forelse ( $tugas as $tugas )
-                    <div class="kanban-item card p-4" data-eid="in-progress-1" data-comments="12" data-badge-text="UX" data-badge="success" data-due-date="5 April" data-attachments="4" data-assigned="12.png,5.png" data-members="Bruce,Clark">
-                        <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
-                            <div class="item-badges">
-                                <div class="badge rounded-pill bg-label-success"> UX</div>
-                            </div>
-                            <div class="dropdown kanban-tasks-item-dropdown"><i class="dropdown-toggle ti ti-dots-vertical" id="kanban-tasks-item-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="kanban-tasks-item-dropdown" style=""><a class="dropdown-item" href="javascript:void(0)">Copy task link</a><a class="dropdown-item" href="javascript:void(0)">Duplicate task</a><a class="dropdown-item delete-task" href="javascript:void(0)">Delete</a></div>
-                            </div>
-                        </div><span class="kanban-text">{{ $tugas->nama }}</span>
-                        <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
-                            <div class="d-flex"> <span class="d-flex align-items-center me-2"><i class="ti ti-paperclip ti-xs me-1"></i><span class="attachments">4</span></span> <span class="d-flex align-items-center ms-1"><i class="ti ti-message-dots ti-xs me-1"></i><span> 12 </span></span>
-                            </div>
-                            <div class="avatar-group d-flex align-items-center assigned-avatar">
-                                <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Bruce" data-bs-original-title="Bruce"><img src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png" alt="Avatar" class="rounded-circle  pull-up"></div>
-                                <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Clark" data-bs-original-title="Clark"><img src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png" alt="Avatar" class="rounded-circle  pull-up"></div>
-                            </div>
+
+            <div style="" class=" col-3">
+                <div class="card">
+                    <div class="card-body p-2 py-2 row">
+                        <div class="col-8 d-flex align-items-center">
+                            <span style="font-size: 15px" class="">Dikerjakan</span>
                         </div>
                     </div>
-                    @empty
-
-                    <div id="notFoundw" class="card bg-secondary">
-                        <div class="card-body">
-                            <p>Belum ada Tugas di timmu</p>
+                </div>
+                <div class="row">
+                    @foreach ($tugas_dikerjakan as $tugas)
+                        <div class="col-12 mt-3">
+                            <div class="kanban-item card p-4" data-eid="in-progress-1" data-comments="12"
+                                data-badge-text="UX" data-badge="success" data-due-date="5 April" data-attachments="4"
+                                data-assigned="12.png,5.png" data-members="Bruce,Clark">
+                                <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
+                                    <div class="item-badges">
+                                        <div class="badge rounded-pill bg-label-success"> UX</div>
+                                    </div>
+                                    <div class="dropdown kanban-tasks-item-dropdown"><i
+                                            class="dropdown-toggle ti ti-dots-vertical" id="kanban-tasks-item-dropdown"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                        <div class="dropdown-menu dropdown-menu-end"
+                                            aria-labelledby="kanban-tasks-item-dropdown" id="{{ $tugas->uuid }}" style=""><a
+                                                class="dropdown-item" href="javascript:void(0)">Copy task link</a><a
+                                                class="dropdown-item" href="javascript:void(0)">Duplicate task</a><a
+                                                class="dropdown-item delete-task" href="javascript:void(0)">Delete</a>
+                                        </div>
+                                    </div>
+                                </div><span class="kanban-text">{{ $tugas->nama }}</span>
+                                <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
+                                    <div class="d-flex"> <span class="d-flex align-items-center me-2"><i
+                                                class="ti ti-paperclip ti-xs me-1"></i><span
+                                                class="attachments">4</span></span> <span
+                                            class="d-flex align-items-center ms-1"><i
+                                                class="ti ti-message-dots ti-xs me-1"></i><span> 12 </span></span>
+                                    </div>
+                                    <div class="avatar-group d-flex align-items-center assigned-avatar">
+                                        <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            aria-label="Bruce" data-bs-original-title="Bruce"><img
+                                                src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png"
+                                                alt="Avatar" class="rounded-circle  pull-up"></div>
+                                        <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            aria-label="Clark" data-bs-original-title="Clark"><img
+                                                src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png"
+                                                alt="Avatar" class="rounded-circle  pull-up"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-
-                    @endforelse
-               </div>
+                    @endforeach
+                </div>
             </div>
-        </div>
-        <div style="" class=" col-3">
-
-        </div>
-        <div style="" class=" col-3">
-
-        </div>
-        <div style="" class=" col-3">
-
+            <div style="" class=" col-3">
+                <div class="card">
+                    <div class="card-body p-2 py-2 row">
+                        <div class="col-8 d-flex align-items-center">
+                            <span style="font-size: 15px" class="">Direvisi</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    @foreach ($tugas_revisi as $tugas)
+                        <div class="col-12 mt-3">
+                            <div class="kanban-item card p-4" data-eid="in-progress-1" data-comments="12"
+                                data-badge-text="UX" data-badge="success" data-due-date="5 April" data-attachments="4"
+                                data-assigned="12.png,5.png" data-members="Bruce,Clark">
+                                <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
+                                    <div class="item-badges">
+                                        <div class="badge rounded-pill bg-label-success"> UX</div>
+                                    </div>
+                                    <div class="dropdown kanban-tasks-item-dropdown"><i
+                                            class="dropdown-toggle ti ti-dots-vertical" id="kanban-tasks-item-dropdown"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                        <div class="dropdown-menu dropdown-menu-end"
+                                            aria-labelledby="kanban-tasks-item-dropdown" style=""><a
+                                                class="dropdown-item" href="javascript:void(0)">Copy task link</a><a
+                                                class="dropdown-item" href="javascript:void(0)">Duplicate task</a><a
+                                                class="dropdown-item delete-task" href="javascript:void(0)">Delete</a>
+                                        </div>
+                                    </div>
+                                </div><span class="kanban-text">{{ $tugas->nama }}</span>
+                                <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
+                                    <div class="d-flex"> <span class="d-flex align-items-center me-2"><i
+                                                class="ti ti-paperclip ti-xs me-1"></i><span
+                                                class="attachments">4</span></span> <span
+                                            class="d-flex align-items-center ms-1"><i
+                                                class="ti ti-message-dots ti-xs me-1"></i><span> 12 </span></span>
+                                    </div>
+                                    <div class="avatar-group d-flex align-items-center assigned-avatar">
+                                        <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            aria-label="Bruce" data-bs-original-title="Bruce"><img
+                                                src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png"
+                                                alt="Avatar" class="rounded-circle  pull-up"></div>
+                                        <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            aria-label="Clark" data-bs-original-title="Clark"><img
+                                                src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png"
+                                                alt="Avatar" class="rounded-circle  pull-up"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <div style="" class=" col-3">
+                <div class="card">
+                    <div class="card-body p-2 py-2 row">
+                        <div class="col-8 d-flex align-items-center">
+                            <span style="font-size: 15px" class="">Selesai</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    @foreach ($tugas_selesai as $tugas)
+                        <div class="col-12 mt-3">
+                            <div class="kanban-item card p-4" data-eid="in-progress-1" data-comments="12"
+                                data-badge-text="UX" data-badge="success" data-due-date="5 April" data-attachments="4"
+                                data-assigned="12.png,5.png" data-members="Bruce,Clark">
+                                <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
+                                    <div class="item-badges">
+                                        <div class="badge rounded-pill bg-label-success"> UX</div>
+                                    </div>
+                                    <div class="dropdown kanban-tasks-item-dropdown"><i
+                                            class="dropdown-toggle ti ti-dots-vertical" id="kanban-tasks-item-dropdown"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                        <div class="dropdown-menu dropdown-menu-end"
+                                            aria-labelledby="kanban-tasks-item-dropdown" style=""><a
+                                                class="dropdown-item" href="javascript:void(0)">Copy task link</a><a
+                                                class="dropdown-item" href="javascript:void(0)">Duplicate task</a><a
+                                                class="dropdown-item delete-task" href="javascript:void(0)">Delete</a>
+                                        </div>
+                                    </div>
+                                </div><span class="kanban-text">{{ $tugas->nama }}</span>
+                                <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
+                                    <div class="d-flex"> <span class="d-flex align-items-center me-2"><i
+                                                class="ti ti-paperclip ti-xs me-1"></i><span
+                                                class="attachments">4</span></span> <span
+                                            class="d-flex align-items-center ms-1"><i
+                                                class="ti ti-message-dots ti-xs me-1"></i><span> 12 </span></span>
+                                    </div>
+                                    <div class="avatar-group d-flex align-items-center assigned-avatar">
+                                        <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            aria-label="Bruce" data-bs-original-title="Bruce"><img
+                                                src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png"
+                                                alt="Avatar" class="rounded-circle  pull-up"></div>
+                                        <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            aria-label="Clark" data-bs-original-title="Clark"><img
+                                                src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png"
+                                                alt="Avatar" class="rounded-circle  pull-up"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
         </div>
     </div>
 @endsection

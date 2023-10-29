@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tims', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
+            $table->string('uuid');
             $table->text('logo')->nullable();
             $table->string('nama')->nullable();
             $table->string('repository');

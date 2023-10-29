@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tugas', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->foreignUuid('tim_id')->constrained();
+            $table->id();
+            $table->foreignId('tim_id')->constrained();
             $table->string('uuid');
             $table->string('nama');
             $table->date('deadline')->nullable();

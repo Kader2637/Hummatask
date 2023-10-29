@@ -14,17 +14,13 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-
-        $peran_id_siswa = Str::uuid();
-        $peran_id_mentor = Str::uuid();
-
         DB::table('perans')->insert([
             [
-                'id' => $peran_id_siswa,
+                'uuid' => Str::uuid(),
                 'peran' => "siswa",
             ],
             [
-                'id' => $peran_id_mentor,
+                'uuid' => Str::uuid(),
                 'peran' => "mentor",
             ],
         ]);
@@ -32,43 +28,43 @@ class DatabaseSeeder extends Seeder
 
         DB::table('users')->insert([
             [
-                'id' => Str::uuid(),
+                'uuid' => Str::uuid(),
                 'username' => 'Rafliansyah',
                 'email' => 'Rafliansyah@gmail.com',
                 'password' => Hash::make('password'),
-                'peran_id' => $peran_id_siswa,
+                'peran_id' => 1,
                 'deskripsi' => 'none',
             ],
             [
-                'id' => Str::uuid(),
+                'uuid' => Str::uuid(),
                 'username' => 'Saputra',
                 'email' => 'Saputra@gmail.com',
                 'password' => Hash::make('password'),
-                'peran_id' => $peran_id_siswa,
+                'peran_id' => 1,
                 'deskripsi' => 'none',
             ],
             [
-                'id' => Str::uuid(),
+                'uuid' => Str::uuid(),
                 'username' => 'Jefri',
                 'email' => 'Jefri@gmail.com',
                 'password' => Hash::make('password'),
-                'peran_id' => $peran_id_siswa,
+                'peran_id' => 1,
                 'deskripsi' => 'none',
             ],
             [
-                'id' => Str::uuid(),
+                'uuid' => Str::uuid(),
                 'username' => 'Yafy',
                 'email' => 'Yafy@gmail.com',
                 'password' => Hash::make('password'),
-                'peran_id' => $peran_id_siswa,
+                'peran_id' => 1,
                 'deskripsi' => 'none',
             ],
             [
-                'id' => Str::uuid(),
+                'uuid' => Str::uuid(),
                 'username' => 'Mas Jefri',
                 'email' => 'mentor@gmail.com',
                 'password' => Hash::make('password'),
-                'peran_id' => $peran_id_mentor,
+                'peran_id' => 2,
                 'deskripsi' => 'none',
             ],
         ]);
@@ -81,30 +77,14 @@ class DatabaseSeeder extends Seeder
         $role->givePermissionTo('kelola siswa');
         User::create(
             [
-                'id' => Str::uuid(),
+                'uuid' => Str::uuid(),
                 'username' => 'Adi Kurniawan',
                 'email' => 'kurniawan@gmail.com',
                 'password' => Hash::make('password'),
-                'peran_id' => $peran_id_siswa,
+                'peran_id' => 1,
                 'deskripsi' => 'none',
             ]
         )->assignRole($role);
-
-
-        for ($i=0; $i <100 ; $i++) {
-            # code...
-
-        User::create(
-            [
-                'id' => Str::uuid(),
-                'username' => fake()->name(),
-                'email' => fake()->email(),
-                'password' => Hash::make('password'),
-                'peran_id' => $peran_id_siswa,
-                'deskripsi' => 'none',
-            ]);
-        }
-
 
         // $role->givePermissionTo(Permission::all());
     }
