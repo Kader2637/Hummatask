@@ -14,12 +14,12 @@ class timController extends Controller
         $title = "Tim/board";
         $tim = Tim::where('uuid', $uuid)->first();
         $anggota = $tim->user()->get();
-        $tugas_baru = $tim->tugas()->where('status_tugas','tugas_baru')->get();
-        $tugas_dikerjakan = $tim->tugas()->where('status_tugas','dikerjakan')->get();
-        $tugas_revisi = $tim->tugas()->where('status_tugas','revisi')->get();
-        $tugas_selesai = $tim->tugas()->where('status_tugas','selesai')->get();
+        $tugas = Tugas::all();
 
-        return view('siswa.tim.board', compact('title','tim','anggota','tugas_baru','tugas_dikerjakan','tugas_revisi','tugas_selesai'));
+        //
+
+
+        return view('siswa.tim.board', compact('title','tim','anggota','tugas'));
     }
 
     protected function kalenderPage($uuid)
@@ -43,6 +43,7 @@ class timController extends Controller
     protected function historyPage($uuid)
     {
         $title = "Tim/history";
+
         $tim = Tim::where('uuid', $uuid)->first();
         $anggota = $tim->user()->get();
 
