@@ -19,6 +19,8 @@ class timController extends Controller
         $tugas_revisi = $tim->tugas()->where('status_tugas','revisi')->get();
         $tugas_selesai = $tim->tugas()->where('status_tugas','selesai')->get();
 
+        dd($anggota);
+
         return view('siswa.tim.board', compact('title','tim','anggota','tugas_baru','tugas_dikerjakan','tugas_revisi','tugas_selesai'));
     }
 

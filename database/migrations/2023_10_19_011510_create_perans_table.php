@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('perans', function (Blueprint $table) {
-            $table->id();
-            $table->string('uuid');
+            $table->uuid('id')->primary();
             $table->enum('peran', ['siswa', 'mentor']);
             $table->timestamps();
         });
