@@ -149,7 +149,7 @@
                         <ul class="">
                             @forelse ($tims as $tim)
                                 <li class="menu-item ">
-                                    <a href="{{ route('tim.board', $tim->uuid) }}"
+                                    <a href="{{ route('tim.board', $tim->code) }}"
                                         class="menu-link d-flex align-items-center gap-2">
                                         <img style="width: 30px;height:30px;object-fit: cover"
                                             class="rounded-circle border border-primary"

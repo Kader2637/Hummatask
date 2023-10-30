@@ -26,7 +26,7 @@ class PengajuanTimController extends Controller
 
         // membuat tim
         $tim = new Tim;
-        $tim->uuid = Str::uuid();
+        $tim->code = Str::uuid();
         $tim->nama = $request->nama;
         $tim->logo = $namaLogo;
         $tim->repository = $request->repository;

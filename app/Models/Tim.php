@@ -19,9 +19,15 @@ class Tim extends Model
     {
         return $this->belongsToMany(User::class, 'anggotas');
     }
+
     public function tugas():HasMany
     {
-        return $this->tugas(Tugas::class);
+        return $this->hasMany(Tugas::class);
+    }
+
+    public function presentasi():HasMany
+    {
+        return $this->hasMany(Presentasi::class);
     }
 
 }

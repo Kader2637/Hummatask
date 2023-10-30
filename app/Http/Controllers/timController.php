@@ -9,19 +9,22 @@ use Illuminate\Http\Request;
 
 class timController extends Controller
 {
-    protected function boardPage($uuid)
+     protected function boardPage($uuid)
     {
         $title = "Tim/board";
-        $tim = Tim::where('uuid', $uuid)->first();
+        $tim = Tim::where('code', $uuid)->first();
         $anggota = $tim->user()->get();
-        $tugas = Tugas::all();
+        $tugas_baru = $tim->tugas()->where('status_tugas','tugas_baru')->get();
+        $tugas_dikerjakan = $tim->tugas()->where('status_tugas','dikerjakan')->get();
+        $tugas_revisi = $tim->tugas()->where('status_tugas','revisi')->get();
+        $tugas_selesai = $tim->tugas()->where('status_tugas','selesai')->get();
 
         return view('siswa.tim.board', compact('title','tim','anggota','tugas_baru','tugas_dikerjakan','tugas_revisi','tugas_selesai'));
     }
 
     protected function kalenderPage($uuid)
     {
-        $tim = Tim::where('uuid', $uuid)->first();
+        $tim = Tim::where('code', $uuid)->first();
         $anggota = $tim->user()->get();
 
         $title = "Tim/kalender";
@@ -30,7 +33,7 @@ class timController extends Controller
 
     protected function projectPage($uuid)
     {
-        $tim = Tim::where('uuid', $uuid)->first();
+        $tim = Tim::where('code', $uuid)->first();
         $anggota = $tim->user()->get();
 
         $title = "Tim/project";
@@ -41,7 +44,7 @@ class timController extends Controller
     {
         $title = "Tim/history";
 
-        $tim = Tim::where('uuid', $uuid)->first();
+        $tim = Tim::where('code', $uuid)->first();
         $anggota = $tim->user()->get();
 
 
@@ -51,7 +54,7 @@ class timController extends Controller
     protected function historyPresentasiPage($uuid)
     {
         $title = "Tim/presentasi";
-        $tim = Tim::where('uuid', $uuid)->first();
+        $tim = Tim::where('code', $uuid)->first();
         $anggota = $tim->user()->get();
 
         return view('siswa.tim.history-presentasi', compact('title', 'tim', 'anggota'));
@@ -59,7 +62,7 @@ class timController extends Controller
 
     protected function catatanPage($uuid)
     {
-        $tim = Tim::where('uuid', $uuid)->first();
+        $tim = Tim::where('code', $uuid)->first();
         $anggota = $tim->user()->get();
 
         $title = "catatan";
@@ -68,7 +71,7 @@ class timController extends Controller
 
     protected function historyCatatanPage($uuid)
     {
-        $tim = Tim::where('uuid', $uuid)->first();
+        $tim = Tim::where('code', $uuid)->first();
         $anggota = $tim->user()->get();
 
         $title = "catatan history";

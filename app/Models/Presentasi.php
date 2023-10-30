@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Tugas extends Model
+class Presentasi extends Model
 {
     use HasFactory;
 
@@ -18,10 +18,4 @@ class Tugas extends Model
     {
         return $this->belongsTo(Tim::class);
     }
-
-    public function tugas():BelongsTo
-    {
-        return $this->belongsTo(Tugas::class);
-    }
-
 }

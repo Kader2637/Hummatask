@@ -56,6 +56,9 @@ Route::prefix('tim')->middleware(['auth', 'siswa'])->controller(timController::c
     // proses di halaman tim
     Route::get('board/dataTugas/{uuid}',[TugasController::class,'getData'])->name('dataTugas');
     Route::post('board/tambah-tugas',[TugasController::class,'buatTugas']);
+
+    // proses untuk presentasi
+    Route::post('ajukan-presentasi/{code}',[PresentasiController::class,'ajukanPresentasi'])->name('ajukan-presentasi');
 });
 
 // Halaman Ketua Magang

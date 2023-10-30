@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('tims', function (Blueprint $table) {
             $table->id();
-            $table->string('uuid');
+            $table->string('code');
             $table->text('logo')->nullable();
             $table->string('nama')->nullable();
             $table->string('repository');
             $table->enum('status_tim',['solo','pre_mini','mini','pre_big','big']);
+            $table->boolean('kadaluwarsa')->default(false);
             $table->timestamps();
         });
     }
