@@ -1,17 +1,15 @@
 @extends('layoutsMentor.app')
 
 @section('content')
-    <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}"></script>
-
-    <div class="container mt-3">
+    <div class="container-fluid mt-3">
         <h5 class="">Dashboard</h5>
         <div class="card">
-            <div class="d-flex justify-content-between mx-3 my-4">
+            <div class="d-flex justify-content-between mx-3 mb-1 mt-4">
                 <h5 class="pb-0">Tabel Presentasi</h5>
                 <a href="{{ route('presentasi.mentor') }}" class="btn btn-primary d-flex justify-content-end">Detail</a>
             </div>
-            <div class="table-responsive text-nowrap">
-                <table class="table">
+            <div class="table-responsive text-nowrap card-datatable">
+                <table id="myTable" class="table">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -118,18 +116,21 @@
                                 <button type="button" class="btn dropdown-toggle px-0" data-bs-toggle="dropdown"
                                     aria-expanded="false"><i class="ti ti-calendar"></i></button>
                                 <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">Today</a>
+                                    <li><a href="javascript:void(0);"
+                                            class="dropdown-item d-flex align-items-center">Today</a>
                                     </li>
                                     <li><a href="javascript:void(0);"
                                             class="dropdown-item d-flex align-items-center">Yesterday</a></li>
                                     <li><a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">Last 7
                                             Days</a></li>
-                                    <li><a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">Last 30
+                                    <li><a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">Last
+                                            30
                                             Days</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">Current
+                                    <li><a href="javascript:void(0);"
+                                            class="dropdown-item d-flex align-items-center">Current
                                             Month</a></li>
                                     <li><a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">Last
                                             Month</a></li>
@@ -138,23 +139,21 @@
                         </div>
                     </div>
                     <div class="card-body pt-2">
-                        <canvas id="barChart" class="chartjs" data-height="435"></canvas>
+                        <canvas id="barChart" class="chartjs" data-height="480" style="height: 365px;"></canvas>
                     </div>
                 </div>
             </div>
-
-            <!-- /Scatter Chart -->
         </div>
     </div>
+@endsection
 
-
-
+@section('script')
+    <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}"></script>
 
     <script>
         const cyanColor = '#28dac6',
             orangeLightColor = '#FDAC34';
         let cardColor, headingColor, labelColor, borderColor, legendColor;
-
 
         cardColor = config.colors.cardColor;
         headingColor = config.colors.headingColor;

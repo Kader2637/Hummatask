@@ -11,7 +11,6 @@
     <meta charset="utf-8" />
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-
     <title>
         {{ $title }}
     </title>
@@ -34,7 +33,6 @@
         href="{{ asset('assets/vendor/fonts/fontawesome8a69.css?id=a2997cb6a1c98cc3c85f4c99cdea95b5') }}" />
     <link rel="stylesheet"
         href="{{ asset('assets/vendor/fonts/flag-icons80a8.css?id=121bcc3078c6c2f608037fb9ca8bce8d') }}" />
-    <!-- Core CSS -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/core6cc1.css?id=9dd8321ea008145745a7d78e072a6e36') }}"
         class="template-customizer-core-css" />
     <link rel="stylesheet"
@@ -52,27 +50,22 @@
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('assets/js/config.js') }}"></script>
 
-    <!-- Vendor Styles -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/fullcalendar/fullcalendar.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/flatpickr/flatpickr.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/editor.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/%40form-validation/umd/styles/index.min.css') }}" />
-
-
-    <!-- Page Styles -->
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/app-calendar.css') }}" />
     @yield('link')
-
-
 </head>
 
 @yield('style')
 
 
 <body>
-
-    {{-- modal --}}
     <div class="modal fade" id="ajukanPresentasi" tabindex="-1" style="display: none;" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -91,7 +84,8 @@
                     <div class="row">
                         <div class="col">
                             <label for="deskripsi" class="form-label">Deskripsi Presentasi</label>
-                            <textarea name="deskripsi" id="deskripsi" cols="20" rows="10" class="form-control" style="resize: none"></textarea>
+                            <textarea name="deskripsi" id="deskripsi" cols="20" rows="10" class="form-control" style="resize: none"
+                                placeholder="Isi deskripsi pengajuan anda"></textarea>
                         </div>
                     </div>
                     <div class="row">
@@ -110,9 +104,6 @@
             </div>
         </div>
     </div>
-    {{-- End Modal --}}
-
-    {{-- OffCanvas --}}
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEnd" aria-labelledby="offcanvasEndLabel">
         <div class="offcanvas-header">
@@ -139,7 +130,7 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane fade active show" id="navs-top-home" role="tabpanel">
-                                <div class="card">
+                                <div class="card mb-3">
                                     <h5 class="card-header">Progres Tim</h5>
                                     <div class="card-body">
                                         <canvas id="doughnutChart" class="chartjs mb-4" data-height="350"
@@ -452,21 +443,8 @@
                 <div class="app-brand demo">
                     <a href="{{ route('dashboard.siswa') }}" class="app-brand-link">
                         <span class="app-brand-logo demo">
-                            <svg width="32" height="20" viewBox="0 0 32 22" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M0.00172773 0V6.85398C0.00172773 6.85398 -0.133178 9.01207 1.98092 10.8388L13.6912 21.9964L19.7809 21.9181L18.8042 9.88248L16.4951 7.17289L9.23799 0H0.00172773Z"
-                                    fill="#7367F0" />
-                                <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M7.69824 16.4364L12.5199 3.23696L16.5541 7.25596L7.69824 16.4364Z"
-                                    fill="#161616" />
-                                <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M8.07751 15.9175L13.9419 4.63989L16.5849 7.28475L8.07751 15.9175Z"
-                                    fill="#161616" />
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z"
-                                    fill="#7367F0" />
-                            </svg>
+                            <img src="{{ url('assets/img/icons/icon.svg') }}" width="50" alt=""
+                                srcset="">
                         </span>
                         <span class="app-brand-text demo menu-text fw-bold">HummaTask</span>
                     </a>
@@ -480,32 +458,33 @@
 
                 <ul class="menu-inner py-1 ">
                     <li class="menu-item @if ($title == 'Tim/board') active @endif ">
-                        <a href="{{ route('tim.board') }}" class="menu-link d-flex align-items-center gap-2">
+                        <a href="{{ route('tim.board',$tim->uuid) }}" class="menu-link d-flex align-items-center gap-2">
                             <i class="menu-icon tf-icons ti ti-layout-dashboard"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Board</div>
                         </a>
                     </li>
                     <li class="menu-item ">
-                        <a href="" class="menu-link d-flex align-items-center gap-2">
+                        <a style="cursor: pointer" data-bs-toggle="offcanvas" data-bs-target="#offcanvasEnd"
+                            class="menu-link d-flex align-items-center gap-2">
                             <i class="menu-icon tf-icons ti ti-chart-line"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Statistik Project
                             </div>
                         </a>
                     </li>
                     <li class="menu-item @if ($title == 'Tim/kalender') active @endif ">
-                        <a href="{{ route('tim.kalender') }}" class="menu-link d-flex align-items-center gap-2">
+                        <a href="{{ route('tim.kalender',$tim->uuid) }}" class="menu-link d-flex align-items-center gap-2">
                             <i class="menu-icon tf-icons ti ti-calendar"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Kalender</div>
                         </a>
                     </li>
                     <li class="menu-item @if ($title == 'Tim/project') active @endif ">
-                        <a href="{{ route('tim.project') }}" class="menu-link d-flex align-items-center gap-2">
+                        <a href="{{ route('tim.project',$tim->uuid) }}" class="menu-link d-flex align-items-center gap-2">
                             <i class="menu-icon tf-icons ti ti-folder-cog"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Project</div>
                         </a>
                     </li>
                     <li class="menu-item @if ($title == 'Tim/history') active @endif ">
-                        <a href="{{ route('tim.history') }}" class="menu-link d-flex align-items-center gap-2">
+                        <a href="{{ route('tim.history',$tim->uuid) }}" class="menu-link d-flex align-items-center gap-2">
                             <i class="menu-icon tf-icons ti ti-history"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">History</div>
                         </a>
@@ -517,12 +496,12 @@
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item @if ($title == 'catatan') active @endif">
-                                <a href="{{ route('tim.catatan') }}" class="menu-link">
+                                <a href="{{ route('tim.catatan',$tim->uuid) }}" class="menu-link">
                                     <div>Buat Catatan</div>
                                 </a>
                             </li>
                             <li class="menu-item @if ($title == 'catatan history') active @endif ">
-                                <a href="{{ route('tim.historyCatatan') }}" class="menu-link">
+                                <a href="{{ route('tim.historyCatatan',$tim->uuid) }}" class="menu-link">
                                     <div>History Catatan</div>
                                 </a>
                             </li>
@@ -541,14 +520,14 @@
                                 </a>
                             </li>
                             <li class="menu-item @if ($title == 'Tim/presentasi') active @endif ">
-                                <a href="{{ route('tim.historyPresentasi') }}" class="menu-link">
+                                <a href="{{ route('tim.historyPresentasi',$tim->uuid) }}" class="menu-link">
                                     <div>History Presentasi</div>
                                 </a>
                             </li>
                         </ul>
                     </li>
                     <li class="menu-item active mt-5">
-                        <a href="{{ route('dashboard.siswa') }}" class="menu-link d-flex align-items-center gap-2">
+                        <a href="{{ route('dashboard.siswa',$tim->uuid) }}" class="menu-link d-flex align-items-center gap-2">
                             <i class="menu-icon tf-icons ti ti-arrow-back"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Kembali</div>
                         </a>
@@ -573,9 +552,16 @@
                     </div>
 
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-                        <ul class="navbar-nav flex-row align-items-center ms-auto">
+                        <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Siswa Magang</span>
+                                @if (auth()->check() &&
+                                        auth()->user()->can('kelola siswa'))
+                                    <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Ketua
+                                        Magang</span>
+                                @else
+                                    <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Siswa
+                                        Magang</span>
+                                @endif
                             </li>
                             <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
@@ -849,7 +835,12 @@
                                                     <span class="fw-medium d-block">
                                                         {{ Auth::user()->username }}
                                                     </span>
-                                                    <small class="text-muted">Admin</small>
+                                                    @if (auth()->check() &&
+                                                            auth()->user()->can('kelola siswa'))
+                                                        <small class="text-muted">Ketua Magang</small>
+                                                    @else
+                                                        <small class="text-muted">Siswa Magang</small>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </a>
@@ -867,9 +858,9 @@
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('profile.siswa') }}">
-                                            <i class='ti ti-login me-2'></i>
-                                            <span class="align-middle">Login</span>
+                                        <a class="dropdown-item" href="{{ route('logout') }}">
+                                            <i class='ti ti-logout me-2'></i>
+                                            <span class="align-middle">Logout</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -916,6 +907,7 @@
     <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/moment/moment.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/extended-ui-sweetalert2.js') }}"></script> --}}
 
     <!-- BEGIN: Page JS-->
     <script src="{{ asset('assets/js/app-calendar-events.js') }}"></script>
@@ -981,6 +973,23 @@
             });
         }
     </script>
+
+    @if (session()->has('unauthorize'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Akses Ditolak',
+                text: '{{ session('unauthorize') }}', // Teks pesan dari sesi
+                showClass: {
+                    popup: "animate__animated animate__tada"
+                },
+                customClass: {
+                    confirmButton: "btn btn-primary"
+                },
+                buttonsStyling: !1,
+            });
+        </script>
+    @endif
 
 </body>
 

@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             ],
         ]);
 
+
         DB::table('users')->insert([
             [
                 'uuid' => Str::uuid(),
@@ -68,17 +69,23 @@ class DatabaseSeeder extends Seeder
             ],
         ]);
 
-        // app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // Permission::create(['name'=>'kelola siswa']);
+        Permission::create(['name' => 'kelola siswa']);
 
-        // $role = Role::create(['name'=>'ketua']);
+        $role = Role::create(['name' => 'ketua magang']);
+        $role->givePermissionTo('kelola siswa');
+        User::create(
+            [
+                'uuid' => Str::uuid(),
+                'username' => 'Adi Kurniawan',
+                'email' => 'kurniawan@gmail.com',
+                'password' => Hash::make('password'),
+                'peran_id' => 1,
+                'deskripsi' => 'none',
+            ]
+        )->assignRole($role);
+
         // $role->givePermissionTo(Permission::all());
-
-        // // $user->
-        // $user->assignRole($role);
-
-
-
     }
 }

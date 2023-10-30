@@ -91,7 +91,7 @@
                                 <input type="text" class="form-control pencarian">
                             </div>
                             <div class="d-flex">
-                                <div class="col ">
+                                <div class="col">
                                     <button class="btn btn-success"><i
                                             class="fa-regular fa-file icon-text"></i>Import</button>
                                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-data"><i
@@ -707,5 +707,138 @@
                 </div>
             </div>
         </div>
-    </div>
-@endsection
+
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+        <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+        <script src="{{ asset('assets/js/forms-editors.js') }}"></script>
+        <script>
+            jQuery.noConflict();
+
+            jQuery(document).ready(function($) {
+                $('#jstabel1').DataTable({
+                    "lengthMenu": [
+                        [5, 10, 15, -1],
+                        [5, 10, 15, "All"]
+                    ],
+                    "pageLength": 5,
+
+                    "order": [],
+
+                    "ordering": false,
+
+                    "language": {
+                        "sProcessing": "Sedang memproses...",
+                        "sLengthMenu": "Tampilkan _MENU_ data",
+                        "sZeroRecords": "Tidak ditemukan Data",
+                        "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                        "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
+                        "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Cari :",
+                        "sUrl": "",
+                        "oPaginate": {
+                            "sFirst": "Pertama",
+                            "sPrevious": "&#8592;",
+                            "sNext": "&#8594;",
+                            "sLast": "Terakhir"
+                        }
+                    }
+                });
+            });
+            jQuery(document).ready(function($) {
+                $('#jstabel2').DataTable({
+                    "lengthMenu": [
+                        [5, 10, 15, -1],
+                        [5, 10, 15, "All"]
+                    ],
+                    "pageLength": 5,
+
+                    "order": [],
+
+                    "ordering": false,
+
+                    "language": {
+                        "sProcessing": "Sedang memproses...",
+                        "sLengthMenu": "Tampilkan _MENU_ data",
+                        "sZeroRecords": "Tidak ditemukan Data",
+                        "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                        "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
+                        "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Cari :",
+                        "sUrl": "",
+                        "oPaginate": {
+                            "sFirst": "Pertama",
+                            "sPrevious": "&#8592;",
+                            "sNext": "&#8594;",
+                            "sLast": "Terakhir"
+                        }
+                    }
+                });
+            });
+            jQuery(document).ready(function($) {
+                $('#jstabel3').DataTable({
+                    "lengthMenu": [
+                        [5, 10, 15, -1],
+                        [5, 10, 15, "All"]
+                    ],
+                    "pageLength": 5,
+
+                    "order": [],
+
+                    "ordering": false,
+
+                    "language": {
+                        "sProcessing": "Sedang memproses...",
+                        "sLengthMenu": "Tampilkan _MENU_ data",
+                        "sZeroRecords": "Tidak ditemukan Data",
+                        "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                        "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
+                        "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Cari :",
+                        "sUrl": "",
+                        "oPaginate": {
+                            "sFirst": "Pertama",
+                            "sPrevious": "&#8592;",
+                            "sNext": "&#8594;",
+                            "sLast": "Terakhir"
+                        }
+                    }
+                });
+            });
+            jQuery(document).ready(function($) {
+                $('#jstabel4').DataTable({
+                    "lengthMenu": [
+                        [5, 10, 15, -1],
+                        [5, 10, 15, "All"]
+                    ],
+                    "pageLength": 5,
+
+                    "order": [],
+
+                    "ordering": false,
+
+                    "language": {
+                        "sProcessing": "Sedang memproses...",
+                        "sLengthMenu": "Tampilkan _MENU_ data",
+                        "sZeroRecords": "Tidak ditemukan Data",
+                        "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                        "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
+                        "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Cari :",
+                        "sUrl": "",
+                        "oPaginate": {
+                            "sFirst": "Pertama",
+                            "sPrevious": "&#8592;",
+                            "sNext": "&#8594;",
+                            "sLast": "Terakhir"
+                        }
+                    }
+                });
+            });
+        </script>
+    @endsection

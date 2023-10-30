@@ -48,6 +48,12 @@
     <link rel="stylesheet"
         href="{{ asset('assets/vendor/libs/typeahead-js/typeaheadb5e1.css?id=2603197f6b29a6654cb700bd9367e2a3') }}" />
 
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/apex-charts/apex-charts.css') }}" />
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('assets/js/config.js') }}"></script>
@@ -65,21 +71,8 @@
                 <div class="app-brand demo">
                     <a href="{{ route('dashboard.siswa') }}" class="app-brand-link">
                         <span class="app-brand-logo demo">
-                            <svg width="32" height="20" viewBox="0 0 32 22" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M0.00172773 0V6.85398C0.00172773 6.85398 -0.133178 9.01207 1.98092 10.8388L13.6912 21.9964L19.7809 21.9181L18.8042 9.88248L16.4951 7.17289L9.23799 0H0.00172773Z"
-                                    fill="#7367F0" />
-                                <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M7.69824 16.4364L12.5199 3.23696L16.5541 7.25596L7.69824 16.4364Z"
-                                    fill="#161616" />
-                                <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M8.07751 15.9175L13.9419 4.63989L16.5849 7.28475L8.07751 15.9175Z"
-                                    fill="#161616" />
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z"
-                                    fill="#7367F0" />
-                            </svg>
+                            <img src="{{ url('assets/img/icons/icon.svg') }}" width="50" alt=""
+                                srcset="">
                         </span>
                         <span class="app-brand-text demo menu-text fw-bold">HummaTask</span>
                     </a>
@@ -93,47 +86,51 @@
 
                 <ul class="menu-inner py-1">
                     <li class="menu-item">
-                        <a href="{{route('dashboard.siswa')}}" class="menu-link">
+                        <a href="{{ route('dashboard.siswa') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-category"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Dashboard</div>
                         </a>
                     </li>
 
-                    {{-- Navigasi ke ketua magang --}}
+                    {{-- Navigasi ketua magang --}}
 
-                    <li class="menu-item @if (
-                        $title === 'Dashboard Ketua Magang' ||
-                            $title === 'Presentasi Ketua Magang' ||
-                            $title === 'Project Ketua Magang' ||
-                            $title === 'History Ketua Magang') open @endif">
-                        <a href="" class="menu-link menu-toggle d-flex">
-                            <i class="menu-icon tf-icons ti ti-crown"></i>
-                            <div class="w-100 d-flex align-items-center justify-content-between">Ketua Magang</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="{{ route('ketua.dashboard') }}" class="menu-link">
-                                     <div>Dashboard</div>
-                                </a>
-                            </li>
-                            <li class="menu-item ">
-                                <a href="{{ route('ketua.presentasi') }}" class="menu-link">
-                                    <div>Presentasi</div>
-                                </a>
-                            </li>
-                            <li class="menu-item {{ request()->routeIs('ketua.project') ? 'active' : '' }}">
-                                <a href="{{ route('ketua.project') }}" class="menu-link">
-                                    <div>Project</div>
-                                </a>
-                            </li>
-                            <li class="menu-item ">
-                                <a href="{{ route('ketua.history') }}" class="menu-link">
-                                    <div>History</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    {{-- @endcan --}}
+                    @can('kelola siswa')
+                        <li class="menu-item @if (
+                            $title === 'Dashboard Ketua Magang' ||
+                                $title === 'Presentasi Ketua Magang' ||
+                                $title === 'Project Ketua Magang' ||
+                                $title === 'History Ketua Magang') open @endif">
+                            <a href="" class="menu-link menu-toggle d-flex">
+                                <i class="menu-icon tf-icons ti ti-crown"></i>
+                                <div class="w-100 d-flex align-items-center justify-content-between">Ketua Magang</div>
+                            </a>
+                            <ul class="menu-sub">
+                                <li class="menu-item">
+                                    <a href="{{ route('ketua.dashboard') }}" class="menu-link">
+                                        <div>Dashboard</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item ">
+                                    <a href="{{ route('ketua.presentasi') }}" class="menu-link">
+                                        <div>Presentasi</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item {{ request()->routeIs('ketua.project') ? 'active' : '' }}">
+                                    <a href="{{ route('ketua.project') }}" class="menu-link">
+                                        <div>Project</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item ">
+                                    <a href="{{ route('ketua.history') }}" class="menu-link">
+                                        <div>History</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endcan
+
+                    {{-- Navigasi ketua magang --}}
+
                     <li class="menu-item ">
                         <a class="menu-link">
                             <i class="menu-icon tf-icons ti ti-users-group"></i>
@@ -150,13 +147,30 @@
                     </li>
                     <li class="menu-item">
                         <ul class="">
-                            <li class="menu-item ">
-                                <a href="{{ route('tim.board') }}" class="menu-link d-flex align-items-center gap-2">
-                                    <img style="width: 30px" class="rounded-circle border border-primary"
-                                        src="{{ asset('assets/logo.png') }}" alt="">
-                                    <div class="">Hummatask</div>
-                                </a>
-                            </li>
+                            @forelse ($tims as $tim)
+                                <li class="menu-item ">
+                                    <a href="{{ route('tim.board', $tim->uuid) }}"
+                                        class="menu-link d-flex align-items-center gap-2">
+                                        <img style="width: 30px;height:30px;object-fit: cover"
+                                            class="rounded-circle border border-primary"
+                                            src="{{ asset('storage/' . $tim->logo) }}" alt="">
+                                        <div class="">{{ $tim->nama }}</div>
+                                    </a>
+                                </li>
+
+                            @empty
+
+                                <li class="menu-item bg-info bg-light ">
+                                    <a class="menu-link d-flex align-items-center gap-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                            viewBox="0 0 512 512">
+                                            <path fill="currentColor"
+                                                d="M256 16c-48 0-80 32-80 64c0 48 16 80 32 96v16h96v-16c16-16 32-48 32-96c0-32-32-64-80-64zm-63.6 65.33L256 102.5l63.6-21.17l-39.2 97.97l-16.8-6.6l24.8-62l-32.4 10.8l-32.4-10.8l24.8 62l-16.8 6.6l-39.2-97.97zm-83.3 79.07c-23.4 3-44.6 30.5-44.6 65.9c0 19.6 6.8 36.9 16.7 48.9l11.9 14.2l-18.3 3.4c-12.9 2.5-22.3 9.3-30.4 20.4c-8.1 11.1-14.3 26.5-18.6 44.4C18 389.8 16.2 429.2 16 464h42.8l2.24 30H169.6l2-30h40.8c0-35.2-.4-75.1-7.5-107.7c-4-17.9-9.9-33.3-18.1-44.3c-8.2-11-18.1-17.8-32.6-20l-18.5-2.9l11.7-14.7c9.5-11.9 15.9-29 15.9-48.1c0-37.8-23.6-65.8-49.4-65.8l-4.8-.1zm283.6 0c-23.4 3-44.6 30.5-44.6 65.9c0 19.6 6.8 36.9 16.7 48.9l11.9 14.2l-18.3 3.4c-12.9 2.5-22.3 9.3-30.4 20.4c-8.1 11.1-14.3 26.5-18.6 44.4c-7.8 32.2-9.6 71.6-9.8 106.4h42.8l2.2 30h108.6l2-30H496c0-35.2-.4-75.1-7.5-107.7c-4-17.9-9.9-33.3-18.1-44.3c-8.2-11-18.1-17.8-32.6-20l-18.5-2.9l11.7-14.7c9.5-11.9 15.9-29 15.9-48.1c0-37.8-23.6-65.8-49.4-65.8l-4.8-.1zM208 209v18h96v-18h-96zm16 34v18h64v-18h-64z" />
+                                        </svg>
+                                        <div class="">Belum punya tim</div>
+                                    </a>
+                                </li>
+                            @endforelse
                         </ul>
                     </li>
                 </ul>
@@ -174,9 +188,16 @@
                     </div>
 
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-                        <ul class="navbar-nav flex-row align-items-center ms-auto">
+                        <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Siswa Magang</span>
+                                @if (auth()->check() &&
+                                        auth()->user()->can('kelola siswa'))
+                                    <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Ketua
+                                        Magang</span>
+                                @else
+                                    <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Siswa
+                                        Magang</span>
+                                @endif
                             </li>
                             <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
                                 <a class="nav-link dropdown-toggle hide-arrow mx-3" href="javascript:void(0);"
@@ -450,7 +471,12 @@
                                                     <span class="fw-medium d-block">
                                                         {{ Auth::user()->username }}
                                                     </span>
-                                                    <small class="text-muted">Admin</small>
+                                                    @if (auth()->check() &&
+                                                            auth()->user()->can('kelola siswa'))
+                                                        <small class="text-muted">Ketua Magang</small>
+                                                    @else
+                                                        <small class="text-muted">Siswa Magang</small>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </a>
@@ -492,9 +518,11 @@
                     <div class="modal-dialog modal-dialog-centered modal-lg modal-simple modal-edit-user">
                         <div class="modal-content p-2">
                             <div class="modal-body">
-                                <button type="button" class="btn-close position-absolute top-0 " style="right: 0px" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                                <form id="editUserForm" class="row g-2 p-0 m-0" onsubmit="return false">
+                                <button type="button" class="btn-close position-absolute top-0 " style="right: 0px"
+                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                <form id="editUserForm" action="{{ route('buat_tim_solo') }}" method="POST"
+                                    enctype="multipart/form-data" class="row g-2 p-0 m-0">
+                                    @csrf
                                     <div class="col-12  gap-3 align-items-center">
                                         <div class="col-12 col-md-3 align-items-center">
                                             <label class="form-label text-white" for="image-input">
@@ -503,21 +531,34 @@
                                                     alt="example placeholder"
                                                     style="width: 150px; height: 150px; border-radius: 10px; cursor: pointer" />
                                                 <input type="file" class="form-control d-none" id="image-input"
-                                                    name="avatar" />
+                                                    name="logo" />
+                                                @error('logo')
+                                                    <p class="text-danger">
+                                                        {{ $message }}
+                                                    </p>
+                                                @enderror
                                             </label>
                                         </div>
                                         <div class="col-lg-12 d-flex flex-wrap flex-col align-items-center">
                                             <label class="form-label m-0 p-0" for="modalEditUserLastName">Nama
                                                 Tim</label>
-                                            <input type="text" id="modalEditUserLastName"
-                                                name="modalEditUserLastName" class="form-control"
-                                                placeholder="Hummatask" />
+                                            <input type="text" id="modalEditUserLastName" name="nama"
+                                                class="form-control" placeholder="Isi nama tim" />
+                                            @error('nama')
+                                                <p class="text-danger">
+                                                    {{ $message }}
+                                                </p>
+                                            @enderror
                                             <label class="form-label m-0 p-0 mt-2" for="modalEditUserLastName">Link
                                                 Repository
                                                 Github</label>
-                                            <input type="text" id="modalEditUserLastName"
-                                                name="modalEditUserLastName" class="form-control"
-                                                placeholder="https://.." />
+                                            <input type="text" id="modalEditUserLastName" name="repository"
+                                                class="form-control" placeholder="https://.." />
+                                            @error('repository')
+                                                <p class="text-danger">
+                                                    {{ $message }}
+                                                </p>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-12 d-flex flex-row flex-wrap justify-content-end">
@@ -530,6 +571,72 @@
                         </div>
                     </div>
                 </div>
+
+                {{-- validasi --}}
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const editUserForm = document.getElementById('editUserForm');
+
+                        editUserForm.addEventListener('submit', function(event) {
+                            const namaInput = document.querySelector('input[name="nama"]');
+                            const repositoryInput = document.querySelector('input[name="repository"]');
+                            const logoInput = document.querySelector('input[name="logo"]');
+
+                            // Validasi input kosong
+                            if (namaInput.value.trim() === '' || repositoryInput.value.trim() === '' || logoInput.files
+                                .length === 0) {
+                                event.preventDefault(); // Mencegah pengiriman formulir
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: 'Peringatan',
+                                    text: 'Pastikan semua input diisi!',
+                                });
+                            }
+                            // Validasi repositoryInput sebagai URL
+                            else if (!repositoryInput.value.match(
+                                    /^(http(s)?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/)) {
+                                event.preventDefault(); // Mencegah pengiriman formulir
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: 'Peringatan',
+                                    text: 'URL Repository tidak valid!',
+                                });
+                            }
+                            // Validasi logoInput sebagai gambar (image)
+                            else {
+                                const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                                const file = logoInput.files[0];
+
+                                if (!allowedImageTypes.includes(file.type)) {
+                                    event.preventDefault(); // Mencegah pengiriman formulir
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: 'Peringatan',
+                                        text: 'File yang diunggah harus berupa gambar (jpeg, jpg, png, atau gif)!',
+                                    });
+                                }
+                                // Validasi panjang maksimum untuk namaInput dan repositoryInput
+                                else if (namaInput.value.length > 50) {
+                                    event.preventDefault(); // Mencegah pengiriman formulir
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: 'Peringatan',
+                                        text: 'Nama Tim harus kurang dari atau sama dengan 50 karakter!',
+                                    });
+                                } else if (repositoryInput.value.length > 100) {
+                                    event.preventDefault(); // Mencegah pengiriman formulir
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: 'Peringatan',
+                                        text: 'URL Repository harus kurang dari atau sama dengan 100 karakter!',
+                                    });
+                                }
+                            }
+                        });
+                    });
+                </script>
+                {{-- validasi --}}
+
                 {{-- Modal Tambah Tim --}}
 
             </div>
@@ -553,6 +660,8 @@
     <script src="{{ asset('assets/vendor/js/menu2dc9.js?id=c6ce30ded4234d0c4ca0fb5f2a2990d8') }}"></script>
     <script src="{{ asset('assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
     <script src="{{ asset('assets/js/mainf696.js?id=8bd0165c1c4340f4d4a66add0761ae8a') }}"></script>
+    <script src="{{ asset('assets/js/extended-ui-sweetalert2.js') }}"></script>
+
 
     <script src="{{ asset('assets/js/dashboards-crm.js') }}"></script>
 
@@ -573,7 +682,32 @@
                 previewImage.attr('src', '');
             }
         });
+
+        const buatTim = () => {
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil Membuat Tim'
+            })
+        }
     </script>
+
+    @if (session()->has('unauthorize'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Akses Ditolak',
+                text: '{{ session('unauthorize') }}', // Teks pesan dari sesi
+                showClass: {
+                    popup: "animate__animated animate__tada"
+                },
+                customClass: {
+                    confirmButton: "btn btn-primary"
+                },
+                buttonsStyling: !1,
+            });
+        </script>
+    @endif
+
 
     @yield('script')
 
