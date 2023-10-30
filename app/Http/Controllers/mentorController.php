@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Presentasi;
+use App\Models\Tim;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class mentorController extends Controller
@@ -57,6 +60,18 @@ class mentorController extends Controller
     // return view presentasi mentor
     protected function presentasi()
     {
-        return response()->view('mentor.presentasi');
+    $presentasi = Presentasi::where('status_pengajuan','menunggu')->get();
+    $jadwal =[];
+    $hari=[];
+
+    foreach ($presentasi as $i => $data) {
+        $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
+        $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd') ;
+    }
+
+    // dd($hari);
+
+        // dd($presentasi[0]->tim()->first()->ketuaMagang()->first());
+        return response()->view('mentor.presentasi',compact('presentasi','jadwal','hari'));
     }
 }

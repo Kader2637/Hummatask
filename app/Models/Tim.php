@@ -19,6 +19,10 @@ class Tim extends Model
     {
         return $this->belongsToMany(User::class, 'anggotas');
     }
+    public function ketuaTim():BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'anggotas')->wherePivot('jabatan','ketua_tim');
+    }
 
     public function tugas():HasMany
     {

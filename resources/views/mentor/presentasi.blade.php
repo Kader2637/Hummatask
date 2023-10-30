@@ -36,10 +36,10 @@
                                         data-bs-target="#navs-pills-top-start" aria-controls="navs-pills-top-profile"
                                         aria-selected="false" tabindex="-1"><i
                                             class="ti ti-clock-exclamation me-2"></i>Telat</button>
-                                </div>
-                            </div>
+                                        </div>
                         </div>
                     </div>
+                                    </div>
                 </div>
             </div>
         </div>
@@ -62,26 +62,35 @@
                                             <th>Opsi</th>
                                         </tr>
                                     </thead>
-                                    @php
-                                        $no = 1;
-                                    @endphp
                                     <tbody>
-                                        <tr>
-                                            <td>{{ $no++ }}</td>
-                                            <td><img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                                    style="border-radius: 50%; width:40px;">
-                                                Hidan</td>
-                                            <td>21-03-2023</td>
-                                            <td>Senin</td>
-                                            <td>Solo Project</td>
-                                            <td>Sekolah</td>
-                                            <td><span class="badge bg-label-warning">tertunda</span></td>
-                                            <td>
-                                                <button class="btn btn-danger me-2" data-bs-toggle="modal"
-                                                    data-bs-target="#Reject">Tolak</button>
-                                                <button class="btn btn-success">Terima</button>
-                                            </td>
-                                        </tr>
+                                        @forelse ( $presentasi as $i => $data )
+                                            <tr>
+                                                <td>{{ ++$i }}</td>
+
+                                                @if ($data->tim->status_tim === "solo")
+                                                <td>
+                                                    <img src="{{ asset('storage/' . '') }}" alt="" style="border-radius: 50%; width:40px;">{{ $data->tim->ketuaTim->first()->username }}
+                                                </td>
+
+                                                @else
+                                                <td>
+                                                    <img src="{{ asset('storage/' . '') }}" alt="" style="border-radius: 50%; width:40px;">{{ $data->tim->nama }}
+                                                </td>
+                                                @endif
+                                                <td>{{ $jadwal[--$i] }}</td>
+                                                <td>{{ $hari[$i] }}</td>
+                                                <td>{{ $data->tim->status_tim }}</td>
+                                                <td>Sekolah</td>
+                                                <td><span class="badge bg-label-warning">tertunda</span></td>
+                                                <td>
+                                                    <button class="btn btn-danger me-2" data-bs-toggle="modal"
+                                                        data-bs-target="#Reject">Tolak</button>
+                                                    <button class="btn btn-success">Terima</button>
+                                                </td>
+                                            </tr>
+                                        @empty
+
+                                        @endforelse
                                     </tbody>
                                 </div>
                             </table>

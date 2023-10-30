@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Anggota;
 use App\Models\Tim;
 use App\Models\Tugas;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class timController extends Controller
@@ -56,8 +57,15 @@ class timController extends Controller
         $title = "Tim/presentasi";
         $tim = Tim::where('code', $uuid)->first();
         $anggota = $tim->user()->get();
+        $presentasi = $tim->presentasi()->get();
+        $jadwal = [];
+        foreach ($presentasi as $data) {
+           $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY') ;
 
-        return view('siswa.tim.history-presentasi', compact('title', 'tim', 'anggota'));
+        }
+        // dd($hari);
+
+        return view('siswa.tim.history-presentasi', compact('title', 'tim', 'anggota','presentasi','jadwal'));
     }
 
     protected function catatanPage($uuid)
@@ -73,6 +81,7 @@ class timController extends Controller
     {
         $tim = Tim::where('code', $uuid)->first();
         $anggota = $tim->user()->get();
+
 
         $title = "catatan history";
         return view('siswa.tim.history-catatan', compact('title', 'anggota', 'tim'));
