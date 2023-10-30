@@ -13,6 +13,7 @@
         /* Mengubah warna track (latar belakang scroll) */
         .avatar-container::-webkit-scrollbar {
             width: 8px;
+            height: 8px;
             /* Lebar scroll */
             background-color: #f0f0f0;
             /* Warna latar belakang scroll */
@@ -44,47 +45,159 @@
         .icon-text {
             margin-right: 5px;
         }
+
         .nama-anggota {
             margin-top: 15px;
         }
 
-        @media (min-width: 320px) and (max-width: 450px){
-
-            .navbar-ul{
+        @media (min-width: 320px) and (max-width: 499px) {
+            .navbar-ul {
                 flex-direction: column;
                 width: 100%;
                 padding-left: 0px;
-
             }
 
-            .navbar-ul li{
+            .navbar-ul li {
                 /* font-size: 10px; */
                 display: 'flex';
                 justify-content: 'center';
                 align-content: 'center';
             }
 
-            .button-document{
+            .button-document {
                 width: 100%;
                 margin-bottom: 8px;
             }
 
-            .button-document button{
+            .button-document button {
                 width: 100%;
             }
 
+            .image-leader {
+                width: 20%;
+                hight: 10%;
+                border-radius: 20%
+                    /* width: 10%;hight:10%;border-radius:20% */
+            }
 
+            .image-team {
+                width: 100%;
+                hight: 100%;
+                border-radius: 20%;
+                /* width: 80%;hight:80%;border-radius:20% */
+            }
+
+            .anggota {
+                top: -900px;
+                padding-left: 60px;
+            }
+
+            .nama-anggota {
+                max-width: 70px;
+            }
+
+            .anggota-scroll {
+                max-width: 200px;
+                overflow-x: auto;
+            }
+
+            .longor {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            /* Mengubah warna track (latar belakang scroll) */
+            .anggota-scroll::-webkit-scrollbar {
+                width: 8px;
+                height: 8px;
+                /* Lebar scroll */
+                background-color: #f0f0f0;
+                /* Warna latar belakang scroll */
+            }
+
+            /* Mengubah tampilan thumb (bagian yang dapat digerakkan) */
+            .anggota-scroll::-webkit-scrollbar-thumb {
+                background-color: #7367f0;
+                /* Warna thumb */
+                border-radius: 4px;
+                /* Sudut melengkung thumb */
+            }
+
+            /* Mengubah tampilan thumb saat digulirkan */
+            .anggota-scroll::-webkit-scrollbar-thumb:hover {
+                background-color: #4838fb;
+                /* Warna thumb saat dihover */
+            }
         }
 
-        @media (min-width: 500px) and (max-width: 768px){
-            .navbar-ul li{
+        @media (min-width: 1000px) and (max-width: 2000px) {
+            .image-leader {
+                width: 15%;
+                hight: 10%;
+                border-radius: 20%
+                    /* width: 10%;hight:10%;border-radius:20% */
+            }
+
+            .anggota {
+                padding-left: 80px;
+            }
+
+            .leader {
+                top: 90px;
+            }
+
+            .avatar-container {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                /* Mengatur elemen di sebelah kiri */
+                max-width: 250px;
+                overflow-x: auto;
+            }
+
+            .modal-detail {
+                width: 450px;
+            }
+        }
+
+        @media (min-width: 500px) and (max-width: 999px) {
+            .image-leader {
+                width: 10%;
+                hight: -5%;
+                border-radius: 10%
+                    /* width: 10%;hight:10%;border-radius:20% */
+            }
+
+            .anggota {
+                padding-left: 70px;
+            }
+
+            .leader {
+                top: 50px;
+            }
+
+            .avatar-container {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                /* Mengatur elemen di sebelah kiri */
+                max-width: 240px;
+                overflow-x: auto;
+            }
+
+            .modal-detail {
+                width: 430px;
+            }
+        }
+
+        @media (min-width: 500px) and (max-width: 768px) {
+            .navbar-ul li {
                 font-size: 14px;
                 display: 'flex';
                 justify-content: 'center';
                 align-content: 'center';
             }
         }
-
     </style>
     <!-- Content -->
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -470,26 +583,31 @@
         {{-- modal --}}
         <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
+                <div class="modal-content modal-detail">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalCenterTitle">Modal title</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="row">
-                            <label for="emailWithTitle" class="form-label">TEAM</label>
-                            <div class="col mb-3">
-                                <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                    style="width: 80%;hight:80%;border-radius:20%">
-                                <span>Hummatech</span>
+                        <div class="d-flex longor">
+                            <div class="row">
+                                <div class="col mb-0">
+                                    <label for="emailWithTitle" class="form-label">TEAM</label>
+                                    <div class="col mb-2">
+                                        <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
+                                            style="width: 150%;hight:150%;border-radius:10%" class="image-team">
+                                    </div>
+                                    <span style="">Hummatech</span>
+                                </div>
                             </div>
-                            <div class="col mb-0">
+                            <div class="col mb-4 anggota">
                                 <label for="emailWithTitle" class="form-label">ANGGOTA</label>
-                                <div class="avatar-container">
+                                <div class="avatar-container anggota-scroll">
                                     <div class="d-flex">
                                         <img src="{{ asset('assets/img/avatars/5.png') }}" alt="Avatar"
                                             style="width:30px;hight:30px;border-radius:50%" class="avatar">
-                                        <span class="nama-anggota">saputra</span>
+                                        <span
+                                            class="nama-anggota">saputraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</span>
                                     </div>
                                     <div class="d-flex">
                                         <img src="{{ asset('assets/img/avatars/12.png') }}" alt="Avatar"
@@ -510,22 +628,23 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col mb-0">
+                            <div class="col mt-3 leader">
                                 <label for="emailWithTitle" class="form-label">KETUA</label>
                                 <div class="col mb-3 d-flex">
-                                    <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                        style="width: 10%;hight:10%;border-radius:20%">
+                                    <img src="{{ asset('assets/img/avatars/10.png') }}" alt="" style=""
+                                        class="image-leader">
                                     <span style="margin-top: 30px;margin-left: 10px">King Ibnu</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="row g-2" style="padding-top: 40px">
+                        <div class="row g-2" style="padding-top: 10px">
                             <div class="col mb-0"
                                 style="display: flex; flex-direction: column;>
                                 <label for="emailWithTitle"
                                 class="form-label">STATUS</label>
                                 <button disabled="disabled" class="btn"
-                                    style="background-color:  rgb(255, 231, 187);color:rgb(255, 149, 0);width: fit-content;margin-top: 4px">Big Project</button>
+                                    style="background-color:  rgb(255, 231, 187);color:rgb(255, 149, 0);width: fit-content;margin-top: 4px">Big
+                                    Project</button>
                             </div>
                             <div class="col mb-0" style="display: flex; flex-direction: column;">
                                 <label for="dobWithTitle" class="form-label">TEMA</label>

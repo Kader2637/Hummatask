@@ -16,9 +16,38 @@
                 height: 40px;
             }
 
+            td.nama {
+                display: flex;
+                align-items: center;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 112px;
+                height: 91px;
+            }
+
+            td.masa-jabatan {
+                display: flex;
+                align-items: center;
+                white-space: nowrap;
+                overflow-x: auto;
+                text-overflow: ellipsis;
+                max-width: 112px;
+                height: 71px;
+            }
+
+            td.nama img {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                margin-right: 10px;
+                /* Atur margin kanan untuk memberi jarak antara gambar dan teks */
+            }
+
             .search {
                 display: none !important;
             }
+
             .saputra {
                 flex-direction: column;
             }
@@ -85,7 +114,7 @@
                             <tbody>
                                 <tr>
                                     <th scope="row">1</th>
-                                    <td>
+                                    <td class="nama">
                                         <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
                                             style="width:30px;hight:30px;border-radius:50%">
                                         Mark
@@ -111,7 +140,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">2</th>
-                                    <td>
+                                    <td class="nama">
                                         <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
                                             style="width:30px;hight:30px;border-radius:50%">
                                         Jacob
@@ -137,7 +166,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">3</th>
-                                    <td>
+                                    <td class="nama">
                                         <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
                                             style="width:30px;hight:30px;border-radius:50%">
                                         Larry the Bird
@@ -201,7 +230,7 @@
                             <tbody>
                                 <tr>
                                     <th scope="row">1</th>
-                                    <td>
+                                    <td class="nama">
                                         <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
                                             style="width:30px;hight:30px;border-radius:50%">
                                         Adi
@@ -229,7 +258,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">2</th>
-                                    <td>
+                                    <td class="nama">
                                         <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
                                             style="width:30px;hight:30px;border-radius:50%">
                                         Meilani
@@ -292,7 +321,7 @@
                             <tbody>
                                 <tr>
                                     <th scope="row">1</th>
-                                    <td>
+                                    <td class="nama">
                                         <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
                                             style="width:30px;hight:30px;border-radius:50%">
                                         Yudas
@@ -317,7 +346,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">2</th>
-                                    <td>
+                                    <td class="nama">
                                         <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
                                             style="width:30px;hight:30px;border-radius:50%">
                                         Bagas
@@ -370,7 +399,7 @@
                             <tbody>
                                 <tr>
                                     <th scope="row">1</th>
-                                    <td>
+                                    <td class="nama">
                                         <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
                                             style="width:30px;hight:30px;border-radius:50%">
                                         Adi
@@ -379,11 +408,11 @@
                                     <td><button disabled="disabled" class="btn"
                                             style="background-color:  rgb(255, 231, 187);color:rgb(255, 149, 0)">Ketua
                                             Magang</button></td>
-                                    <td>10 Januari s.d 10 Februari</td>
+                                    <td class="masa-jabatan">10 Januari s.d 10 Februari</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">2</th>
-                                    <td>
+                                    <td class="nama">
                                         <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
                                             style="width:30px;hight:30px;border-radius:50%">
                                         Meilani
@@ -392,7 +421,7 @@
                                     <td><button disabled="disabled" class="btn"
                                             style="background-color:  rgb(255, 231, 187);color:rgb(255, 149, 0)">Wakil
                                             Ketua</button></td>
-                                    <td>10 Januari s.d 10 Februari</td>
+                                    <td class="masa-jabatan">10 Januari s.d 10 Februari</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -439,7 +468,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
+                            <button type="button" class="btn btn-label-secondary"
+                                data-bs-dismiss="modal">Kembali</button>
                             <button type="button" class="btn btn-primary">Simpan</button>
                         </div>
                     </div>
@@ -473,7 +503,7 @@
                             <div class="row">
                                 <div class="col-md-6 mb-4">
                                     <label for="select2Basic" class="form-label">Status Role</label>
-                                    <select id="select2Basic" class="select2 form-select form-select-lg"
+                                    <select id="selectBasic" class="select2 form-select form-select-lg"
                                         data-allow-clear="true">
                                         <option value="AK">Alaska</option>
                                         <option value="HI">Hawaii</option>
@@ -484,7 +514,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
+                            <button type="button" class="btn btn-label-secondary"
+                                data-bs-dismiss="modal">Kembali</button>
                             <button type="button" class="btn btn-primary">Simpan</button>
                         </div>
                     </div>
@@ -676,4 +707,5 @@
                 </div>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection
