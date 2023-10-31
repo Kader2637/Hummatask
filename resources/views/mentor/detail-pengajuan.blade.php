@@ -3,9 +3,6 @@
 @section('style')
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/flatpickr/flatpickr.css') }}" />
-@endsection
-
-@section('content')
     <style>
         @media (max-width: 590px) {
             .content-1 {
@@ -41,14 +38,16 @@
             }
         }
     </style>
+@endsection
 
+@section('content')
     <div class="container-fluid mt-4">
         <h5 class="header">Detail Pengajuan Projek</h5>
         <div class="card">
             <div class="card-body">
                 <div class="content-profile d-flex flex-wrap flex-row justify-content-between">
                     <div class="d-flex flex-row gap-3 justify-content-center">
-                        <img src="{{ asset('assets/img/avatars/2.png') }}" alt class="h-auto rounded-circle mb-3">
+                        <img src="{{ asset($projects->tim->logo) }}" alt class="h-auto rounded-circle mb-3">
                         <div style="display: flex; flex-direction: column; justify-content: center; align-items: center">
                             <span class="d-block text-black fs-4">{{ $projects->tim->nama }}</span>
                             <span class="d-block">{{ $projects->tim->status_tim }}</span>
@@ -122,12 +121,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @php
-                                            $i = 1;
-                                        @endphp
                                         @forelse ($tema as $item)
                                             <tr>
-                                                <td>{{ $i++ }}</td>
+                                                <td>{{ $loop->iteration }}.</td>
                                                 <td>{{ $item->nama_tema }}</td>
                                             @empty
                                         @endforelse
@@ -136,38 +132,10 @@
                             </div>
                         </div>
                     </div>
-                    {{-- List Tema --}}
-
                 </div>
             </div>
         </div>
     </div>
-
-    {{-- <!-- Modal Tolak -->
-    <div class="modal fade" id="modalTolak" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalCenterTitle">Tolak Pengajuan Projek</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col mb-3">
-                            <label for="alasanPenolakan" class="form-label">Alasan Penolakan</label>
-                            <textarea style="resize: none" cols="1" rows="8" name="alasanPenolakan" id="alasanPenolakan"
-                                class="form-control" placeholder="Beri Alasan Penolakan"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
-                    <button type="button" class="btn btn-primary">Simpan</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal Tolak--> --}}
 
     <!-- Modal Terima-->
     <div class="modal fade" id="modalTerima" tabindex="-1" aria-hidden="true">
@@ -195,7 +163,9 @@
                         </div>
                         <div class="row">
                             <div class="col mb-3">
-                                <label for="flatpickr-date" class="form-label">Tentukan Deadline (Opsional)</label>
+                                <label for="flatpickr-date" class="form-label">Tentukan Deadline <span
+                                        class="text-warning">(Deadline akan terisi otomatis jika anda tidak
+                                        mengisi)</span></label>
                                 <input type="text" class="form-control" placeholder="YYYY-MM-DD" name="deadlineInput"
                                     id="flatpickr-date" />
                             </div>
@@ -240,78 +210,6 @@
     {{-- Validasi --}}
 
     <!-- Modal Terima-->
-
-    <!-- Modal Deskripsi Project-->
-    <div class="modal fade" id="modalDeskripsi" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalDeskripsiTitle">Deskripsi Projek</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
-                        egestas
-                        eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel
-                        augue
-                        laoreet rutrum faucibus dolor auctor.</p>
-                    <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque
-                        nisl
-                        consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-                    <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
-                        egestas
-                        eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel
-                        augue
-                        laoreet rutrum faucibus dolor auctor.</p>
-                    <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque
-                        nisl
-                        consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-                    <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
-                        egestas
-                        eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel
-                        augue
-                        laoreet rutrum faucibus dolor auctor.</p>
-                    <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque
-                        nisl
-                        consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-                    <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
-                        egestas
-                        eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel
-                        augue
-                        laoreet rutrum faucibus dolor auctor.</p>
-                    <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque
-                        nisl
-                        consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-                    <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
-                        egestas
-                        eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel
-                        augue
-                        laoreet rutrum faucibus dolor auctor.</p>
-                    <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque
-                        nisl
-                        consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-                    <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
-                        egestas
-                        eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel
-                        augue
-                        laoreet rutrum faucibus dolor auctor.</p>
-                    <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque
-                        nisl
-                        consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Tutup</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal Deskripsi Project-->
 @endsection
 
 @section('script')

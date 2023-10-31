@@ -149,23 +149,13 @@
                         <ul class="">
                             @forelse ($tims as $tim)
                                 <li class="menu-item ">
-                                    @if (auth()->user()->can('kelola tim'))
-                                        <a href="{{ route('tim.board', $tim->code) }}"
-                                            class="menu-link d-flex align-items-center gap-2">
-                                            <img style="width: 30px;height:30px;object-fit: cover"
-                                                class="rounded-circle border border-primary"
-                                                src="{{ asset('storage/' . $tim->logo) }}" alt="">
-                                            <div class="">{{ $tim->nama }}</div>
-                                        </a>
-                                    @else
-                                        <a href="{{ route('tim.project', $tim->code) }}"
-                                            class="menu-link d-flex align-items-center gap-2">
-                                            <img style="width: 30px;height:30px;object-fit: cover"
-                                                class="rounded-circle border border-primary"
-                                                src="{{ asset('storage/' . $tim->logo) }}" alt="">
-                                            <div class="">{{ $tim->nama }}</div>
-                                        </a>
-                                    @endif
+                                    <a href="{{ route('tim.board', $tim->code) }}"
+                                        class="menu-link d-flex align-items-center gap-2">
+                                        <img style="width: 30px;height:30px;object-fit: cover"
+                                            class="rounded-circle border border-primary"
+                                            src="{{ asset('storage/' . $tim->logo) }}" alt="">
+                                        <div class="">{{ $tim->nama }}</div>
+                                    </a>
                                 </li>
                             @empty
 

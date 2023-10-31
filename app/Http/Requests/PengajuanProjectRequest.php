@@ -22,9 +22,17 @@ class PengajuanProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tim_id' => 'required',
-            'tema_id' => 'required',
-            'status_project' => 'required',
+            'temaInput' => 'required',
+            'repository' => 'required|url',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'temaInput.required' => 'Kolom Tema wajib diisi.',
+            'repository.required' => 'Kolom Repository wajib diisi.',
+            'repository.url' => 'Kolom Repository harus berisi URL yang valid.',
         ];
     }
 }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('tema_id')->nullable()->references('id')->on('temas');
             $table->enum('status_project', ['notapproved', 'approved']);
             $table->enum('type_project', ['solo', 'premini', 'mini', 'big']);
+            $table->text('deskripsi')->nullable();
             $table->date('deadline')->nullable();
             $table->timestamps();
         });

@@ -34,7 +34,6 @@ class mentorController extends Controller
     protected function pengajuanProjekPage()
     {
         $projects = Project::with('tim.anggota.user')->where('status_project', 'notapproved')->get();
-
         return response()->view('mentor.pengajuan-projek', compact('projects'));
     }
 
@@ -50,13 +49,18 @@ class mentorController extends Controller
     // Return view projek mentor
     protected function projekPage()
     {
-        return response()->view('mentor.projek');
+        $project = Project::with('tim', 'tema')->where('status_project', 'approved')->get();
+        return response()->view('mentor.projek', compact('project', 'project'));
     }
 
     // Return view detail projek mentor
-    protected function detailProjekPage()
+    protected function detailProjekPage($code)
     {
-        return response()->view('mentor.detail-projek');
+        $tim = Tim::where('code', $code)->firstOrFail();
+        $anggota = $tim->anggota()->get();
+        $project = $tim->project()->first();
+
+        return response()->view('mentor.detail-projek', compact('tim', 'anggota', 'project'));
     }
 
     // Return view profile mentor

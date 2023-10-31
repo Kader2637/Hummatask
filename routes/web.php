@@ -75,7 +75,7 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::get('pengajuan-projek', [mentorController::class, 'pengajuanProjekPage'])->name('pengajuan-projek');
     Route::get('detail-pengajuan-projek/{code}', [mentorController::class, 'detailPengajuanPage'])->name('detail-pengajuan-projek');
     Route::get('projek', [mentorController::class, 'projekPage'])->name('projek');
-    Route::get('detail-projek', [mentorController::class, 'detailProjekPage'])->name('detail-projek');
+    Route::get('detail-projek/{code}', [mentorController::class, 'detailProjekPage'])->name('detail-projek');
     Route::get('profile-mentor', [mentorController::class, 'profilePage'])->name('profile-mentor');
     Route::get('pengguna', [mentorController::class, 'pengguna'])->name('pengguna.mentor');
     Route::get('history', [mentorController::class, 'history'])->name('history.mentor');

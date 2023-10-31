@@ -40,26 +40,35 @@
 @endsection
 
 @section('content')
-    {{-- Modal --}}
+    {{-- Modal Ajukan Project --}}
     <div class="modal fade" id="ajukanModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-simple modal-edit-user">
             <div class="modal-content">
                 <div class="modal-body">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <form id="editUserForm"  class="row g-2 p-0 m-0" action="{{route('tim.ajukanProject', $tim->code)}}" method="POST">
+                    <form id="editUserForm" class="row g-2 p-0 m-0" action="{{ route('tim.ajukanProject', $tim->code) }}"
+                        method="POST">
                         @csrf
                         <div class="col-12 col-md-12 d-flex flex-row gap-3 align-items-center">
                             <div class="col-12 col-md-12 d-flex flex-wrap flex-col align-items-center">
                                 <label class="form-label m-0 p-0 mt-2" for="modalEditUserLastName">Link Repository
                                     Github</label>
-                                <input type="text" id="modalEditUserLastName" name="repository" class="form-control"
+                                <input type="text" id="modalEditUserLastName" name="repository"
+                                    class="form-control @error('repository') is-invalid @enderror"
                                     placeholder="https://.." />
+                                @error('repository')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
+
                         <div class="col-12 justify-content-center">
                             <label for="TagifyBasic" class="form-label">Tema</label>
-                            <input id="TagifyBasic" class="form-control" name="temaInput"
-                                placeholder="Masukkan 5 tema pilihan anda" />
+                            <input id="TagifyBasic" class="form-control @error('temaInput') is-invalid @enderror"
+                                name="temaInput" placeholder="Masukkan 5 tema pilihan anda" />
+                            @error('temaInput')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="col-12 d-flex flex-row flex-wrap justify-content-end">
                             <button type="submit" class="btn btn-primary me-sm-3 me-1">Unggah</button>
@@ -127,6 +136,10 @@
 
     {{-- Modal --}}
 
+    {{-- Modal Edit Project --}}
+
+    {{-- Modal Edit Project --}}
+
     <div class="container-fluid mt-5">
         <div class="col-12">
             <div class="nav-align-top d-flex justify-between">
@@ -145,10 +158,17 @@
                     </div>
 
                     <div class="" role="presentation">
-                        <button class="btn btn-primary button-nav waves-effect waves-light" data-bs-toggle="modal"
-                            data-bs-target="#ajukanModal">
-                            Ajukan Project
-                        </button>
+                        @if (!$project)
+                            <button class="btn btn-primary button-nav waves-effect waves-light" data-bs-toggle="modal"
+                                data-bs-target="#ajukanModal">
+                                Ajukan Project
+                            </button>
+                        @else
+                            <button class="btn btn-primary button-nav waves-effect waves-light" data-bs-toggle="modal"
+                                data-bs-target="#editProject">
+                                Edit Project
+                            </button>
+                        @endif
                     </div>
                 </div>
                 <div class="tab-content bg-transparent pb-0" style="box-shadow: none;">
@@ -172,9 +192,15 @@
                                                 Projek
                                             </div>
                                             <div
-                                                style="display: flex; flex-direction: column; justify-items: center; align-items: center;">
-                                                <span>Tanggal Mulai : 20 Januari 2023</span>
-                                                <span>Tenggat : 25 Januari 2023</span>
+                                                style="display: flex; flex-direction: column; justify-items: center; align-items: left;">
+                                                <span>Tanggal Mulai :
+                                                    {{ $tim->created_at->translatedFormat('l, j F Y') }}</span>
+                                                @if (@isset($project))
+                                                    <span>Tenggat :
+                                                        {{ \Carbon\Carbon::parse($project->deadline)->translatedFormat('l, j F Y') }}</span>
+                                                @else
+                                                    <span>Tenggat : Pending </span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -194,92 +220,101 @@
                                                     <div class="mb-3">Status : <span
                                                             class="badge bg-label-warning">{{ $tim->status_tim }}</span>
                                                     </div>
-                                                    <div>Tema : <span class="badge bg-label-warning">apa ya</span>
-                                                    </div>
+                                                    @php
+                                                        $now = \Carbon\Carbon::now();
+                                                        $deadline = \Carbon\Carbon::parse($project->deadline);
+                                                        $daysRemaining = $now->diffInDays($deadline);
+                                                    @endphp
+                                                    @if (@isset($project->tema->nama_tema))
+                                                        <div>Tema : <span
+                                                                class="badge bg-label-warning">{{ $project->tema->nama_tema }}</span>
+                                                        @else
+                                                            <div>Tema : <span class="badge bg-label-warning">Pending</span>
+                                                    @endif
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6">
-                                                <div class="progres-bar">
-                                                    <div class="d-flex justify-content-between">
-                                                        <span>Hari</span>
-                                                        <span>24 dari 20 Hari</span>
-                                                    </div>
-                                                    <div class="d-flex flex-grow-1 align-items-center my-1">
-                                                        <div class="progress w-100 me-3" style="height:8px;">
-                                                            <div class="progress-bar bg-primary" role="progressbar"
-                                                                style="width: 54%" aria-valuenow="54" aria-valuemin="0"
-                                                                aria-valuemax="100">
-                                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="progres-bar">
+                                                <div class="d-flex justify-content-between">
+                                                    <span>Hari</span>
+                                                    <span>24 dari 30 Hari</span>
+                                                </div>
+                                                <div class="d-flex flex-grow-1 align-items-center my-1">
+                                                    <div class="progress w-100 me-3" style="height:8px;">
+                                                        <div class="progress-bar bg-primary" role="progressbar"
+                                                            style="width: 54%" aria-valuenow="54" aria-valuemin="0"
+                                                            aria-valuemax="100">
                                                         </div>
-                                                        <span class="text-muted">54%</span>
                                                     </div>
-                                                    <div class="tenggat">
-                                                        <span>Tenggat kurang 6 hari lagi</span>
-                                                    </div>
+                                                    <span class="text-muted">54%</span>
                                                 </div>
-                                                <div class="deskripsi mt-2">
-                                                    <div class="title text-dark">
-                                                        Deskripsi :
-                                                    </div>
-                                                    <div class="isi">
-                                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Numquam
-                                                        suscipit nihil animi aut placeat doloribus repellat, ipsa sunt, ab
-                                                        molestiae quibusdam blanditiis voluptate mollitia perspiciatis
-                                                        dolor! Tempora laborum nulla voluptates? Eligendi sit ullam, iure
-                                                        hic mollitia, voluptatem quisquam iste distinctio quas praesentium
-                                                        aut. Beatae dolore quas ipsa, inventore earum necessitatibus.
-                                                    </div>
+                                                <div class="tenggat">
+                                                    <span>Tenggat kurang 6 hari lagi</span>
+                                                </div>
+                                            </div>
+                                            <div class="deskripsi mt-2">
+                                                <div class="title text-dark">
+                                                    Deskripsi :
+                                                </div>
+                                                <div class="isi">
+                                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Numquam
+                                                    suscipit nihil animi aut placeat doloribus repellat, ipsa sunt, ab
+                                                    molestiae quibusdam blanditiis voluptate mollitia perspiciatis
+                                                    dolor! Tempora laborum nulla voluptates? Eligendi sit ullam, iure
+                                                    hic mollitia, voluptatem quisquam iste distinctio quas praesentium
+                                                    aut. Beatae dolore quas ipsa, inventore earum necessitatibus.
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                {{-- card projects --}}
                             </div>
+                            {{-- card projects --}}
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="navs-pills-top-profile" role="tabpanel">
-                        <div class="container">
-                            <div class="row">
-                                <div class="card cursor-default col-12 d-flex align-items-center justify-content-center">
-                                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
-                                        <img width="90px" height="90px" class="rounded-circle"
-                                            src="{{ asset($tim->logo) }}" alt="">
-                                        <h1>{{ $tim->nama }}</h1>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt-2 justify-content-center align-items-center grid">
-                                {{-- Anggota --}}
-                                @forelse ($anggota as $item)
-                                    <div class="col-lg-4 p-2" style="box-shadow: none">
-                                        <div class="card">
-                                            <div class="card-body d-flex gap-3 align-items-center">
-                                                <div>
-                                                    <img width="30px" height="30px"
-                                                        class="rounded-circle object-cover"
-                                                        src="{{ asset($item->user->avatar) }}" alt="foto user">
-                                                </div>
-                                                <div>
-                                                    <h5 class="mb-0" style="font-size: 15px">
-                                                        {{ $item->user->username }}</h5>
-                                                    <span
-                                                        class="badge bg-label-warning">{{ $item->jabatan->nama_jabatan }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @empty
-                                    <p>Tidak ada data anggota</p>
-                                @endforelse
-                                {{-- Anggota --}}
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
+                <div class="tab-pane fade" id="navs-pills-top-profile" role="tabpanel">
+                    <div class="container">
+                        <div class="row">
+                            <div class="card cursor-default col-12 d-flex align-items-center justify-content-center">
+                                <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                                    <img width="90px" height="90px" class="rounded-circle"
+                                        src="{{ asset($tim->logo) }}" alt="">
+                                    <h1>{{ $tim->nama }}</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2 justify-content-center align-items-center grid">
+                            {{-- Anggota --}}
+                            @forelse ($anggota as $item)
+                                <div class="col-lg-4 p-2" style="box-shadow: none">
+                                    <div class="card">
+                                        <div class="card-body d-flex gap-3 align-items-center">
+                                            <div>
+                                                <img width="30px" height="30px" class="rounded-circle object-cover"
+                                                    src="{{ asset($item->user->avatar) }}" alt="foto user">
+                                            </div>
+                                            <div>
+                                                <h5 class="mb-0" style="font-size: 15px">
+                                                    {{ $item->user->username }}</h5>
+                                                <span
+                                                    class="badge bg-label-warning">{{ $item->jabatan->nama_jabatan }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                <p>Tidak ada data anggota</p>
+                            @endforelse
+                            {{-- Anggota --}}
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
+    </div>
     </div>
 @endsection
 

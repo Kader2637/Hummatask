@@ -291,13 +291,6 @@
 
 // let dataEmpty
 
-    axios.get("{{ route('dataTugas',$tim->uuid) }}")
-    .then(res=>{
-        const data = res.data;
-
-        console.log("{{ $tim->uuid }}");
-
-    })
 
     function showForm(id){
         let status = false;

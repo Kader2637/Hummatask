@@ -171,7 +171,7 @@
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
                         <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Siswa Magang</span>
+                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Mentor</span>
                             </li>
                             <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
@@ -445,7 +445,7 @@
                                                     <span class="fw-medium d-block">
                                                         {{ Auth::user()->username }}
                                                     </span>
-                                                    <small class="text-muted">Admin</small>
+                                                    <small class="text-muted">Mentor</small>
                                                 </div>
                                             </div>
                                         </a>
