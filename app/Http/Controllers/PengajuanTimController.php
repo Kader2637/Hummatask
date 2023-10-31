@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Http\Requests\RequestPengajuanSoloProject;
 use App\Models\Anggota;
 use App\Models\Tim;
@@ -10,12 +11,12 @@ use illuminate\Support\Str;
 
 class PengajuanTimController extends Controller
 {
-    protected function pengajuanSoloProject(RequestPengajuanSoloProject $request){
-
+    protected function pengajuanSoloProject(RequestPengajuanSoloProject $request)
+    {
 
         // Kondisi dimana nama tim kosong atau foto kosong
-        if($request->nama === null || $request->logo === null){
-            return redirect()->back()->with('error','input Foto ataupun nama tim tidak boleh kosong');
+        if ($request->nama === null || $request->logo === null) {
+            return redirect()->back()->with('error', 'input Foto ataupun nama tim tidak boleh kosong');
         }
 
         // menyimpan logo
@@ -36,14 +37,13 @@ class PengajuanTimController extends Controller
         // membuat anggota
         $anggota = new Anggota;
         $anggota->tim_id = $tim->id;
-        $anggota->jabatan = 'ketua_tim';
+        $anggota->jabatan_id = 1;
         $anggota->user_id = Auth::user()->id;
         $anggota->save();
 
         // hilangkan komentar dibawah ini untuk debugging
         // dd($request,$tim,$anggota);
 
-        return redirect()->back()->with('success','Berhasil membuat tim solo project');
-
+        return redirect()->back()->with('success', 'Berhasil membuat tim solo project');
     }
 }

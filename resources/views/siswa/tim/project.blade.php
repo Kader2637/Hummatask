@@ -26,77 +26,40 @@
         href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar7358.css?id=280196ccb54c8ae7e29ea06932c9a4b6') }}" />
     <link rel="stylesheet"
         href="{{ asset('assets/vendor/libs/typeahead-js/typeaheadb5e1.css?id=2603197f6b29a6654cb700bd9367e2a3') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/tagify/tagify.css') }}" />
 @endsection
 
 @section('style')
-
-<style>
-    @media (max-width: 425px){
-        .button-nav{
-            font-size: 13px;
+    <style>
+        @media (max-width: 425px) {
+            .button-nav {
+                font-size: 13px;
+            }
         }
-    }
-</style>
-
+    </style>
 @endsection
 
 @section('content')
     {{-- Modal --}}
     <div class="modal fade" id="ajukanModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-simple modal-edit-user">
             <div class="modal-content">
                 <div class="modal-body">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <form id="editUserForm" class="row g-2 p-0 m-0" onsubmit="return false">
+                    <form id="editUserForm"  class="row g-2 p-0 m-0" action="{{route('tim.ajukanProject', $tim->code)}}" method="POST">
+                        @csrf
                         <div class="col-12 col-md-12 d-flex flex-row gap-3 align-items-center">
-                            <div class="col-12 col-md-3 align-items-center">
-                                <label class="form-label text-white " for="image-input">
-                                    <label class="form-label text-white rounded" for="image-input">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="120px" height="120px"
-                                            class="bg-primary d-flex align-items-center justify-center p-4 rounded"
-                                            viewBox="0 0 24 24">
-                                            <path fill="currentColor"
-                                                d="M5 23.7q-.825 0-1.413-.587T3 21.7v-14q0-.825.588-1.413T5 5.7h8.925l-2 2H5v14h14v-6.95l2-2v8.95q0 .825-.588 1.413T19 23.7H5Zm7-9Zm4.175-8.425l1.425 1.4l-6.6 6.6V15.7h1.4l6.625-6.625l1.425 1.4l-7.2 7.225H9v-4.25l7.175-7.175Zm4.275 4.2l-4.275-4.2l2.5-2.5q.6-.6 1.438-.6t1.412.6l1.4 1.425q.575.575.575 1.4T22.925 8l-2.475 2.475Z" />
-                                        </svg>
-                                        <input type="file" class="form-control d-none" id="image-input" name="avatar" />
-                                    </label>
-                            </div>
-                            <div class="col-12 col-md-9 d-flex flex-wrap flex-col align-items-center">
-                                <label class="form-label m-0 p-0" for="modalEditUserLastName">Name
-                                    Team</label>
-                                <input type="text" id="modalEditUserLastName" name="modalEditUserLastName"
-                                    class="form-control" placeholder="Hummatask" />
+                            <div class="col-12 col-md-12 d-flex flex-wrap flex-col align-items-center">
                                 <label class="form-label m-0 p-0 mt-2" for="modalEditUserLastName">Link Repository
                                     Github</label>
-                                <input type="text" id="modalEditUserLastName" name="modalEditUserLastName"
-                                    class="form-control" placeholder="https://.." />
+                                <input type="text" id="modalEditUserLastName" name="repository" class="form-control"
+                                    placeholder="https://.." />
                             </div>
                         </div>
                         <div class="col-12 justify-content-center">
-                            <div class="row">
-                                <div class="mb-3 col-lg-6 col-xl-5 col-12 mb-0">
-                                    <label class="form-label" for="form-repeater-1-1">Username</label>
-                                    <input type="text" id="form-repeater-1-1" class="form-control"
-                                        placeholder="john.doe" />
-                                </div>
-                                <div class="mb-3 col-lg-6 col-xl-5 col-12 mb-0">
-                                    <label class="form-label" for="form-repeater-1-2">Password</label>
-                                    <input type="password" id="form-repeater-1-2" class="form-control"
-                                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
-                                </div>
-                                <div class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
-                                    <button class="btn btn-label-danger mt-4" data-repeater-delete>
-                                        <i class="ti ti-x ti-xs me-1"></i>
-                                        <span class="align-middle">Delete</span>
-                                    </button>
-                                </div>
-                                <div class="mb-0">
-                                    <button class="btn btn-primary" data-repeater-create>
-                                        <i class="ti ti-plus me-1"></i>
-                                        <span class="align-middle">Add</span>
-                                    </button>
-                                </div>
-                            </div>
+                            <label for="TagifyBasic" class="form-label">Tema</label>
+                            <input id="TagifyBasic" class="form-control" name="temaInput"
+                                placeholder="Masukkan 5 tema pilihan anda" />
                         </div>
                         <div class="col-12 d-flex flex-row flex-wrap justify-content-end">
                             <button type="submit" class="btn btn-primary me-sm-3 me-1">Unggah</button>
@@ -108,6 +71,60 @@
             </div>
         </div>
     </div>
+
+    {{-- Validasi --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ajukanModal = document.getElementById('ajukanModal');
+
+            ajukanModal.addEventListener('submit', function(event) {
+                const repositoryInput = document.querySelector('input[name="repository"]');
+                const temaInput = document.getElementById('TagifyBasic').value;
+                console.log(temaInput.length);
+                console.log(temaInput);
+
+                // Validasi input kosong
+                if (temaInput.trim() === '' || repositoryInput.value.trim() === '') {
+                    event.preventDefault(); // Mencegah pengiriman formulir
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Peringatan',
+                        text: 'Pastikan semua input diisi!',
+                    });
+                    return;
+                }
+                // Validasi repositoryInput sebagai URL
+                if (!repositoryInput.value.match(
+                        /^(http(s)?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/)) {
+                    event.preventDefault(); // Mencegah pengiriman formulir
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Peringatan',
+                        text: 'URL Repository tidak valid!',
+                    });
+                    return;
+                }
+                // Validasi jumlah array
+                try {
+                    const temaArray = JSON.parse(temaInput);
+                    console.log(temaArray);
+                    if (!Array.isArray(temaArray) || temaArray.length !== 5) {
+                        throw new Error();
+                    }
+                } catch (error) {
+                    event.preventDefault(); // Mencegah pengiriman formulir
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Peringatan',
+                        text: 'Inputkan 5 tema!',
+                    });
+                    return;
+                }
+            });
+        });
+    </script>
+    {{-- Validasi --}}
+
     {{-- Modal --}}
 
     <div class="container-fluid mt-5">
@@ -147,68 +164,77 @@
                                 </div>
                             </div>
                             <div class="col-lg-8">
+                                {{-- card projects --}}
                                 <div class="card">
-                                    <div
-                                        class="card-header border d-flex justify-content-between align-items-center py-1 px-3 ">
-                                        <div style="font-size: 15px">Project</div>
-                                        <table class="" style="font-size: 10px">
-                                            <tr>
-                                                <td class="">Tanggal Dimulai :</td>
-                                                <td class="">21 Agustus 2022</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tanggal Berakhir :</td>
-                                                <td>21 Desember 2022</td>
-                                            </tr>
-                                        </table>
+                                    <div class="card-header">
+                                        <div class="d-flex flex-row align-items-center justify-content-between">
+                                            <div class="fs-4 text-black">
+                                                Projek
+                                            </div>
+                                            <div
+                                                style="display: flex; flex-direction: column; justify-items: center; align-items: center;">
+                                                <span>Tanggal Mulai : 20 Januari 2023</span>
+                                                <span>Tenggat : 25 Januari 2023</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="card-body mt-3">
+                                    <hr class="my-0">
+                                    <div class="card-body">
                                         <div class="row">
-                                            <div class="col-6 d-flex flex-column">
-                                                <div class="d-flex align-items-center gap-4">
-                                                    <img width="50px" height="50px"
-                                                        class="rounded-circle border border-primary"
-                                                        src="{{ asset('assets/img/avatars/1.png') }}" alt="">
-                                                    <div class="fw-bold">Hummatask</div>
+                                            <div class="col-lg-6">
+                                                <div class="d-flex flex-row gap-3">
+                                                    <img src="{{ asset($tim->logo) }}" alt='logo tim'
+                                                        class="h-auto rounded-circle" style="width: 60px">
+                                                    <div
+                                                        style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+                                                        <span class="d-block text-black fs-5">{{ $tim->nama }}</span>
+                                                    </div>
                                                 </div>
-
-                                                <div class="mt-3">
-                                                    <p style="margin-bottom: 0px" class="fw-semibold text-dark">Status :
-                                                    </p>
-                                                    <span class="badge bg-label-warning">Big Project</span>
-                                                </div>
-
-                                                <div class="mt-2">
-                                                    <p style="margin-bottom: 0px" class="fw-semibold text-dark">Tema :</p>
-                                                    <span class="badge bg-label-primary">Pengelolaan Tugas</span>
+                                                <div class="mt-4">
+                                                    <div class="mb-3">Status : <span
+                                                            class="badge bg-label-warning">{{ $tim->status_tim }}</span>
+                                                    </div>
+                                                    <div>Tema : <span class="badge bg-label-warning">apa ya</span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-6">
-                                                <div class="d-flex justify-content-between" style="font-size: 12px">
-                                                    <p style="font-size: 12px">Hari</p>
-                                                    <div class="d-flex gap-1">
-                                                        <p>24</p>
-                                                        <p>dari</p>
-                                                        <p>30</p>
-                                                        <p>hari</p>
+                                            <div class="col-lg-6">
+                                                <div class="progres-bar">
+                                                    <div class="d-flex justify-content-between">
+                                                        <span>Hari</span>
+                                                        <span>24 dari 20 Hari</span>
+                                                    </div>
+                                                    <div class="d-flex flex-grow-1 align-items-center my-1">
+                                                        <div class="progress w-100 me-3" style="height:8px;">
+                                                            <div class="progress-bar bg-primary" role="progressbar"
+                                                                style="width: 54%" aria-valuenow="54" aria-valuemin="0"
+                                                                aria-valuemax="100">
+                                                            </div>
+                                                        </div>
+                                                        <span class="text-muted">54%</span>
+                                                    </div>
+                                                    <div class="tenggat">
+                                                        <span>Tenggat kurang 6 hari lagi</span>
                                                     </div>
                                                 </div>
-                                                <div class="progress mt-1">
-                                                    <div class="progress-bar" role="progressbar" style="width: 75%;"
-                                                        aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%
+                                                <div class="deskripsi mt-2">
+                                                    <div class="title text-dark">
+                                                        Deskripsi :
+                                                    </div>
+                                                    <div class="isi">
+                                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Numquam
+                                                        suscipit nihil animi aut placeat doloribus repellat, ipsa sunt, ab
+                                                        molestiae quibusdam blanditiis voluptate mollitia perspiciatis
+                                                        dolor! Tempora laborum nulla voluptates? Eligendi sit ullam, iure
+                                                        hic mollitia, voluptatem quisquam iste distinctio quas praesentium
+                                                        aut. Beatae dolore quas ipsa, inventore earum necessitatibus.
                                                     </div>
                                                 </div>
-                                                <p style="font-size: 12px;">Deadline anda 6 hari lagi</p>
-
-                                                <p class="mb-0 text-dark fw-semibold">Deskipsi :</p>
-                                                <p class="" style="font-size: 12px">Lorem ipsum dolor sit amet
-                                                    consectetur adipisicing elit. Ducimus voluptas veniam, impedit quaerat
-                                                    mollitia distinctio quod. Dolor facilis molestiae esse.</p>
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                {{-- card projects --}}
                             </div>
                         </div>
                     </div>
@@ -218,29 +244,35 @@
                                 <div class="card cursor-default col-12 d-flex align-items-center justify-content-center">
                                     <div class="card-body d-flex flex-column align-items-center justify-content-center">
                                         <img width="90px" height="90px" class="rounded-circle"
-                                            src="{{ asset('assets/img/avatars/10.png') }}" alt="">
-                                        <h1>HummaTaask</h1>
+                                            src="{{ asset($tim->logo) }}" alt="">
+                                        <h1>{{ $tim->nama }}</h1>
                                     </div>
                                 </div>
                             </div>
                             <div class="row mt-2 justify-content-center align-items-center grid">
-                                @for ($i = 0; $i < 5; $i++)
+                                {{-- Anggota --}}
+                                @forelse ($anggota as $item)
                                     <div class="col-lg-4 p-2" style="box-shadow: none">
                                         <div class="card">
                                             <div class="card-body d-flex gap-3 align-items-center">
                                                 <div>
                                                     <img width="30px" height="30px"
                                                         class="rounded-circle object-cover"
-                                                        src="{{ asset('assets/img/avatars/12.png') }}" alt="">
+                                                        src="{{ asset($item->user->avatar) }}" alt="foto user">
                                                 </div>
                                                 <div>
-                                                    <h5 class="mb-0" style="font-size: 15px">Muhhamad Rafli</h5>
-                                                    <span class="badge bg-label-warning">Ketua Tim</span>
+                                                    <h5 class="mb-0" style="font-size: 15px">
+                                                        {{ $item->user->username }}</h5>
+                                                    <span
+                                                        class="badge bg-label-warning">{{ $item->jabatan->nama_jabatan }}</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                @endfor
+                                @empty
+                                    <p>Tidak ada data anggota</p>
+                                @endforelse
+                                {{-- Anggota --}}
                             </div>
                         </div>
                     </div>
@@ -266,11 +298,9 @@
     </script>
     <script src="{{ asset('assets/vendor/js/menu2dc9.js?id=c6ce30ded4234d0c4ca0fb5f2a2990d8') }}"></script>
     <script src="{{ asset('assets/js/charts-chartjs.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}">
-        < script >
-            <
-            script src = "{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}" >
-    </script>
+    <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/tagify/tagify.js') }}"></script>
+    <script src="{{ asset('assets/js/forms-tagify.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Anggota;
 use App\Models\Presentasi;
+use App\Models\Project;
+use App\Models\Tema;
 use App\Models\Tim;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -30,13 +33,18 @@ class mentorController extends Controller
     // Return view pengajuan projek mentor
     protected function pengajuanProjekPage()
     {
-        return response()->view('mentor.pengajuan-projek');
+        $projects = Project::with('tim.anggota.user')->where('status_project', 'notapproved')->get();
+
+        return response()->view('mentor.pengajuan-projek', compact('projects'));
     }
 
     // Return view detail pengajuan projek mentor
-    protected function detailPengajuanPage()
+    protected function detailPengajuanPage($code)
     {
-        return response()->view('mentor.detail-pengajuan');
+        $projects = Project::where('code', $code)->firstOrFail();
+        $tema = Tema::where('code', $code)->get();
+
+        return response()->view('mentor.detail-pengajuan', compact('projects', 'tema'));
     }
 
     // Return view projek mentor
@@ -60,18 +68,18 @@ class mentorController extends Controller
     // return view presentasi mentor
     protected function presentasi()
     {
-    $presentasi = Presentasi::where('status_pengajuan','menunggu')->get();
-    $jadwal =[];
-    $hari=[];
+        $presentasi = Presentasi::where('status_pengajuan', 'menunggu')->get();
+        $jadwal = [];
+        $hari = [];
 
-    foreach ($presentasi as $i => $data) {
-        $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
-        $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd') ;
-    }
+        foreach ($presentasi as $i => $data) {
+            $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
+            $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd');
+        }
 
-    // dd($hari);
+        // dd($hari);
 
         // dd($presentasi[0]->tim()->first()->ketuaMagang()->first());
-        return response()->view('mentor.presentasi',compact('presentasi','jadwal','hari'));
+        return response()->view('mentor.presentasi', compact('presentasi', 'jadwal', 'hari'));
     }
 }

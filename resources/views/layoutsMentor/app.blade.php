@@ -554,6 +554,14 @@
                 buttonsStyling: !1,
             });
         </script>
+    @elseif (session()->has('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}', // Teks pesan dari sesi
+            });
+        </script>
     @endif
 
 </body>

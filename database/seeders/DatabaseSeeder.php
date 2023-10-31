@@ -87,5 +87,20 @@ class DatabaseSeeder extends Seeder
         )->assignRole($role);
 
         // $role->givePermissionTo(Permission::all());
+
+        DB::table('jabatans')->insert([
+            [
+                'code' => Str::uuid(),
+                'nama_jabatan' => 'Ketua Kelompok'
+            ],
+            [
+                'code' => Str::uuid(),
+                'nama_jabatan' => 'Ketua Project'
+            ],
+            [
+                'code' => Str::uuid(),
+                'nama_jabatan' => 'Anggota'
+            ],
+        ]);
     }
 }

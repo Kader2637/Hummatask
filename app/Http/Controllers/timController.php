@@ -10,17 +10,17 @@ use Illuminate\Http\Request;
 
 class timController extends Controller
 {
-     protected function boardPage($uuid)
+    protected function boardPage($uuid)
     {
         $title = "Tim/board";
         $tim = Tim::where('code', $uuid)->first();
         $anggota = $tim->user()->get();
-        $tugas_baru = $tim->tugas()->where('status_tugas','tugas_baru')->get();
-        $tugas_dikerjakan = $tim->tugas()->where('status_tugas','dikerjakan')->get();
-        $tugas_revisi = $tim->tugas()->where('status_tugas','revisi')->get();
-        $tugas_selesai = $tim->tugas()->where('status_tugas','selesai')->get();
+        $tugas_baru = $tim->tugas()->where('status_tugas', 'tugas_baru')->get();
+        $tugas_dikerjakan = $tim->tugas()->where('status_tugas', 'dikerjakan')->get();
+        $tugas_revisi = $tim->tugas()->where('status_tugas', 'revisi')->get();
+        $tugas_selesai = $tim->tugas()->where('status_tugas', 'selesai')->get();
 
-        return view('siswa.tim.board', compact('title','tim','anggota','tugas_baru','tugas_dikerjakan','tugas_revisi','tugas_selesai'));
+        return view('siswa.tim.board', compact('title', 'tim', 'anggota', 'tugas_baru', 'tugas_dikerjakan', 'tugas_revisi', 'tugas_selesai'));
     }
 
     protected function kalenderPage($uuid)
@@ -29,13 +29,13 @@ class timController extends Controller
         $anggota = $tim->user()->get();
 
         $title = "Tim/kalender";
-        return view('siswa.tim.kalender', compact('title','tim','anggota',));
+        return view('siswa.tim.kalender', compact('title', 'tim', 'anggota',));
     }
 
     protected function projectPage($uuid)
     {
-        $tim = Tim::where('code', $uuid)->first();
-        $anggota = $tim->user()->get();
+        $tim = Tim::where('code', $uuid)->firstOrFail();
+        $anggota = Anggota::where('tim_id', $tim->id)->get();
 
         $title = "Tim/project";
         return view('siswa.tim.project', compact('title', 'tim', 'anggota'));
@@ -48,7 +48,6 @@ class timController extends Controller
         $tim = Tim::where('code', $uuid)->first();
         $anggota = $tim->user()->get();
 
-
         return view('siswa.tim.history', compact('title', 'tim', 'anggota'));
     }
 
@@ -60,12 +59,11 @@ class timController extends Controller
         $presentasi = $tim->presentasi()->get();
         $jadwal = [];
         foreach ($presentasi as $data) {
-           $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY') ;
-
+            $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
         }
         // dd($hari);
 
-        return view('siswa.tim.history-presentasi', compact('title', 'tim', 'anggota','presentasi','jadwal'));
+        return view('siswa.tim.history-presentasi', compact('title', 'tim', 'anggota', 'presentasi', 'jadwal'));
     }
 
     protected function catatanPage($uuid)

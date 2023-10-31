@@ -7,162 +7,35 @@
     <div class="container-fluid mt-4 ">
         <h5 class="header">Daftar Pengajuan Projek</h5>
         <div class="row">
-            <div class="col-md-6 col-lg-3">
-                <div class="card text-center mb-3">
-                    <div class="card-body">
-                        <img src="{{ asset('assets/img/avatars/2.png') }}" alt class="h-auto rounded-circle mb-3">
-                        <h5 class="card-title">Bang Jefri</h5>
-                        <div class="d-flex align-items-center pt-1 mb-3 justify-content-center">
-                            <div class="d-flex align-items-center">
-                                <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        title="Vinnie Mostowy" class="avatar avatar-sm pull-up">
-                                        <img class="rounded-circle"
-                                            src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png"
-                                            alt="Avatar">
-                                    </li>
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        title="Allen Rieske" class="avatar avatar-sm pull-up">
-                                        <img class="rounded-circle"
-                                            src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png"
-                                            alt="Avatar">
-                                    </li>
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        title="Julee Rossignol" class="avatar avatar-sm pull-up">
-                                        <img class="rounded-circle"
-                                            src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/6.png"
-                                            alt="Avatar">
-                                    </li>
-                                    <li class="avatar avatar-sm">
-                                        <span class="avatar-initial rounded-circle pull-up" data-bs-toggle="tooltip"
-                                            data-bs-placement="top" title="8 more">+8</span>
-                                    </li>
-                                </ul>
+            @forelse ($projects as $item)
+                <div class="col-md-6 col-lg-3">
+                    <div class="card text-center mb-3">
+                        <div class="card-body">
+                            <img src="{{ asset($item->tim->logo) }}" alt="logo tim" class="h-auto rounded-circle mb-3">
+                            <h5 class="card-title">{{$item->tim->nama}}</h5>
+                            <div class="d-flex align-items-center pt-1 mb-3 justify-content-center">
+                                <div class="d-flex align-items-center">
+                                    <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
+                                        @foreach ($item->tim->anggota as $anggota)
+                                            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
+                                                title="{{ $anggota->user->username }}" class="avatar avatar-sm pull-up">
+                                                <img class="rounded-circle" src="{{ $anggota->user->avatar }}"
+                                                    alt="Avatar">
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
+                            <a href="#"><span
+                                    class="badge bg-label-warning mb-3">{{ $item->tim->status_tim }}</span></a>
+                            <p class="card-text">{{ $item->created_at->translatedFormat('l, j F Y') }}</p>
+                            <a href="{{ route('detail-pengajuan-projek', $item->code) }}" class="btn btn-primary">Detail</a>
                         </div>
-                        <a href="#"><span class="badge bg-label-warning mb-3">Big Project</span></a>
-                        <p class="card-text">20 Januari 2000</p>
-                        <a href="{{ route('detail-pengajuan-projek') }}" class="btn btn-primary">Detail</a>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="card text-center mb-3">
-                    <div class="card-body">
-                        <img src="{{ asset('assets/img/avatars/2.png') }}" alt class="h-auto rounded-circle mb-3">
-                        <h5 class="card-title">Bang Jefri</h5>
-                        <div class="d-flex align-items-center pt-1 mb-3 justify-content-center">
-                            <div class="d-flex align-items-center">
-                                <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        title="Vinnie Mostowy" class="avatar avatar-sm pull-up">
-                                        <img class="rounded-circle"
-                                            src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png"
-                                            alt="Avatar">
-                                    </li>
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        title="Allen Rieske" class="avatar avatar-sm pull-up">
-                                        <img class="rounded-circle"
-                                            src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png"
-                                            alt="Avatar">
-                                    </li>
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        title="Julee Rossignol" class="avatar avatar-sm pull-up">
-                                        <img class="rounded-circle"
-                                            src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/6.png"
-                                            alt="Avatar">
-                                    </li>
-                                    <li class="avatar avatar-sm">
-                                        <span class="avatar-initial rounded-circle pull-up" data-bs-toggle="tooltip"
-                                            data-bs-placement="top" title="8 more">+8</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <a href="#"><span class="badge bg-label-warning mb-3">Big Project</span></a>
-                        <p class="card-text">20 Januari 2000</p>
-                        <a href="{{ route('detail-pengajuan-projek') }}" class="btn btn-primary">Detail</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="card text-center mb-3">
-                    <div class="card-body">
-                        <img src="{{ asset('assets/img/avatars/2.png') }}" alt class="h-auto rounded-circle mb-3">
-                        <h5 class="card-title">Bang Jefri</h5>
-                        <div class="d-flex align-items-center pt-1 mb-3 justify-content-center">
-                            <div class="d-flex align-items-center">
-                                <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        title="Vinnie Mostowy" class="avatar avatar-sm pull-up">
-                                        <img class="rounded-circle"
-                                            src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png"
-                                            alt="Avatar">
-                                    </li>
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        title="Allen Rieske" class="avatar avatar-sm pull-up">
-                                        <img class="rounded-circle"
-                                            src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png"
-                                            alt="Avatar">
-                                    </li>
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        title="Julee Rossignol" class="avatar avatar-sm pull-up">
-                                        <img class="rounded-circle"
-                                            src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/6.png"
-                                            alt="Avatar">
-                                    </li>
-                                    <li class="avatar avatar-sm">
-                                        <span class="avatar-initial rounded-circle pull-up" data-bs-toggle="tooltip"
-                                            data-bs-placement="top" title="8 more">+8</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <a href="#"><span class="badge bg-label-warning mb-3">Big Project</span></a>
-                        <p class="card-text">20 Januari 2000</p>
-                        <a href="{{ route('detail-pengajuan-projek') }}" class="btn btn-primary">Detail</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="card text-center mb-3">
-                    <div class="card-body">
-                        <img src="{{ asset('assets/img/avatars/2.png') }}" alt class="h-auto rounded-circle mb-3">
-                        <h5 class="card-title">Bang Jefri</h5>
-                        <div class="d-flex align-items-center pt-1 mb-3 justify-content-center">
-                            <div class="d-flex align-items-center">
-                                <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        title="Vinnie Mostowy" class="avatar avatar-sm pull-up">
-                                        <img class="rounded-circle"
-                                            src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png"
-                                            alt="Avatar">
-                                    </li>
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        title="Allen Rieske" class="avatar avatar-sm pull-up">
-                                        <img class="rounded-circle"
-                                            src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png"
-                                            alt="Avatar">
-                                    </li>
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        title="Julee Rossignol" class="avatar avatar-sm pull-up">
-                                        <img class="rounded-circle"
-                                            src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/6.png"
-                                            alt="Avatar">
-                                    </li>
-                                    <li class="avatar avatar-sm">
-                                        <span class="avatar-initial rounded-circle pull-up" data-bs-toggle="tooltip"
-                                            data-bs-placement="top" title="8 more">+8</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <a href="#"><span class="badge bg-label-warning mb-3">Big Project</span></a>
-                        <p class="card-text">20 Januari 2000</p>
-                        <a href="{{ route('detail-pengajuan-projek') }}" class="btn btn-primary">Detail</a>
-                    </div>
-                </div>
-            </div>
+            @empty
+                <p>Tidak ada data pengajuan project</p>
+            @endforelse
         </div>
 
         {{-- pagination --}}

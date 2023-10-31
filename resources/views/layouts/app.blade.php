@@ -149,15 +149,24 @@
                         <ul class="">
                             @forelse ($tims as $tim)
                                 <li class="menu-item ">
-                                    <a href="{{ route('tim.board', $tim->code) }}"
-                                        class="menu-link d-flex align-items-center gap-2">
-                                        <img style="width: 30px;height:30px;object-fit: cover"
-                                            class="rounded-circle border border-primary"
-                                            src="{{ asset('storage/' . $tim->logo) }}" alt="">
-                                        <div class="">{{ $tim->nama }}</div>
-                                    </a>
+                                    @if (auth()->user()->can('kelola tim'))
+                                        <a href="{{ route('tim.board', $tim->code) }}"
+                                            class="menu-link d-flex align-items-center gap-2">
+                                            <img style="width: 30px;height:30px;object-fit: cover"
+                                                class="rounded-circle border border-primary"
+                                                src="{{ asset('storage/' . $tim->logo) }}" alt="">
+                                            <div class="">{{ $tim->nama }}</div>
+                                        </a>
+                                    @else
+                                        <a href="{{ route('tim.project', $tim->code) }}"
+                                            class="menu-link d-flex align-items-center gap-2">
+                                            <img style="width: 30px;height:30px;object-fit: cover"
+                                                class="rounded-circle border border-primary"
+                                                src="{{ asset('storage/' . $tim->logo) }}" alt="">
+                                            <div class="">{{ $tim->nama }}</div>
+                                        </a>
+                                    @endif
                                 </li>
-
                             @empty
 
                                 <li class="menu-item bg-info bg-light ">
@@ -704,6 +713,14 @@
                     confirmButton: "btn btn-primary"
                 },
                 buttonsStyling: !1,
+            });
+        </script>
+    @elseif (session()->has('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}', // Teks pesan dari sesi
             });
         </script>
     @endif

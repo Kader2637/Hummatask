@@ -37,44 +37,43 @@ Route::get('logout', [authController::class, 'logout'])->name('logout');
 Route::prefix('siswa')->middleware(['auth', 'siswa'])->group(function () {
     Route::get('dashboard', [siswaController::class, 'dashboard'])->name('dashboard.siswa');
     Route::get('profile', [siswaController::class, 'profilePage'])->name('profile.siswa');
-    Route::post('buat-tim-solo',[PengajuanTimController::class,'pengajuanSoloProject'])->name('buat_tim_solo');
+    Route::post('buat-tim-solo', [PengajuanTimController::class, 'pengajuanSoloProject'])->name('buat_tim_solo');
 });
 
-Route::prefix('tim')->middleware(['auth', 'siswa'])->controller(timController::class)->group(function () {
+Route::prefix('tim')->controller(timController::class)->group(function () {
     // Halaman Tim
-    Route::get('board/{uuid}', 'boardPage')->name('tim.board');
-    Route::get('kalender/{uuid}', 'kalenderPage')->name('tim.kalender');
-    Route::get('catatan/{uuid}','catatanPage')->name('tim.catatan');
-    Route::get('project/{uuid}', 'projectPage')->name('tim.project');
-    Route::get('history/{uuid}', 'historyPage')->name('tim.history');
-    Route::get('history-presentasi/{uuid}', 'historyPresentasiPage')->name('tim.historyPresentasi');
-    Route::get('history-catatan/{uuid}', 'historyCatatanPage')->name('tim.historyCatatan');
+    Route::middleware(['auth', 'siswa'])->group(function () {
+        Route::get('board/{uuid}', 'boardPage')->name('tim.board');
+        Route::get('kalender/{uuid}', 'kalenderPage')->name('tim.kalender');
+        Route::get('catatan/{uuid}', 'catatanPage')->name('tim.catatan');
+        Route::get('history/{uuid}', 'historyPage')->name('tim.history');
+        Route::get('history-presentasi/{uuid}', 'historyPresentasiPage')->name('tim.historyPresentasi');
+        Route::get('history-catatan/{uuid}', 'historyCatatanPage')->name('tim.historyCatatan');
 
+        Route::get('project/{uuid}', 'projectPage')->name('tim.project');
+        Route::post('project/ajukan-project/{code}', [PengajuanProjekController::class, 'ajukanProject'])->name('tim.ajukanProject');
 
-
-
-    // proses di halaman tim
-    Route::get('board/dataTugas/{uuid}',[TugasController::class,'getData'])->name('dataTugas');
-    Route::post('board/tambah-tugas',[TugasController::class,'buatTugas']);
-
-    // proses untuk presentasi
-    Route::post('ajukan-presentasi/{code}',[PresentasiController::class,'ajukanPresentasi'])->name('ajukan-presentasi');
+        // proses di halaman tim
+        Route::post('board/tambah-tugas', [TugasController::class, 'buatTugas']);
+        // proses untuk presentasi
+        Route::post('ajukan-presentasi/{code}', [PresentasiController::class, 'ajukanPresentasi'])->name('ajukan-presentasi');
+    });
 });
 
 // Halaman Ketua Magang
-Route::prefix('ketuaMagang')->middleware(['auth', 'siswa','can:kelola siswa'])->controller(KetuaMagangController::class)->group(function () {
-    Route::get('dashboard','dashboardPage')->name('ketua.dashboard');
-    Route::get('presentasi','presentasiPage')->name('ketua.presentasi');
-    Route::get('project','projectPage')->name('ketua.project');
-    Route::get('detail_project','detailProject')->name('ketua.detail_project');
-    Route::get('history','historyPage')->name('ketua.history');
+Route::prefix('ketuaMagang')->middleware(['auth', 'siswa', 'can:kelola siswa'])->controller(KetuaMagangController::class)->group(function () {
+    Route::get('dashboard', 'dashboardPage')->name('ketua.dashboard');
+    Route::get('presentasi', 'presentasiPage')->name('ketua.presentasi');
+    Route::get('project', 'projectPage')->name('ketua.project');
+    Route::get('detail_project', 'detailProject')->name('ketua.detail_project');
+    Route::get('history', 'historyPage')->name('ketua.history');
 });
 
 // Halaman Mentor
 Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::get('dashboard', [mentorController::class, 'dashboard'])->name('dashboard.mentor');
     Route::get('pengajuan-projek', [mentorController::class, 'pengajuanProjekPage'])->name('pengajuan-projek');
-    Route::get('detail-pengajuan-projek', [mentorController::class, 'detailPengajuanPage'])->name('detail-pengajuan-projek');
+    Route::get('detail-pengajuan-projek/{code}', [mentorController::class, 'detailPengajuanPage'])->name('detail-pengajuan-projek');
     Route::get('projek', [mentorController::class, 'projekPage'])->name('projek');
     Route::get('detail-projek', [mentorController::class, 'detailProjekPage'])->name('detail-projek');
     Route::get('profile-mentor', [mentorController::class, 'profilePage'])->name('profile-mentor');
@@ -84,6 +83,7 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
 
 
     // Proses
-    Route::put('persetujuan-presentasi',[PresentasiController::class,'persetujuanPresentasi']);
+    Route::put('persetujuan-presentasi', [PresentasiController::class, 'persetujuanPresentasi']);
+    Route::patch('persetujuan-project/{code}', [PengajuanProjekController::class, 'persetujuanProject'])->name('persetujuan-project');
 
 });
