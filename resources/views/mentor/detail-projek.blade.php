@@ -43,6 +43,12 @@
                                             </div>
                                             <div
                                                 style="display: flex; flex-direction: column; justify-items: center; align-items: left;">
+                                                @php
+                                                    $tanggalMulai = $tim->created_at->translatedFormat('Y-m-d');
+                                                    $deadline = \Carbon\Carbon::parse($project->deadline)->translatedFormat('Y-m-d');
+                                                    $totalDeadline = \Carbon\Carbon::parse($deadline)->diffInDays($tanggalMulai);
+                                                    $dayLeft = \Carbon\Carbon::parse($deadline)->diffInDays(\Carbon\Carbon::now());
+                                                @endphp
                                                 <span>Tanggal Mulai :
                                                     {{ $tim->created_at->translatedFormat('l, j F Y') }}</span>
                                                 @if (@isset($project))
@@ -88,7 +94,7 @@
                                             <div class="progres-bar">
                                                 <div class="d-flex justify-content-between">
                                                     <span>Hari</span>
-                                                    <span>24 dari 30 Hari</span>
+                                                    <span>{{ $dayLeft }} dari {{ $totalDeadline }} Hari</span>
                                                 </div>
                                                 <div class="d-flex flex-grow-1 align-items-center my-1">
                                                     <div class="progress w-100 me-3" style="height:8px;">
@@ -100,7 +106,7 @@
                                                     <span class="text-muted">54%</span>
                                                 </div>
                                                 <div class="tenggat">
-                                                    <span>Tenggat kurang 6 hari lagi</span>
+                                                    <span>Tenggat kurang {{$dayLeft}} hari lagi</span>
                                                 </div>
                                             </div>
                                             <div class="deskripsi mt-2">
@@ -197,5 +203,4 @@
             data: data
         })
     </script>
-
 @endsection
