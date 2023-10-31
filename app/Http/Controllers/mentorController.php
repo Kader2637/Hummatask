@@ -72,18 +72,18 @@ class mentorController extends Controller
     // return view presentasi mentor
     protected function presentasi()
     {
-        $presentasi = Presentasi::where('status_pengajuan', 'menunggu')->get();
-        $jadwal = [];
-        $hari = [];
+    $presentasi = Presentasi::all();
+    $persetujuan_presentasi = $presentasi->where('status_pengajuan','menunggu');
+    $konfirmasi_presentasi = $presentasi->where('status_pengajuan','disetujui')->where('status_presentasi','menunggu');
+    // dd($konfirmasi_presentasi);
+    $jadwal =[];
+    $hari=[];
 
-        foreach ($presentasi as $i => $data) {
-            $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
-            $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd');
-        }
 
-        // dd($hari);
-
-        // dd($presentasi[0]->tim()->first()->ketuaMagang()->first());
-        return response()->view('mentor.presentasi', compact('presentasi', 'jadwal', 'hari'));
+    foreach ($presentasi as $i => $data) {
+        $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
+        $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd') ;
+    }
+        return response()->view('mentor.presentasi',compact('persetujuan_presentasi','konfirmasi_presentasi','jadwal','hari'));
     }
 }
