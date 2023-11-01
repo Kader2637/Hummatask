@@ -37,7 +37,7 @@ class timController extends Controller
         $title = "Tim/project";
         $tim = Tim::where('code', $uuid)->firstOrFail();
         $anggota = $tim->anggota()->get();
-        $project = $tim->project()->where('status_project', 'approved')->first();
+        $project = $tim->project()->firstOrFail();
         return view('siswa.tim.project', compact('title', 'tim', 'anggota', 'project'));
     }
 

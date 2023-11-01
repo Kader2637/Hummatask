@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\editProjectRequest;
 use App\Http\Requests\PengajuanProjectRequest;
 use App\Models\Project;
 use App\Models\Tema;
 use App\Models\Tim;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PengajuanProjekController extends Controller
 {
@@ -77,5 +79,29 @@ class PengajuanProjekController extends Controller
         $project->save();
 
         return back()->with('success', 'Berhasil menyetujui project');
+    }
+
+    protected function editProject(editProjectRequest $request, $code)
+    {
+        try {
+            $tim = Tim::where('code', $code)->firstOrFail();
+            $validated = $request->validated();
+            // dd($validated['deskripsiInput']);
+
+            if ($request->hasFile('logo')) {
+                Storage::disk('public')->delete($tim->logo);
+                $tim->update(['logo' => $validated['logo']->store('logo', 'public')]);
+            }
+            if ($request->deskripsiInput != null) {
+                Project::where('tim_id', $tim->id)->update(['deskripsi' => $validated['deskripsiInput']]);
+            }
+            if ($request->namaTimInput != null) {
+                $tim->update(['nama' => $validated['namaTimInput']]);
+            }
+
+            return back()->with('success', 'Berhasil mengedit project');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 }

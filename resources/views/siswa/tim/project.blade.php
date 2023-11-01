@@ -137,7 +137,68 @@
     {{-- Modal --}}
 
     {{-- Modal Edit Project --}}
+    <div class="modal fade" id="editProject" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProjectTitle">Edit Project</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('tim.editProject', $tim->code) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PATCH')
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label class="form-label text-white" for="image-input">
+                                    <img id="preview-image" src="{{ asset('storage/' . $tim->logo) }}"
+                                        alt="example placeholder"
+                                        style="width: 150px; height: 150px; border-radius: 10px; cursor: pointer" />
+                                    <input type="file" class="form-control d-none" id="image-input" name="logo" />
+                                    @error('logo')
+                                        <p class="text-danger">
+                                            {{ $message }}
+                                        </p>
+                                    @enderror
+                                    <script>
+                                        document.getElementById('image-input').addEventListener('change', function(e) {
+                                            var previewImage = document.getElementById('preview-image');
+                                            var file = e.target.files[0];
 
+                                            if (file) {
+                                                var reader = new FileReader();
+                                                reader.onload = function(event) {
+                                                    previewImage.src = event.target.result;
+                                                };
+                                                reader.readAsDataURL(file);
+                                            }
+                                        });
+                                    </script>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="nameWithTitle" class="form-label">Nama Tim</label>
+                                <input type="text" id="nameWithTitle" class="form-control" name="namaTimInput"
+                                    placeholder="Masukkan nama tim" value="{{ $tim->nama }}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="nameWithTitle" class="form-label">Deskripsi</label>
+                                <textarea style="height: 150px; resize: none;" name="deskripsiInput" id="nameWithTitle" class="form-control"
+                                    placeholder="Masukkan deskripsi project anda">{{ $project->deskripsi ?? '' }}</textarea>
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
     {{-- Modal Edit Project --}}
 
     <div class="container-fluid mt-5">
@@ -146,9 +207,9 @@
                 <div class="nav nav-pills d-flex justify-content-between my-4" role="tablist">
                     <div class="d-flex justify-content-between">
                         <div class="nav-item" role="presentation">
-                            <button type="button" class="nav-link active button-nav" role="tab" data-bs-toggle="tab"
-                                data-bs-target="#navs-pills-top-home" aria-controls="navs-pills-top-home"
-                                aria-selected="true">Project</button>
+                            <button type="button" class="nav-link active button-nav" role="tab"
+                                data-bs-toggle="tab" data-bs-target="#navs-pills-top-home"
+                                aria-controls="navs-pills-top-home" aria-selected="true">Project</button>
                         </div>
                         <div class="nav-item button-nav" role="presentation">
                             <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
@@ -221,8 +282,8 @@
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="d-flex flex-row gap-3">
-                                                    <img src="{{ asset($tim->logo) }}" alt='logo tim'
-                                                        class="h-auto rounded-circle" style="width: 60px">
+                                                    <img src="{{ asset('storage/' . $tim->logo) }}" alt='logo tim'
+                                                        class="rounded-circle" style="width: 90px; height: 90px">
                                                     <div
                                                         style="display: flex; flex-direction: column; justify-content: center; align-items: center">
                                                         <span class="d-block text-black fs-5">{{ $tim->nama }}</span>
@@ -263,19 +324,23 @@
                                                     @endif
                                                 </div>
                                             </div>
-                                            <div class="deskripsi mt-2">
-                                                <div class="title text-dark">
-                                                    Deskripsi :
+                                            @if ($project->deskripsi)
+                                                <div class="deskripsi mt-2">
+                                                    <div class="title text-dark">
+                                                        Deskripsi :
+                                                    </div>
+                                                    <div class="isi">
+                                                        {{ $project->deskripsi }}
+                                                    </div>
                                                 </div>
-                                                <div class="isi">
-                                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Numquam
-                                                    suscipit nihil animi aut placeat doloribus repellat, ipsa sunt, ab
-                                                    molestiae quibusdam blanditiis voluptate mollitia perspiciatis
-                                                    dolor! Tempora laborum nulla voluptates? Eligendi sit ullam, iure
-                                                    hic mollitia, voluptatem quisquam iste distinctio quas praesentium
-                                                    aut. Beatae dolore quas ipsa, inventore earum necessitatibus.
+                                            @else
+                                                <div class="alert alert-warning d-flex align-items-center mt-4 cursor-pointer" role="alert" data-bs-toggle="modal" data-bs-target="#editProject">
+                                                    <span class="alert-icon text-warning me-2">
+                                                        <i class="ti ti-bell ti-xs"></i>
+                                                    </span>
+                                                    Tim ini belum memiliki deskripsi tema!
                                                 </div>
-                                            </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -290,7 +355,7 @@
                             <div class="card cursor-default col-12 d-flex align-items-center justify-content-center">
                                 <div class="card-body d-flex flex-column align-items-center justify-content-center">
                                     <img width="90px" height="90px" class="rounded-circle"
-                                        src="{{ asset($tim->logo) }}" alt="">
+                                        src="{{ asset('storage/' . $tim->logo) }}" alt="">
                                     <h1>{{ $tim->nama }}</h1>
                                 </div>
                             </div>

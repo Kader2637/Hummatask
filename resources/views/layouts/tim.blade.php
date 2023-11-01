@@ -1013,6 +1013,14 @@
                 text: '{{ session('success') }}', // Teks pesan dari sesi
             });
         </script>
+    @elseif (session()->has('warning'))
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Peringatan',
+                text: '{{ session('warning') }}', // Teks pesan dari sesi
+            });
+        </script>
     @endif
 
 </body>
