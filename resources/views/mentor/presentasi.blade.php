@@ -45,54 +45,35 @@
         </div>
         <div class="tab-content mt-3">
             <div class="tab-pane fade active show" id="navs-pills-top-home" role="tabpanel">
-                <div class="card">
-                    <div class="card-header">
+                <div class="">
+                    <div class="">
                         <div class="table-responsive text-nowrap">
-                            <table id="jstabel1" class="table">
-                                <div class="">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Nama</th>
-                                            <th>Tanggal</th>
-                                            <th>Hari</th>
-                                            <th>Project</th>
-                                            <th>Tema</th>
-                                            <th>Opsi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse ( $persetujuan_presentasi as $i => $data )
-                                            <tr id="tr{{ $data->code }}">
-                                                <td>{{ ++$i }}</td>
+                            <div class="container">
+                                <div class="row" id="row-persetujuan">
+                                    @forelse ( $persetujuan_presentasi as $presentasi )
+                                    <div class="col-md-6 col-lg-4" id="card-persetujuan-{{ $presentasi->code }}" >
+                                        <div class="card text-center mb-3">
+                                            <div class="card-body">
+                                                <img src="{{ asset('storage/' . $presentasi->tim->logo) }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 150px; height: 150px; object-fit: cover; ">
+                                                <div class="d-flex justify-content-center align-items-center gap-2">
+                                                    <h4 class="card-title text-capitalize">tes</h4>
+                                                <a href="#"><span class="badge bg-label-warning mb-3">solo</span></a>
+                                                </div>
+                                                <p class="card-text">{{ \Carbon\Carbon::parse($presentasi->jadwal)->isoFormat('DD MMMM YYYY') }}</p>
 
-                                                @if ($data->tim->status_tim === "solo")
-                                                <td>
-                                                    <img src="{{ asset('storage/' . '') }}" alt="" style="border-radius: 50%; width:40px;">{{ $data->tim->ketuaTim->first()->username }}
-                                                </td>
+                                               <div class="d-flex justify-content-center gap-2">
+                                                    <button onclick="tolakPresentasi('{{ $presentasi->code }}')" data-bs-toggle="modal" data-bs-target="#Reject" class="px-3 py-1 btn btn-danger" >Tolak</button>
+                                                    <button onclick="setujuiPresentasi('{{ $presentasi->code }}')" class="px-3 py-1 btn btn-success" >Setujui</button>
+                                               </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @empty
 
-                                                @else
-                                                <td>
-                                                    <img src="{{ asset('storage/' . '') }}" alt="" style="border-radius: 50%; width:40px;">{{ $data->tim->nama }}
-                                                </td>
-                                                @endif
-                                                <td>{{ $jadwal[--$i] }}</td>
-                                                <td>{{ $hari[$i] }}</td>
-                                                <td>{{ $data->tim->status_tim }}</td>
-                                                <td>Sekolah</td>
-                                                <td>
-                                                    <button onclick="tolakPresentasi('{{ $data->code }}')" class="btn btn-danger me-2" data-bs-toggle="modal"
-                                                        data-bs-target="#Reject" >Tolak</button>
-                                                    <button onclick="setujuiPresentasi('{{ $data->code }}')" class="btn btn-success">Terima</button>
-                                                </td>
-                                            </tr>
-                                        @empty
-
-                                        @endforelse
-                                    </tbody>
+                                    @endforelse
                                 </div>
-                            </table>
-                        </div>
+                            </div>
+                         </div>
                     </div>
                 </div>
             </div>
@@ -124,60 +105,29 @@
             {{-- Modal Tolak Presentasi --}}
 
             <div class="tab-pane fade" id="navs-pills-top-profile" role="tabpanel">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="table-responsive text-nowrap">
-                            <table id="jstabel2" class="table">
-                                <div class="">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Nama</th>
-                                            <th>Tanggal</th>
-                                            <th>Hari</th>
-                                            <th>Project</th>
-                                            <th>Tema</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $i = 0
-                                        @endphp
-                                        @forelse ( $konfirmasi_presentasi as $presentasi )
-                                        <tr>
-                                            <td>{{ ++$i }}</td>
-                                            @if ($presentasi->tim->status_tim === "solo")
-                                            <td>
-                                                <img src="{{ asset('storage/' . '') }}" alt="" style="border-radius: 50%; width:40px;">{{ $presentasi->tim->ketuaTim->first()->username }}
-                                            </td>
+                <div class="row" id="row-konfirmasi">
 
-                                            @else
-                                            <td>
-                                                <img src="{{ asset('storage/' . '') }}" alt="" style="border-radius: 50%; width:40px;">{{ $presentasi->tim->nama }}
-                                            </td>
-                                            @endif
-                                            <td id="jadwal{{ $presentasi->code }}">{{  \Carbon\Carbon::parse($presentasi->jadwal)->isoFormat('DD MMMM YYYY')  }}</td>
-                                            <td id="hari{{ $presentasi->code }}">{{  \Carbon\Carbon::parse($presentasi->jadwal)->isoFormat('dddd')  }}</td>
-                                            <td>
-                                                {{ $presentasi->tim->status_tim }}
-                                            </td>
-                                            <td>Sekolah</td>
-                                            <td>
-                                                <button onclick="aturJadwal('{{ $presentasi->code }}', '{{ $presentasi->jadwal }}')" class="btn btn-warning me-2" data-bs-toggle="modal"
-                                                    data-bs-target="#Reset">Atur ulang</button>
-                                                <button class="btn btn-success" data-bs-toggle="modal"
-                                                    data-bs-target="#Finish">Selesai</button>
-                                            </td>
-                                        </tr>
-                                        @empty
-
-                                        @endforelse
-                                    </tbody>
+                    @forelse ($konfirmasi_presentasi as $presentasi )
+                    <div id="card-konfirmasi-{{ $presentasi->code }}" class="col-md-6 col-lg-4">
+                        <div class="card text-center mb-3">
+                            <div class="card-body">
+                                <img src="{{ asset('storage/' . $presentasi->tim->logo) }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 150px; height: 150px; object-fit: cover; ">
+                                <div class="d-flex justify-content-center align-items-center gap-2">
+                                    <h4 class="card-title text-capitalize">tes</h4>
+                                <a href="#"><span class="badge bg-label-warning mb-3">solo</span></a>
                                 </div>
-                            </table>
+                                <p class="card-text">{{ \Carbon\Carbon::parse($presentasi->jadwal)->isoFormat('DD MMMM YYYY') }}</p>
+
+                               <div class="d-flex justify-content-center gap-2">
+                                     <button class="btn btn-primary" >Urutan</button>
+                                     <button class="btn btn-success" >Konfirmasi</button>
+                               </div>
+                            </div>
                         </div>
                     </div>
+                    @empty
+
+                    @endforelse
                 </div>
             </div>
 
@@ -220,6 +170,8 @@
                 aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
+                        <form id="selesaiPresentasiForm" method="post">
+                            @csrf
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Selesai Presentasi</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -228,16 +180,17 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col">
-                                    <label for="" class="mb-3">Feedback</label>
-                                    <textarea type="text" class="form-control" placeholder="Beri Feedback Presentasi"
+                                    <label for="feedback" class="mb-3">Feedback</label>
+                                    <textarea type="text" class="form-control" id="feedback" placeholder="Beri Feedback Presentasi"
                                         style="height: 150px; resize: none"></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
-                            <button type="button" class="btn btn-success">Simpan</button>
+                            <button type="submit" data-bs-dismiss="modal" class="btn btn-success">Simpan</button>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -340,22 +293,60 @@
             const alasan = document.getElementById('alasan').value
                 e.preventDefault();
 
+                console.log("form berjalan")
                 axios.put('penolakan-presentasi/' + code ,{alasan})
                 .then((response) => {
-                    // document.getElementById('Reject').classList.toggle('show')
-                    const tr = document.getElementById('tr'+code).classList.add('d-none')
+                        console.log(response.data);
+                        document.getElementById('card-persetujuan-' + code).classList.add('d-none')
+                        Swal.fire({
+                            icon: 'success',
+                            title : 'Sukses',
+                            text : 'Berhasil Menolak Presentasi'
+                        })
                 })
                 .catch((err) => {
                     console.log(err)
                 })
             })
-
         }
 
-        const setujuiPresentasi = (code) =>{
+        const setujuiPresentasi =(code) =>{
             axios.put('persetujuan-presentasi/' + code)
             .then((res) => {
-                const tr = document.getElementById('tr'+code).classList.add('d-none')
+                document.getElementById('card-persetujuan-' + code).classList.add('d-none')
+
+                const newData = res.data;
+                console.log(newData);
+
+                const div = document.createElement('div')
+                div.className = 'col-md-6 col-lg-4';
+                div.id = 'card-persetujuan-' + code;
+
+
+                let data =
+                `
+
+                                        <div class="card text-center mb-3">
+                                            <div class="card-body">
+                                                <img src="{{ asset('storage/' . '${newData[1].logo}') }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 150px; height: 150px; object-fit: cover; ">
+                                                <div class="d-flex justify-content-center align-items-center gap-2">
+                                                    <h4 class="card-title text-capitalize">tes</h4>
+                                                <a href="#"><span class="badge bg-label-warning mb-3">solo</span></a>
+                                                </div>
+                                                <p class="card-text"> ${newData[0].jadwal}</p>
+
+                                               <div class="d-flex justify-content-center gap-2">
+
+                                               </div>
+                                            </div>
+                                        </div>
+                `
+                div.innerHTML = data
+                console.log(data);
+
+                document.getElementById('row-konfirmasi').appendChild(div);
+
+
                 Swal.fire({
                 icon: 'success',
                 title: 'Sukses memberikan persetujuan presentasi',
@@ -374,33 +365,30 @@
 
         }
 
-        const aturJadwal = (code,jadwal) =>{
-            const form = document.getElementById('formAturJadwal');
-            const jadwalBaru = document.querySelector("[name='jadwal']").value = jadwal;
-            form.addEventListener('submit',(event)=>{
-                event.preventDefault();
-                const jadwalBaru = document.querySelector("[name='jadwal']").value;
 
-                // Memastikan jadwalBaru tidak null atau kosong
-                if (!jadwalBaru) {
-                console.log('Jadwal tidak boleh kosong');
-                return;
-                }
+        function sudahPresentasi(code){
 
-                axios.put('atur-jadwal-presentasi/' + code, { jadwalBaru })
-                .then((res) => {
-                    // document.getElementById('jadwal'+code).innerHtml = '';
-                    // console.log(res.data)
-                    document.getElementById('jadwal'+code).textContent = res.data[0];
-                    document.getElementById('hari'+code).textContent = res.data[1];
+            const form = document.getElementById('selesaiPresentasiForm')
+            form.addEventListener("submit",(e)=>{
+                e.preventDefault();
 
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
+                const feedback = document.getElementById('feedback').value
+
+                axios.put('konfirmasi-presentasi/'+code,{feedback})
+            .then((res) => {
+                document.getElementById('tr-konfirmasi-' + code).classList.add('d-none');
+                console.log(res.data)
+                console.log("sukses");
+
             })
-        }
+            .catch((err) => {
+                console.log(err);
+            })
 
+
+            })
+
+        }
 
 
 

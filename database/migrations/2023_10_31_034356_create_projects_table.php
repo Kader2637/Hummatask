@@ -20,6 +20,8 @@ return new class extends Migration
             $table->enum('type_project', ['solo', 'premini', 'mini', 'big']);
             $table->text('deskripsi')->nullable();
             $table->date('deadline')->nullable();
+            $table->integer('total_presentasi_mingguan');
+            $table->integer('total_presentasi');
             $table->timestamps();
         });
     }

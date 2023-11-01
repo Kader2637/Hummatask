@@ -19,22 +19,40 @@ class PresentasiController extends Controller
     protected function ajukanPresentasi(RequestPengajuanPresentasi $request, $code)
     {
         try {
-            $tim_id = Tim::where('code', $code)->pluck('id')->first();
+            //code...
+            $tim= Tim::where('code',$code)->first();
+            $validasiSatuKaliPresentasi = $tim->presentasi->where('jadwal',Carbon::now())->first();
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Timmu tidak ditemukan');
         }
 
-        dd($request);
+        if(Str::length($request->judul) > 50){
+            return back()->with('error','Judul presentasi tidak boleh melebihi 50 karakter');
+        }
+
+        if(Str::length($request->deskripsi) > 700){
+            return back()->with('error','Deskripsi presentasi tidak boleh melebihi 700 karakter');
+        }
+
+        // dd($validasiSatuKaliPresentasi);
+        // if($validasiSatuKaliPresentasi === null){
+        //     return back()->with('error','Kamu sudah memiliki jadwal presentasi hari ini');
+        // }
+
+
 
         $presentasi = new Presentasi;
         $presentasi->code = Str::uuid();
         $presentasi->judul = $request->judul;
         $presentasi->deskripsi = $request->deskripsi;
-        $presentasi->jadwal = $request->jadwal;
-        $presentasi->tim_id = $tim_id;
+        $presentasi->jadwal = Carbon::now();
+        $presentasi->tim_id = $tim->id;
+        $presentasi->status_presentasi_mingguan = true;
         $presentasi->save();
 
-        return redirect()->back()->with('success', 'Berhasil mengajukan presentasi');
+
+        return redirect()->back()->with('success','Berhasil mengajukan presentasi');
+
     }
 
 
@@ -43,26 +61,28 @@ class PresentasiController extends Controller
     {
 
         $presentasi = Presentasi::where('code', $code)->first();
+        $tim = $presentasi->tim;
         $presentasi->status_pengajuan = 'disetujui';
         $presentasi->save();
 
-        return response()->json(['message' => 'success']);
+
+        return response()->json([$presentasi,$tim]);
     }
 
     protected function penolakanPresentasi(RequestPenolakanPresentasi $request, $code)
     {
         $presentasi = Presentasi::where('code', $code)->first();
         $presentasi->status_pengajuan = 'ditolak';
-        $presentasi->alasan = $request->alasan;
+        $presentasi->feedback = $request->alasan;
         $presentasi->save();
 
-        return response()->json(['Message' => 'success']);
+        return response()->json($presentasi);
     }
 
     protected function konfirmasiPresentasi(RequestKonfirmasiPresentasi $request, $code)
     {
-        $presentasi = Presentasi::where('code', $code)->first();
-        $presentasi->status_pengajuan = 'disetujui';
+        $presentasi = Presentasi::where('code',$code)->first();
+        $presentasi->status_presentasi = 'selesai';
         $presentasi->save();
 
         return response()->json(['message' => 'success']);
@@ -78,4 +98,7 @@ class PresentasiController extends Controller
         $hari = Carbon::parse($presentasi->jadwal)->isoFormat('dddd');
         return response()->json([$jadwal, $hari]);
     }
+
+
+
 }

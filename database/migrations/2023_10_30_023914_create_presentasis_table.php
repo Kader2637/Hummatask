@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('jadwal');
             $table->enum('status_pengajuan',['menunggu','disetujui','ditolak'])->default('menunggu');
             $table->enum('status_presentasi',['menunggu','selesai','telat'])->default('menunggu');
+            $table->boolean('status_presentasi_mingguan')->default(false);
             $table->text('feedback')->nullable();
             $table->foreignId('tim_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

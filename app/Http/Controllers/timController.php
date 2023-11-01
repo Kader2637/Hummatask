@@ -54,11 +54,15 @@ class timController extends Controller
         $title = "Tim/presentasi";
         $tim = Tim::where('code', $uuid)->firstOrFail();
         $anggota = $tim->user()->get();
-        $presentasi = $tim->presentasi()->get();
+        $presentasi = $tim->presentasi()->orderBy('jadwal','asc')->get();
         $jadwal = [];
+
         foreach ($presentasi as $data) {
             $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
         }
+
+
+        // dd($presentasi,$jadwal);
 
         return view('siswa.tim.history-presentasi', compact('title', 'tim', 'anggota', 'presentasi', 'jadwal'));
     }

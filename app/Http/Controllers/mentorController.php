@@ -78,7 +78,7 @@ class mentorController extends Controller
     // dd($konfirmasi_presentasi);
     $jadwal =[];
     $hari=[];
-
+    
 
     foreach ($presentasi as $i => $data) {
         $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');

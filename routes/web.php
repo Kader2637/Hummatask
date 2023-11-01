@@ -12,6 +12,7 @@ use App\Http\Controllers\ProjekController;
 use App\Http\Controllers\siswaController;
 use App\Http\Controllers\timController;
 use App\Http\Controllers\TugasController;
+use App\Models\Presentasi;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->controller(authController::class)->group(function () {
@@ -85,4 +86,6 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::put('penolakan-presentasi/{code}',[PresentasiController::class,'penolakanPresentasi']);
     Route::put('atur-jadwal-presentasi/{code}',[PresentasiController::class,'aturJadwal']);
     Route::patch('persetujuan-project/{code}', [PengajuanProjekController::class, 'persetujuanProject'])->name('persetujuan-project');
+    Route::put('konfirmasi-presentasi/{code}',[PresentasiController::class,'konfirmasiPresentasi']);
+
 });

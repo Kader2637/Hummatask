@@ -93,13 +93,6 @@
                                     placeholder="Isi deskripsi pengajuan anda"></textarea>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <label for="jadwal" class="form-label">Atur Jadwal</label>
-                                <input type="date" name="jadwal" id="jadwal"
-                                    class="form-control datepicker-days">
-                            </div>
-                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-label-secondary waves-effect"
@@ -1011,14 +1004,6 @@
                 icon: 'success',
                 title: 'Berhasil',
                 text: '{{ session('success') }}', // Teks pesan dari sesi
-            });
-        </script>
-    @elseif (session()->has('warning'))
-        <script>
-            Swal.fire({
-                icon: 'warning',
-                title: 'Peringatan',
-                text: '{{ session('warning') }}', // Teks pesan dari sesi
             });
         </script>
     @endif
