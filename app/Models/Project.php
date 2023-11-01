@@ -11,21 +11,19 @@ class Project extends Model
 {
     use HasFactory;
 
-    protected $guarded=[
+    protected $guarded = [];
 
-    ];
-
-    public function anggota():BelongsTo
+    public function anggota(): BelongsTo
     {
         return $this->belongsTo(Anggota::class);
     }
 
-    public function tim():BelongsTo
+    public function tim(): BelongsTo
     {
         return $this->belongsTo(Tim::class);
     }
 
-    public function tema():BelongsTo
+    public function tema(): BelongsTo
     {
         return $this->belongsTo(Tema::class);
     }

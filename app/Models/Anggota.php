@@ -9,26 +9,24 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Anggota extends Model
 {
     use HasFactory;
-    protected $guarded=[
+    protected $guarded = [];
 
-    ];
-
-    public function jabatan():BelongsTo
+    public function jabatan(): BelongsTo
     {
         return $this->belongsTo(Jabatan::class);
     }
 
-    public function user():BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function tim():BelongsTo
+    public function tim(): BelongsTo
     {
         return $this->belongsTo(Tim::class);
     }
 
-    public function project():BelongsTo
+    public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
     }

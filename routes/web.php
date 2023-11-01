@@ -21,13 +21,12 @@ Route::middleware('guest')->controller(authController::class)->group(function ()
     Route::get('forgot', 'lupaPasswordPage')->name('lupa-password');
     Route::get('reset', 'resetPasswordPage');
     Route::get('profile/{code}', 'profilePage')->name('profile');
-
     Route::get('/auth/google', 'redirectToGoogle')->name('google.register');
     Route::get('/auth/google/callback', 'handleGoogleCallback')->name('google.callback');
-
     Route::get('/auth/facebook', 'redirectToFacebook')->name('facebook.register');
     Route::get('/auth/facebook/callback', 'handleFacebookCallback')->name('facebook.callback');
 
+    // Process
     Route::post('login', 'login')->name('login');
     Route::post('register', 'register')->name('register.store');
 });
@@ -49,13 +48,11 @@ Route::prefix('tim')->controller(timController::class)->group(function () {
         Route::get('history/{uuid}', 'historyPage')->name('tim.history');
         Route::get('history-presentasi/{uuid}', 'historyPresentasiPage')->name('tim.historyPresentasi');
         Route::get('history-catatan/{uuid}', 'historyCatatanPage')->name('tim.historyCatatan');
-
         Route::get('project/{uuid}', 'projectPage')->name('tim.project');
-        Route::post('project/ajukan-project/{code}', [PengajuanProjekController::class, 'ajukanProject'])->name('tim.ajukanProject');
 
-        // proses di halaman tim
+        // Process
+        Route::post('project/ajukan-project/{code}', [PengajuanProjekController::class, 'ajukanProject'])->name('tim.ajukanProject');
         Route::post('board/tambah-tugas', [TugasController::class, 'buatTugas']);
-        // proses untuk presentasi
         Route::post('ajukan-presentasi/{code}', [PresentasiController::class, 'ajukanPresentasi'])->name('ajukan-presentasi');
     });
 });
@@ -82,7 +79,7 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::get('presentasi', [mentorController::class, 'presentasi'])->name('presentasi.mentor');
 
 
-    // Proses
+    // Process
     Route::put('persetujuan-presentasi/{code}',[PresentasiController::class,'persetujuanPresentasi']);
     Route::put('penolakan-presentasi/{code}',[PresentasiController::class,'penolakanPresentasi']);
     Route::put('atur-jadwal-presentasi/{code}',[PresentasiController::class,'aturJadwal']);

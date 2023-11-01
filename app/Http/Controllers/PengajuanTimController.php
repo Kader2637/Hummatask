@@ -10,49 +10,44 @@ use App\Models\Tim;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use illuminate\Support\Str;
-// use Illuminate\Http\Request;
 
 class PengajuanTimController extends Controller
 {
     protected function pengajuanSoloProject(RequestPengajuanSoloProject $request)
     {
-
         // Kondisi dimana nama tim kosong atau foto kosong
         if ($request->nama === null || $request->logo === null) {
             return redirect()->back()->with('error', 'input Foto ataupun nama tim tidak boleh kosong');
         }
 
         // menyimpan logo
-        $logo = $request->file('logo');
-        $lokasiPenyimpanan = 'logo/';
-        $namaLogo = $lokasiPenyimpanan . uniqid() . '.' . $logo->getClientOriginalExtension();
-        $logo->storeAs($namaLogo);
+        $logo = $request->logo->store('logo', 'public');
 
-        // membuat tim
+        // Membuat tim
         $tim = Tim::create([
             'code' => Str::uuid(),
             'nama' => $request->nama,
-            'logo' => $namaLogo,
+            'logo' => $logo,
             'repository' => $request->repository,
             'status_tim' => 'solo'
         ]);
 
-        // membuat anggota
+        // Membuat anggota
         Anggota::create([
             'tim_id' => $tim->id,
             'jabatan_id' => 1,
             'user_id' => Auth::user()->id,
         ]);
 
-        // membuat tema
+        // Membuat tema
         $tema = Tema::create([
             'code' => $tim->code,
             'nama_tema' => $request->temaInput,
             'tim_id' => $tim->id,
         ]);
 
-        // membuat project
-        $project = Project::create([
+        // Membuat project
+        Project::create([
             'code' => $tim->code,
             'tim_id' => $tim->id,
             'tema_id' => $tema->id,

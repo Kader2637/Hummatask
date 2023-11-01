@@ -18,7 +18,6 @@ class PresentasiController extends Controller
 {
     protected function ajukanPresentasi(RequestPengajuanPresentasi $request, $code)
     {
-
         try {
             $tim_id = Tim::where('code', $code)->pluck('id')->first();
         } catch (\Throwable $th) {
@@ -26,7 +25,7 @@ class PresentasiController extends Controller
         }
 
         dd($request);
-        
+
         $presentasi = new Presentasi;
         $presentasi->code = Str::uuid();
         $presentasi->judul = $request->judul;

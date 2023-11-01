@@ -10,9 +10,7 @@ class Jabatan extends Model
 {
     use HasFactory;
 
-    protected $guarded=[
-
-    ];
+    protected $guarded = [];
 
     public function anggota(): HasMany
     {

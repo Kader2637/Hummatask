@@ -9,5 +9,5 @@ class Tema extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['code', 'nama_tema', 'tim_id'];
+    protected $guarded = [];
 }

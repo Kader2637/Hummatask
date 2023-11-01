@@ -12,11 +12,9 @@ class Presentasi extends Model
 {
     use HasFactory;
 
-    protected $guarded=[
+    protected $guarded = [];
 
-    ];
-
-    public function tim():BelongsTo
+    public function tim(): BelongsTo
     {
         return $this->belongsTo(Tim::class);
     }
