@@ -37,18 +37,15 @@ class timController extends Controller
         $title = "Tim/project";
         $tim = Tim::where('code', $uuid)->firstOrFail();
         $anggota = $tim->anggota()->get();
-        $project = $tim->project()->first();
-
+        $project = $tim->project()->where('status_project', 'approved')->first();
         return view('siswa.tim.project', compact('title', 'tim', 'anggota', 'project'));
     }
 
     protected function historyPage($uuid)
     {
         $title = "Tim/history";
-
         $tim = Tim::where('code', $uuid)->firstOrFail();
         $anggota = $tim->user()->get();
-
         return view('siswa.tim.history', compact('title', 'tim', 'anggota'));
     }
 

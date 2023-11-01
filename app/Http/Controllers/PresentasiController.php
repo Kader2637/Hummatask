@@ -16,17 +16,17 @@ use Psy\VarDumper\Presenter;
 
 class PresentasiController extends Controller
 {
-    protected function ajukanPresentasi(RequestPengajuanPresentasi $request,$code)
+    protected function ajukanPresentasi(RequestPengajuanPresentasi $request, $code)
     {
 
         try {
-            //code...
-            $tim_id = Tim::where('code',$code)->pluck('id')->first();
+            $tim_id = Tim::where('code', $code)->pluck('id')->first();
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error','Timmu tidak ditemukan');
+            return redirect()->back()->with('error', 'Timmu tidak ditemukan');
         }
 
-
+        dd($request);
+        
         $presentasi = new Presentasi;
         $presentasi->code = Str::uuid();
         $presentasi->judul = $request->judul;
@@ -35,52 +35,48 @@ class PresentasiController extends Controller
         $presentasi->tim_id = $tim_id;
         $presentasi->save();
 
-        return redirect()->back()->with('success','Berhasil mengajukan presentasi');
-
+        return redirect()->back()->with('success', 'Berhasil mengajukan presentasi');
     }
 
 
 
-    protected function persetujuanPresentasi(RequestPersetujuanPresentasi $request,$code)
+    protected function persetujuanPresentasi(RequestPersetujuanPresentasi $request, $code)
     {
 
-        $presentasi = Presentasi::where('code',$code)->first();
+        $presentasi = Presentasi::where('code', $code)->first();
         $presentasi->status_pengajuan = 'disetujui';
         $presentasi->save();
 
-        return response()->json(['message'=>'success']);
-
+        return response()->json(['message' => 'success']);
     }
 
     protected function penolakanPresentasi(RequestPenolakanPresentasi $request, $code)
     {
-        $presentasi = Presentasi::where('code',$code)->first();
+        $presentasi = Presentasi::where('code', $code)->first();
         $presentasi->status_pengajuan = 'ditolak';
         $presentasi->alasan = $request->alasan;
         $presentasi->save();
 
-        return response()->json(['Message'=>'success']);
+        return response()->json(['Message' => 'success']);
     }
 
-    protected function konfirmasiPresentasi(RequestKonfirmasiPresentasi $request,$code)
+    protected function konfirmasiPresentasi(RequestKonfirmasiPresentasi $request, $code)
     {
-        $presentasi = Presentasi::where('code',$code)->first();
+        $presentasi = Presentasi::where('code', $code)->first();
         $presentasi->status_pengajuan = 'disetujui';
         $presentasi->save();
 
-        return response()->json(['message'=>'success']);
+        return response()->json(['message' => 'success']);
     }
 
     protected function aturJadwal(Request $request, $code)
     {
-        $presentasi = Presentasi::where('code',$code)->first();
+        $presentasi = Presentasi::where('code', $code)->first();
         $presentasi->jadwal = $request->jadwalBaru;
         $presentasi->save();
 
         $jadwal = Carbon::parse($presentasi->jadwal)->isoFormat('DD MMMM YYYY');
         $hari = Carbon::parse($presentasi->jadwal)->isoFormat('dddd');
-        return response()->json([$jadwal,$hari]);
+        return response()->json([$jadwal, $hari]);
     }
-
-
 }

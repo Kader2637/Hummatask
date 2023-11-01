@@ -48,6 +48,7 @@
                                                     $deadline = \Carbon\Carbon::parse($project->deadline)->translatedFormat('Y-m-d');
                                                     $totalDeadline = \Carbon\Carbon::parse($deadline)->diffInDays($tanggalMulai);
                                                     $dayLeft = \Carbon\Carbon::parse($deadline)->diffInDays(\Carbon\Carbon::now());
+                                                    $progressPercentage = 100 - ($dayLeft / $totalDeadline) * 100;
                                                 @endphp
                                                 <span>Tanggal Mulai :
                                                     {{ $tim->created_at->translatedFormat('l, j F Y') }}</span>
@@ -99,14 +100,15 @@
                                                 <div class="d-flex flex-grow-1 align-items-center my-1">
                                                     <div class="progress w-100 me-3" style="height:8px;">
                                                         <div class="progress-bar bg-primary" role="progressbar"
-                                                            style="width: 54%" aria-valuenow="54" aria-valuemin="0"
-                                                            aria-valuemax="100">
+                                                            style="width: {{ round($progressPercentage) }}%"
+                                                            aria-valuenow="{{ round($progressPercentage) }}"
+                                                            aria-valuemin="0" aria-valuemax="100">
                                                         </div>
                                                     </div>
-                                                    <span class="text-muted">54%</span>
+                                                    <span class="text-muted">{{ round($progressPercentage) }}%</span>
                                                 </div>
                                                 <div class="tenggat">
-                                                    <span>Tenggat kurang {{$dayLeft}} hari lagi</span>
+                                                    <span>Tenggat kurang {{ $dayLeft }} hari lagi</span>
                                                 </div>
                                             </div>
                                             <div class="deskripsi mt-2">

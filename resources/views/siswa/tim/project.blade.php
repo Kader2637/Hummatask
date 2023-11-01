@@ -189,19 +189,25 @@
                                     <div class="card-header">
                                         <div class="d-flex flex-row align-items-center justify-content-between">
                                             <div class="fs-4 text-black">
-                                                Projek
+                                                Project
                                             </div>
                                             <div
                                                 style="display: flex; flex-direction: column; justify-items: center; align-items: left;">
                                                 @php
                                                     $tanggalMulai = $tim->created_at->translatedFormat('Y-m-d');
-                                                    $deadline = \Carbon\Carbon::parse($project->deadline)->translatedFormat('Y-m-d');
-                                                    $totalDeadline = \Carbon\Carbon::parse($deadline)->diffInDays($tanggalMulai);
-                                                    $dayLeft = \Carbon\Carbon::parse($deadline)->diffInDays(\Carbon\Carbon::now());
+                                                    $totalDeadline = null;
+                                                    $dayLeft = null;
+
+                                                    if ($project) {
+                                                        $deadline = \Carbon\Carbon::parse($project->deadline)->translatedFormat('Y-m-d');
+                                                        $totalDeadline = \Carbon\Carbon::parse($deadline)->diffInDays($tanggalMulai);
+                                                        $dayLeft = \Carbon\Carbon::parse($deadline)->diffInDays(\Carbon\Carbon::now());
+                                                        $progressPercentage = 100 - ($dayLeft / $totalDeadline) * 100;
+                                                    }
                                                 @endphp
                                                 <span>Tanggal Mulai :
                                                     {{ $tim->created_at->translatedFormat('l, j F Y') }}</span>
-                                                @if (@isset($project))
+                                                @if ($project)
                                                     <span>Tenggat :
                                                         {{ \Carbon\Carbon::parse($project->deadline)->translatedFormat('l, j F Y') }}</span>
                                                 @else
@@ -226,12 +232,7 @@
                                                     <div class="mb-3">Status : <span
                                                             class="badge bg-label-warning">{{ $tim->status_tim }}</span>
                                                     </div>
-                                                    @php
-                                                        $now = \Carbon\Carbon::now();
-                                                        $deadline = \Carbon\Carbon::parse($project->deadline);
-                                                        $daysRemaining = $now->diffInDays($deadline);
-                                                    @endphp
-                                                    @if (@isset($project->tema->nama_tema))
+                                                    @if ($project)
                                                         <div>Tema : <span
                                                                 class="badge bg-label-warning">{{ $project->tema->nama_tema }}</span>
                                                         @else
@@ -243,20 +244,23 @@
                                         <div class="col-lg-6">
                                             <div class="progres-bar">
                                                 <div class="d-flex justify-content-between">
-                                                    <span>Hari</span>
-                                                    <span>{{ $dayLeft }} dari {{ $totalDeadline }} Hari</span>
+                                                    @if ($project)
+                                                        <span>Hari</span>
+                                                        <span>{{ $dayLeft }} dari {{ $totalDeadline }} Hari</span>
                                                 </div>
                                                 <div class="d-flex flex-grow-1 align-items-center my-1">
                                                     <div class="progress w-100 me-3" style="height:8px;">
                                                         <div class="progress-bar bg-primary" role="progressbar"
-                                                            style="width: 54%" aria-valuenow="54" aria-valuemin="0"
-                                                            aria-valuemax="100">
+                                                            style="width: {{ round($progressPercentage) }}%"
+                                                            aria-valuenow="{{ round($progressPercentage) }}"
+                                                            aria-valuemin="0" aria-valuemax="100">
                                                         </div>
                                                     </div>
-                                                    <span class="text-muted">54%</span>
+                                                    <span class="text-muted">{{ round($progressPercentage) }}%</span>
                                                 </div>
                                                 <div class="tenggat">
                                                     <span>Tenggat kurang {{ $dayLeft }} hari lagi</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="deskripsi mt-2">

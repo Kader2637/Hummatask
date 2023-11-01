@@ -86,5 +86,5 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::put('persetujuan-presentasi/{code}',[PresentasiController::class,'persetujuanPresentasi']);
     Route::put('penolakan-presentasi/{code}',[PresentasiController::class,'penolakanPresentasi']);
     Route::put('atur-jadwal-presentasi/{code}',[PresentasiController::class,'aturJadwal']);
-
+    Route::patch('persetujuan-project/{code}', [PengajuanProjekController::class, 'persetujuanProject'])->name('persetujuan-project');
 });

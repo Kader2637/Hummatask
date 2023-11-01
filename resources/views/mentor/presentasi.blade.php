@@ -387,8 +387,6 @@
                 return;
                 }
 
-
-
                 axios.put('atur-jadwal-presentasi/' + code, { jadwalBaru })
                 .then((res) => {
                     // document.getElementById('jadwal'+code).innerHtml = '';

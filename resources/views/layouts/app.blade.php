@@ -522,7 +522,7 @@
                                 <form id="editUserForm" action="{{ route('buat_tim_solo') }}" method="POST"
                                     enctype="multipart/form-data" class="row g-2 p-0 m-0">
                                     @csrf
-                                    <div class="col-12  gap-3 align-items-center">
+                                    <div class="col-12 gap-3 align-items-center">
                                         <div class="col-12 col-md-3 align-items-center">
                                             <label class="form-label text-white" for="image-input">
                                                 <img id="preview-image"
@@ -558,9 +558,17 @@
                                                     {{ $message }}
                                                 </p>
                                             @enderror
+                                            <label class="form-label m-0 p-0 mt-2" for="modalEditUserLastName">Tema</label>
+                                            <input type="text" id="modalEditUserLastName" name="temaInput"
+                                                class="form-control" placeholder="Isi tema project anda" />
+                                            @error('temaInput')
+                                                <p class="text-danger">
+                                                    {{ $message }}
+                                                </p>
+                                            @enderror
                                         </div>
                                     </div>
-                                    <div class="col-12 d-flex flex-row flex-wrap justify-content-end">
+                                    <div class="col-12 d-flex flex-row flex-wrap justify-content-end modal-footer">
                                         <button type="submit" class="btn btn-primary me-sm-3 me-1">Unggah</button>
                                         <button type="reset" class="btn btn-danger" data-bs-dismiss="modal"
                                             aria-label="Close">Batal</button>
@@ -580,9 +588,10 @@
                             const namaInput = document.querySelector('input[name="nama"]');
                             const repositoryInput = document.querySelector('input[name="repository"]');
                             const logoInput = document.querySelector('input[name="logo"]');
+                            const temaInput = document.querySelector('input[name="temaInput"]');
 
                             // Validasi input kosong
-                            if (namaInput.value.trim() === '' || repositoryInput.value.trim() === '' || logoInput.files
+                            if (namaInput.value.trim() === '' || repositoryInput.value.trim() === '' || temaInput.value.trim() === '' || logoInput.files
                                 .length === 0) {
                                 event.preventDefault(); // Mencegah pengiriman formulir
                                 Swal.fire({
