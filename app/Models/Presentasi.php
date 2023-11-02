@@ -23,4 +23,9 @@ class Presentasi extends Model
     {
         return $this->through('tim')->has('user');
     }
+
+    public function historyPresentasi():BelongsTo
+    {
+        return $this->belongsTo(HistoryPresentasi::class);
+    }
 }

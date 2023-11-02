@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Anggota;
+use App\Models\HistoryPresentasi;
 use App\Models\Presentasi;
 use App\Models\Project;
 use App\Models\Tema;
@@ -93,18 +94,19 @@ class mentorController extends Controller
     // return view presentasi mentor
     protected function presentasi()
     {
-        $presentasi = Presentasi::all();
-        $persetujuan_presentasi = $presentasi->where('status_pengajuan', 'menunggu');
-        $konfirmasi_presentasi = $presentasi->where('status_pengajuan', 'disetujui')->where('status_presentasi', 'menunggu');
-        // dd($konfirmasi_presentasi);
-        $jadwal = [];
-        $hari = [];
+    $presentasi = Presentasi::all();
+    $historyPresentasi = HistoryPresentasi::all();
+    $persetujuan_presentasi = $presentasi->where('status_pengajuan','menunggu');
+    $konfirmasi_presentasi = $presentasi->where('status_pengajuan','disetujui')->where('status_presentasi','menunggu');
+    $jadwal =[];
+    $hari=[];
 
+    // dd($konfirmasi_presentasi);
 
-        foreach ($presentasi as $i => $data) {
-            $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
-            $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd');
-        }
-        return response()->view('mentor.presentasi', compact('persetujuan_presentasi', 'konfirmasi_presentasi', 'jadwal', 'hari'));
+    foreach ($presentasi as $i => $data) {
+        $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
+        $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd') ;
+    }
+        return response()->view('mentor.presentasi',compact('persetujuan_presentasi','konfirmasi_presentasi','jadwal','hari','historyPresentasi'));
     }
 }

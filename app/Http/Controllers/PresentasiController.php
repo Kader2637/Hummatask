@@ -7,6 +7,7 @@ use App\Http\Requests\RequestKonfirmasiPresentasi;
 use App\Http\Requests\RequestPengajuanPresentasi;
 use App\Http\Requests\RequestPenolakanPresentasi;
 use App\Http\Requests\RequestPersetujuanPresentasi;
+use App\Models\HistoryPresentasi;
 use App\Models\Presentasi;
 use App\Models\Tim;
 use Carbon\Carbon;
@@ -39,7 +40,16 @@ class PresentasiController extends Controller
         //     return back()->with('error','Kamu sudah memiliki jadwal presentasi hari ini');
         // }
 
+        $history = HistoryPresentasi::latest()->pluck('id')->first();
 
+        if($history === null){
+            HistoryPresentasi::create([
+                'code' => Str::uuid(),
+            ]);
+        }
+
+
+        // dd($history);
 
         $presentasi = new Presentasi;
         $presentasi->code = Str::uuid();
@@ -48,6 +58,7 @@ class PresentasiController extends Controller
         $presentasi->jadwal = Carbon::now();
         $presentasi->tim_id = $tim->id;
         $presentasi->status_presentasi_mingguan = true;
+        $presentasi->history_presentasi_id = $history;
         $presentasi->save();
 
 
@@ -60,11 +71,14 @@ class PresentasiController extends Controller
     protected function persetujuanPresentasi(RequestPersetujuanPresentasi $request, $code)
     {
 
+        $dataPresentasi = Presentasi::where('jadwal',Carbon::now()->isoFormat('Y-M-DD'))->where('status_pengajuan','disetujui')->get();
+        $urutan = count($dataPresentasi);
+
         $presentasi = Presentasi::where('code', $code)->first();
-        $tim = $presentasi->tim;
+        $presentasi->urutan = $urutan + 1;
         $presentasi->status_pengajuan = 'disetujui';
         $presentasi->save();
-
+        $tim = $presentasi->tim;
 
         return response()->json([$presentasi,$tim]);
     }
@@ -83,9 +97,10 @@ class PresentasiController extends Controller
     {
         $presentasi = Presentasi::where('code',$code)->first();
         $presentasi->status_presentasi = 'selesai';
+        $presentasi->status_revisi = $request->status_revisi;
+        $presentasi->feedback = $request->feedback;
         $presentasi->save();
-
-        return response()->json(['message' => 'success']);
+        return response()->json($presentasi);
     }
 
     protected function aturJadwal(Request $request, $code)
@@ -97,6 +112,18 @@ class PresentasiController extends Controller
         $jadwal = Carbon::parse($presentasi->jadwal)->isoFormat('DD MMMM YYYY');
         $hari = Carbon::parse($presentasi->jadwal)->isoFormat('dddd');
         return response()->json([$jadwal, $hari]);
+    }
+
+    protected function tampilkanDetailPresentasi(Request $request,$code)
+    {
+        $history = HistoryPresentasi::with('presentasi.tim')->where('code',$code)->first();
+        $presentasi = $history->presentasi->where('status_pengajuan','menunggu');
+        $konfirmasi_presentasi = $history->presentasi->where('status_pengajuan','disetujui')->where('status_presentasi','menunggu');
+        $data = [
+            'presentasi' => $presentasi,
+            'konfirmasi' => $konfirmasi_presentasi
+        ];
+        return response()->json($data);
     }
 
 
