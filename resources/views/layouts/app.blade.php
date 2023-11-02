@@ -99,28 +99,30 @@
                             $title === 'Dashboard Ketua Magang' ||
                                 $title === 'Presentasi Ketua Magang' ||
                                 $title === 'Project Ketua Magang' ||
-                                $title === 'History Ketua Magang') open @endif">
+                                $title === 'History Ketua Magang' ||
+                                $title === 'Detail Project Ketua Magang') open @endif">
                             <a href="" class="menu-link menu-toggle d-flex">
                                 <i class="menu-icon tf-icons ti ti-crown"></i>
                                 <div class="w-100 d-flex align-items-center justify-content-between">Ketua Magang</div>
                             </a>
                             <ul class="menu-sub">
-                                <li class="menu-item">
+                                <li class="menu-item {{request()->routeIs('ketua.dashboard') ? 'active' : ''}}">
                                     <a href="{{ route('ketua.dashboard') }}" class="menu-link">
                                         <div>Dashboard</div>
                                     </a>
                                 </li>
-                                <li class="menu-item ">
+                                <li class="menu-item {{request()->routeIs('ketua.presentasi') ? 'active' : ''}}">
                                     <a href="{{ route('ketua.presentasi') }}" class="menu-link">
                                         <div>Presentasi</div>
                                     </a>
                                 </li>
-                                <li class="menu-item {{ request()->routeIs('ketua.project') ? 'active' : '' }}">
+                                <li
+                                    class="menu-item {{ request()->routeIs('ketua.project', 'ketua.detail_project') ? 'active' : '' }}">
                                     <a href="{{ route('ketua.project') }}" class="menu-link">
                                         <div>Project</div>
                                     </a>
                                 </li>
-                                <li class="menu-item ">
+                                <li class="menu-item {{request()->routeIs('ketua.history') ? 'active' : ''}}">
                                     <a href="{{ route('ketua.history') }}" class="menu-link">
                                         <div>History</div>
                                     </a>
@@ -558,7 +560,8 @@
                                                     {{ $message }}
                                                 </p>
                                             @enderror
-                                            <label class="form-label m-0 p-0 mt-2" for="modalEditUserLastName">Tema</label>
+                                            <label class="form-label m-0 p-0 mt-2"
+                                                for="modalEditUserLastName">Tema</label>
                                             <input type="text" id="modalEditUserLastName" name="temaInput"
                                                 class="form-control" placeholder="Isi tema project anda" />
                                             @error('temaInput')
@@ -591,7 +594,8 @@
                             const temaInput = document.querySelector('input[name="temaInput"]');
 
                             // Validasi input kosong
-                            if (namaInput.value.trim() === '' || repositoryInput.value.trim() === '' || temaInput.value.trim() === '' || logoInput.files
+                            if (namaInput.value.trim() === '' || repositoryInput.value.trim() === '' || temaInput.value
+                                .trim() === '' || logoInput.files
                                 .length === 0) {
                                 event.preventDefault(); // Mencegah pengiriman formulir
                                 Swal.fire({

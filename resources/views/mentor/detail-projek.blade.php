@@ -111,19 +111,24 @@
                                                     <span>Tenggat kurang {{ $dayLeft }} hari lagi</span>
                                                 </div>
                                             </div>
-                                            <div class="deskripsi mt-2">
-                                                <div class="title text-dark">
-                                                    Deskripsi :
+                                            @if ($project->deskripsi)
+                                                <div class="deskripsi mt-2">
+                                                    <div class="title text-dark">
+                                                        Deskripsi :
+                                                    </div>
+                                                    <div class="isi">
+                                                        {{ $project->deskripsi }}
+                                                    </div>
                                                 </div>
-                                                <div class="isi">
-                                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Numquam
-                                                    suscipit nihil animi aut placeat doloribus repellat, ipsa sunt, ab
-                                                    molestiae quibusdam blanditiis voluptate mollitia perspiciatis
-                                                    dolor! Tempora laborum nulla voluptates? Eligendi sit ullam, iure
-                                                    hic mollitia, voluptatem quisquam iste distinctio quas praesentium
-                                                    aut. Beatae dolore quas ipsa, inventore earum necessitatibus.
+                                            @else
+                                                <div class="alert alert-warning d-flex align-items-center mt-4 cursor-pointer"
+                                                    role="alert" data-bs-toggle="modal" data-bs-target="#editProject">
+                                                    <span class="alert-icon text-warning me-2">
+                                                        <i class="ti ti-bell ti-xs"></i>
+                                                    </span>
+                                                    Tim ini belum memiliki deskripsi tema!
                                                 </div>
-                                            </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -172,7 +177,6 @@
 
             </div>
         </div>
-    </div>
     </div>
 @endsection
 

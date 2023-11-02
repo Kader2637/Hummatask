@@ -18,7 +18,7 @@
                                 <span class="avatar-initial rounded bg-label-primary"><i
                                         class="fa-solid fa-user-group"></i></span>
                             </div>
-                            <h4 class="ms-1 mb-0">42</h4>
+                            <h4 class="ms-1 mb-0">{{$usercount}}</h4>
                         </div>
                         <p class="mb-1">Jumlah anak magang</p>
                     </div>
@@ -32,7 +32,7 @@
                                 <span class="avatar-initial rounded bg-label-warning"><i
                                         class="fa-solid fa-users"></i></span>
                             </div>
-                            <h4 class="ms-1 mb-0">8</h4>
+                            <h4 class="ms-1 mb-0">{{$timcount}}</h4>
                         </div>
                         <p class="mb-1">Jumlah tim project</p>
                     </div>

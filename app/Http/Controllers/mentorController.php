@@ -40,8 +40,10 @@ class mentorController extends Controller
     // Return view detail pengajuan projek mentor
     protected function detailPengajuanPage($code)
     {
-        $projects = Project::where('code', $code)->firstOrFail();
-        $tema = Tema::where('code', $code)->get();
+        $projects = Project::where('code', $code)
+            ->firstOrFail();
+        $tema = Tema::where('code', $code)
+            ->get();
 
         return response()->view('mentor.detail-pengajuan', compact('projects', 'tema'));
     }
@@ -49,8 +51,15 @@ class mentorController extends Controller
     // Return view projek mentor
     protected function projekPage()
     {
-        $project = Project::with('tim', 'tema')->where('status_project', 'approved')->get();
-        return response()->view('mentor.projek', compact('project', 'project'));
+        $projects = Project::with('tim', 'tema')
+            ->where('status_project', 'approved')
+            ->get();
+
+        $anggota = $projects->flatMap(function ($project) {
+            return $project->tim->anggota;
+        });
+
+        return response()->view('mentor.projek', compact('projects', 'anggota'));
     }
 
     // Return view detail projek mentor
@@ -78,12 +87,12 @@ class mentorController extends Controller
     // dd($konfirmasi_presentasi);
     $jadwal =[];
     $hari=[];
-    
 
-    foreach ($presentasi as $i => $data) {
-        $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
-        $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd') ;
-    }
-        return response()->view('mentor.presentasi',compact('persetujuan_presentasi','konfirmasi_presentasi','jadwal','hari'));
+
+        foreach ($presentasi as $i => $data) {
+            $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
+            $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd');
+        }
+        return response()->view('mentor.presentasi', compact('persetujuan_presentasi', 'konfirmasi_presentasi', 'jadwal', 'hari'));
     }
 }

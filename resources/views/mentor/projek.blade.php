@@ -28,12 +28,13 @@
 
         {{-- Card --}}
         <div class="row mt-4">
-            @forelse ($project as $item)
+            @forelse ($projects as $item)
                 <div class="col-md-4 col-lg-4 col-sm-4">
                     <div class="card text-center mb-3">
                         <div class="card-body">
                             <div class="d-flex flex-row gap-3">
-                                <img src="{{ asset($item->tim->logo) }}" alt="foto logo" class="rounded-circle mb-3">
+                                <img src="{{ asset('storage/' . $item->tim->logo) }}" alt="foto logo"
+                                    style="width: 100px; height: 100px" class="rounded-circle mb-3">
                                 <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;"
                                     class="">
                                     <span class="text-black fs-6">{{ $item->tim->nama }}</span>
@@ -44,13 +45,12 @@
                                         <div class="d-flex align-items-center pt-1 mb-3 justify-content-center">
                                             <div class="d-flex align-items-center">
                                                 <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
-                                                    @foreach ($item->tim->anggota as $anggota)
+                                                    @foreach ($anggota as $anggota)
                                                         <li data-bs-toggle="tooltip" data-popup="tooltip-custom"
-                                                            data-bs-placement="top" title="{{$anggota->user->username}}"
+                                                            data-bs-placement="top" title="{{ $anggota->user->username }}"
                                                             class="avatar avatar-sm pull-up">
                                                             <img class="rounded-circle"
-                                                                src="{{asset($anggota->user->avatar)}}"
-                                                                alt="Avatar">
+                                                                src="{{ asset($anggota->user->avatar) }}" alt="Avatar">
                                                         </li>
                                                     @endforeach
                                                 </ul>

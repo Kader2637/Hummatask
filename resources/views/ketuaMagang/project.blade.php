@@ -16,7 +16,6 @@
     </style>
 @endsection
 
-
 @section('content')
     <div class="container-fluid mt-4">
         <h5 class="header">List Project</h5>
@@ -40,72 +39,59 @@
         {{-- Header --}}
 
         {{-- Card --}}
-        <div class="row mt-3">
-            <div class="col-lg-4 col-md-4">
-                <div class="card text-center mb-3">
-                    <div class="card-body">
-                        <div class="d-flex gap-3 tim-detail justify-content-between">
-                            <img src="{{ asset('assets/img/avatars/2.png') }}" alt class="rounded-circle mb-3">
-                            <div
-                                style="display: flex; flex-direction: column; justify-content: center; align-items: center">
-                                <span class="text-black fs-5 judul">Hummatask</span>
-                                <div class="d-flex align-items-center">
-                                    <a href="#"><span class="badge bg-label-warning my-1">Big Project</span></a>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-center">
-                                    <div class="d-flex align-items-center pt-1 mb-3 justify-content-center">
-                                        <div class="d-flex align-items-center">
-                                            <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
-                                                <li data-bs-toggle="tooltip" data-popup="tooltip-custom"
-                                                    data-bs-placement="top" title="Vinnie Mostowy"
-                                                    class="avatar avatar-sm pull-up">
-                                                    <img class="rounded-circle"
-                                                        src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png"
-                                                        alt="Avatar">
-                                                </li>
-                                                <li data-bs-toggle="tooltip" data-popup="tooltip-custom"
-                                                    data-bs-placement="top" title="Allen Rieske"
-                                                    class="avatar avatar-sm pull-up">
-                                                    <img class="rounded-circle"
-                                                        src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png"
-                                                        alt="Avatar">
-                                                </li>
-                                                <li data-bs-toggle="tooltip" data-popup="tooltip-custom"
-                                                    data-bs-placement="top" title="Julee Rossignol"
-                                                    class="avatar avatar-sm pull-up">
-                                                    <img class="rounded-circle"
-                                                        src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/6.png"
-                                                        alt="Avatar">
-                                                </li>
-                                                <li class="avatar avatar-sm">
-                                                    <span class="avatar-initial rounded-circle pull-up"
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="8 more">+8</span>
-                                                </li>
-                                            </ul>
+        <div class="row mt-4">
+            @forelse ($project as $item)
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="card text-center mb-3">
+                        <div class="card-body">
+                            <div class="d-flex flex-row gap-3">
+                                <img src="{{ asset('storage/' . $item->tim->logo) }}" alt="foto logo"
+                                    style="width: 100px; height: 100px" class="rounded-circle mb-3">
+                                <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;"
+                                    class="">
+                                    <span class="text-black fs-6">{{ $item->tim->nama }}</span>
+                                    <div class="d-flex align-items-center">
+                                        <span class="badge bg-label-warning my-1">{{ $item->tim->status_tim }}</span>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <div class="d-flex align-items-center pt-1 mb-3 justify-content-center">
+                                            <div class="d-flex align-items-center">
+                                                <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
+                                                    @foreach ($item->tim->anggota as $anggota)
+                                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom"
+                                                            data-bs-placement="top" title="{{ $anggota->user->username }}"
+                                                            class="avatar avatar-sm pull-up">
+                                                            <img class="rounded-circle"
+                                                                src="{{ asset($anggota->user->avatar) }}" alt="Avatar">
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div id="info" class="my-4">
+                                <div class="d-flex justify-content-between">
+                                    <span>Mulai : </span>
+                                    <div>{{ $item->created_at->translatedFormat('l, j F Y') }}</div>
+                                </div>
+                                <div class="d-flex justify-content-between my-3">
+                                    <span>Deadline : </span>
+                                    <div>{{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}</div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span>Tema : </span>
+                                    <div>{{ $item->tema->nama_tema }}</div>
+                                </div>
+                            </div>
+                            <a href="{{ route('ketua.detail_project', $item->code) }}" class="w-100 btn btn-primary">Detail</a>
                         </div>
-                        <div id="info" class="my-4">
-                            <div class="d-flex justify-content-between">
-                                <span>Mulai : </span>
-                                <div>24 Januari 2023</div>
-                            </div>
-                            <div class="d-flex justify-content-between my-3">
-                                <span>Akhir : </span>
-                                <div>24 Januari 2024</div>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span>Tema : </span>
-                                <div>Pengelolaan Tugas</div>
-                            </div>
-                        </div>
-                        <a href="{{ route('ketua.detail_project') }}" class="w-100 btn btn-primary">Detail</a>
                     </div>
                 </div>
-            </div>
+            @empty
+                <p>Tidak ada data project</p>
+            @endforelse
         </div>
         {{-- Card --}}
 

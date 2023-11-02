@@ -64,7 +64,7 @@ Route::prefix('ketuaMagang')->middleware(['auth', 'siswa', 'can:kelola siswa'])-
     Route::get('dashboard', 'dashboardPage')->name('ketua.dashboard');
     Route::get('presentasi', 'presentasiPage')->name('ketua.presentasi');
     Route::get('project', 'projectPage')->name('ketua.project');
-    Route::get('detail_project', 'detailProject')->name('ketua.detail_project');
+    Route::get('detail_project/{code}', 'detailProject')->name('ketua.detail_project');
     Route::get('history', 'historyPage')->name('ketua.history');
 });
 
