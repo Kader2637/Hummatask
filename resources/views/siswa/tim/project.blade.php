@@ -254,21 +254,21 @@
                                             </div>
                                             <div
                                                 style="display: flex; flex-direction: column; justify-items: center; align-items: left;">
-                                                @php
-                                                    $tanggalMulai = $tim->created_at->translatedFormat('Y-m-d');
-                                                    $totalDeadline = null;
-                                                    $dayLeft = null;
+                                                @if (!$project || $project->deadline != null)
+                                                    @php
+                                                        $tanggalMulai = $tim->created_at->translatedFormat('Y-m-d');
+                                                        $totalDeadline = null;
+                                                        $dayLeft = null;
 
-                                                    if ($project) {
                                                         $deadline = \Carbon\Carbon::parse($project->deadline)->translatedFormat('Y-m-d');
                                                         $totalDeadline = \Carbon\Carbon::parse($deadline)->diffInDays($tanggalMulai);
                                                         $dayLeft = \Carbon\Carbon::parse($deadline)->diffInDays(\Carbon\Carbon::now());
                                                         $progressPercentage = 100 - ($dayLeft / $totalDeadline) * 100;
-                                                    }
-                                                @endphp
+                                                    @endphp
+                                                @endif
                                                 <span>Tanggal Mulai :
                                                     {{ $tim->created_at->translatedFormat('l, j F Y') }}</span>
-                                                @if ($project)
+                                                @if (@isset($project->deadline) || $project)
                                                     <span>Tenggat :
                                                         {{ \Carbon\Carbon::parse($project->deadline)->translatedFormat('l, j F Y') }}</span>
                                                 @else
@@ -293,7 +293,7 @@
                                                     <div class="mb-3">Status : <span
                                                             class="badge bg-label-warning">{{ $tim->status_tim }}</span>
                                                     </div>
-                                                    @if ($project)
+                                                    @if (!$project || @isset($project->deadline))
                                                         <div>Tema : <span
                                                                 class="badge bg-label-warning">{{ $project->tema->nama_tema }}</span>
                                                         @else
@@ -305,7 +305,7 @@
                                         <div class="col-lg-6">
                                             <div class="progres-bar">
                                                 <div class="d-flex justify-content-between">
-                                                    @if ($project)
+                                                    @if ($project || @isset($project->deadline))
                                                         <span>Hari</span>
                                                         <span>{{ $dayLeft }} dari {{ $totalDeadline }} Hari</span>
                                                 </div>
@@ -324,7 +324,7 @@
                                                     @endif
                                                 </div>
                                             </div>
-                                            @if ($project->deskripsi)
+                                            @if (@isset($project->deskripsi))
                                                 <div class="deskripsi mt-2">
                                                     <div class="title text-dark">
                                                         Deskripsi :
@@ -334,7 +334,8 @@
                                                     </div>
                                                 </div>
                                             @else
-                                                <div class="alert alert-warning d-flex align-items-center mt-4 cursor-pointer" role="alert" data-bs-toggle="modal" data-bs-target="#editProject">
+                                                <div class="alert alert-warning d-flex align-items-center mt-4 cursor-pointer"
+                                                    role="alert" data-bs-toggle="modal" data-bs-target="#editProject">
                                                     <span class="alert-icon text-warning me-2">
                                                         <i class="ti ti-bell ti-xs"></i>
                                                     </span>

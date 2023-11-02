@@ -38,7 +38,9 @@ class timController extends Controller
         $title = "Tim/project";
         $tim = Tim::where('code', $uuid)->firstOrFail();
         $anggota = $tim->anggota()->get();
-        $project = $tim->project()->firstOrFail();
+        $project = $tim->project()->first();
+
+        // dd($project->tema);
 
         return view('siswa.tim.project', compact('title', 'tim', 'anggota', 'project'));
     }
@@ -48,7 +50,7 @@ class timController extends Controller
         $title = "Tim/history";
         $tim = Tim::where('code', $uuid)->firstOrFail();
         $anggota = $tim->user()->get();
-        
+
         return view('siswa.tim.history', compact('title', 'tim', 'anggota'));
     }
 

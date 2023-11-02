@@ -69,9 +69,8 @@ class mentorController extends Controller
             })
             ->get();
 
-
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
-        return response()->view('mentor.projek', compact('users', 'status_tim','projects' ,'anggota'));
+        return response()->view('mentor.projek', compact('users', 'status_tim', 'projects', 'anggota'));
     }
 
 
@@ -107,5 +106,5 @@ class mentorController extends Controller
             $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd');
         }
         return response()->view('mentor.presentasi', compact('persetujuan_presentasi', 'konfirmasi_presentasi', 'jadwal', 'hari'));
-   }
+    }
 }

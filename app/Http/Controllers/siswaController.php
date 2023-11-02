@@ -13,7 +13,7 @@ class siswaController extends Controller
     protected function dashboard()
     {
         $title = "Dashboard";
-        $tims = Anggota::with('tim')->where('user_id', Auth::user()->id)->get();
+        $tims = User::find(Auth::user()->id)->tim()->get();
         // dd($tims);
         return response()->view('siswa.dashboard', compact('title','tims'));
     }

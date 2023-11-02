@@ -118,7 +118,7 @@
 
     .custom-margin {
         margin-top: -65px;
-     }
+    }
 
     @keyframes loading {
 
@@ -131,42 +131,43 @@
         }
 
     }
+
     @keyframes preloader {
-    0%, 100% {
-        transform: translateY(0);
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        25% {
+            transform: translateY(-15px);
+        }
+
+        50% {
+            transform: translateY(0);
+        }
+
+        75% {
+            transform: translateY(15px);
+        }
     }
-
-    25% {
-        transform: translateY(-15px);
-    }
-
-    50% {
-        transform: translateY(0);
-    }
-
-    75% {
-        transform: translateY(15px);
-    }
-}
-
-
-
 </style>
 
 <body>
 
-    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"
+        integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
     <div id="loader">
         <div class="preloader">
             <div class="d-flex justify-content-center custom-margin">
-                <img src="{{ asset('assets/img/icons/icon.svg') }}"  width="180" height="160" alt="Loader Image">
+                <img src="{{ asset('assets/img/icons/icon.svg') }}" width="180" height="160" alt="Loader Image">
             </div>
         </div>
     </div>
     <script>
         $(window).load(function() {
 
-            var rnd = Math.random() * ( 3000 - 2000) + 3000;
+            var rnd = Math.random() * (3000 - 2000) + 3000;
 
             $('.progress').css("animation", "loading " + rnd + "ms linear");
 
@@ -224,12 +225,12 @@
                                 <div class="w-100 d-flex align-items-center justify-content-between">Ketua Magang</div>
                             </a>
                             <ul class="menu-sub">
-                                <li class="menu-item {{request()->routeIs('ketua.dashboard') ? 'active' : ''}}">
+                                <li class="menu-item {{ request()->routeIs('ketua.dashboard') ? 'active' : '' }}">
                                     <a href="{{ route('ketua.dashboard') }}" class="menu-link">
                                         <div>Dashboard</div>
                                     </a>
                                 </li>
-                                <li class="menu-item {{request()->routeIs('ketua.presentasi') ? 'active' : ''}}">
+                                <li class="menu-item {{ request()->routeIs('ketua.presentasi') ? 'active' : '' }}">
                                     <a href="{{ route('ketua.presentasi') }}" class="menu-link">
                                         <div>Presentasi</div>
                                     </a>
@@ -240,7 +241,7 @@
                                         <div>Project</div>
                                     </a>
                                 </li>
-                                <li class="menu-item {{request()->routeIs('ketua.history') ? 'active' : ''}}">
+                                <li class="menu-item {{ request()->routeIs('ketua.history') ? 'active' : '' }}">
                                     <a href="{{ route('ketua.history') }}" class="menu-link">
                                         <div>History</div>
                                     </a>
@@ -268,18 +269,15 @@
                     <li class="menu-item">
                         <ul class="">
                             @forelse ($tims as $item)
-                                @if ($item->jabatan_id == '1')
-                                    <li class="menu-item ">
-                                        <a href="{{ route('tim.board', $item->tim->code) }}"
-                                            class="menu-link d-flex align-items-center gap-2">
-                                            <img style="width: 30px;height:30px;object-fit: cover"
-                                                class="rounded-circle border border-primary"
-                                                src="{{ asset('storage/avatar/14.png' . $item->logo) }}"
-                                                alt="">
-                                            <div class="">{{ $item->name }}</div>
-                                        </a>
-                                    </li>
-                                @endif
+                                <li class="menu-item ">
+                                    <a href="{{ route('tim.board', $item->code) }}"
+                                        class="menu-link d-flex align-items-center gap-2">
+                                        <img style="width: 30px;height:30px;object-fit: cover"
+                                            class="rounded-circle border border-primary"
+                                            src="{{ asset('storage/' . $item->logo) }}" alt="">
+                                        <div class="">{{ $item->nama }}</div>
+                                    </a>
+                                </li>
                             @empty
                                 <li class="menu-item bg-info bg-light ">
                                     <a class="menu-link d-flex align-items-center gap-2">

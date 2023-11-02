@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Http\Requests\editProjectRequest;
 use App\Http\Requests\RequestPembentukanTimProject;
 use App\Http\Requests\RequestPembentukanTimProjectKetua;
 use App\Http\Requests\RequestPengajuanSoloProject;
@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Auth;
 use illuminate\Support\Str;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+
 // use Illuminate\Http\Request;
 
 class PengajuanTimController extends Controller
@@ -63,7 +65,6 @@ class PengajuanTimController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Berhasil membuat tim solo project');
-
     }
 
     protected function pembuatanTimProject(RequestPembentukanTimProject $request)
@@ -78,7 +79,6 @@ class PengajuanTimController extends Controller
             $tim->save();
 
             // membuat anggota
-
             $daftarAnggota = $request->anggota;
             array_push($daftarAnggota, $request->ketuaKelompok, $request->ketuaProjek);
             $interval = 2 + count($daftarAnggota);
@@ -94,7 +94,6 @@ class PengajuanTimController extends Controller
                 }
                 $anggota->user_id = $daftarAnggota[$i];
                 $anggota->save();
-
             }
             return redirect()->back()->with('success', 'Berhasil membentuk tim');
         } catch (QueryException $e) {
@@ -138,6 +137,27 @@ class PengajuanTimController extends Controller
             return redirect()->back()->with('error', 'Gagal membentuk tim. Terjadi kesalahan pada database');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal membentuk tim . Terjadi Kesalahan');
+        }
+    }
+
+    protected function editProject(editProjectRequest $request, $code)
+    {
+        try {
+            $tim = Tim::where('code', $code)->firstOrFail();
+            $validated = $request->validated();
+            if ($request->hasFile('logo')) {
+                Storage::disk('public')->delete($tim->logo);
+                $tim->update(['logo' => $validated['logo']->store('logo', 'public')]);
+            }
+            if ($request->deskripsiInput != null) {
+                Project::where('tim_id', $tim->id)->update(['deskripsi' => $validated['deskripsiInput']]);
+            }
+            if ($request->namaTimInput != null) {
+                $tim->update(['nama' => $validated['namaTimInput']]);
+            }
+            return back()->with('success', 'Berhasil mengedit project');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
 }
