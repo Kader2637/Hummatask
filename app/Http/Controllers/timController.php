@@ -29,6 +29,7 @@ class timController extends Controller
         $title = "Tim/kalender";
         $tim = Tim::where('code', $uuid)->firstOrFail();
         $anggota = $tim->user()->get();
+
         return view('siswa.tim.kalender', compact('title', 'tim', 'anggota',));
     }
 
@@ -38,6 +39,7 @@ class timController extends Controller
         $tim = Tim::where('code', $uuid)->firstOrFail();
         $anggota = $tim->anggota()->get();
         $project = $tim->project()->firstOrFail();
+
         return view('siswa.tim.project', compact('title', 'tim', 'anggota', 'project'));
     }
 
@@ -46,6 +48,7 @@ class timController extends Controller
         $title = "Tim/history";
         $tim = Tim::where('code', $uuid)->firstOrFail();
         $anggota = $tim->user()->get();
+        
         return view('siswa.tim.history', compact('title', 'tim', 'anggota'));
     }
 
@@ -54,34 +57,30 @@ class timController extends Controller
         $title = "Tim/presentasi";
         $tim = Tim::where('code', $uuid)->firstOrFail();
         $anggota = $tim->user()->get();
-        $presentasi = $tim->presentasi()->orderBy('jadwal','asc')->get();
+        $presentasi = $tim->presentasi()->get();
         $jadwal = [];
-
         foreach ($presentasi as $data) {
             $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
         }
-
-
-        // dd($presentasi,$jadwal);
 
         return view('siswa.tim.history-presentasi', compact('title', 'tim', 'anggota', 'presentasi', 'jadwal'));
     }
 
     protected function catatanPage($uuid)
     {
+        $title = "catatan";
         $tim = Tim::where('code', $uuid)->firstOrFail();
         $anggota = $tim->user()->get();
 
-        $title = "catatan";
         return view('siswa.tim.catatan', compact('title', 'anggota', 'tim'));
     }
 
     protected function historyCatatanPage($uuid)
     {
+        $title = "catatan history";
         $tim = Tim::where('code', $uuid)->firstOrFail();
         $anggota = $tim->user()->get();
 
-        $title = "catatan history";
         return view('siswa.tim.history-catatan', compact('title', 'anggota', 'tim'));
     }
 }

@@ -86,7 +86,6 @@ class PengajuanProjekController extends Controller
         try {
             $tim = Tim::where('code', $code)->firstOrFail();
             $validated = $request->validated();
-            // dd($validated['deskripsiInput']);
 
             if ($request->hasFile('logo')) {
                 Storage::disk('public')->delete($tim->logo);

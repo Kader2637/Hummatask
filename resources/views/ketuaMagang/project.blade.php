@@ -25,10 +25,10 @@
                 <label for="select2Basic" class="form-label">Filter</label>
                 <select id="select2Basic" name="temaProjek" class="select2 form-select form-select-lg"
                     data-allow-clear="true">
-                    <option value="a">Solo Project</option>
-                    <option value="b">Pre-mini Project</option>
-                    <option value="b">Mini Project</option>
-                    <option value="b">Big Project</option>
+                    <option disabled selected>Filter type project</option>
+                    @foreach ($project as $item)
+                        <option value="{{ $item->code }}">{{ $item->type_project }}</option>
+                    @endforeach
                 </select>
             </div>
             <div id="buatTim" class="d-flex align-items-end">
@@ -85,7 +85,8 @@
                                     <div>{{ $item->tema->nama_tema }}</div>
                                 </div>
                             </div>
-                            <a href="{{ route('ketua.detail_project', $item->code) }}" class="w-100 btn btn-primary">Detail</a>
+                            <a href="{{ route('ketua.detail_project', $item->code) }}"
+                                class="w-100 btn btn-primary">Detail</a>
                         </div>
                     </div>
                 </div>

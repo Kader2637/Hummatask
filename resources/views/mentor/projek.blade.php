@@ -45,7 +45,7 @@
                                         <div class="d-flex align-items-center pt-1 mb-3 justify-content-center">
                                             <div class="d-flex align-items-center">
                                                 <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
-                                                    @foreach ($anggota as $anggota)
+                                                    @foreach ($item->tim->anggota as $anggota)
                                                         <li data-bs-toggle="tooltip" data-popup="tooltip-custom"
                                                             data-bs-placement="top" title="{{ $anggota->user->username }}"
                                                             class="avatar avatar-sm pull-up">

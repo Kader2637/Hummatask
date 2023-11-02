@@ -34,16 +34,15 @@ class mentorController extends Controller
     protected function pengajuanProjekPage()
     {
         $projects = Project::with('tim.anggota.user')->where('status_project', 'notapproved')->get();
+
         return response()->view('mentor.pengajuan-projek', compact('projects'));
     }
 
     // Return view detail pengajuan projek mentor
     protected function detailPengajuanPage($code)
     {
-        $projects = Project::where('code', $code)
-            ->firstOrFail();
-        $tema = Tema::where('code', $code)
-            ->get();
+        $projects = Project::where('code', $code)->firstOrFail();
+        $tema = Tema::where('code', $code)->get();
 
         return response()->view('mentor.detail-pengajuan', compact('projects', 'tema'));
     }
@@ -51,15 +50,8 @@ class mentorController extends Controller
     // Return view projek mentor
     protected function projekPage()
     {
-        $projects = Project::with('tim', 'tema')
-            ->where('status_project', 'approved')
-            ->get();
-
-        $anggota = $projects->flatMap(function ($project) {
-            return $project->tim->anggota;
-        });
-
-        return response()->view('mentor.projek', compact('projects', 'anggota'));
+        $projects = Project::with('tim', 'tema')->where('status_project', 'approved')->get();
+        return response()->view('mentor.projek', compact('projects'));
     }
 
     // Return view detail projek mentor
@@ -81,12 +73,12 @@ class mentorController extends Controller
     // return view presentasi mentor
     protected function presentasi()
     {
-    $presentasi = Presentasi::all();
-    $persetujuan_presentasi = $presentasi->where('status_pengajuan','menunggu');
-    $konfirmasi_presentasi = $presentasi->where('status_pengajuan','disetujui')->where('status_presentasi','menunggu');
-    // dd($konfirmasi_presentasi);
-    $jadwal =[];
-    $hari=[];
+        $presentasi = Presentasi::all();
+        $persetujuan_presentasi = $presentasi->where('status_pengajuan', 'menunggu');
+        $konfirmasi_presentasi = $presentasi->where('status_pengajuan', 'disetujui')->where('status_presentasi', 'menunggu');
+        // dd($konfirmasi_presentasi);
+        $jadwal = [];
+        $hari = [];
 
 
         foreach ($presentasi as $i => $data) {
