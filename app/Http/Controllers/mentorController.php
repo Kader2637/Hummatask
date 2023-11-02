@@ -6,9 +6,14 @@ use App\Models\Anggota;
 use App\Models\Presentasi;
 use App\Models\Project;
 use App\Models\Tema;
+use App\Models\StatusTim;
 use App\Models\Tim;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Symfony\Polyfill\Intl\Idn\Idn;
 
 class mentorController extends Controller
 {
@@ -50,11 +55,27 @@ class mentorController extends Controller
     // Return view projek mentor
     protected function projekPage()
     {
-        $projects = Project::with('tim', 'tema')->where('status_project', 'approved')->get();
-        return response()->view('mentor.projek', compact('projects'));
+        $projects = Project::with('tim', 'tema')
+            ->where('status_project', 'approved')
+            ->get();
+
+        $anggota = $projects->flatMap(function ($project) {
+            return $project->tim->anggota;
+        });
+
+        $users = User::where('peran_id', 1)
+            ->whereDoesntHave('tim', function ($query) {
+                $query->where('kadaluwarsa', true);
+            })
+            ->get();
+
+
+        $status_tim = StatusTim::whereNot('status', 'solo')->get();
+        return response()->view('mentor.projek', compact('users', 'status_tim','projects' ,'anggota'));
     }
 
-    // Return view detail projek mentor
+
+
     protected function detailProjekPage($code)
     {
         $tim = Tim::where('code', $code)->firstOrFail();
@@ -86,5 +107,5 @@ class mentorController extends Controller
             $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd');
         }
         return response()->view('mentor.presentasi', compact('persetujuan_presentasi', 'konfirmasi_presentasi', 'jadwal', 'hari'));
-    }
+   }
 }

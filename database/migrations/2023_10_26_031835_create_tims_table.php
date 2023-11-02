@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('tims', function (Blueprint $table) {
             $table->id();
             $table->string('code');
-            $table->text('logo')->nullable();
+            $table->text('logo')->default('avatar');
             $table->string('nama')->nullable();
-            $table->string('repository');
+            $table->string('repository')->nullable();
             $table->enum('status_tim',['solo','pre_mini','mini','pre_big','big']);
             $table->boolean('kadaluwarsa')->default(false);
             $table->timestamps();

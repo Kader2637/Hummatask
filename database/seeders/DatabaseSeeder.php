@@ -25,6 +25,23 @@ class DatabaseSeeder extends Seeder
             ],
         ]);
 
+        DB::table('status_tims')->insert([
+            [
+                'status' => 'solo'
+            ],
+            [
+                'status' => 'pre_mini'
+            ],
+            [
+                'status' => 'mini'
+            ],
+            [
+                'status' => 'pre_big'
+            ],
+            [
+                'status' => 'big'
+            ]
+        ]);
 
         DB::table('users')->insert([
             [

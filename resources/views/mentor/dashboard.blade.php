@@ -138,7 +138,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body pt-2">
+                    <div class="card-body d-flex pt-2">
                         <canvas id="barChart" class="chartjs" data-height="480" style="height: 365px;"></canvas>
                     </div>
                 </div>

@@ -83,10 +83,129 @@
 
 @yield('style')
 
-<body>
+<!-- jQuery Plugin -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<style>
+    body,
+    {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    z-index: 2;
+    /* Tambahkan z-index di sini */
+    }
 
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .hidden {
+        opacity: 0;
+    }
+
+    #loader {
+        z-index: 100;
+        /* Tambahkan z-index di sini */
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #ffffff;
+    }
+
+    .preloader {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        left: calc(50% - 20px);
+        top: calc(50% - 20px);
+        animation: preloader 2s linear infinite;
+    }
+
+    .loadBar {
+        position: absolute;
+        width: 200px;
+        height: 2px;
+        left: calc(50% - 100px);
+        top: calc(50% + 60px);
+        background: #7a14c3;
+    }
+
+    .progress {
+        position: relative;
+        width: 0%;
+        height: inherit;
+        background: #e74c3c;
+    }
+
+    .custom-margin {
+        margin-top: -65px;
+     }
+
+    @keyframes loading {
+
+        0% {
+            width: 0%;
+        }
+
+        100% {
+            width: 100%;
+        }
+
+    }
+    @keyframes preloader {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    25% {
+        transform: translateY(-15px);
+    }
+
+    50% {
+        transform: translateY(0);
+    }
+
+    75% {
+        transform: translateY(15px);
+    }
+}
+
+
+
+</style>
+
+<body>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+    <div id="loader">
+        <div class="preloader">
+            <div class="d-flex justify-content-center custom-margin">
+                <img src="{{ asset('assets/img/icons/icon.svg') }}"  width="180" height="160" alt="Loader Image">
+            </div>
+        </div>
+    </div>
+    <script>
+        $(window).load(function() {
+
+            var rnd = Math.random() * ( 3000 - 2000) + 3000;
+
+            $('.progress').css("animation", "loading " + rnd + "ms linear");
+
+            console.log(rnd);
+
+            setTimeout(function() {
+
+                $('#loader').fadeOut();
+                $('#page').removeClass('hidden');
+
+            }, rnd);
+
+        });
+    </script>
     <!-- Layout Content -->
-    <div class="layout-wrapper layout-content-navbar ">
+    <div class=" layout-content-navbar ">
         <div class="layout-container">
 
             <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
@@ -195,8 +314,8 @@
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            <img src="assets/img/avatars/1.png" alt
-                                                                class="h-auto rounded-circle">
+                                                            {{-- <img src="assets/img/avatars/1.png" alt
+                                                                class="h-auto rounded-circle"> --}}
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -243,8 +362,8 @@
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            <img src="assets/img/avatars/2.png" alt
-                                                                class="h-auto rounded-circle">
+                                                            {{-- <img src="assets/img/avatars/2.png" alt
+                                                                class="h-auto rounded-circle"> --}}
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -292,8 +411,8 @@
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            <img src="assets/img/avatars/9.png" alt
-                                                                class="h-auto rounded-circle">
+                                                            {{-- <img src="assets/img/avatars/9.png" alt
+                                                                class="h-auto rounded-circle"> --}}
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -343,8 +462,8 @@
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            <img src="assets/img/avatars/5.png" alt
-                                                                class="h-auto rounded-circle">
+                                                            {{-- <img src="assets/img/avatars/5.png" alt
+                                                                class="h-auto rounded-circle"> --}}
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -367,8 +486,8 @@
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            <img src="assets/img/avatars/6.png" alt
-                                                                class="h-auto rounded-circle">
+                                                            {{-- <img src="assets/img/avatars/6.png" alt
+                                                                class="h-auto rounded-circle"> --}}
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -427,8 +546,8 @@
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
                                     data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="{{ asset('assets/img/avatars/1.png') }}" alt
-                                            class="h-auto rounded-circle">
+                                        {{-- <img src="{{ asset('assets/img/avatars/1.png') }}" alt
+                                            class="h-auto rounded-circle"> --}}
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -437,8 +556,8 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
-                                                        <img src="{{ asset('assets/img/avatars/1.png') }}"
-                                                            class="h-auto rounded-circle">
+                                                        {{-- <img src="{{ asset('assets/img/avatars/1.png') }}"
+                                                            class="h-auto rounded-circle"> --}}
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">

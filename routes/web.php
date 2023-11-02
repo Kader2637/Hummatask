@@ -13,6 +13,7 @@ use App\Http\Controllers\siswaController;
 use App\Http\Controllers\timController;
 use App\Http\Controllers\TugasController;
 use App\Models\Presentasi;
+use App\Models\StatusTim;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->controller(authController::class)->group(function () {
@@ -66,6 +67,7 @@ Route::prefix('ketuaMagang')->middleware(['auth', 'siswa', 'can:kelola siswa'])-
     Route::get('project', 'projectPage')->name('ketua.project');
     Route::get('detail_project/{code}', 'detailProject')->name('ketua.detail_project');
     Route::get('history', 'historyPage')->name('ketua.history');
+    Route::post('pembuatantim',[PengajuanTimController::class,'pembuatanTimProjectKetua'])->name('pembuatantim.ketua');
 });
 
 // Halaman Mentor
@@ -86,5 +88,6 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::put('atur-jadwal-presentasi/{code}',[PresentasiController::class,'aturJadwal']);
     Route::patch('persetujuan-project/{code}', [PengajuanProjekController::class, 'persetujuanProject'])->name('persetujuan-project');
     Route::put('konfirmasi-presentasi/{code}',[PresentasiController::class,'konfirmasiPresentasi']);
+    Route::post('pembuatantim', [PengajuanTimController::class, 'pembuatanTimProject'])->name('pembuatan.tim');
 
 });

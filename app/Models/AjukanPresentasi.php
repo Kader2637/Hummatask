@@ -5,15 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
-
-class peran extends Model
+class AjukanPresentasi extends Model
 {
     use HasFactory;
+    protected $table = 'ajukanpresentasis';
+    protected $guarded = [];
 
-
-    protected $fillable = [
-        'uuid',
-        'peran',
-    ];
 }

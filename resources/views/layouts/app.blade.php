@@ -53,7 +53,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
-
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/apex-charts/apex-charts.css') }}" />
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('assets/js/config.js') }}"></script>
@@ -61,8 +61,126 @@
 </head>
 
 @yield('style')
+<style>
+    body,
+    {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    z-index: 2;
+    /* Tambahkan z-index di sini */
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .hidden {
+        opacity: 0;
+    }
+
+    #loader {
+        z-index: 100;
+        /* Tambahkan z-index di sini */
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #ffffff;
+    }
+
+    .preloader {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        left: calc(50% - 20px);
+        top: calc(50% - 20px);
+        animation: preloader 2s linear infinite;
+    }
+
+    .loadBar {
+        position: absolute;
+        width: 200px;
+        height: 2px;
+        left: calc(50% - 100px);
+        top: calc(50% + 60px);
+        background: #7a14c3;
+    }
+
+    .progress {
+        position: relative;
+        width: 0%;
+        height: inherit;
+        background: #e74c3c;
+    }
+
+    .custom-margin {
+        margin-top: -65px;
+     }
+
+    @keyframes loading {
+
+        0% {
+            width: 0%;
+        }
+
+        100% {
+            width: 100%;
+        }
+
+    }
+    @keyframes preloader {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    25% {
+        transform: translateY(-15px);
+    }
+
+    50% {
+        transform: translateY(0);
+    }
+
+    75% {
+        transform: translateY(15px);
+    }
+}
+
+
+
+</style>
 
 <body>
+
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+    <div id="loader">
+        <div class="preloader">
+            <div class="d-flex justify-content-center custom-margin">
+                <img src="{{ asset('assets/img/icons/icon.svg') }}"  width="180" height="160" alt="Loader Image">
+            </div>
+        </div>
+    </div>
+    <script>
+        $(window).load(function() {
+
+            var rnd = Math.random() * ( 3000 - 2000) + 3000;
+
+            $('.progress').css("animation", "loading " + rnd + "ms linear");
+
+            console.log(rnd);
+
+            setTimeout(function() {
+
+                $('#loader').fadeOut();
+                $('#page').removeClass('hidden');
+
+            }, rnd);
+
+        });
+    </script>
     <div class="layout-wrapper layout-content-navbar ">
         <div class="layout-container">
 
@@ -149,18 +267,20 @@
                     </li>
                     <li class="menu-item">
                         <ul class="">
-                            @forelse ($tims as $tim)
-                                <li class="menu-item ">
-                                    <a href="{{ route('tim.board', $tim->code) }}"
-                                        class="menu-link d-flex align-items-center gap-2">
-                                        <img style="width: 30px;height:30px;object-fit: cover"
-                                            class="rounded-circle border border-primary"
-                                            src="{{ asset('storage/' . $tim->logo) }}" alt="">
-                                        <div class="">{{ $tim->nama }}</div>
-                                    </a>
-                                </li>
+                            @forelse ($tims as $item)
+                                @if ($item->jabatan_id == '1')
+                                    <li class="menu-item ">
+                                        <a href="{{ route('tim.board', $item->tim->code) }}"
+                                            class="menu-link d-flex align-items-center gap-2">
+                                            <img style="width: 30px;height:30px;object-fit: cover"
+                                                class="rounded-circle border border-primary"
+                                                src="{{ asset('storage/avatar/14.png' . $item->logo) }}"
+                                                alt="">
+                                            <div class="">{{ $item->name }}</div>
+                                        </a>
+                                    </li>
+                                @endif
                             @empty
-
                                 <li class="menu-item bg-info bg-light ">
                                     <a class="menu-link d-flex align-items-center gap-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"

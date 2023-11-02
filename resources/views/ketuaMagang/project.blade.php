@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
 @section('link')
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />
-
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"> --}}
     <style>
         .tim-detail {
             flex-direction: row;
@@ -97,6 +98,8 @@
         {{-- Card --}}
 
         {{-- Modal Buat Tim --}}
+        <form action="" id="createForm" method="post">
+        @csrf
         <div class="modal fade" id="modalBuatTim" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -107,50 +110,208 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col mb-3">
+                            <label for="" class="form-label">Tim</label>
+                            <select name="status_tim" id="status_tim" onchange="run()"  class="select2 form-select form-select-lg"
+                            data-allow-clear="true">
+                               <option value="" disabled selected>Pilih Tim</option>
+                               @foreach ($status_tim as $status )
+                               <option class="text-capitalize" value="{{ $status->id }}">{{ $status->status }}</option>
+                               @endforeach
+                            </select>
+                            @error('status_tim')
+                               <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+                        <div class="row" id="kelompok_ketua" style="display: block">
+                            <div class="col mb-3">
                                 <label for="ketuaKelompok" class="form-label">Ketua Kelompok</label>
                                 <select id="ketuaKelompok" name="ketuaKelompok" class="select2 form-select form-select-lg"
                                     data-allow-clear="true">
-                                    <option value="a">Rafliansyah</option>
-                                    <option value="b">Jual beli Hewan</option>
-                                    <option value="c">Jual beli Minuman</option>
-                                    <option value="d">Jual beli Senjata</option>
-                                    <option value="e">Jual beli Buku</option>
+                                    <option value="" disabled selected>Pilih Data</option>
+                                    @foreach ($users as $data )
+                                    <option value="{{ $data->id }}">{{ $data->username }}</option>
+                                    @endforeach
                                 </select>
+                                @error('ketuaKelompok')
+                                    <p class="text-danger">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" id="project_ketua" style="display: block">
                             <div class="col mb-3">
-                                <label for="KetuaProject" class="form-label">Ketua Projek</label>
-                                <select id="KetuaProject" name="ketuaProjek" class="select2 form-select form-select-lg"
+                                <label for="KetuaProjek" class="form-label">Ketua Projek</label>
+                                <select id="KetuaProjek" name="ketuaProjek" class="select2 form-select form-select-lg"
                                     data-allow-clear="true">
-                                    <option value="a">Rafliansyah</option>
-                                    <option value="b">Jual beli Hewan</option>
-                                    <option value="c">Jual beli Minuman</option>
-                                    <option value="d">Jual beli Senjata</option>
-                                    <option value="e">Jual beli Buku</option>
+                                    <option value="" disabled selected>Pilih Data</option>
+                                    @foreach ($users as $data )
+                                    <option value="{{ $data->id }}">{{ $data->username }}</option>
+                                    @endforeach
                                 </select>
+                                @error('ketuaProjek')
+                                 <p class="text-danger">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                         <div class="row">
                             <div class="col mb-3">
                                 <label for="anggota" class="form-label">Anggota</label>
-                                <select id="anggota" class="select2 form-select" multiple>
-                                    <option value="AK">Alaska</option>
-                                    <option value="AK">Alaska</option>
-                                    <option value="AK">Alaska</option>
-                                    <option value="HI">Hawaii</option>
+                                <select id="anggota" name="anggota[]" class="select2 form-select" multiple>
+                                    @foreach ($users as $data )
+                                   <option value="{{ $data->id }}">{{ $data->username }}</option>
+                                   @endforeach
                                 </select>
+                                @error('anggota')
+                                  <p class="text-danger">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
-                        <button type="button" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </div>
             </div>
         </div>
+    </form>
         {{-- Modal Buat Tim --}}
+
+        <script>
+            $(document).ready(function() {
+                // Fungsi untuk menangani pembuatan tim menggunakan AJAX
+                function createTim() {
+                    // Mendapatkan data formulir
+                    $('#loader').show();
+                    var formData = new FormData($('#createForm')[0]);
+                    // Menggunakan AJAX untuk mengirim data ke server
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ route('pembuatantim.ketua') }}',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
+                            // Tanggapan dari server, bisa ditangani sesuai kebutuhan
+                            console.log(response);
+                            // Tutup modal
+                            $('#status_tim').val('');
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Sukses',
+                                text: 'Data Berhasil Ditambahkan',
+                            });
+                            $('#ketuaKelompok, #status_tim, #anggota').val(null).trigger('change');
+                            $('#modalBuatTim').modal('hide');
+                            $('#loader').fadeOut();
+                            $('.preloader').fadeIn(500).delay(500).fadeOut(500, function() {
+                                location.reload(true);
+                            });
+                        },
+                        error: function(error) {
+                            $('#modalBuatTim').modal('hide');
+                            // Tanggapan error dari server
+                            console.log(error);
+                            var errorMessage = 'Pastikan data terisi semua.';
+                            if (error.response && error.response.data && error.response.data.message) {
+                                errorMessage = error.response.data.message;
+                            }
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Peringatan',
+                                text: errorMessage,
+                            });
+                            $('#loader').fadeOut();
+                        }
+                    });
+                }
+
+                // Menangani submit formulir menggunakan AJAX
+                $('#createForm').submit(function(e) {
+                    e.preventDefault(); // Mencegah formulir melakukan submit bawaan
+                    createTim(); // Panggil fungsi untuk membuat tim menggunakan AJAX
+                });
+            });
+        </script>
+
+
+
+        <script>
+            function run() {
+                const status = document.getElementById('status_tim').value;
+                let project_ketua = document.getElementById('project_ketua');
+
+                if(status == 2) {
+                    project_ketua.style = 'display: none';
+                } else {
+                    project_ketua.style = 'display: block';
+                }
+            }
+        </script>
+
+        <script>
+            $(document).ready(function() {
+              let selectedOptions = {};
+
+              function disableSelectedOptions(select) {
+                let selectedValues = $(select).val();
+
+                // Menyimpan nilai opsi yang dipilih
+                selectedOptions[$(select).attr('id')] = selectedValues;
+
+                $("select").not(select).each(function() {
+                  let currentSelect = this;
+                  $(this).find('option').each(function() {
+                    let optionValue = $(this).val();
+
+                    // Mengatur opsi yang dipilih di dropdown lainnya menjadi nonaktif
+                    if (selectedValues && selectedValues.includes(optionValue)) {
+                      $(this).prop('disabled', true);
+                    } else {
+                      $(this).prop('disabled', false);
+                    }
+                  });
+                });
+              }
+
+              // Event handler saat memilih opsi di ketuaKelompok, KetuaProject, atau anggota
+              $("#ketuaKelompok, #KetuaProject, #anggota").change(function() {
+                disableSelectedOptions(this);
+              });
+
+              // Event handler saat memfokuskan pada ketuaKelompok, KetuaProject, atau anggota
+              $("#ketuaKelompok, #KetuaProject, #anggota").focus(function() {
+                disableSelectedOptions(this);
+              });
+
+              // Event handler saat kehilangan fokus pada ketuaKelompok, KetuaProject, atau anggota
+              $("#ketuaKelompok, #KetuaProject, #anggota").blur(function() {
+                // Mengembalikan opsi yang telah dinonaktifkan
+                $("select").each(function() {
+                  let selectId = $(this).attr('id');
+                  let originalOptions = selectedOptions[selectId];
+                  if (originalOptions) {
+                    $(this).html(originalOptions);
+                  }
+                });
+
+                // Menonaktifkan opsi yang telah dipilih di dropdown lainnya
+                for (let selectId in selectedOptions) {
+                  if (selectedOptions.hasOwnProperty(selectId)) {
+                    let selectedValues = selectedOptions[selectId];
+                    $("select#" + selectId + " option").each(function() {
+                      let optionValue = $(this).val();
+                      if (selectedValues && selectedValues.includes(optionValue)) {
+                        $(this).prop('disabled', true);
+                      }
+                    });
+                  }
+                }
+              });
+            });
+          </script>
+
+
 
         {{-- pagination --}}
         <nav aria-label="Page navigation">

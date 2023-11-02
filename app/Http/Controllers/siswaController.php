@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Anggota;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +13,8 @@ class siswaController extends Controller
     protected function dashboard()
     {
         $title = "Dashboard";
-        $tims = User::find(Auth::user()->id)->tim()->get();
+        $tims = Anggota::with('tim')->where('user_id', Auth::user()->id)->get();
+        // dd($tims);
         return response()->view('siswa.dashboard', compact('title','tims'));
     }
 
