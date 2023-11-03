@@ -73,14 +73,11 @@ class PresentasiController extends Controller
 
         $dataPresentasi = Presentasi::where('jadwal',Carbon::now()->isoFormat('Y-M-DD'))->where('status_pengajuan','disetujui')->get();
         $urutan = count($dataPresentasi);
-
-        $presentasi = Presentasi::where('code', $code)->first();
+        $presentasi = Presentasi::with('tim.project.tema')->where('code', $code)->first();
         $presentasi->urutan = $urutan + 1;
         $presentasi->status_pengajuan = 'disetujui';
         $presentasi->save();
-        $tim = $presentasi->tim;
-
-        return response()->json([$presentasi,$tim]);
+        return response()->json($presentasi);
     }
 
     protected function penolakanPresentasi(RequestPenolakanPresentasi $request, $code)
@@ -96,7 +93,7 @@ class PresentasiController extends Controller
     protected function konfirmasiPresentasi(RequestKonfirmasiPresentasi $request, $code)
     {
         $presentasi = Presentasi::where('code',$code)->first();
-        $presentasi->status_presentasi = 'selesai';
+        $presentasi->status_presentasi = $request->persetujuan;
         $presentasi->status_revisi = $request->status_revisi;
         $presentasi->feedback = $request->feedback;
         $presentasi->save();
@@ -116,13 +113,19 @@ class PresentasiController extends Controller
 
     protected function tampilkanDetailPresentasi(Request $request,$code)
     {
-        $history = HistoryPresentasi::with('presentasi.tim')->where('code',$code)->first();
+        $history = HistoryPresentasi::with('presentasi.tim.user','presentasi.tim.project.tema')->where('code',$code)->first();
         $presentasi = $history->presentasi->where('status_pengajuan','menunggu');
         $konfirmasi_presentasi = $history->presentasi->where('status_pengajuan','disetujui')->where('status_presentasi','menunggu');
+        $tim_belum_presentasi = Tim::with('user','project.tema')->doesntHave('presentasi')->get();
+        $telat_presentasi = $history->presentasi->where('status_presentasi','telat');
+
         $data = [
             'presentasi' => $presentasi,
-            'konfirmasi' => $konfirmasi_presentasi
+            'konfirmasi' => $konfirmasi_presentasi,
+            'belum_presentasi' => $tim_belum_presentasi,
+            'telat_presentasi' => $telat_presentasi,
         ];
+
         return response()->json($data);
     }
 

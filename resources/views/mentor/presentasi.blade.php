@@ -217,15 +217,8 @@
                                             @php
                                                 $no = 1;
                                             @endphp
-                                            <tbody>
-                                                <tr>
-                                                    <td>{{ $no++ }}</td>
-                                                    <td><img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                                            style="border-radius: 50%; width:40px;"> Hidan</td>
-                                                    <td>Solo Project</td>
-                                                    <td>Sekolah</td>
-                                                    <td><span class="badge bg-label-warning">Belum Presentasi</span></td>
-                                                </tr>
+                                            <tbody id="tr-belum-presentasi">
+
                                             </tbody>
                                         </div>
                                     </table>
@@ -252,16 +245,8 @@
                                             @php
                                                 $no = 1;
                                             @endphp
-                                            <tbody>
-                                                <tr>
-                                                    <td>{{ $no++ }}</td>
-                                                    <td><img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                                            style="border-radius: 50%; width:40px;"> Hidan</td>
-                                                    <td>21-03-2023</td>
-                                                    <td>Senin</td>
-                                                    <td>Solo Project</td>
-                                                    <td>Sekolah</td>
-                                                </tr>
+                                            <tbody id="row-telat">
+
                                             </tbody>
                                         </div>
                                     </table>
@@ -334,9 +319,13 @@
             .then((res) => {
                 let data1 = res.data.presentasi;
                 let data2 = res.data.konfirmasi;
+                let data3 = res.data.belum_presentasi;
+                let data4 = res.data.telat_presentasi;
+                console.log(res.data);
 
-                console.log(Object.keys(data2));
+                // console.log(Object.keys(data2));
 
+                document.getElementById('row-persetujuan').innerHTML = ''
                 Object.keys(data1).forEach( (key) => {
                     let presentasi = data1[key]
                     // console.log(presentasi);
@@ -366,6 +355,7 @@
                    document.getElementById('row-persetujuan').appendChild(div);
                 });
 
+                document.getElementById('row-konfirmasi').innerHTML = "";
                 Object.keys(data2).forEach(( key ) => {
                     let presentasi = data2[key]
                     let div = document.createElement('div')
@@ -397,12 +387,109 @@
                 })
 
 
+                document.getElementById('tr-belum-presentasi').innerHTML = ""
+                Object.keys(data3).forEach((keys, i) => {
+                    let presentasi = data3[keys];
+                    let tr = document.createElement('tr');
+                    let child;
+                    let cell1 = document.createElement('td');
+                    cell1.textContent = i + 1;
+
+                    let cell3 = document.createElement('td');
+                    cell3.textContent = presentasi.status_tim;
+
+                    let cell4 = document.createElement('td');
+                    cell4.textContent = presentasi.project[0].tema.nama_tema;
+
+                    let cell5 = document.createElement('td');
+                    cell5.innerHTML = `<span class="badge bg-label-warning">Belum Presentasi</span>`;
+
+                    if (presentasi.status_tim === "solo") {
+                      let cell2 = document.createElement('td');
+                      cell2.innerHTML = `<img src="{{ asset('assets/${presentasi.user[0].avatar}') }}" alt=""
+                          style="border-radius: 50%; width:40px;"> ${presentasi.user[0].username}`;
+                      tr.appendChild(cell1);
+                      tr.appendChild(cell2);
+                      tr.appendChild(cell3);
+                      tr.appendChild(cell4);
+                      tr.appendChild(cell5);
+                    } else {
+                      let cell2 = document.createElement('td');
+                      cell2.innerHTML = `<img src="{{ asset('assets/${presentasi.logo}') }}" alt=""
+                          style="border-radius: 50%; width:40px;"> ${presentasi.user[0].username}`;
+                      tr.appendChild(cell1);
+                      tr.appendChild(cell2);
+                      tr.appendChild(cell3);
+                      tr.appendChild(cell4);
+                      tr.appendChild(cell5);
+                    }
+
+                    document.getElementById('tr-belum-presentasi').appendChild(tr);
+                  });
+
+
+                  document.getElementById('row-telat').innerHTML = "";
+
+                  Object.keys(data4).forEach((keys,i)=>{
+
+                    let presentasi = data4[keys]
+                    let tr = document.createElement('tr')
+                    let cell1 = document.createElement('td')
+                    cell1.textContent = i + 1;
+
+                    const date = new Date(presentasi.jadwal)
+                    const day = date.toLocaleString('id-ID',{weekday: 'long',timeZone:'UTC'});
+
+
+                    let cell6 = document.createElement('td')
+                    cell6.textContent = presentasi.jadwal;
+
+                    let cell3 = document.createElement('td')
+                    cell3.textContent = day;
+
+                    let cell4 = document.createElement('td')
+                    cell4.textContent = presentasi.tim.status_tim;
+
+                    let cell5 = document.createElement('td')
+                    cell5.textContent = presentasi.tim.project[0].tema.nama_tema;
+
+
+                    if(presentasi.tim.status_tim === "solo"){
+                        let cell2 = document.createElement('td')
+                        cell2.innerHTML = `<img src="{{ asset('assets/${presentasi.tim.logo}') }}" alt="" style="border-radius: 50%; width:40px;"> ${presentasi.tim.user[0].username}</td>`
+                        tr.appendChild(cell1)
+                        tr.appendChild(cell2)
+                        tr.appendChild(cell6)
+                        tr.appendChild(cell3)
+                        tr.appendChild(cell4)
+                        tr.appendChild(cell5)
+                    }else{
+
+                        let cell2 = document.createElement('td')
+                        cell2.innerHTML = `<img src="{{ asset('assets/${presentasi.tim.logo}') }}" alt="" style="border-radius: 50%; width:40px;"> ${presentasi.tim.nama}</td>`
+
+                        tr.appendChild(cell1)
+                        tr.appendChild(cell2)
+                        tr.appendChild(cell6)
+                        tr.appendChild(cell3)
+                        tr.appendChild(cell4)
+                        tr.appendChild(cell5)
+
+                    }
+
+                    document.getElementById('row-telat').appendChild(tr)
+
+
+                  })
+
+
 
             })
             .catch((err) => {
                 console.log(err);
             })
         }
+
 
 
         const tolakPresentasi =(code)=>{
@@ -428,12 +515,13 @@
 
 
         const setujuiPresentasi = (code) => {
+
     axios.put('persetujuan-presentasi/' + code)
         .then((res) => {
             document.getElementById('card-persetujuan-'+code).classList.add('d-none');
 
             const newData = res.data;
-            console.log(newData);
+            console.log({newData});
 
             const div = document.createElement('div');
             div.className = 'col-md-6 col-lg-4';
@@ -443,24 +531,24 @@
                 <div class="card text-center mb-3">
                     <div class="card-body">
                         <div style="width: 30px; height: 30px; top: -10px; right: -10px;" class="rounded bg-primary d-flex justify-content-center align-items-center text-white position-absolute">
-                            ${newData[0].urutan}
+                            ${newData.urutan}
                         </div>
-                        <img src="{{ asset('storage/${newData[0].tim.logo}' ) }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 150px; height: 150px; object-fit: cover;">
+                        <img src="{{ asset('storage/${newData.tim.logo}' ) }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 150px; height: 150px; object-fit: cover;">
                         <div class="d-flex justify-content-center align-items-center gap-2">
-                            <h4 class="card-title text-capitalize">${newData[0].tim.nama}</h4>
-                            <a href="#"><span class="badge bg-label-warning mb-3">${newData[0].tim.status_tim}</span></a>
+                            <h4 class="card-title text-capitalize">${newData.tim.nama}</h4>
+                            <a href="#"><span class="badge bg-label-warning mb-3">${newData.tim.status_tim}</span></a>
                         </div>
-                        <div class="card-text">${newData[0].jadwal}</div>
+                        <div class="card-text">${newData.jadwal}</div>
                         <div class="d-flex justify-content-center gap-2">
                             <button class="btn btn-primary">Urutan</button>
-                            <button class="btn btn-success" onclick="sudahPresentasi('${newData[0].tim.code}')" data-bs-toggle="modal" data-bs-target="#Finish">Konfirmasi</button>
-                        </div>
-                    </div>
+                            <button class="btn btn-success" onclick="sudahPresentasi('${newData.code}')" data-bs-toggle="modal" data-bs-target="#Finish">Konfirmasi</button>
+                        </div
+                    </div
                 </div>
             `;
 
             div.innerHTML = data;
-            console.log(data);
+
 
             document.getElementById('row-konfirmasi').appendChild(div);
 
@@ -483,22 +571,28 @@
 
 
         function sudahPresentasi(code){
+            const  persetujuan = "selesai"
             const form = document.getElementById('selesaiPresentasiForm')
             form.addEventListener("submit",( e )=>{
                 e.preventDefault();
                 const feedback = document.getElementById('feedback').value
                 const status_revisi = document.querySelector("[name='status_revisi']:checked").value
 
-                axios.put('konfirmasi-presentasi/'+code,{feedback,status_revisi})
+                axios.put('konfirmasi-presentasi/'+code,{feedback,status_revisi,persetujuan})
                 .then((res) => {
+                    console.log(res.data);
                     document.getElementById('card-konfirmasi-'+code).classList.add('d-none');
                 })
                 .catch((err) => {
                     console.log(err);
                 })
+                .finally(()=>{
+                    const form = document.getElementById('selesaiPresentasiForm').reset()
+                })
 
 
                 })
+
 
         }
 

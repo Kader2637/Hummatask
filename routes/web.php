@@ -82,7 +82,7 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::get('history', [mentorController::class, 'history'])->name('history.mentor');
     Route::get('presentasi', [mentorController::class, 'presentasi'])->name('presentasi.mentor');
 
-    // Process
+    // Process`
     Route::post('tampil-detail-presentasi/{code}',[PresentasiController::class,'tampilkanDetailPresentasi']);
     Route::put('persetujuan-presentasi/{code}',[PresentasiController::class,'persetujuanPresentasi']);
     Route::put('penolakan-presentasi/{code}',[PresentasiController::class,'penolakanPresentasi']);
