@@ -34,6 +34,11 @@ class Tim extends Model
         return $this->hasMany(Presentasi::class);
     }
 
+    public function tema(): HasMany
+    {
+        return $this->hasMany(Tema::class);
+    }
+
     public function anggota(): HasMany
     {
         return $this->hasMany(Anggota::class);

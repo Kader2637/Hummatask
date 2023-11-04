@@ -41,7 +41,7 @@ class PengajuanProjekController extends Controller
             'tema_id' => null,
             'status_project' => 'notapproved',
             'deadline' => null,
-            'type_project' => 'solo',
+            'type_project' => $tim->status_tim,
         ]);
 
         return back()->with('success', 'Berhasil mengajukan Project, mohon tunggu konfirmasi mentor');
@@ -60,11 +60,14 @@ class PengajuanProjekController extends Controller
             case 'solo':
                 $deadline->addWeek();
                 break;
-            case 'premini':
+            case 'pre_mini':
                 $deadline->addWeek(2);
                 break;
             case 'mini':
                 $deadline->addWeek(4);
+                break;
+            case 'pre_big':
+                $deadline->addWeek(8);
                 break;
             default:
                 $deadline->addWeek(8);
@@ -72,7 +75,11 @@ class PengajuanProjekController extends Controller
         }
 
         if ($request->deadlineInput) {
-            $deadline = $request->deadlineInput;
+            if ($request->deadlineInput < $deadline) {
+                return back()->with('warning', 'Deadline tidak valid');
+            } else {
+                $deadline = $request->deadlineInput;
+            }
         }
 
         $project->deadline = $deadline;

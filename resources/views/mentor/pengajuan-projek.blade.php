@@ -11,8 +11,9 @@
                 <div class="col-md-6 col-lg-3">
                     <div class="card text-center mb-3">
                         <div class="card-body">
-                            <img src="{{ asset($item->tim->logo) }}" alt="logo tim" class="h-auto rounded-circle mb-3">
-                            <h5 class="card-title">{{$item->tim->nama}}</h5>
+                            <img src="{{ asset('storage/' . $item->tim->logo) }}" alt="logo tim" class="rounded-circle mb-3"
+                                style="width: 100px; height: 100px">
+                            <h5 class="card-title">{{ $item->tim->nama }}</h5>
                             <div class="d-flex align-items-center pt-1 mb-3 justify-content-center">
                                 <div class="d-flex align-items-center">
                                     <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
@@ -29,7 +30,8 @@
                             <a href="#"><span
                                     class="badge bg-label-warning mb-3">{{ $item->tim->status_tim }}</span></a>
                             <p class="card-text">{{ $item->created_at->translatedFormat('l, j F Y') }}</p>
-                            <a href="{{ route('detail-pengajuan-projek', $item->code) }}" class="btn btn-primary">Detail</a>
+                            <a  data-bs-toggle="" data-bs-target="#Detail" class="btn btn-primary"><span
+                                    class="text-white">Detail</span></a>
                         </div>
                     </div>
                 </div>
@@ -71,6 +73,213 @@
             </ul>
         </nav>
         {{-- pagination --}}
+
+        {{-- Modal Detail --}}
+        <div class="modal fade" id="modalDetail" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalCenterTitle">Detail tim</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid mt-4">
+                            <h5 class="header">Detail Pengajuan Projek</h5>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="content-profile d-flex flex-wrap flex-row justify-content-between">
+                                        <div class="d-flex flex-row gap-3 justify-content-center">
+                                            <img src="" alt="logo tim" class="h-auto rounded-circle mb-3">
+                                            <div
+                                                style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+                                                <span class="d-block text-black fs-4 mb-2">NAMA TIM</span>
+                                                {{-- @if ($projects->tim->status_tim == 'solo') --}}
+                                                <span class="badge bg-label-warning">Solo Project</span>
+                                                {{-- @elseif ($projects->tim->status_tim == 'pre_mini')
+                                                    <span class="badge bg-label-warning">Pre Mini Project</span>
+                                                @elseif ($projects->tim->status_tim == 'mini')
+                                                    <span class="badge bg-label-warning">Mini Project</span>
+                                                @elseif ($projects->tim->status_tim == 'pre_big')
+                                                    <span class="badge bg-label-warning">Pre Big Project</span>
+                                                @elseif ($projects->tim->status_tim == 'big')
+                                                    <span class="badge bg-label-warning">Big Project</span>
+                                                @endif --}}
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-wrap"
+                                            style="display: flex; flex-direction: column; justify-items: center; align-items: center; padding: 30px 5px">
+                                            <span class="d-block text-black fs-5">Tanggal Pengajuan</span>
+                                            <span class="d-block" style="font-size: 13px">CREATED AT</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <div style="display: flex; align-content: center; align-items: center;">
+                                            <span class="text-black fs-5">Anggota Tim : </span>
+                                        </div>
+                                        <div>
+                                            {{-- @if ($projects->status_project == 'notapproved') --}}
+                                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                                data-bs-target="#modalTerima">Terima</button>
+                                            {{-- @endif --}}
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="d-flex flex-row flex-wrap mt-3 justify-content-center align-content-center gap-3">
+                                        <!-- Anggota Tim -->
+                                        <div class="content-1 col-md-3 col-xl-3 col-sm-12 mb-4">
+                                            <div class="card h-100">
+                                                <div class="table-responsive">
+                                                    <table class="table table-borderless">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>DAFTAR ANGGOTA</td>
+                                                            </tr>
+                                                            {{-- @forelse ($projects->tim->anggota as $item)
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="d-flex align-items-center mt-lg-3">
+                                                                            <div class="avatar me-3 avatar-sm">
+                                                                                <img src="{{ $item->user->avatar }}"
+                                                                                    alt="Avatar"
+                                                                                    class="rounded-circle" />
+                                                                            </div>
+                                                                            <div class="d-flex flex-column">
+                                                                                <h6 class="mb-0">
+                                                                                    {{ $item->user->username }}</h6>
+                                                                                <small
+                                                                                    class="text-truncate text-muted">{{ $item->jabatan->nama_jabatan }}</small>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            @empty
+                                                                <tr>
+                                                                    <td>
+                                                                        Data tidak ada.
+                                                                    </td>
+                                                                </tr>
+                                                            @endforelse --}}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--/ Anggota Tim -->
+
+                                        {{-- List Tema --}}
+                                        <div class="content-1 col-md-8 col-xl-8 col-sm-12 mb-4">
+                                            <div class="card h-100">
+                                                <h5 class="card-header">List Tema Projek</h5>
+                                                <div class="table-responsive">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>No.</th>
+                                                                <th>Tema</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>TEMA 1</td>
+                                                                <td>TEMA 1</td>
+                                                            </tr>
+                                                            {{-- @forelse ($projects->tim->tema as $item)
+                                                                <tr>
+                                                                    <td>{{ $loop->iteration }}.</td>
+                                                                    <td>{{ $item->nama_tema }}</td>
+                                                                @empty
+                                                            @endforelse --}}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- Modal Detail --}}
+
+        <!-- Modal Terima-->
+        <div class="modal fade" id="modalTerima" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalCenterTitle">Terima Pengajuan Projek</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="POST" id="terima-project">
+                            @csrf
+                            @method('PATCH')
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="select2Basic" class="form-label">Tema Projek</label>
+                                    <select id="select2Basic" name="temaInput" class="select2 form-select form-select-lg"
+                                        data-allow-clear="true">
+                                        <option value="" disabled selected>Pilih Data</option>
+                                        {{-- @foreach ($projects->tim->tema as $item)
+                                            <option value="{{ $item->id }}">{{ $item->nama_tema }}</option>
+                                        @endforeach --}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="flatpickr-date" class="form-label">Tentukan Deadline</label>
+                                    <div class="alert alert-warning d-flex align-items-center cursor-pointer"
+                                        role="alert">
+                                        <span class="alert-icon text-warning me-2">
+                                            <i class="ti ti-bell ti-xs"></i>
+                                        </span>
+                                        Jika tidak di isi maka deadline akan menyesuaikan status tim (Jika di isi eadline
+                                        harus
+                                        1 minggu dari sekarang)
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="YYYY-MM-DD"
+                                        name="deadlineInput" id="flatpickr-date" />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-label-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#modalDetail">Kembali</button>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Validasi --}}
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const ajukanModal = document.getElementById('terima-project');
+
+                ajukanModal.addEventListener('submit', function(event) {
+                    const temaInput = document.querySelector('select[name="temaInput"]');
+                    const deadlineInput = document.querySelector('input[name="deadlineInput"]');
+
+                    // Validasi input kosong
+                    if (temaInput.value.trim() === '') {
+                        event.preventDefault(); // Mencegah pengiriman formulir
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Peringatan',
+                            text: 'Inputkan Tema Project!',
+                        });
+                        return;
+                    }
+                });
+            });
+        </script>
+        {{-- Validasi --}}
+
+        <!-- Modal Terima-->
 
     </div>
 @endsection

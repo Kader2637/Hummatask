@@ -49,8 +49,18 @@
                     <div class="d-flex flex-row gap-3 justify-content-center">
                         <img src="{{ asset($projects->tim->logo) }}" alt class="h-auto rounded-circle mb-3">
                         <div style="display: flex; flex-direction: column; justify-content: center; align-items: center">
-                            <span class="d-block text-black fs-4">{{ $projects->tim->nama }}</span>
-                            <span class="d-block">{{ $projects->tim->status_tim }}</span>
+                            <span class="d-block text-black fs-4 mb-2">{{ $projects->tim->nama }}</span>
+                            @if ($projects->tim->status_tim == 'solo')
+                                <span class="badge bg-label-warning">Solo Project</span>
+                            @elseif ($projects->tim->status_tim == 'pre_mini')
+                                <span class="badge bg-label-warning">Pre Mini Project</span>
+                            @elseif ($projects->tim->status_tim == 'mini')
+                                <span class="badge bg-label-warning">Mini Project</span>
+                            @elseif ($projects->tim->status_tim == 'pre_big')
+                                <span class="badge bg-label-warning">Pre Big Project</span>
+                            @elseif ($projects->tim->status_tim == 'big')
+                                <span class="badge bg-label-warning">Big Project</span>
+                            @endif
                         </div>
                     </div>
                     <div class="d-flex flex-wrap"
@@ -62,7 +72,7 @@
                 </div>
                 <div class="d-flex justify-content-between">
                     <div style="display: flex; align-content: center; align-items: center;">
-                        <span class="text-black fs-5">Tim</span>
+                        <span class="text-black fs-5">Anggota Tim : </span>
                     </div>
                     <div>
                         @if ($projects->status_project == 'notapproved')
@@ -121,7 +131,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse ($tema as $item)
+                                        @forelse ($projects->tim->tema as $item)
                                             <tr>
                                                 <td>{{ $loop->iteration }}.</td>
                                                 <td>{{ $item->nama_tema }}</td>
@@ -155,7 +165,7 @@
                                 <select id="select2Basic" name="temaInput" class="select2 form-select form-select-lg"
                                     data-allow-clear="true">
                                     <option value="" disabled selected>Pilih Data</option>
-                                    @foreach ($tema as $item)
+                                    @foreach ($projects->tim->tema as $item)
                                         <option value="{{ $item->id }}">{{ $item->nama_tema }}</option>
                                     @endforeach
                                 </select>
@@ -163,9 +173,14 @@
                         </div>
                         <div class="row">
                             <div class="col mb-3">
-                                <label for="flatpickr-date" class="form-label">Tentukan Deadline <span
-                                        class="text-warning">(Deadline akan terisi otomatis jika anda tidak
-                                        mengisi)</span></label>
+                                <label for="flatpickr-date" class="form-label">Tentukan Deadline</label>
+                                <div class="alert alert-warning d-flex align-items-center cursor-pointer" role="alert">
+                                    <span class="alert-icon text-warning me-2">
+                                        <i class="ti ti-bell ti-xs"></i>
+                                    </span>
+                                    Jika tidak di isi maka deadline akan menyesuaikan status tim (Jika di isi eadline harus
+                                    1 minggu dari sekarang)
+                                </div>
                                 <input type="text" class="form-control" placeholder="YYYY-MM-DD" name="deadlineInput"
                                     id="flatpickr-date" />
                             </div>
@@ -187,12 +202,8 @@
             console.log(ajukanModal);
 
             ajukanModal.addEventListener('submit', function(event) {
-                console.log('kontol');
                 const temaInput = document.querySelector('select[name="temaInput"]');
                 const deadlineInput = document.querySelector('input[name="deadlineInput"]');
-                console.log(temaInput.value.trim);
-                console.log(deadlineInput.value.trim);
-
 
                 // Validasi input kosong
                 if (temaInput.value.trim() === '') {

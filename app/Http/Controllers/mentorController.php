@@ -48,21 +48,34 @@ class mentorController extends Controller
     protected function detailPengajuanPage($code)
     {
         $projects = Project::where('code', $code)->firstOrFail();
-        $tema = Tema::where('code', $code)->get();
+        $anggota = $projects->tim->user;
+        $tema = $projects->tim->tema;
 
-        return response()->view('mentor.detail-pengajuan', compact('projects', 'tema'));
+        $data = [
+            'anggota' => $anggota,
+            'tema' => $tema,
+        ];
+
+        return response()->view('mentor.detail-pengajuan', compact('projects'));
     }
 
     // Return view projek mentor
     protected function projekPage()
     {
-        $projects = Project::with('tim', 'tema')
+        $projects = Project::with('tim.anggota', 'tema')
             ->where('status_project', 'approved')
             ->get();
 
-        $anggota = $projects->flatMap(function ($project) {
-            return $project->tim->anggota;
+        $projects = $projects->map(function ($project) {
+            if ($project->type_project === 'solo') {
+                $project->type_project = 'Solo Project';
+            } elseif ($project->type_project === 'pre_mini') {
+                $project->type_project = 'Pre Mini Project';
+            }
+
+            return $project;
         });
+
 
         $users = User::where('peran_id', 1)
             ->whereDoesntHave('tim', function ($query) {
@@ -71,7 +84,7 @@ class mentorController extends Controller
             ->get();
 
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
-        return response()->view('mentor.projek', compact('users', 'status_tim', 'projects', 'anggota'));
+        return response()->view('mentor.projek', compact('users', 'status_tim', 'projects'));
     }
 
 
@@ -94,20 +107,20 @@ class mentorController extends Controller
     // return view presentasi mentor
     protected function presentasi()
     {
-    $presentasi = Presentasi::all();
-    $historyPresentasi = HistoryPresentasi::all();
-    $persetujuan_presentasi = $presentasi->where('status_pengajuan','menunggu');
-    $konfirmasi_presentasi = $presentasi->where('status_pengajuan','disetujui')->where('status_presentasi','menunggu');
-    $jadwal =[];
-    $hari=[];
-
-    
+        $presentasi = Presentasi::all();
+        $historyPresentasi = HistoryPresentasi::all();
+        $persetujuan_presentasi = $presentasi->where('status_pengajuan', 'menunggu');
+        $konfirmasi_presentasi = $presentasi->where('status_pengajuan', 'disetujui')->where('status_presentasi', 'menunggu');
+        $jadwal = [];
+        $hari = [];
 
 
-    foreach ($presentasi as $i => $data) {
-        $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
-        $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd') ;
-    }
-        return response()->view('mentor.presentasi',compact('persetujuan_presentasi','konfirmasi_presentasi','jadwal','hari','historyPresentasi'));
+
+
+        foreach ($presentasi as $i => $data) {
+            $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
+            $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd');
+        }
+        return response()->view('mentor.presentasi', compact('persetujuan_presentasi', 'konfirmasi_presentasi', 'jadwal', 'hari', 'historyPresentasi'));
     }
 }

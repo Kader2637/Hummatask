@@ -67,14 +67,14 @@ Route::prefix('ketuaMagang')->middleware(['auth', 'siswa', 'can:kelola siswa'])-
     Route::get('project', 'projectPage')->name('ketua.project');
     Route::get('detail_project/{code}', 'detailProject')->name('ketua.detail_project');
     Route::get('history', 'historyPage')->name('ketua.history');
-    Route::post('pembuatantim',[PengajuanTimController::class,'pembuatanTimProjectKetua'])->name('pembuatantim.ketua');
+    Route::post('pembuatantim', [PengajuanTimController::class, 'pembuatanTimProjectKetua'])->name('pembuatantim.ketua');
 });
 
 // Halaman Mentor
 Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::get('dashboard', [mentorController::class, 'dashboard'])->name('dashboard.mentor');
     Route::get('pengajuan-projek', [mentorController::class, 'pengajuanProjekPage'])->name('pengajuan-projek');
-    Route::get('detail-pengajuan-projek/{code}', [mentorController::class, 'detailPengajuanPage'])->name('detail-pengajuan-projek');
+    Route::get('detail-pengajuan-projek/{code}', [mentorController::class, 'detailPengajuan'])->name('detail-pengajuan-projek');
     Route::get('projek', [mentorController::class, 'projekPage'])->name('projek');
     Route::get('detail-projek/{code}', [mentorController::class, 'detailProjekPage'])->name('detail-projek');
     Route::get('profile-mentor', [mentorController::class, 'profilePage'])->name('profile-mentor');
@@ -83,12 +83,11 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::get('presentasi', [mentorController::class, 'presentasi'])->name('presentasi.mentor');
 
     // Process`
-    Route::post('tampil-detail-presentasi/{code}',[PresentasiController::class,'tampilkanDetailPresentasi']);
-    Route::put('persetujuan-presentasi/{code}',[PresentasiController::class,'persetujuanPresentasi']);
-    Route::put('penolakan-presentasi/{code}',[PresentasiController::class,'penolakanPresentasi']);
-    Route::put('atur-jadwal-presentasi/{code}',[PresentasiController::class,'aturJadwal']);
-    Route::put('konfirmasi-presentasi/{code}',[PresentasiController::class,'konfirmasiPresentasi']);
+    Route::post('tampil-detail-presentasi/{code}', [PresentasiController::class, 'tampilkanDetailPresentasi']);
+    Route::put('persetujuan-presentasi/{code}', [PresentasiController::class, 'persetujuanPresentasi']);
+    Route::put('penolakan-presentasi/{code}', [PresentasiController::class, 'penolakanPresentasi']);
+    Route::put('atur-jadwal-presentasi/{code}', [PresentasiController::class, 'aturJadwal']);
+    Route::put('konfirmasi-presentasi/{code}', [PresentasiController::class, 'konfirmasiPresentasi']);
     Route::post('pembuatantim', [PengajuanTimController::class, 'pembuatanTimProject'])->name('pembuatan.tim');
     Route::patch('persetujuan-project/{code}', [PengajuanProjekController::class, 'persetujuanProject'])->name('persetujuan-project');
-
 });

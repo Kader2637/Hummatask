@@ -15,6 +15,7 @@
     <meta charset="utf-8" />
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    {!! csrf_field() !!}
 
     <title>
         Dashboard Mentor
@@ -142,7 +143,7 @@
 
     .custom-margin {
         margin-top: -65px;
-     }
+    }
 
     @keyframes loading {
 
@@ -155,41 +156,42 @@
         }
 
     }
+
     @keyframes preloader {
-    0%, 100% {
-        transform: translateY(0);
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        25% {
+            transform: translateY(-15px);
+        }
+
+        50% {
+            transform: translateY(0);
+        }
+
+        75% {
+            transform: translateY(15px);
+        }
     }
-
-    25% {
-        transform: translateY(-15px);
-    }
-
-    50% {
-        transform: translateY(0);
-    }
-
-    75% {
-        transform: translateY(15px);
-    }
-}
-
-
-
 </style>
 
 <body>
-    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"
+        integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
     <div id="loader">
         <div class="preloader">
             <div class="d-flex justify-content-center custom-margin">
-                <img src="{{ asset('assets/img/icons/icon.svg') }}"  width="180" height="160" alt="Loader Image">
+                <img src="{{ asset('assets/img/icons/icon.svg') }}" width="180" height="160" alt="Loader Image">
             </div>
         </div>
     </div>
     <script>
         $(window).load(function() {
 
-            var rnd = Math.random() * ( 3000 - 2000) + 3000;
+            var rnd = Math.random() * (3000 - 2000) + 3000;
 
             $('.progress').css("animation", "loading " + rnd + "ms linear");
 
@@ -679,6 +681,14 @@
                 icon: 'success',
                 title: 'Berhasil!',
                 text: '{{ session('success') }}', // Teks pesan dari sesi
+            });
+        </script>
+    @elseif (session()->has('warning'))
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Peringatan!',
+                text: '{{ session('warning') }}', // Teks pesan dari sesi
             });
         </script>
     @endif

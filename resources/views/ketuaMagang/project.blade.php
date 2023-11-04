@@ -24,10 +24,9 @@
         <div class="d-flex justify-content-between">
             <div class="filter col-lg-3 col-md-3 col-sm-3">
                 <label for="select2Basic" class="form-label">Filter</label>
-                <select id="select2Basic" name="temaProjek" class="select2 form-select form-select-lg"
-                    data-allow-clear="true">
+                <select id="select2Basic" name="temaProjek" class="select2 form-select form-select-lg" data-allow-clear="true">
                     <option disabled selected>Filter type project</option>
-                    @foreach ($project as $item)
+                    @foreach ($projects as $item)
                         <option value="{{ $item->code }}">{{ $item->type_project }}</option>
                     @endforeach
                 </select>
@@ -41,7 +40,22 @@
 
         {{-- Card --}}
         <div class="row mt-4">
-            @forelse ($project as $item)
+            @forelse ($projects as $item)
+                @php
+                    $anggotaArray = [];
+                    foreach ($item->tim->anggota as $anggota) {
+                        $anggotaArray[] = $anggota->user->username;
+                    }
+                    $anggotaJson = json_encode($anggotaArray);
+                    $tanggalMulai = $item->tim->created_at->translatedFormat('Y-m-d');
+                    $totalDeadline = null;
+                    $dayLeft = null;
+
+                    $deadline = \Carbon\Carbon::parse($item->deadline)->translatedFormat('Y-m-d');
+                    $totalDeadline = \Carbon\Carbon::parse($deadline)->diffInDays($tanggalMulai);
+                    $dayLeft = \Carbon\Carbon::parse($deadline)->diffInDays(\Carbon\Carbon::now());
+                    $progressPercentage = 100 - ($dayLeft / $totalDeadline) * 100;
+                @endphp
                 <div class="col-md-4 col-lg-4 col-sm-4">
                     <div class="card text-center mb-3">
                         <div class="card-body">
@@ -86,8 +100,15 @@
                                     <div>{{ $item->tema->nama_tema }}</div>
                                 </div>
                             </div>
-                            <a href="{{ route('ketua.detail_project', $item->code) }}"
-                                class="w-100 btn btn-primary">Detail</a>
+                            <a data-bs-toggle="" data-bs-target="#modalDetail" class="w-100 btn btn-primary btn-detail"
+                                data-logo="{{ asset('storage/' . $item->tim->logo) }}"
+                                data-namatim="{{ $item->tim->nama }}" data-status="{{ $item->tim->status_tim }}"
+                                data-tema="{{ $item->tema->nama_tema }}"
+                                data-tglmulai="{{ $item->created_at->translatedFormat('l, j F Y') }}"
+                                data-deadline="{{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}"
+                                data-anggota="{{ $anggotaJson }}" data-deskripsi="{{ $item->deskripsi }}"
+                                data-dayleft="{{ $dayLeft }}" data-total-deadline="{{ $totalDeadline }}"
+                                data-progress="{{ $progressPercentage }}"><span class="text-white">Detail</span></a>
                         </div>
                     </div>
                 </div>
@@ -97,84 +118,317 @@
         </div>
         {{-- Card --}}
 
-        {{-- Modal Buat Tim --}}
-        <form action="" id="createForm" method="post">
-        @csrf
-        <div class="modal fade" id="modalBuatTim" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
+        {{-- Script detail modal --}}
+        <script>
+            $(document).ready(function() {
+                $('.btn-detail').click(function() {
+                    var logo = $(this).data('logo');
+                    var namatim = $(this).data('namatim');
+                    var status = $(this).data('status');
+                    var tema = $(this).data('tema');
+                    var tglmulai = $(this).data('tglmulai');
+                    var deadline = $(this).data('deadline');
+                    var anggota = $(this).data('anggota');
+                    var deskripsi = $(this).data('deskripsi');
+                    var dayLeft = $(this).data('dayleft');
+                    var total = $(this).data('total-deadline');
+                    var progress = $(this).data('progress');
+                    var progressFormat = Math.round(progress);
+                    // console.log(dayLeft, total, progressFormat);
+
+
+                    $('#logo-tim').attr('src', logo);
+                    $('#logo-tim2').attr('src', logo);
+                    $('#nama-tim').text(namatim);
+                    $('#nama-tim2').text(namatim);
+                    $('#status').text(status);
+                    $('#tema').text(tema);
+                    $('#tglmulai').text(tglmulai);
+                    $('#deadline').text(deadline);
+                    $('#dayLeft').text(dayLeft);
+                    $('#dayleft').text(dayLeft);
+                    $('#total').text(total);
+                    $('#textPercent').text(progressFormat);
+                    $('.progress-bar').css('width', progressFormat + '%');
+                    $('.progress-bar').attr('aria-valuenow', progressFormat);
+                    if (deskripsi) {
+                        $('#deskripsi').text(deskripsi);
+                    } else {
+                        $('#deskripsi').html(
+                            '<div class="alert alert-warning d-flex align-items-center mt-4 cursor-pointer" role="alert">' +
+                            '<span class="alert-icon text-warning me-2">' +
+                            '<i class="ti ti-bell ti-xs"></i>' +
+                            '</span>' +
+                            'Tim ini belum memiliki deskripsi tema!' +
+                            '</div>'
+                        );
+                    }
+
+                    var anggotaList = $('#anggota-list');
+                    anggotaList.empty();
+
+                    anggota.forEach(function(anggota, index) {
+                        var anggotaItem = $('<div class="col-lg-4 p-2" style="box-shadow: none">' +
+                            '<div class="card">' +
+                            '<div class="card-body d-flex gap-3 align-items-center">' +
+                            '<div>' +
+                            '<img width="30px" height="30px" class="rounded-circle object-cover" src="" alt="foto user">' +
+                            '</div>' +
+                            '<div>' +
+                            '<h5 class="mb-0" style="font-size: 15px">' + anggota + '</h5>' +
+                            '<span class="badge bg-label-warning"></span>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>');
+                        anggotaList.append(anggotaItem);
+                    });
+
+                    $('#modalDetail').modal('show');
+
+                });
+            });
+        </script>
+        {{-- Script detail modal --}}
+
+        {{-- Modal detail --}}
+        <div class="modal fade" id="modalDetail" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalCenterTitle">Buat Tim</h5>
+                        <h5 class="modal-title" id="modalCenterTitle">Detail tim</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="row">
-                            <div class="col mb-3">
-                            <label for="" class="form-label">Tim</label>
-                            <select name="status_tim" id="status_tim" onchange="run()"  class="select2 form-select form-select-lg"
-                            data-allow-clear="true">
-                               <option value="" disabled selected>Pilih Tim</option>
-                               @foreach ($status_tim as $status )
-                               <option class="text-capitalize" value="{{ $status->id }}">{{ $status->status }}</option>
-                               @endforeach
-                            </select>
-                            @error('status_tim')
-                               <p class="text-danger">{{ $message }}</p>
-                            @enderror
-                        </div>
-                    </div>
-                        <div class="row" id="kelompok_ketua" style="display: block">
-                            <div class="col mb-3">
-                                <label for="ketuaKelompok" class="form-label">Ketua Kelompok</label>
-                                <select id="ketuaKelompok" name="ketuaKelompok" class="select2 form-select form-select-lg"
-                                    data-allow-clear="true">
-                                    <option value="" disabled selected>Pilih Data</option>
-                                    @foreach ($users as $data )
-                                    <option value="{{ $data->id }}">{{ $data->username }}</option>
-                                    @endforeach
-                                </select>
-                                @error('ketuaKelompok')
-                                    <p class="text-danger">{{ $message }}</p>
-                                @enderror
+                        <div class="container-fluid">
+                            <div class="col-12">
+                                <div class="nav-align-top d-flex justify-between">
+                                    <div class="nav nav-pills d-flex justify-content-between my-4" role="tablist">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="nav-item" role="presentation">
+                                                <button type="button" class="nav-link active button-nav" role="tab"
+                                                    data-bs-toggle="tab" data-bs-target="#navs-pills-top-home"
+                                                    aria-controls="navs-pills-top-home"
+                                                    aria-selected="true">Project</button>
+                                            </div>
+                                            <div class="nav-item button-nav" role="presentation">
+                                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                                    data-bs-target="#navs-pills-top-profile"
+                                                    aria-controls="navs-pills-top-profile" aria-selected="false"
+                                                    tabindex="-1">Anggota</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-content bg-transparent pb-0" style="box-shadow: none;">
+                                        <div class="tab-pane fade active show" id="navs-pills-top-home" role="tabpanel">
+                                            <div class="row">
+                                                <div class="col-lg-4 mb-4">
+                                                    <div class="card">
+                                                        <h5 class="card-header">Progres Tim</h5>
+                                                        <div class="card-body">
+                                                            <canvas id="project" class="chartjs mb-4" data-height="267"
+                                                                style="display: block; box-sizing: border-box; height: 200px; width: 200px;"></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-8">
+                                                    {{-- card projects --}}
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <div
+                                                                class="d-flex flex-row align-items-center justify-content-between">
+                                                                <div class="fs-4 text-black">
+                                                                    Projek
+                                                                </div>
+                                                                <div
+                                                                    style="display: flex; flex-direction: column; justify-items: center; align-items: left;">
+
+                                                                    <span>Tanggal Mulai : <span id="tglmulai"></span>
+                                                                    </span>
+
+                                                                    <span>Tenggat : <span id="deadline"></span></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <hr class="my-0">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <div class="d-flex flex-row gap-3">
+                                                                        <img id="logo-tim" src="" alt='logo tim'
+                                                                            class="rounded-circle"
+                                                                            style="width: 90px; height: 90px">
+                                                                        <div
+                                                                            style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+                                                                            <span class="d-block text-black fs-5"
+                                                                                id="nama-tim">nama tim</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mt-4">
+                                                                        <div class="mb-3">Status : <span
+                                                                                class="badge bg-label-warning"
+                                                                                id="status"></span>
+                                                                        </div>
+
+                                                                        <div>Tema : <span class="badge bg-label-warning"
+                                                                                id="tema"></span>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="progres-bar">
+                                                                        <div class="d-flex justify-content-between">
+                                                                            <span>Hari</span>
+                                                                            <span><span id="dayLeft"></span> dari <span
+                                                                                    id="total"></span> Hari</span>
+                                                                        </div>
+                                                                        <div
+                                                                            class="d-flex flex-grow-1 align-items-center my-1">
+                                                                            <div class="progress w-100 me-3"
+                                                                                style="height:8px;background-color: gainsboro">
+                                                                                <div class="progress-bar bg-primary"
+                                                                                    role="progressbar" style="width: 10%"
+                                                                                    aria-valuenow="10" aria-valuemin="0"
+                                                                                    aria-valuemax="100">
+                                                                                </div>
+                                                                            </div>
+                                                                            <span class="text-muted"><span
+                                                                                    id="textPercent"></span>%</span>
+                                                                        </div>
+                                                                        <div class="tenggat">
+                                                                            <span>Tenggat kurang <span
+                                                                                    id="dayleft"></span> hari lagi</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="deskripsi mt-2">
+                                                                        <div class="title text-dark">
+                                                                            Deskripsi :
+                                                                        </div>
+                                                                        <div class="isi" id="deskripsi">
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {{-- card projects --}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="navs-pills-top-profile" role="tabpanel">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div
+                                                        class="card cursor-default col-12 d-flex align-items-center justify-content-center">
+                                                        <div
+                                                            class="card-body d-flex flex-column align-items-center justify-content-center">
+                                                            <img id="logo-tim2" width="90px" height="90px"
+                                                                class="rounded-circle" src="" alt="">
+                                                            <h1 id="nama-tim2" class="mt-2"></h1>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-2 justify-content-center align-items-center grid"
+                                                    id="anggota-list">
+                                                    {{-- Anggota --}}
+                                                    {{-- Anggota --}}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="row" id="project_ketua" style="display: block">
-                            <div class="col mb-3">
-                                <label for="KetuaProjek" class="form-label">Ketua Projek</label>
-                                <select id="KetuaProjek" name="ketuaProjek" class="select2 form-select form-select-lg"
-                                    data-allow-clear="true">
-                                    <option value="" disabled selected>Pilih Data</option>
-                                    @foreach ($users as $data )
-                                    <option value="{{ $data->id }}">{{ $data->username }}</option>
-                                    @endforeach
-                                </select>
-                                @error('ketuaProjek')
-                                 <p class="text-danger">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-3">
-                                <label for="anggota" class="form-label">Anggota</label>
-                                <select id="anggota" name="anggota[]" class="select2 form-select" multiple>
-                                    @foreach ($users as $data )
-                                   <option value="{{ $data->id }}">{{ $data->username }}</option>
-                                   @endforeach
-                                </select>
-                                @error('anggota')
-                                  <p class="text-danger">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+        {{-- Modal detail --}}
+
+        {{-- Modal Buat Tim --}}
+        <form action="" id="createForm" method="post">
+            @csrf
+            <div class="modal fade" id="modalBuatTim" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalCenterTitle">Buat Tim</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="" class="form-label">Tim</label>
+                                    <select name="status_tim" id="status_tim" onchange="run()"
+                                        class="select2 form-select form-select-lg" data-allow-clear="true">
+                                        <option value="" disabled selected>Pilih Tim</option>
+                                        @foreach ($status_tim as $status)
+                                            <option class="text-capitalize" value="{{ $status->id }}">
+                                                {{ $status->status }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('status_tim')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row" id="kelompok_ketua" style="display: block">
+                                <div class="col mb-3">
+                                    <label for="ketuaKelompok" class="form-label">Ketua Kelompok</label>
+                                    <select id="ketuaKelompok" name="ketuaKelompok"
+                                        class="select2 form-select form-select-lg" data-allow-clear="true">
+                                        <option value="" disabled selected>Pilih Data</option>
+                                        @foreach ($users as $data)
+                                            <option value="{{ $data->id }}">{{ $data->username }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('ketuaKelompok')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row" id="project_ketua" style="display: block">
+                                <div class="col mb-3">
+                                    <label for="KetuaProjek" class="form-label">Ketua Projek</label>
+                                    <select id="KetuaProjek" name="ketuaProjek"
+                                        class="select2 form-select form-select-lg" data-allow-clear="true">
+                                        <option value="" disabled selected>Pilih Data</option>
+                                        @foreach ($users as $data)
+                                            <option value="{{ $data->id }}">{{ $data->username }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('ketuaProjek')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="anggota" class="form-label">Anggota</label>
+                                    <select id="anggota" name="anggota[]" class="select2 form-select" multiple>
+                                        @foreach ($users as $data)
+                                            <option value="{{ $data->id }}">{{ $data->username }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('anggota')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-label-secondary"
+                                data-bs-dismiss="modal">Kembali</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
         {{-- Modal Buat Tim --}}
 
         <script>
@@ -241,7 +495,7 @@
                 const status = document.getElementById('status_tim').value;
                 let project_ketua = document.getElementById('project_ketua');
 
-                if(status == 2) {
+                if (status == 2) {
                     project_ketua.style = 'display: none';
                 } else {
                     project_ketua.style = 'display: block';
@@ -251,65 +505,65 @@
 
         <script>
             $(document).ready(function() {
-              let selectedOptions = {};
+                let selectedOptions = {};
 
-              function disableSelectedOptions(select) {
-                let selectedValues = $(select).val();
+                function disableSelectedOptions(select) {
+                    let selectedValues = $(select).val();
 
-                // Menyimpan nilai opsi yang dipilih
-                selectedOptions[$(select).attr('id')] = selectedValues;
+                    // Menyimpan nilai opsi yang dipilih
+                    selectedOptions[$(select).attr('id')] = selectedValues;
 
-                $("select").not(select).each(function() {
-                  let currentSelect = this;
-                  $(this).find('option').each(function() {
-                    let optionValue = $(this).val();
+                    $("select").not(select).each(function() {
+                        let currentSelect = this;
+                        $(this).find('option').each(function() {
+                            let optionValue = $(this).val();
 
-                    // Mengatur opsi yang dipilih di dropdown lainnya menjadi nonaktif
-                    if (selectedValues && selectedValues.includes(optionValue)) {
-                      $(this).prop('disabled', true);
-                    } else {
-                      $(this).prop('disabled', false);
-                    }
-                  });
-                });
-              }
-
-              // Event handler saat memilih opsi di ketuaKelompok, KetuaProject, atau anggota
-              $("#ketuaKelompok, #KetuaProject, #anggota").change(function() {
-                disableSelectedOptions(this);
-              });
-
-              // Event handler saat memfokuskan pada ketuaKelompok, KetuaProject, atau anggota
-              $("#ketuaKelompok, #KetuaProject, #anggota").focus(function() {
-                disableSelectedOptions(this);
-              });
-
-              // Event handler saat kehilangan fokus pada ketuaKelompok, KetuaProject, atau anggota
-              $("#ketuaKelompok, #KetuaProject, #anggota").blur(function() {
-                // Mengembalikan opsi yang telah dinonaktifkan
-                $("select").each(function() {
-                  let selectId = $(this).attr('id');
-                  let originalOptions = selectedOptions[selectId];
-                  if (originalOptions) {
-                    $(this).html(originalOptions);
-                  }
-                });
-
-                // Menonaktifkan opsi yang telah dipilih di dropdown lainnya
-                for (let selectId in selectedOptions) {
-                  if (selectedOptions.hasOwnProperty(selectId)) {
-                    let selectedValues = selectedOptions[selectId];
-                    $("select#" + selectId + " option").each(function() {
-                      let optionValue = $(this).val();
-                      if (selectedValues && selectedValues.includes(optionValue)) {
-                        $(this).prop('disabled', true);
-                      }
+                            // Mengatur opsi yang dipilih di dropdown lainnya menjadi nonaktif
+                            if (selectedValues && selectedValues.includes(optionValue)) {
+                                $(this).prop('disabled', true);
+                            } else {
+                                $(this).prop('disabled', false);
+                            }
+                        });
                     });
-                  }
                 }
-              });
+
+                // Event handler saat memilih opsi di ketuaKelompok, KetuaProject, atau anggota
+                $("#ketuaKelompok, #KetuaProject, #anggota").change(function() {
+                    disableSelectedOptions(this);
+                });
+
+                // Event handler saat memfokuskan pada ketuaKelompok, KetuaProject, atau anggota
+                $("#ketuaKelompok, #KetuaProject, #anggota").focus(function() {
+                    disableSelectedOptions(this);
+                });
+
+                // Event handler saat kehilangan fokus pada ketuaKelompok, KetuaProject, atau anggota
+                $("#ketuaKelompok, #KetuaProject, #anggota").blur(function() {
+                    // Mengembalikan opsi yang telah dinonaktifkan
+                    $("select").each(function() {
+                        let selectId = $(this).attr('id');
+                        let originalOptions = selectedOptions[selectId];
+                        if (originalOptions) {
+                            $(this).html(originalOptions);
+                        }
+                    });
+
+                    // Menonaktifkan opsi yang telah dipilih di dropdown lainnya
+                    for (let selectId in selectedOptions) {
+                        if (selectedOptions.hasOwnProperty(selectId)) {
+                            let selectedValues = selectedOptions[selectId];
+                            $("select#" + selectId + " option").each(function() {
+                                let optionValue = $(this).val();
+                                if (selectedValues && selectedValues.includes(optionValue)) {
+                                    $(this).prop('disabled', true);
+                                }
+                            });
+                        }
+                    }
+                });
             });
-          </script>
+        </script>
 
 
 

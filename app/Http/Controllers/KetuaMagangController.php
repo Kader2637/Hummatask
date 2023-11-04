@@ -32,15 +32,31 @@ class KetuaMagangController extends Controller
     protected function projectPage()
     {
         $title = "Project Ketua Magang";
-        $tims = User::find(Auth::user()->id)->tim()->get();
-        $project = Project::with('tim', 'tema')->where('status_project', 'approved')->get();
-        $users = User::where('peran_id',1)
-        ->whereDoesntHave('tim', function($query){
-            $query->where('kadaluwarsa', true);
-        })
-        ->get();
-        $status_tim = StatusTim::whereNot('status','solo')->get();
-        return view('ketuaMagang.project', compact('title', 'tims','users','status_tim' , 'project'));
+        $tims = User::find(Auth::user()->id)
+            ->tim()
+            ->get();
+        $projects = Project::with('tim.anggota', 'tema')
+            ->where('status_project', 'approved')
+            ->get();
+
+        $projects = $projects->map(function ($project) {
+            if ($project->type_project === 'solo') {
+                $project->type_project = 'Solo Project';
+            } elseif ($project->type_project === 'pre_mini') {
+                $project->type_project = 'Pre Mini Project';
+            }
+
+            return $project;
+        });
+
+        // dd($projects);
+        $users = User::where('peran_id', 1)
+            ->whereDoesntHave('tim', function ($query) {
+                $query->where('kadaluwarsa', true);
+            })
+            ->get();
+        $status_tim = StatusTim::whereNot('status', 'solo')->get();
+        return view('ketuaMagang.project', compact('title', 'tims', 'users', 'status_tim', 'projects'));
     }
     protected function detailProject($code)
     {
@@ -50,7 +66,7 @@ class KetuaMagangController extends Controller
         $anggota = $tim->anggota()->get();
         $project = $tim->project()->first();
         // $tims = Anggota::with('tim')->where('user_id', Auth::user()->id)->get();
-        return view('ketuaMagang.project',compact('title','tims','tim', 'anggota', 'project'));
+        return view('ketuaMagang.project', compact('title', 'tims', 'tim', 'anggota', 'project'));
     }
 
     protected function historyPage()
