@@ -1006,6 +1006,14 @@
                 text: '{{ session('success') }}', // Teks pesan dari sesi
             });
         </script>
+    @elseif (session()->has('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '{{ session('error') }}', // Teks pesan dari sesi
+            });
+        </script>
     @endif
 
 </body>

@@ -2,28 +2,28 @@
 
 namespace App\Console;
 
-use App\Models\HistoryPresentasi;
+use App\Models\Tim;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Illuminate\Support\Str;
 
 class Kernel extends ConsoleKernel
 {
+
+    protected $commands = [
+        Commands\RestSudahPresentasiTim::class,
+        Commands\HistoriPresentasiMingguan::class,
+    ];
+
     /**
      * Define the application's command schedule.
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
 
-
-//      Tugas setiap minggu untuk membuat history presentasi
-        $schedule->call(function(){
-            $history = new HistoryPresentasi;
-            $history->code = Str::uuid();
-            $history->save();
-        })->weekly();
+        $schedule->command('HistoriPresentasiMingguan')->weeklyOn(5,'14.00');
+        $schedule->command('RestSudahPresentasiTim')->sundays();
         
+
 
     }
 

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nama')->nullable();
             $table->string('repository')->nullable();
             $table->enum('status_tim',['solo','pre_mini','mini','pre_big','big']);
+            $table->boolean('sudah_presentasi')->default(false);
             $table->boolean('kadaluwarsa')->default(false);
             $table->timestamps();
         });

@@ -29,7 +29,7 @@
 
                     <div class="col">
                         <span>Status Revisi</span> <br><br>
-                        <input type="radio" value="selesai" name="status_revisi" id="selesai">
+                        <input type="radio" value="selesai" name="status_revisi" id="selesai" checked>
                         <label for="selesai" >Selesai</label>
                         <input type="radio" value="tidak_selesai" name="status_revisi" id="tidak">
                         <label for="tidak" >Tidak selesai</label>
@@ -38,7 +38,7 @@
                         <br>
                         <br>
 
-                        <label for="feedback" class="mb-3">Feedback</label>
+                        <label for="feedback" class="mb-3">Feedback <span class="badge bg-label-warning">opsional</span> </label>
                         <textarea type="text" class="form-control" id="feedback" placeholder="Beri Feedback Presentasi"
                             style="height: 150px; resize: none"></textarea>
                     </div>
@@ -131,27 +131,7 @@
                                 <div class="table-responsive text-nowrap">
                                     <div class="container">
                                         <div class="row" id="row-persetujuan">
-                                            {{-- @forelse ( $persetujuan_presentasi as $presentasi )
-                                            <div class="col-md-6 col-lg-4" id="card-persetujuan-{{ $presentasi->code }}" >
-                                                <div class="card text-center mb-3">
-                                                    <div class="card-body">
-                                                        <img src="{{ asset('storage/' . $presentasi->tim->logo) }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 150px; height: 150px; object-fit: cover; ">
-                                                        <div class="d-flex justify-content-center align-items-center gap-2">
-                                                            <h4 class="card-title text-capitalize">tes</h4>
-                                                            <a href="#"><span class="badge bg-label-warning mb-3">solo</span></a>
-                                                        </div>
-                                                        <p class="card-text">{{ \Carbon\Carbon::parse($presentasi->jadwal)->isoFormat('DD MMMM YYYY') }}</p>
-
-                                                       <div class="d-flex justify-content-center gap-2">
-                                                            <button onclick="tolakPresentasi('{{ $presentasi->code }}')" data-bs-toggle="modal" data-bs-target="#Reject" class="px-3 py-1 btn btn-danger" >Tolak</button>
-                                                            <button onclick="setujuiPresentasi('{{ $presentasi->code }}')" class="px-3 py-1 btn btn-success" >Setujui</button>
-                                                       </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @empty
-
-                                            @endforelse --}}
+                                         
                                         </div>
                                     </div>
                                  </div>
@@ -168,31 +148,7 @@
                     <div class="tab-pane fade" id="navs-pills-top-profile" role="tabpanel">
                         <div class="row" id="row-konfirmasi">
 
-                            {{-- @forelse ($konfirmasi_presentasi as $presentasi )
-                            <div id="card-konfirmasi-{{ $presentasi->code }}" class="col-md-6 col-lg-4">
-                                <div class="card text-center mb-3">
-                                    <div class="card-body">
-                                        <div style="width: 30px; height: 30px; top: -10px; right: -10px;" class="rounded bg-primary d-flex justify-content-center align-items-center text-white position-absolute">
-                                            {{ $presentasi->urutan }}
-                                        </div>
-                                        <img src="{{ asset('storage/' . $presentasi->tim->logo) }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 150px; height: 150px; object-fit: cover; ">
-                                        <div class="d-flex justify-content-center align-items-center gap-2">
-                                            <h4 class="card-title text-capitalize">tes</h4>
-                                        <a href="#"><span class="badge bg-label-warning mb-3">solo</span></a>
-                                        </div>
 
-
-                                        <div class="card-text">{{ \Carbon\Carbon::parse($presentasi->jadwal)->isoFormat('DD MMMM YYYY') }}</div>
-                                       <div class="d-flex justify-content-center gap-2">
-                                             <button class="btn btn-primary" >Urutan</button>
-                                             <button class="btn btn-success" onclick="sudahPresentasi('{{ $presentasi->code }}')" data-bs-toggle="modal" data-bs-target="#Finish" >Konfirmasi</button>
-                                       </div>
-                                    </div>
-                                </div>
-                            </div>
-                            @empty
-
-                            @endforelse --}}
                         </div>
                     </div>
 
@@ -497,15 +453,29 @@
             form.addEventListener("submit",function(e){
             const alasan = document.getElementById('alasan').value
                 e.preventDefault();
+
                 axios.put('penolakan-presentasi/'+code,{alasan})
                 .then((response) => {
-                        console.log(response.data);
+                    console.log(response.data);
+
+                        if(response.data.error){
+                            Swal.fire({
+                            icon: 'error',
+                            title : 'Error',
+                            text : response.data.error
+                        })
+                        }
+
+                        if(response.data.success){
+
                         document.getElementById('card-persetujuan-'+code).classList.add('d-none')
                         Swal.fire({
                             icon: 'success',
                             title : 'Sukses',
                             text : 'Berhasil Menolak Presentasi'
                         })
+                        }
+
                 })
                 .catch((err) => {
                     console.log(err)
@@ -553,16 +523,12 @@
             document.getElementById('row-konfirmasi').appendChild(div);
 
             Swal.fire({
-                icon: 'success',
-                title: 'Sukses memberikan persetujuan presentasi',
-                showClass: {
-                    popup: 'animate__animated animate__tada'
-                },
-                customClass: {
-                    confirmButton: 'btn btn-primary'
-                },
-                buttonsStyling: false,
-            });
+                            icon: 'success',
+                            title : 'Sukses',
+                            text : 'Berhasil Menolak Presentasi'
+                        })
+
+
         })
         .catch((err) => {
             console.log(err);
@@ -576,11 +542,25 @@
             form.addEventListener("submit",( e )=>{
                 e.preventDefault();
                 const feedback = document.getElementById('feedback').value
-                const status_revisi = document.querySelector("[name='status_revisi']:checked").value
+
+
+                try {
+                    const status_revisi = document.querySelector("[name='status_revisi']:checked").value
+                } catch (error) {
+
+                    Swal.fire({
+                            icon: 'error',
+                            title : 'Error',
+                            text : 'Status revisi tidak boleh kosong'
+                        })
+
+                        return false;
+                }
+
 
                 axios.put('konfirmasi-presentasi/'+code,{feedback,status_revisi,persetujuan})
                 .then((res) => {
-                    console.log(res.data);
+                    console.log(res.data.error);
                     document.getElementById('card-konfirmasi-'+code).classList.add('d-none');
                 })
                 .catch((err) => {

@@ -19,13 +19,15 @@ class PresentasiController extends Controller
 {
     protected function ajukanPresentasi(RequestPengajuanPresentasi $request, $code)
     {
-        try {
-            //code...
-            $tim= Tim::where('code',$code)->first();
-            $validasiSatuKaliPresentasi = $tim->presentasi->where('jadwal',Carbon::now())->first();
-        } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'Timmu tidak ditemukan');
+
+        if($request->judul === null){
+            return back()->with('error','Judul presentasi tidak boleh kosong');
         }
+
+        if($request->deskripsi === null){
+            return back()->with('error','Deskripsi presentasi tidak boleh kosong');
+        }
+
 
         if(Str::length($request->judul) > 50){
             return back()->with('error','Judul presentasi tidak boleh melebihi 50 karakter');
@@ -35,10 +37,6 @@ class PresentasiController extends Controller
             return back()->with('error','Deskripsi presentasi tidak boleh melebihi 700 karakter');
         }
 
-        // dd($validasiSatuKaliPresentasi);
-        // if($validasiSatuKaliPresentasi === null){
-        //     return back()->with('error','Kamu sudah memiliki jadwal presentasi hari ini');
-        // }
 
         $history = HistoryPresentasi::latest()->pluck('id')->first();
 
@@ -47,6 +45,21 @@ class PresentasiController extends Controller
                 'code' => Str::uuid(),
             ]);
         }
+
+        try {
+            //code...
+            $tim= Tim::where('code',$code)->first();
+
+            $validasi = $tim->presentasi->where('jadwal',Carbon::now()->isoFormat('YYYY-M-DD'));
+
+            if($validasi){
+                return back()->with('error','Pengajuan presentasi dalam sehari hanya boleh 1 kali');
+            }
+
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Timmu tidak ditemukan');
+        }
+
 
 
         // dd($history);
@@ -82,16 +95,27 @@ class PresentasiController extends Controller
 
     protected function penolakanPresentasi(RequestPenolakanPresentasi $request, $code)
     {
+
+        if($request->feedback === null){
+            return  response()->json(["error"=>"Alasan penolakan tidak boleh kosong"]);
+        }
+
+
         $presentasi = Presentasi::where('code', $code)->first();
         $presentasi->status_pengajuan = 'ditolak';
         $presentasi->feedback = $request->alasan;
         $presentasi->save();
 
-        return response()->json($presentasi);
+        return response()->json(['success'=>'Berhasil Memberikan Penolakan']);
     }
 
     protected function konfirmasiPresentasi(RequestKonfirmasiPresentasi $request, $code)
     {
+
+        if($request->status_revisi === null){
+            return response()->json(['success'=>'Status revisi tidak boleh kosong']);
+        }
+
         $presentasi = Presentasi::where('code',$code)->first();
         $presentasi->status_presentasi = $request->persetujuan;
         $presentasi->status_revisi = $request->status_revisi;
