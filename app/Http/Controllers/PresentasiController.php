@@ -19,7 +19,6 @@ class PresentasiController extends Controller
 {
     protected function ajukanPresentasi(RequestPengajuanPresentasi $request, $code)
     {
-
         if($request->judul === null){
             return back()->with('error','Judul presentasi tidak boleh kosong');
         }
@@ -37,6 +36,14 @@ class PresentasiController extends Controller
             return back()->with('error','Deskripsi presentasi tidak boleh melebihi 700 karakter');
         }
 
+        if(Carbon::now()->isoFormat('HH:m:ss') < "08:00:00" ){
+            return back()->with('error','Pengajuan Presentasi dimulai pukul 08:00');
+        }
+
+        if(Carbon::now()->isoFormat('HH:m:ss') > "15:00:00" ){
+            return back()->with('error','Pengajuan Presentasi tidak boleh lebih dari pukul 15:00');
+        }
+
 
         $history = HistoryPresentasi::latest()->pluck('id')->first();
 
@@ -48,11 +55,12 @@ class PresentasiController extends Controller
 
         try {
             //code...
-            $tim= Tim::where('code',$code)->first();
+            $tim = Tim::where('code',$code)->first();
 
-            $validasi = $tim->presentasi->where('jadwal',Carbon::now()->isoFormat('YYYY-M-DD'));
+            $validasi = $tim->presentasi->where('jadwal',Carbon::now()->isoFormat('YYYY-M-DD'))->first();
+            // dd($validasi);
 
-            if($validasi){
+            if( $validasi != null ){
                 return back()->with('error','Pengajuan presentasi dalam sehari hanya boleh 1 kali');
             }
 
@@ -68,7 +76,7 @@ class PresentasiController extends Controller
         $presentasi->code = Str::uuid();
         $presentasi->judul = $request->judul;
         $presentasi->deskripsi = $request->deskripsi;
-        $presentasi->jadwal = Carbon::now();
+        $presentasi->jadwal = Carbon::now()->isoFormat('Y-M-DD');
         $presentasi->tim_id = $tim->id;
         $presentasi->status_presentasi_mingguan = true;
         $presentasi->history_presentasi_id = $history;

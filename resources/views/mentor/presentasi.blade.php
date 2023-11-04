@@ -29,7 +29,7 @@
 
                     <div class="col">
                         <span>Status Revisi</span> <br><br>
-                        <input type="radio" value="selesai" name="status_revisi" id="selesai" checked>
+                        <input type="radio" value="selesai" name="status_revisi" id="selesai">
                         <label for="selesai" >Selesai</label>
                         <input type="radio" value="tidak_selesai" name="status_revisi" id="tidak">
                         <label for="tidak" >Tidak selesai</label>
@@ -131,7 +131,7 @@
                                 <div class="table-responsive text-nowrap">
                                     <div class="container">
                                         <div class="row" id="row-persetujuan">
-                                         
+
                                         </div>
                                     </div>
                                  </div>
@@ -546,19 +546,8 @@
 
                 try {
                     const status_revisi = document.querySelector("[name='status_revisi']:checked").value
-                } catch (error) {
 
-                    Swal.fire({
-                            icon: 'error',
-                            title : 'Error',
-                            text : 'Status revisi tidak boleh kosong'
-                        })
-
-                        return false;
-                }
-
-
-                axios.put('konfirmasi-presentasi/'+code,{feedback,status_revisi,persetujuan})
+                    axios.put('konfirmasi-presentasi/'+code,{feedback,status_revisi,persetujuan})
                 .then((res) => {
                     console.log(res.data.error);
                     document.getElementById('card-konfirmasi-'+code).classList.add('d-none');
@@ -569,6 +558,19 @@
                 .finally(()=>{
                     const form = document.getElementById('selesaiPresentasiForm').reset()
                 })
+                } catch (error) {
+
+                    setTimeout(() => {
+                        Swal.fire({
+                                icon: 'error',
+                                title : 'Error',
+                                text : 'Status revisi tidak boleh kosong'
+                            })
+                    }, 400);
+
+                }
+
+
 
 
                 })
