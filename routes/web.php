@@ -1,15 +1,18 @@
 <?php
 
 use App\Http\Controllers\authController;
+use App\Http\Controllers\catatanController;
 use App\Http\Controllers\KetuaMagangController;
 use App\Http\Controllers\mentorController;
 use App\Http\Controllers\PengajuanProjekController;
 use App\Http\Controllers\PengajuanTimController;
 use App\Http\Controllers\PresentasiController;
+use App\Http\Controllers\profileController;
 use App\Http\Controllers\ProfileMentor;
 use App\Http\Controllers\ProfileSiswaController;
 use App\Http\Controllers\ProjekController;
 use App\Http\Controllers\siswaController;
+use App\Http\Controllers\tambahUsersController;
 use App\Http\Controllers\timController;
 use App\Http\Controllers\TugasController;
 use App\Models\Presentasi;
@@ -52,8 +55,12 @@ Route::prefix('tim')->controller(timController::class)->group(function () {
         Route::get('history-catatan/{uuid}', 'historyCatatanPage')->name('tim.historyCatatan');
         Route::get('project/{uuid}', 'projectPage')->name('tim.project');
 
+        Route::post('catatan', [catatanController::class, 'store'])->name('catatan.store');
+
         // Process
         Route::post('project/ajukan-project/{code}', [PengajuanProjekController::class, 'ajukanProject'])->name('tim.ajukanProject');
+
+        // proses di halaman tim
         Route::post('board/tambah-tugas', [TugasController::class, 'buatTugas']);
         Route::post('ajukan-presentasi/{code}', [PresentasiController::class, 'ajukanPresentasi'])->name('ajukan-presentasi');
         Route::patch('edit-project/{code}', [PengajuanProjekController::class, 'editProject'])->name('tim.editProject');
@@ -90,4 +97,14 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::put('konfirmasi-presentasi/{code}', [PresentasiController::class, 'konfirmasiPresentasi']);
     Route::post('pembuatantim', [PengajuanTimController::class, 'pembuatanTimProject'])->name('pembuatan.tim');
     Route::patch('persetujuan-project/{code}', [PengajuanProjekController::class, 'persetujuanProject'])->name('persetujuan-project');
+    
+    Route::get('delete-user/{code}', [tambahUsersController::class, 'delete'])->name('delete.user');
+    Route::get('delete-mentor/{code}', [tambahUsersController::class, 'delete_mentor'])->name('delete.mentor');
+    Route::get('delete-user-permisions/{code}', [tambahUsersController::class, 'delete_permisions'])->name('delete.user');
+
+    Route::post('tambah-user-user', [tambahUsersController::class, 'storeCsv'])->name('tambah.users.csv');
+    Route::post('tambah-user', [tambahUsersController::class, 'store'])->name('tambah.users');
+    Route::post('tambah-mentor', [tambahUsersController::class, 'store_mentor'])->name('tambah.mentor');
+    Route::post('tambah-pengelola', [tambahUsersController::class, 'tambah_pengelola'])->name('tambah.pengelola');
+    Route::post('tambah-role', [tambahUsersController::class, 'tambah_role'])->name('tambah.roles');
 });

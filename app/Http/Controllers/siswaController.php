@@ -22,8 +22,7 @@ class siswaController extends Controller
     protected function profilePage()
     {
         $title = 'Profile Siswa';
-        $tims = User::find(Auth::user()->id)->tim()->get();
-        return response()->view('siswa.profile-siswa', compact('title'));
+        $user = User::with('peran')->where('id', Auth::user()->id)->first();
+        return response()->view('siswa.profile-siswa', compact('title', 'user'));
     }
-
 }

@@ -46,44 +46,12 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'uuid' => Str::uuid(),
-                'username' => 'Rafliansyah',
-                'email' => 'Rafliansyah@gmail.com',
-                'password' => Hash::make('password'),
-                'peran_id' => 1,
-                'deskripsi' => 'none',
-            ],
-            [
-                'uuid' => Str::uuid(),
-                'username' => 'Saputra',
-                'email' => 'Saputra@gmail.com',
-                'password' => Hash::make('password'),
-                'peran_id' => 1,
-                'deskripsi' => 'none',
-            ],
-            [
-                'uuid' => Str::uuid(),
-                'username' => 'Jefri',
-                'email' => 'Jefri@gmail.com',
-                'password' => Hash::make('password'),
-                'peran_id' => 1,
-                'deskripsi' => 'none',
-            ],
-            [
-                'uuid' => Str::uuid(),
-                'username' => 'Yafy',
-                'email' => 'Yafy@gmail.com',
-                'password' => Hash::make('password'),
-                'peran_id' => 1,
-                'deskripsi' => 'none',
-            ],
-            [
-                'uuid' => Str::uuid(),
-                'username' => 'Mas Jefri',
+                'username' => 'mentor',
                 'email' => 'mentor@gmail.com',
                 'password' => Hash::make('password'),
                 'peran_id' => 2,
                 'deskripsi' => 'none',
-            ],
+            ]
         ]);
 
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
@@ -99,11 +67,11 @@ class DatabaseSeeder extends Seeder
                 'email' => 'kurniawan@gmail.com',
                 'password' => Hash::make('password'),
                 'peran_id' => 1,
+                'tlp' => "845889288",
+                'sekolah' => "SMKN 1 Banyuwangi",
                 'deskripsi' => 'none',
             ]
         )->assignRole($role);
-
-        // $role->givePermissionTo(Permission::all());
 
         DB::table('jabatans')->insert([
             [

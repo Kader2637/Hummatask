@@ -11,10 +11,8 @@ use App\Models\StatusTim;
 use App\Models\Tim;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Symfony\Polyfill\Intl\Idn\Idn;
+use Illuminate\Support\Collection;
+use Spatie\Permission\Models\Role;
 
 class mentorController extends Controller
 {
@@ -27,7 +25,25 @@ class mentorController extends Controller
     // Return view pengguna mentor
     protected function pengguna()
     {
-        return response()->view('mentor.pengguna');
+        $roles = Role::all();
+        $mentors = User::where('peran_id', 2)->get();
+        $users = User::with('peran')->where('peran_id', 1)->get();
+        $pengelolaMagang = new Collection();
+        $bukanPengelolaMagang = new Collection();
+
+        foreach ($roles as $peran) {
+            $penggunaDenganPeran = User::whereHas('roles', function ($query) use ($peran) {
+                $query->where('name', $peran->name);
+            })->get();
+            $pengelolaMagang = $pengelolaMagang->concat($penggunaDenganPeran);
+
+            $bukanPengelolaMagang = User::whereDoesntHave('permissions', function ($query) use ($peran) {
+                $query->where('name', $peran);
+            })->get();
+            $bukanPengelolaMagang = $bukanPengelolaMagang->concat($penggunaDenganPeran);
+        }
+
+        return response()->view('mentor.pengguna', compact('users', 'pengelolaMagang', 'bukanPengelolaMagang', 'mentors', 'roles'));
     }
 
     // Return view history mentor
@@ -113,10 +129,6 @@ class mentorController extends Controller
         $konfirmasi_presentasi = $presentasi->where('status_pengajuan', 'disetujui')->where('status_presentasi', 'menunggu');
         $jadwal = [];
         $hari = [];
-
-
-
-
         foreach ($presentasi as $i => $data) {
             $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
             $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd');

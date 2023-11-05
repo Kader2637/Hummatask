@@ -8,6 +8,7 @@
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 
 <head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="utf-8" />
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
@@ -49,6 +50,8 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/apex-charts/apex-charts.css') }}" />
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('assets/js/config.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/fullcalendar/fullcalendar.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/flatpickr/flatpickr.css') }}" />
@@ -59,11 +62,15 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/app-calendar.css') }}" />
+
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
     @yield('link')
 </head>
 
 @yield('style')
-
 
 <body>
 
@@ -97,10 +104,14 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-label-secondary waves-effect"
                             data-bs-dismiss="modal">Kembali</button>
-                        <button type="submit\
-                "
-                            class="btn btn-primary waves-effect waves-light">Ajukan</button>
-                    </div>
+                        <button type="submit"class="btn btn-primary waves-effect waves-light">Ajukan</button>
+                        <div class="row">
+                            <div class="col">
+                                <label for="deskripsi" class="form-label">Deskripsi Presentasi</label>
+                                <textarea name="deskripsi" id="deskripsi" cols="20" rows="10" class="form-control" style="resize: none"
+                                    placeholder="Isi deskripsi pengajuan anda"></textarea>
+                            </div>
+                        </div>
                 </form>
             </div>
         </div>

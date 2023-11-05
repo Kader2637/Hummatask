@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Anggota;
-use App\Models\Project;
 use App\Models\Tim;
-use App\Models\Tugas;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class timController extends Controller
 {

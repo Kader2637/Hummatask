@@ -57,6 +57,10 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/apex-charts/apex-charts.css') }}" />
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('assets/js/config.js') }}"></script>
+
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     @yield('link')
 </head>
 
@@ -210,7 +214,6 @@
                             <div class="w-100 d-flex align-items-center justify-content-between">Dashboard</div>
                         </a>
                     </li>
-
                     {{-- Navigasi ketua magang --}}
 
                     @can('kelola siswa')
@@ -272,7 +275,7 @@
                                 <li class="menu-item ">
                                     <a href="{{ route('tim.board', $item->code) }}"
                                         class="menu-link d-flex align-items-center gap-2">
-                                        <img style="width: 30px;height:30px;object-fit: cover"
+                                        <img width="30" height="30" style="width: 30px;height:30px;object-fit: cover"
                                             class="rounded-circle border border-primary"
                                             src="{{ asset('storage/' . $item->logo) }}" alt="">
                                         <div class="">{{ $item->nama }}</div>
@@ -296,10 +299,8 @@
             </aside>
 
             <div class="layout-page">
-
                 <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
                     id="layout-navbar">
-
                     <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0  d-xl-none ">
                         <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
                             <i class="ti ti-menu-2 ti-sm"></i>
@@ -307,7 +308,7 @@
                     </div>
 
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-                        <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
+                        <ul class="navbar-nav flex-row align-items-center ms-auto gap-1">
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 @if (auth()->check() &&
                                         auth()->user()->can('kelola siswa'))

@@ -5,12 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class peran extends Model
+class PenglolaMagang extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'uuid',
-        'peran',
-    ];
 }

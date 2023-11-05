@@ -1,5 +1,119 @@
 @extends('layoutsMentor.app')
 @section('content')
+    <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <script src="assets/plugins/global/plugins.bundle.js"></script>
+    <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
+
+    @if ($errors->any())
+        <script>
+            @foreach ($errors->all() as $error)
+                swal.fire({
+                    title: "Kesalahan!",
+                    text: "{{ $error }}",
+                    icon: "error",
+                    confirmButtonText: "Tutup",
+                    customClass: {
+                        confirmButton: "btn btn-danger me-3",
+                    }
+                });
+            @endforeach
+        </script>
+    @endif
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let deleteButtons = document.querySelectorAll('[id^="delete-button-"]');
+
+            deleteButtons.forEach(function(button) {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    let code = button.id.replace('delete-button-', '');
+
+                    swal.fire({
+                        title: "Apa kamu yakin?",
+                        icon: "question",
+                        showCancelButton: true,
+                        confirmButtonText: "Hapus!",
+                        customClass: {
+                            confirmButton: "btn btn-danger me-3",
+                            cancelButton: "btn btn-label-secondary",
+                        },
+                        buttonsStyling: false,
+                    }).then(function(confirmDelete) {
+                        if (confirmDelete.isConfirmed) {
+                            window.location.href = "{{ url('mentor/delete-user') }}/" +
+                                code;
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let deleteButtons = document.querySelectorAll('[id^="delete-button-mentor-"]');
+
+            deleteButtons.forEach(function(button) {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    let code = button.id.replace('delete-button-mentor-', '');
+
+                    swal.fire({
+                        title: "Apa kamu yakin?",
+                        icon: "question",
+                        showCancelButton: true,
+                        confirmButtonText: "Hapus!",
+                        customClass: {
+                            confirmButton: "btn btn-danger me-3",
+                            cancelButton: "btn btn-label-secondary",
+                        },
+                        buttonsStyling: false,
+                    }).then(function(confirmDelete) {
+                        if (confirmDelete.isConfirmed) {
+                            window.location.href = "{{ url('mentor/delete-mentor') }}/" +
+                                code;
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let deleteButtons = document.querySelectorAll('[id^="delete-button-permisions-"]');
+
+            deleteButtons.forEach(function(button) {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    let code = button.id.replace('delete-button-permisions-', '');
+
+                    swal.fire({
+                        title: "Apa kamu yakin mencabut hak akses user ini?",
+                        icon: "question",
+                        showCancelButton: true,
+                        confirmButtonText: "Hapus!",
+                        customClass: {
+                            confirmButton: "btn btn-danger me-3",
+                            cancelButton: "btn btn-label-secondary",
+                        },
+                        buttonsStyling: false,
+                    }).then(function(confirmDelete) {
+                        if (confirmDelete.isConfirmed) {
+                            window.location.href =
+                                "{{ url('mentor/delete-user-permisions') }}/" +
+                                code;
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
     <style>
         .icon-button {
             background: none;
@@ -53,321 +167,280 @@
             }
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            function toggleContent(tabId) {
+                if (tabId === 'pills-home-tab') {
+                    $('#siswa-content').show();
+                } else {
+                    $('#siswa-content').hide();
+                }
+
+                if (tabId === 'pills-profile-tab') {
+                    $('#pengelola-content').show();
+                } else {
+                    $('#pengelola-content').hide();
+                }
+
+                if (tabId === 'pills-contact-tab') {
+                    $('#mentor-content').show();
+                } else {
+                    $('#mentor-content').hide();
+                }
+            }
+
+            toggleContent('pills-home-tab');
+
+            $('.nav-link').click(function() {
+                const tabId = $(this).attr('aria-controls');
+                toggleContent(tabId);
+            });
+        });
+    </script>
+
+
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="card">
-            <ul class="nav nav-pills mb-3 mt-3 saputra" style="padding-left: 20px" id="pills-tab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
-                        type="button" role="tab" aria-controls="pills-home" aria-selected="true"><i
-                            class="fa-solid fa-users icon-text"></i>Siswa</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
-                        type="button" role="tab" aria-controls="pills-profile" aria-selected="false"><i
-                            class="fa-solid fa-user-group icon-text"></i>Ketua
-                        Magang</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact"
-                        type="button" role="tab" aria-controls="pills-contact" aria-selected="false"><i
-                            class="fa-solid fa-user-tie icon-text"></i>Mentor</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-team"
-                        type="button" role="tab" aria-controls="pills-contact" aria-selected="false"><i
-                            class="fa-solid fa-user-slash icon-text"></i>Histori Ketua
-                        Magang</button>
-                </li>
-            </ul>
-            <div class="tab-content" id="pills-tabContent">
-                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
-                    tabindex="0">
-                    {{-- <div class="card"> --}}
-                    <div class="row g-3 align-items-center">
-                        <div class="d-flex flex-row gap-2 justify-content-between py-3 px-4">
-                            <div class="d-flex flex-row gap-1 search">
-                                <label for="inputPassword6" class="col-form-label col-md-4"
-                                    style="padding-right: 0px;padding-left: 5px">Search Filter</label>
-                                <input type="text" class="form-control pencarian">
-                            </div>
-                            <div class="d-flex">
-                                <div class="col">
-                                    <button class="btn btn-success"><i
-                                            class="fa-regular fa-file icon-text"></i>Import</button>
-                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-data"><i
-                                            class="fa-solid fa-plus icon-text"></i>Tambah</button>
-                                </div>
+            <div class="d-flex flex-wrap flex-row justify-content-between">
+                <div>
+                    <ul class="nav nav-pills mb-3 mt-3 saputra" style="padding-left: 20px" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home-tab"
+                                aria-selected="true"><i class="fa-solid fa-users icon-text"></i>Siswa</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-profile" type="button" role="tab"
+                                aria-controls="pills-profile-tab" aria-selected="false"><i
+                                    class="fa-solid fa-user-group icon-text"></i>Pengelola Magang</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-contact" type="button" role="tab"
+                                aria-controls="pills-contact-tab" aria-selected="false"><i
+                                    class="fa-solid fa-user-tie icon-text"></i>Mentor</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-team" type="button" role="tab" aria-controls="pills-histori-tab"
+                                aria-selected="false"><i class="fa-solid fa-user-slash icon-text"></i>Histori Pengelola
+                                Magang</button>
+                        </li>
+                    </ul>
+                </div>
+                <div id="mentor-content" class="row g-3">
+                    <div class="d-flex flex-row gap-2 justify-content-end py-3 px-4">
+                        <div class="d-flex">
+                            <div class="col d-flex flex-wrap gap-1">
+                                <button id="add-btn" class="btn btn-primary" style="font-size: 13px"
+                                    data-bs-toggle="modal" data-bs-target="#add-data-mentor"><i
+                                        class="fa-solid fa-plus icon-text"></i>Tambah
+                                    Mentor</button>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div id="pengelola-content" class="row g-3">
+                    <div class="d-flex flex-row gap-2 justify-content-end py-3 px-4">
+                        <div class="d-flex">
+                            <div class="col d-flex flex-wrap gap-1">
+                                <button id="add-btn" class="btn btn-primary" style="font-size: 13px"
+                                    data-bs-toggle="modal" data-bs-target="#add-role"><i
+                                        class="fa-solid fa-plus icon-text"></i>Tambah
+                                    Role</button>
+                            </div>
+                            <div class="col d-flex flex-wrap gap-1">
+                                <button id="add-btn" class="btn btn-primary" style="font-size: 13px"
+                                    data-bs-toggle="modal" data-bs-target="#add-pengelola"><i
+                                        class="fa-solid fa-plus icon-text"></i>Tambah
+                                    Pengelola</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="siswa-content" class="row g-3">
+                    <div class="d-flex flex-row gap-2 justify-content-end py-3 px-4">
+                        <div class="d-flex">
+                            <div class="col d-flex flex-wrap gap-1">
+                                <div>
+                                    <form action="{{ route('tambah.users.csv') }}" method="post" id="import-form"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        <input name="import" accept="text/csv" type="file" id="import"
+                                            class="d-none">
+                                        <button type="button" id="import-btn" style="font-size: 13px"
+                                            class="btn btn-success"><i class="fa-regular fa-file icon-text"></i> Import
+                                            CSV</button>
+                                    </form>
+                                    <script>
+                                        document.getElementById("import-btn").addEventListener("click", function() {
+                                            document.getElementById("import").click();
+                                        });
+                                        document.getElementById("import").addEventListener("change", function() {
+                                            document.getElementById("import-form").submit();
+                                        });
+                                    </script>
+                                </div>
+                                <button id="add-btn" class="btn btn-primary" style="font-size: 13px"
+                                    data-bs-toggle="modal" data-bs-target="#add-data"><i
+                                        class="fa-solid fa-plus icon-text"></i>Tambah</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
+                    tabindex="0">
                     <div class="card-datatable table-responsive">
-                        <table class="dt-responsive table">
+                        <table id="jstabel1" class="dt-responsive table">
                             <thead>
                                 <tr>
                                     <th scope="col">NO</th>
                                     <th scope="col">USER</th>
                                     <th scope="col">EMAIL</th>
-                                    <th scope="col">STATUS</th>
                                     <th scope="col">ACTION</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td class="nama">
-                                        <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                            style="width:30px;hight:30px;border-radius:50%">
-                                        Mark
-                                    </td>
-                                    <td>Example@gmail.com</td>
-                                    <td><button disabled="disabled" class="btn"
-                                            style="background-color:  rgb(255, 231, 187);color:rgb(255, 149, 0)">siswa</button>
-                                    </td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
-                                                    data-bs-target="#detail"><i class="ti ti-eye me-1"></i> Detail</a>
-                                                <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
-                                                    data-bs-target="#edit-data"><i class="ti ti-pencil me-1"></i> Edit</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                        class="ti ti-trash me-1"></i> Delete</a>
+                                @php
+                                    $no_user = 1;
+                                @endphp
+                                @foreach ($users as $item)
+                                    <tr>
+                                        <th scope="row">{{ $no_user++ }}</th>
+                                        <td class="nama">
+                                            @if ($item->avatar)
+                                                <img src="{{ asset('storage/' . $item->avatar) }}" alt=""
+                                                    style="width:30px;hight:30px;border-radius:50%">
+                                            @else
+                                                <img src="{{ asset('assets/img/avatars/1.png') }}" alt=""
+                                                    style="width:30px;hight:30px;border-radius:50%">
+                                            @endif
+                                            <span class="ml-3">
+                                                {{ $item->username }}
+                                            </span>
+                                        </td>
+                                        <td>{{ $item->email }}</td>
+                                        <td>
+                                            <div class="d-flex flex-wrap flex-row">
+                                                <span class="detail-user" href="javascript:void(0);"
+                                                    data-bs-toggle="modal" data-bs-target="#detail"
+                                                    data-username="{{ $item->username }}"
+                                                    data-avatar="{{ $item->avatar }}" data-tlp="{{ $item->tlp }}"
+                                                    data-peran="{{ $item->peran->peran }}"
+                                                    data-sekolah="{{ $item->sekolah }}"
+                                                    data-email="{{ $item->email }}"><i
+                                                        class="ti ti-eye me-1"></i></span>
+                                                <span class="" id="delete-button-{{ $item->uuid }}"
+                                                    href="javascript:void(0);"><i class="ti ti-trash me-1"></i></span>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td class="nama">
-                                        <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                            style="width:30px;hight:30px;border-radius:50%">
-                                        Jacob
-                                    </td>
-                                    <td>Example@gmail.com</td>
-                                    <td><button disabled="disabled" class="btn"
-                                            style="background-color:  rgb(255, 231, 187);color:rgb(255, 149, 0)">siswa</button>
-                                    </td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                        class="ti ti-eye me-1"></i> Detail</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                        class="ti ti-pencil me-1"></i> Edit</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                        class="ti ti-trash me-1"></i> Delete</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td class="nama">
-                                        <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                            style="width:30px;hight:30px;border-radius:50%">
-                                        Larry the Bird
-                                    </td>
-                                    <td>Example@gmail.com</td>
-                                    <td><button disabled="disabled" class="btn"
-                                            style="background-color: rgb(255, 231, 187);color:rgb(255, 149, 0)"">siswa</button>
-                                    </td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                        class="ti ti-eye me-1"></i> Detail</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                        class="ti ti-pencil me-1"></i> Edit</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                        class="ti ti-trash me-1"></i> Delete</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
-                    {{-- </div> --}}
 
                 </div>
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
                     tabindex="0">
-                    {{-- <div class="card"> --}}
-                    <div class="row g-3 align-items-center">
-                        <div class="d-flex flex-row gap-2 justify-content-between py-3 px-4">
-                            <div class="d-flex flex-row gap-1 search">
-                                <label for="inputPassword6" class="col-form-label col-md-4"
-                                    style="padding-right: 0px;padding-left: 5px">Search Filter</label>
-                                <input type="text" class="form-control" style="width:200px;">
-                            </div>
-                            <div class="d-flex">
-                                <div class="col" style="padding-left: auto">
-                                    <button class="btn btn-success"><i
-                                            class="fa-regular fa-file icon-text"></i>Import</button>
-                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-data"><i
-                                            class="fa-solid fa-plus icon-text"></i>Tambah</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="card-datatable table-responsive">
-                        <table class="dt-responsive table">
+                        <table id="jstabel2" class="dt-responsive table">
                             <thead>
                                 <tr>
                                     <th scope="col">NO</th>
                                     <th scope="col">USER</th>
                                     <th scope="col">EMAIL</th>
-                                    <th scope="col">STATUS</th>
                                     <th scope="col">ACTION</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td class="nama">
-                                        <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                            style="width:30px;hight:30px;border-radius:50%">
-                                        Adi
-                                    </td>
-                                    <td>Example@gmail.com</td>
-                                    <td><button disabled="disabled" class="btn"
-                                            style="background-color:  rgb(255, 231, 187);color:rgb(255, 149, 0)">Ketua
-                                            Magang</button></td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                        class="ti ti-eye me-1"data-bs-toggle="modal"
-                                                        data-bs-target="#detail-ketua"></i> Detail</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"
-                                                    data-bs-toggle="modal" data-bs-target="#edit-data"><i
-                                                        class="ti ti-pencil me-1"></i> Edit</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                        class="ti ti-trash me-1"></i> Delete</a>
+                                @php
+                                    $no_manage = 1;
+                                @endphp
+                                @foreach ($pengelolaMagang as $item)
+                                    <tr>
+                                        <th scope="row">{{ $no_manage++ }}</th>
+                                        <td class="nama">
+                                            @if ($item->avatar)
+                                                <img src="{{ asset('storage/' . $item->avatar) }}" alt=""
+                                                    style="width:30px;hight:30px;border-radius:50%">
+                                                {{ $item->username }}
+                                            @else
+                                                <img src="{{ asset('assets/img/avatars/1.png') }}" alt=""
+                                                    style="width:30px;hight:30px;border-radius:50%">
+                                                {{ $item->username }}
+                                            @endif
+                                        </td>
+                                        <td>{{ $item->email }}</td>
+                                        <td>
+                                            <div class="d-flex flex-wrap flex-row gap-2">
+                                                <span class="detail-user" href="javascript:void(0);"
+                                                    data-bs-toggle="modal" data-bs-target="#detail"
+                                                    data-username="{{ $item->username }}"
+                                                    data-avatar="{{ $item->avatar }}" data-tlp="{{ $item->tlp }}"
+                                                    data-peran="{{ $item->peran->peran }}"
+                                                    data-sekolah="{{ $item->sekolah }}"
+                                                    data-email="{{ $item->email }}"><i
+                                                        class="ti ti-eye me-1"></i></span>
+                                                <span class="" href="javascript:void(0);" data-bs-toggle="modal"
+                                                    data-bs-target="#edit-data-permisions"><i
+                                                        class="ti ti-pencil me-1"></i></span>
+                                                <span class="" id="delete-button-permisions-{{ $item->uuid }}"
+                                                    href="javascript:void(0);"><i class="ti ti-trash me-1"></i></span>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td class="nama">
-                                        <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                            style="width:30px;hight:30px;border-radius:50%">
-                                        Meilani
-                                    </td>
-                                    <td>Example@gmail.com</td>
-                                    <td><button disabled="disabled" class="btn"
-                                            style="background-color:  rgb(255, 231, 187);color:rgb(255, 149, 0)">Wakil
-                                            Ketua</button></td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                        class="ti ti-eye me-1"></i> Detail</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                        class="ti ti-pencil me-1"></i> Edit</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                        class="ti ti-trash me-1"></i> Delete</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
-                    {{-- </div> --}}
                 </div>
                 <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"
                     tabindex="0">
-                    {{-- <div class="card"> --}}
-                    <div class="row g-3 align-items-center">
-                        <div class="d-flex flex-row gap-2 justify-content-between py-3 px-4">
-                            <div class="d-flex flex-row gap-1 search">
-                                <label for="inputPassword6" class="col-form-label col-md-4"
-                                    style="padding-right: 0px;padding-left: 5px">Search Filter</label>
-                                <input type="text" class="form-control" style="width:200px;">
-                            </div>
-                            <div class="d-flex">
-                                <div class="col" style="padding-left: auto">
-                                    <button class="btn btn-success"><i
-                                            class="fa-regular fa-file icon-text"></i>Import</button>
-                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-data"><i
-                                            class="fa-solid fa-plus icon-text"></i>Tambah</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="card-datatable table-responsive">
-                        <table class="dt-responsive table">
+                        <table id="jstabel3" class="dt-responsive table">
                             <thead>
                                 <tr>
                                     <th scope="col">NO</th>
                                     <th scope="col">USER</th>
                                     <th scope="col">EMAIL</th>
-                                    <th scope="col">STATUS</th>
                                     <th scope="col">ACTION</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td class="nama">
-                                        <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                            style="width:30px;hight:30px;border-radius:50%">
-                                        Yudas
-                                    </td>
-                                    <td>Example@gmail.com</td>
-                                    <td><button disabled="disabled" class="btn"
-                                            style="background-color:  rgb(255, 231, 187);color:rgb(255, 149, 0)">Mentor</button>
-                                    </td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="javascript:void(0);"
-                                                    data-bs-toggle="modal" data-bs-target="#edit-data"><i
-                                                        class="ti ti-pencil me-1"></i> Edit</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                        class="ti ti-trash me-1"></i> Delete</a>
+                                @php
+                                    $no_mentor = 1;
+                                @endphp
+                                @foreach ($mentors as $item)
+                                    <tr>
+                                        <th scope="row">{{ $no_mentor++ }}</th>
+                                        <td class="nama">
+                                            @if ($item->avatar)
+                                                <img src="{{ asset('storage/' . $item->avatar) }}" alt=""
+                                                    style="width:30px;hight:30px;border-radius:50%">
+                                            @else
+                                                <img src="{{ asset('assets/img/avatars/1.png') }}" alt=""
+                                                    style="width:30px;hight:30px;border-radius:50%">
+                                            @endif
+                                            {{ $item->username }}
+                                        </td>
+                                        <td>{{ $item->email }}</td>
+                                        <td>
+                                            <div class="d-flex flex-wrap flex-row">
+                                                <span class="" href="javascript:void(0);"><i
+                                                        class="ti ti-pencil me-1"></i></span>
+                                                <span class="" id="delete-button-mentor-{{ $item->uuid }}"
+                                                    href="javascript:void(0);"><i class="ti ti-trash me-1"></i></span>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td class="nama">
-                                        <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                            style="width:30px;hight:30px;border-radius:50%">
-                                        Bagas
-                                    </td>
-                                    <td>Example@gmail.com</td>
-                                    <td><button disabled="disabled" class="btn"
-                                            style="background-color:  rgb(255, 231, 187);color:rgb(255, 149, 0)">Mentor</button>
-                                    </td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                        class="ti ti-pencil me-1"></i> Edit</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                        class="ti ti-trash me-1"></i> Delete</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -375,24 +448,13 @@
                 </div>
                 <div class="tab-pane fade" id="pills-team" role="tabpanel" aria-labelledby="pills-disabled-tab"
                     tabindex="0">
-                    {{-- <div class="card"> --}}
-                    <div class="row g-3 align-items-center">
-                        <div class="d-flex flex-row gap-2 justify-content-between py-3 px-4">
-                            <div class="d-flex flex-row gap-1 search">
-                                <label for="inputPassword6" class="col-form-label col-md-4"
-                                    style="padding-right: 0px;padding-left: 5px">Search Filter</label>
-                                <input type="text" class="form-control" style="width:200px;">
-                            </div>
-                        </div>
-                    </div>
                     <div class="card-datatable table-responsive">
-                        <table class="dt-responsive table">
+                        <table id="jstabel4" class="dt-responsive table">
                             <thead>
                                 <tr>
                                     <th scope="col">NO</th>
                                     <th scope="col">USER</th>
                                     <th scope="col">EMAIL</th>
-                                    <th scope="col">STATUS</th>
                                     <th scope="col">MASA JABATAN</th>
                                 </tr>
                             </thead>
@@ -405,22 +467,6 @@
                                         Adi
                                     </td>
                                     <td>Example@gmail.com</td>
-                                    <td><button disabled="disabled" class="btn"
-                                            style="background-color:  rgb(255, 231, 187);color:rgb(255, 149, 0)">Ketua
-                                            Magang</button></td>
-                                    <td class="masa-jabatan">10 Januari s.d 10 Februari</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td class="nama">
-                                        <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                            style="width:30px;hight:30px;border-radius:50%">
-                                        Meilani
-                                    </td>
-                                    <td>Example@gmail.com</td>
-                                    <td><button disabled="disabled" class="btn"
-                                            style="background-color:  rgb(255, 231, 187);color:rgb(255, 149, 0)">Wakil
-                                            Ketua</button></td>
                                     <td class="masa-jabatan">10 Januari s.d 10 Februari</td>
                                 </tr>
                             </tbody>
@@ -431,49 +477,192 @@
             </div>
 
             {{-- modal add data --}}
-            <div class="modal fade" id="add-data" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalCenterTitle">Tambah Pengguna</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col mb-3">
-                                    <label for="nameWithTitle" class="form-label">Nama</label>
-                                    <input type="text" id="nameWithTitle" class="form-control"
-                                        placeholder="Masukkan nama pengguna">
+            <div class="modal fade" id="add-role" tabindex="-1" aria-hidden="true">
+                <form action="{{ route('tambah.roles') }}" method="POST">
+                    @csrf
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalCenterTitle">Tambah Role</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col mb-3">
+                                        <label for="roles" class="form-label">Nama</label>
+                                        <input name="roles" type="text" id="roles" class="form-control"
+                                            placeholder="Masukkan nama hak akses " required>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col mb-3">
-                                    <label for="nameWithTitle" class="form-label">Email</label>
-                                    <input type="text" id="nameWithTitle" class="form-control"
-                                        placeholder="Masukkan email">
-                                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-label-secondary"
+                                    data-bs-dismiss="modal">Kembali</button>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6 mb-4">
-                                    <label for="select2Basic" class="form-label">Status Role</label>
-                                    <select id="select2Basic" class="select2 form-select form-select-lg"
-                                        data-allow-clear="true">
-                                        <option value="AK">Alaska</option>
-                                        <option value="HI">Hawaii</option>
-                                        <option value="CA">California</option>
-                                        <option value="NV">Nevada</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-label-secondary"
-                                data-bs-dismiss="modal">Kembali</button>
-                            <button type="button" class="btn btn-primary">Simpan</button>
                         </div>
                     </div>
-                </div>
+                </form>
+            </div>
+            <div class="modal fade" id="add-pengelola" tabindex="-1" aria-hidden="true">
+                <form action="{{ route('tambah.pengelola') }}" method="POST">
+                    @csrf
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalCenterTitle">Tambah Pengelola</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col mb-3">
+                                        <label for="role" class="form-label">Role Pengelola</label>
+                                        <select id="role" name="role" class="select2 form-select selecto"
+                                            required>
+                                            @foreach ($roles as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-3">
+                                        <label for="user" class="form-label">User</label>
+                                        <select id="user" name="user" class="select2 form-select selecto"
+                                            required>
+                                            @foreach ($bukanPengelolaMagang as $data)
+                                                <option value="{{ $data->id }}">{{ $data->username }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-label-secondary"
+                                    data-bs-dismiss="modal">Kembali</button>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal fade" id="add-data" tabindex="-1" aria-hidden="true">
+                <form action="{{ route('tambah.users') }}" method="POST">
+                    @csrf
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalCenterTitle">Tambah Pengguna</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col mb-3">
+                                        <label for="username" class="form-label">Nama</label>
+                                        <input name="username" type="text" id="username" class="form-control"
+                                            placeholder="Masukkan nama pengguna" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-3">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input name="email" type="text" id="email" class="form-control"
+                                            placeholder="Masukkan email" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-3">
+                                        <label for="sekolah" class="form-label">Sekolah</label>
+                                        <input name="sekolah" type="text" id="sekolah" class="form-control"
+                                            placeholder="Masukkan sekolah asal" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-3">
+                                        <label for="masa_magang" class="form-label">Masa Magang</label>
+                                        <input name="masa_magang" type="date" id="masa_magang" class="form-control"
+                                            placeholder="Masukan tanggal mulai dan selesai magang" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-label-secondary"
+                                    data-bs-dismiss="modal">Kembali</button>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal fade" id="add-data-mentor" tabindex="-1" aria-hidden="true">
+                <form action="{{ route('tambah.mentor') }}" method="POST">
+                    @csrf
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalCenterTitle">Tambah Mentor</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col mb-3">
+                                        <label for="username" class="form-label">Nama</label>
+                                        <input name="username" type="text" id="username" class="form-control"
+                                            placeholder="Masukkan nama pengguna" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-3">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input name="email" type="text" id="email" class="form-control"
+                                            placeholder="Masukkan email" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-label-secondary"
+                                    data-bs-dismiss="modal">Kembali</button>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal fade" id="edit-data-permisions" tabindex="-1" aria-hidden="true">
+                <form action="{{ route('tambah.users') }}" method="POST">
+                    @csrf
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalCenterTitle">Tambah Pengguna</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col mb-3">
+                                        <label for="role" class="form-label">Role Pengelola</label>
+                                        <select id="role" name="role" class="select2 form-select selecto"
+                                            required>
+                                            @foreach ($roles as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-label-secondary"
+                                    data-bs-dismiss="modal">Kembali</button>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
 
             {{-- modal edit data --}}
@@ -595,7 +784,6 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modalCenterTitle">Modal title</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
@@ -606,11 +794,10 @@
                                 <div class="card-body">
                                     <div class="user-avatar-section">
                                         <div class=" d-flex align-items-center flex-column">
-                                            <img class="img-fluid rounded mb-3 pt-1 mt-4"
-                                                src="{{ asset('assets/img/avatars/15.png') }}" height="100"
-                                                width="100" alt="User avatar" />
+                                            <img class="img-fluid rounded mb-3 pt-1 mt-4" src="" height="100"
+                                                width="100" id="avatar" />
                                             <div class="user-info text-center">
-                                                <h4 class="mb-2">Violet Mendoza</h4>
+                                                <h4 class="mb-2" id="username-siswa"></h4>
                                             </div>
                                         </div>
                                     </div>
@@ -619,31 +806,28 @@
                                     <p class="mt-4 small text-uppercase text-muted">Details</p>
                                     <div class="info-container">
                                         <ul class="list-unstyled">
-                                            <li class="mb-4">
-                                                <span class="fw-medium me-1">Name:</span>
-                                                <span>Violet Mendoza</span>
-                                            </li>
                                             <li class="mb-4 pt-1">
                                                 <span class="fw-medium me-1">Email:</span>
-                                                <span>Example@gmail.com</span>
+                                                <span id="email-siswa"></span>
                                             </li>
                                             <li class="mb-4 pt-1">
                                                 <span class="fw-medium me-1">Contact:</span>
-                                                <span>(+62) 832-2321-2886</span>
+                                                <span id="tlp-siswa"></span>
+                                            </li>
+                                            <li class="mb-4 pt-1">
+                                                <span class="fw-medium me-1">Sekolah:</span>
+                                                <span id="sekolah-siswa"></span>
                                             </li>
                                             <li class="mb-4 pt-1">
                                                 <span class="fw-medium me-1">Status:</span>
-                                                <span class="badge bg-label-warning">siswa</span>
+                                                <span class="badge bg-label-warning" id="peran-siswa"></span>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
-                                {{-- </div> --}}
-                                <!-- /User Card -->
 
                             </div>
                         </div>
-                        {{-- end modal detail --}}
                     </div>
                 </div>
             </div>
@@ -677,168 +861,197 @@
                                     <p class="mt-4 small text-uppercase text-muted">Details</p>
                                     <div class="info-container">
                                         <ul class="list-unstyled">
-                                            <li class="mb-4">
-                                                <span class="fw-medium me-1">Name:</span>
-                                                <span>Violet Mendoza</span>
-                                            </li>
                                             <li class="mb-4 pt-1">
                                                 <span class="fw-medium me-1">Email:</span>
-                                                <span>Example@gmail.com</span>
+                                                <span id="email-siswa"></span>
                                             </li>
                                             <li class="mb-4 pt-1">
                                                 <span class="fw-medium me-1">Contact:</span>
-                                                <span>(+62) 832-2321-2886</span>
+                                                <span id="tlp-siswa"></span>
+                                            </li>
+                                            <li class="mb-4 pt-1">
+                                                <span class="fw-medium me-1">Sekolah:</span>
+                                                <span id="sekolah-siswa"></span>
                                             </li>
                                             <li class="mb-4 pt-1">
                                                 <span class="fw-medium me-1">Status:</span>
-                                                <span class="badge bg-label-warning">siswa</span>
-                                                <span class="badge bg-label-warning">ketua magang</span>
+                                                <span class="badge bg-label-warning" id="peran-siswa"></span>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
-                                {{-- </div> --}}
-                                <!-- /User Card -->
 
                             </div>
                         </div>
-                        {{-- end modal detail --}}
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
-        <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-        <script src="{{ asset('assets/js/forms-editors.js') }}"></script>
-        <script>
-            jQuery.noConflict();
+    <script src="{{ asset('assets/vendor/libs/moment/moment.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 
-            jQuery(document).ready(function($) {
-                $('#jstabel1').DataTable({
-                    "lengthMenu": [
-                        [5, 10, 15, -1],
-                        [5, 10, 15, "All"]
-                    ],
-                    "pageLength": 5,
+    <script>
+        $("#masa_magang").flatpickr({
+            altInput: true,
+            altFormat: "F j, Y",
+            dateFormat: "Y-m-d",
+            mode: "range"
+        });
+    </script>
 
-                    "order": [],
+    <script>
+        $('.detail-user').click(function() {
 
-                    "ordering": false,
+            let avatar = $(this).data('avatar');
+            let username = $(this).data('username');
+            let email = $(this).data('email');
+            let tlp = $(this).data('tlp') != '' ? $(this).data('tlp') : '-';
+            let peran = $(this).data('peran');
+            let sekolah = $(this).data('sekolah');
 
-                    "language": {
-                        "sProcessing": "Sedang memproses...",
-                        "sLengthMenu": "Tampilkan _MENU_ data",
-                        "sZeroRecords": "Tidak ditemukan Data",
-                        "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-                        "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
-                        "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
-                        "sInfoPostFix": "",
-                        "sSearch": "Cari :",
-                        "sUrl": "",
-                        "oPaginate": {
-                            "sFirst": "Pertama",
-                            "sPrevious": "&#8592;",
-                            "sNext": "&#8594;",
-                            "sLast": "Terakhir"
-                        }
+            $('#avatar').attr('src', (avatar == '' ? 'http://127.0.0.1:8000/assets/img/avatars/1.png' :
+                `http://127.0.0.1:8000/storage/${avatar}`));
+            $('#username-siswa').text(username);
+            $('#email-siswa').text(email);
+            $('#tlp-siswa').text(tlp);
+            $('#peran-siswa').text(peran);
+            $('#sekolah-siswa').text(sekolah);
+
+            $('#detail').modal('show');
+        });
+    </script>
+
+    <script>
+        jQuery.noConflict();
+
+        jQuery(document).ready(function($) {
+            $('#jstabel1').DataTable({
+                "lengthMenu": [
+                    [5, 10, 15, -1],
+                    [5, 10, 15, "All"]
+                ],
+                "pageLength": 5,
+
+                "order": [],
+
+                "ordering": false,
+
+                "language": {
+                    "sProcessing": "Sedang memproses...",
+                    "sLengthMenu": "Tampilkan _MENU_ data",
+                    "sZeroRecords": "Tidak ditemukan Data",
+                    "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
+                    "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Cari :",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "Pertama",
+                        "sPrevious": "&#8592;",
+                        "sNext": "&#8594;",
+                        "sLast": "Terakhir"
                     }
-                });
+                }
             });
-            jQuery(document).ready(function($) {
-                $('#jstabel2').DataTable({
-                    "lengthMenu": [
-                        [5, 10, 15, -1],
-                        [5, 10, 15, "All"]
-                    ],
-                    "pageLength": 5,
+        });
+        jQuery(document).ready(function($) {
+            $('#jstabel2').DataTable({
+                "lengthMenu": [
+                    [5, 10, 15, -1],
+                    [5, 10, 15, "All"]
+                ],
+                "pageLength": 5,
 
-                    "order": [],
+                "order": [],
 
-                    "ordering": false,
+                "ordering": false,
 
-                    "language": {
-                        "sProcessing": "Sedang memproses...",
-                        "sLengthMenu": "Tampilkan _MENU_ data",
-                        "sZeroRecords": "Tidak ditemukan Data",
-                        "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-                        "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
-                        "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
-                        "sInfoPostFix": "",
-                        "sSearch": "Cari :",
-                        "sUrl": "",
-                        "oPaginate": {
-                            "sFirst": "Pertama",
-                            "sPrevious": "&#8592;",
-                            "sNext": "&#8594;",
-                            "sLast": "Terakhir"
-                        }
+                "language": {
+                    "sProcessing": "Sedang memproses...",
+                    "sLengthMenu": "Tampilkan _MENU_ data",
+                    "sZeroRecords": "Tidak ditemukan Data",
+                    "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
+                    "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Cari :",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "Pertama",
+                        "sPrevious": "&#8592;",
+                        "sNext": "&#8594;",
+                        "sLast": "Terakhir"
                     }
-                });
+                }
             });
-            jQuery(document).ready(function($) {
-                $('#jstabel3').DataTable({
-                    "lengthMenu": [
-                        [5, 10, 15, -1],
-                        [5, 10, 15, "All"]
-                    ],
-                    "pageLength": 5,
+        });
+        jQuery(document).ready(function($) {
+            $('#jstabel3').DataTable({
+                "lengthMenu": [
+                    [5, 10, 15, -1],
+                    [5, 10, 15, "All"]
+                ],
+                "pageLength": 5,
 
-                    "order": [],
+                "order": [],
 
-                    "ordering": false,
+                "ordering": false,
 
-                    "language": {
-                        "sProcessing": "Sedang memproses...",
-                        "sLengthMenu": "Tampilkan _MENU_ data",
-                        "sZeroRecords": "Tidak ditemukan Data",
-                        "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-                        "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
-                        "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
-                        "sInfoPostFix": "",
-                        "sSearch": "Cari :",
-                        "sUrl": "",
-                        "oPaginate": {
-                            "sFirst": "Pertama",
-                            "sPrevious": "&#8592;",
-                            "sNext": "&#8594;",
-                            "sLast": "Terakhir"
-                        }
+                "language": {
+                    "sProcessing": "Sedang memproses...",
+                    "sLengthMenu": "Tampilkan _MENU_ data",
+                    "sZeroRecords": "Tidak ditemukan Data",
+                    "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
+                    "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Cari :",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "Pertama",
+                        "sPrevious": "&#8592;",
+                        "sNext": "&#8594;",
+                        "sLast": "Terakhir"
                     }
-                });
+                }
             });
-            jQuery(document).ready(function($) {
-                $('#jstabel4').DataTable({
-                    "lengthMenu": [
-                        [5, 10, 15, -1],
-                        [5, 10, 15, "All"]
-                    ],
-                    "pageLength": 5,
+        });
+        jQuery(document).ready(function($) {
+            $('#jstabel4').DataTable({
+                "lengthMenu": [
+                    [5, 10, 15, -1],
+                    [5, 10, 15, "All"]
+                ],
+                "pageLength": 5,
 
-                    "order": [],
+                "order": [],
 
-                    "ordering": false,
+                "ordering": false,
 
-                    "language": {
-                        "sProcessing": "Sedang memproses...",
-                        "sLengthMenu": "Tampilkan _MENU_ data",
-                        "sZeroRecords": "Tidak ditemukan Data",
-                        "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-                        "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
-                        "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
-                        "sInfoPostFix": "",
-                        "sSearch": "Cari :",
-                        "sUrl": "",
-                        "oPaginate": {
-                            "sFirst": "Pertama",
-                            "sPrevious": "&#8592;",
-                            "sNext": "&#8594;",
-                            "sLast": "Terakhir"
-                        }
+                "language": {
+                    "sProcessing": "Sedang memproses...",
+                    "sLengthMenu": "Tampilkan _MENU_ data",
+                    "sZeroRecords": "Tidak ditemukan Data",
+                    "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
+                    "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Cari :",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "Pertama",
+                        "sPrevious": "&#8592;",
+                        "sNext": "&#8594;",
+                        "sLast": "Terakhir"
                     }
-                });
+                }
             });
-        </script>
-    @endsection
+        });
+    </script>
+@endsection

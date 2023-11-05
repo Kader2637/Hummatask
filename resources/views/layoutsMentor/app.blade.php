@@ -6,9 +6,6 @@
     data-base-url="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1" data-framework="laravel"
     data-template="vertical-menu-theme-default-light">
 
-
-<!-- Mirrored from demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/dashboard/crm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Oct 2023 03:44:33 GMT -->
-<!-- Added by HTTrack -->
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 
 <head>
@@ -75,9 +72,6 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('assets/js/config.js') }}"></script>
 
 </head>
@@ -316,8 +310,13 @@
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            {{-- <img src="assets/img/avatars/1.png" alt
-                                                                class="h-auto rounded-circle"> --}}
+                                                            @if (Auth::user()->avatar)
+                                                                <img src="{{ asset('storage/' . Auth::user()->avatar) }}"
+                                                                    class="h-auto rounded-circle">
+                                                            @else
+                                                                <img src="{{ asset('assets/img/avatars/1.png') }}"
+                                                                    class="h-auto rounded-circle">
+                                                            @endif
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -364,8 +363,13 @@
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            {{-- <img src="assets/img/avatars/2.png" alt
-                                                                class="h-auto rounded-circle"> --}}
+                                                            @if (Auth::user()->avatar)
+                                                                <img src="{{ asset('storage/' . Auth::user()->avatar) }}"
+                                                                    class="h-auto rounded-circle">
+                                                            @else
+                                                                <img src="{{ asset('assets/img/avatars/1.png') }}"
+                                                                    class="h-auto rounded-circle">
+                                                            @endif
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -548,8 +552,13 @@
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
                                     data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        {{-- <img src="{{ asset('assets/img/avatars/1.png') }}" alt
-                                            class="h-auto rounded-circle"> --}}
+                                        @if (Auth::user()->avatar)
+                                            <img src="{{ asset('storage/' . Auth::user()->avatar) }}"
+                                                class="h-auto rounded-circle">
+                                        @else
+                                            <img src="{{ asset('assets/img/avatars/1.png') }}"
+                                                class="h-auto rounded-circle">
+                                        @endif
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -558,8 +567,13 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
-                                                        {{-- <img src="{{ asset('assets/img/avatars/1.png') }}"
-                                                            class="h-auto rounded-circle"> --}}
+                                                        @if (Auth::user()->avatar)
+                                                            <img src="{{ asset('storage/' . Auth::user()->avatar) }}"
+                                                                class="h-auto rounded-circle">
+                                                        @else
+                                                            <img src="{{ asset('assets/img/avatars/1.png') }}"
+                                                                class="h-auto rounded-circle">
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
@@ -612,13 +626,7 @@
         <!-- Drag Target Area To SlideIn Menu On Small Screens -->
         <div class="drag-target"></div>
     </div>
-    <!-- / Layout wrapper -->
-    <!--/ Layout Content -->
 
-
-    <!-- Include Scripts -->
-    <!-- $isFront is used to append the front layout scripts only on the front layout otherwise the variable will be blank -->
-    <!-- BEGIN: Vendor JS-->
     <script src="{{ asset('assets/vendor/libs/jquery/jquery1e84.js?id=0f7eb1f3a93e3e19e8505fd8c175925a') }}"></script>
     <script src="{{ asset('assets/vendor/libs/popper/popper0a73.js?id=baf82d96b7771efbcc05c3b77135d24c') }}"></script>
     <script src="{{ asset('assets/vendor/js/bootstraped84.js?id=9a6c701557297a042348b5aea69e9b76') }}"></script>
