@@ -105,13 +105,7 @@
                         <button type="button" class="btn btn-label-secondary waves-effect"
                             data-bs-dismiss="modal">Kembali</button>
                         <button type="submit"class="btn btn-primary waves-effect waves-light">Ajukan</button>
-                        <div class="row">
-                            <div class="col">
-                                <label for="deskripsi" class="form-label">Deskripsi Presentasi</label>
-                                <textarea name="deskripsi" id="deskripsi" cols="20" rows="10" class="form-control" style="resize: none"
-                                    placeholder="Isi deskripsi pengajuan anda"></textarea>
-                            </div>
-                        </div>
+                    </div>
                 </form>
             </div>
         </div>
