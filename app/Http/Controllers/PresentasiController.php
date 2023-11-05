@@ -36,13 +36,13 @@ class PresentasiController extends Controller
             return back()->with('error','Deskripsi presentasi tidak boleh melebihi 700 karakter');
         }
 
-        if(Carbon::now()->isoFormat('HH:m:ss') < "08:00:00" ){
-            return back()->with('error','Pengajuan Presentasi dimulai pukul 08:00');
-        }
+        // if(Carbon::now()->isoFormat('HH:m:ss') < "08:00:00" ){
+        //     return back()->with('error','Pengajuan Presentasi dimulai pukul 08:00');
+        // }
 
-        if(Carbon::now()->isoFormat('HH:m:ss') > "15:00:00" ){
-            return back()->with('error','Pengajuan Presentasi tidak boleh lebih dari pukul 15:00');
-        }
+        // if(Carbon::now()->isoFormat('HH:m:ss') > "15:00:00" ){
+        //     return back()->with('error','Pengajuan Presentasi tidak boleh lebih dari pukul 15:00');
+        // }
 
 
         $history = HistoryPresentasi::latest()->pluck('id')->first();
@@ -57,12 +57,12 @@ class PresentasiController extends Controller
             //code...
             $tim = Tim::where('code',$code)->first();
 
-            $validasi = $tim->presentasi->where('jadwal',Carbon::now()->isoFormat('YYYY-M-DD'))->first();
-            // dd($validasi);
+            // $validasi = $tim->presentasi->where('jadwal',Carbon::now()->isoFormat('YYYY-M-DD'))->first();
 
-            if( $validasi != null ){
-                return back()->with('error','Pengajuan presentasi dalam sehari hanya boleh 1 kali');
-            }
+
+            // if( $validasi != null ){
+            //     return back()->with('error','Pengajuan presentasi dalam sehari hanya boleh 1 kali');
+            // }
 
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Timmu tidak ditemukan');
@@ -87,11 +87,9 @@ class PresentasiController extends Controller
 
     protected function persetujuanPresentasi(RequestPersetujuanPresentasi $request, $code)
     {
-
-        $dataPresentasi = Presentasi::where('jadwal',Carbon::now()->isoFormat('Y-M-DD'))->where('status_pengajuan','disetujui')->get();
-        $urutan = count($dataPresentasi);
+        $dataPresentasi = Presentasi::where('jadwal',Carbon::now()->isoFormat('Y-M-DD'))->where('status_pengajuan','disetujui')->get()->count();
         $presentasi = Presentasi::with('tim.project.tema')->where('code', $code)->first();
-        $presentasi->urutan = $urutan + 1;
+        $presentasi->urutan = ($dataPresentasi === null ) ?  1   :  ++$dataPresentasi ;
         $presentasi->status_pengajuan = 'disetujui';
         $presentasi->save();
         return response()->json($presentasi);
@@ -113,7 +111,7 @@ class PresentasiController extends Controller
         return response()->json(['success'=>'Berhasil Memberikan Penolakan']);
     }
 
-    protected function konfirmasiPresentasi(RequestKonfirmasiPresentasi $request, $code)
+    protected function konfirmasiPresentasi(Request $request, $code)
     {
 
         if($request->status_revisi === null){
@@ -141,22 +139,54 @@ class PresentasiController extends Controller
 
     protected function tampilkanDetailPresentasi(Request $request,$code)
     {
-        $history = HistoryPresentasi::with('presentasi.tim.user','presentasi.tim.project.tema')->where('code',$code)->first();
+        $history = HistoryPresentasi::with(['presentasi.tim.user','presentasi.tim.project.tema'])->where('code',$code)->first();
         $presentasi = $history->presentasi->where('status_pengajuan','menunggu');
-        $konfirmasi_presentasi = $history->presentasi->where('status_pengajuan','disetujui')->where('status_presentasi','menunggu');
-        $tim_belum_presentasi = Tim::with('user','project.tema')->doesntHave('presentasi')->get();
+        $konfirmasi_presentasi = $history->presentasi->where('status_pengajuan','disetujui')->where('status_presentasi','menunggu')->sortByDesc('urutan');
+        $tim_belum_presentasi = Tim::with('user','project.tema')->where('sudah_presentasi',false)->get();
         $telat_presentasi = $history->presentasi->where('status_presentasi','telat');
+        $urutanPresentasi = $history->presentasi->where('status_presentasi','menunggu')->where('status_pengajuan','disetujui')->where('jadwal',Carbon::now()->isoFormat('Y-M-DD'));
+
 
         $data = [
             'presentasi' => $presentasi,
             'konfirmasi' => $konfirmasi_presentasi,
             'belum_presentasi' => $tim_belum_presentasi,
             'telat_presentasi' => $telat_presentasi,
+            'urutanPresentasi' => $urutanPresentasi
         ];
 
         return response()->json($data);
     }
 
+    protected function gantiUrutan(Request $request, $code)
+    {
+        $presentasi = Presentasi::where('status_presentasi', 'menunggu')
+            ->where('status_pengajuan', 'disetujui')
+            ->where('jadwal', Carbon::now()->isoFormat('Y-M-DD'))
+            ->orderBy('urutan', 'asc')
+            ->get();
+
+        $urutanTergantikan = $request->urutanTergantikan;
+
+        // Temukan presentasi yang akan digantikan
+        $pengganti = $presentasi->where('code', $code)->first();
+
+       foreach ($presentasi as $data) {
+            if($data->urutan >= $urutanTergantikan){
+                if($data->urutan === $pengganti->urutan){
+                    $pengganti->urutan = $urutanTergantikan;
+                    $pengganti->save();
+                }else{
+                    $data->urutan += 1;
+                    $data->save();
+
+                }
+            }
+       }
+
+
+        return response()->json($pengganti);
+    }
 
 
 }

@@ -283,10 +283,13 @@
                         </a>
                     </div>
 
-                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                    <div class="navbar-nav-right d-flex align-items-center" id="navbarcollapse">
+                        <div class="d-flex align-items-center justify-content-center gap-2 ">
+                            Login sebagai :
+                            <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Mentor</span>
+                        </div>
                         <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Mentor</span>
                             </li>
                             <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"

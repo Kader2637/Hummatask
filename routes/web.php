@@ -99,6 +99,7 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::put('konfirmasi-presentasi/{code}', [PresentasiController::class, 'konfirmasiPresentasi']);
     Route::post('pembuatantim', [PengajuanTimController::class, 'pembuatanTimProject'])->name('pembuatan.tim');
     Route::patch('persetujuan-project/{code}', [PengajuanProjekController::class, 'persetujuanProject'])->name('persetujuan-project');
+    Route::put('atur-urutan/{code}',[PresentasiController::class,'gantiUrutan']);
 
     Route::get('delete-user/{code}', [tambahUsersController::class, 'delete'])->name('delete.user.pengguna');
     Route::get('delete-mentor/{code}', [tambahUsersController::class, 'delete_mentor'])->name('delete.mentor');
