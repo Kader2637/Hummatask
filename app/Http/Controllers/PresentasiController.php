@@ -12,6 +12,7 @@ use App\Models\Presentasi;
 use App\Models\Tim;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Psy\VarDumper\Presenter;
 
@@ -89,7 +90,7 @@ class PresentasiController extends Controller
     {
         $dataPresentasi = Presentasi::where('jadwal',Carbon::now()->isoFormat('Y-M-DD'))->where('status_pengajuan','disetujui')->get()->count();
         $presentasi = Presentasi::with('tim.project.tema')->where('code', $code)->first();
-        $presentasi->urutan = ($dataPresentasi === null ) ?  1   :  ++$dataPresentasi ;
+        $presentasi->urutan = $dataPresentasi+1;
         $presentasi->status_pengajuan = 'disetujui';
         $presentasi->save();
         return response()->json($presentasi);
@@ -144,15 +145,13 @@ class PresentasiController extends Controller
         $konfirmasi_presentasi = $history->presentasi->where('status_pengajuan','disetujui')->where('status_presentasi','menunggu')->sortByDesc('urutan');
         $tim_belum_presentasi = Tim::with('user','project.tema')->where('sudah_presentasi',false)->get();
         $telat_presentasi = $history->presentasi->where('status_presentasi','telat');
-        $urutanPresentasi = $history->presentasi->where('status_presentasi','menunggu')->where('status_pengajuan','disetujui')->where('jadwal',Carbon::now()->isoFormat('Y-M-DD'));
-
 
         $data = [
             'presentasi' => $presentasi,
             'konfirmasi' => $konfirmasi_presentasi,
             'belum_presentasi' => $tim_belum_presentasi,
             'telat_presentasi' => $telat_presentasi,
-            'urutanPresentasi' => $urutanPresentasi
+            'codeHistory'      => $history->code,
         ];
 
         return response()->json($data);
@@ -166,26 +165,49 @@ class PresentasiController extends Controller
             ->orderBy('urutan', 'asc')
             ->get();
 
-        $urutanTergantikan = $request->urutanTergantikan;
+            $urutanTergantikan = $request->urutanTergantikan;
 
-        // Temukan presentasi yang akan digantikan
-        $pengganti = $presentasi->where('code', $code)->first();
+            // Temukan presentasi yang akan digantikan
+            $pengganti = $presentasi->where('code', $code)->first();
 
-       foreach ($presentasi as $data) {
-            if($data->urutan >= $urutanTergantikan){
-                if($data->urutan === $pengganti->urutan){
-                    $pengganti->urutan = $urutanTergantikan;
-                    $pengganti->save();
-                }else{
-                    $data->urutan += 1;
-                    $data->save();
+            // Jika presentasi pengganti ditemukan
+            if ($pengganti) {
+                $urutanAwalPengganti = $pengganti->urutan;
 
+                foreach ($presentasi as $model) {
+                    if ($urutanAwalPengganti > $urutanTergantikan) {
+                        if ($model->urutan >= $urutanTergantikan && $model->urutan < $urutanAwalPengganti) {
+                            $model->update(['urutan' => $model->urutan + 1]);
+                        }
+                    } else {
+                        if ($model->urutan > $urutanAwalPengganti && $model->urutan <= $urutanTergantikan) {
+                            $model->update(['urutan' => $model->urutan - 1]);
+                        }
+                    }
                 }
+
+                // Ubah urutan presentasi pengganti
+                $pengganti->urutan = $urutanTergantikan;
+                $pengganti->save();
             }
-       }
 
 
-        return response()->json($pengganti);
+            $history = HistoryPresentasi::with(['presentasi.tim.user','presentasi.tim.project.tema'])-> where('code',$request->codeHistory)->first();
+        $urutanPresentasi = $history->presentasi->where('status_presentasi','menunggu')->where('status_pengajuan','disetujui')->where('jadwal',Carbon::now()->isoFormat('Y-M-DD'));
+        return response()->json($urutanPresentasi);
+    }
+
+    protected function ambilUrutan($codeHistory)
+    {
+        $history = HistoryPresentasi::with(['presentasi.tim.user','presentasi.tim.project.tema'])->where('code',$codeHistory)->first();
+
+        $urutanPresentasi = Presentasi::with(['tim.user','tim.project.tema'])->where('history_presentasi_id',$history->id)->where('status_presentasi', 'menunggu')
+        ->where('status_pengajuan', 'disetujui')
+        ->whereDate('jadwal', Carbon::now()->format('Y-m-d'))
+        ->orderBy('urutan', 'asc')
+        ->get();
+
+    return response()->json($urutanPresentasi);
     }
 
 

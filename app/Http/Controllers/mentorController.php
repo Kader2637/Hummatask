@@ -217,7 +217,6 @@ class mentorController extends Controller
     protected function presentasi()
     {
 
-        $dataPresentasi = Presentasi::where('jadwal',Carbon::now()->isoFormat('Y-M-DD'))->where('status_pengajuan','disetujui')->get()->count();
         
         $presentasi = Presentasi::all();
         $historyPresentasi = HistoryPresentasi::all();

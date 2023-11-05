@@ -24,9 +24,8 @@
                                 <select id="select2Basic"
                                     class="select2 form-select form-select-lg select2-hidden-accessible"
                                     data-allow-clear="true" data-select2-id="select2Basic" tabindex="-1"
-                                    aria-hidden="true" name="urutan">
+                                    aria-hidden="true" name="urutan" data-bs-code="">
                                     <option value="" disabled selected > Pilih Urutan </option>
-
                                 </select>
                             </div>
                         </div>
@@ -35,7 +34,7 @@
                 <div class="modal-footer">
                     <button type="button" data-bs-toggle="modal" data-bs-target="#detailPresentasi"
                         class="btn btn-label-secondary waves-effect" data-bs-dismiss="modal">Close</button>
-                    <button type="button" data-bs-toggle="modal" data-bs-target="#detailPresentasi"
+                    <button type="button"  onclick="kirimProsesGantiUrutan()" data-bs-toggle="modal" data-bs-target="#detailPresentasi"
                         class="btn btn-primary waves-effect waves-light">Save changes</button>
                 </div>
             </div>
@@ -311,13 +310,79 @@
     <script src="{{ asset('assets/js/forms-typeahead.js') }}"></script>
     <script>
 
-        const aturUrutan = (code) =>{
-            const urutanTergantikan = document.getElementById("select2Basic").value;
-            console.log(urutanTergantikan);
-            axios.put('atur-urutan/'+code,{urutanTergantikan})
+        const aturUrutan = (code,codeHistory) =>{
+
+            document.getElementById('select2Basic').setAttribute('data-bs-code',code);
+            document.getElementById('select2Basic').setAttribute('data-bs-codeHistory',codeHistory);
+
+            axios.get('ambil-urutan/'+codeHistory)
             .then((res) => {
                 const data = res.data;
                 console.log(data);
+                document.getElementById('select2Basic').innerHTML = "";
+                data.forEach(presentasi => {
+                    let option = document.createElement('option')
+                    option.textContent = "Urutan ke-"+presentasi.urutan;
+                    option.value = presentasi.urutan;
+                    option.name = "optUrutan";
+                    document.getElementById('select2Basic').appendChild(option);
+                });
+
+            })
+        }
+
+        const kirimProsesGantiUrutan = () =>
+        {
+            const code = document.getElementById('select2Basic').getAttribute('data-bs-code');
+            const codeHistory = document.getElementById('select2Basic').getAttribute('data-bs-codeHistory');
+            const urutanTergantikan = document.getElementById("select2Basic").value;
+            console.log(urutanTergantikan);
+            document.getElementById('row-konfirmasi').innerHTML = "";
+            axios.put('atur-urutan/'+code,{urutanTergantikan,codeHistory})
+            .then((res) => {
+                axios.get('ambil-urutan/'+codeHistory)
+                .then((resNew) => {
+
+                    const data = resNew.data
+                    console.log(data);
+
+                    data.forEach(presentasi => {
+                        let div = document.createElement('div')
+                        div.id = "card-konfirmasi-" + presentasi.code;
+                        div.className = "col-md-6 col-lg-4";
+                        let childrend =
+                            `
+                    <div class="card text-center mb-3">
+                                    <div class="card-body">
+                                        <div style="width: 30px; height: 30px; top: -10px; right: -10px;" class="rounded bg-primary d-flex justify-content-center align-items-center text-white position-absolute">
+                                          ${presentasi.urutan}
+                                        </div>
+                                        <img src="{{ asset('storage/${presentasi.tim.logo}') }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 150px; height: 150px; object-fit: cover; ">
+                                        <div class="d-flex justify-content-center align-items-center gap-2">
+                                            <h4 class="card-title text-capitalize">${presentasi.tim.nama}</h4>
+                                        <a href="#"><span class="badge bg-label-warning mb-3">${presentasi.tim.status_tim}</span></a>
+                                        </div>
+                                        <div class="card-text">${presentasi.jadwal}</div>
+                                       <div class="d-flex justify-content-center gap-2">
+                                             <button class="btn btn-primary" onclick="aturUrutan('${presentasi.code}','${codeHistory}')" data-bs-toggle="modal" id="btnUrutan" data-bs-target="#aturUrutan" >Urutan</button>
+                                             <button class="btn btn-success" onclick="sudahPresentasi('${presentasi.code}')" data-bs-toggle="modal" data-bs-target="#Finish" >Konfirmasi</button>
+                                       </div>
+                                    </div>
+                                </div>
+                    `
+                        div.innerHTML = childrend
+                        document.getElementById('row-konfirmasi').appendChild(div)
+
+                    });
+
+
+                })
+
+
+
+
+
+
             })
             .catch((err) => {
                 console.log(err);
@@ -331,9 +396,8 @@
                     let data2 = res.data.konfirmasi;
                     let data3 = res.data.belum_presentasi;
                     let data4 = res.data.telat_presentasi;
-                    let data5 = res.data.urutanPresentasi;
 
-                    console.log(res.data);
+                    console.log(res.data.codeHistory);
 
                     // console.log(Object.keys(data2));
 
@@ -387,7 +451,7 @@
                                         </div>
                                         <div class="card-text">${presentasi.jadwal}</div>
                                        <div class="d-flex justify-content-center gap-2">
-                                             <button class="btn btn-primary" onclick="aturUrutan('${presentasi.code}')" data-bs-toggle="modal" data-bs-target="#aturUrutan" >Urutan</button>
+                                             <button class="btn btn-primary" onclick="aturUrutan('${presentasi.code}','${res.data.codeHistory}')" data-bs-toggle="modal" id="btnUrutan" data-bs-target="#aturUrutan" >Urutan</button>
                                              <button class="btn btn-success" onclick="sudahPresentasi('${presentasi.code}')" data-bs-toggle="modal" data-bs-target="#Finish" >Konfirmasi</button>
                                        </div>
                                     </div>
@@ -498,17 +562,6 @@
 
                     })
 
-                    document.getElementById('select2Basic').innerHTML = "";
-
-                    Object.keys(data5).forEach(keys=>{
-                        let presentasi = data5[keys]
-
-                        let option = document.createElement('option')
-                        option.textContent = "Urutan ke-"+presentasi.urutan;
-                        option.value = presentasi.urutan;
-                        option.name = "optUrutan";
-                        document.getElementById('select2Basic').appendChild(option);
-                    })
 
 
 
@@ -589,7 +642,7 @@
                         </div>
                         <div class="card-text">${newData.jadwal}</div>
                         <div class="d-flex justify-content-center gap-2">
-                            <button onclick="aturUrutan('${newData.code}')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#aturUrutan" >Urutan</button>
+                            <button id="btnUrutan" onclick="aturUrutan('${newData.code}','${res.data.codeHistory}')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#aturUrutan" >Urutan</button>
                             <button class="btn btn-success" onclick="sudahPresentasi('${newData.code}')" data-bs-toggle="modal" data-bs-target="#Finish">Konfirmasi</button>
                         </div
                     </div
