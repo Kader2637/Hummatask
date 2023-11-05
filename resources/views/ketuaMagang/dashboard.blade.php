@@ -46,7 +46,7 @@
                                 <span class="avatar-initial rounded bg-label-danger"><i
                                         class="ti ti-calendar-check "></i></span>
                             </div>
-                            <h4 class="ms-1 mb-0">27</h4>
+                            <h4 class="ms-1 mb-0">{{ $present }}</h4>
                         </div>
                         <p class="mb-1">Presentasi hari ini</p>
                     </div>
@@ -99,96 +99,26 @@
                     <div class="table-responsive">
                         <table class="table table-borderless border-top">
                             <tbody>
+                                @foreach ($presentasi as $item )
                                 <tr>
                                     <td class="pt-2">
-                                        <div class="d-flex justify-content-start align-items-center mt-lg-4">
+                                        <div class="d-flex justify-content-start align-items-center mt-lg-1">
                                             <div class="avatar me-3 avatar-sm">
                                                 <img src="{{ asset('assets/img/avatars/4.png') }}" alt="Avatar"
                                                     class="rounded-circle" />
                                             </div>
                                             <div class="d-flex flex-column">
-                                                <h6 class="mb-0">Maven</h6>
+                                                <h6 class="mb-0">{{ $item->tim_id }}</h6>
                                             </div>
                                         </div>
-                                    </td>
-                                    <td class="text-end pt-2">
-                                        <div class="user-progress mt-lg-4">
-                                            <i class="fa-solid fa-user"></i>
-                                        </div>
+                                        <td class="text-end pt-2">
+                                            <div class="user-progress mt-lg-2">
+                                                <i class="fa-solid fa-user"></i>
+                                            </div>
+                                        </td>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex justify-content-start align-items-center">
-                                            <div class="avatar me-3 avatar-sm">
-                                                <img src="{{ asset('assets/img/avatars/14.png') }}" alt="Avatar"
-                                                    class="rounded-circle" />
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <h6 class="mb-0">HummasTask</h6>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="text-end">
-                                        <div class="user-progress">
-                                            <i class="fa-solid fa-users"></i>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex justify-content-start align-items-center">
-                                            <div class="avatar me-3 avatar-sm">
-                                                <img src="{{ asset('assets/img/backgrounds/airpods.png') }}" alt="Avatar"
-                                                    class="rounded-circle" />
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <h6 class="mb-0">Yo Wes Iki</h6>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="text-end">
-                                        <div class="user-progress">
-                                            <i class="fa-solid fa-users"></i>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex justify-content-start align-items-center">
-                                            <div class="avatar me-3 avatar-sm">
-                                                <img src="{{ asset('assets/img/avatars/11.png') }}" alt="Avatar"
-                                                    class="rounded-circle" />
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <h6 class="mb-0">Manula</h6>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="text-end">
-                                        <div class="user-progress">
-                                            <i class="fa-solid fa-user-group"></i>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex justify-content-start align-items-center">
-                                            <div class="avatar me-3 avatar-sm">
-                                                <img src="{{ asset('assets/img/avatars/1.png') }}" alt="Avatar"
-                                                    class="rounded-circle" />
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <h6 class="mb-0">Sempul</h6>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="text-end">
-                                        <div class="user-progress">
-                                            <i class="fa-solid fa-user-group"></i>
-                                        </div>
-                                    </td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                         <a href="{{ route('ketua.presentasi') }}" class="btn btn-primary d-flex flex-wrap flex-col">Lihat Lebih Banyak</a>
@@ -221,16 +151,12 @@
                 </div>
             </div>
 
-
-
         </div>
-
         <script>
+            var chartData = @json($chartData);
             const cyanColor = '#28dac6',
                 orangeLightColor = '#FDAC34';
             let cardColor, headingColor, labelColor, borderColor, legendColor;
-
-
             cardColor = config.colors.cardColor;
             headingColor = config.colors.headingColor;
             labelColor = config.colors.textMuted;
@@ -242,24 +168,12 @@
                 const barChartVar = new Chart(barChart, {
                     type: 'bar',
                     data: {
-                        labels: [
-                            '7/12',
-                            '8/12',
-                            '9/12',
-                            '10/12',
-                            '11/12',
-                            '12/12',
-                            '13/12',
-                            '14/12',
-                            '15/12',
-                            '16/12',
-                            '17/12',
-                            '18/12',
-                            '19/12'
-                        ],
-                        datasets: [{
-                            data: [275, 90, 190, 205, 125, 85, 55, 87, 127, 150, 230, 280, 190],
-                            backgroundColor: cyanColor,
+                        labels:  chartData.map(data => data.month),
+                        datasets:
+                        [{
+                            label: 'Data Persentasi',
+                            data: chartData.map(data => parseInt(data.disetujui)),
+                            backgroundColor: chartData.map(data => data.color),
                             borderColor: 'transparent',
                             maxBarThickness: 15,
                             borderRadius: {
@@ -268,6 +182,7 @@
                             }
                         }]
                     },
+
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
@@ -276,7 +191,6 @@
                         },
                         plugins: {
                             tooltip: {
-                                //   rtl: isRtl,
                                 backgroundColor: cardColor,
                                 titleColor: headingColor,
                                 bodyColor: legendColor,
@@ -291,7 +205,7 @@
                             x: {
                                 grid: {
                                     color: borderColor,
-                                    drawBorder: false,
+                                    drawBorder: true,
                                     borderColor: borderColor
                                 },
                                 ticks: {
@@ -300,14 +214,14 @@
                             },
                             y: {
                                 min: 0,
-                                max: 400,
+                                max: 100,
                                 grid: {
                                     color: borderColor,
-                                    drawBorder: false,
+                                    drawBorder: true,
                                     borderColor: borderColor
                                 },
                                 ticks: {
-                                    stepSize: 100,
+                                    stepSize: 50,
                                     color: labelColor
                                 }
                             }

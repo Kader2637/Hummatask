@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Models\Tim;
 use App\Models\Anggota;
+use App\Models\Presentasi;
 use App\Models\StatusTim;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class KetuaMagangController extends Controller
 {
@@ -18,9 +21,53 @@ class KetuaMagangController extends Controller
         $title = "Dashboard Ketua Magang";
         $tims = Anggota::with('tim')->where('user_id', Auth::user()->id)->get();
         $usercount = User::where('peran_id', 1)->count();
-        $timcount = Tim::where('kadaluwarsa', 0)->count();
+        $timcount = Tim::where('kadaluwarsa', 1)->count();
+        $present = Presentasi::where('status_pengajuan','disetujui')->count();
 
-        return view('ketuaMagang.dashboard', compact('title', 'tims', 'usercount', 'timcount'));
+
+        $presentasi = Presentasi::with('tim')->where('status_pengajuan', 'disetujui')->latest('created_at')->take(5)->get()->reverse();
+
+        $data = Presentasi::select(
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('YEAR(created_at) as year'),
+            'status_pengajuan',
+            DB::raw('count(*) as total')
+        )
+            ->whereIn('status_pengajuan', ['disetujui'])
+            ->whereYear('created_at', Carbon::now()->year)
+            ->groupBy('year', 'month', 'status_pengajuan')
+            ->get();
+
+        $processedData = [];
+        $currentYear = Carbon::now()->year;
+        $currentMonth = Carbon::now()->month;
+
+        for ($month = 1; $month <= 12; $month++) {
+            $date = Carbon::createFromDate($currentYear, $month, 1);
+            $yearMonth = $date->isoFormat('MMMM');
+
+            $color = ($month == $currentMonth) ? 'blue' : 'green';
+            $colorwait = ($month == $currentMonth) ? 'grey' : 'green';
+
+            $processedData[$yearMonth] = [
+                'month' => $yearMonth,
+                'disetujui' => 0,
+                'color' => $color,
+                'colorwait' => $colorwait
+            ];
+        }
+
+        foreach ($data as $item) {
+            $yearMonth = Carbon::createFromDate($item->year, $item->month, 1)->isoFormat('MMMM');
+
+            if (isset($processedData[$yearMonth])) {
+                $status_pengajuan = strtolower($item->status_pengajuan);
+                $processedData[$yearMonth][$status_pengajuan] = $item->total;
+            }
+        }
+
+        $chartData = array_values($processedData);
+        return view('ketuaMagang.dashboard', compact('title', 'tims', 'usercount', 'timcount', 'chartData','presentasi','present'));
     }
     protected function presentasiPage()
     {
@@ -57,6 +104,20 @@ class KetuaMagangController extends Controller
             ->get();
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
         return view('ketuaMagang.project', compact('title', 'tims', 'users', 'status_tim', 'projects'));
+    }
+
+    protected function projek()
+    {
+        $title = "Project Ketua Magang";
+        $tims = User::find(Auth::user()->id)->tim()->get();
+        $project = Project::with('tim', 'tema')->where('status_project', 'approved')->get();
+        $users = User::where('peran_id',1)
+        ->whereDoesntHave('tim', function($query){
+            $query->where('kadaluwarsa', true);
+        })
+        ->get();
+        $status_tim = StatusTim::whereNot('status','solo')->get();
+        return response()->json(['project' => $project , 'title' => $title , 'tims' => $tims , 'users' => $users , 'status_tim' => $status_tim]);
     }
     protected function detailProject($code)
     {

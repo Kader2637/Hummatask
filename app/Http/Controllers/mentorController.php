@@ -12,6 +12,7 @@ use App\Models\Tim;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 
 class mentorController extends Controller
@@ -19,8 +20,81 @@ class mentorController extends Controller
     // Return view dashboard mentor
     protected function dashboard()
     {
-        return response()->view('mentor.dashboard');
+        $jadwal = [];
+        $hari = [];
+        $presentasi = Presentasi::with('tim')->where('status_pengajuan', 'disetujui')->latest('created_at')->take(5)->get()->reverse();
+        foreach ($presentasi as $i => $data) {
+            $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
+            $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd');
+        }
+        $jadwal = array_reverse($jadwal);
+        $hari = array_reverse($hari);
+
+        $data = Presentasi::select(
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('YEAR(created_at) as year'),
+            'status_pengajuan',
+            DB::raw('count(*) as total')
+        )
+            ->whereIn('status_pengajuan', ['disetujui'])
+            ->whereYear('created_at', Carbon::now()->year)
+            ->groupBy('year', 'month', 'status_pengajuan')
+            ->get();
+
+        $users = User::select(
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('YEAR(created_at) as year'),
+            'peran_id',
+            DB::raw('count(*) as total')
+        )
+            ->whereIn('peran_id', ['1'])
+            ->whereYear('created_at', Carbon::now()->year)
+            ->groupBy('year', 'month', 'peran_id')
+            ->get();
+
+        $processedData = [];
+        $currentYear = Carbon::now()->year;
+        $currentMonth = Carbon::now()->month;
+
+        for ($month = 1; $month <= 12; $month++) {
+            $date = Carbon::createFromDate($currentYear, $month, 1);
+            $yearMonth = $date->isoFormat('MMMM');
+
+            $color = ($month == $currentMonth) ? 'blue' : 'yellow';
+            $colorwait = ($month == $currentMonth) ? 'grey' : 'yellow';
+
+            $processedData[$yearMonth] = [
+                'month' => $yearMonth,
+                'disetujui' => 0,
+                '1' => 0,
+                'color' => $color,
+                'colorwait' => $colorwait
+            ];
+        }
+
+        foreach ($data as $item) {
+            $yearMonth = Carbon::createFromDate($item->year, $item->month, 1)->isoFormat('MMMM');
+
+            if (isset($processedData[$yearMonth])) {
+                $status_pengajuan = strtolower($item->status_pengajuan);
+                $processedData[$yearMonth][$status_pengajuan] = $item->total;
+            }
+        }
+
+        foreach ($users as $user) {
+            $yearMonth = Carbon::createFromDate($user->year, $user->month, 1)->isoFormat('MMMM');
+
+            if (isset($processedData[$yearMonth])) {
+                $processedData[$yearMonth]['1'] = $user->total;
+            }
+        }
+
+        $chartData = array_values($processedData);
+        return response()->view('mentor.dashboard', compact('presentasi', 'chartData', 'jadwal', 'hari'));
     }
+
+
+
 
     // Return view pengguna mentor
     protected function pengguna()
@@ -101,6 +175,25 @@ class mentorController extends Controller
 
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
         return response()->view('mentor.projek', compact('users', 'status_tim', 'projects'));
+    }
+
+    protected function Project()
+    {
+        $projects = Project::with('tim', 'tema')
+            ->where('status_project', 'approved')
+            ->get();
+
+        $anggota = $projects->flatMap(function ($project) {
+            return $project->tim->anggota;
+        });
+
+        $users = User::where('peran_id', 1)
+            ->whereDoesntHave('tim', function ($query) {
+                $query->where('kadaluwarsa', true);
+            })
+            ->get();
+        $status_tim = StatusTim::whereNot('status', 'solo')->get();
+        return response()->json(['projects' => $projects, 'anggota' => $anggota, 'users' => $users, 'status_tim' => $status_tim]);
     }
 
 

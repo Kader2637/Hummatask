@@ -117,7 +117,6 @@
             @endforelse
         </div>
         {{-- Card --}}
-
         {{-- Script detail modal --}}
         <script>
             $(document).ready(function() {
@@ -333,7 +332,6 @@
                                                 <div class="row mt-2 justify-content-center align-items-center grid"
                                                     id="anggota-list">
                                                     {{-- Anggota --}}
-                                                    {{-- Anggota --}}
                                                 </div>
                                             </div>
                                         </div>
@@ -382,9 +380,6 @@
                                     <select id="ketuaKelompok" name="ketuaKelompok"
                                         class="select2 form-select form-select-lg" data-allow-clear="true">
                                         <option value="" disabled selected>Pilih Data</option>
-                                        @foreach ($users as $data)
-                                            <option value="{{ $data->id }}">{{ $data->username }}</option>
-                                        @endforeach
                                     </select>
                                     @error('ketuaKelompok')
                                         <p class="text-danger">{{ $message }}</p>
@@ -397,9 +392,6 @@
                                     <select id="KetuaProjek" name="ketuaProjek"
                                         class="select2 form-select form-select-lg" data-allow-clear="true">
                                         <option value="" disabled selected>Pilih Data</option>
-                                        @foreach ($users as $data)
-                                            <option value="{{ $data->id }}">{{ $data->username }}</option>
-                                        @endforeach
                                     </select>
                                     @error('ketuaProjek')
                                         <p class="text-danger">{{ $message }}</p>
@@ -410,9 +402,6 @@
                                 <div class="col mb-3">
                                     <label for="anggota" class="form-label">Anggota</label>
                                     <select id="anggota" name="anggota[]" class="select2 form-select" multiple>
-                                        @foreach ($users as $data)
-                                            <option value="{{ $data->id }}">{{ $data->username }}</option>
-                                        @endforeach
                                     </select>
                                     @error('anggota')
                                         <p class="text-danger">{{ $message }}</p>
@@ -423,19 +412,49 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-label-secondary"
                                 data-bs-dismiss="modal">Kembali</button>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="submit" id="createButton" class="btn btn-primary">Simpan</button>
                         </div>
                     </div>
                 </div>
             </div>
         </form>
-        {{-- Modal Buat Tim --}}
 
         <script>
+            get()
+
+            function get() {
+                $.ajax({
+                    url: "{{ route('tampilprojek') }}",
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data) {
+                        $('#ketuaKelompok').html('')
+                        $('#KetuaProjek').html('')
+                        $('#anggota').html('')
+                        $("#KetuaProjek").append("<option disabled selected>Pilih Data</option>");
+                        $("#ketuaKelompok").append("<option disabled selected>Pilih Data</option>");
+
+                        $.each(data.users, function(index, users) {
+                            $("#ketuaKelompok").append("<option value=" + users.id + ">" + users.username +
+                                "</option>");
+                            $("#KetuaProjek").append("<option value=" + users.id + ">" + users.username +
+                                "</option>");
+                            $("#anggota").append("<option value=" + users.id + ">" + users.username +
+                                "</option>");
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Terjasi kesalahan : " + error);
+                    }
+                });
+            }
             $(document).ready(function() {
+                var isCreatingTim = false;
                 // Fungsi untuk menangani pembuatan tim menggunakan AJAX
                 function createTim() {
                     // Mendapatkan data formulir
+                    $('#createButton').prop('disabled', true);
+                    isCreatingTim = true;
                     $('#loader').show();
                     var formData = new FormData($('#createForm')[0]);
                     // Menggunakan AJAX untuk mengirim data ke server
@@ -447,7 +466,10 @@
                         processData: false,
                         success: function(response) {
                             // Tanggapan dari server, bisa ditangani sesuai kebutuhan
-                            console.log(response);
+                            get();
+                            isCreatingTim = false;
+                            // Aktifkan kembali button create
+                            $('#createButton').prop('disabled', false);
                             // Tutup modal
                             $('#status_tim').val('');
                             Swal.fire({
@@ -457,10 +479,8 @@
                             });
                             $('#ketuaKelompok, #status_tim, #anggota').val(null).trigger('change');
                             $('#modalBuatTim').modal('hide');
+                            get();
                             $('#loader').fadeOut();
-                            $('.preloader').fadeIn(500).delay(500).fadeOut(500, function() {
-                                location.reload(true);
-                            });
                         },
                         error: function(error) {
                             $('#modalBuatTim').modal('hide');
@@ -476,10 +496,13 @@
                                 text: errorMessage,
                             });
                             $('#loader').fadeOut();
+                            isCreatingTim = false;
+
+                            // Aktifkan kembali button create
+                            $('#createButton').prop('disabled', false);
                         }
                     });
                 }
-
                 // Menangani submit formulir menggunakan AJAX
                 $('#createForm').submit(function(e) {
                     e.preventDefault(); // Mencegah formulir melakukan submit bawaan
@@ -487,8 +510,6 @@
                 });
             });
         </script>
-
-
 
         <script>
             function run() {

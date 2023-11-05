@@ -171,7 +171,7 @@
     <script>
         $(window).load(function() {
 
-            var rnd = Math.random() * (3000 - 2000) + 3000;
+            var rnd = Math.random() * ( 2000 - 2000) + 500;
 
             $('.progress').css("animation", "loading " + rnd + "ms linear");
 
@@ -273,7 +273,7 @@
                         <ul class="">
                             @forelse ($tims as $item)
                                 <li class="menu-item ">
-                                    <a href="{{ route('tim.board', $item->code) }}"
+                                    <a href="{{ route('tim.board', $item->tim->code) }}"
                                         class="menu-link d-flex align-items-center gap-2">
                                         <img width="30" height="30" style="width: 30px;height:30px;object-fit: cover"
                                             class="rounded-circle border border-primary"

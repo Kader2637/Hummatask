@@ -72,6 +72,7 @@ Route::prefix('ketuaMagang')->middleware(['auth', 'siswa', 'can:kelola siswa'])-
     Route::get('dashboard', 'dashboardPage')->name('ketua.dashboard');
     Route::get('presentasi', 'presentasiPage')->name('ketua.presentasi');
     Route::get('project', 'projectPage')->name('ketua.project');
+    Route::get('projek', 'projek')->name('tampilprojek');
     Route::get('detail_project/{code}', 'detailProject')->name('ketua.detail_project');
     Route::get('history', 'historyPage')->name('ketua.history');
     Route::post('pembuatantim', [PengajuanTimController::class, 'pembuatanTimProjectKetua'])->name('pembuatantim.ketua');
@@ -88,6 +89,7 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::get('pengguna', [mentorController::class, 'pengguna'])->name('pengguna.mentor');
     Route::get('history', [mentorController::class, 'history'])->name('history.mentor');
     Route::get('presentasi', [mentorController::class, 'presentasi'])->name('presentasi.mentor');
+    Route::get('project', [mentorController::class, 'Project'])->name('Project');
 
     // Process`
     Route::post('tampil-detail-presentasi/{code}', [PresentasiController::class, 'tampilkanDetailPresentasi']);
@@ -97,8 +99,8 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::put('konfirmasi-presentasi/{code}', [PresentasiController::class, 'konfirmasiPresentasi']);
     Route::post('pembuatantim', [PengajuanTimController::class, 'pembuatanTimProject'])->name('pembuatan.tim');
     Route::patch('persetujuan-project/{code}', [PengajuanProjekController::class, 'persetujuanProject'])->name('persetujuan-project');
-    
-    Route::get('delete-user/{code}', [tambahUsersController::class, 'delete'])->name('delete.user');
+
+    Route::get('delete-user/{code}', [tambahUsersController::class, 'delete'])->name('delete.user.pengguna');
     Route::get('delete-mentor/{code}', [tambahUsersController::class, 'delete_mentor'])->name('delete.mentor');
     Route::get('delete-user-permisions/{code}', [tambahUsersController::class, 'delete_permisions'])->name('delete.user');
 

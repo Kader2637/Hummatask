@@ -44,7 +44,7 @@ class Tim extends Model
         return $this->hasMany(Anggota::class);
     }
 
-    public function project()
+    public function project(): HasMany
     {
         return $this->hasMany(Project::class);
     }

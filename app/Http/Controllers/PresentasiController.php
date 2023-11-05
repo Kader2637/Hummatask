@@ -68,10 +68,6 @@ class PresentasiController extends Controller
             return redirect()->back()->with('error', 'Timmu tidak ditemukan');
         }
 
-
-
-        // dd($history);
-
         $presentasi = new Presentasi;
         $presentasi->code = Str::uuid();
         $presentasi->judul = $request->judul;
