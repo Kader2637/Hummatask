@@ -487,8 +487,10 @@
                             // Tanggapan error dari server
                             console.log(error);
                             var errorMessage = 'Pastikan data terisi semua.';
-                            if (error.response && error.response.data && error.response.data.message) {
-                                errorMessage = error.response.data.message;
+                            if (error.responseJSON && error.responseJSON.message) {
+                                errorMessage = error.responseJSON.message;
+                            }else if (error.responseJSON && error.responseJSON.errors && error.responseJSON.error.anggota){
+                                errroMessage = 'Data sudah digunakan di opsi lain.';
                             }
                             Swal.fire({
                                 icon: 'warning',
@@ -523,70 +525,6 @@
                 }
             }
         </script>
-
-        <script>
-            $(document).ready(function() {
-                let selectedOptions = {};
-
-                function disableSelectedOptions(select) {
-                    let selectedValues = $(select).val();
-
-                    // Menyimpan nilai opsi yang dipilih
-                    selectedOptions[$(select).attr('id')] = selectedValues;
-
-                    $("select").not(select).each(function() {
-                        let currentSelect = this;
-                        $(this).find('option').each(function() {
-                            let optionValue = $(this).val();
-
-                            // Mengatur opsi yang dipilih di dropdown lainnya menjadi nonaktif
-                            if (selectedValues && selectedValues.includes(optionValue)) {
-                                $(this).prop('disabled', true);
-                            } else {
-                                $(this).prop('disabled', false);
-                            }
-                        });
-                    });
-                }
-
-                // Event handler saat memilih opsi di ketuaKelompok, KetuaProject, atau anggota
-                $("#ketuaKelompok, #KetuaProject, #anggota").change(function() {
-                    disableSelectedOptions(this);
-                });
-
-                // Event handler saat memfokuskan pada ketuaKelompok, KetuaProject, atau anggota
-                $("#ketuaKelompok, #KetuaProject, #anggota").focus(function() {
-                    disableSelectedOptions(this);
-                });
-
-                // Event handler saat kehilangan fokus pada ketuaKelompok, KetuaProject, atau anggota
-                $("#ketuaKelompok, #KetuaProject, #anggota").blur(function() {
-                    // Mengembalikan opsi yang telah dinonaktifkan
-                    $("select").each(function() {
-                        let selectId = $(this).attr('id');
-                        let originalOptions = selectedOptions[selectId];
-                        if (originalOptions) {
-                            $(this).html(originalOptions);
-                        }
-                    });
-
-                    // Menonaktifkan opsi yang telah dipilih di dropdown lainnya
-                    for (let selectId in selectedOptions) {
-                        if (selectedOptions.hasOwnProperty(selectId)) {
-                            let selectedValues = selectedOptions[selectId];
-                            $("select#" + selectId + " option").each(function() {
-                                let optionValue = $(this).val();
-                                if (selectedValues && selectedValues.includes(optionValue)) {
-                                    $(this).prop('disabled', true);
-                                }
-                            });
-                        }
-                    }
-                });
-            });
-        </script>
-
-
 
         {{-- pagination --}}
         <nav aria-label="Page navigation">
