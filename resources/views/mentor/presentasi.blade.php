@@ -294,6 +294,7 @@
     </div>
 @endsection
 
+
 @section('script')
     <script src="{{ asset('assets/js/forms-selects.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
@@ -447,6 +448,7 @@
 
                         let div = document.createElement('div')
                         div.className = "container"
+                        div.id = "notFound-1"
                         let children =
                         `
                         <div class="row" style="height:50vh;">
@@ -464,7 +466,6 @@
 
                         Object.keys(data1).forEach((key) => {
                         let presentasi = data1[key]
-                        // console.log(presentasi);
                         let div = document.createElement('div')
                         div.id = "card-persetujuan-" + presentasi.code;
                         div.className = "col-md-6 col-lg-4";
@@ -498,6 +499,7 @@
 
                         let div = document.createElement('div')
                         div.className = "container"
+                        div.id = "notFound-2"
                         let children =
                         `
                         <div class="row" style="height:50vh;">
@@ -697,7 +699,6 @@
 
 
         const setujuiPresentasi = (code) => {
-
             axios.put('persetujuan-presentasi/' + code)
                 .then((res) => {
                     document.getElementById('card-persetujuan-' + code).classList.add('d-none');
@@ -707,6 +708,8 @@
                     console.log(
                         res.data.codeHistory
                     );
+
+                    document.getElementById('notFound-2').classList.add('d-none')
 
                     const div = document.createElement('div');
                     div.className = 'col-md-6 col-lg-4';
@@ -926,3 +929,4 @@
         });
     </script>
 @endsection
+

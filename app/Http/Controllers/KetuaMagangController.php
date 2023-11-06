@@ -81,11 +81,12 @@ class KetuaMagangController extends Controller
         $konfirmasi_presentasi = $presentasi->where('status_pengajuan', 'disetujui')->where('status_presentasi', 'menunggu');
         $jadwal = [];
         $hari = [];
+        $tims = User::find(Auth::user()->id)->tim()->get();
         foreach ($presentasi as $i => $data) {
             $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
             $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd');
         }
-        return response()->view('mentor.presentasi', compact('persetujuan_presentasi', 'konfirmasi_presentasi', 'jadwal', 'hari', 'historyPresentasi'));
+        return response()->view('ketuaMagang.presentasi', compact('persetujuan_presentasi', 'konfirmasi_presentasi', 'jadwal', 'hari', 'historyPresentasi','title','tims'));
 
     }
     protected function projectPage()
