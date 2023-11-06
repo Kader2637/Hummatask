@@ -183,13 +183,23 @@
                                     placeholder="Masukkan nama tim" value="{{ $tim->nama }}">
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col mb-3">
-                                <label for="nameWithTitle" class="form-label">Deskripsi</label>
-                                <textarea style="height: 150px; resize: none;" name="deskripsiInput" id="nameWithTitle" class="form-control"
-                                    placeholder="Masukkan deskripsi project anda">{{ $project->deskripsi ?? '' }}</textarea>
+                        @if (@isset($project) && $project->deskripsi)
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="nameWithTitle" class="form-label">Deskripsi</label>
+                                    <textarea style="height: 150px; resize: none;" name="deskripsiInput" id="nameWithTitle" class="form-control"
+                                        placeholder="Masukkan deskripsi project anda">{{ $project->deskripsi ?? '' }}</textarea>
+                                </div>
                             </div>
-                        </div>
+                        @else
+                            <label for="nameWithTitle" class="form-label">Deskripsi</label>
+                            <div class="alert alert-warning d-flex align-items-center mt-4 cursor-pointer" role="alert">
+                                <span class="alert-icon text-warning me-2">
+                                    <i class="ti ti-bell ti-xs"></i>
+                                </span>
+                                Deskripsi baru bisa di edit saat project anda telah di konfirmasi oleh mentor/ketua magang
+                            </div>
+                        @endif
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
@@ -369,7 +379,8 @@
                                         <div class="card-body d-flex gap-3 align-items-center">
                                             <div>
                                                 <img width="30px" height="30px" class="rounded-circle object-cover"
-                                                    src="{{ asset($item->user->avatar) }}" alt="foto user">
+                                                    src="{{ $item->user->avatar ? Storage::url($item->user->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                    alt="foto user">
                                             </div>
                                             <div>
                                                 <h5 class="mb-0" style="font-size: 15px">

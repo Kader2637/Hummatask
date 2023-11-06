@@ -565,16 +565,19 @@
                     </div>
 
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                        <div class="d-flex align-items-center justify-content-center gap-2 ">
+                            Login sebagai :
+                            @if (auth()->check() &&
+                                    auth()->user()->can('kelola siswa'))
+                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Ketua
+                                    Magang</span>
+                            @else
+                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Siswa
+                                    Magang</span>
+                            @endif
+                        </div>
                         <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                                @if (auth()->check() &&
-                                        auth()->user()->can('kelola siswa'))
-                                    <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Ketua
-                                        Magang</span>
-                                @else
-                                    <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Siswa
-                                        Magang</span>
-                                @endif
                             </li>
                             <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"

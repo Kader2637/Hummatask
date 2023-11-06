@@ -171,7 +171,7 @@
     <script>
         $(window).load(function() {
 
-            var rnd = Math.random() * ( 2000 - 2000) + 500;
+            var rnd = Math.random() * (2000 - 2000) + 500;
 
             $('.progress').css("animation", "loading " + rnd + "ms linear");
 
@@ -275,7 +275,8 @@
                                 <li class="menu-item ">
                                     <a href="{{ route('tim.board', $item->tim->code) }}"
                                         class="menu-link d-flex align-items-center gap-2">
-                                        <img width="30" height="30" style="width: 30px;height:30px;object-fit: cover"
+                                        <img width="30" height="30"
+                                            style="width: 30px;height:30px;object-fit: cover"
                                             class="rounded-circle border border-primary"
                                             src="{{ asset('storage/' . $item->logo) }}" alt="">
                                         <div class="">{{ $item->nama }}</div>
@@ -308,16 +309,19 @@
                     </div>
 
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                        <div class="d-flex align-items-center justify-content-center gap-2 ">
+                            Login sebagai :
+                            @if (auth()->check() &&
+                                    auth()->user()->can('kelola siswa'))
+                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Ketua
+                                    Magang</span>
+                            @else
+                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Siswa
+                                    Magang</span>
+                            @endif
+                        </div>
                         <ul class="navbar-nav flex-row align-items-center ms-auto gap-1">
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                                @if (auth()->check() &&
-                                        auth()->user()->can('kelola siswa'))
-                                    <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Ketua
-                                        Magang</span>
-                                @else
-                                    <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Siswa
-                                        Magang</span>
-                                @endif
                             </li>
                             <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
                                 <a class="nav-link dropdown-toggle hide-arrow mx-3" href="javascript:void(0);"
