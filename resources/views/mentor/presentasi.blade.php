@@ -690,7 +690,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Sukses',
-                        text: 'Berhasil Menolak Presentasi'
+                        text: 'Berhasil Menyetujui Presentasi'
                     })
 
 
