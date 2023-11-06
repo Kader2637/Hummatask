@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Models\Tim;
 use App\Models\Anggota;
+use App\Models\HistoryPresentasi;
 use App\Models\Presentasi;
 use App\Models\StatusTim;
 use App\Models\User;
@@ -19,11 +20,12 @@ class KetuaMagangController extends Controller
     protected function dashboardPage()
     {
         $title = "Dashboard Ketua Magang";
-        $tims = Anggota::with('tim')->where('user_id', Auth::user()->id)->get();
+        // $tims = Anggota::with('tim')->where('user_id', Auth::user()->id)->get();
         $usercount = User::where('peran_id', 1)->count();
         $timcount = Tim::where('kadaluwarsa', 1)->count();
         $today = Carbon::today();
         $present = Presentasi::where('status_pengajuan','disetujui')->whereDate('created_at', $today)->count();
+        $tims = User::find(Auth::user()->id)->tim()->get();
 
 
         $presentasi = Presentasi::with('tim')->where('status_pengajuan', 'disetujui')->whereDate('created_at',$today)->latest('created_at')->take(5)->get()->reverse();
@@ -73,9 +75,18 @@ class KetuaMagangController extends Controller
     protected function presentasiPage()
     {
         $title = "Presentasi Ketua Magang";
-        $tims = User::find(Auth::user()->id)->tim()->get();
+        $presentasi = Presentasi::all();
+        $historyPresentasi = HistoryPresentasi::all();
+        $persetujuan_presentasi = $presentasi->where('status_pengajuan', 'menunggu');
+        $konfirmasi_presentasi = $presentasi->where('status_pengajuan', 'disetujui')->where('status_presentasi', 'menunggu');
+        $jadwal = [];
+        $hari = [];
+        foreach ($presentasi as $i => $data) {
+            $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
+            $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd');
+        }
+        return response()->view('mentor.presentasi', compact('persetujuan_presentasi', 'konfirmasi_presentasi', 'jadwal', 'hari', 'historyPresentasi'));
 
-        return view('ketuaMagang.presentasi', compact('title', 'tims'));
     }
     protected function projectPage()
     {

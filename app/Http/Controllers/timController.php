@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Auth;
 
 class timController extends Controller
 {
-    protected function boardPage($uuid)
+    protected function boardPage($code)
     {
         $title = "Tim/board";
-        $tim = Tim::where('code', $uuid)->firstOrFail();
+        $tim = Tim::where('code', $code)->firstOrFail();
         $anggota = $tim->user()->get();
         $tugas_baru = $tim->tugas()->where('status_tugas', 'tugas_baru')->get();
         $tugas_dikerjakan = $tim->tugas()->where('status_tugas', 'dikerjakan')->get();
@@ -22,19 +22,19 @@ class timController extends Controller
         return view('siswa.tim.board', compact('title', 'tim', 'anggota', 'tugas_baru', 'tugas_dikerjakan', 'tugas_revisi', 'tugas_selesai'));
     }
 
-    protected function kalenderPage($uuid)
+    protected function kalenderPage($code)
     {
         $title = "Tim/kalender";
-        $tim = Tim::where('code', $uuid)->firstOrFail();
+        $tim = Tim::where('code', $code)->firstOrFail();
         $anggota = $tim->user()->get();
 
         return view('siswa.tim.kalender', compact('title', 'tim', 'anggota',));
     }
 
-    protected function projectPage($uuid)
+    protected function projectPage($code)
     {
         $title = "Tim/project";
-        $tim = Tim::where('code', $uuid)->firstOrFail();
+        $tim = Tim::where('code', $code)->firstOrFail();
         $anggota = $tim->anggota()->get();
         $project = $tim->project()->first();
 
@@ -43,19 +43,19 @@ class timController extends Controller
         return view('siswa.tim.project', compact('title', 'tim', 'anggota', 'project'));
     }
 
-    protected function historyPage($uuid)
+    protected function historyPage($code)
     {
         $title = "Tim/history";
-        $tim = Tim::where('code', $uuid)->firstOrFail();
+        $tim = Tim::where('code', $code)->firstOrFail();
         $anggota = $tim->user()->get();
 
         return view('siswa.tim.history', compact('title', 'tim', 'anggota'));
     }
 
-    protected function historyPresentasiPage($uuid)
+    protected function historyPresentasiPage($code)
     {
         $title = "Tim/presentasi";
-        $tim = Tim::where('code', $uuid)->firstOrFail();
+        $tim = Tim::where('code', $code)->firstOrFail();
         $anggota = $tim->user()->get();
         $presentasi = $tim->presentasi()->get();
         $jadwal = [];
@@ -66,19 +66,19 @@ class timController extends Controller
         return view('siswa.tim.history-presentasi', compact('title', 'tim', 'anggota', 'presentasi', 'jadwal'));
     }
 
-    protected function catatanPage($uuid)
+    protected function catatanPage($code)
     {
         $title = "catatan";
-        $tim = Tim::where('code', $uuid)->firstOrFail();
+        $tim = Tim::where('code', $code)->firstOrFail();
         $anggota = $tim->user()->get();
 
         return view('siswa.tim.catatan', compact('title', 'anggota', 'tim'));
     }
 
-    protected function historyCatatanPage($uuid)
+    protected function historyCatatanPage($code)
     {
         $title = "catatan history";
-        $tim = Tim::where('code', $uuid)->firstOrFail();
+        $tim = Tim::where('code', $code)->firstOrFail();
         $anggota = $tim->user()->get();
 
         return view('siswa.tim.history-catatan', compact('title', 'anggota', 'tim'));
