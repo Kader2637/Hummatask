@@ -22,10 +22,11 @@ class KetuaMagangController extends Controller
         $tims = Anggota::with('tim')->where('user_id', Auth::user()->id)->get();
         $usercount = User::where('peran_id', 1)->count();
         $timcount = Tim::where('kadaluwarsa', 1)->count();
-        $present = Presentasi::where('status_pengajuan','disetujui')->count();
+        $today = Carbon::today();
+        $present = Presentasi::where('status_pengajuan','disetujui')->whereDate('created_at', $today)->count();
 
 
-        $presentasi = Presentasi::with('tim')->where('status_pengajuan', 'disetujui')->latest('created_at')->take(5)->get()->reverse();
+        $presentasi = Presentasi::with('tim')->where('status_pengajuan', 'disetujui')->whereDate('created_at',$today)->latest('created_at')->take(5)->get()->reverse();
 
         $data = Presentasi::select(
             DB::raw('MONTH(created_at) as month'),

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container-fluid mt-3">
-        <h5 class="">Dashboard</h5>
+        <h5 class="mt-3">Dashboard</h5>
         <div class="card">
             <div class="d-flex justify-content-between mx-3 mb-1 mt-4">
                 <h5 class="pb-0">Tabel Presentasi</h5>
@@ -44,20 +44,26 @@
         <div class="row mt-3">
             <div class="col-lg-4 col-12 mb-4">
                 <div class="card">
-                    <h5 class="card-header">Jumlah Anak Magang</h5>
+                    <h5 class="card-header">Data</h5>
                     <div class="card-body">
                         <canvas id="doughnutChart" class="chartjs mb-4" data-height="350"></canvas>
                         <ul class="doughnut-legend d-flex justify-content-around ps-0 mb-2 pt-1">
                             <li class="ct-series-0 d-flex flex-column">
-                                <h5 class="mb-0">Jumlah Presentasi</h5>
+                                <h5 class="mb-0">Presentasi</h5>
                                 <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                    style="background-color: blue; height:6px;"></span>
+                                    style="background-color: blue; height:6px;width:30px;"></span>
                                 <div class="text-muted"></div>
                             </li>
                             <li class="ct-series-1 d-flex flex-column">
-                                <h5 class="mb-0">Jumlah akun</h5>
+                                <h5 class="mb-0">Akun User</h5>
                                 <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                    style="background-color: yellow; height:6px;"></span>
+                                    style="background-color: yellow; height:6px; width:30px;"></span>
+                                <div class="text-muted"></div>
+                            </li>
+                            <li class="ct-series-1 d-flex flex-column">
+                                <h5 class="mb-0">Tim</h5>
+                                <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
+                                    style="background-color: rgb(184, 235, 244); height:6px; width: 30px;"></span>
                                 <div class="text-muted"></div>
                             </li>
                         </ul>
@@ -70,7 +76,7 @@
             <div class="col-lg-8 col-12 mb  -4">
                 <div class="card">
                     <div class="card-header header-elements">
-                        <h5 class="card-title mb-0">Jumlah</h5>
+                        <h5 class="card-title mb-0">Jumlah Perbulan</h5>
                         <div class="card-action-element ms-auto py-0">
                             <div class="dropdown">
                                 <button type="button" class="btn dropdown-toggle px-0" data-bs-toggle="dropdown"
@@ -99,7 +105,7 @@
                         </div>
                     </div>
                     <div class="card-body d-flex pt-2">
-                        <canvas id="barChart" class="chartjs" data-height="480" style="height: 365px;"></canvas>
+                        <canvas id="barChart" class="chartjs" data-height="480" style="height: 346px;"></canvas>
                     </div>
                 </div>
             </div>
@@ -108,6 +114,7 @@
 @endsection
 @section('script')
     <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}"></script>
+
 
     <script>
         const cyanColor = '#28dac6';
@@ -123,25 +130,18 @@
         const doughnutChart = document.getElementById('doughnutChart');
         if (doughnutChart) {
             const processedData = <?php echo json_encode($chartData); ?>;
-            const labels = processedData.map(data => data.month);
             const dataValues = processedData.map(data => data.disetujui);
             const acount = processedData.map(data => data['1']);
-
-            // Data dari set kedua
-            const labels2 = ['Grey', 'Grey', 'Grey'];
-            const dataValues2 = [100, 80, 150];
-            const backgroundColor2 = ['rgb(169, 169, 169)', 'rgb(169, 169, 169)', 'rgb(169, 169, 169)'];
-
+            const tims = processedData.map(data => data['2']);
 
             // Menggabungkan data dari kedua set data
-            const mergedLabels = labels.concat(labels2);
-            const mergedDataValues = dataValues.concat(acount);
-            const mergedBackgroundColor = processedData.map(data => data.color).concat(data => data.colorwait);
+            const mergedDataValues = acount.concat(dataValues).concat(tims);
+            const mergedBackgroundColor = acount.map(() => 'yellow').concat(dataValues.map(() => 'blue')).concat(tims.map(() =>
+                'grey'));
 
             const doughnutChartVar = new Chart(doughnutChart, {
                 type: 'doughnut',
                 data: {
-                    labels: mergedLabels,
                     datasets: [{
                         data: mergedDataValues,
                         backgroundColor: mergedBackgroundColor,
@@ -243,7 +243,7 @@
                         },
                         y: {
                             min: 0,
-                            max: 100,
+                            max: 500,
                             grid: {
                                 color: borderColor,
                                 drawBorder: true,

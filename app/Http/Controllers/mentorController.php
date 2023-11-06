@@ -52,6 +52,17 @@ class mentorController extends Controller
             ->groupBy('year', 'month', 'peran_id')
             ->get();
 
+            $tim = Tim::select(
+                DB::raw('MONTH(created_at) as month'),
+                DB::raw('YEAR(created_at) as year'),
+                'kadaluwarsa',
+                DB::raw('count(*) as total')
+            )
+            ->whereIn('kadaluwarsa', ['1'])
+            ->whereYear('created_at', Carbon::now()->year)
+            ->groupBy('year','month','kadaluwarsa')
+            ->get();
+
         $processedData = [];
         $currentYear = Carbon::now()->year;
         $currentMonth = Carbon::now()->month;
@@ -61,14 +72,17 @@ class mentorController extends Controller
             $yearMonth = $date->isoFormat('MMMM');
 
             $color = ($month == $currentMonth) ? 'blue' : 'yellow';
-            $colorwait = ($month == $currentMonth) ? 'grey' : 'yellow';
+            $colorwait = ($month == $currentMonth) ? 'grey' : 'pink';
+            $colors = ($month == $currentMonth) ? 'red' : 'green';
 
             $processedData[$yearMonth] = [
                 'month' => $yearMonth,
                 'disetujui' => 0,
                 '1' => 0,
+                '2'=> 0,
                 'color' => $color,
-                'colorwait' => $colorwait
+                'colorwait' => $colorwait,
+                'colors' => $colors
             ];
         }
 
@@ -86,6 +100,13 @@ class mentorController extends Controller
 
             if (isset($processedData[$yearMonth])) {
                 $processedData[$yearMonth]['1'] = $user->total;
+            }
+        }
+        foreach ($tim as $tims) {
+            $yearMonth = Carbon::createFromDate($tims->year, $tims->month, 1)->isoFormat('MMMM');
+
+            if (isset($processedData[$yearMonth])) {
+                $processedData[$yearMonth]['2'] = $tims->total;
             }
         }
 
@@ -217,7 +238,7 @@ class mentorController extends Controller
     protected function presentasi()
     {
 
-        
+
         $presentasi = Presentasi::all();
         $historyPresentasi = HistoryPresentasi::all();
         $persetujuan_presentasi = $presentasi->where('status_pengajuan', 'menunggu');

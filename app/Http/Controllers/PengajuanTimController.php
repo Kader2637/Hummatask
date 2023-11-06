@@ -76,7 +76,7 @@ class PengajuanTimController extends Controller
             $daftarAnggota[] = $request->ketuaProjek;
             $uniqueDaftarAnggota = array_unique($daftarAnggota);
             if (count($daftarAnggota) !== count($uniqueDaftarAnggota)) {
-                throw new \Exception('Nama user sudah digunakan di opsi lain.');
+                throw new \Exception('User sudah digunakan di opsi lain.');
             }
 
             $tim = new Tim;
@@ -130,7 +130,7 @@ class PengajuanTimController extends Controller
         $daftarAnggota[] = $request->ketuaProjek;
         $uniqueDaftarAnggota = array_unique($daftarAnggota);
         if (count($daftarAnggota) !== count($uniqueDaftarAnggota)) {
-            throw new \Exception('Nama user sudah digunakan di opsi lain.');
+            throw new \Exception('User sudah digunakan di opsi lain.');
         }
             $tim = new Tim;
             $tim->code = Str::uuid();
