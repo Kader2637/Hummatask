@@ -129,23 +129,15 @@ class mentorController extends Controller
     // Return view pengajuan projek mentor
     protected function pengajuanProjekPage()
     {
-        $projects = Project::with('tim.anggota.user')->where('status_project', 'notapproved')->get();
+        $projects = Project::with('tim.anggota.user', 'tim.tema', 'anggota.jabatan', 'anggota.user')->where('status_project', 'notapproved')->get();
 
         return response()->view('mentor.pengajuan-projek', compact('projects'));
     }
 
     // Return view detail pengajuan projek mentor
-    protected function detailPengajuanPage($code)
+    protected function detailPengajuan($code)
     {
         $projects = Project::where('code', $code)->firstOrFail();
-        $anggota = $projects->tim->user;
-        $tema = $projects->tim->tema;
-
-        $data = [
-            'anggota' => $anggota,
-            'tema' => $tema,
-        ];
-
         return response()->view('mentor.detail-pengajuan', compact('projects'));
     }
 
@@ -156,15 +148,21 @@ class mentorController extends Controller
             ->where('status_project', 'approved')
             ->get();
 
-        $projects = $projects->map(function ($project) {
-            if ($project->type_project === 'solo') {
-                $project->type_project = 'Solo Project';
-            } elseif ($project->type_project === 'pre_mini') {
-                $project->type_project = 'Pre Mini Project';
-            }
+        // $projects = $projects->map(function ($project) {
+        //     if ($project->type_project === 'solo') {
+        //         $project->type_project = 'Solo Project';
+        //     } elseif ($project->type_project === 'pre_mini') {
+        //         $project->type_project = 'Pre Mini Project';
+        //     } elseif ($project->type_project === 'mini') {
+        //         $project->type_project = 'Mini Project';
+        //     } elseif ($project->type_project === 'pre_big') {
+        //         $project->type_project = 'Pre Big Project';
+        //     } elseif ($project->type_project === 'big') {
+        //         $project->type_project = 'Big Project';
+        //     }
 
-            return $project;
-        });
+        //     return $project;
+        // });
 
 
         $users = User::where('peran_id', 1)
