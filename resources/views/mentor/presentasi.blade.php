@@ -272,6 +272,7 @@
                                 $month = $date->isoFormat('MMMM');
                                 $weekOfMonth = ceil($date->day / 7);
                             @endphp
+
                             <img width="300" height="auto" class="img-fluid"
                                 src="{{ asset('assets/img/presentasi.png') }}" alt="">
                             <div class="d-flex justify-content-around align-items-center">
@@ -315,20 +316,33 @@
             document.getElementById('select2Basic').setAttribute('data-bs-code',code);
             document.getElementById('select2Basic').setAttribute('data-bs-codeHistory',codeHistory);
 
-            axios.get('ambil-urutan/'+codeHistory)
-            .then((res) => {
-                const data = res.data;
-                console.log(data);
-                document.getElementById('select2Basic').innerHTML = "";
-                data.forEach(presentasi => {
-                    let option = document.createElement('option')
-                    option.textContent = "Urutan ke-"+presentasi.urutan;
-                    option.value = presentasi.urutan;
-                    option.name = "optUrutan";
-                    document.getElementById('select2Basic').appendChild(option);
-                });
 
-            })
+                axios.get('ambil-urutan/'+codeHistory)
+                .then((res) => {
+                    const data = res.data;
+                    console.log(data);
+                    document.getElementById('select2Basic').innerHTML = "";
+                    data.forEach(presentasi => {
+                        let option = document.createElement('option')
+                        option.textContent = "Urutan ke-"+presentasi.urutan;
+                        option.value = presentasi.urutan;
+                        option.name = "optUrutan";
+                        document.getElementById('select2Basic').appendChild(option);
+                    });
+
+                })
+                .catch((err) => {
+                    Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: "404 Route tidak ditemukan"
+                        });
+                        console.log("weeee");
+                })
+
+
+
+
         }
 
         const kirimProsesGantiUrutan = () =>
@@ -336,15 +350,38 @@
             const code = document.getElementById('select2Basic').getAttribute('data-bs-code');
             const codeHistory = document.getElementById('select2Basic').getAttribute('data-bs-codeHistory');
             const urutanTergantikan = document.getElementById("select2Basic").value;
-            console.log(urutanTergantikan);
-            document.getElementById('row-konfirmasi').innerHTML = "";
-            axios.put('atur-urutan/'+code,{urutanTergantikan,codeHistory})
-            .then((res) => {
+            console.log( typeof urutanTergantikan);
+
+
+
+
+
+                axios.put('atur-urutan/'+code,{urutanTergantikan,codeHistory})
+                .then((res) => {
+                document.getElementById('row-konfirmasi').innerHTML = "";
                 axios.get('ambil-urutan/'+codeHistory)
                 .then((resNew) => {
 
                     const data = resNew.data
                     console.log(data);
+                    console.log(res.data);
+
+                    if (res.data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Sukses',
+                            text: res.data.success
+                        })
+                    }
+                    if (res.data.error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: res.data.error
+                        })
+                    }
+
+
 
                     data.forEach(presentasi => {
                         let div = document.createElement('div')
@@ -378,14 +415,15 @@
 
                 })
 
-
-
-
-
-
             })
             .catch((err) => {
-                console.log(err);
+
+                Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: "404 Route tidak ditemukan"
+                        })
+
             })
         }
 
@@ -396,8 +434,9 @@
                     let data2 = res.data.konfirmasi;
                     let data3 = res.data.belum_presentasi;
                     let data4 = res.data.telat_presentasi;
+                    let codeHistory =  res.data.codeHistory
 
-                    console.log(res.data.codeHistory);
+                    console.log(codeHistory);
 
                     // console.log(Object.keys(data2));
 
@@ -451,7 +490,7 @@
                                         </div>
                                         <div class="card-text">${presentasi.jadwal}</div>
                                        <div class="d-flex justify-content-center gap-2">
-                                             <button class="btn btn-primary" onclick="aturUrutan('${presentasi.code}','${res.data.codeHistory}')" data-bs-toggle="modal" id="btnUrutan" data-bs-target="#aturUrutan" >Urutan</button>
+                                             <button class="btn btn-primary" onclick="aturUrutan('${presentasi.code}','${codeHistory}')" data-bs-toggle="modal" id="btnUrutan" data-bs-target="#aturUrutan" >Urutan</button>
                                              <button class="btn btn-success" onclick="sudahPresentasi('${presentasi.code}')" data-bs-toggle="modal" data-bs-target="#Finish" >Konfirmasi</button>
                                        </div>
                                     </div>
@@ -561,13 +600,6 @@
 
 
                     })
-
-
-
-
-
-
-
                 })
                 .catch((err) => {
                     console.log(err);
@@ -620,33 +652,34 @@
                 .then((res) => {
                     document.getElementById('card-persetujuan-' + code).classList.add('d-none');
 
-                    const newData = res.data;
-                    console.log({
-                        newData
-                    });
+                    const newData = res.data.presentasi;
+                    const codeHistory = res.data.codeHistory;
+                    console.log(
+                        res.data.codeHistory
+                    );
 
                     const div = document.createElement('div');
                     div.className = 'col-md-6 col-lg-4';
                     div.id = 'card-konfirmasi-' + code;
 
                     let data = `
-                <div class="card text-center mb-3">
-                    <div class="card-body">
-                        <div style="width: 30px; height: 30px; top: -10px; right: -10px;" class="rounded bg-primary d-flex justify-content-center align-items-center text-white position-absolute">
-                            ${newData.urutan}
-                        </div>
-                        <img src="{{ asset('storage/${newData.tim.logo}') }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 150px; height: 150px; object-fit: cover;">
-                        <div class="d-flex justify-content-center align-items-center gap-2">
-                            <h4 class="card-title text-capitalize">${newData.tim.nama}</h4>
-                            <a href="#"><span class="badge bg-label-warning mb-3">${newData.tim.status_tim}</span></a>
-                        </div>
-                        <div class="card-text">${newData.jadwal}</div>
-                        <div class="d-flex justify-content-center gap-2">
-                            <button id="btnUrutan" onclick="aturUrutan('${newData.code}','${res.data.codeHistory}')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#aturUrutan" >Urutan</button>
-                            <button class="btn btn-success" onclick="sudahPresentasi('${newData.code}')" data-bs-toggle="modal" data-bs-target="#Finish">Konfirmasi</button>
+                    <div class="card text-center mb-3">
+                        <div class="card-body">
+                            <div style="width: 30px; height: 30px; top: -10px; right: -10px;" class="rounded bg-primary d-flex justify-content-center align-items-center text-white position-absolute">
+                                ${newData.urutan}
+                            </div>
+                            <img src="{{ asset('storage/${newData.tim.logo}') }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 150px; height: 150px; object-fit: cover;">
+                            <div class="d-flex justify-content-center align-items-center gap-2">
+                                <h4 class="card-title text-capitalize">${newData.tim.nama}</h4>
+                                <a href="#"><span class="badge bg-label-warning mb-3">${newData.tim.status_tim}</span></a>
+                            </div>
+                            <div class="card-text">${newData.jadwal}</div>
+                            <div class="d-flex justify-content-center gap-2">
+                                <button id="btnUrutan" onclick="aturUrutan('${newData.code}','${codeHistory}')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#aturUrutan" >Urutan</button>
+                                <button class="btn btn-success" onclick="sudahPresentasi('${newData.code}')" data-bs-toggle="modal" data-bs-target="#Finish">Konfirmasi</button>
+                            </div
                         </div
-                    </div
-                </div>
+                    </div>
             `;
 
                     div.innerHTML = data;
@@ -675,7 +708,6 @@
                 e.preventDefault();
                 const feedback = document.getElementById('feedback').value
 
-
                 try {
                     const status_revisi = document.querySelector("[name='status_revisi']:checked").value
 
@@ -686,6 +718,9 @@
                         })
                         .then((res) => {
                             console.log(res.data.error);
+
+
+
                             document.getElementById('card-konfirmasi-' + code).classList.add('d-none');
                         })
                         .catch((err) => {
