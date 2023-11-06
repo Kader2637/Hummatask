@@ -6,25 +6,23 @@ use App\Models\Anggota;
 use App\Models\Comments;
 use App\Models\Tim;
 use App\Models\Tugas;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class timController extends Controller
 {
-    protected function boardPage($uuid)
+    protected function boardPage($code)
     {
         $title = "Tim/board";
-        $tim = Tim::where('uuid', $uuid)->first();
+        $tim = Tim::where('code', $code)->firstOrFail();
         $anggota = $tim->user()->get();
-        $tugas_baru = $tim->tugas()->where('status_tugas','tugas_baru')->get();
-        $tugas_dikerjakan = $tim->tugas()->where('status_tugas','dikerjakan')->get();
-        $tugas_revisi = $tim->tugas()->where('status_tugas','revisi')->get();
-        $tugas_selesai = $tim->tugas()->where('status_tugas','selesai')->get();
+        $tugas_baru = $tim->tugas()->where('status_tugas', 'tugas_baru')->get();
+        $tugas_dikerjakan = $tim->tugas()->where('status_tugas', 'dikerjakan')->get();
+        $tugas_revisi = $tim->tugas()->where('status_tugas', 'revisi')->get();
+        $tugas_selesai = $tim->tugas()->where('status_tugas', 'selesai')->get();
 
-        // $tugas = $tugas_revisi->first();
-        // dd($tugas);
-
-        return view('siswa.tim.board', compact('title','tim','anggota','tugas_baru','tugas_dikerjakan','tugas_revisi','tugas_selesai'));
+        return view('siswa.tim.board', compact('title', 'tim', 'anggota', 'tugas_baru', 'tugas_dikerjakan', 'tugas_revisi', 'tugas_selesai'));
     }
 
     protected function ubahStatus(Request $request)
@@ -80,61 +78,65 @@ class timController extends Controller
         $comments = Comments::where('tugas_id', $request->input('tugas_id'))->get();
         return response()->json($comments);
     }
-
-
-    protected function kalenderPage($uuid)
+    protected function kalenderPage($code)
     {
-        $tim = Tim::where('uuid', $uuid)->first();
-        $anggota = $tim->user()->get();
-
         $title = "Tim/kalender";
-        return view('siswa.tim.kalender', compact('title','tim','anggota',));
-    }
-
-    protected function projectPage($uuid)
-    {
-        $tim = Tim::where('uuid', $uuid)->first();
+        $tim = Tim::where('code', $code)->firstOrFail();
         $anggota = $tim->user()->get();
 
-        $title = "Tim/project";
-        return view('siswa.tim.project', compact('title', 'tim', 'anggota'));
+        return view('siswa.tim.kalender', compact('title', 'tim', 'anggota',));
     }
 
-    protected function historyPage($uuid)
+    protected function projectPage($code)
+    {
+        $title = "Tim/project";
+        $tim = Tim::where('code', $code)->firstOrFail();
+        $anggota = $tim->anggota()->get();
+        $project = $tim->project()->first();
+
+        // dd($project->tema);
+
+        return view('siswa.tim.project', compact('title', 'tim', 'anggota', 'project'));
+    }
+
+    protected function historyPage($code)
     {
         $title = "Tim/history";
-
-        $tim = Tim::where('uuid', $uuid)->first();
+        $tim = Tim::where('code', $code)->firstOrFail();
         $anggota = $tim->user()->get();
-
 
         return view('siswa.tim.history', compact('title', 'tim', 'anggota'));
     }
 
-    protected function historyPresentasiPage($uuid)
+    protected function historyPresentasiPage($code)
     {
         $title = "Tim/presentasi";
-        $tim = Tim::where('uuid', $uuid)->first();
+        $tim = Tim::where('code', $code)->firstOrFail();
         $anggota = $tim->user()->get();
+        $presentasi = $tim->presentasi()->get();
+        $jadwal = [];
+        foreach ($presentasi as $data) {
+            $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
+        }
 
-        return view('siswa.tim.history-presentasi', compact('title', 'tim', 'anggota'));
+        return view('siswa.tim.history-presentasi', compact('title', 'tim', 'anggota', 'presentasi', 'jadwal'));
     }
 
-    protected function catatanPage($uuid)
+    protected function catatanPage($code)
     {
-        $tim = Tim::where('uuid', $uuid)->first();
+        $title = "catatan";
+        $tim = Tim::where('code', $code)->firstOrFail();
         $anggota = $tim->user()->get();
 
-        $title = "catatan";
         return view('siswa.tim.catatan', compact('title', 'anggota', 'tim'));
     }
 
-    protected function historyCatatanPage($uuid)
+    protected function historyCatatanPage($code)
     {
-        $tim = Tim::where('uuid', $uuid)->first();
+        $title = "catatan history";
+        $tim = Tim::where('code', $code)->firstOrFail();
         $anggota = $tim->user()->get();
 
-        $title = "catatan history";
         return view('siswa.tim.history-catatan', compact('title', 'anggota', 'tim'));
     }
 }

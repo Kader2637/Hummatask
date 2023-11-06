@@ -8,6 +8,7 @@
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 
 <head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="utf-8" />
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
@@ -49,6 +50,8 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/apex-charts/apex-charts.css') }}" />
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('assets/js/config.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/fullcalendar/fullcalendar.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/flatpickr/flatpickr.css') }}" />
@@ -59,13 +62,20 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/app-calendar.css') }}" />
+
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
     @yield('link')
 </head>
 
 @yield('style')
 
-
 <body>
+
+    {{-- Modal Ajukan presentasi --}}
+
     <div class="modal fade" id="ajukanPresentasi" tabindex="-1" style="display: none;" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -73,37 +83,35 @@
                     <h5 class="modal-title" id="exampleModalLabel1">Ajukan Presentasi</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col mb-3">
-                            <label for="judul" class="form-label">Judul Presentasi</label>
-                            <input type="text" id="judul" name="judul" class="form-control"
-                                placeholder="Masukan Judul Presentasi">
+                <form action="{{ route('ajukan-presentasi', $tim->code) }}" method="post" id="formAjukanPresentasi">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="judul" class="form-label">Judul Presentasi</label>
+                                <input type="text" id="judul" name="judul" class="form-control"
+                                    placeholder="Masukan Judul Presentasi">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label for="deskripsi" class="form-label">Deskripsi Presentasi</label>
+                                <textarea name="deskripsi" id="deskripsi" cols="20" rows="10" class="form-control" style="resize: none"
+                                    placeholder="Isi deskripsi pengajuan anda"></textarea>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="deskripsi" class="form-label">Deskripsi Presentasi</label>
-                            <textarea name="deskripsi" id="deskripsi" cols="20" rows="10" class="form-control" style="resize: none"
-                                placeholder="Isi deskripsi pengajuan anda"></textarea>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-label-secondary waves-effect"
+                            data-bs-dismiss="modal">Kembali</button>
+                        <button type="submit"class="btn btn-primary waves-effect waves-light">Ajukan</button>
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="jadwal" class="form-label">Atur Jadwal</label>
-                            <input type="date" name="jadwal" id="jadwal"
-                                class="form-control datepicker-days">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-label-secondary waves-effect"
-                        data-bs-dismiss="modal">Kembali</button>
-                    <button type="button" class="btn btn-primary waves-effect waves-light">Ajukan</button>
-                </div>
+                </form>
             </div>
         </div>
     </div>
+
+
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEnd" aria-labelledby="offcanvasEndLabel">
         <div class="offcanvas-header">
@@ -458,7 +466,8 @@
 
                 <ul class="menu-inner py-1 ">
                     <li class="menu-item @if ($title == 'Tim/board') active @endif ">
-                        <a href="{{ route('tim.board',$tim->uuid) }}" class="menu-link d-flex align-items-center gap-2">
+                        <a href="{{ route('tim.board', $tim->code) }}"
+                            class="menu-link d-flex align-items-center gap-2">
                             <i class="menu-icon tf-icons ti ti-layout-dashboard"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Board</div>
                         </a>
@@ -472,19 +481,15 @@
                         </a>
                     </li>
                     <li class="menu-item @if ($title == 'Tim/kalender') active @endif ">
-                        <a href="{{ route('tim.kalender',$tim->uuid) }}" class="menu-link d-flex align-items-center gap-2">
+                        <a href="{{ route('tim.kalender', $tim->code) }}"
+                            class="menu-link d-flex align-items-center gap-2">
                             <i class="menu-icon tf-icons ti ti-calendar"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Kalender</div>
                         </a>
                     </li>
-                    <li class="menu-item @if ($title == 'Tim/project') active @endif ">
-                        <a href="{{ route('tim.project',$tim->uuid) }}" class="menu-link d-flex align-items-center gap-2">
-                            <i class="menu-icon tf-icons ti ti-folder-cog"></i>
-                            <div class="w-100 d-flex align-items-center justify-content-between">Project</div>
-                        </a>
-                    </li>
                     <li class="menu-item @if ($title == 'Tim/history') active @endif ">
-                        <a href="{{ route('tim.history',$tim->uuid) }}" class="menu-link d-flex align-items-center gap-2">
+                        <a href="{{ route('tim.history', $tim->code) }}"
+                            class="menu-link d-flex align-items-center gap-2">
                             <i class="menu-icon tf-icons ti ti-history"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">History</div>
                         </a>
@@ -496,12 +501,12 @@
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item @if ($title == 'catatan') active @endif">
-                                <a href="{{ route('tim.catatan',$tim->uuid) }}" class="menu-link">
+                                <a href="{{ route('tim.catatan', $tim->code) }}" class="menu-link">
                                     <div>Buat Catatan</div>
                                 </a>
                             </li>
                             <li class="menu-item @if ($title == 'catatan history') active @endif ">
-                                <a href="{{ route('tim.historyCatatan',$tim->uuid) }}" class="menu-link">
+                                <a href="{{ route('tim.historyCatatan', $tim->code) }}" class="menu-link">
                                     <div>History Catatan</div>
                                 </a>
                             </li>
@@ -520,14 +525,22 @@
                                 </a>
                             </li>
                             <li class="menu-item @if ($title == 'Tim/presentasi') active @endif ">
-                                <a href="{{ route('tim.historyPresentasi',$tim->uuid) }}" class="menu-link">
+                                <a href="{{ route('tim.historyPresentasi', $tim->code) }}" class="menu-link">
                                     <div>History Presentasi</div>
                                 </a>
                             </li>
                         </ul>
                     </li>
+                    <li class="menu-item @if ($title == 'Tim/project') active @endif ">
+                        <a href="{{ route('tim.project', $tim->code) }}"
+                            class="menu-link d-flex align-items-center gap-2">
+                            <i class="menu-icon tf-icons ti ti-folder-cog"></i>
+                            <div class="w-100 d-flex align-items-center justify-content-between">Project</div>
+                        </a>
+                    </li>
                     <li class="menu-item active mt-5">
-                        <a href="{{ route('dashboard.siswa',$tim->uuid) }}" class="menu-link d-flex align-items-center gap-2">
+                        <a href="{{ route('dashboard.siswa', $tim->code) }}"
+                            class="menu-link d-flex align-items-center gap-2">
                             <i class="menu-icon tf-icons ti ti-arrow-back"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Kembali</div>
                         </a>
@@ -552,16 +565,19 @@
                     </div>
 
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                        <div class="d-flex align-items-center justify-content-center gap-2 ">
+                            Login sebagai :
+                            @if (auth()->check() &&
+                                    auth()->user()->can('kelola siswa'))
+                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Ketua
+                                    Magang</span>
+                            @else
+                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Siswa
+                                    Magang</span>
+                            @endif
+                        </div>
                         <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                                @if (auth()->check() &&
-                                        auth()->user()->can('kelola siswa'))
-                                    <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Ketua
-                                        Magang</span>
-                                @else
-                                    <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Siswa
-                                        Magang</span>
-                                @endif
                             </li>
                             <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
@@ -817,7 +833,7 @@
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
                                     data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="{{ asset('assets/img/avatars/1.png') }}" alt
+                                        <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : asset('assets/img/avatars/1.png') }}" alt
                                             class="h-auto rounded-circle">
                                     </div>
                                 </a>
@@ -827,7 +843,7 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
-                                                        <img src="{{ asset('assets/img/avatars/1.png') }}"
+                                                        <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : asset('assets/img/avatars/1.png') }}"
                                                             class="h-auto rounded-circle">
                                                     </div>
                                                 </div>
@@ -908,6 +924,7 @@
     <script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/moment/moment.js') }}"></script>
     {{-- <script src="{{ asset('assets/js/extended-ui-sweetalert2.js') }}"></script> --}}
+    <script src="{{ asset('assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
 
     <!-- BEGIN: Page JS-->
     <script src="{{ asset('assets/js/app-calendar-events.js') }}"></script>
@@ -987,6 +1004,22 @@
                     confirmButton: "btn btn-primary"
                 },
                 buttonsStyling: !1,
+            });
+        </script>
+    @elseif (session()->has('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success') }}', // Teks pesan dari sesi
+            });
+        </script>
+    @elseif (session()->has('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '{{ session('error') }}', // Teks pesan dari sesi
             });
         </script>
     @endif

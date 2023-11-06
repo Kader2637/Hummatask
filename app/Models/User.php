@@ -4,7 +4,9 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -35,10 +37,12 @@ class User extends Authenticatable
         'email',
         'password',
         'status',
+        'sekolah',
         'peran_id',
         'tlp',
         'deskripsi',
         'is_login',
+        'tanggal_bergabung',
     ];
     /**
      * The attributes that should be hidden for serialization.
@@ -60,8 +64,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-
-    public function tim():BelongsToMany
+    public function tim(): BelongsToMany
     {
         return $this->belongsToMany(Tim::class, 'anggotas');
     }
@@ -76,5 +79,8 @@ class User extends Authenticatable
         return $this->hasMany(Comments::class);
     }
 
-
+    public function peran(): HasOne
+    {
+        return $this->hasOne(peran::class, 'id', 'peran_id');
+    }
 }

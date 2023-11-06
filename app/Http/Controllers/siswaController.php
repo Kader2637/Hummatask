@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Anggota;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +14,7 @@ class siswaController extends Controller
     {
         $title = "Dashboard";
         $tims = User::find(Auth::user()->id)->tim()->get();
+        // dd($tims);
         return response()->view('siswa.dashboard', compact('title','tims'));
     }
 
@@ -20,8 +22,7 @@ class siswaController extends Controller
     protected function profilePage()
     {
         $title = 'Profile Siswa';
-        $tims = User::find(Auth::user()->id)->tim()->get();
-        return response()->view('siswa.profile-siswa', compact('title'));
+        $user = User::with('peran')->where('id', Auth::user()->id)->first();
+        return response()->view('siswa.profile-siswa', compact('title', 'user'));
     }
-
 }

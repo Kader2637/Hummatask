@@ -21,41 +21,41 @@
                             <tr>
                                 <th class="text-white">Presentasi</th>
                                 <th class="text-white">Tanggal</th>
-                                <th class="text-white">Status</th>
+                                <th class="text-white">Status Presentasi</th>
+                                <th class="text-white">Status Pengajuan</th>
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
+                            @forelse ($presentasi as $i=> $data )
                             <tr>
-                                <td><span class="fw-medium">Progres Figma</span></td>
-                                <td>12 Oktober 2023</td>
-                                <td><span class="badge bg-label-success me-1">Sukses</span></td>
+                                <td><span class="fw-medium">{{ $data->judul }}</span></td>
+                                <td>{{ $jadwal[$i] }}</td>
+                                <td>
+                                    @if ($data->status_presentasi === 'menunggu')
+                                        <span class="badge bg-label-warning me-1">menunggu jadwal</span>
+                                    @endif
+                                    @if ($data->status_presentasi === 'selesai')
+                                        <span class="badge bg-label-success me-1">selesai</span>
+                                    @endif
+                                    @if ($data->status_presentasi === 'telat')
+                                        <span class="badge bg-label-danger me-1">telat</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($data->status_pengajuan === 'menunggu')
+                                        <span class="badge bg-label-warning me-1">menunggu</span>
+                                    @endif
+                                    @if ($data->status_pengajuan === 'disetujui')
+                                        <span class="badge bg-label-success me-1">disetujui</span>
+                                    @endif
+                                    @if ($data->status_pengajuan === 'ditolak')
+                                        <span class="badge bg-label-danger me-1">ditolak</span>
+                                    @endif
+                                </td>
                             </tr>
-                            <tr>
-                                <td><span class="fw-medium">Progres Figma</span></td>
-                                <td>12 Oktober 2023</td>
-                                <td><span class="badge bg-label-success me-1">Sukses</span></td>
-                            </tr>
-                            <tr>
-                                <td><span class="fw-medium">Progres Figma</span></td>
-                                <td>12 Oktober 2023</td>
-                                <td><span class="badge bg-label-success me-1">Sukses</span></td>
-                            </tr>
-                            <tr>
-                                <td><span class="fw-medium">Progres Figma</span></td>
-                                <td>12 Oktober 2023</td>
-                                <td><span class="badge bg-label-success me-1">Sukses</span></td>
-                            </tr>
-                            <tr>
-                                <td><span class="fw-medium">Progres Figma</span></td>
-                                <td>12 Oktober 2023</td>
-                                <td><span class="badge bg-label-success me-1">Sukses</span></td>
-                            </tr>
-                            <tr>
-                                <td><span class="fw-medium">Progres Figma</span></td>
-                                <td>12 Oktober 2023</td>
-                                <td><span class="badge bg-label-success me-1">Sukses</span></td>
-                            </tr>
+                            @empty
 
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

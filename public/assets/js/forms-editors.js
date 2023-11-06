@@ -1,65 +1,32 @@
-var quill = new Quill("#editor", {
-    placeholder: "Type Something...",
-    modules: {
-        formula: !0,
-        toolbar: [
-            [
-                {
-                    font: [],
-                },
-                {
-                    size: [],
-                },
+$(document).ready(function () {
+    let quill = new Quill("#editor", {
+        modules: {
+            clipboard: true,
+            toolbar: [
+                ["bold", "italic"],
+                ["link", "blockquote"],
+                [{ list: "ordered" }, { list: "bullet" }],
             ],
-            ["bold", "italic", "underline", "strike"],
-            [
-                {
-                    color: [],
-                },
-                {
-                    background: [],
-                },
-            ],
-            [
-                {
-                    script: "super",
-                },
-                {
-                    script: "sub",
-                },
-            ],
-            [
-                {
-                    header: "1",
-                },
-                {
-                    header: "2",
-                },
-                "blockquote",
-                "code-block",
-            ],
-            [
-                {
-                    list: "ordered",
-                },
-                {
-                    list: "bullet",
-                },
-                {
-                    indent: "-1",
-                },
-                {
-                    indent: "+1",
-                },
-            ],
-            [
-                {
-                    direction: "rtl",
-                },
-            ],
-            ["link", "image", "video", "formula"],
-            ["clean"],
-        ],
-    },
-    theme: "snow",
+        },
+        placeholder: "Tuliskan catatan anda..",
+        theme: "snow",
+    });
+
+    var fileInput = document.getElementById("fileInput");
+    quill.on("paste", function (e) {
+        if (e.clipboardData && e.clipboardData.items) {
+            for (var i = 0; i < e.clipboardData.items.length; i++) {
+                var item = e.clipboardData.items[i];
+                if (item.type.indexOf("image") !== -1) {
+                    var file = item.getAsFile();
+                    fileInput.files = new DataTransfer();
+                    fileInput.files.items.add(file);
+                }
+            }
+        }
+    });
+
+    quill.on("text-change", function (delta, oldDelta, source) {
+        $("#content").text($(".ql-editor").html());
+    });
 });

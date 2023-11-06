@@ -425,8 +425,11 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $no = 1;
+                                @endphp
                                 <tr>
-                                    <th scope="row">1</th>
+                                    <th scope="row">{{ $no++ }}</th>
                                     <td>
                                         <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
                                             style="width:30px;hight:30px;border-radius:50%">
@@ -473,96 +476,6 @@
                                             detail
                                         </button></td>
                                 </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>
-                                        <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                            style="width:30px;hight:30px;border-radius:50%">
-                                        Hummatech
-                                    </td>
-                                    <td>king ibnu</td>
-                                    <td>
-                                        <div class="d-flex align-items-center avatar-group">
-                                            <div class="avatar pull-up" data-bs-toggle="tooltip"
-                                                data-popup="tooltip-custom" data-bs-placement="top"
-                                                title="Vinnie Mostowy">
-                                                <img src="{{ asset('assets/img/avatars/5.png') }}" alt="Avatar"
-                                                    class="rounded-circle">
-                                            </div>
-                                            <div class="avatar pull-up" data-bs-toggle="tooltip"
-                                                data-popup="tooltip-custom" data-bs-placement="top" title="Marrie Patty">
-                                                <img src="{{ asset('assets/img/avatars/12.png') }}" alt="Avatar"
-                                                    class="rounded-circle">
-                                            </div>
-                                            <div class="avatar pull-up" data-bs-toggle="tooltip"
-                                                data-popup="tooltip-custom" data-bs-placement="top"
-                                                title="Jimmy Jackson">
-                                                <img src="{{ asset('assets/img/avatars/9.png') }}" alt="Avatar"
-                                                    class="rounded-circle">
-                                            </div>
-                                            <div class="avatar pull-up" data-bs-toggle="tooltip"
-                                                data-popup="tooltip-custom" data-bs-placement="top"
-                                                title="Kristine Gill">
-                                                <img src="{{ asset('assets/img/avatars/6.png') }}" alt="Avatar"
-                                                    class="rounded-circle">
-                                            </div>
-                                            <div class="avatar pull-up" data-bs-toggle="tooltip"
-                                                data-popup="tooltip-custom" data-bs-placement="top"
-                                                title="Nelson Wilson">
-                                                <img src="{{ asset('assets/img/avatars/4.png') }}" alt="Avatar"
-                                                    class="rounded-circle">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Mini Project</td>
-                                    <td>10</td>
-                                    <td><button class="btn btn-primary">detail</button></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>
-                                        <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                            style="width:30px;hight:30px;border-radius:50%">
-                                        Hummatech
-                                    </td>
-                                    <td>king ibnu</td>
-                                    <td>
-                                        <div class="d-flex align-items-center avatar-group">
-                                            <div class="avatar pull-up" data-bs-toggle="tooltip"
-                                                data-popup="tooltip-custom" data-bs-placement="top"
-                                                title="Vinnie Mostowy">
-                                                <img src="{{ asset('assets/img/avatars/5.png') }}" alt="Avatar"
-                                                    class="rounded-circle">
-                                            </div>
-                                            <div class="avatar pull-up" data-bs-toggle="tooltip"
-                                                data-popup="tooltip-custom" data-bs-placement="top" title="Marrie Patty">
-                                                <img src="{{ asset('assets/img/avatars/12.png') }}" alt="Avatar"
-                                                    class="rounded-circle">
-                                            </div>
-                                            <div class="avatar pull-up" data-bs-toggle="tooltip"
-                                                data-popup="tooltip-custom" data-bs-placement="top"
-                                                title="Jimmy Jackson">
-                                                <img src="{{ asset('assets/img/avatars/9.png') }}" alt="Avatar"
-                                                    class="rounded-circle">
-                                            </div>
-                                            <div class="avatar pull-up" data-bs-toggle="tooltip"
-                                                data-popup="tooltip-custom" data-bs-placement="top"
-                                                title="Kristine Gill">
-                                                <img src="{{ asset('assets/img/avatars/6.png') }}" alt="Avatar"
-                                                    class="rounded-circle">
-                                            </div>
-                                            <div class="avatar pull-up" data-bs-toggle="tooltip"
-                                                data-popup="tooltip-custom" data-bs-placement="top"
-                                                title="Nelson Wilson">
-                                                <img src="{{ asset('assets/img/avatars/4.png') }}" alt="Avatar"
-                                                    class="rounded-circle">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Mini Project</td>
-                                    <td>10</td>
-                                    <td><button class="btn btn-primary">detail</button></td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -575,7 +488,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content modal-detail">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalCenterTitle">Modal title</h5>
+                        <h5 class="modal-title" id="modalCenterTitle">Team</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">

@@ -53,16 +53,139 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
-
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/apex-charts/apex-charts.css') }}" />
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('assets/js/config.js') }}"></script>
+
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     @yield('link')
 </head>
 
 @yield('style')
+<style>
+    body,
+    {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    z-index: 2;
+    /* Tambahkan z-index di sini */
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .hidden {
+        opacity: 0;
+    }
+
+    #loader {
+        z-index: 100;
+        /* Tambahkan z-index di sini */
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #ffffff;
+    }
+
+    .preloader {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        left: calc(50% - 20px);
+        top: calc(50% - 20px);
+        animation: preloader 2s linear infinite;
+    }
+
+    .loadBar {
+        position: absolute;
+        width: 200px;
+        height: 2px;
+        left: calc(50% - 100px);
+        top: calc(50% + 60px);
+        background: #7a14c3;
+    }
+
+    .progress {
+        position: relative;
+        width: 0%;
+        height: inherit;
+        background: #e74c3c;
+    }
+
+    .custom-margin {
+        margin-top: -65px;
+    }
+
+    @keyframes loading {
+
+        0% {
+            width: 0%;
+        }
+
+        100% {
+            width: 100%;
+        }
+
+    }
+
+    @keyframes preloader {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        25% {
+            transform: translateY(-15px);
+        }
+
+        50% {
+            transform: translateY(0);
+        }
+
+        75% {
+            transform: translateY(15px);
+        }
+    }
+</style>
 
 <body>
+
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"
+        integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+    <div id="loader">
+        <div class="preloader">
+            <div class="d-flex justify-content-center custom-margin">
+                <img src="{{ asset('assets/img/icons/icon.svg') }}" width="180" height="160" alt="Loader Image">
+            </div>
+        </div>
+    </div>
+    <script>
+        $(window).load(function() {
+
+            var rnd = Math.random() * (2000 - 2000) + 500;
+
+            $('.progress').css("animation", "loading " + rnd + "ms linear");
+
+            console.log(rnd);
+
+            setTimeout(function() {
+
+                $('#loader').fadeOut();
+                $('#page').removeClass('hidden');
+
+            }, rnd);
+
+        });
+    </script>
     <div class="layout-wrapper layout-content-navbar ">
         <div class="layout-container">
 
@@ -91,7 +214,6 @@
                             <div class="w-100 d-flex align-items-center justify-content-between">Dashboard</div>
                         </a>
                     </li>
-
                     {{-- Navigasi ketua magang --}}
 
                     @can('kelola siswa')
@@ -99,28 +221,30 @@
                             $title === 'Dashboard Ketua Magang' ||
                                 $title === 'Presentasi Ketua Magang' ||
                                 $title === 'Project Ketua Magang' ||
-                                $title === 'History Ketua Magang') open @endif">
+                                $title === 'History Ketua Magang' ||
+                                $title === 'Detail Project Ketua Magang') open @endif">
                             <a href="" class="menu-link menu-toggle d-flex">
                                 <i class="menu-icon tf-icons ti ti-crown"></i>
                                 <div class="w-100 d-flex align-items-center justify-content-between">Ketua Magang</div>
                             </a>
                             <ul class="menu-sub">
-                                <li class="menu-item">
+                                <li class="menu-item {{ request()->routeIs('ketua.dashboard') ? 'active' : '' }}">
                                     <a href="{{ route('ketua.dashboard') }}" class="menu-link">
                                         <div>Dashboard</div>
                                     </a>
                                 </li>
-                                <li class="menu-item ">
+                                <li class="menu-item {{ request()->routeIs('ketua.presentasi') ? 'active' : '' }}">
                                     <a href="{{ route('ketua.presentasi') }}" class="menu-link">
                                         <div>Presentasi</div>
                                     </a>
                                 </li>
-                                <li class="menu-item {{ request()->routeIs('ketua.project') ? 'active' : '' }}">
+                                <li
+                                    class="menu-item {{ request()->routeIs('ketua.project', 'ketua.detail_project') ? 'active' : '' }}">
                                     <a href="{{ route('ketua.project') }}" class="menu-link">
                                         <div>Project</div>
                                     </a>
                                 </li>
-                                <li class="menu-item ">
+                                <li class="menu-item {{ request()->routeIs('ketua.history') ? 'active' : '' }}">
                                     <a href="{{ route('ketua.history') }}" class="menu-link">
                                         <div>History</div>
                                     </a>
@@ -147,19 +271,18 @@
                     </li>
                     <li class="menu-item">
                         <ul class="">
-                            @forelse ($tims as $tim)
+                            @forelse ($tims as $item)
                                 <li class="menu-item ">
-                                    <a href="{{ route('tim.board', $tim->uuid) }}"
+                                    <a href="{{ route('tim.board', $item->code) }}"
                                         class="menu-link d-flex align-items-center gap-2">
-                                        <img style="width: 30px;height:30px;object-fit: cover"
+                                        <img width="30" height="30"
+                                            style="width: 30px;height:30px;object-fit: cover"
                                             class="rounded-circle border border-primary"
-                                            src="{{ asset('storage/' . $tim->logo) }}" alt="">
-                                        <div class="">{{ $tim->nama }}</div>
+                                            src="{{ asset('storage/' . $item->logo) }}" alt="">
+                                        <div class="">{{ $item->nama }}</div>
                                     </a>
                                 </li>
-
                             @empty
-
                                 <li class="menu-item bg-info bg-light ">
                                     <a class="menu-link d-flex align-items-center gap-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
@@ -177,10 +300,8 @@
             </aside>
 
             <div class="layout-page">
-
                 <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
                     id="layout-navbar">
-
                     <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0  d-xl-none ">
                         <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
                             <i class="ti ti-menu-2 ti-sm"></i>
@@ -188,16 +309,19 @@
                     </div>
 
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-                        <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
+                        <div class="d-flex align-items-center justify-content-center gap-2 ">
+                            Login sebagai :
+                            @if (auth()->check() &&
+                                    auth()->user()->can('kelola siswa'))
+                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Ketua
+                                    Magang</span>
+                            @else
+                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Siswa
+                                    Magang</span>
+                            @endif
+                        </div>
+                        <ul class="navbar-nav flex-row align-items-center ms-auto gap-1">
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                                @if (auth()->check() &&
-                                        auth()->user()->can('kelola siswa'))
-                                    <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Ketua
-                                        Magang</span>
-                                @else
-                                    <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Siswa
-                                        Magang</span>
-                                @endif
                             </li>
                             <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
                                 <a class="nav-link dropdown-toggle hide-arrow mx-3" href="javascript:void(0);"
@@ -453,8 +577,8 @@
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
                                     data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="{{ asset('assets/img/avatars/1.png') }}" alt
-                                            class="h-auto rounded-circle">
+                                        <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : asset('assets/img/avatars/1.png') }}"
+                                            alt class="h-auto rounded-circle">
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -463,7 +587,7 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
-                                                        <img src="{{ asset('assets/img/avatars/1.png') }}"
+                                                        <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : asset('assets/img/avatars/1.png') }}"
                                                             class="h-auto rounded-circle">
                                                     </div>
                                                 </div>
@@ -523,7 +647,7 @@
                                 <form id="editUserForm" action="{{ route('buat_tim_solo') }}" method="POST"
                                     enctype="multipart/form-data" class="row g-2 p-0 m-0">
                                     @csrf
-                                    <div class="col-12  gap-3 align-items-center">
+                                    <div class="col-12 gap-3 align-items-center">
                                         <div class="col-12 col-md-3 align-items-center">
                                             <label class="form-label text-white" for="image-input">
                                                 <img id="preview-image"
@@ -559,9 +683,18 @@
                                                     {{ $message }}
                                                 </p>
                                             @enderror
+                                            <label class="form-label m-0 p-0 mt-2"
+                                                for="modalEditUserLastName">Tema</label>
+                                            <input type="text" id="modalEditUserLastName" name="temaInput"
+                                                class="form-control" placeholder="Isi tema project anda" />
+                                            @error('temaInput')
+                                                <p class="text-danger">
+                                                    {{ $message }}
+                                                </p>
+                                            @enderror
                                         </div>
                                     </div>
-                                    <div class="col-12 d-flex flex-row flex-wrap justify-content-end">
+                                    <div class="col-12 d-flex flex-row flex-wrap justify-content-end modal-footer">
                                         <button type="submit" class="btn btn-primary me-sm-3 me-1">Unggah</button>
                                         <button type="reset" class="btn btn-danger" data-bs-dismiss="modal"
                                             aria-label="Close">Batal</button>
@@ -581,9 +714,11 @@
                             const namaInput = document.querySelector('input[name="nama"]');
                             const repositoryInput = document.querySelector('input[name="repository"]');
                             const logoInput = document.querySelector('input[name="logo"]');
+                            const temaInput = document.querySelector('input[name="temaInput"]');
 
                             // Validasi input kosong
-                            if (namaInput.value.trim() === '' || repositoryInput.value.trim() === '' || logoInput.files
+                            if (namaInput.value.trim() === '' || repositoryInput.value.trim() === '' || temaInput.value
+                                .trim() === '' || logoInput.files
                                 .length === 0) {
                                 event.preventDefault(); // Mencegah pengiriman formulir
                                 Swal.fire({
@@ -704,6 +839,22 @@
                     confirmButton: "btn btn-primary"
                 },
                 buttonsStyling: !1,
+            });
+        </script>
+    @elseif (session()->has('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}', // Teks pesan dari sesi
+            });
+        </script>
+    @elseif (session()->has('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'error!',
+                text: '{{ session('error') }}', // Teks pesan dari sesi
             });
         </script>
     @endif

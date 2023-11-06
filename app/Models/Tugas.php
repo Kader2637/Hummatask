@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Tugas extends Model
 {
     use HasFactory;
-    
+
     protected $guarded=[
     ];
 // sesuai yang ada didala array
@@ -28,5 +28,10 @@ class Tugas extends Model
     public function comments()
     {
         return $this->hasMany(Comments::class);
+    }
+
+    public function tugas(): BelongsTo
+    {
+        return $this->belongsTo(Tugas::class);
     }
 }

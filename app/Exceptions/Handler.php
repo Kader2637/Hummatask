@@ -4,8 +4,6 @@ namespace App\Exceptions;
 
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Validation\UnauthorizedException as ValidationUnauthorizedException;
-use Spatie\Permission\Exceptions\UnauthorizedException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -31,12 +29,12 @@ class Handler extends ExceptionHandler
         });
     }
 
-    public function render($request, Throwable $e)
-    {
-        if ($e instanceof AuthorizationException) {
-            return back()->with('unauthorize', 'Anda tidak memiliki izin untuk mengakses halaman ini.');
-        }
+    // public function render($request, Throwable $e)
+    // {
+    //     if ($e instanceof AuthorizationException) {
+    //         return back()->with('unauthorize', 'Anda tidak memiliki izin untuk mengakses halaman ini.');
+    //     }
 
-        return parent::render($request, $e);
-    }
+    //     return parent::render($request, $e);
+    // }
 }

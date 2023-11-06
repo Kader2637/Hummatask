@@ -6,15 +6,13 @@
     data-base-url="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1" data-framework="laravel"
     data-template="vertical-menu-theme-default-light">
 
-
-<!-- Mirrored from demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/dashboard/crm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Oct 2023 03:44:33 GMT -->
-<!-- Added by HTTrack -->
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    {!! csrf_field() !!}
 
     <title>
         Dashboard Mentor
@@ -74,19 +72,136 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('assets/js/config.js') }}"></script>
 
 </head>
 
 @yield('style')
 
-<body>
+<!-- jQuery Plugin -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<style>
+    body,
+    {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    z-index: 2;
+    /* Tambahkan z-index di sini */
+    }
 
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .hidden {
+        opacity: 0;
+    }
+
+    #loader {
+        z-index: 100;
+        /* Tambahkan z-index di sini */
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #ffffff;
+    }
+
+    .preloader {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        left: calc(50% - 20px);
+        top: calc(50% - 20px);
+        animation: preloader 2s linear infinite;
+    }
+
+    .loadBar {
+        position: absolute;
+        width: 200px;
+        height: 2px;
+        left: calc(50% - 100px);
+        top: calc(50% + 60px);
+        background: #7a14c3;
+    }
+
+    .progress {
+        position: relative;
+        width: 0%;
+        height: inherit;
+        background: #e74c3c;
+    }
+
+    .custom-margin {
+        margin-top: -65px;
+    }
+
+    @keyframes loading {
+
+        0% {
+            width: 0%;
+        }
+
+        100% {
+            width: 100%;
+        }
+
+    }
+
+    @keyframes preloader {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        25% {
+            transform: translateY(-15px);
+        }
+
+        50% {
+            transform: translateY(0);
+        }
+
+        75% {
+            transform: translateY(15px);
+        }
+    }
+</style>
+
+<body>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"
+        integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+    <div id="loader">
+        <div class="preloader">
+            <div class="d-flex justify-content-center custom-margin">
+                <img src="{{ asset('assets/img/icons/icon.svg') }}" width="180" height="160" alt="Loader Image">
+            </div>
+        </div>
+    </div>
+    <script>
+        $(window).load(function() {
+
+            var rnd = Math.random() * ( 3000 - 2000) + 2000;
+
+            $('.progress').css("animation", "loading " + rnd + "ms linear");
+
+            console.log(rnd);
+
+            setTimeout(function() {
+
+                $('#loader').fadeOut();
+                $('#page').removeClass('hidden');
+
+            }, rnd);
+
+        });
+    </script>
     <!-- Layout Content -->
-    <div class="layout-wrapper layout-content-navbar ">
+    <div class=" layout-content-navbar ">
         <div class="layout-container">
 
             <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
@@ -168,10 +283,13 @@
                         </a>
                     </div>
 
-                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                    <div class="navbar-nav-right d-flex align-items-center" id="navbarcollapse">
+                        <div class="d-flex align-items-center justify-content-center gap-2 ">
+                            Login sebagai :
+                            <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Mentor</span>
+                        </div>
                         <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Siswa Magang</span>
                             </li>
                             <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
@@ -195,8 +313,13 @@
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            <img src="assets/img/avatars/1.png" alt
-                                                                class="h-auto rounded-circle">
+                                                            @if (Auth::user()->avatar)
+                                                                <img src="{{ asset('storage/' . Auth::user()->avatar) }}"
+                                                                    class="h-auto rounded-circle">
+                                                            @else
+                                                                <img src="{{ asset('assets/img/avatars/1.png') }}"
+                                                                    class="h-auto rounded-circle">
+                                                            @endif
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -243,8 +366,13 @@
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            <img src="assets/img/avatars/2.png" alt
-                                                                class="h-auto rounded-circle">
+                                                            @if (Auth::user()->avatar)
+                                                                <img src="{{ asset('storage/' . Auth::user()->avatar) }}"
+                                                                    class="h-auto rounded-circle">
+                                                            @else
+                                                                <img src="{{ asset('assets/img/avatars/1.png') }}"
+                                                                    class="h-auto rounded-circle">
+                                                            @endif
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -292,8 +420,8 @@
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            <img src="assets/img/avatars/9.png" alt
-                                                                class="h-auto rounded-circle">
+                                                            {{-- <img src="assets/img/avatars/9.png" alt
+                                                                class="h-auto rounded-circle"> --}}
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -343,8 +471,8 @@
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            <img src="assets/img/avatars/5.png" alt
-                                                                class="h-auto rounded-circle">
+                                                            {{-- <img src="assets/img/avatars/5.png" alt
+                                                                class="h-auto rounded-circle"> --}}
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -367,8 +495,8 @@
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            <img src="assets/img/avatars/6.png" alt
-                                                                class="h-auto rounded-circle">
+                                                            {{-- <img src="assets/img/avatars/6.png" alt
+                                                                class="h-auto rounded-circle"> --}}
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -427,8 +555,13 @@
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
                                     data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="{{ asset('assets/img/avatars/1.png') }}" alt
-                                            class="h-auto rounded-circle">
+                                        @if (Auth::user()->avatar)
+                                            <img src="{{ asset('storage/' . Auth::user()->avatar) }}"
+                                                class="h-auto rounded-circle">
+                                        @else
+                                            <img src="{{ asset('assets/img/avatars/1.png') }}"
+                                                class="h-auto rounded-circle">
+                                        @endif
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -437,15 +570,20 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
-                                                        <img src="{{ asset('assets/img/avatars/1.png') }}"
-                                                            class="h-auto rounded-circle">
+                                                        @if (Auth::user()->avatar)
+                                                            <img src="{{ asset('storage/' . Auth::user()->avatar) }}"
+                                                                class="h-auto rounded-circle">
+                                                        @else
+                                                            <img src="{{ asset('assets/img/avatars/1.png') }}"
+                                                                class="h-auto rounded-circle">
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
                                                     <span class="fw-medium d-block">
                                                         {{ Auth::user()->username }}
                                                     </span>
-                                                    <small class="text-muted">Admin</small>
+                                                    <small class="text-muted">Mentor</small>
                                                 </div>
                                             </div>
                                         </a>
@@ -491,13 +629,7 @@
         <!-- Drag Target Area To SlideIn Menu On Small Screens -->
         <div class="drag-target"></div>
     </div>
-    <!-- / Layout wrapper -->
-    <!--/ Layout Content -->
 
-
-    <!-- Include Scripts -->
-    <!-- $isFront is used to append the front layout scripts only on the front layout otherwise the variable will be blank -->
-    <!-- BEGIN: Vendor JS-->
     <script src="{{ asset('assets/vendor/libs/jquery/jquery1e84.js?id=0f7eb1f3a93e3e19e8505fd8c175925a') }}"></script>
     <script src="{{ asset('assets/vendor/libs/popper/popper0a73.js?id=baf82d96b7771efbcc05c3b77135d24c') }}"></script>
     <script src="{{ asset('assets/vendor/js/bootstraped84.js?id=9a6c701557297a042348b5aea69e9b76') }}"></script>
@@ -552,6 +684,22 @@
                     confirmButton: "btn btn-primary"
                 },
                 buttonsStyling: !1,
+            });
+        </script>
+    @elseif (session()->has('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}', // Teks pesan dari sesi
+            });
+        </script>
+    @elseif (session()->has('warning'))
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Peringatan!',
+                text: '{{ session('warning') }}', // Teks pesan dari sesi
             });
         </script>
     @endif

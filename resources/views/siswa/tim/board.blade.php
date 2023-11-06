@@ -10,13 +10,7 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/katex.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/editor.css') }}" />
 
-    <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/app-kanban.css') }}" />
-    <style>
-        .komentar{
-            overflow-y: auto;
-            max-height: 320px;
-        }
-    </style>
+<link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/app-kanban.css') }}" />
 
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
 @endsection
@@ -135,17 +129,10 @@
                                         <i class=" ti ti-dots-vertical" id="kanban-tasks-item-dropdown"
                                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                                         <div class="dropdown-menu dropdown-menu-end"
-                                            aria-labelledby="kanban-tasks-item-dropdown" style=""><a
-                                                class="dropdown-item" href="javascript:void(0)"
-                                                data-bs-toggle="offcanvas"
-                                                data-bs-target="#barKerja{{ $tugas->id }}">Edit</a>
-                                            <form id="deleteTaskForm" action="{{ route('delete.tugas') }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <input type="text" name="nama" value="{{ $tugas->nama }}"
-                                                    style="display: none;">
-                                                <a class="dropdown-item delete-task" href="javascript:void(0)" onclick="konfirmasi({{$tugas->id}})">Delete</a>
+                                            aria-labelledby="kanban-tasks-item-dropdown" id="{{ $tugas->uuid }}" style=""><a
+                                                class="dropdown-item" href="javascript:void(0)">Copy task link</a><a
+                                                class="dropdown-item" href="javascript:void(0)">Duplicate task</a><a
+                                                class="dropdown-item delete-task" href="javascript:void(0)">Delete</a>
                                         </div>
                                         </form>
                                     </div>
@@ -1167,122 +1154,45 @@
     @endforeach
 @endsection
 @section('script')
-    <script src="{{ asset('assets/vendor/libs/jquery/jquery1e84.js?id=0f7eb1f3a93e3e19e8505fd8c175925a') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/popper/popper0a73.js?id=baf82d96b7771efbcc05c3b77135d24c') }}"></script>
-    {{-- <script src="{{ asset('assets/vendor/js/bootstraped84.js?id=9a6c701557297a042348b5aea69e9b76') }}"></script> --}}
-    <script src="{{ asset('assets/vendor/libs/node-waves/node-waves259f.js?id=4fae469a3ded69fb59fce3dcc14cd638') }}">
-    </script>
-    <script
-        src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar6188.js?id=44b8e955848dc0c56597c09f6aebf89a') }}">
-    </script>
-    <script src="{{ asset('assets/vendor/libs/hammer/hammer2de0.js?id=0a520e103384b609e3c9eb3b732d1be8') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/typeahead-js/typeahead60e7.js?id=f6bda588c16867a6cc4158cb4ed37ec6') }}">
-    </script>
-    <script src="{{ asset('assets/vendor/js/menu2dc9.js?id=c6ce30ded4234d0c4ca0fb5f2a2990d8') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/moment/moment.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/jkanban/jkanban.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/quill/katex.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/quill/quill.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="{{ asset('assets/vendor/libs/jquery/jquery1e84.js?id=0f7eb1f3a93e3e19e8505fd8c175925a') }}"></script>
+<script src="{{ asset('assets/vendor/libs/popper/popper0a73.js?id=baf82d96b7771efbcc05c3b77135d24c') }}"></script>
+{{-- <script src="{{ asset('assets/vendor/js/bootstraped84.js?id=9a6c701557297a042348b5aea69e9b76') }}"></script> --}}
+<script src="{{ asset('assets/vendor/libs/node-waves/node-waves259f.js?id=4fae469a3ded69fb59fce3dcc14cd638') }}"></script>
+<script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar6188.js?id=44b8e955848dc0c56597c09f6aebf89a') }}"></script>
+<script src="{{ asset('assets/vendor/libs/hammer/hammer2de0.js?id=0a520e103384b609e3c9eb3b732d1be8') }}"></script>
+<script src="{{ asset('assets/vendor/libs/typeahead-js/typeahead60e7.js?id=f6bda588c16867a6cc4158cb4ed37ec6') }}"></script>
+<script src="{{ asset('assets/vendor/js/menu2dc9.js?id=c6ce30ded4234d0c4ca0fb5f2a2990d8') }}"></script>
+<script src="{{ asset('assets/vendor/libs/moment/moment.js') }}"></script>
+<script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+<script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
+<script src="{{ asset('assets/vendor/libs/jkanban/jkanban.js') }}"></script>
+<script src="{{ asset('assets/vendor/libs/quill/katex.js') }}"></script>
+<script src="{{ asset('assets/vendor/libs/quill/quill.js') }}"></script>
+<!-- END: Page Vendor JS-->
+<!-- BEGIN: Theme JS-->
+{{-- <script src="{{ asset('assets/js/mainf696.js?id=8bd0165c1c4340f4d4a66add0761ae8a') }}"></script> --}}
 
-    <!-- END: Page Vendor JS-->
-    <!-- BEGIN: Theme JS-->
-    {{-- <script src="{{ asset('assets/js/mainf696.js?id=8bd0165c1c4340f4d4a66add0761ae8a') }}"></script> --}}
+<!-- END: Theme JS-->
+<!-- Pricing Modal JS-->
+<!-- END: Pricing Modal JS-->
+<!-- BEGIN: Page JS-->
+<script src="{{ asset('assets/js/app-kanban.js') }}"></script>
+<!-- END: Page JS-->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
 
-    <!-- END: Theme JS-->
-    <!-- Pricing Modal JS-->
-    <!-- END: Pricing Modal JS-->
-    <!-- BEGIN: Page JS-->
-    <script src="{{ asset('assets/js/app-kanban.js') }}"></script>
-    <!-- END: Page JS-->
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            function loadComments() {
-                $.ajax({ // Ganti $ajax menjadi $.ajax
-                    url: "/comments",
-                    type: "GET",
-                    success: function(data) {
-                        const comments = data.map(comment => `<div>${comment.text}</div>`).join('');
-                        $("#comments-container").html(comments);
-                    },
-                    error: function(error) {
-                        console.error(error);
-                    }
-                });
-            }
-            loadComments();
+// let dataEmpty
 
-            @foreach ($tugas_baru as $tugas)
-                $("#comment-form-{{ $tugas->id }}").submit(function(event) {
-                    event.preventDefault();
-                    $.ajax({
-                        url: "{{ route('tim.addComment') }}",
-                        type: "POST",
-                        data: $(this).serialize(),
-                        success: function(data) {
-                            loadComments();
-                            $("#comment-form-{{ $tugas->id }}")[0].reset();
-                        },
-                        error: function(error) {
-                            console.error(error);
-                        }
-                    });
-                });
-            @endforeach
-        });
-    </script>
+    axios.get("{{ route('dataTugas',$tim->uuid) }}")
+    .then(res=>{
+        const data = res.data;
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var deleteTaskLink = document.querySelector(".delete-task");
+        console.log("{{ $tim->uuid }}");
 
-            deleteTaskLink.addEventListener("click", function() {
-                Swal.fire({
-                    title: 'Konfirmasi',
-                    text: 'Apakah Anda yakin ingin menghapus tugas ini?',
-                    icon: 'error',
-                    showCancelButton: true,
-                    confirmButtonText: 'Ya',
-                    cancelButtonText: 'Tidak',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        document.getElementById("deleteTaskForm").submit();
-                    }
-                });
-            });
-        });
-        function konfirmasi(id){
-            Swal.fire({
-                    title: 'Konfirmasi',
-                    text: 'Apakah Anda yakin ingin menghapus tugas ini?',
-                    icon: 'error',
-                    showCancelButton: true,
-                    confirmButtonText: 'Ya',
-                    cancelButtonText: 'Tidak',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        document.getElementById("deleteTaskForm").submit();
-                    }
-                });
-        }
-    </script>
+    })
 
-    <script>
-        // let dataEmpty
-
-        axios.get("{{ route('dataTugas', $tim->uuid) }}")
-            .then(res => {
-                const data = res.data;
-
-                console.log("{{ $tim->uuid }}");
-
-            })
-
-        function showForm(id) {
-            let status = false;
+    function showForm(id){
+        let status = false;
 
             if (!status) {
                 document.getElementById(id).classList.toggle('d-none')
@@ -1356,11 +1266,9 @@
       </div>
     `;
 
-                    // Tambahkan elemen baru ke dalam div dengan id "tugas_baru"
-                    const tugasBaru = document.getElementById('tugas_baru');
-                    tugasBaru.appendChild(newElement);
-
-                    document.getElementById('notFound').classList.add('d-none')
+    // Tambahkan elemen baru ke dalam div dengan id "tugas_baru"
+    const tugasBaru = document.getElementById('tugas_baru');
+    tugasBaru.appendChild(newElement);
 
                 })
 

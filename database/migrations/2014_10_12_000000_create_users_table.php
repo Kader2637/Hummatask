@@ -20,7 +20,9 @@ return new class extends Migration
             $table->string('password');
             $table->boolean('status')->default(true);
             $table->string('tlp')->nullable();
+            $table->string('sekolah')->nullable();
             $table->text('deskripsi');
+            $table->date('tanggal_bergabung')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->boolean('is_login')->default(false);
             $table->rememberToken();
