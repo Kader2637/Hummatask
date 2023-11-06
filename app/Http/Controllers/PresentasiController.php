@@ -38,13 +38,13 @@ class PresentasiController extends Controller
             return back()->with('error','Deskripsi presentasi tidak boleh melebihi 700 karakter');
         }
 
-        if(Carbon::now()->isoFormat('HH:m:ss') < "08:00:00" ){
-            return back()->with('error','Pengajuan Presentasi dimulai pukul 08:00');
-        }
+        // if(Carbon::now()->isoFormat('HH:m:ss') < "08:00:00" ){
+        //     return back()->with('error','Pengajuan Presentasi dimulai pukul 08:00');
+        // }
 
-        if(Carbon::now()->isoFormat('HH:m:ss') > "15:00:00" ){
-            return back()->with('error','Pengajuan Presentasi tidak boleh lebih dari pukul 15:00');
-        }
+        // if(Carbon::now()->isoFormat('HH:m:ss') > "15:00:00" ){
+        //     return back()->with('error','Pengajuan Presentasi tidak boleh lebih dari pukul 15:00');
+        // }
 
 
         $history = HistoryPresentasi::latest()->pluck('id')->first();

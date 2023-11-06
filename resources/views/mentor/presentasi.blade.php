@@ -436,12 +436,33 @@
                     let data4 = res.data.telat_presentasi;
                     let codeHistory =  res.data.codeHistory
 
-                    console.log(codeHistory);
+                    console.log(data1);
 
                     // console.log(Object.keys(data2));
 
                     document.getElementById('row-persetujuan').innerHTML = ''
-                    Object.keys(data1).forEach((key) => {
+
+                    if( data1.length === 0 )
+                    {
+
+                        let div = document.createElement('div')
+                        div.className = "container"
+                        let children =
+                        `
+                        <div class="row" style="height:50vh;">
+                            <div class ="col-12 d-flex flex-column justify-content-center align-items-center ">
+                                <img src="{{ asset('assets/img/illustrations/noData.png') }}" width="200" />
+                                <h3>Sedang Tidak ada Pengajuan</h3>
+                            </div>
+                        </div>
+                        `
+                        div.innerHTML = children;
+
+                        document.getElementById('row-persetujuan').appendChild(div);
+
+                    } else {
+
+                        Object.keys(data1).forEach((key) => {
                         let presentasi = data1[key]
                         // console.log(presentasi);
                         let div = document.createElement('div')
@@ -453,7 +474,7 @@
                         <div class="card-body">
                             <img src="{{ asset('storage/${presentasi.tim.logo}') }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 150px; height: 150px; object-fit: cover; ">
                             <div class="d-flex justify-content-center align-items-center gap-2">
-                                <h4 class="card-title text-capitalize">tes</h4>
+                                <h4 class="card-title text-capitalize">${presentasi.tim.nama}</h4>
                                 <a href="#"><span class="badge bg-label-warning mb-3">solo</span></a>
                             </div>
                             <p class="card-text">${presentasi.jadwal}</p>
@@ -469,6 +490,31 @@
                         div.innerHTML = childrend;
                         document.getElementById('row-persetujuan').appendChild(div);
                     });
+
+                    }
+
+
+                    if( data2.length == 0 ){
+
+                        let div = document.createElement('div')
+                        div.className = "container"
+                        let children =
+                        `
+                        <div class="row" style="height:50vh;">
+                            <div class ="col-12 d-flex flex-column justify-content-center align-items-center ">
+                                <img src="{{ asset('assets/img/illustrations/noData2.png') }}" width="200" />
+                                <h3>Sedang Tidak ada presentasi</h3>
+                            </div>
+                        </div>
+                        `
+                        div.innerHTML = children;
+
+                        document.getElementById('row-konfirmasi').appendChild(div);
+
+
+                    }else{
+
+
 
                     document.getElementById('row-konfirmasi').innerHTML = "";
                     Object.keys(data2).forEach((key) => {
@@ -499,6 +545,10 @@
                         div.innerHTML = childrend
                         document.getElementById('row-konfirmasi').appendChild(div)
                     })
+
+
+
+                    }
 
 
                     document.getElementById('tr-belum-presentasi').innerHTML = ""
@@ -718,9 +768,6 @@
                         })
                         .then((res) => {
                             console.log(res.data.error);
-
-
-
                             document.getElementById('card-konfirmasi-' + code).classList.add('d-none');
                         })
                         .catch((err) => {
