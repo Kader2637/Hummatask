@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nama');
             $table->date('deadline')->nullable();
             $table->enum('status_tugas',['tugas_baru','dikerjakan','revisi','selesai'])->default('tugas_baru');
+            $table->enum('prioritas',['penting','urgen','mendesak','selesai'])->default('penting');
             $table->timestamps();
         });
     }

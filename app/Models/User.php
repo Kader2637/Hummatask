@@ -66,5 +66,15 @@ class User extends Authenticatable
         return $this->belongsToMany(Tim::class, 'anggotas');
     }
 
+    public function tugas()
+    {
+        return $this->hasMany(Tugas::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comments::class);
+    }
+
 
 }

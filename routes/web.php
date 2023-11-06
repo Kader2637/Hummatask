@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\authController;
+use App\Http\Controllers\commentsController;
 use App\Http\Controllers\KetuaMagangController;
 use App\Http\Controllers\mentorController;
 use App\Http\Controllers\PengajuanProjekController;
@@ -49,8 +50,10 @@ Route::prefix('tim')->middleware(['auth', 'siswa'])->controller(timController::c
     Route::get('history/{uuid}', 'historyPage')->name('tim.history');
     Route::get('history-presentasi/{uuid}', 'historyPresentasiPage')->name('tim.historyPresentasi');
     Route::get('history-catatan/{uuid}', 'historyCatatanPage')->name('tim.historyCatatan');
-
-
+    Route::patch('/ubah-status', 'ubahStatus')->name('ubahStatus');
+    Route::delete('/delete-tugas', 'hapusTugas')->name('delete.tugas');
+    Route::post('/add-comment', 'comments')->name('tim.addComment');
+    Route::get('/view-comment', 'viewComments');
 
 
     // proses di halaman tim
@@ -79,3 +82,6 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::get('history', [mentorController::class, 'history'])->name('history.mentor');
     Route::get('presentasi', [mentorController::class, 'presentasi'])->name('presentasi.mentor');
 });
+
+// Route::get('/comments',[commentsController::class, 'viewComments']);
+// Route::post('/comments',[commentsController::class, 'comments'])->name('comments');

@@ -9,13 +9,24 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Tugas extends Model
 {
     use HasFactory;
-
+    
     protected $guarded=[
-
     ];
+// sesuai yang ada didala array
+    protected $fillable=['status_tugas','nama','prioritas'];
 
     public function tim():BelongsTo
     {
         return $this->belongsTo(Tim::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comments::class);
     }
 }
