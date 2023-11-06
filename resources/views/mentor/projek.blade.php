@@ -35,7 +35,11 @@
                 @php
                     $anggotaArray = [];
                     foreach ($item->tim->anggota as $anggota) {
-                        $anggotaArray[] = $anggota->user->username;
+                        $anggotaArray[] = [
+                            'name' => $anggota->user->username,
+                            'avatar' => $anggota->user->avatar,
+                            'jabatan' => $anggota->jabatan->nama_jabatan,
+                        ];
                     }
                     $anggotaJson = json_encode($anggotaArray);
                     $tanggalMulai = $item->tim->created_at->translatedFormat('Y-m-d');
@@ -68,7 +72,8 @@
                                                             data-bs-placement="top" title="{{ $anggota->user->username }}"
                                                             class="avatar avatar-sm pull-up">
                                                             <img class="rounded-circle"
-                                                                src="{{ asset($anggota->user->avatar) }}" alt="Avatar">
+                                                                src="{{ $anggota->user->avatar ? Storage::url($anggota->user->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                                alt="Avatar">
                                                         </li>
                                                     @endforeach
                                                 </ul>
@@ -98,7 +103,8 @@
                                 data-deadline="{{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}"
                                 data-anggota="{{ $anggotaJson }}" data-deskripsi="{{ $item->deskripsi }}"
                                 data-dayleft="{{ $dayLeft }}" data-total-deadline="{{ $totalDeadline }}"
-                                data-progress="{{ $progressPercentage }}"><span class="text-white">Detail</span></a>
+                                data-progress="{{ $progressPercentage }}" data-repo="{{$item->tim->repository}}"><span class="text-white">Detail</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -121,11 +127,10 @@
                     var anggota = $(this).data('anggota');
                     var deskripsi = $(this).data('deskripsi');
                     var dayLeft = $(this).data('dayleft');
+                    var repo = $(this).data('repo');
                     var total = $(this).data('total-deadline');
                     var progress = $(this).data('progress');
                     var progressFormat = Math.round(progress);
-                    // console.log(dayLeft, total, progressFormat);
-
 
                     $('#logo-tim').attr('src', logo);
                     $('#logo-tim2').attr('src', logo);
@@ -138,6 +143,8 @@
                     $('#dayLeft').text(dayLeft);
                     $('#dayleft').text(dayLeft);
                     $('#total').text(total);
+                    $('#text-repo').text(repo);
+                    $('#repository').attr('href', repo);
                     $('#textPercent').text(progressFormat);
                     $('.progress-bar').css('width', progressFormat + '%');
                     $('.progress-bar').attr('aria-valuenow', progressFormat);
@@ -158,15 +165,19 @@
                     anggotaList.empty();
 
                     anggota.forEach(function(anggota, index) {
+                        var avatarSrc = anggota.avatar ? '/storage/' + anggota.avatar :
+                            '/assets/img/avatars/1.png';
+
                         var anggotaItem = $('<div class="col-lg-4 p-2" style="box-shadow: none">' +
                             '<div class="card">' +
                             '<div class="card-body d-flex gap-3 align-items-center">' +
                             '<div>' +
-                            '<img width="30px" height="30px" class="rounded-circle object-cover" src="" alt="foto user">' +
+                            '<img width="30px" height="30px" class="rounded-circle object-cover" src="' +
+                            avatarSrc + '" alt="foto user">' +
                             '</div>' +
                             '<div>' +
-                            '<h5 class="mb-0" style="font-size: 15px">' + anggota + '</h5>' +
-                            '<span class="badge bg-label-warning"></span>' +
+                            '<h5 class="mb-0" style="font-size: 15px">' + anggota.name + '</h5>' +
+                            '<span class="badge bg-label-warning">' + anggota.jabatan + '</span>' +
                             '</div>' +
                             '</div>' +
                             '</div>' +
@@ -183,7 +194,7 @@
 
         {{-- Modal detail --}}
         <div class="modal fade" id="modalDetail" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+            <div class="modal-dialog modal-fullscreen modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalCenterTitle">Detail tim</h5>
@@ -291,6 +302,7 @@
                                                                                     id="dayleft"></span> hari lagi</span>
                                                                         </div>
                                                                     </div>
+                                                                    <a href="" id="repository" target="_blank"><span class="text-blue" id="text-repo"></span></a>
                                                                     <div class="deskripsi mt-2">
                                                                         <div class="title text-dark">
                                                                             Deskripsi :

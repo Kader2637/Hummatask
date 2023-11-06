@@ -8,6 +8,27 @@
         <h5 class="header">Daftar Pengajuan Projek</h5>
         <div class="row">
             @forelse ($projects as $item)
+                @php
+                    $anggotaArray = [];
+                    foreach ($item->tim->anggota as $anggota) {
+                        $anggotaArray[] = [
+                            'username' => $anggota->user->username,
+                            'avatar' => $anggota->user->avatar,
+                            'jabatan' => $anggota->jabatan->nama_jabatan,
+                        ];
+                    }
+                    $anggotaJson = json_encode($anggotaArray);
+
+                    $temaArray = [];
+                    foreach ($item->tim->tema as $tema) {
+                        $temaArray[] = [
+                            'tema_id' => $tema->id,
+                            'tema_code' => $tema->code,
+                            'nama_tema' => $tema->nama_tema,
+                        ];
+                    }
+                    $temaJson = json_encode($temaArray);
+                @endphp
                 <div class="col-md-6 col-lg-3">
                     <div class="card text-center mb-3">
                         <div class="card-body">
@@ -20,25 +41,120 @@
                                         @foreach ($item->tim->anggota as $anggota)
                                             <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
                                                 title="{{ $anggota->user->username }}" class="avatar avatar-sm pull-up">
-                                                <img class="rounded-circle" src="{{ $anggota->user->avatar }}"
+                                                <img class="rounded-circle"
+                                                    src="{{ $anggota->user->avatar ? Storage::url($anggota->user->avatar) : asset('assets/img/avatars/1.png') }}"
                                                     alt="Avatar">
                                             </li>
                                         @endforeach
                                     </ul>
                                 </div>
                             </div>
-                            <a href="#"><span
-                                    class="badge bg-label-warning mb-3">{{ $item->tim->status_tim }}</span></a>
+                            <a><span class="badge bg-label-warning mb-3">{{ $item->tim->status_tim }}</span></a>
                             <p class="card-text">{{ $item->created_at->translatedFormat('l, j F Y') }}</p>
-                            <a  data-bs-toggle="" data-bs-target="#Detail" class="btn btn-primary"><span
-                                    class="text-white">Detail</span></a>
+                            <a data-bs-toggle="modal" data-bs-target="#modalDetail" data-nama-tim="{{ $item->tim->nama }}"
+                                data-type-project="{{ $item->type_project }}"
+                                data-logo="{{ Storage::url($item->tim->logo) }}"
+                                data-created-at="{{ $item->created_at->translatedFormat('l, j F Y') }}"
+                                data-anggota="{{ $anggotaJson }}" data-tema="{{ $temaJson }}"
+                                class="btn btn-primary btn-detail"><span class="text-white">Detail</span></a>
                         </div>
                     </div>
                 </div>
             @empty
-                <p>Tidak ada data pengajuan project</p>
+                <p>Tidak ada data pengajuan project.</p>
             @endforelse
         </div>
+
+        {{-- script modal detail --}}
+        <script>
+            $(document).ready(function() {
+                $('.btn-detail').click(function() {
+                    var namaTim = $(this).data('nama-tim');
+                    var typeProject = $(this).data('type-project');
+                    var logo = $(this).data('logo');
+                    var createdAt = $(this).data('created-at');
+                    var anggota = $(this).data('anggota');
+                    var tema = $(this).data('tema');
+                    var temaHtml = JSON.stringify(tema);
+
+                    $('#btn-terima').attr('data-tema', temaHtml);
+                    $('#nama-tim').text(namaTim);
+                    $('#type-project').text(typeProject);
+                    $('#created-at').text(createdAt);
+                    $('#logo-tim').attr('src', logo);
+
+                    var anggotaList = $('#anggota-list');
+                    anggotaList.empty();
+
+                    anggota.forEach(function(anggota, index) {
+                        var avatarSrc = anggota.avatar ? '/storage/' + anggota.avatar :
+                            '/assets/img/avatars/1.png';
+
+                        var anggotaItem = $(
+                            '<tr>' +
+                            '<td>' +
+                            '<div class="d-flex align-items-center mt-lg-3">' +
+                            '<div class="avatar me-3 avatar-sm">' +
+                            '<img src="' + avatarSrc +
+                            '" alt="Avatar" class="h-auto rounded-circle" />' +
+                            '</div>' +
+                            '<div class="d-flex flex-column">' +
+                            '<h6 class="mb-0">' + anggota.username + '</h6>' +
+                            '<small class="text-truncate text-muted">' + anggota.jabatan +
+                            '</small>' +
+                            '</div>' +
+                            '</div>' +
+                            '</td>' +
+                            '</tr>'
+                        );
+
+                        anggotaList.append(anggotaItem);
+                    });
+
+                    var temaList = $('#tema-list');
+                    temaList.empty();
+
+                    tema.forEach(function(tema, index) {
+                        var temaItem = $(
+                            '<tr>' +
+                            '<td>' + (index + 1) + '.' + '</td>' +
+                            '<td>' + tema.nama_tema + '</td>' +
+                            '</tr>'
+                        );
+                        temaList.append(temaItem);
+                    });
+                });
+
+                $('#btn-terima').click(function() {
+                    var tema = $(this).data('tema');
+                    var temaList = $('#tema');
+                    temaList.empty();
+                    tema.forEach(function(tema, index) {
+                        temaList.append("<option data-url="+ tema.tema_code +" value=" + tema.tema_id + ">" + tema.nama_tema +
+                            "</option>");
+                    });
+
+                    temaList.on('change', function() {
+                        var selectedTema = $(this).find(':selected').data('url');
+                        var formAction =
+                            "{{ route('persetujuan-project', ['code' => ':temaId']) }}";
+                        formAction = formAction.replace(':temaId', selectedTema);
+                        $('#terima-project').attr('action', formAction);
+                    });
+
+                });
+
+                const oneWeekFromToday = new Date();
+                oneWeekFromToday.setDate(oneWeekFromToday.getDate() + 7);
+
+                flatpickr("#deadline", {
+                    minDate: oneWeekFromToday,
+                    dateFormat: "Y-m-d",
+                });
+
+            });
+        </script>
+        {{-- script modal detail --}}
 
         {{-- pagination --}}
         <nav aria-label="Page navigation">
@@ -74,9 +190,58 @@
         </nav>
         {{-- pagination --}}
 
+        <!-- Modal Terima-->
+        <div class="modal fade" id="modalTerima" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalCenterTitle">Terima Pengajuan Projek</h5>
+                        <button type="button" class="btn-close" data-bs-toggle="modal" data-bs-target="#modalDetail"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="POST" id="terima-project">
+                            @csrf
+                            @method('PATCH')
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="tema" class="form-label">Tema Projek</label>
+                                    <select id="tema" name="temaInput" class="select2 form-select form-select-lg"
+                                        data-allow-clear="true">
+                                        <option disabled selected>Pilih Data</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="flatpickr-date" class="form-label">Tentukan Deadline</label>
+                                    <div class="alert alert-warning d-flex align-items-center cursor-pointer"
+                                        role="alert">
+                                        <span class="alert-icon text-warning me-2">
+                                            <i class="ti ti-bell ti-xs"></i>
+                                        </span>
+                                        Jika tidak di isi maka deadline akan menyesuaikan status tim (Jika di isi, deadline
+                                        harus
+                                        1 minggu dari sekarang)
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="YYYY-MM-DD"
+                                        name="deadlineInput" id="deadline" />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-label-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#modalDetail">Kembali</button>
+                                <button type="submit" class="btn btn-primary" id="btn-save">Simpan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         {{-- Modal Detail --}}
         <div class="modal fade" id="modalDetail" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+            <div class="modal-dialog modal-fullscreen modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalCenterTitle">Detail tim</h5>
@@ -89,27 +254,18 @@
                                 <div class="card-body">
                                     <div class="content-profile d-flex flex-wrap flex-row justify-content-between">
                                         <div class="d-flex flex-row gap-3 justify-content-center">
-                                            <img src="" alt="logo tim" class="h-auto rounded-circle mb-3">
+                                            <img src="" id="logo-tim" alt="logo tim"
+                                                style="width: 100px; height: 100px" class="rounded-circle mb-3">
                                             <div
                                                 style="display: flex; flex-direction: column; justify-content: center; align-items: center">
-                                                <span class="d-block text-black fs-4 mb-2">NAMA TIM</span>
-                                                {{-- @if ($projects->tim->status_tim == 'solo') --}}
-                                                <span class="badge bg-label-warning">Solo Project</span>
-                                                {{-- @elseif ($projects->tim->status_tim == 'pre_mini')
-                                                    <span class="badge bg-label-warning">Pre Mini Project</span>
-                                                @elseif ($projects->tim->status_tim == 'mini')
-                                                    <span class="badge bg-label-warning">Mini Project</span>
-                                                @elseif ($projects->tim->status_tim == 'pre_big')
-                                                    <span class="badge bg-label-warning">Pre Big Project</span>
-                                                @elseif ($projects->tim->status_tim == 'big')
-                                                    <span class="badge bg-label-warning">Big Project</span>
-                                                @endif --}}
+                                                <span class="d-block text-black fs-4 mb-2" id="nama-tim"></span>
+                                                <span class="badge bg-label-warning" id="type-project"></span>
                                             </div>
                                         </div>
                                         <div class="d-flex flex-wrap"
                                             style="display: flex; flex-direction: column; justify-items: center; align-items: center; padding: 30px 5px">
                                             <span class="d-block text-black fs-5">Tanggal Pengajuan</span>
-                                            <span class="d-block" style="font-size: 13px">CREATED AT</span>
+                                            <span class="d-block" style="font-size: 13px" id="created-at"></span>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-between">
@@ -117,10 +273,9 @@
                                             <span class="text-black fs-5">Anggota Tim : </span>
                                         </div>
                                         <div>
-                                            {{-- @if ($projects->status_project == 'notapproved') --}}
-                                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                                data-bs-target="#modalTerima">Terima</button>
-                                            {{-- @endif --}}
+                                            <button type="button" id="btn-terima" data-bs-toggle="modal"
+                                                data-bs-target="#modalTerima" class="btn btn-success"
+                                                data-tema="">Terima</button>
                                         </div>
                                     </div>
                                     <div
@@ -130,35 +285,7 @@
                                             <div class="card h-100">
                                                 <div class="table-responsive">
                                                     <table class="table table-borderless">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>DAFTAR ANGGOTA</td>
-                                                            </tr>
-                                                            {{-- @forelse ($projects->tim->anggota as $item)
-                                                                <tr>
-                                                                    <td>
-                                                                        <div class="d-flex align-items-center mt-lg-3">
-                                                                            <div class="avatar me-3 avatar-sm">
-                                                                                <img src="{{ $item->user->avatar }}"
-                                                                                    alt="Avatar"
-                                                                                    class="rounded-circle" />
-                                                                            </div>
-                                                                            <div class="d-flex flex-column">
-                                                                                <h6 class="mb-0">
-                                                                                    {{ $item->user->username }}</h6>
-                                                                                <small
-                                                                                    class="text-truncate text-muted">{{ $item->jabatan->nama_jabatan }}</small>
-                                                                            </div>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            @empty
-                                                                <tr>
-                                                                    <td>
-                                                                        Data tidak ada.
-                                                                    </td>
-                                                                </tr>
-                                                            @endforelse --}}
+                                                        <tbody id="anggota-list">
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -178,17 +305,7 @@
                                                                 <th>Tema</th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>TEMA 1</td>
-                                                                <td>TEMA 1</td>
-                                                            </tr>
-                                                            {{-- @forelse ($projects->tim->tema as $item)
-                                                                <tr>
-                                                                    <td>{{ $loop->iteration }}.</td>
-                                                                    <td>{{ $item->nama_tema }}</td>
-                                                                @empty
-                                                            @endforelse --}}
+                                                        <tbody id="tema-list">
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -203,57 +320,6 @@
             </div>
         </div>
         {{-- Modal Detail --}}
-
-        <!-- Modal Terima-->
-        <div class="modal fade" id="modalTerima" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalCenterTitle">Terima Pengajuan Projek</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="" method="POST" id="terima-project">
-                            @csrf
-                            @method('PATCH')
-                            <div class="row">
-                                <div class="col mb-3">
-                                    <label for="select2Basic" class="form-label">Tema Projek</label>
-                                    <select id="select2Basic" name="temaInput" class="select2 form-select form-select-lg"
-                                        data-allow-clear="true">
-                                        <option value="" disabled selected>Pilih Data</option>
-                                        {{-- @foreach ($projects->tim->tema as $item)
-                                            <option value="{{ $item->id }}">{{ $item->nama_tema }}</option>
-                                        @endforeach --}}
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col mb-3">
-                                    <label for="flatpickr-date" class="form-label">Tentukan Deadline</label>
-                                    <div class="alert alert-warning d-flex align-items-center cursor-pointer"
-                                        role="alert">
-                                        <span class="alert-icon text-warning me-2">
-                                            <i class="ti ti-bell ti-xs"></i>
-                                        </span>
-                                        Jika tidak di isi maka deadline akan menyesuaikan status tim (Jika di isi eadline
-                                        harus
-                                        1 minggu dari sekarang)
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="YYYY-MM-DD"
-                                        name="deadlineInput" id="flatpickr-date" />
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-label-secondary" data-bs-toggle="modal"
-                                    data-bs-target="#modalDetail">Kembali</button>
-                                <button type="submit" class="btn btn-primary">Simpan</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         {{-- Validasi --}}
         <script>
@@ -281,15 +347,18 @@
 
         <!-- Modal Terima-->
 
+
     </div>
 @endsection
 
 @section('script')
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.5.0/js/bootstrap.min.js"></script> --}}
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="{{ asset('assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
+
+
     <script src="{{ asset('assets/js/forms-editors.js') }}"></script>
     <script>
         jQuery.noConflict();
