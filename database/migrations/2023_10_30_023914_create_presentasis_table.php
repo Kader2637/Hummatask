@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /** 
+    /**
      * Run the migrations.
      */
     public function up(): void
@@ -25,6 +25,7 @@ return new class extends Migration
             $table->enum('status_revisi',['selesai','tidak_selesai']);
             $table->foreignId('tim_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('history_presentasi_id')->references('id')->on('history_presentasis')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('user_approval_id')->nullable()->references('id')->on('users');
             $table->timestamps();
         });
     }
