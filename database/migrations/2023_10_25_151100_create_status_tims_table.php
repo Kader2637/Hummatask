@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('status_tims', function (Blueprint $table) {
             $table->id();
-            $table->enum('status',['solo','pre_mini','mini','pre_big','big']);
+            $table->enum('status', ['solo', 'pre_mini', 'mini', 'big']);
             $table->timestamps();
         });
     }

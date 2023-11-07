@@ -315,11 +315,6 @@
                             </thead>
                             <tbody>
                                 @forelse ($timSolo as $item)
-                                    @php
-                                        $jumlahPresentasi = Presentasi::where('status_presentasi', 'selesai')
-                                            ->where('tim_id', $item->id)
-                                            ->count();
-                                    @endphp
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
@@ -327,9 +322,9 @@
                                                 style="width:30px;height:30px;border-radius:50%">
                                             {{ $item->nama }}
                                         </td>
-                                        <td>{{ $item->anggota->user->email }}</td>
+                                        <td>{{ $item->anggota[0]->user->email }}</td>
                                         <td>{{ $item->status_tim }}</td>
-                                        <td>{{ $item->project->tema->nama_tema }}</td>
+                                        <td>{{ $item->project[0]->tema->nama_tema }}</td>
                                         <td>{{ $item->presentasiSelesai->count() }}</td>
                                     </tr>
                                 @empty
