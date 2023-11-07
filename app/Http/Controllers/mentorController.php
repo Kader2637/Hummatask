@@ -13,6 +13,8 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Request;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Code;
 use Spatie\Permission\Models\Role;
 
 class mentorController extends Controller
@@ -182,17 +184,40 @@ class mentorController extends Controller
             ->where('status_project', 'approved')
             ->get();
 
+
+        $request = Request::instance();
+        $code = $request->input('temaProjek');
+        $projek = Tim::query();
+
+        if ($code === 'all') {
+            // Tidak ada filter, tampilkan semua proyek
+          } elseif ($code === 'solo') {
+            $projek->where('status_tim', 'solo');
+          } elseif ($code === 'pre_mini') {
+            $projek->where('status_tim', 'pre_mini');
+          } elseif ($code === 'mini') {
+            $projek->where('status_tim', 'mini');
+          } elseif ($code === 'big') {
+            $projek->where('status_tim', 'big');
+          }
+
+        $projek = $projek->get();
+
         $users = User::where('peran_id', 1)
             ->whereDoesntHave('tim', function ($query) {
                 $query->where('kadaluwarsa', true);
             })
             ->get();
+            $tim = Tim::all();
 
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
-        return response()->view('mentor.projek', compact('users', 'status_tim', 'projects'));
+
+
+
+        return response()->view('mentor.projek', compact('projek','users', 'status_tim', 'projects', 'tim'));
     }
 
-    protected function Project()
+    protected function Project(Request $request)
     {
         $projects = Project::with('tim', 'tema')
             ->where('status_project', 'approved')
@@ -208,8 +233,26 @@ class mentorController extends Controller
             })
             ->get();
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
+
+        $request = Request::instance();
+        $code = $request->input('temaProjek');
+        $projects = Tim::query();
+
+        if ($code === 'solo') {
+            $projects->where('status_tim', 'solo');
+        } elseif ($code === 'pre_mini') {
+            $projects->where('status_tim', 'pre_mini');
+        } elseif ($code === 'mini') {
+            $projects->where('status_tim', 'mini');
+        } elseif ($code === 'big') {
+            $projects->where('status_tim', 'big');
+        }
+
+        $projects = $projects->get();
+
         return response()->json(['projects' => $projects, 'anggota' => $anggota, 'users' => $users, 'status_tim' => $status_tim]);
     }
+
 
 
 

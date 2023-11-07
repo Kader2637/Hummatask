@@ -86,7 +86,7 @@ class PengajuanTimController extends Controller
             // $tim->nama = $request->nama;
             $statusTim = is_array($request->status_tim) ? $request->status_tim : [$request->status_tim];
             $tim->status_tim = implode(',', $statusTim);
-            $tim->kadaluwarsa = false;
+            $tim->kadaluwarsa = true;
             $tim->save();
 
             // membuat anggota

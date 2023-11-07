@@ -9,9 +9,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
     <title>
         {{ $title }}
     </title>
@@ -61,104 +59,105 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <style>
+        body,
+        {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        z-index: 2;
+        /* Tambahkan z-index di sini */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .hidden {
+            opacity: 0;
+        }
+
+        #loader {
+            z-index: 100;
+            /* Tambahkan z-index di sini */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+        }
+
+        .preloader {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            left: calc(50% - 20px);
+            top: calc(50% - 20px);
+            animation: preloader 2s linear infinite;
+        }
+
+        .loadBar {
+            position: absolute;
+            width: 200px;
+            height: 2px;
+            left: calc(50% - 100px);
+            top: calc(50% + 60px);
+            background: #7a14c3;
+        }
+
+        .progress {
+            position: relative;
+            width: 0%;
+            height: inherit;
+            background: #e74c3c;
+        }
+
+        .custom-margin {
+            margin-top: -65px;
+        }
+
+        @keyframes loading {
+
+            0% {
+                width: 0%;
+            }
+
+            100% {
+                width: 100%;
+            }
+
+        }
+
+        @keyframes preloader {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            25% {
+                transform: translateY(-15px);
+            }
+
+            50% {
+                transform: translateY(0);
+            }
+
+            75% {
+                transform: translateY(15px);
+            }
+        }
+    </style>
     @yield('link')
 </head>
 
 @yield('style')
-<style>
-    body,
-    {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    position: relative;
-    z-index: 2;
-    /* Tambahkan z-index di sini */
-    }
-
-    * {
-        margin: 0;
-        padding: 0;
-    }
-
-    .hidden {
-        opacity: 0;
-    }
-
-    #loader {
-        z-index: 100;
-        /* Tambahkan z-index di sini */
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: #ffffff;
-    }
-
-    .preloader {
-        position: absolute;
-        width: 40px;
-        height: 40px;
-        left: calc(50% - 20px);
-        top: calc(50% - 20px);
-        animation: preloader 2s linear infinite;
-    }
-
-    .loadBar {
-        position: absolute;
-        width: 200px;
-        height: 2px;
-        left: calc(50% - 100px);
-        top: calc(50% + 60px);
-        background: #7a14c3;
-    }
-
-    .progress {
-        position: relative;
-        width: 0%;
-        height: inherit;
-        background: #e74c3c;
-    }
-
-    .custom-margin {
-        margin-top: -65px;
-    }
-
-    @keyframes loading {
-
-        0% {
-            width: 0%;
-        }
-
-        100% {
-            width: 100%;
-        }
-
-    }
-
-    @keyframes preloader {
-
-        0%,
-        100% {
-            transform: translateY(0);
-        }
-
-        25% {
-            transform: translateY(-15px);
-        }
-
-        50% {
-            transform: translateY(0);
-        }
-
-        75% {
-            transform: translateY(15px);
-        }
-    }
-</style>
 
 <body>
-
     <script src="https://code.jquery.com/jquery-2.2.3.min.js"
         integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
     <div id="loader">
@@ -168,24 +167,6 @@
             </div>
         </div>
     </div>
-    <script>
-        $(window).load(function() {
-
-            var rnd = Math.random() * (2000 - 2000) + 500;
-
-            $('.progress').css("animation", "loading " + rnd + "ms linear");
-
-            console.log(rnd);
-
-            setTimeout(function() {
-
-                $('#loader').fadeOut();
-                $('#page').removeClass('hidden');
-
-            }, rnd);
-
-        });
-    </script>
     <div class="layout-wrapper layout-content-navbar ">
         <div class="layout-container">
 
@@ -858,7 +839,24 @@
             });
         </script>
     @endif
+    <script>
+        $(window).load(function() {
 
+            var rnd = Math.random() * (2000 - 2000) + 500;
+
+            $('.progress').css("animation", "loading " + rnd + "ms linear");
+
+            console.log(rnd);
+
+            setTimeout(function() {
+
+                $('#loader').fadeOut();
+                $('#page').removeClass('hidden');
+
+            }, rnd);
+
+        });
+    </script>
 
     @yield('script')
 
