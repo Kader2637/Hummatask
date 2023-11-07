@@ -345,25 +345,38 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="progres-bar">
-                                                <div class="d-flex justify-content-between">
-                                                    @if ($project && @isset($project->deadline))
-                                                        <span>Hari</span>
-                                                        <span>{{ $dayLeft }} dari {{ $totalDeadline }} Hari</span>
-                                                </div>
-                                                <div class="d-flex flex-grow-1 align-items-center my-1">
-                                                    <div class="progress w-100 me-3" style="height:8px;">
-                                                        <div class="progress-bar bg-primary" role="progressbar"
-                                                            style="width: {{ round($progressPercentage) }}%"
-                                                            aria-valuenow="{{ round($progressPercentage) }}"
-                                                            aria-valuemin="0" aria-valuemax="100">
+                                                @if ($project)
+                                                    @if ($project->deadline > now())
+                                                        <div class="d-flex justify-content-between">
+                                                            <span>Hari</span>
+                                                            <span>{{ $dayLeft }} dari {{ $totalDeadline }}
+                                                                Hari</span>
                                                         </div>
-                                                    </div>
-                                                    <span class="text-muted">{{ round($progressPercentage) }}%</span>
-                                                </div>
-                                                <div class="tenggat">
-                                                    <span>Tenggat kurang {{ $dayLeft }} hari lagi</span>
+                                                        <div class="d-flex flex-grow-1 align-items-center my-1">
+                                                            <div class="progress w-100 me-3" style="height:8px;">
+                                                                <div class="progress-bar bg-primary" role="progressbar"
+                                                                    style="width: {{ round($progressPercentage) }}%"
+                                                                    aria-valuenow="{{ round($progressPercentage) }}"
+                                                                    aria-valuemin="0" aria-valuemax="100">
+                                                                </div>
+                                                            </div>
+                                                            <span
+                                                                class="text-muted">{{ round($progressPercentage) }}%</span>
+                                                        </div>
+                                                        <div class="tenggat">
+                                                            <span>Tenggat kurang {{ $dayLeft }} hari lagi</span>
+                                                        </div>
+                                                    @else
+                                                        <div class="alert alert-danger d-flex align-items-center"
+                                                            role="alert">
+                                                            <span class="alert-icon text-danger me-2">
+                                                                <i class="ti ti-ban ti-xs"></i>
+                                                            </span>
+                                                            Project anda telah lewat deadline selama {{ $dayLeft }}
+                                                            hari, mohon konfirmasi mentor untuk perpanjang tenggat!
+                                                        </div>
                                                     @endif
-                                                </div>
+                                                @endif
                                             </div>
                                             @if (@isset($project) && $project->deskripsi != null)
                                                 <div class="deskripsi mt-2">

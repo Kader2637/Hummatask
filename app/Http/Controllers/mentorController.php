@@ -157,8 +157,6 @@ class mentorController extends Controller
             ->whereHas('project')
             ->get();
 
-            // dd($timGroup);
-
         return response()->view('mentor.history', compact('telatDeadline', 'presentasiSelesai', 'timSolo', 'timGroup'));
     }
 

@@ -103,8 +103,8 @@
                                 data-deadline="{{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}"
                                 data-anggota="{{ $anggotaJson }}" data-deskripsi="{{ $item->deskripsi }}"
                                 data-dayleft="{{ $dayLeft }}" data-total-deadline="{{ $totalDeadline }}"
-                                data-progress="{{ $progressPercentage }}" data-repo="{{ $item->tim->repository }}"><span
-                                    class="text-white">Detail</span>
+                                data-progress="{{ $progressPercentage }}" data-repo="{{ $item->tim->repository }}"
+                                data-now="{{ now() }}"><span class="text-white">Detail</span>
                             </a>
                         </div>
                     </div>
@@ -132,6 +132,7 @@
                     var total = $(this).data('total-deadline');
                     var progress = $(this).data('progress');
                     var progressFormat = Math.round(progress);
+                    var now = $(this).data('now');
 
                     $('#logo-tim').attr('src', logo);
                     $('#logo-tim2').attr('src', logo);
@@ -141,14 +142,28 @@
                     $('#tema').text(tema);
                     $('#tglmulai').text(tglmulai);
                     $('#deadline').text(deadline);
-                    $('#dayLeft').text(dayLeft);
-                    $('#dayleft').text(dayLeft);
-                    $('#total').text(total);
                     $('#text-repo').text(repo);
                     $('#repository').attr('href', repo);
                     $('#textPercent').text(progressFormat);
-                    $('.progress-bar').css('width', progressFormat + '%');
-                    $('.progress-bar').attr('aria-valuenow', progressFormat);
+
+                    if (deadline < now) {
+                        $('#dayLeft').text(dayLeft);
+                        $('#dayleft').text(dayLeft);
+                        $('#total').text(total);
+                        $('.progress-bar').css('width', progressFormat + '%');
+                        $('.progress-bar').attr('aria-valuenow', progressFormat);
+                    } else {
+                        $('#container').html(
+                            '<div class="alert alert-danger d-flex align-items-center" role="alert">' +
+                            '<span class="alert-icon text-danger me-2">' +
+                            '<i class="ti ti-ban ti-xs"></i>' +
+                            '</span>' +
+                            'Project anda telah lewat deadline selama ' + dayLeft +
+                            ' hari, mohon konfirmasi mentor untuk perpanjang tenggat!' +
+                            '</div>'
+                        );
+                    }
+                    
                     if (deskripsi) {
                         $('#deskripsi').text(deskripsi);
                     } else {
@@ -195,7 +210,7 @@
 
         {{-- Modal detail --}}
         <div class="modal fade" id="modalDetail" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-fullscreen modal-dialog-centered" role="document">
+            <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalCenterTitle">Detail tim</h5>
@@ -279,7 +294,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-lg-6">
-                                                                    <div class="progres-bar">
+                                                                    <div class="progres-bar" id="container">
                                                                         <div class="d-flex justify-content-between">
                                                                             <span>Hari</span>
                                                                             <span><span id="dayLeft"></span> dari <span

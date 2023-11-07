@@ -9,31 +9,6 @@
 
 
 @section('content')
-    <script>
-        @if (session('success'))
-            Swal.fire({
-                title: "Sukses",
-                text: "{{ session('success') }}",
-                icon: "success",
-                customClass: {
-                    confirmButton: "btn btn-primary"
-                },
-                buttonsStyling: false,
-            });
-        @endif
-        @if (session('error'))
-            Swal.fire({
-                title: "Gagal",
-                text: "{{ session('error') }}",
-                icon: "error",
-                customClass: {
-                    confirmButton: "btn btn-primary"
-                },
-                buttonsStyling: false,
-            });
-        @endif
-    </script>
-
     <div class="container-fluid mt-4">
         <form action="{{ route('profile.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -48,7 +23,7 @@
                             <div class="flex-shrink-0 mt-n2 mx-sm-0 mx-auto">
                                 <label class="form-label text-white" for="image-input">
                                     <img id="preview-image"
-                                        src="{{ asset('storage/' . ($user->avatar ?? 'assets/img/avatars/pen.png')) }}"
+                                        src="{{ $user->avatar ? Storage::url($user->avatar) : asset('assets/img/avatars/pen.png') }}"
                                         alt="example placeholder"
                                         style="width: 150px; height: 150px; border-radius: 10px; cursor: pointer;"
                                         class="d-block ms-0 ms-sm-4 rounded user-profile-img" />

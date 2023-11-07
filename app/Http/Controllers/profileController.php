@@ -15,12 +15,12 @@ class profileController extends Controller
         $validate = Validator::make(
             $request->only(['username', 'email', 'tlp', 'sekolah', 'deskripsi', 'avatar']),
             [
-                'username' => 'string|max:50',
-                'email' => 'email|unique:users,email',
-                'tlp' => 'regex:/^\d+$/',
-                'sekolah' => 'string|max:50',
-                'deskripsi' => 'string|max:255',
-                'avatar' => 'image|max:2048',
+                'username' => 'nullable|string|max:50',
+                'email' => 'nullable|email|unique:users,email',
+                'tlp' => 'nullable|regex:/^\d+$/',
+                'sekolah' => 'nullable|string|max:50',
+                'deskripsi' => 'nullable|string|max:255',
+                'avatar' => 'nullable|image',
             ],
             [
                 'email.email' => 'Email harus dalam format yang benar.',
@@ -40,7 +40,7 @@ class profileController extends Controller
         try {
             $user = User::find(Auth::user()->id);
 
-            if ($request->avatar) {
+            if ($request->hasFile('avatar')) {
                 if (Storage::disk('public')->exists($user->avatar)) {
                     Storage::disk('public')->delete($user->avatar);
                 }

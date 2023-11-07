@@ -155,7 +155,7 @@
                                                             class="ti ti-adjustments-horizontal me-2"></i>Belum
                                                         Presentasi</button>
                                                 </div>
-                                                
+
                                             </div>
                                         </div>
                                     </div>
@@ -923,4 +923,3 @@
         });
     </script>
 @endsection
-
