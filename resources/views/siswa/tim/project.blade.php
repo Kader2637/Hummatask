@@ -136,6 +136,30 @@
 
     {{-- Modal --}}
 
+    {{-- Validasi --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const editModal = document.getElementById('editProject');
+            editModal.addEventListener('submit', function(event) {
+                const repoInput = document.getElementById('repoInput');
+                if (repoInput.value.trim() === '') {
+                    return;
+                }
+
+                if (!repoInput.value.match(
+                        /^(http(s)?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/)) {
+                    event.preventDefault(); // Mencegah pengiriman formulir
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Peringatan',
+                        text: 'URL Repository tidak valid!',
+                    });
+                }
+            });
+        });
+    </script>
+    {{-- Validasi --}}
+
     {{-- Modal Edit Project --}}
     <div class="modal fade" id="editProject" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -181,6 +205,13 @@
                                 <label for="nameWithTitle" class="form-label">Nama Tim</label>
                                 <input type="text" id="nameWithTitle" class="form-control" name="namaTimInput"
                                     placeholder="Masukkan nama tim" value="{{ $tim->nama }}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="nameWithTitle" class="form-label">Repository Github</label>
+                                <input type="text" id="repoInput" class="form-control" name="repoInput"
+                                    placeholder="Masukkan URL Repository" value="{{ $tim->repository }}">
                             </div>
                         </div>
                         @if (@isset($project) && $project->deskripsi)

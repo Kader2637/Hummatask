@@ -24,16 +24,22 @@ class editProjectRequest extends FormRequest
         return [
             'logo' => 'nullable|image',
             'namaTimInput' => 'nullable|string|max:50',
-            'deskripsiInput' => 'nullable|string|max:250'
+            'deskripsiInput' => 'nullable|string|max:250',
+            'repoInput' => 'nullable|string|max:250|url',
         ];
     }
 
     public function messages(): array
     {
         return [
-            'logo.image' => 'Logo tim harus berupa gambar',
-            'namaTimInput.max' => 'Nama tim maksimal 50 karakter',
-            'deskripsiInput.max' => 'Deskripsi maksimal 250 karakter',
+            'logo.image' => 'Logo harus berupa gambar.',
+            'namaTimInput.string' => 'Nama tim harus berupa teks.',
+            'namaTimInput.max' => 'Nama tim maksimal 50 karakter.',
+            'deskripsiInput.string' => 'Deskripsi harus berupa teks.',
+            'deskripsiInput.max' => 'Deskripsi maksimal 250 karakter.',
+            'repoInput.string' => 'URL repository harus berupa teks.',
+            'repoInput.url' => 'URL repository harus berupa URL yang valid.',
+            'repoInput.max' => 'URL repository maksimal 250 karakter.',
         ];
     }
 }
