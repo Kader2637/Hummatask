@@ -155,13 +155,7 @@
                                                             class="ti ti-adjustments-horizontal me-2"></i>Belum
                                                         Presentasi</button>
                                                 </div>
-                                                <div class="nav-item col-lg-3 col-md-6" role="presentation">
-                                                    <button type="button" class="nav-link" role="tab"
-                                                        data-bs-toggle="tab" data-bs-target="#navs-pills-top-start"
-                                                        aria-controls="navs-pills-top-profile" aria-selected="false"
-                                                        tabindex="-1"><i
-                                                            class="ti ti-clock-exclamation me-2"></i>Telat</button>
-                                                </div>
+                                                
                                             </div>
                                         </div>
                                     </div>

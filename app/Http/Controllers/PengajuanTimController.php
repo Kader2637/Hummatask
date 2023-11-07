@@ -7,6 +7,7 @@ use App\Http\Requests\RequestPembentukanTimProject;
 use App\Http\Requests\RequestPembentukanTimProjectKetua;
 use App\Http\Requests\RequestPengajuanSoloProject;
 use App\Models\Anggota;
+use App\Models\Notifikasi;
 use App\Models\Project;
 use App\Models\Tema;
 use App\Models\Tim;
@@ -47,6 +48,7 @@ class PengajuanTimController extends Controller
             'jabatan_id' => 1,
             'user_id' => Auth::user()->id,
         ]);
+
         // Membuat tema
         $tema = Tema::create([
             'code' => $tim->code,
@@ -84,7 +86,7 @@ class PengajuanTimController extends Controller
             // $tim->nama = $request->nama;
             $statusTim = is_array($request->status_tim) ? $request->status_tim : [$request->status_tim];
             $tim->status_tim = implode(',', $statusTim);
-            $tim->kadaluwarsa = true;
+            $tim->kadaluwarsa = false;
             $tim->save();
 
             // membuat anggota
@@ -111,6 +113,22 @@ class PengajuanTimController extends Controller
                 $anggotaModel->user_id = $anggota;
                 $anggotaModel->save();
             }
+
+            // membuat notif
+            // $notifAnggota = $tim->user;
+            // foreach ($notifAnggota as $user) {
+            //     $notif = new Notifikasi;
+            //     $notif->code = Str::uuid();
+            //     $notif->judul = "Kamu bergabung dengan Tim Baru";
+            //     $notif->body = "Kamu bergabung di Tim dengan status tim " . $tim->status_tim;
+            //     $notif->url = "tim/project/" . $tim->code;
+            //     $notif->user_id = $user->id;
+            //     $notif->save();
+            // }
+
+
+
+
 
             return response()->json(['message' => 'Berhasil membentuk tim'], 200);
         } catch (QueryException $e) {

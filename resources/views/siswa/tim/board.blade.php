@@ -38,6 +38,7 @@
                     <div class="row p-3 d-none" id="tambahTugas">
                         <div class="col-12">
                             <form id="formTambahTugas" method="post">
+                                @csrf
                                 <label for="tugas">Nama Tugas</label>
                                 <input type="text" class="form-control" id="tugas" name="tugas">
                                 <div class="d-flex justify-content-end mt-3">
@@ -47,64 +48,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12" id="tugas_baru">
-                    <div class="row">
+                <div class="col-12">
+                    <div class="row"  id="tugas_baru">
 
-                        @forelse ($tugas_baru as $tugas)
-                            {{-- Kondisi dimana tugas yang tampil hanya tugas baru --}}
-                            <div class="col-12 mt-3">
-                                <div class="kanban-item card p-4">
-                                    <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
-                                        <div class="item-badges">
-                                            <div class="badge rounded-pill bg-label-success">{{ $tugas->prioritas }}</div>
-                                        </div>
-                                        <div class="dropdown kanban-tasks-item-dropdown">
-                                            <i class=" ti ti-dots-vertical" id="kanban-tasks-item-dropdown"
-                                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-                                            <div class="dropdown-menu dropdown-menu-end"
-                                                aria-labelledby="kanban-tasks-item-dropdown" style=""><a
-                                                    class="dropdown-item" href="javascript:void(0)"
-                                                    data-bs-toggle="offcanvas"
-                                                    data-bs-target="#barTugas{{ $tugas->id }}">Edit</a>
-                                                <form id="deleteTaskForm" action="{{ route('delete.tugas') }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <input type="text" name="nama" value="{{ $tugas->nama }}"
-                                                        style="display: none;">
-                                                    <a class="dropdown-item delete-task"
-                                                        href="javascript:void(0)" onclick="konfirmasi({{$tugas->id}})">Delete</a>
-                                            </div>
-                                            </form>
-                                        </div>
-                                    </div><span class="kanban-text">{{ $tugas->nama }}</span>
-                                    <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
-                                        <div class="d-flex"> <span class="d-flex align-items-center me-2"><i
-                                                    class="ti ti-paperclip ti-xs me-1"></i><span
-                                                    class="attachments">4</span></span> <span
-                                                class="d-flex align-items-center ms-1"><i
-                                                    class="ti ti-message-dots ti-xs me-1"></i><span> 12 </span></span>
-                                        </div>
-                                        <div class="avatar-group d-flex align-items-center assigned-avatar">
-                                            <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                aria-label="Bruce" data-bs-original-title="Bruce"><img
-                                                    src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png"
-                                                    alt="Avatar" class="rounded-circle  pull-up"></div>
-                                            <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                aria-label="Clark" data-bs-original-title="Clark"><img
-                                                    src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png"
-                                                    alt="Avatar" class="rounded-circle  pull-up"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @empty
-                            <div id="notFound" class="card bg-secondary">
-                                <div class="card-body">
-                                    <p>Belum ada Tugas di timmu</p>
-                                </div>
-                            </div>
-                        @endforelse
+
                     </div>
                 </div>
             </div>
@@ -1176,20 +1123,13 @@
 <!-- Pricing Modal JS-->
 <!-- END: Pricing Modal JS-->
 <!-- BEGIN: Page JS-->
-<script src="{{ asset('assets/js/app-kanban.js') }}"></script>
+{{-- <script src="{{ asset('assets/js/app-kanban.js') }}"></script> --}}
 <!-- END: Page JS-->
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
 
 // let dataEmpty
 
-    axios.get("{{ route('dataTugas',$tim->uuid) }}")
-    .then(res=>{
-        const data = res.data;
-
-        console.log("{{ $tim->uuid }}");
-
-    })
 
     function showForm(id){
         let status = false;
@@ -1203,34 +1143,22 @@
             }
         }
 
-        // tambah tugas
-        const formTambahTugas = document.getElementById('formTambahTugas');
-        formTambahTugas.addEventListener('submit', (event) => {
-            event.preventDefault();
-            const nama = document.getElementById('tugas').value
-            const tim_uuid = "{{ $tim->uuid }}"
+        $(document).ready(()=>{
 
-            // axios untuk tambah tugas
-            axios.post("tambah-tugas", {
-                    nama,
-                    tim_uuid
-                })
-                .then(res => {
-                    const newData = res.data;
+            $("#formTambahTugas").submit((event)=>{
+                event.preventDefault()
 
-                    const newElement = document.createElement('div');
-                    newElement.classList.add('kanban-item', 'card', 'p-4', 'mt-3');
-                    newElement.setAttribute('data-eid', 'in-progress-1');
-                    newElement.setAttribute('data-comments', '12');
-                    newElement.setAttribute('data-badge-text', 'UX');
-                    newElement.setAttribute('data-badge', 'success');
-                    newElement.setAttribute('data-due-date', '5 April');
-                    newElement.setAttribute('data-attachments', '4');
-                    newElement.setAttribute('data-assigned', '12.png,5.png');
-                    newElement.setAttribute('data-members', 'Bruce,Clark');
+                const nama = $('#tugas').val();
+                const tim_id = "{{ $tim->code }}";
 
-                    newElement.innerHTML = `
-      <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1 ">
+                axios.post("{{ route('tim.tambah-tugas') }}",{nama,tim_id})
+                .then((res) => {
+                    console.log(res.data);
+                    const div = $(`<div>`)
+                        .addClass('col-12 p-2 mt-3 card')
+                        .html(
+                            `
+    <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1 ">
         <div class="item-badges">
           <div class="badge rounded-pill bg-label-success">UX</div>
         </div>
@@ -1243,7 +1171,7 @@
           </div>
         </div>
       </div>
-      <span class="kanban-text">${newData.nama}</span>
+      <span class="kanban-text">${res.data.nama}</span>
       <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
         <div class="d-flex">
           <span class="d-flex align-items-center me-2">
@@ -1264,18 +1192,91 @@
           </div>
         </div>
       </div>
-    `;
 
-    // Tambahkan elemen baru ke dalam div dengan id "tugas_baru"
-    const tugasBaru = document.getElementById('tugas_baru');
-    tugasBaru.appendChild(newElement);
+                            `
+                            );
 
-                })
+                    $("#tugas_baru").append(div);
 
-                .catch(error => {
-                    console.log(error)
-                })
+                    })
 
-        })
+            })
+
+        });
+
+        // tambah tugas
+    //     const formTambahTugas = document.getElementById('formTambahTugas');
+    //     formTambahTugas.addEventListener('submit', (event) => {
+    //         event.preventDefault();
+    //         const nama = document.getElementById('tugas').value
+    //         const tim_uuid = "{{ $tim->uuid }}"
+
+    //         // axios untuk tambah tugas
+    //         axios.post("tambah-tugas", {
+    //                 nama,
+    //                 tim_uuid
+    //             })
+    //             .then(res => {
+    //                 const newData = res.data;
+
+    //                 const newElement = document.createElement('div');
+    //                 newElement.classList.add('kanban-item', 'card', 'p-4', 'mt-3');
+    //                 newElement.setAttribute('data-eid', 'in-progress-1');
+    //                 newElement.setAttribute('data-comments', '12');
+    //                 newElement.setAttribute('data-badge-text', 'UX');
+    //                 newElement.setAttribute('data-badge', 'success');
+    //                 newElement.setAttribute('data-due-date', '5 April');
+    //                 newElement.setAttribute('data-attachments', '4');
+    //                 newElement.setAttribute('data-assigned', '12.png,5.png');
+    //                 newElement.setAttribute('data-members', 'Bruce,Clark');
+
+    //                 newElement.innerHTML = `
+    //   <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1 ">
+    //     <div class="item-badges">
+    //       <div class="badge rounded-pill bg-label-success">UX</div>
+    //     </div>
+    //     <div class="dropdown kanban-tasks-item-dropdown">
+    //       <i class="dropdown-toggle ti ti-dots-vertical" id="kanban-tasks-item-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+    //       <div class="dropdown-menu dropdown-menu-end" aria-labelledby="kanban-tasks-item-dropdown" style="">
+    //         <a class="dropdown-item" href="javascript:void(0)">Copy task link</a>
+    //         <a class="dropdown-item" href="javascript:void(0)">Duplicate task</a>
+    //         <a class="dropdown-item delete-task" href="javascript:void(0)">Delete</a>
+    //       </div>
+    //     </div>
+    //   </div>
+    //   <span class="kanban-text">${newData.nama}</span>
+    //   <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
+    //     <div class="d-flex">
+    //       <span class="d-flex align-items-center me-2">
+    //         <i class="ti ti-paperclip ti-xs me-1"></i>
+    //         <span class="attachments">4</span>
+    //       </span>
+    //       <span class="d-flex align-items-center ms-1">
+    //         <i class="ti ti-message-dots ti-xs me-1"></i>
+    //         <span>12</span>
+    //       </span>
+    //     </div>
+    //     <div class="avatar-group d-flex align-items-center assigned-avatar">
+    //       <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Bruce" data-bs-original-title="Bruce">
+    //         <img src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png" alt="Avatar" class="rounded-circle pull-up">
+    //       </div>
+    //       <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Clark" data-bs-original-title="Clark">
+    //         <img src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png" alt="Avatar" class="rounded-circle pull-up">
+    //       </div>
+    //     </div>
+    //   </div>
+    // `;
+
+    // // Tambahkan elemen baru ke dalam div dengan id "tugas_baru"
+    // const tugasBaru = document.getElementById('tugas_baru');
+    // tugasBaru.appendChild(newElement);
+
+    //             })
+
+    //             .catch(error => {
+    //                 console.log(error)
+    //             })
+
+    //     })
     </script>
 @endsection
