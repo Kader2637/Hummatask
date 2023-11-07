@@ -103,7 +103,8 @@
                                 data-deadline="{{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}"
                                 data-anggota="{{ $anggotaJson }}" data-deskripsi="{{ $item->deskripsi }}"
                                 data-dayleft="{{ $dayLeft }}" data-total-deadline="{{ $totalDeadline }}"
-                                data-progress="{{ $progressPercentage }}" data-repo="{{$item->tim->repository}}"><span class="text-white">Detail</span>
+                                data-progress="{{ $progressPercentage }}" data-repo="{{ $item->tim->repository }}"><span
+                                    class="text-white">Detail</span>
                             </a>
                         </div>
                     </div>
@@ -152,7 +153,7 @@
                         $('#deskripsi').text(deskripsi);
                     } else {
                         $('#deskripsi').html(
-                            '<div class="alert alert-warning d-flex align-items-center mt-4 cursor-pointer" role="alert">' +
+                            '<div class="alert alert-warning d-flex align-items-center mt-3 cursor-pointer" role="alert">' +
                             '<span class="alert-icon text-warning me-2">' +
                             '<i class="ti ti-bell ti-xs"></i>' +
                             '</span>' +
@@ -302,7 +303,14 @@
                                                                                     id="dayleft"></span> hari lagi</span>
                                                                         </div>
                                                                     </div>
-                                                                    <a href="" id="repository" target="_blank"><span class="text-blue" id="text-repo"></span></a>
+                                                                    <div class="link mt-2">
+                                                                        <div class="title text-dark">
+                                                                            Link Repository :
+                                                                        </div>
+                                                                        <a href="" id="repository"
+                                                                            target="_blank"><span class="text-blue"
+                                                                                id="text-repo"></span></a>
+                                                                    </div>
                                                                     <div class="deskripsi mt-2">
                                                                         <div class="title text-dark">
                                                                             Deskripsi :

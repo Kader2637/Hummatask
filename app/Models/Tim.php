@@ -21,7 +21,11 @@ class Tim extends Model
     }
     public function ketuaTim(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'anggotas')->wherePivot('jabatan_id',1);
+        return $this->belongsToMany(User::class, 'anggotas')->wherePivot('jabatan_id', 1);
+    }
+    public function AnggotaTim(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'anggotas')->wherePivot('jabatan_id', '!=', 1 );
     }
 
     public function tugas(): HasMany
@@ -32,6 +36,11 @@ class Tim extends Model
     public function presentasi(): HasMany
     {
         return $this->hasMany(Presentasi::class);
+    }
+
+    public function presentasiSelesai(): HasMany
+    {
+        return $this->hasMany(Presentasi::class)->where('status_presentasi','selesai');
     }
 
     public function tema(): HasMany
