@@ -52,15 +52,15 @@ class mentorController extends Controller
             ->groupBy('year', 'month', 'peran_id')
             ->get();
 
-            $tim = Tim::select(
-                DB::raw('MONTH(created_at) as month'),
-                DB::raw('YEAR(created_at) as year'),
-                'kadaluwarsa',
-                DB::raw('count(*) as total')
-            )
+        $tim = Tim::select(
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('YEAR(created_at) as year'),
+            'kadaluwarsa',
+            DB::raw('count(*) as total')
+        )
             ->whereIn('kadaluwarsa', ['1'])
             ->whereYear('created_at', Carbon::now()->year)
-            ->groupBy('year','month','kadaluwarsa')
+            ->groupBy('year', 'month', 'kadaluwarsa')
             ->get();
 
         $processedData = [];
@@ -79,7 +79,7 @@ class mentorController extends Controller
                 'month' => $yearMonth,
                 'disetujui' => 0,
                 '1' => 0,
-                '2'=> 0,
+                '2' => 0,
                 'color' => $color,
                 'colorwait' => $colorwait,
                 'colors' => $colors
@@ -114,9 +114,6 @@ class mentorController extends Controller
         return response()->view('mentor.dashboard', compact('presentasi', 'chartData', 'jadwal', 'hari'));
     }
 
-
-
-
     // Return view pengguna mentor
     protected function pengguna()
     {
@@ -144,7 +141,25 @@ class mentorController extends Controller
     // Return view history mentor
     protected function history()
     {
-        return response()->view('mentor.history');
+        $telatDeadline = Project::with('tim.anggota.user', 'tema')
+            ->where('deadline', '<', now())
+            ->get();
+        $presentasiSelesai = Presentasi::with('tim.anggota.user', 'tim.project.tema')
+            ->where('status_presentasi', 'selesai')
+            ->where('status_pengajuan', 'disetujui')
+            ->whereHas('tim.project.tema')
+            ->get();
+        $timSolo = Tim::with('anggota.user', 'project.tema')
+            ->where('status_tim', 'solo')
+            ->get();
+        $timGroup = Tim::with('anggota.user', 'project.tema')
+            ->where('status_tim', '!=', 'solo')
+            ->whereHas('project')
+            ->get();
+
+            // dd($timGroup);
+
+        return response()->view('mentor.history', compact('telatDeadline', 'presentasiSelesai', 'timSolo', 'timGroup'));
     }
 
     // Return view pengajuan projek mentor
@@ -168,23 +183,6 @@ class mentorController extends Controller
         $projects = Project::with('tim.anggota', 'tema')
             ->where('status_project', 'approved')
             ->get();
-
-        // $projects = $projects->map(function ($project) {
-        //     if ($project->type_project === 'solo') {
-        //         $project->type_project = 'Solo Project';
-        //     } elseif ($project->type_project === 'pre_mini') {
-        //         $project->type_project = 'Pre Mini Project';
-        //     } elseif ($project->type_project === 'mini') {
-        //         $project->type_project = 'Mini Project';
-        //     } elseif ($project->type_project === 'pre_big') {
-        //         $project->type_project = 'Pre Big Project';
-        //     } elseif ($project->type_project === 'big') {
-        //         $project->type_project = 'Big Project';
-        //     }
-
-        //     return $project;
-        // });
-
 
         $users = User::where('peran_id', 1)
             ->whereDoesntHave('tim', function ($query) {
@@ -235,6 +233,7 @@ class mentorController extends Controller
     // return view presentasi mentor
     protected function presentasi()
     {
+
         $presentasi = Presentasi::all();
         $historyPresentasi = HistoryPresentasi::all();
         $persetujuan_presentasi = $presentasi->where('status_pengajuan', 'menunggu');
