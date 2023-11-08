@@ -105,7 +105,6 @@
                         <h6 style="font-size: 15px;" >History Presentasi</h6>
                         <div class="row">
                             <div class="col-lg-12">
-                                <small class="text-light fw-medium">Custom content</small>
                                 <div class="demo-inline-spacing mt-3">
                                   <div id="list-group" class="list-group">
                                 
@@ -629,7 +628,7 @@
 
                     console.log(data2)
 
-                    if( data2.length == 0 ){
+                    if( data2[0].length == 0 ){
 
                         let div = document.createElement('div')
                         div.className = "container"

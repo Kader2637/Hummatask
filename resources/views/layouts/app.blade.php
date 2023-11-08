@@ -167,6 +167,24 @@
             </div>
         </div>
     </div>
+    <script>
+        $(window).load(function() {
+
+            var rnd = Math.random() * (2000 - 2000) + 500;
+
+            $('.progress').css("animation", "loading " + rnd + "ms linear");
+
+            console.log(rnd);
+
+            setTimeout(function() {
+
+                $('#loader').fadeOut();
+                $('#page').removeClass('hidden');
+
+            }, rnd);
+
+        });
+    </script>
     <div class="layout-wrapper layout-content-navbar ">
         <div class="layout-container">
 
@@ -839,24 +857,7 @@
             });
         </script>
     @endif
-    <script>
-        $(window).load(function() {
-
-            var rnd = Math.random() * (2000 - 2000) + 500;
-
-            $('.progress').css("animation", "loading " + rnd + "ms linear");
-
-            console.log(rnd);
-
-            setTimeout(function() {
-
-                $('#loader').fadeOut();
-                $('#page').removeClass('hidden');
-
-            }, rnd);
-
-        });
-    </script>
+  
 
     @yield('script')
 
