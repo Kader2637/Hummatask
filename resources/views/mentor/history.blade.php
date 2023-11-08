@@ -219,9 +219,9 @@
                             class="fa-solid fa-users icon-text"></i>Team</button>
                 </li>
             </div>
-            <div class="px-3 button-document" style="margin-left: auto">
+            {{-- <div class="px-3 button-document" style="margin-left: auto">
                 <button class="btn btn-success"><i class="fa-regular fa-file icon-text"></i>document</i></button>
-            </div>
+            </div> --}}
         </div>
         <div class="tab-content px-0 mt-2" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
@@ -233,55 +233,26 @@
                                 <tr>
                                     <th scope="col">NO</th>
                                     <th scope="col">NAMA</th>
-                                    <th scope="col">TANGGAL TENGGAT</th>
+                                    <th scope="col">DEADLINE</th>
                                     <th scope="col">PROJECT</th>
                                     <th scope="col">TEMA</th>
-                                    <th scope="col">STATUS</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>
-                                        <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                            style="width:30px;hight:30px;border-radius:50%">
-                                        Mark
-                                    </td>
-                                    <td>12-10-2023</td>
-                                    <td>Solo Project</td>
-                                    <td>Sekolah</td>
-                                    <td><button disabled="disabled" class="btn"
-                                            style="background-color: rgb(255, 231, 187);color:rgb(255, 149, 0)">tenggat</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>
-                                        <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                            style="width:30px;hight:30px;border-radius:50%">
-                                        Jacob
-                                    </td>
-                                    <td>12-10-2023</td>
-                                    <td>Mini Project</td>
-                                    <td>Peminjaman</td>
-                                    <td><button disabled="disabled" class="btn"
-                                            style="background-color: rgb(255, 231, 187);color:rgb(255, 149, 0)">tenggat</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>
-                                        <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                            style="width:30px;hight:30px;border-radius:50%">
-                                        Larry the Bird
-                                    </td>
-                                    <td>12-10-2023</td>
-                                    <td>Big Project</td>
-                                    <td>Tiket Konser</td>
-                                    <td><button disabled="disabled" class="btn"
-                                            style="background-color: rgb(255, 231, 187);color:rgb(255, 149, 0)">tenggat</button>
-                                    </td>
-                                </tr>
+                                @forelse ($telatDeadline as $item)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}.</td>
+                                        <td>
+                                            <img src="{{ Storage::url($item->tim->logo) }}" alt=""
+                                                style="width:30px;height:30px;border-radius:50%">
+                                            {{ $item->tim->nama }}
+                                        </td>
+                                        <td>{{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}</td>
+                                        <td>{{ $item->tim->status_tim }}</td>
+                                        <td>{{ $item->tema->nama_tema }}</td>
+                                    </tr>
+                                @empty
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -297,55 +268,31 @@
                                 <tr>
                                     <th scope="col">NO</th>
                                     <th scope="col">NAMA</th>
-                                    <th scope="col">TANGGAL TENGGAT</th>
+                                    <th scope="col">DEADLINE</th>
                                     <th scope="col">PROJECT</th>
                                     <th scope="col">TEMA</th>
-                                    <th scope="col">STATUS</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>
-                                        <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                            style="width:30px;hight:30px;border-radius:50%">
-                                        Mark
-                                    </td>
-                                    <td>12-10-2023</td>
-                                    <td>Solo Project</td>
-                                    <td>Sekolah</td>
-                                    <td><button disabled="disabled" class="btn"
-                                            style="background-color: rgb(187, 210, 255);color:rgb(0, 106, 255)">selesai</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>
-                                        <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                            style="width:30px;hight:30px;border-radius:50%">
-                                        Jacob
-                                    </td>
-                                    <td>12-10-2023</td>
-                                    <td>Mini Project</td>
-                                    <td>Peminjaman</td>
-                                    <td><button disabled="disabled" class="btn"
-                                            style="background-color: rgb(187, 210, 255);color:rgb(0, 106, 255)">selesai</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>
-                                        <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                            style="width:30px;hight:30px;border-radius:50%">
-                                        Larry the Bird
-                                    </td>
-                                    <td>12-10-2023</td>
-                                    <td>Big Project</td>
-                                    <td>Tiket Konser</td>
-                                    <td><button disabled="disabled" class="btn"
-                                            style="background-color: rgb(187, 210, 255);color:rgb(0, 106, 255)">selesai</button>
-                                    </td>
-                                </tr>
+                                @forelse ($presentasiSelesai as $item)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}.</td>
+                                        <td>
+                                            <img src="{{ Storage::url($item->tim->logo) }}" alt=""
+                                                style="width:30px;height:30px;border-radius:50%">
+                                            {{ $item->tim->nama }}
+                                        </td>
+                                        @foreach ($item->tim->project as $item)
+                                            <td>{{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}
+                                            </td>
+                                        @endforeach
+                                        <td>{{ $item->tim->status_tim }}</td>
+                                        @foreach ($item->tim->project as $item)
+                                            <td>{{ $item->tema->nama_tema }}</td>
+                                        @endforeach
+                                    </tr>
+                                @empty
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -367,42 +314,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>
-                                        <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                            style="width:30px;hight:30px;border-radius:50%">
-                                        Mark
-                                    </td>
-                                    <td>Example@gmail.com</td>
-                                    <td>Solo Project</td>
-                                    <td>Sekolah</td>
-                                    <td>10</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>
-                                        <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                            style="width:30px;hight:30px;border-radius:50%">
-                                        Jacob
-                                    </td>
-                                    <td>Example@gmail.com</td>
-                                    <td>Solo Project</td>
-                                    <td>Peminjaman</td>
-                                    <td>8</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>
-                                        <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                            style="width:30px;hight:30px;border-radius:50%">
-                                        Larry the Bird
-                                    </td>
-                                    <td>Example@gmail.com</td>
-                                    <td>Solo Project</td>
-                                    <td>Tiket Konser</td>
-                                    <td>5</td>
-                                </tr>
+                                @forelse ($timSolo as $item)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>
+                                            <img src="{{ Storage::url($item->logo) }}" alt=""
+                                                style="width:30px;height:30px;border-radius:50%">
+                                            {{ $item->nama }}
+                                        </td>
+                                        <td>{{ $item->anggota[0]->user->email }}</td>
+                                        <td>{{ $item->status_tim }}</td>
+                                        <td>{{ $item->project[0]->tema->nama_tema }}</td>
+                                        <td>{{ $item->presentasiSelesai->count() }}</td>
+                                    </tr>
+                                @empty
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -425,57 +351,66 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-                                    $no = 1;
-                                @endphp
-                                <tr>
-                                    <th scope="row">{{ $no++ }}</th>
-                                    <td>
-                                        <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                            style="width:30px;hight:30px;border-radius:50%">
-                                        Hummatech
-                                    </td>
-                                    <td>king ibnu</td>
-                                    <td>
-                                        <div class="d-flex align-items-center avatar-group">
-                                            <div class="avatar pull-up" data-bs-toggle="tooltip"
-                                                data-popup="tooltip-custom" data-bs-placement="top"
-                                                title="Vinnie Mostowy">
-                                                <img src="{{ asset('assets/img/avatars/5.png') }}" alt="Avatar"
-                                                    class="rounded-circle">
+                                @forelse ($timGroup as $item)
+                                    @php
+                                        $anggotaArray = [];
+                                        foreach ($item->anggota as $anggota) {
+                                            $anggotaArray[] = [
+                                                'name' => $anggota->user->username,
+                                                'avatar' => $anggota->user->avatar,
+                                                'jabatan' => $anggota->jabatan->nama_jabatan,
+                                            ];
+                                        }
+                                        $anggotaJson = json_encode($anggotaArray);
+                                        $tanggalMulai = $item->project[0]->created_at->translatedFormat('Y-m-d');
+                                        $totalDeadline = null;
+                                        $dayLeft = null;
+
+                                        $deadline = \Carbon\Carbon::parse($item->project[0]->deadline)->translatedFormat('Y-m-d');
+                                        $totalDeadline = \Carbon\Carbon::parse($deadline)->diffInDays($tanggalMulai);
+                                        $dayLeft = \Carbon\Carbon::parse($deadline)->diffInDays(\Carbon\Carbon::now());
+                                        $progressPercentage = 100 - ($dayLeft / $totalDeadline) * 100;
+                                    @endphp
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>
+                                            <img src="{{ Storage::url($item->logo) }}" alt=""
+                                                style="width:30px;height:30px;border-radius:50%">
+                                            {{ $item->nama }}
+                                        </td>
+                                        <td>{{ $item->ketuaTim[0]->username }}</td>
+                                        <td>
+                                            <div class="d-flex align-items-center avatar-group">
+                                                @foreach ($item->AnggotaTim as $itemAnggota)
+                                                    <div class="avatar pull-up" data-bs-toggle="tooltip"
+                                                        data-popup="tooltip-custom" data-bs-placement="top"
+                                                        title="{{ $itemAnggota->username }}">
+                                                        <img src="{{ $itemAnggota->avatar ? Storage::url($itemAnggota->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                            alt="Avatar" class="rounded-circle">
+                                                    </div>
+                                                @endforeach
                                             </div>
-                                            <div class="avatar pull-up" data-bs-toggle="tooltip"
-                                                data-popup="tooltip-custom" data-bs-placement="top" title="Marrie Patty">
-                                                <img src="{{ asset('assets/img/avatars/12.png') }}" alt="Avatar"
-                                                    class="rounded-circle">
-                                            </div>
-                                            <div class="avatar pull-up" data-bs-toggle="tooltip"
-                                                data-popup="tooltip-custom" data-bs-placement="top"
-                                                title="Jimmy Jackson">
-                                                <img src="{{ asset('assets/img/avatars/9.png') }}" alt="Avatar"
-                                                    class="rounded-circle">
-                                            </div>
-                                            <div class="avatar pull-up" data-bs-toggle="tooltip"
-                                                data-popup="tooltip-custom" data-bs-placement="top"
-                                                title="Kristine Gill">
-                                                <img src="{{ asset('assets/img/avatars/6.png') }}" alt="Avatar"
-                                                    class="rounded-circle">
-                                            </div>
-                                            <div class="avatar pull-up" data-bs-toggle="tooltip"
-                                                data-popup="tooltip-custom" data-bs-placement="top"
-                                                title="Nelson Wilson">
-                                                <img src="{{ asset('assets/img/avatars/4.png') }}" alt="Avatar"
-                                                    class="rounded-circle">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Mini Project</td>
-                                    <td>10</td>
-                                    <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#modalCenter">
-                                            detail
-                                        </button></td>
-                                </tr>
+                                        </td>
+                                        <td>{{ $item->status_tim }}</td>
+                                        <td>{{ $item->presentasiSelesai->count() }}</td>
+                                        <td> <button type="button" class="btn btn-primary btn-detail"
+                                                data-bs-toggle="modal" data-bs-target="#modalCenter"
+                                                data-logo="{{ asset('storage/' . $item->logo) }}"
+                                                data-namatim="{{ $item->nama }}" data-status="{{ $item->status_tim }}"
+                                                data-tema="{{ $item->project[0]->tema->nama_tema }}"
+                                                data-tglmulai="{{ $item->created_at->translatedFormat('l, j F Y') }}"
+                                                data-deadline="{{ \Carbon\Carbon::parse($item->project[0]->deadline)->translatedFormat('l, j F Y') }}"
+                                                data-anggota="{{ $anggotaJson }}"
+                                                data-deskripsi="{{ $item->deskripsi }}"
+                                                data-dayleft="{{ $dayLeft }}"
+                                                data-total-deadline="{{ $totalDeadline }}"
+                                                data-progress="{{ $progressPercentage }}"
+                                                data-repo="{{ $item->repository }}">
+                                                Detail
+                                            </button></td>
+                                    </tr>
+                                @empty
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -483,80 +418,233 @@
             </div>
         </div>
 
+        {{-- Script detail modal --}}
+        <script>
+            $(document).ready(function() {
+                $('.btn-detail').click(function() {
+                    var logo = $(this).data('logo');
+                    var namatim = $(this).data('namatim');
+                    var status = $(this).data('status');
+                    var tema = $(this).data('tema');
+                    var tglmulai = $(this).data('tglmulai');
+                    var deadline = $(this).data('deadline');
+                    var anggota = $(this).data('anggota');
+                    var deskripsi = $(this).data('deskripsi');
+                    var dayLeft = $(this).data('dayleft');
+                    var repo = $(this).data('repo');
+                    var total = $(this).data('total-deadline');
+                    var progress = $(this).data('progress');
+                    var progressFormat = Math.round(progress);
+
+                    $('#logo-tim').attr('src', logo);
+                    $('#logo-tim2').attr('src', logo);
+                    $('#nama-tim').text(namatim);
+                    $('#nama-tim2').text(namatim);
+                    $('#status').text(status);
+                    $('#tema').text(tema);
+                    $('#tglmulai').text(tglmulai);
+                    $('#deadline').text(deadline);
+                    $('#dayLeft').text(dayLeft);
+                    $('#dayleft').text(dayLeft);
+                    $('#total').text(total);
+                    $('#text-repo').text(repo);
+                    $('#repository').attr('href', repo);
+                    $('#textPercent').text(progressFormat);
+                    $('.progress-bar').css('width', progressFormat + '%');
+                    $('.progress-bar').attr('aria-valuenow', progressFormat);
+                    if (deskripsi) {
+                        $('#deskripsi').text(deskripsi);
+                    } else {
+                        $('#deskripsi').html(
+                            '<div class="alert alert-warning d-flex align-items-center mt-3 cursor-pointer" role="alert">' +
+                            '<span class="alert-icon text-warning me-2">' +
+                            '<i class="ti ti-bell ti-xs"></i>' +
+                            '</span>' +
+                            'Tim ini belum memiliki deskripsi tema!' +
+                            '</div>'
+                        );
+                    }
+
+                    var anggotaList = $('#anggota-list');
+                    anggotaList.empty();
+
+                    anggota.forEach(function(anggota, index) {
+                        var avatarSrc = anggota.avatar ? '/storage/' + anggota.avatar :
+                            '/assets/img/avatars/1.png';
+
+                        var anggotaItem = $('<div class="col-lg-4 p-2" style="box-shadow: none">' +
+                            '<div class="card">' +
+                            '<div class="card-body d-flex gap-3 align-items-center">' +
+                            '<div>' +
+                            '<img width="30px" height="30px" class="rounded-circle object-cover" src="' +
+                            avatarSrc + '" alt="foto user">' +
+                            '</div>' +
+                            '<div>' +
+                            '<h5 class="mb-0" style="font-size: 15px">' + anggota.name + '</h5>' +
+                            '<span class="badge bg-label-warning">' + anggota.jabatan + '</span>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>');
+                        anggotaList.append(anggotaItem);
+                    });
+
+                    $('#modalDetail').modal('show');
+
+                });
+            });
+        </script>
+        {{-- Script detail modal --}}
+
         {{-- modal --}}
         <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content modal-detail">
+            <div class="modal-dialog modal-fullscreen modal-dialog-centered" role="document">
+                <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalCenterTitle">Team</h5>
+                        <h5 class="modal-title" id="modalCenterTitle">Detail tim</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="d-flex longor">
-                            <div class="row">
-                                <div class="col mb-0">
-                                    <label for="emailWithTitle" class="form-label">TEAM</label>
-                                    <div class="col mb-2">
-                                        <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                            style="width: 150%;hight:150%;border-radius:10%" class="image-team">
+                        <div class="container-fluid">
+                            <div class="col-12">
+                                <div class="nav-align-top d-flex justify-between">
+                                    <div class="nav nav-pills d-flex justify-content-between my-4" role="tablist">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="nav-item" role="presentation">
+                                                <button type="button" class="nav-link active button-nav" role="tab"
+                                                    data-bs-toggle="tab" data-bs-target="#navs-pills-top-home"
+                                                    aria-controls="navs-pills-top-home"
+                                                    aria-selected="true">Project</button>
+                                            </div>
+                                            <div class="nav-item button-nav" role="presentation">
+                                                <button type="button" class="nav-link" role="tab"
+                                                    data-bs-toggle="tab" data-bs-target="#navs-pills-top-profile"
+                                                    aria-controls="navs-pills-top-profile" aria-selected="false"
+                                                    tabindex="-1">Anggota</button>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <span style="">Hummatech</span>
-                                </div>
-                            </div>
-                            <div class="col mb-4 anggota">
-                                <label for="emailWithTitle" class="form-label">ANGGOTA</label>
-                                <div class="avatar-container anggota-scroll">
-                                    <div class="d-flex">
-                                        <img src="{{ asset('assets/img/avatars/5.png') }}" alt="Avatar"
-                                            style="width:30px;hight:30px;border-radius:50%" class="avatar">
-                                        <span
-                                            class="nama-anggota">saputraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</span>
-                                    </div>
-                                    <div class="d-flex">
-                                        <img src="{{ asset('assets/img/avatars/12.png') }}" alt="Avatar"
-                                            style="width:30px;hight:30px;border-radius:50%" class="avatar">
-                                        <span class="nama-anggota">saputra</span>
-                                    </div>
-                                    <div class="d-flex">
-                                        <img src="{{ asset('assets/img/avatars/9.png') }}" alt="Avatar"
-                                            style="width:30px;hight:30px;border-radius:50%" class="avatar">
-                                        <span class="nama-anggota">saputra</span>
-                                    </div>
-                                    <div class="d-flex">
-                                        <img src="{{ asset('assets/img/avatars/6.png') }}" alt="Avatar"
-                                            style="width:30px;hight:30px;border-radius:50%" class="avatar">
-                                        <span class="nama-anggota">saputra</span>
+                                    <div class="tab-content bg-transparent pb-0" style="box-shadow: none;">
+                                        <div class="tab-pane fade active show" id="navs-pills-top-home" role="tabpanel">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    {{-- card projects --}}
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <div
+                                                                class="d-flex flex-row align-items-center justify-content-between">
+                                                                <div class="fs-4 text-black">
+                                                                    Projek
+                                                                </div>
+                                                                <div
+                                                                    style="display: flex; flex-direction: column; justify-items: center; align-items: left;">
+
+                                                                    <span>Tanggal Mulai : <span id="tglmulai"></span>
+                                                                    </span>
+
+                                                                    <span>Tenggat : <span id="deadline"></span></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <hr class="my-0">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <div class="d-flex flex-row gap-3">
+                                                                        <img id="logo-tim" src="" alt='logo tim'
+                                                                            class="rounded-circle"
+                                                                            style="width: 90px; height: 90px">
+                                                                        <div
+                                                                            style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+                                                                            <span class="d-block text-black fs-5"
+                                                                                id="nama-tim">nama tim</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mt-4">
+                                                                        <div class="mb-3">Status : <span
+                                                                                class="badge bg-label-warning"
+                                                                                id="status"></span>
+                                                                        </div>
+
+                                                                        <div>Tema : <span class="badge bg-label-warning"
+                                                                                id="tema"></span>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="progres-bar">
+                                                                        <div class="d-flex justify-content-between">
+                                                                            <span>Hari</span>
+                                                                            <span><span id="dayLeft"></span> dari <span
+                                                                                    id="total"></span> Hari</span>
+                                                                        </div>
+                                                                        <div
+                                                                            class="d-flex flex-grow-1 align-items-center my-1">
+                                                                            <div class="progress w-100 me-3"
+                                                                                style="height:8px;background-color: gainsboro">
+                                                                                <div class="progress-bar bg-primary"
+                                                                                    role="progressbar" style="width: 10%"
+                                                                                    aria-valuenow="10" aria-valuemin="0"
+                                                                                    aria-valuemax="100">
+                                                                                </div>
+                                                                            </div>
+                                                                            <span class="text-muted"><span
+                                                                                    id="textPercent"></span>%</span>
+                                                                        </div>
+                                                                        <div class="tenggat">
+                                                                            <span>Tenggat kurang <span
+                                                                                    id="dayleft"></span> hari lagi</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="link mt-2">
+                                                                        <div class="title text-dark">
+                                                                            Link Repository :
+                                                                        </div>
+                                                                        <a href="" id="repository"
+                                                                            target="_blank"><span class="text-blue"
+                                                                                id="text-repo"></span></a>
+                                                                    </div>
+                                                                    <div class="deskripsi mt-2">
+                                                                        <div class="title text-dark">
+                                                                            Deskripsi :
+                                                                        </div>
+                                                                        <div class="isi" id="deskripsi">
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {{-- card projects --}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="navs-pills-top-profile" role="tabpanel">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div
+                                                        class="card cursor-default col-12 d-flex align-items-center justify-content-center">
+                                                        <div
+                                                            class="card-body d-flex flex-column align-items-center justify-content-center">
+                                                            <img id="logo-tim2" width="90px" height="90px"
+                                                                class="rounded-circle" src="" alt="">
+                                                            <h1 id="nama-tim2" class="mt-2"></h1>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-2 justify-content-center align-items-center grid"
+                                                    id="anggota-list">
+                                                    {{-- Anggota --}}
+                                                    {{-- Anggota --}}
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col mt-3 leader">
-                                <label for="emailWithTitle" class="form-label">KETUA</label>
-                                <div class="col mb-3 d-flex">
-                                    <img src="{{ asset('assets/img/avatars/10.png') }}" alt="" style=""
-                                        class="image-leader">
-                                    <span style="margin-top: 30px;margin-left: 10px">King Ibnu</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-2" style="padding-top: 10px">
-                            <div class="col mb-0"
-                                style="display: flex; flex-direction: column;>
-                                <label for="emailWithTitle"
-                                class="form-label">STATUS</label>
-                                <button disabled="disabled" class="btn"
-                                    style="background-color:  rgb(255, 231, 187);color:rgb(255, 149, 0);width: fit-content;margin-top: 4px">Big
-                                    Project</button>
-                            </div>
-                            <div class="col mb-0" style="display: flex; flex-direction: column;">
-                                <label for="dobWithTitle" class="form-label">TEMA</label>
-                                <span>pengelola tugas</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>

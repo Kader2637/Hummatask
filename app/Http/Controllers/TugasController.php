@@ -13,9 +13,9 @@ use Illuminate\Support\Str;
 class TugasController extends Controller
 {
 
-    protected function getData($uuid)
+    protected function getData($code)
     {
-        $tim = Tim::where('uuid', $uuid)->first();
+        $tim = Tim::where('code', $code)->first();
         $tugas = $tim->tugas->get();
         return response()->json($tugas, $tim);
     }
@@ -23,7 +23,7 @@ class TugasController extends Controller
     protected function buatTugas(RequestBuatTugas $request)
     {
 
-        $tim = Tim::where('uuid', $request->tim_uuid)->first();
+        $tim = Tim::where('code', $request->tim_id)->first();
 
         $tugas = new Tugas;
         $tugas->tim_id = $tim->id;

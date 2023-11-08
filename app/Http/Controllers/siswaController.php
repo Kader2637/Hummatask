@@ -14,7 +14,6 @@ class siswaController extends Controller
     {
         $title = "Dashboard";
         $tims = User::find(Auth::user()->id)->tim()->get();
-        // dd($tims);
         return response()->view('siswa.dashboard', compact('title','tims'));
     }
 
@@ -23,6 +22,8 @@ class siswaController extends Controller
     {
         $title = 'Profile Siswa';
         $user = User::with('peran')->where('id', Auth::user()->id)->first();
-        return response()->view('siswa.profile-siswa', compact('title', 'user'));
+        $tims = $user->tim()->get();
+
+        return response()->view('siswa.profile-siswa', compact('title', 'user', 'tims'));
     }
 }

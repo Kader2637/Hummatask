@@ -47,13 +47,7 @@ class PresentasiController extends Controller
         // }
 
 
-        $history = HistoryPresentasi::latest()->pluck('id')->first();
 
-        if($history === null){
-            HistoryPresentasi::create([
-                'code' => Str::uuid(),
-            ]);
-        }
 
         try {
             //code...
@@ -61,12 +55,12 @@ class PresentasiController extends Controller
             $tim->sudah_presentasi = true;
             $tim->save();
 
-            $validasi = $tim->presentasi->where('jadwal',Carbon::now()->isoFormat('YYYY-M-DD'))->first();
+            // $validasi = $tim->presentasi->where('jadwal',Carbon::now()->isoFormat('YYYY-M-DD'))->first();
 
 
-            if( $validasi != null ){
-                return back()->with('error','Pengajuan presentasi dalam sehari hanya boleh 1 kali');
-            }
+            // if( $validasi != null ){
+            //     return back()->with('error','Pengajuan presentasi dalam sehari hanya boleh 1 kali');
+            // }
 
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Timmu tidak ditemukan');
@@ -78,8 +72,20 @@ class PresentasiController extends Controller
         $presentasi->deskripsi = $request->deskripsi;
         $presentasi->jadwal = Carbon::now()->isoFormat('Y-M-DD');
         $presentasi->tim_id = $tim->id;
+
+        $history = HistoryPresentasi::latest()->first();
+
+        if(($history === null) || (Carbon::parse($history->created_at)->isoFormat("W-Y") != Carbon::now()->isoFormat("W-Y"))  ){
+            $historyBaru = new HistoryPresentasi;
+            $historyBaru->code = Str::uuid();
+            $historyBaru->save();
+
+            $presentasi->history_presentasi_id = $historyBaru->id;
+        }else{
+            $presentasi->history_presentasi_id = $history->id;
+        }
+
         $presentasi->status_presentasi_mingguan = true;
-        $presentasi->history_presentasi_id = $history;
         $presentasi->save();
 
 
@@ -154,21 +160,51 @@ class PresentasiController extends Controller
     {
         $history = HistoryPresentasi::with(['presentasi.tim.user','presentasi.tim.project.tema'])->where('code',$code)->first();
         $presentasi = $history->presentasi->where('status_pengajuan','menunggu');
+        $judulModal = Carbon::now()->isoFormat('DD MMMM YYYY');
         $konfirmasi_presentasi = Presentasi::with(['tim.user','tim.project.tema'])->where('history_presentasi_id',$history->id)->where('status_presentasi', 'menunggu')
         ->where('status_pengajuan', 'disetujui')
         ->whereDate('jadwal', Carbon::now()->format('Y-m-d'))
         ->orderBy('urutan', 'asc')
         ->get();
 
+
+
+        $konfirmasi_presentasi_date = [];
+        $totalPresentasi = [];
+        $totalPresentasiDitolak = [];
+        $revisiSelesai = [];
+        $revisiTidakSelesai = [];
+        $deadline =[];
+        $dataPresentasiTim=[];
+
+        foreach ($konfirmasi_presentasi as $data) {
+            $konfirmasi_presentasi_date[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
+            $totalPresentasi[] = $data->tim->presentasiSelesai->count();
+            $totalPresentasiDitolak[] = $data->where('status_pengajuan','ditolak')->get()->count();
+            $revisiSelesai[] = $data->where('status_revisi','selesai')->count();
+            $revisiTidakSelesai[] = $data->where('status_revisi','tidak_selesai')->count();
+            $deadline[] = Carbon::parse($data->tim->project[0]->deadline)->isoFormat('DD MMMM YYYY');
+            $dataPresentasiTim[] = $data->tim->presentasi;
+        }
+
         $tim_belum_presentasi = Tim::with('user','project.tema')->where('sudah_presentasi',false)->get();
         $telat_presentasi = $history->presentasi->where('status_presentasi','telat');
 
         $data = [
             'presentasi' => $presentasi,
-            'konfirmasi' => $konfirmasi_presentasi,
+            'konfirmasi' => [
+                             $konfirmasi_presentasi,
+                             $konfirmasi_presentasi_date,
+                             $totalPresentasi,$totalPresentasiDitolak,
+                             $revisiSelesai,
+                             $revisiTidakSelesai,
+                             $deadline,
+                             $dataPresentasiTim
+            ],
             'belum_presentasi' => $tim_belum_presentasi,
             'telat_presentasi' => $telat_presentasi,
             'codeHistory'      => $history->code,
+            'judulModal'       => $judulModal,
         ];
 
 
@@ -254,6 +290,26 @@ class PresentasiController extends Controller
         ->get();
 
     return response()->json($urutanPresentasi);
+    }
+
+    protected function ambilDetailHistoryPresentasi($codeHistory,$codeTim)
+    {
+        $history = HistoryPresentasi::where('code',$codeHistory)->first();
+        $tim = Tim::with('ketuaTim')->where('code',$codeTim)->first();
+        $presentaseRevisi = ($tim->presentasi->where('status_revisi','selesai')->count() / $tim->presentasi->count()) * 100;
+        $waktu = [];
+
+        foreach ($tim->presentasi as $data) {
+            $created_at = Carbon::parse($data->jadwal);
+            $waktu[] = $created_at->diffInDays(Carbon::now());
+        }
+
+        return response()->json([
+            "presentasi" =>[ $history->presentasi->where('status_pengajuan','disetujui')->where('status_presentasi','selesai'), $waktu],
+            "tim"     => $tim,
+            "presentaseRevisi" => $presentaseRevisi,
+        ]);
+
     }
 
 

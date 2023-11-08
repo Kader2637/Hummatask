@@ -104,6 +104,9 @@ class PengajuanProjekController extends Controller
             if ($request->namaTimInput != null) {
                 $tim->update(['nama' => $validated['namaTimInput']]);
             }
+            if ($request->repoInput != null) {
+                $tim->update(['repository' => $validated['repoInput']]);
+            }
 
             return back()->with('success', 'Berhasil mengedit project');
         } catch (\Exception $e) {

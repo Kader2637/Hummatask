@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tims', function (Blueprint $table) {
+        Schema::create('notifikasis', function (Blueprint $table) {
             $table->id();
             $table->string('code');
-            $table->string('logo')->default('avatar');
-            $table->string('nama')->nullable();
-            $table->string('repository')->nullable();
-            $table->enum('status_tim',['solo','pre_mini','mini','big']);
-            $table->boolean('sudah_presentasi')->default(false);
-            $table->boolean('kadaluwarsa')->default(false);
+            $table->string('judul');
+            $table->string('body');
+            $table->string('icon');
+            $table->string('url');
+            $table->enum('status',['belum_dibaca','sudah_dibaca'])->default('belum_dibaca');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tims');
+        Schema::dropIfExists('notifikasis');
     }
 };

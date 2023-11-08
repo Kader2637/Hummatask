@@ -36,9 +36,6 @@ class DatabaseSeeder extends Seeder
                 'status' => 'mini'
             ],
             [
-                'status' => 'pre_big'
-            ],
-            [
                 'status' => 'big'
             ]
         ]);
