@@ -40,6 +40,12 @@
     <script src="{{ asset('assets/vendor/js/template-customizer.js') }}"></script>
     <script src="{{ asset('assets/js/front-config.js') }}"></script>
 
+<!-- Vendor Styles -->
+<link rel="stylesheet" href="{{ asset('assets/vendor/libs/swiper/swiper.css')}}" />
+
+
+<!-- Page Styles -->
+<link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/ui-carousel.css')}}" />
     <script>
         window.templateCustomizer = new TemplateCustomizer({
             cssPath: '',
@@ -114,7 +120,10 @@
                             <a class="nav-link fw-medium" href="#landingFeatures">Fitur</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fw-medium" href="#landingTeam">Tim</a>
+                            <a class="nav-link fw-medium" href="#landingReviews">Kerja sama</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-medium" href="#landingPricing">Galeri</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link fw-medium" href="#landingFAQ">Pertanyaan</a>
@@ -267,17 +276,72 @@
             </div>
         </section>
 
-        <section id="landingReviews" class="section-py bg-body landing-reviews pb-0">
+        <section id="landingFunFacts" class="section-py bg-body landing-reviews pb-0">
+            <div class="container">
+                <div class="row gy-3">
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card border border-label-primary shadow-none">
+                            <div class="card-body text-center">
+                                <img src="{{ asset('assets/img/front-pages/icons/laptop.png') }}" alt="laptop"
+                                    class="mb-2" />
+                                <h5 class="h2 mb-1">7</h5>
+                                <p class="fw-medium mb-0">
+                                    Materi di LMS
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card border border-label-success shadow-none">
+                            <div class="card-body text-center">
+                                <img src="{{ asset('assets/img/front-pages/icons/user-success.png') }}"
+                                    alt="laptop" class="mb-2" />
+                                <h5 class="h2 mb-1">50</h5>
+                                <p class="fw-medium mb-0">
+                                    Siswa Magang
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card border border-label-info shadow-none">
+                            <div class="card-body text-center">
+                                <img src="{{ asset('assets/img/front-pages/icons/user.png') }}" alt="laptop"
+                                    class="mb-2" />
+                                <h5 class="h2 mb-1">200</h5>
+                                <p class="fw-medium mb-0">
+                                    Siswa Alumni<br />
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card border border-label-warning shadow-none">
+                            <div class="card-body text-center">
+                                <img src="{{ asset('assets/img/front-pages/icons/check-warning.png') }}"
+                                    alt="laptop" class="mb-2" />
+                                <h5 class="h2 mb-1">100%</h5>
+                                <p class="fw-medium mb-0">
+                                    Reating Google Maps
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="landingReviews" class="section-py bg-body landing-fun-facts">
             <div class="container">
                 <div class="row align-items-center gx-0 gy-4 g-lg-5">
                     <div class="col-md-6 col-lg-5 col-xl-3">
                         <div class="mb-3 pb-1">
-                            <span class="badge bg-label-primary">Penilaian Pengguna</span>
+                            <span class="badge bg-label-primary">menjalin kerja sama</span>
                         </div>
-                        <h3 class="mb-1"><span class="section-title">Apa yang mereka katakan</span></h3>
-                        <p class="mb-3 mb-md-5">
-                            Lihat dan ketahui apa yang mereka dapatkan<br class="d-none d-xl-block" />
-                            dan jangan lupa merasakan pengalaman mereka juga
+                        <h3 class="mb-1"><span class="section-title">Sekolah yang bekerja sama</span></h3>
+                        <p class="mb-0 mb-md-1">
+                            Berikut adalah beberapa<br class="d-none d-xl-block" />
+                            sekolah atau lembaga yang menjalin kerjasama dengan Hummatech
                         </p>
                         <div class="landing-reviews-btns">
                             <button id="reviews-previous-btn"
@@ -296,32 +360,12 @@
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
                                         <div class="card h-100">
-                                            <div
-                                                class="card-body text-body d-flex flex-column justify-content-between h-100">
-                                                <div class="mb-3">
-                                                    <img src="{{ asset('assets/img/front-pages/branding/logo-1.png') }}"
-                                                        alt="client logo" class="client-logo img-fluid" />
-                                                </div>
-                                                <p>
-                                                    “Vuexy is hands down the most useful front end Bootstrap theme I've
-                                                    ever used. I can't wait
-                                                    to use it again for my next project.”
-                                                </p>
-                                                <div class="text-warning mb-3">
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                </div>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar me-2 avatar-sm">
-                                                        <img src="{{ asset('assets/img/avatars/1.png') }}"
-                                                            alt="Avatar" class="rounded-circle" />
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="mb-0">Cecilia Payne</h6>
-                                                        <p class="small text-muted mb-0">CEO of Airbnb</p>
+                                            <div class="card h-100">
+                                                <div
+                                                    class="card-body text-body d-flex flex-column justify-content-between">
+                                                    <div class="mb-auto mt-auto">
+                                                        <img src="{{ asset('assets/img/front-pages/branding/sekolah.png') }}"
+                                                            alt="client logo" class="client-logo img-fluid" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -330,32 +374,22 @@
                                     <div class="swiper-slide">
                                         <div class="card h-100">
                                             <div
-                                                class="card-body text-body d-flex flex-column justify-content-between h-100">
-                                                <div class="mb-3">
-                                                    <img src="{{ asset('assets/img/front-pages/branding/logo-2.png') }}"
+                                                class="card-body text-body d-flex flex-column justify-content-between">
+                                                <div class="mx-auto my-auto">
+                                                    <img src="{{ asset('assets/img/front-pages/branding/psht.png') }}"
                                                         alt="client logo" class="client-logo img-fluid" />
                                                 </div>
-                                                <p>
-                                                    “I've never used a theme as versatile and flexible as Vuexy. It's my
-                                                    go to for building
-                                                    dashboard sites on almost any project.”
-                                                </p>
-                                                <div class="text-warning mb-3">
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                </div>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar me-2 avatar-sm">
-                                                        <img src="{{ asset('assets/img/avatars/2.png') }}"
-                                                            alt="Avatar" class="rounded-circle" />
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="mb-0">Eugenia Moore</h6>
-                                                        <p class="small text-muted mb-0">Founder of Hubspot</p>
-                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="swiper-slide">
+                                        <div class="card h-100">
+                                            <div
+                                                class="card-body text-body d-flex flex-column justify-content-between h-100">
+                                                <div class="mb-auto mt-auto">
+                                                    <img src="{{ asset('assets/img/front-pages/branding/contoh.png') }}"
+                                                        alt="client logo" class="client-logo img-fluid" />
                                                 </div>
                                             </div>
                                         </div>
@@ -364,31 +398,9 @@
                                         <div class="card h-100">
                                             <div
                                                 class="card-body text-body d-flex flex-column justify-content-between h-100">
-                                                <div class="mb-3">
-                                                    <img src="{{ asset('assets/img/front-pages/branding/logo-3.png') }}"
+                                                <div class="mb-auto mt-auto">
+                                                    <img src="{{ asset('assets/img/front-pages/branding/ikspi.png') }}"
                                                         alt="client logo" class="client-logo img-fluid" />
-                                                </div>
-                                                <p>
-                                                    This template is really clean & well documented. The docs are really
-                                                    easy to understand and
-                                                    it's always easy to find a screenshot from their website.
-                                                </p>
-                                                <div class="text-warning mb-3">
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                </div>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar me-2 avatar-sm">
-                                                        <img src="{{ asset('assets/img/avatars/3.png') }}"
-                                                            alt="Avatar" class="rounded-circle" />
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="mb-0">Curtis Fletcher</h6>
-                                                        <p class="small text-muted mb-0">Design Lead at Dribbble</p>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -397,31 +409,9 @@
                                         <div class="card h-100">
                                             <div
                                                 class="card-body text-body d-flex flex-column justify-content-between h-100">
-                                                <div class="mb-3">
-                                                    <img src="{{ asset('assets/img/front-pages/branding/logo-4.png') }}"
+                                                <div class="mb-auto mt-auto">
+                                                    <img src="{{ asset('assets/img/front-pages/branding/sekolah.png') }}"
                                                         alt="client logo" class="client-logo img-fluid" />
-                                                </div>
-                                                <p>
-                                                    All the requirements for developers have been taken into
-                                                    consideration, so I’m able to build
-                                                    any interface I want.
-                                                </p>
-                                                <div class="text-warning mb-3">
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                    <i class="ti ti-star ti-sm"></i>
-                                                </div>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar me-2 avatar-sm">
-                                                        <img src="{{ asset('assets/img/avatars/4.png') }}"
-                                                            alt="Avatar" class="rounded-circle" />
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="mb-0">Sara Smith</h6>
-                                                        <p class="small text-muted mb-0">Founder of Continental</p>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -430,64 +420,9 @@
                                         <div class="card h-100">
                                             <div
                                                 class="card-body text-body d-flex flex-column justify-content-between h-100">
-                                                <div class="mb-3">
-                                                    <img src="{{ asset('assets/img/front-pages/branding/logo-5.png') }}"
+                                                <div class="mb-auto mt-auto">
+                                                    <img src="{{ asset('assets/img/front-pages/branding/sekolah.png') }}"
                                                         alt="client logo" class="client-logo img-fluid" />
-                                                </div>
-                                                <p>
-                                                    “I've never used a theme as versatile and flexible as Vuexy. It's my
-                                                    go to for building
-                                                    dashboard sites on almost any project.”
-                                                </p>
-                                                <div class="text-warning mb-3">
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                </div>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar me-2 avatar-sm">
-                                                        <img src="{{ asset('assets/img/avatars/5.png') }}"
-                                                            alt="Avatar" class="rounded-circle" />
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="mb-0">Eugenia Moore</h6>
-                                                        <p class="small text-muted mb-0">Founder of Hubspot</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="card h-100">
-                                            <div
-                                                class="card-body text-body d-flex flex-column justify-content-between h-100">
-                                                <div class="mb-3">
-                                                    <img src="{{ asset('assets/img/front-pages/branding/logo-6.png') }}"
-                                                        alt="client logo" class="client-logo img-fluid" />
-                                                </div>
-                                                <p>
-                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam nemo
-                                                    mollitia, ad eum
-                                                    officia numquam nostrum repellendus consequuntur!
-                                                </p>
-                                                <div class="text-warning mb-3">
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                    <i class="ti ti-star-filled ti-sm"></i>
-                                                    <i class="ti ti-star ti-sm"></i>
-                                                </div>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar me-2 avatar-sm">
-                                                        <img src="{{ asset('assets/img/avatars/1.png') }}"
-                                                            alt="Avatar" class="rounded-circle" />
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="mb-0">Sara Smith</h6>
-                                                        <p class="small text-muted mb-0">Founder of Continental</p>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -500,429 +435,42 @@
                     </div>
                 </div>
             </div>
-            <hr class="m-0" />
-            <div class="container">
-                <div class="swiper-logo-carousel py-4 my-lg-2">
-                    <div class="swiper" id="swiper-clients-logos">
+        </section>
+
+        <section id="landingPricing" class="section-py">
+            <!-- Gallery effect-->
+            <div class="col-12">
+                <h3 class="text-center mb-1"><span class="section-title">Galeri </span>Siswa</h3>
+                <div id="swiper-gallery">
+                    <div class="swiper gallery-top">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <img src="{{ asset('assets/img/front-pages/branding/logo_1-light.png') }}"
-                                    alt="client logo" class="client-logo"
-                                    data-app-light-img="front-pages/branding/logo_1-light.png"
-                                    data-app-dark-img="front-pages/branding/logo_1-light.png" />
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="{{ asset('assets/img/front-pages/branding/logo_2-light.png') }}"
-                                    alt="client logo" class="client-logo"
-                                    data-app-light-img="front-pages/branding/logo_2-light.png"
-                                    data-app-dark-img="front-pages/branding/logo_2-light.png" />
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="{{ asset('assets/img/front-pages/branding/logo_3-light.png') }}"
-                                    alt="client logo" class="client-logo"
-                                    data-app-light-img="front-pages/branding/logo_3-light.png"
-                                    data-app-dark-img="front-pages/branding/logo_3-light.png" />
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="{{ asset('assets/img/front-pages/branding/logo_4-light.png') }}"
-                                    alt="client logo" class="client-logo"
-                                    data-app-light-img="front-pages/branding/logo_4-light.png"
-                                    data-app-dark-img="front-pages/branding/logo_4-light.png" />
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="{{ asset('assets/img/front-pages/branding/logo_5-light.png') }}"
-                                    alt="client logo" class="client-logo"
-                                    data-app-light-img="front-pages/branding/logo_5-light.png"
-                                    data-app-dark-img="front-pages/branding/logo_5-light.png" />
-                            </div>
+                            <div class="swiper-slide"
+                                style="background-image:url({{ asset('assets/img/backgrounds/2.jpg')}})">Slide 1</div>
+                            <div class="swiper-slide"
+                                style="background-image:url({{ asset('assets/img/backgrounds/1.jpg')}})">Slide 2</div>
+                            <div class="swiper-slide"
+                                style="background-image:url({{ asset('assets/img/backgrounds/3.jpg')}})">Slide 3</div>
+                            <div class="swiper-slide"
+                                style="background-image:url({{ asset('assets/img/backgrounds/4.jpg')}})">Slide 4</div>
+                            <div class="swiper-slide"
+                                style="background-image:url({{ asset('assets/img/backgrounds/6.jpg')}})">Slide 5</div>
                         </div>
+                        <!-- Add Arrows -->
+                        <div class="swiper-button-next swiper-button-white"></div>
+                        <div class="swiper-button-prev swiper-button-white"></div>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="landingTeam" class="section-py landing-team">
-            <div class="container">
-                <div class="text-center mb-3 pb-1">
-                    <span class="badge bg-label-primary">Our Great Team</span>
-                </div>
-                <h3 class="text-center mb-1"><span class="section-title">Supported</span> by Real People</h3>
-                <p class="text-center mb-md-5 pb-3">Who is behind these great-looking interfaces?</p>
-                <div class="row gy-5 mt-2">
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card mt-3 mt-lg-0 shadow-none">
-                            <div class="bg-label-primary position-relative team-image-box">
-                                <img src="{{ asset('assets/img/front-pages/landing-page/team-member-1.png') }}"
-                                    class="position-absolute card-img-position bottom-0 start-50 scaleX-n1-rtl"
-                                    alt="human image" />
-                            </div>
-                            <div class="card-body border border-top-0 border-label-primary text-center">
-                                <h5 class="card-title mb-0">Sophie Gilbert</h5>
-                                <p class="text-muted mb-0">Project Manager</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card mt-3 mt-lg-0 shadow-none">
-                            <div class="bg-label-info position-relative team-image-box">
-                                <img src="{{ asset('assets/img/front-pages/landing-page/team-member-2.png') }}"
-                                    class="position-absolute card-img-position bottom-0 start-50 scaleX-n1-rtl"
-                                    alt="human image" />
-                            </div>
-                            <div class="card-body border border-top-0 border-label-info text-center">
-                                <h5 class="card-title mb-0">Paul Miles</h5>
-                                <p class="text-muted mb-0">UI Designer</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card mt-3 mt-lg-0 shadow-none">
-                            <div class="bg-label-danger position-relative team-image-box">
-                                <img src="{{ asset('assets/img/front-pages/landing-page/team-member-3.png') }}"
-                                    class="position-absolute card-img-position bottom-0 start-50 scaleX-n1-rtl"
-                                    alt="human image" />
-                            </div>
-                            <div class="card-body border border-top-0 border-label-danger text-center">
-                                <h5 class="card-title mb-0">Nannie Ford</h5>
-                                <p class="text-muted mb-0">Development Lead</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card mt-3 mt-lg-0 shadow-none">
-                            <div class="bg-label-success position-relative team-image-box">
-                                <img src="{{ asset('assets/img/front-pages/landing-page/team-member-4.png') }}"
-                                    class="position-absolute card-img-position bottom-0 start-50 scaleX-n1-rtl"
-                                    alt="human image" />
-                            </div>
-                            <div class="card-body border border-top-0 border-label-success text-center">
-                                <h5 class="card-title mb-0">Chris Watkins</h5>
-                                <p class="text-muted mb-0">Marketing Manager</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="landingPricing" class="section-py bg-body landing-pricing">
-            <div class="container">
-                <div class="text-center mb-3 pb-1">
-                    <span class="badge bg-label-primary">Pricing Plans</span>
-                </div>
-                <h3 class="text-center mb-1"><span class="section-title">Tailored pricing plans</span> designed for
-                    you</h3>
-                <p class="text-center mb-4 pb-3">
-                    All plans include 40+ advanced tools and features to boost your product.<br />Choose the best plan
-                    to fit
-                    your needs.
-                </p>
-                <div class="text-center mb-5">
-                    <div class="position-relative d-inline-block pt-3 pt-md-0">
-                        <label class="switch switch-primary me-0">
-                            <span class="switch-label">Pay Monthly</span>
-                            <input type="checkbox" class="switch-input price-duration-toggler" checked />
-                            <span class="switch-toggle-slider">
-                                <span class="switch-on"></span>
-                                <span class="switch-off"></span>
-                            </span>
-                            <span class="switch-label">Pay Annual</span>
-                        </label>
-                        <div class="pricing-plans-item position-absolute d-flex">
-                            <img src="{{ asset('assets/img/front-pages/icons/pricing-plans-arrow.png') }}"
-                                alt="pricing plans arrow" class="scaleX-n1-rtl" />
-                            <span class="fw-semibold mt-2 ms-1"> Save 25%</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row gy-4 pt-lg-3">
-                    <div class="col-xl-4 col-lg-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="text-center">
-                                    <img src="{{ asset('assets/img/front-pages/icons/paper-airplane.png') }}"
-                                        alt="paper airplane icon" class="mb-4 pb-2" />
-                                    <h4 class="mb-1">Basic</h4>
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <span class="price-monthly h1 text-primary fw-bold mb-0">$19</span>
-                                        <span class="price-yearly h1 text-primary fw-bold mb-0 d-none">$14</span>
-                                        <sub class="h6 text-muted mb-0 ms-1">/mo</sub>
-                                    </div>
-                                    <div class="position-relative pt-2">
-                                        <div class="price-yearly text-muted price-yearly-toggle d-none">$ 168 / year
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <h5>
-                                            <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i
-                                                    class="ti ti-check ti-xs"></i></span>
-                                            Timeline
-                                        </h5>
-                                    </li>
-                                    <li>
-                                        <h5>
-                                            <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i
-                                                    class="ti ti-check ti-xs"></i></span>
-                                            Basic search
-                                        </h5>
-                                    </li>
-                                    <li>
-                                        <h5>
-                                            <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i
-                                                    class="ti ti-check ti-xs"></i></span>
-                                            Live chat widget
-                                        </h5>
-                                    </li>
-                                    <li>
-                                        <h5>
-                                            <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i
-                                                    class="ti ti-check ti-xs"></i></span>
-                                            Email marketing
-                                        </h5>
-                                    </li>
-                                    <li>
-                                        <h5>
-                                            <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i
-                                                    class="ti ti-check ti-xs"></i></span>
-                                            Custom Forms
-                                        </h5>
-                                    </li>
-                                    <li>
-                                        <h5>
-                                            <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i
-                                                    class="ti ti-check ti-xs"></i></span>
-                                            Traffic analytics
-                                        </h5>
-                                    </li>
-                                    <li>
-                                        <h5>
-                                            <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i
-                                                    class="ti ti-check ti-xs"></i></span>
-                                            Basic Support
-                                        </h5>
-                                    </li>
-                                </ul>
-                                <div class="d-grid mt-4 pt-3">
-                                    <a href="payment.html" class="btn btn-label-primary">Get Started</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-4 col-lg-6">
-                        <div class="card border border-primary shadow-lg">
-                            <div class="card-header">
-                                <div class="text-center">
-                                    <img src="{{ asset('assets/img/front-pages/icons/plane.png') }}" alt="plane icon"
-                                        class="mb-4 pb-2" />
-                                    <h4 class="mb-1">Team</h4>
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <span class="price-monthly h1 text-primary fw-bold mb-0">$29</span>
-                                        <span class="price-yearly h1 text-primary fw-bold mb-0 d-none">$22</span>
-                                        <sub class="h6 text-muted mb-0 ms-1">/mo</sub>
-                                    </div>
-                                    <div class="position-relative pt-2">
-                                        <div class="price-yearly text-muted price-yearly-toggle d-none">$ 264 / year
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <h5>
-                                            <span class="badge badge-center rounded-pill bg-primary p-0 me-2"><i
-                                                    class="ti ti-check ti-xs"></i></span>
-                                            Everything in basic
-                                        </h5>
-                                    </li>
-                                    <li>
-                                        <h5>
-                                            <span class="badge badge-center rounded-pill bg-primary p-0 me-2"><i
-                                                    class="ti ti-check ti-xs"></i></span>
-                                            Timeline with database
-                                        </h5>
-                                    </li>
-                                    <li>
-                                        <h5>
-                                            <span class="badge badge-center rounded-pill bg-primary p-0 me-2"><i
-                                                    class="ti ti-check ti-xs"></i></span>
-                                            Advanced search
-                                        </h5>
-                                    </li>
-                                    <li>
-                                        <h5>
-                                            <span class="badge badge-center rounded-pill bg-primary p-0 me-2"><i
-                                                    class="ti ti-check ti-xs"></i></span>
-                                            Marketing automation
-                                        </h5>
-                                    </li>
-                                    <li>
-                                        <h5>
-                                            <span class="badge badge-center rounded-pill bg-primary p-0 me-2"><i
-                                                    class="ti ti-check ti-xs"></i></span>
-                                            Advanced chatbot
-                                        </h5>
-                                    </li>
-                                    <li>
-                                        <h5>
-                                            <span class="badge badge-center rounded-pill bg-primary p-0 me-2"><i
-                                                    class="ti ti-check ti-xs"></i></span>
-                                            Campaign management
-                                        </h5>
-                                    </li>
-                                    <li>
-                                        <h5>
-                                            <span class="badge badge-center rounded-pill bg-primary p-0 me-2"><i
-                                                    class="ti ti-check ti-xs"></i></span>
-                                            Collaboration tools
-                                        </h5>
-                                    </li>
-                                </ul>
-                                <div class="d-grid mt-4 pt-3">
-                                    <a href="payment.html" class="btn btn-primary">Get Started</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-4 col-lg-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="text-center">
-                                    <img src="{{ asset('assets/img/front-pages/icons/shuttle-rocket.png') }}"
-                                        alt="shuttle rocket icon" class="mb-4 pb-2" />
-                                    <h4 class="mb-1">Enterprise</h4>
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <span class="price-monthly h1 text-primary fw-bold mb-0">$49</span>
-                                        <span class="price-yearly h1 text-primary fw-bold mb-0 d-none">$37</span>
-                                        <sub class="h6 text-muted mb-0 ms-1">/mo</sub>
-                                    </div>
-                                    <div class="position-relative pt-2">
-                                        <div class="price-yearly text-muted price-yearly-toggle d-none">$ 444 / year
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <h5>
-                                            <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i
-                                                    class="ti ti-check ti-xs"></i></span>
-                                            Everything in premium
-                                        </h5>
-                                    </li>
-                                    <li>
-                                        <h5>
-                                            <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i
-                                                    class="ti ti-check ti-xs"></i></span>
-                                            Timeline with database
-                                        </h5>
-                                    </li>
-                                    <li>
-                                        <h5>
-                                            <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i
-                                                    class="ti ti-check ti-xs"></i></span>
-                                            Fuzzy search
-                                        </h5>
-                                    </li>
-                                    <li>
-                                        <h5>
-                                            <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i
-                                                    class="ti ti-check ti-xs"></i></span>
-                                            A/B testing sanbox
-                                        </h5>
-                                    </li>
-                                    <li>
-                                        <h5>
-                                            <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i
-                                                    class="ti ti-check ti-xs"></i></span>
-                                            Custom permissions
-                                        </h5>
-                                    </li>
-                                    <li>
-                                        <h5>
-                                            <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i
-                                                    class="ti ti-check ti-xs"></i></span>
-                                            Social media automation
-                                        </h5>
-                                    </li>
-                                    <li>
-                                        <h5>
-                                            <span class="badge badge-center rounded-pill bg-label-primary p-0 me-2"><i
-                                                    class="ti ti-check ti-xs"></i></span>
-                                            Sales automation tools
-                                        </h5>
-                                    </li>
-                                </ul>
-                                <div class="d-grid mt-4 pt-3">
-                                    <a href="payment.html" class="btn btn-label-primary">Get Started</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="landingFunFacts" class="section-py landing-fun-facts">
-            <div class="container">
-                <div class="row gy-3">
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card border border-label-primary shadow-none">
-                            <div class="card-body text-center">
-                                <img src="{{ asset('assets/img/front-pages/icons/laptop.png') }}" alt="laptop"
-                                    class="mb-2" />
-                                <h5 class="h2 mb-1">7.1k+</h5>
-                                <p class="fw-medium mb-0">
-                                    Support Tickets<br />
-                                    Resolved
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card border border-label-success shadow-none">
-                            <div class="card-body text-center">
-                                <img src="{{ asset('assets/img/front-pages/icons/user-success.png') }}"
-                                    alt="laptop" class="mb-2" />
-                                <h5 class="h2 mb-1">50k+</h5>
-                                <p class="fw-medium mb-0">
-                                    Join creatives<br />
-                                    community
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card border border-label-info shadow-none">
-                            <div class="card-body text-center">
-                                <img src="{{ asset('assets/img/front-pages/icons/diamond-info.png') }}"
-                                    alt="laptop" class="mb-2" />
-                                <h5 class="h2 mb-1">4.8/5</h5>
-                                <p class="fw-medium mb-0">
-                                    Highly Rated<br />
-                                    Products
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card border border-label-warning shadow-none">
-                            <div class="card-body text-center">
-                                <img src="{{ asset('assets/img/front-pages/icons/check-warning.png') }}"
-                                    alt="laptop" class="mb-2" />
-                                <h5 class="h2 mb-1">100%</h5>
-                                <p class="fw-medium mb-0">
-                                    Money Back<br />
-                                    Guarantee
-                                </p>
-                            </div>
+                    <div class="swiper gallery-thumbs">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide"
+                                style="background-image:url({{ asset('assets/img/backgrounds/2.jpg')}})">Slide 1</div>
+                            <div class="swiper-slide"
+                                style="background-image:url({{ asset('assets/img/backgrounds/1.jpg')}})">Slide 2</div>
+                            <div class="swiper-slide"
+                                style="background-image:url({{ asset('assets/img/backgrounds/3.jpg')}})">Slide 3</div>
+                            <div class="swiper-slide"
+                                style="background-image:url({{ asset('assets/img/backgrounds/4.jpg')}})">Slide 4</div>
+                            <div class="swiper-slide"
+                                style="background-image:url({{ asset('assets/img/backgrounds/6.jpg')}})">Slide 5</div>
                         </div>
                     </div>
                 </div>
@@ -1054,105 +602,9 @@
                 </div>
             </div>
         </section>
-
-        <section id="landingCTA" class="section-py landing-cta p-lg-0 pb-0">
-            <div class="container">
-                <div class="row align-items-center gy-5 gy-lg-0">
-                    <div class="col-lg-6 text-center text-lg-start">
-                        <h6 class="h2 text-primary fw-bold mb-1">Mulai semua dengan premium akun!</h6>
-                        <p class="fw-medium mb-4">Dengan premium dapatkan semua fitur yang tersedia tanpa batasan</p>
-                        <a href="payment.html" class="btn btn-lg btn-primary">Mulai pembayaran</a>
-                    </div>
-                    <div class="col-lg-6 pt-lg-5 text-center text-lg-end">
-                        <img src="{{ asset('assets/img/front-pages/landing-page/cta-dashboard.png') }}"
-                            alt="cta dashboard" class="img-fluid" />
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="landingContact" class="section-py bg-body landing-contact">
-            <div class="container">
-                <div class="text-center mb-3 pb-1">
-                    <span class="badge bg-label-primary">Hubungi Kami</span>
-                </div>
-                <h3 class="text-center mb-1"><span class="section-title">Mari bekerja</span> sama</h3>
-                <p class="text-center mb-4 mb-lg-5 pb-md-3">Ada pertanyaan ? kirimkan saja email ke kami</p>
-                <div class="row gy-4">
-                    <div class="col-lg-5">
-                        <div class="contact-img-box position-relative border p-2 h-100">
-                            <img src="{{ asset('assets/img/front-pages/landing-page/contact-customer-service.png') }}"
-                                alt="contact customer service" class="contact-img w-100 scaleX-n1-rtl" />
-                            <div class="pt-3 px-4 pb-1">
-                                <div class="row gy-3 gx-md-4">
-                                    <div class="col-md-6 col-lg-12 col-xl-6">
-                                        <div class="d-flex align-items-center">
-                                            <div class="badge bg-label-primary rounded p-2 me-2"><i
-                                                    class="ti ti-mail ti-sm"></i></div>
-                                            <div>
-                                                <p class="mb-0">Email</p>
-                                                <h5 class="mb-0">
-                                                    <a href="mailto:example@gmail.com"
-                                                        class="text-heading">example@gmail.com</a>
-                                                </h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-12 col-xl-6">
-                                        <div class="d-flex align-items-center">
-                                            <div class="badge bg-label-success rounded p-2 me-2">
-                                                <i class="ti ti-phone-call ti-sm"></i>
-                                            </div>
-                                            <div>
-                                                <p class="mb-0">Phone</p>
-                                                <h5 class="mb-0"><a href="tel:+1234-568-963"
-                                                        class="text-heading">+1234 568 963</a></h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-7">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="mb-1">Kirimkan pesan</h4>
-                                <p class="mb-4">
-                                    Jika kamu ingin berdiskusi tentan pembayaran,akun,lisensi<br
-                                        class="d-none d-lg-block" />
-                                    Kerjasama atau ide usaha kamu ditempat yang benar
-                                </p>
-                                <form>
-                                    <div class="row g-3">
-                                        <div class="col-md-6">
-                                            <label class="form-label" for="contact-form-fullname">Nama lengkap</label>
-                                            <input type="text" class="form-control" id="contact-form-fullname"
-                                                placeholder="john" />
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label" for="contact-form-email">Email</label>
-                                            <input type="text" id="contact-form-email" class="form-control"
-                                                placeholder="johndoe@gmail.com" />
-                                        </div>
-                                        <div class="col-12">
-                                            <label class="form-label" for="contact-form-message">Pesan</label>
-                                            <textarea id="contact-form-message" class="form-control" rows="8" placeholder="Write a message"></textarea>
-                                        </div>
-                                        <div class="col-12">
-                                            <button type="submit" class="btn btn-primary">Kirim pesan</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
     </div>
 
-    <footer class="landing-footer bg-body footer-text">
+    <footer class="landing-footer bg-body footer-text" id="landingContact">
         <div class="footer-top">
             <div class="container">
                 <div class="row gx-0 gy-4 g-md-5">
@@ -1254,14 +706,15 @@
     </footer>
     <script src="{{ asset('assets/vendor/js/dropdown-hover.js') }}"></script>
     <script src="{{ asset('assets/vendor/js/mega-dropdown.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/node-waves/node-waves259f.js?id=4fae469a3ded69fb59fce3dcc14cd638') }}">
-    </script>
+    <script src="{{ asset('assets/vendor/libs/node-waves/node-waves259f.js?id=4fae469a3ded69fb59fce3dcc14cd638') }}"></script>
     <script src="{{ asset('assets/vendor/libs/popper/popper0a73.js?id=baf82d96b7771efbcc05c3b77135d24c') }}"></script>
     <script src="{{ asset('assets/vendor/js/bootstraped84.js?id=9a6c701557297a042348b5aea69e9b76') }}"></script>
     <script src="{{ asset('assets/vendor/libs/nouislider/nouislider.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/swiper/swiper.js') }}"></script>
     <script src="{{ asset('assets/js/front-main1b3c.js?id=2c2564d4c142df108c8f3152af8e0460') }}"></script>
     <script src="{{ asset('assets/js/front-page-landing.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/swiper/swiper.js')}}"></script>
+    <script src="{{ asset('assets/js/ui-carousel.js')}}"></script>
 </body>
 
 </html>
