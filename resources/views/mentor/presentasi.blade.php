@@ -41,6 +41,89 @@
         </div>
     </div>
 
+    {{-- modal detail presentasi tim --}}
+    <div class="modal fade" id="detailTim" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel3">History Presentasi Tim</h5>
+              <button type="button" class="btn-close" data-bs-toggle="modal" data-bs-target="#detailPresentasi" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <h6 style="font-size: 15px;">Statistik Tim</h6>
+                        <div class="row gap-2 mt-2">
+                            <div class="col-12">
+                                <div class="card h-100">
+                                    <div class="card-body d-flex justify-content-between align-items-center">
+                                      <div class="card-title mb-0">
+                                        <h5 id="persentasiRevisiSelesai" class="mb-0 me-2"></h5>
+                                        <small>Keberhasilan dalam mengerjakan revisi</small>
+                                      </div>
+                                      <div class="card-icon">
+                                        <span class="badge bg-label-primary rounded-pill p-2">
+                                          <i class="ti ti-cpu ti-sm"></i>
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="card h-100">
+                                    <div class="card-body d-flex justify-content-between align-items-center">
+                                      <div class="card-title mb-0">
+                                        <h5 class="mb-0 me-2" id="historyTotalPresentasi">3</h5>
+                                        <small>Total Presentasi</small>
+                                      </div>
+                                      <div class="card-icon">
+                                        <span class="badge bg-label-success rounded-pill p-2">
+                                          <i class="ti ti-server ti-sm"></i>
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </div>
+                            <div class="col-12">
+                                    <div class="card h-100">
+                                      <div class="card-body d-flex justify-content-between align-items-center">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <img class="rounded-circle" style="width:50px; height:50px;" src="{{ asset('assets/img/avatars/10.png') }}" alt="">
+                                            </div>
+                                            <div class="col-8">
+                                                <p class="m-0 text-secondary" id="history-ketua-tim"></p>
+                                                <span class="badge bg-label-primary">Ketua Tim</span>
+                                            </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 mt-5  mt-lg-0">
+                        <h6 style="font-size: 15px;" >History Presentasi</h6>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <small class="text-light fw-medium">Custom content</small>
+                                <div class="demo-inline-spacing mt-3">
+                                  <div id="list-group" class="list-group">
+                                
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-label-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#detailPresentasi">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    {{-- modal detail presentasi tim --}}
+
 
     {{-- Modal Selesai Project --}}
 
@@ -121,11 +204,11 @@
 
 
     <div class="modal fade" id="detailPresentasi" tabindex="-1" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="container-fluid mt-3">
-                        <h5>Presentasi</h5>
+                    <div class="container mt-3">
+                        <h5 id="judulModal"></h5>
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
@@ -244,9 +327,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" data-bs-dismiss="modal" class="btn btn-danger waves-effect">Close</button>
-                </div>
+
+                    <button type="button" data-bs-dismiss="modal" class="btn btn-danger waves-effect position-absolute rounded-circle" style="top: -10px; right: -10px; width:40px; height:40px;">X</button>
+
             </div>
         </div>
     </div>
@@ -281,8 +364,8 @@
                         </div>
                     </div>
                 </div>
-
             @empty
+
             @endforelse
         </div>
     </div>
@@ -305,6 +388,60 @@
     <script src="{{ asset('assets/js/forms-tagify.js') }}"></script>
     <script src="{{ asset('assets/js/forms-typeahead.js') }}"></script>
     <script>
+
+
+        const tampilDetailTim = (codeTim,codeHistory) =>{
+            document.getElementById('list-group').innerHTML=""
+            axios.get('ambil-detail-history-presentasi/'+codeHistory+'/'+codeTim )
+            .then((res) => {
+                const history = res.data.history;
+                const tim = res.data.tim;
+                const presentasi = res.data.presentasi;
+                const presentaseRevisi = res.data.presentaseRevisi;
+
+                console.log(presentasi);
+                $('#persentasiRevisiSelesai').text(`${presentaseRevisi}%`)
+                $('#historyTotalPresentasi').text(`${tim.presentasi.length}`)
+                $('#history-ketua-tim').text(`${tim.ketua_tim[0].username}`)
+
+                presentasi[0].forEach((data,i) => {
+                     
+                    let waktu = presentasi[1][i]
+                    console.log(data );
+                    const div = document.createElement('div')
+                    let children =
+                    `
+
+                    ${(data === presentasi[0][0] 
+                        
+                        ? '<a href="javascript:void(0);" class="list-group-item list-group-item-action flex-column align-items-start active">'
+
+                            : ''
+                        )}
+
+                    <a class="list-group-item list-group-item-action flex-column align-items-start ${(data === presentasi[0][0] ? 'active' : '' )} ">
+                        <div class="d-flex justify-content-between w-100">
+                            <h5 class="mb-1">${data.judul}</h5>
+                            <small class="text-muted">${waktu} hari lalu</small>
+                            </div>
+                                          <p class="mb-1">${data.deskripsi}</p>
+                                          <small class="text-muted">Donec id elit non mi porta.</small>
+                    </a>
+                    `
+                    div.innerHTML = children                    
+                    document.getElementById('list-group').appendChild(div);
+
+                });
+                
+
+                // document.getElementById('list-group').innerHTML=""
+
+
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+        }
 
         const aturUrutan = (code,codeHistory) =>{
 
@@ -390,7 +527,7 @@
                                           ${presentasi.urutan}
                                         </div>
                                         <img src="{{ asset('storage/${presentasi.tim.logo}') }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 150px; height: 150px; object-fit: cover; ">
-                                        <div class="d-flex justify-content-center align-items-center gap-2">
+                                        <div class="d-flex justify-content-center align-items-center gap-2 flex-column">
                                             <h4 class="card-title text-capitalize">${presentasi.tim.nama}</h4>
                                         <a href="#"><span class="badge bg-label-warning mb-3">${presentasi.tim.status_tim}</span></a>
                                         </div>
@@ -400,7 +537,7 @@
                                              <button class="btn btn-success" onclick="sudahPresentasi('${presentasi.code}')" data-bs-toggle="modal" data-bs-target="#Finish" >Konfirmasi</button>
                                        </div>
                                     </div>
-                                </div>
+                     </div>
                     `
                         div.innerHTML = childrend
                         document.getElementById('row-konfirmasi').appendChild(div)
@@ -422,7 +559,8 @@
             })
         }
 
-        const tampilkanDetail = (code) => {
+        const tampilkanDetail = (code) =>
+        {
             axios.post('tampil-detail-presentasi/' + code)
                 .then((res) => {
                     let data1 = res.data.presentasi;
@@ -431,9 +569,10 @@
                     let data4 = res.data.telat_presentasi;
                     let codeHistory =  res.data.codeHistory
 
-                    console.log(data1);
+                    $('#judulModal').text(`Presentasi / ${res.data.judulModal}`)
 
-                    // console.log(Object.keys(data2));
+
+
 
                     document.getElementById('row-persetujuan').innerHTML = ''
 
@@ -468,9 +607,9 @@
                    <div class="card text-center mb-3">
                         <div class="card-body">
                             <img src="{{ asset('storage/${presentasi.tim.logo}') }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 150px; height: 150px; object-fit: cover; ">
-                            <div class="d-flex justify-content-center align-items-center gap-2">
+                            <div class="d-flex justify-content-center align-items-center gap-2 flex-column">
                                 <h4 class="card-title text-capitalize">${presentasi.tim.nama}</h4>
-                                <a href="#"><span class="badge bg-label-warning mb-3">solo</span></a>
+                                <a href="#"><span class="badge bg-label-warning mb-3">${presentasi.status_tim}</span></a>
                             </div>
                             <p class="card-text">${presentasi.jadwal}</p>
 
@@ -488,6 +627,7 @@
 
                     }
 
+                    console.log(data2)
 
                     if( data2.length == 0 ){
 
@@ -513,38 +653,87 @@
 
 
                     document.getElementById('row-konfirmasi').innerHTML = "";
-                    Object.keys(data2).forEach((key) => {
-                        let presentasi = data2[key]
+                    Object.keys(data2[0]).forEach((key) => {
+                        let presentasi = data2[0][key]
+                        let presentasi_date = data2[1][key]
+                        let totalPresentasi = data2[2][key]
+                        let presentasiDitolak = data2[3][key]
+                        let revisiSelesai = data2[4][key]
+                        let revisiTidakSelesai = data2[5][key]
+                        let deadline = data2[6][key]
+                        let dataPresentasiTim = data2[7][key]
+
+                        let kategoryTim;
+                        if(presentasi.tim.status_tim === "solo"){
+                            kategoryTim = "Solo Project"
+                        }
+                        if(presentasi.tim.status_tim === "pre_mini"){
+                            kategoryTim = "Pre Mini Project"
+                        }
+                        if(presentasi.tim.status_tim === "mini"){
+                            kategoryTim = "Mini Project"
+                        }
+                        if(presentasi.tim.status_tim === "big"){
+                            kategoryTim = "Big Project"
+                        }
+
                         let div = document.createElement('div')
                         div.id = "card-konfirmasi-" + presentasi.code;
-                        div.className = "col-md-6 col-lg-4";
+                        div.className = "col-md-6 col-lg-3";
+
                         let childrend =
                             `
                     <div class="card text-center mb-3">
-                                    <div class="card-body">
-                                        <div style="width: 30px; height: 30px; top: -10px; right: -10px;" class="rounded bg-primary d-flex justify-content-center align-items-center text-white position-absolute">
-                                          ${presentasi.urutan}
-                                        </div>
-                                        <img src="{{ asset('storage/${presentasi.tim.logo}') }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 150px; height: 150px; object-fit: cover; ">
-                                        <div class="d-flex justify-content-center align-items-center gap-2">
-                                            <h4 class="card-title text-capitalize">${presentasi.tim.nama}</h4>
-                                        <a href="#"><span class="badge bg-label-warning mb-3">${presentasi.tim.status_tim}</span></a>
-                                        </div>
-                                        <div class="card-text">${presentasi.jadwal}</div>
-                                       <div class="d-flex justify-content-center gap-2">
-                                             <button class="btn btn-primary" onclick="aturUrutan('${presentasi.code}','${codeHistory}')" data-bs-toggle="modal" id="btnUrutan" data-bs-target="#aturUrutan" >Urutan</button>
-                                             <button class="btn btn-success" onclick="sudahPresentasi('${presentasi.code}')" data-bs-toggle="modal" data-bs-target="#Finish" >Konfirmasi</button>
-                                       </div>
-                                    </div>
+                            <div class="card-body">
+                                <div style="width: 30px; height: 30px; top: -10px;left : -10px;" class="rounded bg-primary d-flex justify-content-center align-items-center text-white position-absolute">
+                                    ${presentasi.urutan}
                                 </div>
+                                <img src="{{ asset('storage/${presentasi.tim.logo}') }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 100px; height: 100px; object-fit: cover; ">
+                                <div class="d-flex justify-content-center align-items-center gap-2 flex-column flex-wrap">
+                                    <h4 class="card-title text-capitalize text-secondary mb-0">${presentasi.tim.nama}</h4>
+                                    <div class="d-flex flex-column gap-2">
+                                    <span class="badge bg-label-warning d-flex align-items-center justify-content-center flex-column" style="" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Status Tim"    >${kategoryTim}</span>
+
+                                    </div>
+                                    <div class="d-flex justify-content-around align-items-center w-100 mb-2 gap-2">
+                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data pengajuan presentasi yang selesai"    class="badge bg-label-success">
+                                            <i class="fas fa-chalkboard"></i>
+                                            ${totalPresentasi}
+                                        </span>
+                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data pengajuan presentasi yang ditolak"    class="badge bg-label-danger">
+                                            <i class="fas fa-chalkboard"></i>
+                                            ${presentasiDitolak}
+                                        </span>
+                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data Revisi yang selesai"      class="badge bg-label-success">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            ${revisiSelesai}
+                                        </span>
+                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data Revisi yang tidak selesai"   class="badge bg-label-danger ">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            ${revisiTidakSelesai}
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex justify-content-center gap-2 align-items-center">
+                                        <button onclick="tampilDetailTim('${presentasi.tim.code}','${codeHistory}')"  data-bs-toggle="modal" data-bs-target="#detailTim" class="btn btn-outline-warning d-flex justify-content-center align-items-center p-3 btn-detail-tim" style="font-size:15px; width:20px;height:20px;">
+                                            <i class="fas fa-info-circle"></i>
+                                        </button>
+                                        <button class="border-0 bg-transparent text-white bg-primary p-3 d-flex justify-content-center align-items-center rounded" style="font-size:20px;width:20px;height:20px;" onclick="aturUrutan('${presentasi.code}','${codeHistory}')" data-bs-toggle="modal" id="btnUrutan" data-bs-target="#aturUrutan" >
+                                            <i class="fas fa-list-ol"></i>
+                                        </button>
+                                        <button class="btn btn-success" onclick="sudahPresentasi('${presentasi.code}')"  data-bs-toggle="modal" data-bs-target="#Finish" >Konfirmasi</button>
+                                </div>
+                            </div>
+                    </div>
                     `
                         div.innerHTML = childrend
                         document.getElementById('row-konfirmasi').appendChild(div)
                     })
-
-
-
                     }
+
+                    // console.log(res.data)
 
 
                     document.getElementById('tr-belum-presentasi').innerHTML = ""

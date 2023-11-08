@@ -116,6 +116,8 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::patch('persetujuan-project/{code}', [PengajuanProjekController::class, 'persetujuanProject'])->name('persetujuan-project');
     Route::put('atur-urutan/{code}', [PresentasiController::class, 'gantiUrutan']);
     Route::get('ambil-urutan/{codeHistory}', [PresentasiController::class, 'ambilUrutan']);
+    Route::get('ambil-detail-history-presentasi/{codeHistory}/{codeTim}',[PresentasiController::class,'ambilDetailHistoryPresentasi']);
+
     Route::post('pembuatantim', [PengajuanTimController::class, 'pembuatanTimProject'])->name('pembuatan.tim');
 
     Route::get('delete-user/{code}', [tambahUsersController::class, 'delete'])->name('delete.user.pengguna');
@@ -127,4 +129,5 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::post('tambah-mentor', [tambahUsersController::class, 'store_mentor'])->name('tambah.mentor');
     Route::post('tambah-pengelola', [tambahUsersController::class, 'tambah_pengelola'])->name('tambah.pengelola');
     Route::post('tambah-role', [tambahUsersController::class, 'tambah_role'])->name('tambah.roles');
+
 });
