@@ -14,24 +14,24 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="d-flex card flex-md-row align-items-center justify-content-between">
-            <div class=" nav nav-pills mb-3 mt-3 d-flex flex-wrap navbar-ul px-3" id="pills-tab" role="tablist">
+            <div class="nav nav-pills mb-3 mt-3 d-flex flex-wrap navbar-ul px-3" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
                         type="button" role="tab" aria-controls="pills-home" aria-selected="true"><i
-                            class="ti ti-clipboard"></i>Buat Catatan</button>
+                            class="ti ti-clipboard-text"></i>Buat Catatan</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
                         type="button" role="tab" aria-controls="pills-profile" aria-selected="false"><i
-                            class="ti ti-clipboard-text"></i>History Catatan</button>
+                            class="ti ti-clipboard-check"></i>History Catatan</button>
                 </li>
             </div>
         </div>
         <div class="tab-content px-0 mt-2" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
                 tabindex="0">
-                <div class="card">
-                    <div class="container-fluid d-flex my-5 justify-content-center">
+                <div class="">
+                    <div class="d-flex justify-content-center">
                         <div class="col-12">
                             <form class="card" id="catatanPost" action="{{ route('catatan.store') }}" method="POST"
                                 enctype="multipart/form-data">
@@ -99,21 +99,21 @@
             </div>
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
                 tabindex="0">
-                <div class="card">
+                <div class="">
                     {{-- Table Content --}}
-                    <div class="container-fluid d-flex my-5 justify-content-center">
+                    <div class="d-flex justify-content-center">
                         <div class="col-12">
                             <div class="card">
                                 <h5 class="card-header">Histori Catatan</h5>
-                                <div class="card-datatable table-responsive">
+                                <div class="container card-datatable table-responsive">
                                     <table id="jstabel" class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>no.</th>
-                                                <th>judul</th>
-                                                <th>Tanggal</th>
-                                                <th>jenis catatan</th>
-                                                <th>Aksi</th>
+                                        <thead class="bg-primary">
+                                            <tr class="text-white">
+                                                <th class="text-white">no.</th>
+                                                <th class="text-white">judul</th>
+                                                <th class="text-white">Tanggal</th>
+                                                <th class="text-white">jenis catatan</th>
+                                                <th class="text-white">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody class="table-border-bottom-0">

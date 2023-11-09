@@ -194,47 +194,10 @@
         });
     </script>
 
-    {{-- Modal Ajukan presentasi --}}
-
-    <div class="modal fade" id="ajukanPresentasi" tabindex="-1" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel1">Ajukan Presentasi</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('ajukan-presentasi', $tim->code) }}" method="post" id="formAjukanPresentasi">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col mb-3">
-                                <label for="judul" class="form-label">Judul Presentasi</label>
-                                <input type="text" id="judul" name="judul" class="form-control"
-                                    placeholder="Masukan Judul Presentasi">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <label for="deskripsi" class="form-label">Deskripsi Presentasi</label>
-                                <textarea name="deskripsi" id="deskripsi" cols="20" rows="10" class="form-control" style="resize: none"
-                                    placeholder="Isi deskripsi pengajuan anda"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-label-secondary waves-effect"
-                            data-bs-dismiss="modal">Kembali</button>
-                        <button type="submit"class="btn btn-primary waves-effect waves-light">Ajukan</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEnd" aria-labelledby="offcanvasEndLabel">
         <div class="offcanvas-header">
             <h5 id="offcanvasEndLabel" class="offcanvas-title">Statistik Project</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                aria-label="Close"></button>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body my-auto mx-0 flex-grow-0">
 
@@ -612,29 +575,18 @@
                         </a>
                     </li>
                     <li class="menu-item @if ($title == 'catatan') active @endif">
-                        <a href="{{ route('tim.catatan', $tim->code) }}" class="menu-link">
+                        <a href="{{ route('tim.catatan', $tim->code) }}"
+                            class="menu-link d-flex align-items-center gap-2">
                             <i class="menu-icon tf-icons ti ti-clipboard-text"></i>
-                            <div>Buat Catatan</div>
+                            <div class="w-100 d-flex align-items-center justify-content-between">Catatan</div>
                         </a>
                     </li>
-                    <li class="menu-item @if ($title == 'Tim/presentasi') open @endif">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle d-flex align-items-center gap-2">
+                    <li class="menu-item @if ($title == 'Tim/presentasi') active @endif ">
+                        <a href="{{ route('tim.historyPresentasi', $tim->code) }}"
+                            class="menu-link d-flex align-items-center gap-2">
                             <i class="menu-icon tf-icons ti ti-presentation"></i>
-                            <div>Presentasi</div>
+                            <div class="w-100 d-flex align-items-center justify-content-between">Presentasi</div>
                         </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a data-bs-toggle="modal" data-bs-target="#ajukanPresentasi"
-                                    class="menu-link cursor-pointer">
-                                    <div>Atur Presentasi</div>
-                                </a>
-                            </li>
-                            <li class="menu-item @if ($title == 'Tim/presentasi') active @endif ">
-                                <a href="{{ route('tim.historyPresentasi', $tim->code) }}" class="menu-link">
-                                    <div>History Presentasi</div>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
                     <li class="menu-item @if ($title == 'Tim/project') active @endif ">
                         <a href="{{ route('tim.project', $tim->code) }}"
