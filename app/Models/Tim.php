@@ -40,7 +40,7 @@ class Tim extends Model
 
     public function presentasiSelesai(): HasMany
     {
-        return $this->hasMany(Presentasi::class)->where('status_presentasi','selesai');
+        return $this->hasMany(Presentasi::class)->where('status_presentasi','selesai')->latest();
     }
 
     public function tema(): HasMany

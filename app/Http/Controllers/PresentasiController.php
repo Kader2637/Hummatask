@@ -15,6 +15,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use PhpParser\Node\Stmt\Foreach_;
 use Psy\VarDumper\Presenter;
 
 class PresentasiController extends Controller
@@ -104,6 +105,10 @@ class PresentasiController extends Controller
         $presentasi->save();
         return response()->json([
             "presentasi" => $presentasi,
+            "totalPresentasi" => $presentasi->where('status_presentasi','selesai')->count(),
+            "presentasiDitolak" => $presentasi->where('status_pengajuan','ditolak')->count(),
+            "revisiSelesai" => $presentasi->where('status_revisi','selesai')->count(),
+            "revisiTidakSelesai" => $presentasi->where('status_revisi','tidak_selesai')->count(),
             "codeHistory" => $presentasi->historyPresentasi->code,
         ]);
     }
@@ -111,7 +116,7 @@ class PresentasiController extends Controller
     protected function penolakanPresentasi(RequestPenolakanPresentasi $request, $code)
     {
 
-        if($request->feedback === null){
+        if($request->alasan === null){
             return  response()->json(["error"=>"Alasan penolakan tidak boleh kosong"]);
         }
 
@@ -138,6 +143,11 @@ class PresentasiController extends Controller
 
 
         $presentasi = Presentasi::where('code',$code)->first();
+
+        $validasiKonfirm = Presentasi::where('urutan',(($presentasi->urutan )- 1))->where('jadwal',Carbon::now()->isoFormat('Y-M-DD'))->where('status_presentasi','menunggu')->first();
+        if($validasiKonfirm){
+            return response()->json(["error"=> "Urutan Sebelumnya belum dikonfirmasi"]);
+        }
         $presentasi->status_presentasi = $request->persetujuan;
         $presentasi->status_revisi = $request->status_revisi;
         $presentasi->feedback = $request->feedback;
@@ -161,7 +171,7 @@ class PresentasiController extends Controller
         $history = HistoryPresentasi::with(['presentasi.tim.user','presentasi.tim.project.tema'])->where('code',$code)->first();
         $presentasi = $history->presentasi->where('status_pengajuan','menunggu');
         $judulModal = Carbon::now()->isoFormat('DD MMMM YYYY');
-        $konfirmasi_presentasi = Presentasi::with(['tim.user','tim.project.tema'])->where('history_presentasi_id',$history->id)->where('status_presentasi', 'menunggu')
+        $konfirmasi_presentasi = Presentasi::with(['tim.user','tim.project.tema','tim.presentasi'])->where('history_presentasi_id',$history->id)->where('status_presentasi', 'menunggu')
         ->where('status_pengajuan', 'disetujui')
         ->whereDate('jadwal', Carbon::now()->format('Y-m-d'))
         ->orderBy('urutan', 'asc')
@@ -180,9 +190,9 @@ class PresentasiController extends Controller
         foreach ($konfirmasi_presentasi as $data) {
             $konfirmasi_presentasi_date[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
             $totalPresentasi[] = $data->tim->presentasiSelesai->count();
-            $totalPresentasiDitolak[] = $data->where('status_pengajuan','ditolak')->get()->count();
-            $revisiSelesai[] = $data->where('status_revisi','selesai')->count();
-            $revisiTidakSelesai[] = $data->where('status_revisi','tidak_selesai')->count();
+            $totalPresentasiDitolak[] = $data->tim->presentasi->where('status_pengajuan','ditolak')->count();
+            $revisiSelesai[] = $data->tim->presentasi->where('status_revisi','selesai')->count();
+            $revisiTidakSelesai[] = $data->tim->presentasi->where('status_revisi','tidak_selesai')->count();
             $deadline[] = Carbon::parse($data->tim->project[0]->deadline)->isoFormat('DD MMMM YYYY');
             $dataPresentasiTim[] = $data->tim->presentasi;
         }
@@ -222,12 +232,20 @@ class PresentasiController extends Controller
             ->orderBy('urutan', 'asc')
             ->get();
 
+
+
             if ( !(is_numeric($request->urutanTergantikan) && ctype_digit($request->urutanTergantikan))) {
                 return response()->json(['error'=>'Kamu memasukan urutan yang bukan bernilai integer']);
             }
 
 
-            if($request->urutanTergantikan > $presentasi->count()){
+            $validasi = Presentasi::where('status_presentasi','selesai')->where('jadwal',Carbon::now()->isoFormat('Y-M-DD'))->where('urutan',$request->urutanTergantikan)->first();
+            if(isset($validasi)){
+                return response()->json(['error'=>'kamu memasukan urutan yang sudah dikonfirmasi']);
+            }
+
+
+            if($request->urutanTergantikan > $presentasi->last()->urutan){
                 return response()->json(['error'=>'kamu memasukan urutan yang lebih besar dari data']);
             }
 
@@ -265,9 +283,13 @@ class PresentasiController extends Controller
             }
 
 
-            $history = HistoryPresentasi::with(['presentasi.tim.user','presentasi.tim.project.tema'])-> where('code',$request->codeHistory)->first();
-        $urutanPresentasi = $history->presentasi->where('status_presentasi','menunggu')->where('status_pengajuan','disetujui')->where('jadwal',Carbon::now()->isoFormat('Y-M-DD'));
-        return response()->json($urutanPresentasi);
+            $history = HistoryPresentasi::with(['presentasi.tim.user','presentasi.tim.project.tema','presentasi.tim.presentasiSelesai'])-> where('code',$request->codeHistory)->first();
+        $urutanPresentasi = $history->presentasi->where('status_presentasi','menunggu')->where('jadwal',Carbon::now()->isoFormat('Y-M-DD'));
+        $data = [
+            "presentasi" => $urutanPresentasi->where('status_pengajuan','disetujui'),
+            "presentasiDitolak" => $urutanPresentasi->where('status_presentasi','ditolak'),
+        ];
+        return response()->json($data);
 
         } catch (Exception $th) {
 
@@ -280,16 +302,34 @@ class PresentasiController extends Controller
 
     protected function ambilUrutan($codeHistory)
     {
-        $history = HistoryPresentasi::with(['presentasi.tim.user','presentasi.tim.project.tema'])->where('code',$codeHistory)->first();
+        $history = HistoryPresentasi::with(['presentasi.tim.user','presentasi.tim.project.tema','presentasi.tim.presentasiSelesai'])->where('code',$codeHistory)->first();
 
 
-        $urutanPresentasi = Presentasi::with(['tim.user','tim.project.tema'])->where('history_presentasi_id',$history->id)->where('status_presentasi', 'menunggu')
-        ->where('status_pengajuan', 'disetujui')
+        $urutanPresentasi = Presentasi::with(['tim.user','tim.project.tema','tim.presentasi'])->where('history_presentasi_id',$history->id)->where('status_presentasi', 'menunggu')
         ->whereDate('jadwal', Carbon::now()->format('Y-m-d'))
         ->orderBy('urutan', 'asc')
         ->get();
 
-    return response()->json($urutanPresentasi);
+        $totalPresentasiDitolak=[];
+        $totalRevisiSelesai=[];
+        $totalRevisiTidakSelesai = [];
+        $totalPresentasiSelesai = [];
+
+        foreach ($urutanPresentasi as $data) {
+            $totalPresentasiDitolak[] = $data->tim->presentasi->where('status_pengajuan','ditolak')->count();
+            $totalRevisiSelesai[] = $data->tim->presentasi->where('status_revisi','selesai')->count();
+            $totalRevisiTidakSelesai[] = $data->tim->presentasi->where('status_revisi','tidak_selesai')->count();
+            $totalPresentasiSelesai[] = $data->tim->presentasiSelesai->count();
+        }
+
+         return response()->json([
+            "presentasi" => $urutanPresentasi->where('status_pengajuan','disetujui'),
+            "presentasiDitolak" => $totalPresentasiDitolak,
+            "revisiSelesai" => $totalRevisiSelesai,
+            "revisiTidakSelesai" => $totalRevisiTidakSelesai,
+            "presentasiSelesai" => $totalPresentasiSelesai,
+
+        ]);
     }
 
     protected function ambilDetailHistoryPresentasi($codeHistory,$codeTim)
@@ -305,8 +345,8 @@ class PresentasiController extends Controller
         }
 
         return response()->json([
-            "presentasi" =>[ $history->presentasi->where('status_pengajuan','disetujui')->where('status_presentasi','selesai'), $waktu],
-            "tim"     => $tim,
+            "presentasi" =>[ $tim->presentasiSelesai , $waktu],
+            "tim"     => $tim,    
             "presentaseRevisi" => $presentaseRevisi,
         ]);
 
