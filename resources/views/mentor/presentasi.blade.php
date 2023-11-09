@@ -325,7 +325,7 @@
                                 </div>
                                 <div class="card">
                                     <div class="card-header">
-                                        <div class="table-responsive text-nowrap">
+                                        <div class="table text-nowrap">
                                             <table id="jstabel3" class="table">
                                                 <div class="">
                                                     <thead>
@@ -560,7 +560,7 @@
 
 
                         div.id = "card-konfirmasi-" + presentasi.code;
-                        div.className = "col-md-6 col-lg-4";
+                        div.className = "col-md-3 col-lg-3";
                         let childrend =
                             `
                             <div class="card text-center mb-3">
@@ -1102,7 +1102,7 @@
             })
 
 
-        }
+        };
 
 
 

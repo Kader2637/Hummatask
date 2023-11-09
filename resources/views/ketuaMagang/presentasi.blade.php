@@ -3,6 +3,20 @@
 @section('style')
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/flatpickr/flatpickr.css') }}" />
+
+
+    <style>
+
+        @media screen and (max-width:768px){
+            .nav-item{
+                font-size : 10px;
+            }
+
+
+        }
+
+    </style>
+
 @endsection
 
 @section('content')
@@ -40,6 +54,88 @@
             </div>
         </div>
     </div>
+
+    {{-- modal detail presentasi tim --}}
+    <div class="modal fade" id="detailTim" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel3">History Presentasi Tim</h5>
+              <button type="button" class="btn-close" data-bs-toggle="modal" data-bs-target="#detailPresentasi" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <h6 style="font-size: 15px;">Statistik Tim</h6>
+                        <div class="row gap-2 mt-2">
+                            <div class="col-12">
+                                <div class="card h-100">
+                                    <div class="card-body d-flex justify-content-between align-items-center">
+                                      <div class="card-title mb-0">
+                                        <h5 id="persentasiRevisiSelesai" class="mb-0 me-2"></h5>
+                                        <small>Keberhasilan dalam mengerjakan revisi</small>
+                                      </div>
+                                      <div class="card-icon">
+                                        <span class="badge bg-label-primary rounded-pill p-2">
+                                          <i class="ti ti-cpu ti-sm"></i>
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="card h-100">
+                                    <div class="card-body d-flex justify-content-between align-items-center">
+                                      <div class="card-title mb-0">
+                                        <h5 class="mb-0 me-2" id="historyTotalPresentasi">3</h5>
+                                        <small>Total Presentasi</small>
+                                      </div>
+                                      <div class="card-icon">
+                                        <span class="badge bg-label-success rounded-pill p-2">
+                                          <i class="ti ti-server ti-sm"></i>
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </div>
+                            <div class="col-12">
+                                    <div class="card h-100">
+                                      <div class="card-body d-flex justify-content-between align-items-center">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <img class="rounded-circle" style="width:50px; height:50px;" src="{{ asset('assets/img/avatars/10.png') }}" alt="">
+                                            </div>
+                                            <div class="col-8">
+                                                <p class="m-0 text-secondary" id="history-ketua-tim"></p>
+                                                <span class="badge bg-label-primary">Ketua Tim</span>
+                                            </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 mt-5  mt-lg-0">
+                        <h6 style="font-size: 15px;" >History Presentasi</h6>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="demo-inline-spacing mt-3">
+                                  <div id="list-group" class="list-group">
+
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-label-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#detailPresentasi">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    {{-- modal detail presentasi tim --}}
 
 
     {{-- Modal Selesai Project --}}
@@ -121,18 +217,18 @@
 
 
     <div class="modal fade" id="detailPresentasi" tabindex="-1" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="container-fluid mt-3">
-                        <h5>Presentasi</h5>
+                    <div class="container mt-3">
+                        <h5 id="judulModal"></h5>
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="nav-align-top d-flex justify-between">
                                             <div class="nav nav-pills d-flex justify-content-between row" role="tablist">
-                                                <div class="nav-item col-lg-3 col-md-6" role="presentation">
+                                                <div class="nav-item col-lg-3 col-md-3" role="presentation">
                                                     <button type="button" class="nav-link active" role="tab"
                                                         data-bs-toggle="tab" data-bs-target="#navs-pills-top-home"
                                                         aria-controls="navs-pills-top-home" data-bs-toggle="popover"
@@ -140,14 +236,14 @@
                                                         aria-selected="true"><i
                                                             class="ti ti-news me-2"></i>Pengajuan</button>
                                                 </div>
-                                                <div class="nav-item col-lg-3 col-md-6" role="presentation">
+                                                <div class="nav-item col-lg-3 col-md-3" role="presentation">
                                                     <button type="button" class="nav-link" role="tab"
                                                         data-bs-toggle="tab" data-bs-target="#navs-pills-top-profile"
                                                         aria-controls="navs-pills-top-profile" aria-selected="false"
                                                         tabindex="-1"><i
                                                             class="ti ti-presentation-analytics me-2"></i>Presentasi</button>
                                                 </div>
-                                                <div class="nav-item col-lg-3 col-md-6" role="presentation">
+                                                <div class="nav-item col-lg-3 col-md-3" role="presentation">
                                                     <button type="button" class="nav-link" role="tab"
                                                         data-bs-toggle="tab" data-bs-target="#navs-pills-top-baru"
                                                         aria-controls="navs-pills-top-profile" aria-selected="false"
@@ -155,13 +251,7 @@
                                                             class="ti ti-adjustments-horizontal me-2"></i>Belum
                                                         Presentasi</button>
                                                 </div>
-                                                <div class="nav-item col-lg-3 col-md-6" role="presentation">
-                                                    <button type="button" class="nav-link" role="tab"
-                                                        data-bs-toggle="tab" data-bs-target="#navs-pills-top-start"
-                                                        aria-controls="navs-pills-top-profile" aria-selected="false"
-                                                        tabindex="-1"><i
-                                                            class="ti ti-clock-exclamation me-2"></i>Telat</button>
-                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -174,6 +264,18 @@
                                     <div class="">
                                         <div class="table-responsive text-nowrap">
                                             <div class="container">
+                                                <div class="row">
+                                                    <div class="alert alert-secondary alert-dismissible d-flex align-items-baseline" role="alert">
+                                                        <span class="alert-icon alert-icon-lg text-secondary me-2">
+                                                          <i class="ti ti-bookmark ti-sm"></i>
+                                                        </span>
+                                                        <div class="d-flex flex-column ps-1">
+                                                          <h5 class="alert-heading mb-2">Tab Pengajuan Presentasi</h5>
+                                                          <p class="mb-0">Tab pengajuan presentasi berisi data data pengajuan presentasi dari siswa magang</p>
+                                                          </button>
+                                                        </div>
+                                                      </div>
+                                                </div>
                                                 <div class="row" id="row-persetujuan">
 
                                                 </div>
@@ -183,6 +285,20 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="navs-pills-top-profile" role="tabpanel">
+                                <div class="container">
+                                    <div class="row mb-3">
+                                        <div class="alert alert-secondary alert-dismissible d-flex align-items-baseline" role="alert">
+                                            <span class="alert-icon alert-icon-lg text-secondary me-2">
+                                              <i class="ti ti-bookmark ti-sm"></i>
+                                            </span>
+                                            <div class="d-flex flex-column ps-1">
+                                              <h5 class="alert-heading mb-2">Tab Presentasi</h5>
+                                              <p class="mb-0">Tab presentasi berisi data data presentasi yang sudah dikonfirmasi. Tab presentasi juga berisi data data tentang tim yang mengajukan presentasi, kamu dapat menghover kearah icon untuk mengetahui penjelasan data tersebut</p>
+                                              </button>
+                                            </div>
+                                          </div>
+                                    </div>
+                                </div>
                                 <div class="row" id="row-konfirmasi">
 
 
@@ -193,9 +309,23 @@
 
 
                             <div class="tab-pane fade" id="navs-pills-top-baru" role="tabpanel">
+                                <div class="container">
+                                    <div class="row mb-3">
+                                        <div class="alert alert-secondary alert-dismissible d-flex align-items-baseline" role="alert">
+                                            <span class="alert-icon alert-icon-lg text-secondary me-2">
+                                              <i class="ti ti-bookmark ti-sm"></i>
+                                            </span>
+                                            <div class="d-flex flex-column ps-1">
+                                              <h5 class="alert-heading mb-2">Tab Belum Presentasi</h5>
+                                              <p class="mb-0">Tab Belum presentasi berisi data data tim dalam seminggu yang belum mengajukan presentasi</p>
+                                              </button>
+                                            </div>
+                                          </div>
+                                    </div>
+                                </div>
                                 <div class="card">
                                     <div class="card-header">
-                                        <div class="table-responsive text-nowrap">
+                                        <div class="table text-nowrap">
                                             <table id="jstabel3" class="table">
                                                 <div class="">
                                                     <thead>
@@ -219,40 +349,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="navs-pills-top-start" role="tabpanel">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <div class="table-responsive text-nowrap">
-                                            <table id="jstabel4" class="table">
-                                                <div class="">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>No</th>
-                                                            <th>Nama</th>
-                                                            <th>Tanggal</th>
-                                                            <th>Hari</th>
-                                                            <th>Project</th>
-                                                            <th>Tema</th>
-                                                        </tr>
-                                                    </thead>
-                                                    @php
-                                                        $no = 1;
-                                                    @endphp
-                                                    <tbody id="row-telat">
-
-                                                    </tbody>
-                                                </div>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" data-bs-dismiss="modal" class="btn btn-danger waves-effect">Close</button>
-                </div>
+
+                    <button type="button" data-bs-dismiss="modal" class="btn btn-danger waves-effect position-absolute rounded-circle" style="top: -10px; right: -10px; width:40px; height:40px;">X</button>
+
             </div>
         </div>
     </div>
@@ -287,12 +389,13 @@
                         </div>
                     </div>
                 </div>
-
             @empty
+
             @endforelse
         </div>
     </div>
 @endsection
+
 
 @section('script')
     <script src="{{ asset('assets/js/forms-selects.js') }}"></script>
@@ -309,7 +412,71 @@
     <script src="{{ asset('assets/js/forms-selects.js') }}"></script>
     <script src="{{ asset('assets/js/forms-tagify.js') }}"></script>
     <script src="{{ asset('assets/js/forms-typeahead.js') }}"></script>
+    <script src="{{ asset('utils/Kategory.js') }}" ></script>
     <script>
+
+        const tampilDetailTim = (codeTim,codeHistory) =>{
+            document.getElementById('list-group').innerHTML=""
+            axios.get('ketua/ambil-detail-history-presentasi/'+codeHistory+'/'+codeTim )
+            .then((res) => {
+                const history = res.data.history;
+                const tim = res.data.tim;
+                const presentasi = res.data.presentasi;
+                const presentaseRevisi = res.data.presentaseRevisi;
+
+
+                $('#persentasiRevisiSelesai').text(`${(presentaseRevisi).toFixed(2)}%`)
+                $('#historyTotalPresentasi').text(`${presentasi[0].length}`)
+                $('#history-ketua-tim').text(`${tim.ketua_tim[0].username}`)
+
+                const kosong = (presentasi[0].length === 0 ? true : false);
+                console.log(kosong);
+                presentasi[0].forEach((data,i) => {
+
+                    let waktu = presentasi[1][i]
+                    const div = document.createElement('div')
+                    let children;
+
+
+                    if (kosong) {
+                            children = `
+                                <h1>Belum pernah presentasi</h1>
+                            `;
+                            console.log("kosong");
+                        } else {
+                            console.log("ada");
+                            children = `
+                                ${(data === presentasi[0][0]
+                                    ? '<a href="javascript:void(0);" class="list-group-item list-group-item-action flex-column align-items-start active">'
+                                    : ''
+                                )}
+                                <a class="list-group-item list-group-item-action flex-column align-items-start ${(data === presentasi[0][0] ? 'active' : '' )}">
+                                    <div class="d-flex justify-content-between w-100">
+                                        <h5 class="mb-1">${data.judul}</h5>
+                                        <small class="text-muted">${waktu} hari lalu</small>
+                                    </div>
+                                    <p class="mb-1">${data.deskripsi}</p>
+                                    <small class="text-muted">Donec id elit non mi porta.</small>
+                                </a>
+                            `;
+                        }
+
+
+
+                    div.innerHTML = children
+                    document.getElementById('list-group').appendChild(div);
+
+                });
+
+
+                // document.getElementById('list-group').innerHTML=""
+
+
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+        }
 
         const aturUrutan = (code,codeHistory) =>{
 
@@ -319,10 +486,11 @@
 
                 axios.get('ketua/ambil-urutan/'+codeHistory)
                 .then((res) => {
-                    const data = res.data;
+                    const data = res.data.presentasi;
                     console.log(data);
                     document.getElementById('select2Basic').innerHTML = "";
-                    data.forEach(presentasi => {
+                     Object.keys(data).forEach(key => {
+                        let presentasi = data[key]
                         let option = document.createElement('option')
                         option.textContent = "Urutan ke-"+presentasi.urutan;
                         option.value = presentasi.urutan;
@@ -337,7 +505,7 @@
                             title: 'Error',
                             text: "404 Route tidak ditemukan"
                         });
-                        console.log("weeee");
+                    console.log(err);
                 })
 
 
@@ -352,19 +520,17 @@
             const urutanTergantikan = document.getElementById("select2Basic").value;
             console.log( typeof urutanTergantikan);
 
-
-
-
-
                 axios.put('ketua/atur-urutan/'+code,{urutanTergantikan,codeHistory})
                 .then((res) => {
+
                 document.getElementById('row-konfirmasi').innerHTML = "";
                 axios.get('ketua/ambil-urutan/'+codeHistory)
                 .then((resNew) => {
 
-                    const data = resNew.data
-                    console.log(data);
-                    console.log(res.data);
+                    const data = resNew.data;
+                    const presentasi = data.presentasi;
+                    console.log(resNew.data);
+
 
                     if (res.data.success) {
                         Swal.fire({
@@ -383,29 +549,64 @@
 
 
 
-                    data.forEach(presentasi => {
+                    presentasi.forEach((presentasi,i) => {
+                        const kategory = handleKategory(presentasi.tim.status_tim)
+                        const presentasiDitolak = data.presentasiDitolak[i];
+                        const revisiSelesai = data.revisiSelesai[i];
+                        const revisiTidakSelesai = data.revisiTidakSelesai[i];
+                        const presentasiSelesai = data.presentasiSelesai[i];
+
                         let div = document.createElement('div')
+
+
                         div.id = "card-konfirmasi-" + presentasi.code;
-                        div.className = "col-md-6 col-lg-4";
+                        div.className = "col-md-3 col-lg-3";
                         let childrend =
                             `
-                    <div class="card text-center mb-3">
-                                    <div class="card-body">
-                                        <div style="width: 30px; height: 30px; top: -10px; right: -10px;" class="rounded bg-primary d-flex justify-content-center align-items-center text-white position-absolute">
-                                          ${presentasi.urutan}
-                                        </div>
-                                        <img src="{{ asset('storage/${presentasi.tim.logo}') }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 150px; height: 150px; object-fit: cover; ">
-                                        <div class="d-flex justify-content-center align-items-center gap-2">
-                                            <h4 class="card-title text-capitalize">${presentasi.tim.nama}</h4>
-                                        <a href="#"><span class="badge bg-label-warning mb-3">${presentasi.tim.status_tim}</span></a>
-                                        </div>
-                                        <div class="card-text">${presentasi.jadwal}</div>
-                                       <div class="d-flex justify-content-center gap-2">
-                                             <button class="btn btn-primary" onclick="aturUrutan('${presentasi.code}','${codeHistory}')" data-bs-toggle="modal" id="btnUrutan" data-bs-target="#aturUrutan" >Urutan</button>
-                                             <button class="btn btn-success" onclick="sudahPresentasi('${presentasi.code}')" data-bs-toggle="modal" data-bs-target="#Finish" >Konfirmasi</button>
-                                       </div>
-                                    </div>
+                            <div class="card text-center mb-3">
+                            <div class="card-body">
+                                <div style="width: 30px; height: 30px; top: -10px;left : -10px;" class="rounded bg-primary d-flex justify-content-center align-items-center text-white position-absolute">
+                                    ${presentasi.urutan}
                                 </div>
+                                <img src="{{ asset('storage/${presentasi.tim.logo}') }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 100px; height: 100px; object-fit: cover; ">
+                                <div class="d-flex justify-content-center align-items-center gap-2 flex-column flex-wrap">
+                                    <h4 class="card-title text-capitalize text-secondary mb-0">${presentasi.tim.nama}</h4>
+                                    <div class="d-flex flex-column gap-2">
+                                    <span class="badge bg-label-warning d-flex align-items-center justify-content-center flex-column" style="" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Status Tim"    >${kategory}</span>
+
+                                    </div>
+                                    <div class="d-flex justify-content-around align-items-center w-100 mb-2 gap-2">
+                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data pengajuan presentasi yang selesai"    class="badge bg-label-success">
+                                            <i class="fas fa-chalkboard"></i>
+                                            ${presentasiSelesai}
+                                        </span>
+                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data pengajuan presentasi yang ditolak"    class="badge bg-label-danger">
+                                            <i class="fas fa-chalkboard"></i>
+                                            ${presentasiDitolak}
+                                        </span>
+                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data Revisi yang selesai"      class="badge bg-label-success">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            ${revisiSelesai}
+                                        </span>
+                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data Revisi yang tidak selesai"   class="badge bg-label-danger ">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            ${revisiTidakSelesai}
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex justify-content-center gap-2 align-items-center">
+                                        <button onclick="tampilDetailTim('${presentasi.tim.code}','${codeHistory}')"  data-bs-toggle="modal" data-bs-target="#detailTim" class="btn btn-outline-warning d-flex justify-content-center align-items-center p-3 btn-detail-tim" style="font-size:15px; width:20px;height:20px;">
+                                            <i class="fas fa-info-circle"></i>
+                                        </button>
+                                        <button class="border-0 bg-transparent text-white bg-primary p-3 d-flex justify-content-center align-items-center rounded" style="font-size:20px;width:20px;height:20px;" onclick="aturUrutan('${presentasi.code}','${codeHistory}')" data-bs-toggle="modal" id="btnUrutan" data-bs-target="#aturUrutan" >
+                                            <i class="fas fa-list-ol"></i>
+                                        </button>
+                                        <button class="btn btn-success" onclick="sudahPresentasi('${presentasi.code}')"  data-bs-toggle="modal" data-bs-target="#Finish" >Konfirmasi</button>
+                                </div>
+                            </div>
+                    </div>
                     `
                         div.innerHTML = childrend
                         document.getElementById('row-konfirmasi').appendChild(div)
@@ -413,6 +614,10 @@
                     });
 
 
+                })
+
+                .catch((err) => {
+                    console.log(err);
                 })
 
             })
@@ -427,7 +632,8 @@
             })
         }
 
-        const tampilkanDetail = (code) => {
+        const tampilkanDetail = (code) =>
+        {
             axios.post('ketua/tampil-detail-presentasi/' + code)
                 .then((res) => {
                     let data1 = res.data.presentasi;
@@ -436,9 +642,10 @@
                     let data4 = res.data.telat_presentasi;
                     let codeHistory =  res.data.codeHistory
 
-                    console.log(data1);
+                    $('#judulModal').text(`Presentasi / ${res.data.judulModal}`)
 
-                    // console.log(Object.keys(data2));
+
+
 
                     document.getElementById('row-persetujuan').innerHTML = ''
 
@@ -473,9 +680,9 @@
                    <div class="card text-center mb-3">
                         <div class="card-body">
                             <img src="{{ asset('storage/${presentasi.tim.logo}') }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 150px; height: 150px; object-fit: cover; ">
-                            <div class="d-flex justify-content-center align-items-center gap-2">
+                            <div class="d-flex justify-content-center align-items-center gap-2 flex-column">
                                 <h4 class="card-title text-capitalize">${presentasi.tim.nama}</h4>
-                                <a href="#"><span class="badge bg-label-warning mb-3">solo</span></a>
+                                <a href="#"><span class="badge bg-label-warning mb-3">${presentasi.status_tim}</span></a>
                             </div>
                             <p class="card-text">${presentasi.jadwal}</p>
 
@@ -493,8 +700,9 @@
 
                     }
 
+                    console.log(data2)
 
-                    if( data2.length == 0 ){
+                    if( data2[0].length == 0 ){
 
                         let div = document.createElement('div')
                         div.className = "container"
@@ -518,38 +726,87 @@
 
 
                     document.getElementById('row-konfirmasi').innerHTML = "";
-                    Object.keys(data2).forEach((key) => {
-                        let presentasi = data2[key]
+                    Object.keys(data2[0]).forEach((key) => {
+                        let presentasi = data2[0][key]
+                        let presentasi_date = data2[1][key]
+                        let totalPresentasi = data2[2][key]
+                        let presentasiDitolak = data2[3][key]
+                        let revisiSelesai = data2[4][key]
+                        let revisiTidakSelesai = data2[5][key]
+                        let deadline = data2[6][key]
+                        let dataPresentasiTim = data2[7][key]
+
+                        let kategoryTim;
+                        if(presentasi.tim.status_tim === "solo"){
+                            kategoryTim = "Solo Project"
+                        }
+                        if(presentasi.tim.status_tim === "pre_mini"){
+                            kategoryTim = "Pre Mini Project"
+                        }
+                        if(presentasi.tim.status_tim === "mini"){
+                            kategoryTim = "Mini Project"
+                        }
+                        if(presentasi.tim.status_tim === "big"){
+                            kategoryTim = "Big Project"
+                        }
+
                         let div = document.createElement('div')
                         div.id = "card-konfirmasi-" + presentasi.code;
-                        div.className = "col-md-6 col-lg-4";
+                        div.className = "col-md-6 col-lg-3";
+
                         let childrend =
                             `
                     <div class="card text-center mb-3">
-                                    <div class="card-body">
-                                        <div style="width: 30px; height: 30px; top: -10px; right: -10px;" class="rounded bg-primary d-flex justify-content-center align-items-center text-white position-absolute">
-                                          ${presentasi.urutan}
-                                        </div>
-                                        <img src="{{ asset('storage/${presentasi.tim.logo}') }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 150px; height: 150px; object-fit: cover; ">
-                                        <div class="d-flex justify-content-center align-items-center gap-2">
-                                            <h4 class="card-title text-capitalize">${presentasi.tim.nama}</h4>
-                                        <a href="#"><span class="badge bg-label-warning mb-3">${presentasi.tim.status_tim}</span></a>
-                                        </div>
-                                        <div class="card-text">${presentasi.jadwal}</div>
-                                       <div class="d-flex justify-content-center gap-2">
-                                             <button class="btn btn-primary" onclick="aturUrutan('${presentasi.code}','${codeHistory}')" data-bs-toggle="modal" id="btnUrutan" data-bs-target="#aturUrutan" >Urutan</button>
-                                             <button class="btn btn-success" onclick="sudahPresentasi('${presentasi.code}')" data-bs-toggle="modal" data-bs-target="#Finish" >Konfirmasi</button>
-                                       </div>
-                                    </div>
+                            <div class="card-body">
+                                <div style="width: 30px; height: 30px; top: -10px;left : -10px;" class="rounded bg-primary d-flex justify-content-center align-items-center text-white position-absolute">
+                                    ${presentasi.urutan}
                                 </div>
+                                <img src="{{ asset('storage/${presentasi.tim.logo}') }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 100px; height: 100px; object-fit: cover; ">
+                                <div class="d-flex justify-content-center align-items-center gap-2 flex-column flex-wrap">
+                                    <h4 class="card-title text-capitalize text-secondary mb-0">${presentasi.tim.nama}</h4>
+                                    <div class="d-flex flex-column gap-2">
+                                    <span class="badge bg-label-warning d-flex align-items-center justify-content-center flex-column" style="" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Status Tim"    >${kategoryTim}</span>
+
+                                    </div>
+                                    <div class="d-flex justify-content-around align-items-center w-100 mb-2 gap-2">
+                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data pengajuan presentasi yang selesai"    class="badge bg-label-success">
+                                            <i class="fas fa-chalkboard"></i>
+                                            ${totalPresentasi}
+                                        </span>
+                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data pengajuan presentasi yang ditolak"    class="badge bg-label-danger">
+                                            <i class="fas fa-chalkboard"></i>
+                                            ${presentasiDitolak}
+                                        </span>
+                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data Revisi yang selesai"      class="badge bg-label-success">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            ${revisiSelesai}
+                                        </span>
+                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data Revisi yang tidak selesai"   class="badge bg-label-danger ">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            ${revisiTidakSelesai}
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex justify-content-center gap-2 align-items-center">
+                                        <button onclick="tampilDetailTim('${presentasi.tim.code}','${codeHistory}')"  data-bs-toggle="modal" data-bs-target="#detailTim" class="btn btn-outline-warning d-flex justify-content-center align-items-center p-3 btn-detail-tim" style="font-size:15px; width:20px;height:20px;">
+                                            <i class="fas fa-info-circle"></i>
+                                        </button>
+                                        <button class="border-0 bg-transparent text-white bg-primary p-3 d-flex justify-content-center align-items-center rounded" style="font-size:20px;width:20px;height:20px;" onclick="aturUrutan('${presentasi.code}','${codeHistory}')" data-bs-toggle="modal" id="btnUrutan" data-bs-target="#aturUrutan" >
+                                            <i class="fas fa-list-ol"></i>
+                                        </button>
+                                        <button class="btn btn-success" onclick="sudahPresentasi('${presentasi.code}')"  data-bs-toggle="modal" data-bs-target="#Finish" >Konfirmasi</button>
+                                </div>
+                            </div>
+                    </div>
                     `
                         div.innerHTML = childrend
                         document.getElementById('row-konfirmasi').appendChild(div)
                     })
-
-
-
                     }
+
+                    // console.log(res.data)
 
 
                     document.getElementById('tr-belum-presentasi').innerHTML = ""
@@ -657,13 +914,12 @@
                 })
         }
 
-
-
         const tolakPresentasi = (code) => {
             const form = document.getElementById("tolakPresentasiForm")
             form.addEventListener("submit", function(e) {
-                const alasan = document.getElementById('alasan').value
                 e.preventDefault();
+                let alasan = $('#alasan').val()
+                console.log(alasan);
 
                 axios.put('ketua/penolakan-presentasi/' + code, {
                         alasan
@@ -702,35 +958,67 @@
                 .then((res) => {
                     document.getElementById('card-persetujuan-' + code).classList.add('d-none');
 
-                    const newData = res.data.presentasi;
+                    const presentasi = res.data.presentasi;
+                    const totalPresentasi = res.data.totalPresentasi;
+                    const presentasiDitolak = res.data.presentasiDitolak;
+                    const revisiSelesai = res.data.revisiSelesai;
+                    const revisiTidakSelesai = res.data.revisiTidakSelesai;
                     const codeHistory = res.data.codeHistory;
-                    console.log(
-                        res.data.codeHistory
-                    );
+                    const kategoryTim = handleKategory(presentasi.tim.status_tim)
 
-                    document.getElementById('notFound-2').classList.add('d-none')
+                    if(document.getElementById('notFound-2')){
+                       const not = document.getElementById('notFound-2').classList.add('d-none')
+                   }
+
 
                     const div = document.createElement('div');
-                    div.className = 'col-md-6 col-lg-4';
+                    div.className = 'col-md-3 col-lg-3';
                     div.id = 'card-konfirmasi-' + code;
 
                     let data = `
                     <div class="card text-center mb-3">
-                        <div class="card-body">
-                            <div style="width: 30px; height: 30px; top: -10px; right: -10px;" class="rounded bg-primary d-flex justify-content-center align-items-center text-white position-absolute">
-                                ${newData.urutan}
+                            <div class="card-body">
+                                <div style="width: 30px; height: 30px; top: -10px;left : -10px;" class="rounded bg-primary d-flex justify-content-center align-items-center text-white position-absolute">
+                                    ${presentasi.urutan}
+                                </div>
+                                <img src="{{ asset('storage/${presentasi.tim.logo}') }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 100px; height: 100px; object-fit: cover; ">
+                                <div class="d-flex justify-content-center align-items-center gap-2 flex-column flex-wrap">
+                                    <h4 class="card-title text-capitalize text-secondary mb-0">${presentasi.tim.nama}</h4>
+                                    <div class="d-flex flex-column gap-2">
+                                    <span class="badge bg-label-warning d-flex align-items-center justify-content-center flex-column" style="" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Status Tim"    >${kategoryTim}</span>
+
+                                    </div>
+                                    <div class="d-flex justify-content-around align-items-center w-100 mb-2 gap-2">
+                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data pengajuan presentasi yang selesai"    class="badge bg-label-success">
+                                            <i class="fas fa-chalkboard"></i>
+                                            ${totalPresentasi}
+                                        </span>
+                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data pengajuan presentasi yang ditolak"    class="badge bg-label-danger">
+                                            <i class="fas fa-chalkboard"></i>
+                                            ${presentasiDitolak}
+                                        </span>
+                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data Revisi yang selesai"      class="badge bg-label-success">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            ${revisiSelesai}
+                                        </span>
+                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data Revisi yang tidak selesai"   class="badge bg-label-danger ">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            ${revisiTidakSelesai}
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex justify-content-center gap-2 align-items-center">
+                                        <button onclick="tampilDetailTim('${presentasi.tim.code}','${codeHistory}')"  data-bs-toggle="modal" data-bs-target="#detailTim" class="btn btn-outline-warning d-flex justify-content-center align-items-center p-3 btn-detail-tim" style="font-size:15px; width:20px;height:20px;">
+                                            <i class="fas fa-info-circle"></i>
+                                        </button>
+                                        <button class="border-0 bg-transparent text-white bg-primary p-3 d-flex justify-content-center align-items-center rounded" style="font-size:20px;width:20px;height:20px;" onclick="aturUrutan('${presentasi.code}','${codeHistory}')" data-bs-toggle="modal" id="btnUrutan" data-bs-target="#aturUrutan" >
+                                            <i class="fas fa-list-ol"></i>
+                                        </button>
+                                        <button class="btn btn-success" onclick="sudahPresentasi('${presentasi.code}')"  data-bs-toggle="modal" data-bs-target="#Finish" >Konfirmasi</button>
+                                </div>
                             </div>
-                            <img src="{{ asset('storage/${newData.tim.logo}') }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 150px; height: 150px; object-fit: cover;">
-                            <div class="d-flex justify-content-center align-items-center gap-2">
-                                <h4 class="card-title text-capitalize">${newData.tim.nama}</h4>
-                                <a href="#"><span class="badge bg-label-warning mb-3">${newData.tim.status_tim}</span></a>
-                            </div>
-                            <div class="card-text">${newData.jadwal}</div>
-                            <div class="d-flex justify-content-center gap-2">
-                                <button id="btnUrutan" onclick="aturUrutan('${newData.code}','${codeHistory}')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#aturUrutan" >Urutan</button>
-                                <button class="btn btn-success" onclick="sudahPresentasi('${newData.code}')" data-bs-toggle="modal" data-bs-target="#Finish">Konfirmasi</button>
-                            </div
-                        </div
                     </div>
             `;
 
@@ -769,8 +1057,26 @@
                             persetujuan
                         })
                         .then((res) => {
-                            console.log(res.data.error);
-                            document.getElementById('card-konfirmasi-' + code).classList.add('d-none');
+                            if(res.data.error){
+                                setTimeout(()=>{
+                                swal.fire({
+                               icon: 'error',
+                                title: 'Error',
+                                text: res.data.error
+                                        })
+                                }, 400)
+                            }else{
+
+                                setTimeout(()=>{
+                                swal.fire({
+                               icon: 'success',
+                                title: 'Sukses',
+                                text: "Berhasil Mengkonfirmasi Presentasi"
+                                        })
+                                }, 400)
+
+                                document.getElementById('card-konfirmasi-' + code).classList.add('d-none');
+                            }
                         })
                         .catch((err) => {
                             console.log(err);

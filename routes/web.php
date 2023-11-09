@@ -92,6 +92,9 @@ Route::prefix('ketuaMagang')->middleware(['auth', 'siswa', 'can:kelola siswa'])-
     Route::patch('ketua/persetujuan-project/{code}', [PengajuanProjekController::class, 'persetujuanProject'])->name('ketua.persetujuan-project');
     Route::put('ketua/atur-urutan/{code}', [PresentasiController::class, 'gantiUrutan']);
     Route::get('ketua/ambil-urutan/{codeHistory}', [PresentasiController::class, 'ambilUrutan']);
+    Route::get('ketua/ambil-urutan/{codeHistory}', [PresentasiController::class, 'ambilUrutan']);
+    Route::get('ketua/ambil-detail-history-presentasi/{codeHistory}/{codeTim}',[PresentasiController::class,'ambilDetailHistoryPresentasi']);
+
 });
 
 // Halaman Mentor
