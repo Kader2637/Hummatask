@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('code');
             $table->foreignId('user_id')->nullable()->constrained('users');
+            $table->string('title')->nullable();
             $table->longText('content');
+            $table->enum('type_note', ['private', 'revisi']);
             $table->timestamps();
         });
     }

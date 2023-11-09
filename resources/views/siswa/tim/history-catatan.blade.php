@@ -5,10 +5,14 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/flatpickr/flatpickr.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-rowgroup-bs5/rowgroup.bootstrap5.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/%40form-validation/umd/styles/index.min.css') }}" />
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/typography.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/katex.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/editor.css') }}" />
+    {{-- CDN Quill && JQuery --}}
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    {{-- CDN Quill --}}
 @endsection
 
 <script>
@@ -44,31 +48,7 @@
 
 
 @section('content')
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-    <script>
-        @if (session('success'))
-            Swal.fire({
-                title: "Sukses",
-                text: "{{ session('success') }}",
-                icon: "success",
-                customClass: {
-                    confirmButton: "btn btn-primary"
-                },
-                buttonsStyling: false,
-            });
-        @endif
-        @if (session('error'))
-            Swal.fire({
-                title: "Gagal",
-                text: "{{ session('error') }}",
-                icon: "error",
-                customClass: {
-                    confirmButton: "btn btn-primary"
-                },
-                buttonsStyling: false,
-            });
-        @endif
-    </script>
+    {{-- Table Content --}}
     <div class="container-fluid d-flex mt-5 justify-content-center">
         <div class="col-12">
             <div class="card">
@@ -77,8 +57,9 @@
                     <table id="jstabel" class="table">
                         <thead>
                             <tr>
-                                <th>Catatan</th>
+                                <th>judul</th>
                                 <th>Tanggal</th>
+                                <th>jenis catatan</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -87,17 +68,40 @@
                                 <tr>
                                     <td>{{ $item->created_at }}</td>
                                     <td>
-                                        <span class="badge bg-label-primary me-1">
-                                            {{ \Carbon\Carbon::parse($item->created_at)->isoFormat('DD MMMM YYYY') }}</span>
+                                        <span class="badge bg-label-success me-1">
+                                            {{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('l, j F Y') }}</span>
                                     </td>
-                                    <td class="d-flex flex-wrap flex-row">
-                                        <a class="d-block cursor-pointer" data-bs-toggle="modal"
-                                            data-bs-target="#edit-catatan-{{ $item->code }}"><i
-                                                class="ti ti-pencil me-1 text-primary"></i></a>
-                                        <a class="d-block cursor-pointer" id="delete-button-{{ $item->code }}">
-                                            <i class="ti ti-trash me-1 text-danger"></i>
-                                        </a>
+                                    <td>
+                                        @if ($item->type_note === 'private')
+                                            <span class="badge bg-label-warning me-1">
+                                                Catatan Pribadi</span>
+                                        @else
+                                            <span class="badge bg-label-warning me-1">
+                                                Catatan Revisi</span>
+                                        @endif
                                     </td>
+                                    @if ($item->type_note === 'private')
+                                        <td class="d-flex flex-wrap flex-row">
+                                            <a class="d-block cursor-pointer btn-show" id="show-button"
+                                                data-bs-toggle="modal" data-bs-target="#modal-show"
+                                                data-content="{{ $item->content }}">
+                                                <i class="ti ti-eye me-1 text-warning"></i>
+                                            </a>
+                                            <a class="d-block cursor-pointer btn-edit" data-bs-toggle="modal"
+                                                data-bs-target="#edit-catatan" data-content="{{ $item->content }}"
+                                                data-url="{{ $item->code }}"><i
+                                                    class="ti ti-pencil me-1 text-primary"></i></a>
+                                            <a class="d-block cursor-pointer btn-delete" id="delete-button">
+                                                <i class="ti ti-trash me-1 text-danger"></i>
+                                            </a>
+                                        </td>
+                                    @else
+                                        <td>
+                                            <a class="d-block cursor-pointer btn-show" id="show-button">
+                                                <i class="ti ti-eye me-1 text-warning"></i>
+                                            </a>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>
@@ -106,81 +110,127 @@
             </div>
         </div>
     </div>
+    {{-- Table Content --}}
 
-    @foreach ($catatans as $item)
-        <div class="modal fade" id="edit-catatan-{{ $item->code }}" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-simple modal-edit-user">
-                <div class="modal-content">
-                    <form method="POST" action="{{ route('catatan.update', $item->code) }}">
+    {{-- Modal Edit --}}
+    <div class="modal fade" id="edit-catatan" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-simple modal-edit-user">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <form action="" id="edit-form" class="row g-2 p-0 m-0" method="POST">
                         @csrf
-                        @method('PUT')
-                        <div class="modal-body">
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            <form id="editUserForm" class="row g-2 p-0 m-0" onsubmit="return false" method="POST"
-                                action="">
-                                <div class="card d-flex gap-0 m-0 p-0">
-                                    <div class="d-flex flex-row flex-wrap justify-content-between p-0 m-0">
-                                        <span class="card-header fs-4">Catatan</span>
-                                        <span class="card-header">
-                                            <button type="button" class="btn btn-label-danger mx-2" data-bs-toggle="modal"
-                                                data-bs-target="#modalTolak">Reset</button>
-                                            <button type="submit" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#modalTerima">Simpan</button>
-                                        </span>
+                        @method('PATCH')
+                        <div class="card d-flex gap-0 m-0 p-0">
+                            <div class="d-flex flex-row flex-wrap justify-content-between p-0 m-0">
+                                <span class="card-header fs-4">Catatan</span>
+                                <span class="card-header">
+                                    <button type="button" class="btn btn-label-danger mx-2">Reset</button>
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                </span>
+                            </div>
+                            <div class="card-body p-0 pb-4 m-0">
+                                <div id="editor">
+                                    <div>
                                     </div>
-                                    <div class="card-body p-0 px-4 pb-4 m-0">
-                                        <div id="editor-history-{{ $item->code }}" style="height: 400px">
-                                            {!! $item->content !!}
-                                        </div>
-                                    </div>
-                                    <textarea name="content" id="content-{{ $item->code }}" cols="30" rows="10" class="d-none"></textarea>
                                 </div>
-                            </form>
+                                <textarea name="content" id="content" cols="30" rows="10" class="d-none"></textarea>
+                            </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-        <script>
-            let editors = document.querySelectorAll("#editor-history-{{ $item->code }}");
+    </div>
+    {{-- Modal Edit --}}
 
-            console.log(editors);
+    {{-- Modal Show --}}
+    <div class="modal fade" id="modal-show" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-simple modal-edit-user">
+            <div class="modal-content">
+                <form method="POST" action="">
+                    <div class="modal-body">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="card d-flex gap-0 m-0 p-0">
+                            <div class="d-flex flex-row flex-wrap justify-content-between p-0 m-0">
+                                <span class="card-header fs-4">Catatan</span>
+                            </div>
+                            <div class="card-body p-0 px-4 pb-4 m-0">
+                                <div id="show-data-content" style="height: 400px">
+                                    {{-- isi data show --}}
+                                </div>
+                            </div>
+                            <textarea name="content" id="content" cols="30" rows="10" class="d-none"></textarea>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+    {{-- Modal Show --}}
 
-            editors.forEach(function(editorElement) {
-                let quill = new Quill(editorElement, {
-                    modules: {
-                        clipboard: true,
-                        toolbar: [
-                            ["bold", "italic"],
-                            ["link", "blockquote"],
-                            [{
-                                list: "ordered"
-                            }, {
-                                list: "bullet"
-                            }],
-                        ],
-                    },
-                    placeholder: "Tuliskan catatan anda..",
-                    theme: "snow",
-                });
+    {{-- Script Append Item to Show Modal && Edit Modal --}}
+    <script>
+        let quill;
 
-                let contentID = "content-{{ $item->code }}";
-                let contentElement = document.getElementById(contentID);
-
-                quill.on("text-change", function(delta, oldDelta, source) {
-                    contentElement.value = quill.root.innerHTML;
-                });
+        $(document).ready(function() {
+            let quill = new Quill("#editor", {
+                modules: {
+                    clipboard: true,
+                    toolbar: [
+                        [{
+                            'size': ['small', false, 'large', 'huge']
+                        }],
+                        [{
+                            'font': []
+                        }],
+                        ["bold", "italic", "underline", "strike"],
+                        [{
+                            'script': 'sub'
+                        }, {
+                            'script': 'super'
+                        }],
+                        [{
+                            'list': 'ordered'
+                        }, {
+                            'list': 'bullet'
+                        }],
+                        [{
+                            'align': []
+                        }],
+                    ],
+                },
+                placeholder: "Tuliskan catatan anda..",
+                theme: "snow",
             });
-        </script>
-    @endforeach
+
+            quill.on("text-change", function(delta, oldDelta, source) {
+                $("#content").text($(".ql-editor").html());
+            });
+
+            $('.btn-show').click(function() {
+                var content = $(this).data('content');
+                $('#show-data-content').html(content);
+            })
+
+            $('.btn-edit').click(function() {
+                var content = $(this).data('content');
+                var dataUrl = $(this).data('url');
+                var form = $('#edit-form');
+                var formAction = "{{ route('catatan.update', ['code' => ':Id']) }}";
+                formAction = formAction.replace(':Id', dataUrl);
+                $('#edit-form').attr('action', formAction);
+                quill.setContents(quill.clipboard.convert(content));
+            })
+        });
+    </script>
+    {{-- Script Append Item to Show Modal && Edit Modal --}}
 @endsection
 
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <script>
         jQuery.noConflict();
 
@@ -222,5 +272,4 @@
     <script src="{{ asset('assets/vendor/libs/%40form-validation/umd/plugin-bootstrap5/index.min.js') }}"></script>
     <script s rc="{{ asset('assets/vendor/libs/%40form-validation/umd/plugin-auto-focus/index.min.js') }}"></script>
     <script src="{{ asset('assets/js/mainf696.js?id=8bd0165c1c4340f4d4a66add0761ae8a') }}"></script>
-    <script src="{{ asset('assets/js/forms-editors-history.js') }}"></script>
 @endsection

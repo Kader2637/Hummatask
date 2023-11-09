@@ -24,11 +24,11 @@ class KetuaMagangController extends Controller
         $usercount = User::where('peran_id', 1)->count();
         $timcount = Tim::where('kadaluwarsa', 1)->count();
         $today = Carbon::today();
-        $present = Presentasi::where('status_pengajuan','disetujui')->whereDate('created_at', $today)->count();
+        $present = Presentasi::where('status_pengajuan', 'disetujui')->whereDate('created_at', $today)->count();
         $tims = User::find(Auth::user()->id)->tim()->get();
 
 
-        $presentasi = Presentasi::with('tim')->where('status_pengajuan', 'disetujui')->whereDate('created_at',$today)->latest('created_at')->take(5)->get()->reverse();
+        $presentasi = Presentasi::with('tim')->where('status_pengajuan', 'disetujui')->whereDate('created_at', $today)->latest('created_at')->take(5)->get()->reverse();
 
         $data = Presentasi::select(
             DB::raw('MONTH(created_at) as month'),
@@ -70,7 +70,7 @@ class KetuaMagangController extends Controller
         }
 
         $chartData = array_values($processedData);
-        return view('ketuaMagang.dashboard', compact('title', 'tims', 'usercount', 'timcount', 'chartData','presentasi','present'));
+        return view('ketuaMagang.dashboard', compact('title', 'tims', 'usercount', 'timcount', 'chartData', 'presentasi', 'present'));
     }
     protected function presentasiPage()
     {
@@ -86,8 +86,7 @@ class KetuaMagangController extends Controller
             $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
             $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd');
         }
-        return response()->view('ketuaMagang.presentasi', compact('persetujuan_presentasi', 'konfirmasi_presentasi', 'jadwal', 'hari', 'historyPresentasi','title','tims'));
-
+        return response()->view('ketuaMagang.presentasi', compact('persetujuan_presentasi', 'konfirmasi_presentasi', 'jadwal', 'hari', 'historyPresentasi', 'title', 'tims'));
     }
     protected function projectPage()
     {
@@ -124,13 +123,13 @@ class KetuaMagangController extends Controller
         $title = "Project Ketua Magang";
         $tims = User::find(Auth::user()->id)->tim()->get();
         $project = Project::with('tim', 'tema')->where('status_project', 'approved')->get();
-        $users = User::where('peran_id',1)
-        ->whereDoesntHave('tim', function($query){
-            $query->where('kadaluwarsa', true);
-        })
-        ->get();
-        $status_tim = StatusTim::whereNot('status','solo')->get();
-        return response()->json(['project' => $project , 'title' => $title , 'tims' => $tims , 'users' => $users , 'status_tim' => $status_tim]);
+        $users = User::where('peran_id', 1)
+            ->whereDoesntHave('tim', function ($query) {
+                $query->where('kadaluwarsa', true);
+            })
+            ->get();
+        $status_tim = StatusTim::whereNot('status', 'solo')->get();
+        return response()->json(['project' => $project, 'title' => $title, 'tims' => $tims, 'users' => $users, 'status_tim' => $status_tim]);
     }
     protected function detailProject($code)
     {
@@ -147,6 +146,22 @@ class KetuaMagangController extends Controller
     {
         $title = "History Ketua Magang";
         $tims = User::find(Auth::user()->id)->tim()->get();
-        return view('ketuaMagang.history', compact('title', 'tims'));
+        $telatDeadline = Project::with('tim.anggota.user', 'tema')
+            ->where('deadline', '<', now())
+            ->get();
+        $presentasiSelesai = Presentasi::with('tim.anggota.user', 'tim.project.tema')
+            ->where('status_presentasi', 'selesai')
+            ->where('status_pengajuan', 'disetujui')
+            ->whereHas('tim.project.tema')
+            ->get();
+        $timSolo = Tim::with('anggota.user', 'project.tema')
+            ->where('status_tim', 'solo')
+            ->get();
+        $timGroup = Tim::with('anggota.user', 'project.tema')
+            ->where('status_tim', '!=', 'solo')
+            ->whereHas('project')
+            ->get();
+
+        return view('ketuaMagang.history', compact('title', 'tims', 'telatDeadline', 'presentasiSelesai', 'timSolo', 'timGroup'));
     }
 }

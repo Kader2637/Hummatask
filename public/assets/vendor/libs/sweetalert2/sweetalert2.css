@@ -489,7 +489,6 @@ div:where(.swal2-container) .swal2-html-container {
     font-weight: 400;
     justify-content: center;
     line-height: normal;
-    margin: 1em 1.6em 0.3em;
     overflow: auto;
     padding: 0;
     text-align: center;

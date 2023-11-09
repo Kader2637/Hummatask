@@ -1,5 +1,5 @@
 @extends('layoutsMentor.app')
-@section('content')
+@section('style')
     <style>
         .avatar-container {
             display: flex;
@@ -189,7 +189,8 @@
             }
         }
     </style>
-
+@endsection
+@section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-3">
             <span class="text-muted fw-light"></span> History
@@ -232,7 +233,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">NO</th>
-                                    <th scope="col">NAMA</th>
+                                    <th scope="col">TEAM</th>
                                     <th scope="col">DEADLINE</th>
                                     <th scope="col">PROJECT</th>
                                     <th scope="col">TEMA</th>
@@ -244,8 +245,9 @@
                                         <td>{{ $loop->iteration }}.</td>
                                         <td>
                                             <img src="{{ Storage::url($item->tim->logo) }}" alt=""
-                                                style="width:30px;height:30px;border-radius:50%">
-                                            {{ $item->tim->nama }}
+                                                style="width:30px;height:30px;border-radius:50%;cursor: pointer;"
+                                                data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
+                                                title="{{ $item->tim->nama }}">
                                         </td>
                                         <td>{{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}</td>
                                         <td>{{ $item->tim->status_tim }}</td>
@@ -257,7 +259,6 @@
                         </table>
                     </div>
                 </div>
-
             </div>
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
                 tabindex="0">
@@ -267,7 +268,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">NO</th>
-                                    <th scope="col">NAMA</th>
+                                    <th scope="col">TEAM</th>
                                     <th scope="col">DEADLINE</th>
                                     <th scope="col">PROJECT</th>
                                     <th scope="col">TEMA</th>
@@ -279,8 +280,9 @@
                                         <td>{{ $loop->iteration }}.</td>
                                         <td>
                                             <img src="{{ Storage::url($item->tim->logo) }}" alt=""
-                                                style="width:30px;height:30px;border-radius:50%">
-                                            {{ $item->tim->nama }}
+                                                style="width:30px;height:30px;border-radius:50%;cursor: pointer;"
+                                                data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
+                                                title="{{ $item->tim->nama }}">
                                         </td>
                                         @foreach ($item->tim->project as $item)
                                             <td>{{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}
@@ -306,7 +308,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">NO</th>
-                                    <th scope="col">NAMA</th>
+                                    <th scope="col">TEAM</th>
                                     <th scope="col">EMAIL</th>
                                     <th scope="col">PROJECT</th>
                                     <th scope="col">TEMA</th>
@@ -319,8 +321,9 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
                                             <img src="{{ Storage::url($item->logo) }}" alt=""
-                                                style="width:30px;height:30px;border-radius:50%">
-                                            {{ $item->nama }}
+                                                style="width:30px;height:30px;border-radius:50%; cursor: pointer"
+                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                data-popup="tooltip-custom" title="{{ $item->nama }}">
                                         </td>
                                         <td>{{ $item->anggota[0]->user->email }}</td>
                                         <td>{{ $item->status_tim }}</td>
@@ -365,7 +368,6 @@
                                         $tanggalMulai = $item->project[0]->created_at->translatedFormat('Y-m-d');
                                         $totalDeadline = null;
                                         $dayLeft = null;
-
                                         $deadline = \Carbon\Carbon::parse($item->project[0]->deadline)->translatedFormat('Y-m-d');
                                         $totalDeadline = \Carbon\Carbon::parse($deadline)->diffInDays($tanggalMulai);
                                         $dayLeft = \Carbon\Carbon::parse($deadline)->diffInDays(\Carbon\Carbon::now());
@@ -375,8 +377,9 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
                                             <img src="{{ Storage::url($item->logo) }}" alt=""
-                                                style="width:30px;height:30px;border-radius:50%">
-                                            {{ $item->nama }}
+                                                style="width:30px;height:30px;border-radius:50%; cursor: pointer"
+                                                data-bs-toggle="tooltip" data-popup="tooltip-custom"
+                                                data-bs-placement="top" title="{{ $item->nama }}">
                                         </td>
                                         <td>{{ $item->ketuaTim[0]->username }}</td>
                                         <td>
@@ -418,85 +421,7 @@
             </div>
         </div>
 
-        {{-- Script detail modal --}}
-        <script>
-            $(document).ready(function() {
-                $('.btn-detail').click(function() {
-                    var logo = $(this).data('logo');
-                    var namatim = $(this).data('namatim');
-                    var status = $(this).data('status');
-                    var tema = $(this).data('tema');
-                    var tglmulai = $(this).data('tglmulai');
-                    var deadline = $(this).data('deadline');
-                    var anggota = $(this).data('anggota');
-                    var deskripsi = $(this).data('deskripsi');
-                    var dayLeft = $(this).data('dayleft');
-                    var repo = $(this).data('repo');
-                    var total = $(this).data('total-deadline');
-                    var progress = $(this).data('progress');
-                    var progressFormat = Math.round(progress);
-
-                    $('#logo-tim').attr('src', logo);
-                    $('#logo-tim2').attr('src', logo);
-                    $('#nama-tim').text(namatim);
-                    $('#nama-tim2').text(namatim);
-                    $('#status').text(status);
-                    $('#tema').text(tema);
-                    $('#tglmulai').text(tglmulai);
-                    $('#deadline').text(deadline);
-                    $('#dayLeft').text(dayLeft);
-                    $('#dayleft').text(dayLeft);
-                    $('#total').text(total);
-                    $('#text-repo').text(repo);
-                    $('#repository').attr('href', repo);
-                    $('#textPercent').text(progressFormat);
-                    $('.progress-bar').css('width', progressFormat + '%');
-                    $('.progress-bar').attr('aria-valuenow', progressFormat);
-                    if (deskripsi) {
-                        $('#deskripsi').text(deskripsi);
-                    } else {
-                        $('#deskripsi').html(
-                            '<div class="alert alert-warning d-flex align-items-center mt-3 cursor-pointer" role="alert">' +
-                            '<span class="alert-icon text-warning me-2">' +
-                            '<i class="ti ti-bell ti-xs"></i>' +
-                            '</span>' +
-                            'Tim ini belum memiliki deskripsi tema!' +
-                            '</div>'
-                        );
-                    }
-
-                    var anggotaList = $('#anggota-list');
-                    anggotaList.empty();
-
-                    anggota.forEach(function(anggota, index) {
-                        var avatarSrc = anggota.avatar ? '/storage/' + anggota.avatar :
-                            '/assets/img/avatars/1.png';
-
-                        var anggotaItem = $('<div class="col-lg-4 p-2" style="box-shadow: none">' +
-                            '<div class="card">' +
-                            '<div class="card-body d-flex gap-3 align-items-center">' +
-                            '<div>' +
-                            '<img width="30px" height="30px" class="rounded-circle object-cover" src="' +
-                            avatarSrc + '" alt="foto user">' +
-                            '</div>' +
-                            '<div>' +
-                            '<h5 class="mb-0" style="font-size: 15px">' + anggota.name + '</h5>' +
-                            '<span class="badge bg-label-warning">' + anggota.jabatan + '</span>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>');
-                        anggotaList.append(anggotaItem);
-                    });
-
-                    $('#modalDetail').modal('show');
-
-                });
-            });
-        </script>
-        {{-- Script detail modal --}}
-
-        {{-- modal --}}
+        {{-- modal detail --}}
         <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-fullscreen modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -650,7 +575,8 @@
             </div>
         </div>
     </div>
-
+@endsection
+@section('script')
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
@@ -787,4 +713,81 @@
             });
         });
     </script>
+    {{-- Script detail modal --}}
+    <script>
+        $(document).ready(function() {
+            $('.btn-detail').click(function() {
+                var logo = $(this).data('logo');
+                var namatim = $(this).data('namatim');
+                var status = $(this).data('status');
+                var tema = $(this).data('tema');
+                var tglmulai = $(this).data('tglmulai');
+                var deadline = $(this).data('deadline');
+                var anggota = $(this).data('anggota');
+                var deskripsi = $(this).data('deskripsi');
+                var dayLeft = $(this).data('dayleft');
+                var repo = $(this).data('repo');
+                var total = $(this).data('total-deadline');
+                var progress = $(this).data('progress');
+                var progressFormat = Math.round(progress);
+
+                $('#logo-tim').attr('src', logo);
+                $('#logo-tim2').attr('src', logo);
+                $('#nama-tim').text(namatim);
+                $('#nama-tim2').text(namatim);
+                $('#status').text(status);
+                $('#tema').text(tema);
+                $('#tglmulai').text(tglmulai);
+                $('#deadline').text(deadline);
+                $('#dayLeft').text(dayLeft);
+                $('#dayleft').text(dayLeft);
+                $('#total').text(total);
+                $('#text-repo').text(repo);
+                $('#repository').attr('href', repo);
+                $('#textPercent').text(progressFormat);
+                $('.progress-bar').css('width', progressFormat + '%');
+                $('.progress-bar').attr('aria-valuenow', progressFormat);
+                if (deskripsi) {
+                    $('#deskripsi').text(deskripsi);
+                } else {
+                    $('#deskripsi').html(
+                        '<div class="alert alert-warning d-flex align-items-center mt-3 cursor-pointer" role="alert">' +
+                        '<span class="alert-icon text-warning me-2">' +
+                        '<i class="ti ti-bell ti-xs"></i>' +
+                        '</span>' +
+                        'Tim ini belum memiliki deskripsi tema!' +
+                        '</div>'
+                    );
+                }
+
+                var anggotaList = $('#anggota-list');
+                anggotaList.empty();
+
+                anggota.forEach(function(anggota, index) {
+                    var avatarSrc = anggota.avatar ? '/storage/' + anggota.avatar :
+                        '/assets/img/avatars/1.png';
+
+                    var anggotaItem = $('<div class="col-lg-4 p-2" style="box-shadow: none">' +
+                        '<div class="card">' +
+                        '<div class="card-body d-flex gap-3 align-items-center">' +
+                        '<div>' +
+                        '<img width="30px" height="30px" class="rounded-circle object-cover" src="' +
+                        avatarSrc + '" alt="foto user">' +
+                        '</div>' +
+                        '<div>' +
+                        '<h5 class="mb-0" style="font-size: 15px">' + anggota.name + '</h5>' +
+                        '<span class="badge bg-label-warning">' + anggota.jabatan + '</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>');
+                    anggotaList.append(anggotaItem);
+                });
+
+                $('#modalDetail').modal('show');
+
+            });
+        });
+    </script>
+    {{-- Script detail modal --}}
 @endsection

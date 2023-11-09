@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en" class="light-style layout-compact layout-navbar-fixed layout-menu-fixed   " dir="ltr"
-    data-theme="theme-default"
+<html lang="en" class="light-style" dir="ltr" data-theme="theme-default"
     data-assets-path="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/"
     data-base-url="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1" data-framework="laravel"
     data-template="vertical-menu-theme-default-light">
@@ -59,20 +58,141 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/editor.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/%40form-validation/umd/styles/index.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+    {{-- <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" /> --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/app-calendar.css') }}" />
 
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+    {{-- <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" /> --}}
+    {{-- <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" /> --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
+    <style>
+        body,
+        {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        z-index: 2;
+        /* Tambahkan z-index di sini */
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .hidden {
+            opacity: 0;
+        }
+
+        #loader {
+            z-index: 100000;
+            /* Tambahkan z-index di sini */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+        }
+
+        .preloader {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            left: calc(50% - 20px);
+            top: calc(50% - 20px);
+            animation: preloader 2s linear infinite;
+        }
+
+        .loadBar {
+            position: absolute;
+            width: 200px;
+            height: 2px;
+            left: calc(50% - 100px);
+            top: calc(50% + 60px);
+            background: #7a14c3;
+        }
+
+        .progress {
+            position: relative;
+            width: 0%;
+            height: inherit;
+            background: #e74c3c;
+        }
+
+        .custom-margin {
+            margin-top: -65px;
+        }
+
+        @keyframes loading {
+
+            0% {
+                width: 0%;
+            }
+
+            100% {
+                width: 100%;
+            }
+
+        }
+
+        @keyframes preloader {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            25% {
+                transform: translateY(-15px);
+            }
+
+            50% {
+                transform: translateY(0);
+            }
+
+            75% {
+                transform: translateY(15px);
+            }
+        }
+    </style>
     @yield('link')
 </head>
 
 @yield('style')
 
 <body>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"
+        integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+    <div id="loader">
+        <div class="preloader">
+            <div class="d-flex justify-content-center custom-margin">
+                <img src="{{ asset('assets/img/icons/icon.svg') }}" width="180" height="160" alt="Loader Image">
+            </div>
+        </div>
+    </div>
+    <script>
+        $(window).load(function() {
+
+            var rnd = Math.random() * (2000 - 2000) + 500;
+
+            $('.progress').css("animation", "loading " + rnd + "ms linear");
+
+            console.log(rnd);
+
+            setTimeout(function() {
+
+                $('#loader').fadeOut();
+                $('#page').removeClass('hidden');
+
+            }, rnd);
+
+        });
+    </script>
 
     {{-- Modal Ajukan presentasi --}}
 
@@ -110,9 +230,6 @@
             </div>
         </div>
     </div>
-
-
-
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEnd" aria-labelledby="offcanvasEndLabel">
         <div class="offcanvas-header">
             <h5 id="offcanvasEndLabel" class="offcanvas-title">Statistik Project</h5>
@@ -494,23 +611,11 @@
                             <div class="w-100 d-flex align-items-center justify-content-between">History</div>
                         </a>
                     </li>
-                    <li class="menu-item @if ($title == 'catatan' || $title == 'catatan history') open @endif">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle d-flex align-items-center gap-2">
+                    <li class="menu-item @if ($title == 'catatan') active @endif">
+                        <a href="{{ route('tim.catatan', $tim->code) }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-clipboard-text"></i>
-                            <div>Catatan</div>
+                            <div>Buat Catatan</div>
                         </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item @if ($title == 'catatan') active @endif">
-                                <a href="{{ route('tim.catatan', $tim->code) }}" class="menu-link">
-                                    <div>Buat Catatan</div>
-                                </a>
-                            </li>
-                            <li class="menu-item @if ($title == 'catatan history') active @endif ">
-                                <a href="{{ route('tim.historyCatatan', $tim->code) }}" class="menu-link">
-                                    <div>History Catatan</div>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
                     <li class="menu-item @if ($title == 'Tim/presentasi') open @endif">
                         <a href="javascript:void(0);" class="menu-link menu-toggle d-flex align-items-center gap-2">
@@ -833,8 +938,8 @@
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
                                     data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : asset('assets/img/avatars/1.png') }}" alt
-                                            class="h-auto rounded-circle">
+                                        <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : asset('assets/img/avatars/1.png') }}"
+                                            alt class="h-auto rounded-circle">
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">

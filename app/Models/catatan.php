@@ -9,9 +9,5 @@ class catatan extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'code',
-        'user_id',
-        'content',
-    ];
+    protected $guarded = [];
 }

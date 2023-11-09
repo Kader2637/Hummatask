@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Anggota;
+use App\Models\catatan;
 use App\Models\Comments;
 use App\Models\Tim;
 use App\Models\Tugas;
@@ -94,8 +95,6 @@ class timController extends Controller
         $anggota = $tim->anggota()->get();
         $project = $tim->project()->first();
 
-        // dd($project->tema);
-
         return view('siswa.tim.project', compact('title', 'tim', 'anggota', 'project'));
     }
 
@@ -127,8 +126,9 @@ class timController extends Controller
         $title = "catatan";
         $tim = Tim::where('code', $code)->firstOrFail();
         $anggota = $tim->user()->get();
+        $catatans = catatan::where('user_id', Auth::user()->id)->get();
 
-        return view('siswa.tim.catatan', compact('title', 'anggota', 'tim'));
+        return view('siswa.tim.catatan', compact('title', 'anggota', 'tim', 'catatans'));
     }
 
     protected function historyCatatanPage($code)
@@ -136,7 +136,9 @@ class timController extends Controller
         $title = "catatan history";
         $tim = Tim::where('code', $code)->firstOrFail();
         $anggota = $tim->user()->get();
+        $catatans = catatan::where('user_id', Auth::user()->id)->get();
+        // dd($catatans);
 
-        return view('siswa.tim.history-catatan', compact('title', 'anggota', 'tim'));
+        return view('siswa.tim.history-catatan', compact('title', 'anggota', 'tim', 'catatans'));
     }
 }
