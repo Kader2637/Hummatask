@@ -17,7 +17,7 @@ class Tim extends Model
 
     public function user(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'anggotas');
+        return $this->belongsToMany(User::class,'anggotas');
     }
     public function ketuaTim(): BelongsToMany
     {

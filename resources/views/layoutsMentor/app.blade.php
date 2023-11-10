@@ -249,7 +249,7 @@
                     <li class="menu-item {{ request()->routeIs('projek', 'detail-projek') ? 'active' : '' }}">
                         <a href="{{ route('projek') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-folder-cog"></i>
-                            <div>Project</div>
+                            <div>Tim</div>
                         </a>
                     </li>
                     <li class="menu-item {{ request()->routeIs('pengguna.mentor') ? 'active' : '' }}">

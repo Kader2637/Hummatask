@@ -5,8 +5,11 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js">
+        < script >
+            <
+            script src = "https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js" >
+    </script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     <script src="{{ asset('assets/js/forms-editors.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
@@ -25,8 +28,8 @@
                     </li>
                     <li class="nav-item" role="presentation">
                         <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                            data-bs-target="#navs-pills-top-pengajuan" aria-controls="navs-pills-top-tim" aria-selected="false"
-                            tabindex="-1">Pengajuan Projek</button>
+                            data-bs-target="#navs-pills-top-pengajuan" aria-controls="navs-pills-top-tim"
+                            aria-selected="false" tabindex="-1">Pengajuan Projek</button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
@@ -49,11 +52,6 @@
                                         <option value="mini">Mini Project</option>
                                         <option value="big">Big Project</option>
                                     </select>
-                                </div>
-                                <div id="buatTim" class="d-flex align-items-end">
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#modalBuatTim">Buat
-                                        Tim</button>
                                 </div>
                             </div>
                             <div class="row mt-4" id="projectList">
@@ -195,7 +193,7 @@
                             <div class="container-fluid mt-4 ">
                                 <h5 class="header">Daftar Pengajuan Projek</h5>
                                 <div class="row">
-                                    @forelse ($projects as $data)
+                                    @forelse ($pengajuan as $data)
                                         @php
                                             $anggotaArray = [];
                                             foreach ($data->tim->anggota as $anggota) {
@@ -302,8 +300,35 @@
                     </div>
                     <div class="tab-pane fade" id="navs-pills-top-tim" role="tabpanel">
                         <div class="row">
+                            <div class="mt-2 d-flex justify-content-end">
+                                <div id="buatTim" class="d-flex align-items-end">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#modalBuatTim">Buat
+                                        Tim</button>
+                                </div>
+                            </div>
+                            @foreach ($tims as $tim)
+                                <div class="col-md-6 col-lg-3">
+                                    <div class="card text-center mb-3" id="">
+                                        <div class="card-body">
+                                            <img src="{{ asset('assets/img/avatars/4.png') }}" alt="logo tim"
+                                                class="rounded-circle mb-3" style="width: 100px; height: 100px">
+                                            <p class="mb-0"><span
+                                                    class="badge bg-label-warning mb-3">{{ $tim->status_tim }}</span></p>
+                                            <h5 class="card-title">{{ $tim->nama }}</h5>
+                                            <p class="card-text">{{ $tim->created_at->translatedFormat('l, j F Y') }}</p>
+                                            <a id="" class="btn btn-primary btn-detail-tim" data-bs-toggle=""
+                                                data-bs-target="#modal-detail-tim"
+                                                data-status_tim="{{ $tim->status_tim }}"
+                                                data-anggota_tim="{{ json_encode($tim->user) }}">Detail</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+
+
                             <nav aria-label="Page navigation">
-                                <ul class="pagination justify-content-end">
+                                <ul class="pagination justify-content-end mt-2">
                                     <li class="page-item first">
                                         <a class="page-link" href="javascript:void(0);"><i
                                                 class="ti ti-chevrons-left ti-xs"></i></a>
@@ -315,22 +340,6 @@
                                     <li class="page-item">
                                         <a class="page-link" href="javascript:void(0);">1</a>
                                     </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="javascript:void(0);">2</a>
-                                    </li>
-                                    <li class="page-item active">
-                                        <a class="page-link" href="javascript:void(0);">3</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="javascript:void(0);">4</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="javascript:void(0);">5</a>
-                                    </li>
-                                    <li class="page-item next">
-                                        <a class="page-link" href="javascript:void(0);"><i
-                                                class="ti ti-chevron-right ti-xs"></i></a>
-                                    </li>
                                     <li class="page-item last">
                                         <a class="page-link" href="javascript:void(0);"><i
                                                 class="ti ti-chevrons-right ti-xs"></i></a>
@@ -341,6 +350,51 @@
                     </div>
                 </div>
             </div>
+
+
+
+            {{-- Modal buat detail pembuatan tim --}}
+            <div class="modal fade" tabindex="-1" id="modal-detail-tim">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Modal Edit</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card-body" id="container-anggota-tim">
+                                <h5 id="statustim">Anggota Tim</h5>
+                                <div class="d-flex mb-3">
+                                    <div class="flex-shrink-0">
+                                        <img src="{{ asset('assets/img/avatars/9.png') }}" style="border-radius: 5px;"
+                                            alt="" class="me-3" height="38">
+                                    </div>
+                                    <div class="flex-grow-1 row" id="list-anggota-tim">
+                                        <div class="col-7">
+                                            <h6 class="mb-0"></h6>
+                                            <small class="text-muted">Not Connected</small>
+                                        </div>
+                                        <div class="col-5 text-end mt-sm-0 mt-2">
+                                            <button class="btn btn-label-secondary btn-icon"><i
+                                                    class="ti ti-link ti-sm"></i></button>
+                                            <button class="btn btn-label-danger btn-icon"><i
+                                                    class="ti ti-delete ti-sm"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer mt-3">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- Modal buat detail pembuatan tim --}}
+
+
 
             {{-- Modal detail --}}
             <div class="modal fade" id="modalDetailProjek" tabindex="-1" aria-hidden="true">
@@ -370,6 +424,9 @@
                                                         aria-controls="navs-pills-top-profile" aria-selected="false"
                                                         tabindex="-1">Anggota</button>
                                                 </div>
+                                            </div>
+                                            <div class="d-flex justify-content-end">
+                                                <button type="submit" class="btn btn-primary">Edit </button>
                                             </div>
                                         </div>
                                         <div class="tab-content bg-transparent pb-0" style="box-shadow: none;">
@@ -515,6 +572,7 @@
                 </div>
             </div>
             {{-- Modal detail --}}
+
             {{-- Modal Buat Tim --}}
             <form action="" id="createForm" method="post">
                 @csrf
@@ -612,6 +670,63 @@
             </script>
             {{-- filter Projek --}}
 
+
+            {{-- js detail buat tim --}}
+            <script>
+                $(document).ready(function() {
+                    $('.btn-detail-tim').click(function() {
+                        const status = $(this).data('status_tim');
+                        const nama = $(this).data('nama');
+                        const anggotaTim = $(this).data('anggota_tim');
+                        console.log(anggotaTim);
+
+                        const container = $("#container-anggota-tim");
+
+                        const h5 = $("<h5>").attr("id", "statustim").text("Anggota Tim");
+                        container.append(h5);
+
+                        $.each(anggotaTim, function(index, anggota) {
+                            const div = $("<div>").addClass("d-flex mb-3");
+
+                            const imgDiv = $("<div>").addClass("flex-shrink-0");
+                            const img = $("<img>").attr("src", anggota.avatar ? anggota.avatar :
+                                    "{{ asset('assets/img/avatars/9.png') }}")
+                                .css("border-radius", "5px").addClass("me-3").attr("alt", "").attr("height",
+                                    "38");
+                            imgDiv.append(img);
+                            div.append(imgDiv);
+
+                            const listAnggotaTimDiv = $("<div>").addClass("flex-grow-1 row").attr("id",
+                                "list-anggota-tim");
+                            const col7Div = $("<div>").addClass("col-7");
+                            const h6 = $("<h6>").addClass("mb-0").text(anggota.username);
+                            const small = $("<small>").addClass("text-muted").text("Not Connected");
+                            col7Div.append(h6);
+                            col7Div.append(small);
+                            listAnggotaTimDiv.append(col7Div);
+                            div.append(listAnggotaTimDiv);
+
+                            const col5Div = $("<div>").addClass("col-5 text-end mt-sm-0 mt-2");
+                            const button1 = $("<button>").addClass("btn btn-label-secondary btn-icon");
+                            const i1 = $("<i>").addClass("ti ti-link ti-sm");
+                            button1.append(i1);
+                            const button2 = $("<button>").addClass("btn btn-label-danger btn-icon");
+                            const i2 = $("<i>").addClass("ti ti-delete ti-sm");
+                            button2.append(i2);
+                            col5Div.append(button1);
+                            col5Div.append(button2);
+                            div.append(col5Div);
+
+                            container.append(div);
+                        });
+
+                        $('#modal-detail-tim').modal('show');
+                    });
+                });
+            </script>
+
+            {{-- js detail buat tim --}}
+
             {{-- js  --}}
             <script>
                 $(document).ready(function() {
@@ -658,8 +773,8 @@
                                 '</div>'
                             );
                         }
-
                         var anggotaList = $('#anggota-list-Projek');
+
                         anggotaList.empty();
 
                         anggota.forEach(function(anggota, index) {
@@ -808,14 +923,14 @@
 
 
             {{-- script pengajuan projek --}}
-            <!-- Modal Terima-->
-            <div class="modal fade" id="modalTerima" tabindex="-1" aria-hidden="true">
+            {{-- Modal Terima --}}
+            <div class="modal fade" id="modalTerimaPengajuan" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="modalCenterTitle">Terima Pengajuan Projek</h5>
                             <button type="button" class="btn-close" data-bs-toggle="modal"
-                                data-bs-target="#modalDetail" aria-label="Close"></button>
+                                data-bs-target="#modalDetailPengajuan" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form action="" method="POST" id="terima-project">
@@ -824,7 +939,7 @@
                                 <div class="row">
                                     <div class="col mb-3">
                                         <label for="tema" class="form-label">Tema Projek</label>
-                                        <select id="tema" name="temaInput"
+                                        <select id="temaPengajuan" name="temaInput"
                                             class="select2 form-select form-select-lg" data-allow-clear="true">
                                             <option disabled selected>Pilih Data</option>
                                         </select>
@@ -849,7 +964,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-label-secondary" data-bs-toggle="modal"
-                                        data-bs-target="#modalDetail">Kembali</button>
+                                        data-bs-target="#modalDetailPengajuan">Kembali</button>
                                     <button type="submit" class="btn btn-primary" id="btn-save">Simpan</button>
                                 </div>
                             </form>
@@ -895,7 +1010,7 @@
                                             </div>
                                             <div>
                                                 <button type="button" id="btn-terima" data-bs-toggle="modal"
-                                                    data-bs-target="#modalTerima" class="btn btn-success"
+                                                    data-bs-target="#modalTerimaPengajuan" class="btn btn-success"
                                                     data-tema="">Terima</button>
                                             </div>
                                         </div>
@@ -1005,7 +1120,9 @@
 
                     $('#btn-terima').click(function() {
                         var tema = $(this).data('tema');
-                        var temaList = $('#tema');
+                        var temaList = $('#temaPengajuan');
+                        console.log(tema);
+                        console.log(temaList);
                         temaList.empty();
                         tema.forEach(function(tema, index) {
                             temaList.append("<option data-url=" + tema.tema_code + " value=" + tema
