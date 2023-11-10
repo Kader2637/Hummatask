@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Anggota;
 use App\Models\catatan;
 use App\Models\Comments;
+use App\Models\Project;
 use App\Models\Tim;
 use App\Models\Tugas;
 use Carbon\Carbon;
@@ -22,8 +23,11 @@ class timController extends Controller
         $tugas_dikerjakan = $tim->tugas()->where('status_tugas', 'dikerjakan')->get();
         $tugas_revisi = $tim->tugas()->where('status_tugas', 'revisi')->get();
         $tugas_selesai = $tim->tugas()->where('status_tugas', 'selesai')->get();
+        $project = $tim->project->first();
 
-        return view('siswa.tim.board', compact('title', 'tim', 'anggota', 'tugas_baru', 'tugas_dikerjakan', 'tugas_revisi', 'tugas_selesai'));
+        $hasProjectRelation = $tim->project()->exists();
+
+        return view('siswa.tim.board', compact('title', 'tim', 'anggota', 'tugas_baru', 'tugas_dikerjakan', 'tugas_revisi', 'tugas_selesai','hasProjectRelation','project'));
     }
 
     protected function ubahStatus(Request $request)
@@ -84,8 +88,11 @@ class timController extends Controller
         $title = "Tim/kalender";
         $tim = Tim::where('code', $code)->firstOrFail();
         $anggota = $tim->user()->get();
+        $project = $tim->project->first();
 
-        return view('siswa.tim.kalender', compact('title', 'tim', 'anggota',));
+        $hasProjectRelation = $tim->project()->exists();
+
+        return view('siswa.tim.kalender', compact('title', 'tim', 'anggota','hasProjectRelation','project'));
     }
 
     protected function projectPage($code)
@@ -95,7 +102,10 @@ class timController extends Controller
         $anggota = $tim->anggota()->get();
         $project = $tim->project()->first();
 
-        return view('siswa.tim.project', compact('title', 'tim', 'anggota', 'project'));
+        $hasProjectRelation = $tim->project()->exists();
+        // dd($project);
+
+        return view('siswa.tim.project', compact('title', 'tim', 'anggota','project','hasProjectRelation'));
     }
 
     protected function historyPage($code)
@@ -103,8 +113,11 @@ class timController extends Controller
         $title = "Tim/history";
         $tim = Tim::where('code', $code)->firstOrFail();
         $anggota = $tim->user()->get();
+        $project = $tim->project->first();
 
-        return view('siswa.tim.history', compact('title', 'tim', 'anggota'));
+        $hasProjectRelation = $tim->project()->exists();
+
+        return view('siswa.tim.history', compact('title', 'tim', 'anggota','hasProjectRelation','project'));
     }
 
     protected function historyPresentasiPage($code)
@@ -113,12 +126,15 @@ class timController extends Controller
         $tim = Tim::where('code', $code)->firstOrFail();
         $anggota = $tim->user()->get();
         $presentasi = $tim->presentasi()->get();
+        $project = $tim->project->first();
+
+        $hasProjectRelation = $tim->project()->exists();
         $jadwal = [];
         foreach ($presentasi as $data) {
             $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
         }
 
-        return view('siswa.tim.history-presentasi', compact('title', 'tim', 'anggota', 'presentasi', 'jadwal'));
+        return view('siswa.tim.history-presentasi', compact('title', 'tim', 'anggota', 'presentasi', 'jadwal','hasProjectRelation','project'));
     }
 
     protected function catatanPage($code)
@@ -126,9 +142,11 @@ class timController extends Controller
         $title = "catatan";
         $tim = Tim::where('code', $code)->firstOrFail();
         $anggota = $tim->user()->get();
-        $catatans = catatan::where('user_id', Auth::user()->id)->get();
+        $project = $tim->project->first();
 
-        return view('siswa.tim.catatan', compact('title', 'anggota', 'tim', 'catatans'));
+        $hasProjectRelation = $tim->project()->exists();
+
+        return view('siswa.tim.catatan', compact('title', 'anggota', 'tim','hasProjectRelation','project'));
     }
 
     protected function historyCatatanPage($code)
@@ -136,9 +154,10 @@ class timController extends Controller
         $title = "catatan history";
         $tim = Tim::where('code', $code)->firstOrFail();
         $anggota = $tim->user()->get();
-        $catatans = catatan::where('user_id', Auth::user()->id)->get();
-        // dd($catatans);
+        $project = $tim->project->first();
 
-        return view('siswa.tim.history-catatan', compact('title', 'anggota', 'tim', 'catatans'));
+        $hasProjectRelation = $tim->project()->exists();
+
+        return view('siswa.tim.history-catatan', compact('title', 'anggota', 'tim','hasProjectRelation','project'));
     }
 }

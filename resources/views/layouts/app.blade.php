@@ -275,7 +275,7 @@
                         <ul class="">
                             @forelse ($tims as $item)
                                 <li class="menu-item ">
-                                    <a href="{{ route('tim.board', $item->code) }}"
+                                    <a href="{{ route('tim.project', $item->code) }}"
                                         class="menu-link d-flex align-items-center gap-2">
                                         <img width="30" height="30"
                                             style="width: 30px;height:30px;object-fit: cover"

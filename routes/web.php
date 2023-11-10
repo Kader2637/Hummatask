@@ -48,29 +48,31 @@ Route::prefix('siswa')->middleware(['auth', 'siswa'])->group(function () {
 Route::prefix('tim')->controller(timController::class)->group(function () {
     // Halaman Tim
     Route::middleware(['auth', 'siswa'])->group(function () {
+        Route::get('project/{code}', 'projectPage')->name('tim.project');
+        // Process
+        Route::patch('edit-project/{code}', [PengajuanProjekController::class, 'editProject'])->name('tim.editProject');
+        Route::post('project/ajukan-project/{code}', [PengajuanProjekController::class, 'ajukanProject'])->name('tim.ajukanProject');
+
+    });
+    Route::middleware(['auth', 'siswa'])->group(function () {
         Route::get('board/{code}', 'boardPage')->name('tim.board');
         Route::get('kalender/{code}', 'kalenderPage')->name('tim.kalender');
         Route::get('catatan/{code}', 'catatanPage')->name('tim.catatan');
         Route::get('history/{code}', 'historyPage')->name('tim.history');
         Route::get('history-presentasi/{code}', 'historyPresentasiPage')->name('tim.historyPresentasi');
         Route::get('history-catatan/{code}', 'historyCatatanPage')->name('tim.historyCatatan');
-        Route::get('project/{code}', 'projectPage')->name('tim.project');
-
-        // Process
+        
         Route::patch('/ubah-status', 'ubahStatus')->name('ubahStatus');
         Route::delete('/delete-tugas', 'hapusTugas')->name('delete.tugas');
         Route::post('/add-comment', 'comments')->name('tim.addComment');
         Route::get('/view-comment', 'viewComments');
         Route::post('catatan', [catatanController::class, 'store'])->name('catatan.store');
-        Route::patch('/catatan/update/{code}', [catatanController::class, 'update'])->name('catatan.update');
-        Route::delete('/catatan/delete/{code}', [catatanController::class, 'delete'])->name('catatan.delete');
-        Route::post('project/ajukan-project/{code}', [PengajuanProjekController::class, 'ajukanProject'])->name('tim.ajukanProject');
 
+        
         // proses di halaman tim
         Route::get('tampil-tugas/{code}', [TugasController::class, 'getData'])->name('tim.tampilTugas');
         Route::post('tambah-tugas', [TugasController::class, 'buatTugas'])->name('tim.tambah-tugas');
         Route::post('ajukan-presentasi/{code}', [PresentasiController::class, 'ajukanPresentasi'])->name('ajukan-presentasi');
-        Route::patch('edit-project/{code}', [PengajuanProjekController::class, 'editProject'])->name('tim.editProject');
     });
 });
 

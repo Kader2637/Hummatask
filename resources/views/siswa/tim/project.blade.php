@@ -214,7 +214,7 @@
                                     placeholder="Masukkan URL Repository" value="{{ $tim->repository }}">
                             </div>
                         </div>
-                        @if (@isset($project) && $project->deskripsi)
+                        @if (@isset($project) && $project->status_project === 'approved')
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="nameWithTitle" class="form-label">Deskripsi</label>
@@ -345,7 +345,7 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="progres-bar">
-                                                @if ($project)
+                                                @if (@isset($project) && $project->status_project === 'approved')
                                                     @if ($project->deadline > now())
                                                         <div class="d-flex justify-content-between">
                                                             <span>Hari</span>

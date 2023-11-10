@@ -543,51 +543,60 @@
                     </a>
                 </div>
                 <div class="menu-inner-shadow"></div>
-
                 <ul class="menu-inner py-1 ">
-                    <li class="menu-item @if ($title == 'Tim/board') active @endif ">
-                        <a href="{{ route('tim.board', $tim->code) }}"
-                            class="menu-link d-flex align-items-center gap-2">
-                            <i class="menu-icon tf-icons ti ti-layout-dashboard"></i>
-                            <div class="w-100 d-flex align-items-center justify-content-between">Board</div>
-                        </a>
-                    </li>
-                    <li class="menu-item ">
-                        <a style="cursor: pointer" data-bs-toggle="offcanvas" data-bs-target="#offcanvasEnd"
-                            class="menu-link d-flex align-items-center gap-2">
-                            <i class="menu-icon tf-icons ti ti-chart-line"></i>
-                            <div class="w-100 d-flex align-items-center justify-content-between">Statistik Project
-                            </div>
-                        </a>
-                    </li>
-                    <li class="menu-item @if ($title == 'Tim/kalender') active @endif ">
-                        <a href="{{ route('tim.kalender', $tim->code) }}"
-                            class="menu-link d-flex align-items-center gap-2">
-                            <i class="menu-icon tf-icons ti ti-calendar"></i>
-                            <div class="w-100 d-flex align-items-center justify-content-between">Kalender</div>
-                        </a>
-                    </li>
-                    <li class="menu-item @if ($title == 'Tim/history') active @endif ">
-                        <a href="{{ route('tim.history', $tim->code) }}"
-                            class="menu-link d-flex align-items-center gap-2">
-                            <i class="menu-icon tf-icons ti ti-history"></i>
-                            <div class="w-100 d-flex align-items-center justify-content-between">History</div>
-                        </a>
-                    </li>
-                    <li class="menu-item @if ($title == 'catatan') active @endif">
-                        <a href="{{ route('tim.catatan', $tim->code) }}"
-                            class="menu-link d-flex align-items-center gap-2">
-                            <i class="menu-icon tf-icons ti ti-clipboard-text"></i>
-                            <div class="w-100 d-flex align-items-center justify-content-between">Catatan</div>
-                        </a>
-                    </li>
-                    <li class="menu-item @if ($title == 'Tim/presentasi') active @endif ">
-                        <a href="{{ route('tim.historyPresentasi', $tim->code) }}"
-                            class="menu-link d-flex align-items-center gap-2">
-                            <i class="menu-icon tf-icons ti ti-presentation"></i>
-                            <div class="w-100 d-flex align-items-center justify-content-between">Presentasi</div>
-                        </a>
-                    </li>
+                    @if ($project && $project->deskripsi)
+                        <li class="menu-item @if ($title == 'Tim/board') active @endif ">
+                            <a href="{{ route('tim.board', $tim->code) }}"
+                                class="menu-link d-flex align-items-center gap-2">
+                                <i class="menu-icon tf-icons ti ti-layout-dashboard"></i>
+                                <div class="w-100 d-flex align-items-center justify-content-between">Board</div>
+                            </a>
+                        </li>
+                    @endif
+                    @if ($project && $project->deskripsi)
+                        <li class="menu-item ">
+                            <a style="cursor: pointer" data-bs-toggle="offcanvas" data-bs-target="#offcanvasEnd"
+                                class="menu-link d-flex align-items-center gap-2">
+                                <i class="menu-icon tf-icons ti ti-chart-line"></i>
+                                <div class="w-100 d-flex align-items-center justify-content-between">Statistik Project
+                                </div>
+                            </a>
+                        </li>
+                    @endif
+                    @if ($project && $project->deskripsi)
+                        <li class="menu-item @if ($title == 'Tim/kalender') active @endif ">
+                            <a href="{{ route('tim.kalender', $tim->code) }}"
+                                class="menu-link d-flex align-items-center gap-2">
+                                <i class="menu-icon tf-icons ti ti-calendar"></i>
+                                <div class="w-100 d-flex align-items-center justify-content-between">Kalender</div>
+                            </a>
+                        </li>
+                    @endif
+                    @if ($project && $project->deskripsi && $hasProjectRelation)
+                        <li class="menu-item @if ($title == 'Tim/history') active @endif ">
+                            <a href="{{ route('tim.history', $tim->code) }}"
+                                class="menu-link d-flex align-items-center gap-2">
+                                <i class="menu-icon tf-icons ti ti-history"></i>
+                                <div class="w-100 d-flex align-items-center justify-content-between">History</div>
+                            </a>
+                        </li>
+                    @endif
+                    @if ($project && $project->deskripsi)
+                        <li class="menu-item @if ($title == 'catatan') active @endif">
+                            <a href="{{ route('tim.catatan', $tim->code) }}" class="menu-link d-flex align-items-center gap-2">
+                                <i class="menu-icon tf-icons ti ti-clipboard-text"></i>
+                                <div class="w-100 d-flex align-items-center justify-content-between">Catatan</div>
+                            </a>
+                        </li>
+                    @endif
+                    @if ($project && $project->deskripsi)
+                        <li class="menu-item @if ($title == 'Tim/presentasi') active @endif">
+                            <a href="{{ route('tim.historyPresentasi', $tim->code) }}" class="menu-link d-flex align-items-center gap-2">
+                                <i class="menu-icon tf-icons ti ti-presentation"></i>
+                                <div class="w-100 d-flex align-items-center justify-content-between">Presentasi</div>
+                            </a>
+                        </li>
+                    @endif
                     <li class="menu-item @if ($title == 'Tim/project') active @endif ">
                         <a href="{{ route('tim.project', $tim->code) }}"
                             class="menu-link d-flex align-items-center gap-2">
