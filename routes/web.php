@@ -133,6 +133,7 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::post('tambah-user-user', [tambahUsersController::class, 'storeCsv'])->name('tambah.users.csv');
     Route::post('tambah-user', [tambahUsersController::class, 'store'])->name('tambah.users');
     Route::post('tambah-mentor', [tambahUsersController::class, 'store_mentor'])->name('tambah.mentor');
+    Route::put('edit-mentor/{uuid}', [tambahUsersController::class, 'edit_mentor'])->name('edit.mentor');
     Route::post('tambah-pengelola', [tambahUsersController::class, 'tambah_pengelola'])->name('tambah.pengelola');
     Route::post('tambah-role', [tambahUsersController::class, 'tambah_role'])->name('tambah.roles');
 
