@@ -373,7 +373,7 @@
                                             @else
                                                 <img src="{{ asset('assets/img/avatars/1.png') }}" alt=""
                                                     style="width:30px;hight:30px;border-radius:50%">
-                                                {{ $item->username }}
+                                                {{ $item->username }}   
                                             @endif
                                         </td>
                                         <td>{{ $item->email }}</td>

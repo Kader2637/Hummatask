@@ -15,20 +15,25 @@ use Illuminate\Support\Facades\DB;
 
 class timController extends Controller
 {
-    protected function boardPage($code)
+        protected function boardPage($code)
     {
         $title = "Tim/board";
         $tim = Tim::where('code', $code)->firstOrFail();
+
+        $project = $tim->project->first();
+        if ($project->deskripsi === null) {
+            return back()->with('tolak', 'Tolong lengkapi deskripsi proyek terlebih dahulu');
+        }
+
         $anggota = $tim->user()->get();
         $tugas_baru = $tim->tugas()->where('status_tugas', 'tugas_baru')->get();
         $tugas_dikerjakan = $tim->tugas()->where('status_tugas', 'dikerjakan')->get();
         $tugas_revisi = $tim->tugas()->where('status_tugas', 'revisi')->get();
         $tugas_selesai = $tim->tugas()->where('status_tugas', 'selesai')->get();
-        $project = $tim->project->first();
 
         $hasProjectRelation = $tim->project()->exists();
 
-        $selesaiCount = $tim->tugas->where('status_t ugas', 'selesai')->count();
+        $selesaiCount = $tim->tugas->where('status_tugas', 'selesai')->count();
         $revisiCount = $tim->tugas->where('status_tugas', 'revisi')->count();
         $tugasBaruCount = $tim->tugas->where('status_tugas', 'tugas_baru')->count();
 
@@ -41,6 +46,8 @@ class timController extends Controller
 
         return view('siswa.tim.board', compact('chartData','title', 'tim', 'anggota', 'tugas_baru', 'tugas_dikerjakan', 'tugas_revisi', 'tugas_selesai','hasProjectRelation','project'));
     }
+
+
 
     protected function ubahStatus(Request $request)
     {
@@ -102,6 +109,10 @@ class timController extends Controller
     {
         $title = "Tim/kalender";
         $tim = Tim::where('code', $code)->firstOrFail();
+        $project = $tim->project->first();
+        if ($project->deskripsi === null) {
+            return back()->with('tolak', 'Tolong lengkapi deskripsi proyek terlebih dahulu');
+        }
         $anggota = $tim->user()->get();
         $project = $tim->project->first();
 
@@ -125,7 +136,9 @@ class timController extends Controller
         $title = "Tim/project";
         $tim = Tim::where('code', $code)->firstOrFail();
         $anggota = $tim->anggota()->get();
-        $project = $tim->project()->first();
+        $project = $tim->project->first();
+
+        $hasProjectRelation = $tim->project()->exists();
         $selesaiCount = $tim->tugas->where('status_tugas', 'selesai')->count();
         $revisiCount = $tim->tugas->where('status_tugas', 'revisi')->count();
         $tugasBaruCount = $tim->tugas->where('status_tugas', 'tugas_baru')->count();
@@ -137,7 +150,7 @@ class timController extends Controller
             ['Tugas Baru', $tugasBaruCount]
         ];
 
-        return view('siswa.tim.project', compact('chartData', 'title', 'tim', 'anggota', 'project'));
+        return view('siswa.tim.project', compact('chartData', 'title', 'tim', 'anggota', 'project','hasProjectRelation'));
 
     }
 
@@ -145,6 +158,11 @@ class timController extends Controller
     {
         $title = "Tim/history";
         $tim = Tim::where('code', $code)->firstOrFail();
+
+        $project = $tim->project->first();
+        if ($project->deskripsi === null) {
+            return back()->with('tolak', 'Tolong lengkapi deskripsi proyek terlebih dahulu');
+        }
         $anggota = $tim->user()->get();
         $project = $tim->project->first();
 
@@ -167,6 +185,11 @@ class timController extends Controller
     {
         $title = "Tim/presentasi";
         $tim = Tim::where('code', $code)->firstOrFail();
+
+        $project = $tim->project->first();
+        if ($project->deskripsi === null) {
+            return back()->with('tolak', 'Tolong lengkapi deskripsi proyek terlebih dahulu');
+        }
         $anggota = $tim->user()->get();
         $presentasi = $tim->presentasi()->get();
         $project = $tim->project->first();
@@ -194,6 +217,11 @@ class timController extends Controller
     {
         $title = "catatan";
         $tim = Tim::where('code', $code)->firstOrFail();
+
+        $project = $tim->project->first();
+        if ($project->deskripsi === null) {
+            return back()->with('tolak', 'Tolong lengkapi deskripsi proyek terlebih dahulu');
+        }
         $anggota = $tim->user()->get();
         $project = $tim->project->first();
 
@@ -217,6 +245,11 @@ class timController extends Controller
     {
         $title = "catatan history";
         $tim = Tim::where('code', $code)->firstOrFail();
+
+        $project = $tim->project->first();
+        if ($project->deskripsi === null) {
+            return back()->with('tolak', 'Tolong lengkapi deskripsi proyek terlebih dahulu');
+        }
         $anggota = $tim->user()->get();
         $catatans = catatan::where('user_id', Auth::user()->id)->get();
         // dd($catatans);

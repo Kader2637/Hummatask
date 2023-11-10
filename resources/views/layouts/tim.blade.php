@@ -64,9 +64,9 @@
 
     {{-- <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" /> --}}
     {{-- <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" /> --}}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="sweetalert2.min.js"></script>
-    <link rel="stylesheet" href="sweetalert2.min.css">
+    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> --}}
+    <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}">
     <style>
         body,
         {
@@ -1087,6 +1087,8 @@
                 icon: 'success',
                 title: 'Berhasil',
                 text: '{{ session('success') }}', // Teks pesan dari sesi
+                showConfirmButton: false,
+                timer: 3000
             });
         </script>
     @elseif (session()->has('error'))
@@ -1095,9 +1097,22 @@
                 icon: 'error',
                 title: 'Error',
                 text: '{{ session('error') }}', // Teks pesan dari sesi
+                showConfirmButton: false,
+                timer: 3000
             });
         </script>
     @endif
+    @if (session()->has('tolak'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '{{ session('tolak') }}', // Teks pesan dari sesi
+            showConfirmButton: false,
+            timer: 3000
+        });
+    </script>
+@endif
 
 </body>
 
