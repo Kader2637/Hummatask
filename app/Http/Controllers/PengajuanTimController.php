@@ -77,10 +77,14 @@ class PengajuanTimController extends Controller
             $daftarAnggota[] = $request->ketuaKelompok;
             $daftarAnggota[] = $request->ketuaProjek;
             $uniqueDaftarAnggota = array_unique($daftarAnggota);
-            if (count($daftarAnggota) !== count($uniqueDaftarAnggota)) {
-                throw new \Exception('User sudah digunakan di opsi lain.');
+
+            // Memeriksa apakah ID anggota sudah terdaftar di tim lain
+            $existingAnggota = Anggota::whereIn('user_id', $uniqueDaftarAnggota)->first();
+            if ($existingAnggota) {
+                throw new \Exception('ID anggota sudah digunakan di opsi lain.');
             }
 
+            // Melanjutkan proses pendaftaran tim baru
             $tim = new Tim;
             $tim->code = Str::uuid();
             // $tim->nama = $request->nama;
@@ -89,11 +93,7 @@ class PengajuanTimController extends Controller
             $tim->kadaluwarsa = true;
             $tim->save();
 
-            // membuat anggota
-            $daftarAnggota = $request->anggota;
-            $daftarAnggota[] = $request->ketuaKelompok;
-            $daftarAnggota[] = $request->ketuaProjek;
-            $uniqueDaftarAnggota = array_unique($daftarAnggota);
+            // Membuat anggota
             foreach ($uniqueDaftarAnggota as $anggota) {
                 $anggotaModel = new Anggota;
                 $anggotaModel->tim_id = $tim->id;
@@ -114,7 +114,16 @@ class PengajuanTimController extends Controller
                 $anggotaModel->save();
             }
 
-            // membuat notif
+            return response()->json(['message' => 'Berhasil membentuk tim'], 200);
+        } catch (QueryException $e) {
+            // Tangani exception terkait query/database
+            return response()->json(['message' => 'Gagal membentuk tim. Terjadi kesalahan pada database.'], 500);
+        } catch (\Exception $e) {
+            // Tangani exception umum, termasuk kesalahan validasi
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
+    }
+           // membuat notif
             // $notifAnggota = $tim->user;
             // foreach ($notifAnggota as $user) {
             //     $notif = new Notifikasi;
@@ -125,20 +134,6 @@ class PengajuanTimController extends Controller
             //     $notif->user_id = $user->id;
             //     $notif->save();
             // }
-
-
-
-
-
-            return response()->json(['message' => 'Berhasil membentuk tim'], 200);
-        } catch (QueryException $e) {
-            // Tangani exception terkait query/database
-            return response()->json(['message' => 'Gagal membentuk tim. Terjadi kesalahan pada database.'], 500);
-        } catch (\Exception $e) {
-            // Tangani exception umum, termasuk kesalahan validasi
-            return response()->json(['message' => $e->getMessage()], 422);
-        }
-    }
     protected function pembuatanTimProjectKetua(RequestPembentukanTimProjectKetua $request)
     {
         try {

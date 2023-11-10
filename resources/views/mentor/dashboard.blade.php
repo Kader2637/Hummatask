@@ -63,7 +63,7 @@
                             <li class="ct-series-1 d-flex flex-column">
                                 <h5 class="mb-0">Tim</h5>
                                 <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                    style="background-color: rgb(184, 235, 244); height:6px; width: 30px;"></span>
+                                    style="background-color: grey; height:6px; width: 30px;"></span>
                                 <div class="text-muted"></div>
                             </li>
                         </ul>
@@ -115,70 +115,94 @@
 @section('script')
     <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}"></script>
 
+<script>
+const doughnutChart = document.getElementById('doughnutChart');
+const cyanColor = '#28dac6';
+const orangeLightColor = '#FDAC34';
+let cardColor, headingColor, labelColor, borderColor, legendColor;
 
-    <script>
-        const cyanColor = '#28dac6';
-        const orangeLightColor = '#FDAC34';
-        let cardColor, headingColor, labelColor, borderColor, legendColor;
+cardColor = config.colors.cardColor;
+headingColor = config.colors.headingColor;
+labelColor = config.colors.textMuted;
+legendColor = config.colors.bodyColor;
+borderColor = config.colors.borderColor;
 
-        cardColor = config.colors.cardColor;
-        headingColor = config.colors.headingColor;
-        labelColor = config.colors.textMuted;
-        legendColor = config.colors.bodyColor;
-        borderColor = config.colors.borderColor;
+if (doughnutChart) {
+    const processedData = <?php echo json_encode($chartData); ?>;
+    const dataValues = processedData.map(data => data.disetujui);
+    const acount = processedData.map(data => data['1']);
+    const tims = processedData.map(data => data['2']);
 
-        const doughnutChart = document.getElementById('doughnutChart');
-        if (doughnutChart) {
-            const processedData = <?php echo json_encode($chartData); ?>;
-            const dataValues = processedData.map(data => data.disetujui);
-            const acount = processedData.map(data => data['1']);
-            const tims = processedData.map(data => data['2']);
+    // Menggabungkan data dari kedua set data
+    const mergedDataValues = acount.concat(dataValues).concat(tims);
+    const mergedBackgroundColor = acount.map(() => 'yellow').concat(dataValues.map(() => 'blue')).concat(tims.map(() =>
+        'grey'));
 
-            // Menggabungkan data dari kedua set data
-            const mergedDataValues = acount.concat(dataValues).concat(tims);
-            const mergedBackgroundColor = acount.map(() => 'yellow').concat(dataValues.map(() => 'blue')).concat(tims.map(() =>
-                'grey'));
-
-            const doughnutChartVar = new Chart(doughnutChart, {
-                type: 'doughnut',
-                data: {
-                    datasets: [{
-                        data: mergedDataValues,
-                        backgroundColor: mergedBackgroundColor,
-                        borderWidth: 0,
-                        pointStyle: 'rectRounded'
-                    }]
+    const doughnutChartVar = new Chart(doughnutChart, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: mergedDataValues,
+                backgroundColor: mergedBackgroundColor,
+                borderWidth: 0,
+                pointStyle: 'rectRounded'
+            }],
+            labels: ['Revisi', 'Tugas Baru', 'Selesai']
+        },
+        options: {
+            responsive: true,
+            animation: {
+                duration: 500
+            },
+            cutout: '68%',
+            plugins: {
+                legend: {
+                    display: false
                 },
-                options: {
-                    responsive: true,
-                    animation: {
-                        duration: 500
-                    },
-                    cutout: '68%',
-                    plugins: {
-                        legend: {
-                            display: false
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const label = context.label || '';
+                            const value = context.parsed;
+                            const output = '' + label + ' : ' + value;
+                            return output;
                         },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const label = context.label || '';
-                                    const value = context.parsed;
-                                    const output = ' ' + label + ' : ' + value + ' %';
-                                    return output;
-                                }
-                            },
-                            backgroundColor: cardColor,
-                            titleColor: headingColor,
-                            bodyColor: legendColor,
-                            borderWidth: 1,
-                            borderColor: borderColor
+                        afterLabel: function(context) {
+                            const datasetIndex = context.datasetIndex;
+                            const dataIndex = context.dataIndex;
+                            const data = doughnutChartVar.data.datasets[datasetIndex].data;
+                            const label = doughnutChartVar.data.labels[dataIndex];
+                            const value = data[dataIndex];
+
+                            // Menampilkan jumlah saat kursor mengarah ke elemen chart
+                            let amountDescription = '';
+                            if (label === 'Revisi') {
+                                amountDescription = 'Revisi: ' + acount[dataIndex];
+                            } else if (label === 'Tugas Baru') {
+                                amountDescription = 'Tugas Baru: ' + dataValues[dataIndex];
+                            } else if (label === 'Selesai') {
+                                amountDescription = 'Selesai: ' + tims[dataIndex];
+                            }
+
+                            return `Jumlah ${amountDescription}: ${value}`;
                         }
+                    },
+                    backgroundColor: cardColor,
+                    titleColor: headingColor,
+                    bodyColor: legendColor,
+                    borderWidth: 1,
+                    borderColor: borderColor,
+                    labelColor: labelColor,
+                    displayColors: false,
+                    titleFont: {
+                        size: 14
                     }
                 }
-            });
+            }
         }
-    </script>
+    });
+}
+</script>
 
     <script>
         var chartData = @json($chartData);

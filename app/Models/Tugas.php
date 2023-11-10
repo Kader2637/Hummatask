@@ -34,4 +34,8 @@ class Tugas extends Model
     {
         return $this->belongsTo(Tugas::class);
     }
+    public function anggota(): BelongsTo
+    {
+        return $this->belongsTo(Anggota::class);
+    }
 }

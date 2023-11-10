@@ -282,6 +282,26 @@
                                     <div class="card-body">
                                         <canvas id="project" class="chartjs mb-4" data-height="267"
                                             style="display: block; box-sizing: border-box; height: 200px; width: 200px;"></canvas>
+                                            <ul class="doughnut-legend d-flex justify-content-around ps-0 mb-2 pt-1">
+                                                <li class="ct-series-0 d-flex flex-column">
+                                                    <h5 class="mb-0">Tugas Baru</h5>
+                                                    <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
+                                                        style="background-color: grey; height:6px;width:30px;"></span>
+                                                    <div class="text-muted"></div>
+                                                </li>
+                                                <li class="ct-series-1 d-flex flex-column">
+                                                    <h5 class="mb-0">Revisi</h5>
+                                                    <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
+                                                        style="background-color: blue; height:6px; width:30px;"></span>
+                                                    <div class="text-muted"></div>
+                                                </li>
+                                                <li class="ct-series-1 d-flex flex-column">
+                                                    <h5 class="mb-0">Selesai</h5>
+                                                    <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
+                                                        style="background-color: yellow; height:6px; width: 30px;"></span>
+                                                    <div class="text-muted"></div>
+                                                </li>
+                                            </ul>
                                     </div>
                                 </div>
                             </div>
@@ -468,28 +488,4 @@
     <script src="{{ asset('assets/js/forms-tagify.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <script>
-        const project = document.getElementById('project');
-        const data = {
-            labels: [
-                'Progres',
-                'Selesai',
-                'Revisi'
-            ],
-            datasets: [{
-                label: 'My First Dataset',
-                data: [12, 8, 2],
-                backgroundColor: [
-                    'rgb(102, 110, 232)',
-                    'rgb(54, 162, 235)',
-                    'rgb(255, 205, 86)'
-                ],
-                hoverOffset: 4
-            }]
-        };
-        new Chart(project, {
-            type: 'pie',
-            data: data
-        })
-    </script>
 @endsection

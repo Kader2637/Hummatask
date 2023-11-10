@@ -194,6 +194,7 @@
         });
     </script>
 
+
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEnd" aria-labelledby="offcanvasEndLabel">
         <div class="offcanvas-header">
             <h5 id="offcanvasEndLabel" class="offcanvas-title">Statistik Project</h5>
@@ -221,24 +222,26 @@
                                 <div class="card mb-3">
                                     <h5 class="card-header">Progres Tim</h5>
                                     <div class="card-body">
-                                        <canvas id="doughnutChart" class="chartjs mb-4" data-height="350"
-                                            height="200" width="200"
-                                            style="display: block; box-sizing: border-box; height: 100px; width: 100px;"></canvas>
+                                        <canvas id="project" class="chartjs mb-4" data-height="267"
+                                        style="display: block; box-sizing: border-box; height: 200px; width: 200px;"></canvas>
                                         <ul class="doughnut-legend d-flex justify-content-around ps-0 mb-2 pt-1">
                                             <li class="ct-series-0 d-flex flex-column">
-                                                <h5 class="mb-0" style="font-size: 15px">Proses</h5>
+                                                <h5 class="mb-0">Tugas Baru</h5>
                                                 <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                                    style="background-color: rgb(102, 110, 232);width:35px; height:6px;"></span>
+                                                    style="background-color: grey; height:6px;width:30px;"></span>
+                                                <div class="text-muted"></div>
                                             </li>
                                             <li class="ct-series-1 d-flex flex-column">
-                                                <h5 class="mb-0" style="font-size: 15px">Selesai</h5>
+                                                <h5 class="mb-0">Revisi</h5>
                                                 <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                                    style="background-color: rgb(40, 208, 148);width:35px; height:6px;"></span>
+                                                    style="background-color: blue; height:6px; width:30px;"></span>
+                                                <div class="text-muted"></div>
                                             </li>
-                                            <li class="ct-series-2 d-flex flex-column">
-                                                <h5 class="mb-0" style="font-size: 15px">Revisi</h5>
+                                            <li class="ct-series-1 d-flex flex-column">
+                                                <h5 class="mb-0">Selesai</h5>
                                                 <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                                    style="background-color: rgb(253, 172, 52);width:35px; height:6px;"></span>
+                                                    style="background-color: yellow; height:6px; width: 30px;"></span>
+                                                <div class="text-muted"></div>
                                             </li>
                                         </ul>
                                     </div>
@@ -251,7 +254,7 @@
                                                 <i class="ti ti-credit-card ti-sm"></i>
                                             </span>
                                         </div>
-                                        <h5 class="card-title mb-0 mt-2">13</h5>
+                                        <h5 class="card-title mb-0 mt-2">5</h5>
                                         <small>Tugas Terselesaikan</small>
                                         <div id="revenueGenerated" style="min-height: 130px;">
                                             <div id="apexchartsv5zg0eqk"
@@ -989,30 +992,26 @@
     <!-- END: Page JS-->
 
     @yield('script')
-
     <script>
-        const cyanColor = '#28dac6',
-            orangeLightColor = '#FDAC34';
-        let cardColor, headingColor, labelColor, borderColor, legendColor;
+        const cardColor = '#28dac6';
+        const headingColor = '#FDAC34';
+        const black = '#000000';
 
-
-        cardColor = config.colors.cardColor;
-        headingColor = config.colors.headingColor;
-        labelColor = config.colors.textMuted;
-        legendColor = config.colors.bodyColor;
-        borderColor = config.colors.borderColor;
-
-        const doughnutChart = document.getElementById('doughnutChart');
+        const doughnutChart = document.getElementById('project');
         if (doughnutChart) {
+            const processedData = <?php echo json_encode($chartData); ?>;
+
+            const labels = processedData.map(data => data[0]);
+            const values = processedData.map(data => data[1]);
+
             const doughnutChartVar = new Chart(doughnutChart, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Selesai', 'Revisi', 'Progres'],
+                    labels: labels,
                     datasets: [{
-                        data: [10, 10, 80],
-                        backgroundColor: [cyanColor, orangeLightColor, config.colors.primary],
-                        borderWidth: 0,
-                        pointStyle: 'rectRounded'
+                        data: values,
+                        backgroundColor: [cardColor, 'yellow', 'blue', 'grey'],
+                        hoverOffset: 4
                     }]
                 },
                 options: {
@@ -1028,19 +1027,29 @@
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
-                                    const label = context.labels || '',
-                                        value = context.parsed;
-                                    const output = ' ' + label + ' : ' + value + ' %';
+                                    const label = context.label || '';
+                                    const value = context.parsed;
+                                    const output = ' ' + label + ' : ' + value ;
                                     return output;
                                 }
                             },
-                            // Updated default tooltip UI
-                            //   rtl: isRtl,
                             backgroundColor: cardColor,
-                            titleColor: headingColor,
-                            bodyColor: legendColor,
+                            titleColor: cardColor,
+                            bodyColor: black,
                             borderWidth: 1,
-                            borderColor: borderColor
+                            borderColor: cardColor,
+                            afterLabel: function(context) {
+                                const datasetIndex = context.datasetIndex;
+                                const dataIndex = context.dataIndex;
+                                const data = doughnutChartVar.data.datasets[datasetIndex].data;
+                                const label = doughnutChartVar.data.labels[dataIndex];
+                                const value = data[dataIndex];
+
+                                // Menampilkan jumlah saat kursor mengarah ke elemen chart
+                                const amountDescription = label === 'Revisi' ? 'Revisi' : label ===
+                                    'Tugas Baru' ? 'Tugas Baru' : 'Selesai';
+                                return `Jumlah ${amountDescription}: ${value}`;
+                            }
                         }
                     }
                 }
