@@ -12,6 +12,7 @@ use App\Models\Tim;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Code;
@@ -174,32 +175,33 @@ class mentorController extends Controller
     protected function detailPengajuan($code)
     {
         $projects = Project::where('code', $code)->firstOrFail();
+
         return response()->view('mentor.detail-pengajuan', compact('projects'));
     }
 
     // Return view projek mentor
     protected function projekPage()
     {
+        $pengajuan = Project::with('tim.anggota.user', 'tim.tema', 'anggota.jabatan', 'anggota.user')->where('status_project', 'notapproved')->get();
         $projects = Project::with('tim.anggota', 'tema')
             ->where('status_project', 'approved')
             ->get();
 
-
         $request = Request::instance();
         $code = $request->input('temaProjek');
         $projek = Tim::query();
-
+        // dd($projects);
         if ($code === 'all') {
             // Tidak ada filter, tampilkan semua proyek
-          } elseif ($code === 'solo') {
+        } elseif ($code === 'solo') {
             $projek->where('status_tim', 'solo');
-          } elseif ($code === 'pre_mini') {
+        } elseif ($code === 'pre_mini') {
             $projek->where('status_tim', 'pre_mini');
-          } elseif ($code === 'mini') {
+        } elseif ($code === 'mini') {
             $projek->where('status_tim', 'mini');
-          } elseif ($code === 'big') {
+        } elseif ($code === 'big') {
             $projek->where('status_tim', 'big');
-          }
+        }
 
         $projek = $projek->get();
 
@@ -208,13 +210,13 @@ class mentorController extends Controller
                 $query->where('kadaluwarsa', true);
             })
             ->get();
-            $tim = Tim::all();
+        $tim = Tim::all();
 
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
+        $tims = Tim::with('user')->where('kadaluwarsa', '1')->get();
+        $members = Tim::with('user')->where('kadaluwarsa', '1')->get();
 
-
-
-        return response()->view('mentor.projek', compact('projek','users', 'status_tim', 'projects', 'tim'));
+        return response()->view('mentor.projek', compact('members', 'tims', 'pengajuan', 'projek', 'users', 'status_tim', 'projects', 'tim'));
     }
 
     protected function Project(Request $request)
@@ -286,6 +288,5 @@ class mentorController extends Controller
             $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd');
         }
         return response()->view('mentor.presentasi', compact('persetujuan_presentasi', 'konfirmasi_presentasi', 'jadwal', 'hari', 'historyPresentasi'));
-
     }
 }

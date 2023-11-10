@@ -163,13 +163,13 @@
 <body>
     <script src="https://code.jquery.com/jquery-2.2.3.min.js"
         integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
-    <div id="loader">
-        <div class="preloader">
-            <div class="d-flex justify-content-center custom-margin">
-                <img src="{{ asset('assets/img/icons/icon.svg') }}" width="180" height="160" alt="Loader Image">
+        <div id="loader">
+            <div class="preloader">
+                <div class="d-flex justify-content-center custom-margin">
+                    <img src="{{ asset('assets/img/icons/icon.svg') }}" width="180" height="160" alt="Loader Image">
+                </div>
             </div>
         </div>
-    </div>
     <script>
         $(window).load(function() {
 
@@ -858,8 +858,11 @@
             });
         </script>
     @endif
-  
+<<<<<<< Updated upstream
 
+
+=======
+>>>>>>> Stashed changes
     @yield('script')
 
 </body>
