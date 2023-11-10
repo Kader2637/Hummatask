@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en" class="light-style layout-compact layout-navbar-fixed layout-menu-fixed   " dir="ltr"
+<html lang="en" class="light-style" dir="ltr"
     data-theme="theme-default"
     data-assets-path="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/"
     data-base-url="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1" data-framework="laravel"
@@ -84,7 +84,7 @@
         }
 
         #loader {
-            z-index: 100;
+            z-index: 10000000;
             /* Tambahkan z-index di sini */
             position: fixed;
             top: 0;
@@ -858,11 +858,8 @@
             });
         </script>
     @endif
-<<<<<<< Updated upstream
 
 
-=======
->>>>>>> Stashed changes
     @yield('script')
 
 </body>

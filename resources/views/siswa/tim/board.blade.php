@@ -49,8 +49,7 @@
                     </div>
                 </div>
                 <div class="col-12">
-                    <div class="row"  id="tugas_baru">
-
+                    <div class="row px-2"  id="tugas_baru">
 
                     </div>
                 </div>
@@ -65,46 +64,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    @foreach ($tugas_dikerjakan as $tugas)
-                        <div class="col-12 mt-3">
-                            <div class="kanban-item card p-4">
-                                <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
-                                    <div class="item-badges">
-                                        <div class="badge rounded-pill bg-label-success">{{ $tugas->prioritas }}</div>
-                                    </div>
-                                    <div class="dropdown kanban-tasks-item-dropdown">
-                                        <i class=" ti ti-dots-vertical" id="kanban-tasks-item-dropdown"
-                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-                                        <div class="dropdown-menu dropdown-menu-end"
-                                            aria-labelledby="kanban-tasks-item-dropdown" id="{{ $tugas->uuid }}" style=""><a
-                                                class="dropdown-item" href="javascript:void(0)">Copy task link</a><a
-                                                class="dropdown-item" href="javascript:void(0)">Duplicate task</a><a
-                                                class="dropdown-item delete-task" href="javascript:void(0)">Delete</a>
-                                        </div>
-                                        </form>
-                                    </div>
-                                </div><span class="kanban-text">{{ $tugas->nama }}</span>
-                                <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
-                                    <div class="d-flex"> <span class="d-flex align-items-center me-2"><i
-                                                class="ti ti-paperclip ti-xs me-1"></i><span
-                                                class="attachments">4</span></span> <span
-                                            class="d-flex align-items-center ms-1"><i
-                                                class="ti ti-message-dots ti-xs me-1"></i><span> 12 </span></span>
-                                    </div>
-                                    <div class="avatar-group d-flex align-items-center assigned-avatar">
-                                        <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
-                                            aria-label="Bruce" data-bs-original-title="Bruce"><img
-                                                src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png"
-                                                alt="Avatar" class="rounded-circle  pull-up"></div>
-                                        <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
-                                            aria-label="Clark" data-bs-original-title="Clark"><img
-                                                src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png"
-                                                alt="Avatar" class="rounded-circle  pull-up"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
+
                 </div>
             </div>
             <div style="" class=" col-3">
@@ -116,55 +76,6 @@
                     </div>
                 </div>
                 <div class="row">
-                    @foreach ($tugas_revisi as $tugas)
-                        <div class="col-12 mt-3">
-                            <div class="kanban-item card p-4" data-eid="in-progress-1" data-comments="12"
-                                data-badge-text="UX" data-badge="success" data-due-date="5 April" data-attachments="4"
-                                data-assigned="12.png,5.png" data-members="Bruce,Clark">
-                                <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
-                                    <div class="item-badges">
-                                        <div class="badge rounded-pill bg-label-success">{{ $tugas->prioritas }}</div>
-                                    </div>
-                                    <div class="dropdown kanban-tasks-item-dropdown">
-                                        <i class=" ti ti-dots-vertical" id="kanban-tasks-item-dropdown"
-                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-                                        <div class="dropdown-menu dropdown-menu-end"
-                                            aria-labelledby="kanban-tasks-item-dropdown" style=""><a
-                                                class="dropdown-item" href="javascript:void(0)"
-                                                data-bs-toggle="offcanvas"
-                                                data-bs-target="#barRevisi{{ $tugas->id }}">Edit</a>
-                                            <form id="deleteTaskForm" action="{{ route('delete.tugas') }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <input type="text" name="nama" value="{{ $tugas->nama }}"
-                                                    style="display: none;">
-                                                <a class="dropdown-item delete-task" href="javascript:void(0)" onclick="konfirmasi({{$tugas->id}})">Delete</a>
-                                        </div>
-                                        </form>
-                                    </div>
-                                </div><span class="kanban-text">{{ $tugas->nama }}</span>
-                                <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
-                                    <div class="d-flex"> <span class="d-flex align-items-center me-2"><i
-                                                class="ti ti-paperclip ti-xs me-1"></i><span
-                                                class="attachments">4</span></span> <span
-                                            class="d-flex align-items-center ms-1"><i
-                                                class="ti ti-message-dots ti-xs me-1"></i><span> 12 </span></span>
-                                    </div>
-                                    <div class="avatar-group d-flex align-items-center assigned-avatar">
-                                        <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
-                                            aria-label="Bruce" data-bs-original-title="Bruce"><img
-                                                src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png"
-                                                alt="Avatar" class="rounded-circle  pull-up"></div>
-                                        <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
-                                            aria-label="Clark" data-bs-original-title="Clark"><img
-                                                src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png"
-                                                alt="Avatar" class="rounded-circle  pull-up"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
                 </div>
             </div>
             <div style="" class=" col-3">
@@ -176,55 +87,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    @foreach ($tugas_selesai as $tugas)
-                        <div class="col-12 mt-3">
-                            <div class="kanban-item card p-4" data-eid="in-progress-1" data-comments="12"
-                                data-badge-text="UX" data-badge="success" data-due-date="5 April" data-attachments="4"
-                                data-assigned="12.png,5.png" data-members="Bruce,Clark">
-                                <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
-                                    <div class="item-badges">
-                                        <div class="badge rounded-pill bg-label-success">{{ $tugas->prioritas }}</div>
-                                    </div>
-                                    <div class="dropdown kanban-tasks-item-dropdown">
-                                        <i class=" ti ti-dots-vertical" id="kanban-tasks-item-dropdown"
-                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-                                        <div class="dropdown-menu dropdown-menu-end"
-                                            aria-labelledby="kanban-tasks-item-dropdown" style=""><a
-                                                class="dropdown-item" href="javascript:void(0)"
-                                                data-bs-toggle="offcanvas"
-                                                data-bs-target="#barSelesai{{ $tugas->id }}">Edit</a>
-                                            <form id="deleteTaskForm" action="{{ route('delete.tugas') }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <input type="text" name="nama" value="{{ $tugas->nama }}"
-                                                    style="display: none;">
-                                                <a class="dropdown-item delete-task" href="javascript:void(0)" onclick="konfirmasi({{$tugas->id}})">Delete</a>
-                                        </div>
-                                        </form>
-                                    </div>
-                                </div><span class="kanban-text">{{ $tugas->nama }}</span>
-                                <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
-                                    <div class="d-flex"> <span class="d-flex align-items-center me-2"><i
-                                                class="ti ti-paperclip ti-xs me-1"></i><span
-                                                class="attachments">4</span></span> <span
-                                            class="d-flex align-items-center ms-1"><i
-                                                class="ti ti-message-dots ti-xs me-1"></i><span> 12 </span></span>
-                                    </div>
-                                    <div class="avatar-group d-flex align-items-center assigned-avatar">
-                                        <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
-                                            aria-label="Bruce" data-bs-original-title="Bruce"><img
-                                                src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png"
-                                                alt="Avatar" class="rounded-circle  pull-up"></div>
-                                        <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
-                                            aria-label="Clark" data-bs-original-title="Clark"><img
-                                                src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png"
-                                                alt="Avatar" class="rounded-circle  pull-up"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
+
                 </div>
             </div>
         </div>
@@ -232,147 +95,8 @@
     <!-- Kanban Wrapper -->
     <div class="kanban-wrapper"></div>
 
-    @foreach ($tugas_baru as $tugas)
-        <div class="offcanvas offcanvas-end kanban-update-item-sidebar" id="barTugas{{ $tugas->id }}">
-            <div class="offcanvas-header border-bottom">
-                <h5 class="offcanvas-title">Edit Task</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body overflow-hidden">
-                <ul class="nav nav-tabs tabs-line">
-                    <li class="nav-item">
-                        <button class="nav-link active" data-bs-toggle="tab"
-                            data-bs-target="#tab-update{{ $tugas->id }}">
-                            <i class="ti ti-edit me-2"></i>
-                            <span class="align-middle">Edit</span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tugas_baru{{ $tugas->id }}">
-                            <i class="ti ti-message-dots ti-xs me-1"></i>
-                            <span class="align-middle">Komentar</span>
-                        </button>
-                    </li>
-                </ul>
-                <div class="tab-content px-0 pb-0">
-                    <!-- Update item/tasks -->
-                    <div class="tab-pane fade show active" id="tab-update{{ $tugas->id }}" role="tabpanel">
-                        <form method="POST" id="comment-form" action="{{ route('ubahStatus') }}">
-                            @csrf
-                            @method('PATCH')
-                            <div class="mb-3">
-                                <label class="form-label" for="title">Nama Tugas</label>
-                                <input type="text" id="title{{ $tugas->id }}" class="form-control"
-                                    value="{{ $tugas->nama }}" name="nama" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="due-date">Deadline</label>
-                                <input type="date" id="due-date" name="deadline" value="{{ $tugas->deadline }}"
-                                    class="form-control" placeholder="Enter Deadline" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="newStatus">Status</label>
-                                <select class="select2 select2-label form-select" id="status" name="newStatus">
-                                    <option data-color="bg-label-success" value="tugas_baru"
-                                        {{ $tugas->status_tugas === 'tugas_baru' ? 'selected' : '' }}>Tugas Baru</option>
-                                    <option data-color="bg-label-warning"
-                                        value="dikerjakan"{{ $tugas->status_tugas === 'dikerjakan' ? 'selected' : '' }}>
-                                        Dikerjakan</option>
-                                    <option data-color="bg-label-info"
-                                        value="revisi"{{ $tugas->status_tugas === 'revisi' ? 'selected' : '' }}>Direvisi
-                                    </option>
-                                    <option data-color="bg-label-danger" value="selesai"
-                                        {{ $tugas->status_tugas === 'selesai' ? 'selected' : '' }}>Selesai</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class a="form-label" for="newPriority">Prioritas</label>
-                                <select class="select2 select2-label form-select" id="newPriority" name="newPriority">
-                                    <option data-color="bg-label-success" value="penting"
-                                        {{ $tugas->prioritas === 'penting' ? 'selected' : '' }}>Penting</option>
-                                    <option data-color="bg-label-warning" value="urgen"
-                                        {{ $tugas->prioritas === 'urgen' ? 'selected' : '' }}>Urgen</option>
-                                    <option data-color="bg-label-info" value="mendesak"
-                                        {{ $tugas->prioritas === 'mendesak' ? 'selected' : '' }}>Mendesak</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class a="form-label" for="label">Anggota</label>
-                                <select class="select2 select2-label form-select" id="label">
-                                    <option data-color="bg-label-success" value="UX">UX</option>
-                                    <option data-color="bg-label-warning" value="Images">
-                                        Images
-                                    </option>
-                                    <option data-color="bg-label-info" value="Info">Info</option>
-                                    <option data-color="bg-label-danger" value="Code Review">
-                                        Code Review
-                                    </option>
-                                    <option data-color="bg-label-secondary" value="App">
-                                        App
-                                    </option>
-                                    <option data-color="bg-label-primary" value="Charts & Maps">
-                                        Charts & Maps
-                                    </option>
-                                </select>
-                            </div>
 
-                            <div class="d-flex flex-wrap">
-                                <button type="submit" class="btn btn-primary me-3" data-bs-dismiss="offcanvas">
-                                    Update
-                                </button>
-                                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">
-                                    close
-                                </button>
-                            </div>
-                        </form>
-
-                    </div>
-                    <!-- Activities -->
-
-                    <div class="tab-pane fade" id="tugas_baru{{ $tugas->id }}" role="tabpanel">
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="media-body komentar" id="comments-container" style="margin-bottom: 200px">
-                                @foreach ($tugas->comments as $comment)
-                                    <div style="" class="media d-flex align-items-start">
-                                        <div class="avatar me-2 flex-shrink-0 mt-1">
-                                            <img src="{{ $comment->user->avatar}}" alt="Avatar"
-                                                class="rounded-circle" />
-                                        </div>
-                                        <div class="media-body">
-                                            <p class="mb-1">
-                                                <span class="fw-medium">{{ $comment->user->username }}</span>
-                                            </p>
-                                            <div class="mb-1">
-                                                <textarea class="form-control" rows="3" disabled>{{ $comment->text }}</textarea>
-                                            </div>
-                                            <small class="text-muted">{{ $comment->created_at }}</small>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        <form action="{{ route('tim.addComment') }}" method="POST"
-                            id="comment-form-{{ $tugas->id }}">
-                            @csrf
-                            <div class="mb-4 position-fixed bottom-0 bg-white pt-1">
-                                <label for="exampleFormControlTextarea1" class="form-label">Komentar</label>
-                                <input type="text" name="tugas_id" value="{{ $tugas->id }}"
-                                    style="display: none;">
-                                <textarea class="form-control position-fix bottom-0 mb-3" id="exampleFormControlTextarea1" name="text"
-                                    rows="3" style="width: 350px"></textarea>
-                                <button type="submit" class="btn btn-primary">Add Comment</button>
-
-                            </div>
-                        </form>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    @endforeach
-
-    @foreach ($tugas_dikerjakan as $tugas)
-        <div class="offcanvas offcanvas-end kanban-update-item-sidebar" id="barKerja{{ $tugas->id }}">
+        <div class="offcanvas offcanvas-end kanban-update-item-sidebar" id="editTugasBar">
             <div class="offcanvas-header border-bottom">
                 <h5 class="offcanvas-title">Edit Task</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -381,13 +105,13 @@
                 <ul class="nav nav-tabs tabs-line">
                     <li class="nav-item">
                         <button class="nav-link active" data-bs-toggle="tab"
-                            data-bs-target="#tab-update{{ $tugas->id }}">
+                            data-bs-target="#tab-update">
                             <i class="ti ti-edit me-2"></i>
                             <span class="align-middle">Edit</span>
                         </button>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#dikerjakan{{ $tugas->id }}">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#selesai">
                             <i class="ti ti-message-dots ti-xs me-1"></i>
                             <span class="align-middle">Komentar</span>
                         </button>
@@ -395,273 +119,23 @@
                 </ul>
                 <div class="tab-content px-0 pb-0">
                     <!-- Update item/tasks -->
-                    <div class="tab-pane fade show active" id="tab-update{{ $tugas->id }}" role="tabpanel">
+                    <div class="tab-pane fade show active" id="tab-update" role="tabpanel">
                         <form method="POST" action="{{ route('ubahStatus') }}">
                             @csrf
                             @method('PATCH')
                             <div class="mb-3">
                                 <label class="form-label" for="title">Nama Tugas</label>
-                                <input type="text" id="title{{ $tugas->id }}" class="form-control"
-                                    value="{{ $tugas->nama }}" name="nama" />
+                                <input type="text" id="title" class="form-control"
+                                    value="" name="nama" />
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="due-date">Deadline</label>
-                                <input type="date" id="due-date" name="deadline" class="form-control"
-                                    value="{{ $tugas->deadline }}" placeholder="Enter Deadline" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="newStatus"> Status</label>
-                                <select class="select2 select2-label form-select" id="status" name="newStatus">
-                                    <option data-color="bg-label-success" value="tugas_baru"
-                                        {{ $tugas->status_tugas === 'tugas_baru' ? 'selected' : '' }}>Tugas Baru</option>
-                                    <option data-color="bg-label-warning"
-                                        value="dikerjakan"{{ $tugas->status_tugas === 'dikerjakan' ? 'selected' : '' }}>
-                                        Dikerjakan</option>
-                                    <option data-color="bg-label-info"
-                                        value="revisi"{{ $tugas->status_tugas === 'revisi' ? 'selected' : '' }}>Direvisi
-                                    </option>
-                                    <option data-color="bg-label-danger" value="selesai"
-                                        {{ $tugas->status_tugas === 'selesai' ? 'selected' : '' }}>Selesai</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class a="form-label" for="newPriority">Prioritas</label>
-                                <select class="select2 select2-label form-select" id="newPriority" name="newPriority">
-                                    <option data-color="bg-label-success" value="penting"
-                                        {{ $tugas->prioritas === 'penting' ? 'selected' : '' }}>Penting</option>
-                                    <option data-color="bg-label-warning" value="urgen"
-                                        {{ $tugas->prioritas === 'urgen' ? 'selected' : '' }}>Urgen</option>
-                                    <option data-color="bg-label-info" value="mendesak"
-                                        {{ $tugas->prioritas === 'mendesak' ? 'selected' : '' }}>Mendesak</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">anggota</label>
-                                <div class="d-flex">
-                                    <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        aria-label="Bruce" data-bs-original-title="Bruce"><img
-                                            src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png"
-                                            alt="Avatar" class="rounded-circle  pull-up"></div>
-                                    <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        aria-label="Clark" data-bs-original-title="Clark"><img
-                                            src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png"
-                                            alt="Avatar" class="rounded-circle  pull-up"></div>
-                                </div>
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="form-label">Komentar</label>
-                                <div class="mb-3">
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                </div>
-                            </div>
-                            <div class="d-flex flex-wrap">
-                                <button type="submit" class="btn btn-primary me-3" data-bs-dismiss="offcanvas">
-                                    Update
-                                </button>
-                                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">
-                                    Close
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- Activities -->
-
-                    <div class="tab-pane fade" id="dikerjakan{{ $tugas->id }}" role="tabpanel">
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <span class="avatar-initial bg-label-success rounded-circle">HJ</span>
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Jordan</span> Left the board.
-                                </p>
-                                <small class="text-muted">Today 11:00 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <img src="../../demo/assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Dianna</span> mentioned
-                                    <span class="text-primary">@bruce</span> in
-                                    a comment.
-                                </p>
-                                <small class="text-muted">Today 10:20 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <img src="../../demo/assets/img/avatars/2.png" alt="Avatar" class="rounded-circle" />
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Martian</span> added moved
-                                    Charts & Maps task to the done board.
-                                </p>
-                                <small class="text-muted">Today 10:00 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <img src="../../demo/assets/img/avatars/1.png" alt="Avatar" class="rounded-circle" />
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Barry</span> Commented on App
-                                    review task.
-                                </p>
-                                <small class="text-muted">Today 8:32 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <span class="avatar-initial bg-label-secondary rounded-circle">BW</span>
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Bruce</span> was assigned
-                                    task of code review.
-                                </p>
-                                <small class="text-muted">Today 8:30 PM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <span class="avatar-initial bg-label-danger rounded-circle">CK</span>
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Clark</span> assigned task UX
-                                    Research to
-                                    <span class="text-primary">@martian</span>
-                                </p>
-                                <small class="text-muted">Today 8:00 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <img src="../../demo/assets/img/avatars/4.png" alt="Avatar" class="rounded-circle" />
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Ray</span> Added moved
-                                    <span class="fw-medium">Forms & Tables</span> task
-                                    from in progress to done.
-                                </p>
-                                <small class="text-muted">Today 7:45 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <img src="../../demo/assets/img/avatars/1.png" alt="Avatar" class="rounded-circle" />
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Barry</span> Complete all the
-                                    tasks assigned to him.
-                                </p>
-                                <small class="text-muted">Today 7:17 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <span class="avatar-initial bg-label-success rounded-circle">HJ</span>
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Jordan</span> added task to
-                                    update new images.
-                                </p>
-                                <small class="text-muted">Today 7:00 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <img src="../../demo/assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Dianna</span> moved task
-                                    <span class="fw-medium">FAQ UX</span> from in
-                                    progress to done board.
-                                </p>
-                                <small class="text-muted">Today 7:00 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <span class="avatar-initial bg-label-danger rounded-circle">CK</span>
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Clark</span> added new board
-                                    with name <span class="fw-medium">Done</span>.
-                                </p>
-                                <small class="text-muted">Yesterday 3:00 PM</small>
-                            </div>
-                        </div>
-                        <div class="media d-flex align-items-center">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <span class="avatar-initial bg-label-secondary rounded-circle">BW</span>
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Bruce</span> added new task
-                                    in progress board.
-                                </p>
-                                <small class="text-muted">Yesterday 12:00 PM</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endforeach
-
-    @foreach ($tugas_revisi as $tugas)
-        <div class="offcanvas offcanvas-end kanban-update-item-sidebar" id="barRevisi{{ $tugas->id }}">
-            <div class="offcanvas-header border-bottom">
-                <h5 class="offcanvas-title">Edit Task</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <ul class="nav nav-tabs tabs-line">
-                    <li class="nav-item">
-                        <button class="nav-link active" data-bs-toggle="tab"
-                            data-bs-target="#tab-update{{ $tugas->id }}">
-                            <i class="ti ti-edit me-2"></i>
-                            <span class="align-middle">Edit</span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#revisi{{ $tugas->id }}">
-                            <i class="ti ti-message-dots ti-xs me-1"></i>
-                            <span class="align-middle">Komentar</span>
-                        </button>
-                    </li>
-                </ul>
-                <div class="tab-content px-0 pb-0">
-                    <!-- Update item/tasks -->
-                    <div class="tab-pane fade show active" id="tab-update{{ $tugas->id }}" role="tabpanel">
-                        <form method="POST" action="{{ route('ubahStatus') }}">
-                            @csrf
-                            @method('PATCH')
-                            <div class="mb-3">
-                                <label class="form-label" for="title">Nama Tugas</label>
-                                <input type="text" id="title{{ $tugas->id }}" class="form-control"
-                                    value="{{ $tugas->nama }}" name="nama" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="due-date">Deadline</label>
-                                <input type="date" id="due-date" name="deadline" value="{{ $tugas->deadline }}"
+                                <input type="date" id="due-date" name="deadline" value=""
                                     class="form-control" placeholder="Enter Deadline" />
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="newStatus"> Status</label>
-                                <select class="select2 select2-label form-select" id="status" name="newStatus">
+                                {{-- <select class="select2 select2-label form-select" id="status" name="newStatus">
                                     <option data-color="bg-label-success" value="tugas_baru"
                                         {{ $tugas->status_tugas === 'tugas_baru' ? 'selected' : '' }}>Tugas Baru</option>
                                     <option data-color="bg-label-warning"
@@ -672,257 +146,17 @@
                                     </option>
                                     <option data-color="bg-label-danger" value="selesai"
                                         {{ $tugas->status_tugas === 'selesai' ? 'selected' : '' }}>Selesai</option>
-                                </select>
+                                </select> --}}
                             </div>
                             <div class="mb-3">
                                 <label class a="form-label" for="newPriority">Prioritas</label>
                                 <select class="select2 select2-label form-select" id="newPriority" name="newPriority">
-                                    <option data-color="bg-label-success" value="penting"
+                                    {{-- <option data-color="bg-label-success" value="penting"
                                         {{ $tugas->prioritas === 'penting' ? 'selected' : '' }}>Penting</option>
                                     <option data-color="bg-label-warning" value="urgen"
                                         {{ $tugas->prioritas === 'urgen' ? 'selected' : '' }}>Urgen</option>
                                     <option data-color="bg-label-info" value="mendesak"
-                                        {{ $tugas->prioritas === 'mendesak' ? 'selected' : '' }}>Mendesak</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Assigned</label>
-                                <div class="assigned d-flex flex-wrap"></div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="exampleFormControlTextarea1" class="form-label">Komentar</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                            </div>
-
-                            <div class="d-flex flex-wrap">
-                                <button type="submit" class="btn btn-primary me-3" data-bs-dismiss="offcanvas">
-                                    Update
-                                </button>
-                                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">
-                                    Close
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- Activities -->
-
-                    <div class="tab-pane fade" id="revisi{{ $tugas->id }}" role="tabpanel">
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <span class="avatar-initial bg-label-success rounded-circle">HJ</span>
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Jordan</span> Left the board.
-                                </p>
-                                <small class="text-muted">Today 11:00 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <img src="../../demo/assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Dianna</span> mentioned
-                                    <span class="text-primary">@bruce</span> in
-                                    a comment.
-                                </p>
-                                <small class="text-muted">Today 10:20 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <img src="../../demo/assets/img/avatars/2.png" alt="Avatar" class="rounded-circle" />
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Martian</span> added moved
-                                    Charts & Maps task to the done board.
-                                </p>
-                                <small class="text-muted">Today 10:00 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <img src="../../demo/assets/img/avatars/1.png" alt="Avatar" class="rounded-circle" />
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Barry</span> Commented on App
-                                    review task.
-                                </p>
-                                <small class="text-muted">Today 8:32 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <span class="avatar-initial bg-label-secondary rounded-circle">BW</span>
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Bruce</span> was assigned
-                                    task of code review.
-                                </p>
-                                <small class="text-muted">Today 8:30 PM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <span class="avatar-initial bg-label-danger rounded-circle">CK</span>
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Clark</span> assigned task UX
-                                    Research to
-                                    <span class="text-primary">@martian</span>
-                                </p>
-                                <small class="text-muted">Today 8:00 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <img src="../../demo/assets/img/avatars/4.png" alt="Avatar" class="rounded-circle" />
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Ray</span> Added moved
-                                    <span class="fw-medium">Forms & Tables</span> task
-                                    from in progress to done.
-                                </p>
-                                <small class="text-muted">Today 7:45 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <img src="../../demo/assets/img/avatars/1.png" alt="Avatar" class="rounded-circle" />
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Barry</span> Complete all the
-                                    tasks assigned to him.
-                                </p>
-                                <small class="text-muted">Today 7:17 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <span class="avatar-initial bg-label-success rounded-circle">HJ</span>
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Jordan</span> added task to
-                                    update new images.
-                                </p>
-                                <small class="text-muted">Today 7:00 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <img src="../../demo/assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Dianna</span> moved task
-                                    <span class="fw-medium">FAQ UX</span> from in
-                                    progress to done board.
-                                </p>
-                                <small class="text-muted">Today 7:00 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <span class="avatar-initial bg-label-danger rounded-circle">CK</span>
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Clark</span> added new board
-                                    with name <span class="fw-medium">Done</span>.
-                                </p>
-                                <small class="text-muted">Yesterday 3:00 PM</small>
-                            </div>
-                        </div>
-                        <div class="media d-flex align-items-center">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <span class="avatar-initial bg-label-secondary rounded-circle">BW</span>
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Bruce</span> added new task
-                                    in progress board.
-                                </p>
-                                <small class="text-muted">Yesterday 12:00 PM</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endforeach
-
-    @foreach ($tugas_selesai as $tugas)
-        <div class="offcanvas offcanvas-end kanban-update-item-sidebar" id="barSelesai{{ $tugas->id }}">
-            <div class="offcanvas-header border-bottom">
-                <h5 class="offcanvas-title">Edit Task</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <ul class="nav nav-tabs tabs-line">
-                    <li class="nav-item">
-                        <button class="nav-link active" data-bs-toggle="tab"
-                            data-bs-target="#tab-update{{ $tugas->id }}">
-                            <i class="ti ti-edit me-2"></i>
-                            <span class="align-middle">Edit</span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#selesai{{ $tugas->id }}">
-                            <i class="ti ti-message-dots ti-xs me-1"></i>
-                            <span class="align-middle">Komentar</span>
-                        </button>
-                    </li>
-                </ul>
-                <div class="tab-content px-0 pb-0">
-                    <!-- Update item/tasks -->
-                    <div class="tab-pane fade show active" id="tab-update{{ $tugas->id }}" role="tabpanel">
-                        <form method="POST" action="{{ route('ubahStatus') }}">
-                            @csrf
-                            @method('PATCH')
-                            <div class="mb-3">
-                                <label class="form-label" for="title">Nama Tugas</label>
-                                <input type="text" id="title{{ $tugas->id }}" class="form-control"
-                                    value="{{ $tugas->nama }}" name="nama" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="due-date">Deadline</label>
-                                <input type="date" id="due-date" name="deadline" value="{{ $tugas->deadline }}"
-                                    class="form-control" placeholder="Enter Deadline" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="newStatus"> Status</label>
-                                <select class="select2 select2-label form-select" id="status" name="newStatus">
-                                    <option data-color="bg-label-success" value="tugas_baru"
-                                        {{ $tugas->status_tugas === 'tugas_baru' ? 'selected' : '' }}>Tugas Baru</option>
-                                    <option data-color="bg-label-warning"
-                                        value="dikerjakan"{{ $tugas->status_tugas === 'dikerjakan' ? 'selected' : '' }}>
-                                        Dikerjakan</option>
-                                    <option data-color="bg-label-info"
-                                        value="revisi"{{ $tugas->status_tugas === 'revisi' ? 'selected' : '' }}>Direvisi
-                                    </option>
-                                    <option data-color="bg-label-danger" value="selesai"
-                                        {{ $tugas->status_tugas === 'selesai' ? 'selected' : '' }}>Selesai</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class a="form-label" for="newPriority">Prioritas</label>
-                                <select class="select2 select2-label form-select" id="newPriority" name="newPriority">
-                                    <option data-color="bg-label-success" value="penting"
-                                        {{ $tugas->prioritas === 'penting' ? 'selected' : '' }}>Penting</option>
-                                    <option data-color="bg-label-warning" value="urgen"
-                                        {{ $tugas->prioritas === 'urgen' ? 'selected' : '' }}>Urgen</option>
-                                    <option data-color="bg-label-info" value="mendesak"
-                                        {{ $tugas->prioritas === 'mendesak' ? 'selected' : '' }}>Mendesak</option>
+                                        {{ $tugas->prioritas === 'mendesak' ? 'selected' : '' }}>Mendesak</option> --}}
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -946,7 +180,7 @@
                     </div>
                     <!-- Activities -->
 
-                    <div class="tab-pane fade" id="selesai{{ $tugas->id }}" role="tabpanel">
+                    <div class="tab-pane fade" id="selesai" role="tabpanel">
                         <div class="media mb-4 d-flex align-items-start">
                             <div class="avatar me-2 flex-shrink-0 mt-1">
                                 <span class="avatar-initial bg-label-success rounded-circle">HJ</span>
@@ -1098,7 +332,8 @@
                 </div>
             </div>
         </div>
-    @endforeach
+
+
 @endsection
 @section('script')
 <script src="{{ asset('assets/vendor/libs/jquery/jquery1e84.js?id=0f7eb1f3a93e3e19e8505fd8c175925a') }}"></script>
@@ -1143,6 +378,72 @@
             }
         }
 
+        $(document).ready(function(){
+
+
+            axios.get("ambil-data-tugas/{{ $code }}")
+            .then((res) => {
+                const dataTugas = res.data.tugas;
+                const tugas_baru = dataTugas.tugas_baru;
+                const tugas_dikerjakan = dataTugas.tugas_dikerjakan;
+                const tugas_direvisi = dataTugas.tugas_direvisi;
+                const tugas_selesai = dataTugas.tugas_selesai;
+                console.log(dataTugas);
+
+                // TugasBaru
+                Object.keys(tugas_baru).forEach(key => {
+                    const tugas = tugas_baru[key];
+                    const element = $(`<div>`)
+                        .addClass('col-12 p-2 mt-3 card')
+                        .html(
+                            `
+    <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1 ">
+        <div class="item-badges">
+          <div class="badge rounded-pill bg-label-success">UX</div>
+        </div>
+        <div class="dropdown kanban-tasks-item-dropdown">
+          <i class="ti ti-dots-vertical" id="kanban-tasks-item-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="kanban-tasks-item-dropdown" style="">
+            <button type="button" class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#editTugasBar" >Edit</button>
+            <a class="dropdown-item" href="javascript:void(0)">Delete</a>
+          </div>
+        </div>
+      </div>
+      <span class="kanban-text">${tugas.nama}</span>
+      <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
+        <div class="d-flex">
+          <span class="d-flex align-items-center ms-1">
+            <i class="ti ti-message-dots ti-xs me-1"></i>
+            <span>${tugas.comments.length}</span>
+          </span>
+        </div>
+        <div class="avatar-group d-flex align-items-center assigned-avatar">
+          <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Bruce" data-bs-original-title="Bruce">
+            <img src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png" alt="Avatar" class="rounded-circle pull-up">
+          </div>
+          <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Clark" data-bs-original-title="Clark">
+            <img src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png" alt="Avatar" class="rounded-circle pull-up">
+          </div>
+        </div>
+      </div>
+    </div>
+                            `
+                            );
+
+                    $('#tugas_baru').append(element)
+                });
+
+
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+
+
+        })
+
+
+
         $(document).ready(()=>{
 
             $("#formTambahTugas").submit((event)=>{
@@ -1163,40 +464,31 @@
           <div class="badge rounded-pill bg-label-success">UX</div>
         </div>
         <div class="dropdown kanban-tasks-item-dropdown">
-          <i class="dropdown-toggle ti ti-dots-vertical" id="kanban-tasks-item-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+          <i class="ti ti-dots-vertical" id="kanban-tasks-item-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
           <div class="dropdown-menu dropdown-menu-end" aria-labelledby="kanban-tasks-item-dropdown" style="">
-            <a class="dropdown-item" href="javascript:void(0)">Copy task link</a>
-            <a class="dropdown-item" href="javascript:void(0)">Duplicate task</a>
-            <a class="dropdown-item delete-task" href="javascript:void(0)">Delete</a>
+            <button type="button" class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#editTugasBar" >Edit</button>
+            <a class="dropdown-item" href="javascript:void(0)">Delete</a>
           </div>
         </div>
       </div>
       <span class="kanban-text">${res.data.nama}</span>
       <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
         <div class="d-flex">
-          <span class="d-flex align-items-center me-2">
-            <i class="ti ti-paperclip ti-xs me-1"></i>
-            <span class="attachments">4</span>
-          </span>
           <span class="d-flex align-items-center ms-1">
             <i class="ti ti-message-dots ti-xs me-1"></i>
-            <span>12</span>
+            <span>${res.data.comments.length}</span>
           </span>
         </div>
         <div class="avatar-group d-flex align-items-center assigned-avatar">
-          <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Bruce" data-bs-original-title="Bruce">
+          <div id="list-ditugaskan-${res.data.code}" class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Bruce" data-bs-original-title="Bruce">
             <img src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png" alt="Avatar" class="rounded-circle pull-up">
           </div>
-          <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Clark" data-bs-original-title="Clark">
-            <img src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png" alt="Avatar" class="rounded-circle pull-up">
-          </div>
         </div>
-      </div>
-
-                            `
-                            );
-
-                    $("#tugas_baru").append(div);
+    </div>
+ `
+);
+    $("#tugas_baru").append(div);
+    
 
                     })
 
@@ -1204,79 +496,6 @@
 
         });
 
-        // tambah tugas
-    //     const formTambahTugas = document.getElementById('formTambahTugas');
-    //     formTambahTugas.addEventListener('submit', (event) => {
-    //         event.preventDefault();
-    //         const nama = document.getElementById('tugas').value
-    //         const tim_uuid = "{{ $tim->uuid }}"
 
-    //         // axios untuk tambah tugas
-    //         axios.post("tambah-tugas", {
-    //                 nama,
-    //                 tim_uuid
-    //             })
-    //             .then(res => {
-    //                 const newData = res.data;
-
-    //                 const newElement = document.createElement('div');
-    //                 newElement.classList.add('kanban-item', 'card', 'p-4', 'mt-3');
-    //                 newElement.setAttribute('data-eid', 'in-progress-1');
-    //                 newElement.setAttribute('data-comments', '12');
-    //                 newElement.setAttribute('data-badge-text', 'UX');
-    //                 newElement.setAttribute('data-badge', 'success');
-    //                 newElement.setAttribute('data-due-date', '5 April');
-    //                 newElement.setAttribute('data-attachments', '4');
-    //                 newElement.setAttribute('data-assigned', '12.png,5.png');
-    //                 newElement.setAttribute('data-members', 'Bruce,Clark');
-
-    //                 newElement.innerHTML = `
-    //   <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1 ">
-    //     <div class="item-badges">
-    //       <div class="badge rounded-pill bg-label-success">UX</div>
-    //     </div>
-    //     <div class="dropdown kanban-tasks-item-dropdown">
-    //       <i class="dropdown-toggle ti ti-dots-vertical" id="kanban-tasks-item-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-    //       <div class="dropdown-menu dropdown-menu-end" aria-labelledby="kanban-tasks-item-dropdown" style="">
-    //         <a class="dropdown-item" href="javascript:void(0)">Copy task link</a>
-    //         <a class="dropdown-item" href="javascript:void(0)">Duplicate task</a>
-    //         <a class="dropdown-item delete-task" href="javascript:void(0)">Delete</a>
-    //       </div>
-    //     </div>
-    //   </div>
-    //   <span class="kanban-text">${newData.nama}</span>
-    //   <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
-    //     <div class="d-flex">
-    //       <span class="d-flex align-items-center me-2">
-    //         <i class="ti ti-paperclip ti-xs me-1"></i>
-    //         <span class="attachments">4</span>
-    //       </span>
-    //       <span class="d-flex align-items-center ms-1">
-    //         <i class="ti ti-message-dots ti-xs me-1"></i>
-    //         <span>12</span>
-    //       </span>
-    //     </div>
-    //     <div class="avatar-group d-flex align-items-center assigned-avatar">
-    //       <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Bruce" data-bs-original-title="Bruce">
-    //         <img src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png" alt="Avatar" class="rounded-circle pull-up">
-    //       </div>
-    //       <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Clark" data-bs-original-title="Clark">
-    //         <img src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png" alt="Avatar" class="rounded-circle pull-up">
-    //       </div>
-    //     </div>
-    //   </div>
-    // `;
-
-    // // Tambahkan elemen baru ke dalam div dengan id "tugas_baru"
-    // const tugasBaru = document.getElementById('tugas_baru');
-    // tugasBaru.appendChild(newElement);
-
-    //             })
-
-    //             .catch(error => {
-    //                 console.log(error)
-    //             })
-
-    //     })
     </script>
 @endsection

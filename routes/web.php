@@ -71,6 +71,7 @@ Route::prefix('tim')->controller(timController::class)->group(function () {
         Route::post('tambah-tugas', [TugasController::class, 'buatTugas'])->name('tim.tambah-tugas');
         Route::post('ajukan-presentasi/{code}', [PresentasiController::class, 'ajukanPresentasi'])->name('ajukan-presentasi');
         Route::patch('edit-project/{code}', [PengajuanProjekController::class, 'editProject'])->name('tim.editProject');
+        Route::get('board/ambil-data-tugas/{code}',[TugasController::class, 'getData'])->name('tim.proses.ambilTugas');
     });
 });
 

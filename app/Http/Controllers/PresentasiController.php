@@ -1,9 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Http\Requests\RequestAturJadwal;
-use App\Http\Requests\RequestKonfirmasiPresentasi;
 use App\Http\Requests\RequestPengajuanPresentasi;
 use App\Http\Requests\RequestPenolakanPresentasi;
 use App\Http\Requests\RequestPersetujuanPresentasi;
@@ -13,10 +10,8 @@ use App\Models\Tim;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use PhpParser\Node\Stmt\Foreach_;
-use Psy\VarDumper\Presenter;
+
 
 class PresentasiController extends Controller
 {
@@ -346,7 +341,7 @@ class PresentasiController extends Controller
 
         return response()->json([
             "presentasi" =>[ $tim->presentasiSelesai , $waktu],
-            "tim"     => $tim,    
+            "tim"     => $tim,
             "presentaseRevisi" => $presentaseRevisi,
         ]);
 

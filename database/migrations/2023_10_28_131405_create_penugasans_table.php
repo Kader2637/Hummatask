@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('penugasans', function (Blueprint $table) {
-            $table->id();
+            $table->foreignId('tugas_id')->references('id')->on('tugas')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('user_id')->nullable()->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

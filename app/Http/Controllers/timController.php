@@ -28,6 +28,8 @@ class timController extends Controller
         $revisiCount = $tim->tugas->where('status_tugas', 'revisi')->count();
         $tugasBaruCount = $tim->tugas->where('status_tugas', 'tugas_baru')->count();
 
+        $code = $tim->code;
+
         $chartData = [
             ['Status Tugas', 'Jumlah'],
             ['Selesai', $selesaiCount],
@@ -35,7 +37,7 @@ class timController extends Controller
             ['Tugas Baru', $tugasBaruCount]
         ];
 
-        return view('siswa.tim.board', compact('chartData','title', 'tim', 'anggota', 'tugas_baru', 'tugas_dikerjakan', 'tugas_revisi', 'tugas_selesai'));
+        return view('siswa.tim.board', compact('chartData','title', 'tim', 'anggota', 'tugas_baru', 'tugas_dikerjakan', 'tugas_revisi', 'tugas_selesai','code'));
     }
 
     protected function ubahStatus(Request $request)
@@ -218,4 +220,6 @@ class timController extends Controller
 
         return view('siswa.tim.history-catatan', compact('chartData','title', 'anggota', 'tim'));
     }
+
+
 }
