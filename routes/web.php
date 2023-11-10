@@ -71,7 +71,7 @@ Route::prefix('tim')->controller(timController::class)->group(function () {
         
         // proses di halaman tim
         Route::get('tampil-tugas/{code}', [TugasController::class, 'getData'])->name('tim.tampilTugas');
-        Route::post('tambah-tugas', [TugasController::class, 'buatTugas'])->name('tim.tambah-tugas');
+        Route::post('tambah-tugas', [TugasController::class, 'buatTugas'])  ->name('tim.tambah-tugas');
         Route::post('ajukan-presentasi/{code}', [PresentasiController::class, 'ajukanPresentasi'])->name('ajukan-presentasi');
     });
 });

@@ -142,6 +142,22 @@ class timController extends Controller
         $selesaiCount = $tim->tugas->where('status_tugas', 'selesai')->count();
         $revisiCount = $tim->tugas->where('status_tugas', 'revisi')->count();
         $tugasBaruCount = $tim->tugas->where('status_tugas', 'tugas_baru')->count();
+        $totalTugas = $tim->tugas->count();
+        $persentase = $totalTugas > 0 ? ($tugasBaruCount / $totalTugas) * 100 : 0;
+        $tgl = $tim->project->pluck('created_at')->toArray();
+        $deadline = $tim->project->pluck('deadline')->toArray();
+
+        $tanggal = collect($tgl)->map(function ($tglItem, $index) use ($deadline) {
+            $tglItem = Carbon::parse($tglItem);
+            $deadlineItem = Carbon::parse($deadline[$index]);
+            return $tglItem->diffInHours($deadlineItem);
+        })->toArray();
+
+        $days = collect($tgl)->map(function ($tglDay, $index) use ($deadline) {
+            $tglDay = Carbon::parse($tglDay);
+            $deadlineItem = Carbon::parse($deadline[$index]);
+            return $tglDay->diffInDays($deadlineItem);
+        })->toArray();
 
         $chartData = [
             ['Status Tugas', 'Jumlah'],
@@ -149,8 +165,8 @@ class timController extends Controller
             ['Revisi', $revisiCount],
             ['Tugas Baru', $tugasBaruCount]
         ];
-
-        return view('siswa.tim.project', compact('chartData', 'title', 'tim', 'anggota', 'project','hasProjectRelation'));
+        // dd($tanggal);
+        return view('siswa.tim.project', compact('hasProjectRelation','days','tanggal','persentase','selesaiCount','revisiCount','chartData', 'title', 'tim', 'anggota', 'project'));
 
     }
 
@@ -266,4 +282,19 @@ class timController extends Controller
 
         return view('siswa.tim.history-catatan', compact('chartData','title', 'anggota', 'tim'));
     }
+
+    // protected function statistic($code) {
+    //     $tim = Tim::where('code', $code)->firstOrFail();
+    //     $selesaiCount = $tim->tugas->where('status_tugas', 'selesai')->count();
+    //     $revisiCount = $tim->tugas->where('status_tugas', 'revisi')->count();
+    //     $tugasBaruCount = $tim->tugas->where('status_tugas', 'tugas_baru')->count();
+
+    //     $chartData = [
+    //     'Status Tugas' => 'Jumlah',
+    //     'Selesai' => $selesaiCount,
+    //     'Revisi' => $revisiCount,
+    //     'Tugas Baru' => $tugasBaruCount
+    //     ];
+    //     return response()->json($chartData);
+    // }
 }
