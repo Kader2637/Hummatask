@@ -858,11 +858,8 @@
             });
         </script>
     @endif
-<<<<<<< Updated upstream
 
 
-=======
->>>>>>> Stashed changes
     @yield('script')
 
 </body>

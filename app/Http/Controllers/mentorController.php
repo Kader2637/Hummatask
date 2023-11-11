@@ -166,7 +166,7 @@ class mentorController extends Controller
     // Return view pengajuan projek mentor
     protected function pengajuanProjekPage()
     {
-        $projects = Project::with('tim.anggota.user', 'tim.tema', 'anggota.jabatan', 'anggota.user')->where('status_project', 'notapproved')->get();
+        $projects = Project::with('tim.anggota.user', 'tim.tema', 'anggota.jabatan', 'anggota.user')->where('status_project', 'notapproved')->paginate(12);
 
         return response()->view('mentor.pengajuan-projek', compact('projects'));
     }
@@ -182,10 +182,10 @@ class mentorController extends Controller
     // Return view projek mentor
     protected function projekPage()
     {
-        $pengajuan = Project::with('tim.anggota.user', 'tim.tema', 'anggota.jabatan', 'anggota.user')->where('status_project', 'notapproved')->get();
+        $pengajuan = Project::with('tim.anggota.user', 'tim.tema', 'anggota.jabatan', 'anggota.user')->where('status_project', 'notapproved')->paginate(5);
         $projects = Project::with('tim.anggota', 'tema')
             ->where('status_project', 'approved')
-            ->get();
+            ->paginate(5);
 
         $request = Request::instance();
         $code = $request->input('temaProjek');
@@ -213,7 +213,7 @@ class mentorController extends Controller
         $tim = Tim::all();
 
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
-        $tims = Tim::with('user')->where('kadaluwarsa', '1')->get();
+        $tims = Tim::with('user')->where('kadaluwarsa', '1')->paginate(5);
         $members = Tim::with('user')->where('kadaluwarsa', '1')->get();
 
         return response()->view('mentor.projek', compact('members', 'tims', 'pengajuan', 'projek', 'users', 'status_tim', 'projects', 'tim'));
@@ -255,8 +255,12 @@ class mentorController extends Controller
         return response()->json(['projects' => $projects, 'anggota' => $anggota, 'users' => $users, 'status_tim' => $status_tim]);
     }
 
-
-
+    protected function tim()
+    {
+        $tims = tim::with('anggota', 'user')->paginate(12);
+        $status_tim = StatusTim::whereNot('status', 'solo')->get();
+        return response()->view('mentor.tim', compact('tims', 'status_tim'));
+    }
 
     protected function detailProjekPage($code)
     {

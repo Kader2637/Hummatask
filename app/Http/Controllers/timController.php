@@ -233,6 +233,7 @@ class timController extends Controller
     {
         $title = "catatan";
         $tim = Tim::where('code', $code)->firstOrFail();
+        $catatans = catatan::where('user_id', Auth::user()->id)->get();
 
         $project = $tim->project->first();
         if ($project->deskripsi === null) {
@@ -254,7 +255,7 @@ class timController extends Controller
             ['Tugas Baru', $tugasBaruCount]
         ];
 
-        return view('siswa.tim.catatan', compact('chartData','title', 'anggota', 'tim','catatans'));
+        return view('siswa.tim.catatan', compact('chartData','title', 'anggota', 'tim','catatans', 'project'));
     }
 
     protected function historyCatatanPage($code)
