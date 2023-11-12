@@ -67,6 +67,7 @@ Route::prefix('tim')->controller(timController::class)->group(function () {
         Route::post('/add-comment', 'comments')->name('tim.addComment');
         Route::get('/view-comment', 'viewComments');
         Route::post('catatan', [catatanController::class, 'store'])->name('catatan.store');
+        Route::patch('catatan/update/{code}', [catatanController::class, 'update'])->name('catatan.update');
 
 
         // proses di halaman tim
