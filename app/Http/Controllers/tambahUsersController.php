@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Excel;
 use Intervention\Image\ImageManagerStatic as Image;
 use App\Imports\CsvImport;
+use App\Models\Tim;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -183,6 +184,36 @@ class tambahUsersController extends Controller
         } catch (\Throwable $th) {
             return redirect()->back()->with('success', 'User gagal disimpan!');
         }
+    }
+
+    protected function edit_mentor(Request $request, $uuid)
+    {
+        $validatedData = $request->validate([
+            'username' => 'required|string',
+            'email' => 'required|email',
+        ]);
+
+        $mentor = User::where('uuid', $uuid)->firstOrFail();
+
+        $inisial = strtoupper(implode('', array_map(fn ($name) => substr($name, 0, 1), array_slice(explode(' ', $request->username), 0, 3))));
+            $image = Image::canvas(200, 200, '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT));
+            $image->text($inisial, 100, 100, function ($font) {
+                $font->file(public_path('assets/font/Poppins-Regular.ttf'));
+                $font->size(48);
+                $font->color('#ffffff');
+                $font->align('center');
+                $font->valign('middle');
+            });
+            $nameImage = 'avatars/' . Str::random(20) . '.jpg';
+            Storage::disk('public')->put($nameImage, $image->stream());
+
+        $mentor->update([
+            'username' => $validatedData['username'],
+            'email' => $validatedData['email'],
+            'avatar' => $nameImage,
+        ]);
+
+        return redirect()->back()->with('success', 'Mentor berhasil diupdate');
     }
 
     protected function tambah_pengelola(Request $request)

@@ -433,8 +433,12 @@
                                         <td>{{ $item->email }}</td>
                                         <td>
                                             <div class="d-flex flex-wrap flex-row">
-                                                <span class="" href="javascript:void(0);"><i
-                                                        class="ti ti-pencil me-1"></i></span>
+                                                <span class="edit-button" href="javascript:void(0);"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#edit-data-mentor"
+                                                    data-url="{{ $item->uuid }}">
+                                                    <i class="ti ti-pencil me-1"></i>
+                                                </span>
                                                 <span class="" id="delete-button-mentor-{{ $item->uuid }}"
                                                     href="javascript:void(0);"><i class="ti ti-trash me-1"></i></span>
                                             </div>
@@ -600,6 +604,42 @@
             <div class="modal fade" id="add-data-mentor" tabindex="-1" aria-hidden="true">
                 <form action="{{ route('tambah.mentor') }}" method="POST">
                     @csrf
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalCenterTitle">Tambah Mentor</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col mb-3">
+                                        <label for="username" class="form-label">Nama</label>
+                                        <input name="username" type="text" id="username" class="form-control"
+                                            placeholder="Masukkan nama pengguna" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-3">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input name="email" type="text" id="email" class="form-control"
+                                            placeholder="Masukkan email" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-label-secondary"
+                                    data-bs-dismiss="modal">Kembali</button>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal fade" id="edit-data-mentor" tabindex="-1" aria-hidden="true">
+                <form action="" id="edit-form" method="POST">
+                    @csrf
+                    @method('PUT')
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -1051,6 +1091,20 @@
                         "sLast": "Terakhir"
                     }
                 }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.edit-button').click(function() {
+                var dataUrl = $(this).data('url');
+                var formAction = "{{ route('edit.mentor', ['uuid' => ':Id']) }}";
+                var form = $('#edit-form');
+
+                formAction = formAction.replace(':Id', dataUrl);
+                $('#edit-form').attr('action', formAction);
+
+                console.log(uuid);
             });
         });
     </script>
