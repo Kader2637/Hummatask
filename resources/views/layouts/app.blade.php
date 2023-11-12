@@ -857,6 +857,8 @@
             });
         </script>
     @endif
+
+
     @yield('script')
 
 </body>
