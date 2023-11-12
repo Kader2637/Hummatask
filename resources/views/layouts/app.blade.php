@@ -651,12 +651,12 @@
                                     @csrf
                                     <div class="col-12 gap-3 align-items-center">
                                         <div class="col-12 col-md-3 align-items-center">
-                                            <label class="form-label text-white" for="image-input">
-                                                <img id="preview-image"
+                                            <label class="form-label text-white" for="image-input1">
+                                                <img id="preview-image1"
                                                     src="{{ asset('assets/img/avatars/pen.png') }}"
                                                     alt="example placeholder"
                                                     style="width: 150px; height: 150px; border-radius: 10px; cursor: pointer" />
-                                                <input type="file" class="form-control d-none" id="image-input"
+                                                <input type="file" class="form-control d-none" id="image-input1"
                                                     name="logo" />
                                                 @error('logo')
                                                     <p class="text-danger">
@@ -801,10 +801,9 @@
     <script src="{{ asset('assets/js/dashboards-crm.js') }}"></script>
 
     <script>
-        let imageInput = $("#image-input");
-
+        let imageInput = $("#image-input1");
         imageInput.on('change', function() {
-            let previewImage = $("#preview-image");
+            let previewImage = $("#preview-image1");
             let file = imageInput[0].files[0];
 
             if (file) {
@@ -858,11 +857,6 @@
             });
         </script>
     @endif
-<<<<<<< Updated upstream
-
-
-=======
->>>>>>> Stashed changes
     @yield('script')
 
 </body>
