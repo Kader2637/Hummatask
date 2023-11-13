@@ -23,7 +23,9 @@ class siswaController extends Controller
         $title = 'Profile Siswa';
         $user = User::with('peran')->where('id', Auth::user()->id)->first();
         $tims = $user->tim()->get();
-
+        // dd($tims);
+        
+ 
         return response()->view('siswa.profile-siswa', compact('title', 'user', 'tims'));
     }
 }

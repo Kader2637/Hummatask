@@ -30,7 +30,7 @@
                     @endif
                     <h4 class="mb-1">Reset Password </h4>
                     <p class="mb-4">untuk <span class="fw-medium">{{request()->email}}</span></p>
-                    
+
                     <form id="formAuthentication" class="mb-3" action="{{ Route('password.update') }}" method="post">
                         @csrf
                         <input type="hidden" name="token" value="{{ request()->token }}">
