@@ -47,7 +47,7 @@ Route::prefix('siswa')->middleware(['auth', 'siswa'])->group(function () {
 
 Route::prefix('tim')->controller(timController::class)->group(function () {
     // Halaman Tim
-    Route::middleware(['auth', 'siswa'])->group(function () {
+    Route::middleware(['auth', 'siswa', 'cekanggota'])->group(function () {
         Route::get('project/{code}', 'projectPage')->name('tim.project');
         // Process
         Route::patch('edit-project/{code}', [PengajuanProjekController::class, 'editProject'])->name('tim.editProject');
@@ -139,4 +139,5 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::post('tambah-pengelola', [tambahUsersController::class, 'tambah_pengelola'])->name('tambah.pengelola');
     Route::post('tambah-role', [tambahUsersController::class, 'tambah_role'])->name('tambah.roles');
 
+    
 });
