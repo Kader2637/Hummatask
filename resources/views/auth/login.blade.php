@@ -20,8 +20,7 @@
                         @csrf
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="text" class="form-control" id="email" name="email"
-                                placeholder="Masukkan email Anda" autofocus>
+                            <input type="text" class="form-control" id="email" name="email" placeholder="Masukkan email Anda" autofocus>
                             @error('username')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -32,8 +31,7 @@
                             <label for="email" class="form-label">Password</label>
                             <div class="input-group input-group-merge">
                                 <input type="password" id="password" class="form-control" name="password"
-                                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                    aria-describedby="password" />
+                                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
                                 <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
                                 @error('password')
                                     <div class="invalid-feedback">
@@ -46,6 +44,11 @@
                             Masuk
                         </button>
                     </form>
+                    
+                    <div class="text-center">
+                        <a href="{{ route('lupa-password') }}">Lupa Password?</a>
+                    </div>
+                    
                 </div>
             </div>
         </div>
