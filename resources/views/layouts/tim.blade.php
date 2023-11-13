@@ -242,7 +242,7 @@
                             </a>
                         </li>
                     @endif
-                    @if ($project && $project->deskripsi)
+                    @if ($project && $project->deskripsi && $hasProjectRelation)
                         <li class="menu-item @if ($title == 'Tim/history') active @endif ">
                             <a href="{{ route('tim.history', $tim->code) }}"
                                 class="menu-link d-flex align-items-center gap-2">
