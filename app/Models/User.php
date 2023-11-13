@@ -66,7 +66,7 @@ class User extends Authenticatable
 
     public function tim(): BelongsToMany
     {
-        return $this->belongsToMany(Tim::class, 'anggotas','user_id','tim_id');
+        return $this->belongsToMany(Tim::class, 'anggotas');
     }
 
     public function tugas()
