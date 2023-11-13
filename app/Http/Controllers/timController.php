@@ -62,18 +62,7 @@ class timController extends Controller
         return redirect()->back()->with('success', 'Status tugas berhasil diperbarui');
     }
 
-    protected function hapusTugas(Request $request)
-    {
-        $nameTask = $request->input('nama');
-        $tugas = Tugas::where('nama', $nameTask)->first();
 
-        if (!$tugas) {
-            return redirect()->back()->with('error', 'Tugas tidak ditemukan');
-        }
-
-        $tugas->delete();
-        return redirect()->back()->with('success', 'Tugas berhasil dihapus');
-    }
 
     public function comments(Request $request)
     {

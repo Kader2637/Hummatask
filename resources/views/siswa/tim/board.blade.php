@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/typography.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/katex.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/editor.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" />
 
-<link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/app-kanban.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/app-kanban.css') }}" />
 
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
 @endsection
@@ -49,7 +50,7 @@
                     </div>
                 </div>
                 <div class="col-12">
-                    <div class="row px-2"  id="tugas_baru">
+                    <div class="row px-2" id="tugas_baru">
 
                     </div>
                 </div>
@@ -64,7 +65,9 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="row px-2" id="dikerjakan">
 
+                    </div>
                 </div>
             </div>
             <div style="" class=" col-3">
@@ -76,6 +79,9 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="row px-2" id="revisi">
+
+                    </div>
                 </div>
             </div>
             <div style="" class=" col-3">
@@ -87,7 +93,9 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="row px-2" id="selesai">
 
+                    </div>
                 </div>
             </div>
         </div>
@@ -96,278 +104,135 @@
     <div class="kanban-wrapper"></div>
 
 
-        <div class="offcanvas offcanvas-end kanban-update-item-sidebar" id="editTugasBar">
-            <div class="offcanvas-header border-bottom">
-                <h5 class="offcanvas-title">Edit Task</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <ul class="nav nav-tabs tabs-line">
-                    <li class="nav-item">
-                        <button class="nav-link active" data-bs-toggle="tab"
-                            data-bs-target="#tab-update">
-                            <i class="ti ti-edit me-2"></i>
-                            <span class="align-middle">Edit</span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#selesai">
-                            <i class="ti ti-message-dots ti-xs me-1"></i>
-                            <span class="align-middle">Komentar</span>
-                        </button>
-                    </li>
-                </ul>
-                <div class="tab-content px-0 pb-0">
-                    <!-- Update item/tasks -->
-                    <div class="tab-pane fade show active" id="tab-update" role="tabpanel">
-                        <form method="POST" action="{{ route('ubahStatus') }}">
-                            @csrf
-                            @method('PATCH')
-                            <div class="mb-3">
-                                <label class="form-label" for="title">Nama Tugas</label>
-                                <input type="text" id="title" class="form-control"
-                                    value="" name="nama" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="due-date">Deadline</label>
-                                <input type="date" id="due-date" name="deadline" value=""
-                                    class="form-control" placeholder="Enter Deadline" />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="newStatus"> Status</label>
-                                {{-- <select class="select2 select2-label form-select" id="status" name="newStatus">
-                                    <option data-color="bg-label-success" value="tugas_baru"
-                                        {{ $tugas->status_tugas === 'tugas_baru' ? 'selected' : '' }}>Tugas Baru</option>
-                                    <option data-color="bg-label-warning"
-                                        value="dikerjakan"{{ $tugas->status_tugas === 'dikerjakan' ? 'selected' : '' }}>
-                                        Dikerjakan</option>
-                                    <option data-color="bg-label-info"
-                                        value="revisi"{{ $tugas->status_tugas === 'revisi' ? 'selected' : '' }}>Direvisi
-                                    </option>
-                                    <option data-color="bg-label-danger" value="selesai"
-                                        {{ $tugas->status_tugas === 'selesai' ? 'selected' : '' }}>Selesai</option>
-                                </select> --}}
-                            </div>
-                            <div class="mb-3">
-                                <label class a="form-label" for="newPriority">Prioritas</label>
-                                <select class="select2 select2-label form-select" id="newPriority" name="newPriority">
-                                    {{-- <option data-color="bg-label-success" value="penting"
-                                        {{ $tugas->prioritas === 'penting' ? 'selected' : '' }}>Penting</option>
-                                    <option data-color="bg-label-warning" value="urgen"
-                                        {{ $tugas->prioritas === 'urgen' ? 'selected' : '' }}>Urgen</option>
-                                    <option data-color="bg-label-info" value="mendesak"
-                                        {{ $tugas->prioritas === 'mendesak' ? 'selected' : '' }}>Mendesak</option> --}}
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Assigned</label>
-                                <div class="assigned d-flex flex-wrap"></div>
-                            </div>
+    <div class="offcanvas offcanvas-end kanban-update-item-sidebar" id="editTugasBar">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title">Edit Task</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="nav nav-tabs tabs-line">
+                <li class="nav-item">
+                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-update">
+                        <i class="ti ti-edit me-2"></i>
+                        <span class="align-middle">Edit</span>
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#selesai">
+                        <i class="ti ti-message-dots ti-xs me-1"></i>
+                        <span class="align-middle">Komentar</span>
+                    </button>
+                </li>
+            </ul>
+            <div class="tab-content px-0 pb-0">
+                <!-- Update item/tasks -->
+                <div class="tab-pane fade show active" id="tab-update" role="tabpanel">
+                    <form id="formEditTugas" method="POST" >
+                        @csrf
+                        @method('PUT')
+                        <div class="mb-3">
+                            <label class="form-label" for="title">Nama Tugas</label>
+                            <input type="text" id="title" class="form-control" value="" name="nama" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="due-date">Deadline</label>
+                            <input type="date" id="due-date" name="deadline" value="" class="form-control"
+                                placeholder="Enter Deadline" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="newStatus"> Status</label>
+                            <select class="select2 select2-label form-select" id="status" name="newStatus">
+                                <option data-color="bg-label-success" value="tugas_baru">Tugas Baru</option>
+                                <option data-color="bg-label-warning" value="dikerjakan">
+                                    Dikerjakan</option>
+                                <option data-color="bg-label-info" value="revisi">Direvisi
+                                </option>
+                                <option data-color="bg-label-danger" value="selesai">Selesai</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class a="form-label" for="newPriority">Prioritas</label>
+                            <select class="select2 select2-label form-select" id="newPriority" name="newPriority">
+                                <option data-color="bg-label-success" value="mendesak">Mendesak</option>
+                                <option data-color="bg-label-warning" value="penting">Penting</option>
+                                <option data-color="bg-label-info" value="mendesak">Tambahan</option>
+                                <option data-color="bg-label-info" value="mendesak">Opsional</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <div class="col-md-12 mb-4" data-select2-id="93">
+                                <label for="select2Primary" class="form-label">Tugas untuk</label>
+                                <div class="select2-primary" data-select2-id="92">
+                                    <div class="position-relative" data-select2-id="91"></div>
+                                    <select name="penugasan[]" id="select2Primary"
+                                            class="select2 form-select select2-hidden-accessible" multiple=""
+                                            data-select2-id="select2Primary" tabindex="-1" aria-hidden="true">
 
-                            <div class="mb-3">
-                                <label for="exampleFormControlTextarea1" class="form-label">Komentar</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="d-flex flex-wrap">
-                                <button type="submit" class="btn btn-primary me-3" data-bs-dismiss="offcanvas">
-                                    Update
-                                </button>
-                                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">
-                                    Close
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- Activities -->
+                        </div>
+                        <div class="d-flex flex-wrap">
+                            <button type="submit"  class="btn btn-primary me-3" data-bs-dismiss="offcanvas">
+                                Update
+                            </button>
+                            <button type="button" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">
+                                Close
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <!-- Activities -->
 
-                    <div class="tab-pane fade" id="selesai" role="tabpanel">
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <span class="avatar-initial bg-label-success rounded-circle">HJ</span>
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Jordan</span> Left the board.
-                                </p>
-                                <small class="text-muted">Today 11:00 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <img src="../../demo/assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Dianna</span> mentioned
-                                    <span class="text-primary">@bruce</span> in
-                                    a comment.
-                                </p>
-                                <small class="text-muted">Today 10:20 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <img src="../../demo/assets/img/avatars/2.png" alt="Avatar" class="rounded-circle" />
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Martian</span> added moved
-                                    Charts & Maps task to the done board.
-                                </p>
-                                <small class="text-muted">Today 10:00 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <img src="../../demo/assets/img/avatars/1.png" alt="Avatar" class="rounded-circle" />
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Barry</span> Commented on App
-                                    review task.
-                                </p>
-                                <small class="text-muted">Today 8:32 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <span class="avatar-initial bg-label-secondary rounded-circle">BW</span>
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Bruce</span> was assigned
-                                    task of code review.
-                                </p>
-                                <small class="text-muted">Today 8:30 PM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <span class="avatar-initial bg-label-danger rounded-circle">CK</span>
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Clark</span> assigned task UX
-                                    Research to
-                                    <span class="text-primary">@martian</span>
-                                </p>
-                                <small class="text-muted">Today 8:00 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <img src="../../demo/assets/img/avatars/4.png" alt="Avatar" class="rounded-circle" />
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Ray</span> Added moved
-                                    <span class="fw-medium">Forms & Tables</span> task
-                                    from in progress to done.
-                                </p>
-                                <small class="text-muted">Today 7:45 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <img src="../../demo/assets/img/avatars/1.png" alt="Avatar" class="rounded-circle" />
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Barry</span> Complete all the
-                                    tasks assigned to him.
-                                </p>
-                                <small class="text-muted">Today 7:17 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <span class="avatar-initial bg-label-success rounded-circle">HJ</span>
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Jordan</span> added task to
-                                    update new images.
-                                </p>
-                                <small class="text-muted">Today 7:00 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <img src="../../demo/assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Dianna</span> moved task
-                                    <span class="fw-medium">FAQ UX</span> from in
-                                    progress to done board.
-                                </p>
-                                <small class="text-muted">Today 7:00 AM</small>
-                            </div>
-                        </div>
-                        <div class="media mb-4 d-flex align-items-start">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <span class="avatar-initial bg-label-danger rounded-circle">CK</span>
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Clark</span> added new board
-                                    with name <span class="fw-medium">Done</span>.
-                                </p>
-                                <small class="text-muted">Yesterday 3:00 PM</small>
-                            </div>
-                        </div>
-                        <div class="media d-flex align-items-center">
-                            <div class="avatar me-2 flex-shrink-0 mt-1">
-                                <span class="avatar-initial bg-label-secondary rounded-circle">BW</span>
-                            </div>
-                            <div class="media-body">
-                                <p class="mb-0">
-                                    <span class="fw-medium">Bruce</span> added new task
-                                    in progress board.
-                                </p>
-                                <small class="text-muted">Yesterday 12:00 PM</small>
-                            </div>
-                        </div>
-                    </div>
+                <div class="tab-pane fade" id="selesai" role="tabpanel">
+
                 </div>
             </div>
         </div>
-
-
+    </div>
 @endsection
 @section('script')
-<script src="{{ asset('assets/vendor/libs/jquery/jquery1e84.js?id=0f7eb1f3a93e3e19e8505fd8c175925a') }}"></script>
-<script src="{{ asset('assets/vendor/libs/popper/popper0a73.js?id=baf82d96b7771efbcc05c3b77135d24c') }}"></script>
-{{-- <script src="{{ asset('assets/vendor/js/bootstraped84.js?id=9a6c701557297a042348b5aea69e9b76') }}"></script> --}}
-<script src="{{ asset('assets/vendor/libs/node-waves/node-waves259f.js?id=4fae469a3ded69fb59fce3dcc14cd638') }}"></script>
-<script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar6188.js?id=44b8e955848dc0c56597c09f6aebf89a') }}"></script>
-<script src="{{ asset('assets/vendor/libs/hammer/hammer2de0.js?id=0a520e103384b609e3c9eb3b732d1be8') }}"></script>
-<script src="{{ asset('assets/vendor/libs/typeahead-js/typeahead60e7.js?id=f6bda588c16867a6cc4158cb4ed37ec6') }}"></script>
-<script src="{{ asset('assets/vendor/js/menu2dc9.js?id=c6ce30ded4234d0c4ca0fb5f2a2990d8') }}"></script>
-<script src="{{ asset('assets/vendor/libs/moment/moment.js') }}"></script>
-<script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
-<script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
-<script src="{{ asset('assets/vendor/libs/jkanban/jkanban.js') }}"></script>
-<script src="{{ asset('assets/vendor/libs/quill/katex.js') }}"></script>
-<script src="{{ asset('assets/vendor/libs/quill/quill.js') }}"></script>
-<!-- END: Page Vendor JS-->
-<!-- BEGIN: Theme JS-->
-{{-- <script src="{{ asset('assets/js/mainf696.js?id=8bd0165c1c4340f4d4a66add0761ae8a') }}"></script> --}}
+    <script src="{{ asset('assets/vendor/libs/jquery/jquery1e84.js?id=0f7eb1f3a93e3e19e8505fd8c175925a') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/popper/popper0a73.js?id=baf82d96b7771efbcc05c3b77135d24c') }}"></script>
+    {{-- <script src="{{ asset('assets/vendor/js/bootstraped84.js?id=9a6c701557297a042348b5aea69e9b76') }}"></script> --}}
+    <script src="{{ asset('assets/vendor/libs/node-waves/node-waves259f.js?id=4fae469a3ded69fb59fce3dcc14cd638') }}">
+    </script>
+    <script
+        src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar6188.js?id=44b8e955848dc0c56597c09f6aebf89a') }}">
+    </script>
+    <script src="{{ asset('assets/vendor/libs/hammer/hammer2de0.js?id=0a520e103384b609e3c9eb3b732d1be8') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/typeahead-js/typeahead60e7.js?id=f6bda588c16867a6cc4158cb4ed37ec6') }}">
+    </script>
+    <script src="{{ asset('assets/vendor/js/menu2dc9.js?id=c6ce30ded4234d0c4ca0fb5f2a2990d8') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/moment/moment.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/jkanban/jkanban.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/quill/katex.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/quill/quill.js') }}"></script>
+    <!-- END: Page Vendor JS-->
+    <!-- BEGIN: Theme JS-->
+    <script src="{{ asset('assets/js/mainf696.js?id=8bd0165c1c4340f4d4a66add0761ae8a') }}"></script>
 
-<!-- END: Theme JS-->
-<!-- Pricing Modal JS-->
-<!-- END: Pricing Modal JS-->
-<!-- BEGIN: Page JS-->
-{{-- <script src="{{ asset('assets/js/app-kanban.js') }}"></script> --}}
-<!-- END: Page JS-->
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script>
+    <!-- END: Theme JS-->
+    <!-- Pricing Modal JS-->
+    <!-- END: Pricing Modal JS-->
+    <!-- BEGIN: Page JS-->
+    {{-- <script src="{{ asset('assets/js/app-kanban.js') }}"></script> --}}
+    <!-- END: Page JS-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/toastr/toastr.js') }}" />
+    <script src="{{ asset('assets/js/forms-selects.js') }}"></script>
+    <script src="{{ asset('assets/js/forms-typeahead.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/forms-tagify.js') }}"></script> --}}
+    <script src="{{ asset('assets/vendor/libs/bloodhound/bloodhound.js') }}"></script>
+    <script>
+        // let dataEmpty
 
-// let dataEmpty
 
-
-    function showForm(id){
-        let status = false;
+        function showForm(id) {
+            let status = false;
 
             if (!status) {
                 document.getElementById(id).classList.toggle('d-none')
@@ -378,124 +243,148 @@
             }
         }
 
-        $(document).ready(function(){
+        get()
 
 
+        function get() {
             axios.get("ambil-data-tugas/{{ $code }}")
-            .then((res) => {
-                const dataTugas = res.data.tugas;
-                const tugas_baru = dataTugas.tugas_baru;
-                const tugas_dikerjakan = dataTugas.tugas_dikerjakan;
-                const tugas_direvisi = dataTugas.tugas_direvisi;
-                const tugas_selesai = dataTugas.tugas_selesai;
-                console.log(dataTugas);
+                .then((res) => {
+                    const dataTugas = res.data.tugas;
 
-                // TugasBaru
-                Object.keys(tugas_baru).forEach(key => {
-                    const tugas = tugas_baru[key];
-                    const element = $(`<div>`)
-                        .addClass('col-12 p-2 mt-3 card')
-                        .html(
+                    $('#tugas_baru').empty()
+                    $('#dikerjakan').empty()
+                    $('#revisi').empty()
+                    $('#selesao').empty()
+                    // TugasBaru
+                    dataTugas.forEach((data, index) => {
+                        const tugas = data;
+                        const {user} = tugas
+                        let tugaskan;
+                        user.forEach(element => {
+                           tugaskan = 
+                           `
+                                          <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Bruce" data-bs-original-title="${element.username}">
+                                            <img src="{{ asset('assets/img/avatars/10.png') }}" alt="Avatar" class="rounded-circle pull-up">
+                                          </div>
                             `
-    <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1 ">
-        <div class="item-badges">
-          <div class="badge rounded-pill bg-label-success">UX</div>
-        </div>
-        <div class="dropdown kanban-tasks-item-dropdown">
-          <i class="ti ti-dots-vertical" id="kanban-tasks-item-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="kanban-tasks-item-dropdown" style="">
-            <button type="button" class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#editTugasBar" >Edit</button>
-            <a class="dropdown-item" href="javascript:void(0)">Delete</a>
-          </div>
-        </div>
-      </div>
-      <span class="kanban-text">${tugas.nama}</span>
-      <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
-        <div class="d-flex">
-          <span class="d-flex align-items-center ms-1">
-            <i class="ti ti-message-dots ti-xs me-1"></i>
-            <span>${tugas.comments.length}</span>
-          </span>
-        </div>
-        <div class="avatar-group d-flex align-items-center assigned-avatar">
-          <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Bruce" data-bs-original-title="Bruce">
-            <img src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png" alt="Avatar" class="rounded-circle pull-up">
-          </div>
-          <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Clark" data-bs-original-title="Clark">
-            <img src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png" alt="Avatar" class="rounded-circle pull-up">
-          </div>
-        </div>
-      </div>
-    </div>
-                            `
+                            console.log(tugaskan);
+                        });
+
+
+                        const element = $(`<div>`)
+                            .addClass('col-12 p-2 mt-3 card')
+                            .html(
+                                `
+                            <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1 ">
+                                <div class="item-badges">
+                                <div class="badge rounded-pill bg-label-success">UX</div>
+                                </div>
+                                <div class="dropdown kanban-tasks-item-dropdown">
+                                <i class="ti ti-dots-vertical" id="kanban-tasks-item-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="kanban-tasks-item-dropdown" style="">
+                                    <button onclick="editTugas('${tugas.code}')" type="button" class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#editTugasBar" >Edit</button>
+                                    <a class="dropdown-item" href="javascript:void(0)">Delete</a>
+                                </div>
+                                </div>
+                            </div>
+                            <span class="kanban-text">${tugas.nama}</span>
+                            <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
+                                <div class="d-flex">
+                                <span class="d-flex align-items-center ms-1">
+                                    <i class="ti ti-message-dots ti-xs me-1"></i>
+                                    <span>${tugas.comments.length}</span>
+                                </span>
+                                </div>
+                                <div class="avatar-group d-flex align-items-center assigned-avatar">
+                                    
+                                    ${tugaskan}
+    
+                                </div>
+                            </div>
+                            </div>
+    `
                             );
 
-                    $('#tugas_baru').append(element)
+
+                        if (tugas.status_tugas === "tugas_baru") {
+                            $('#tugas_baru').append(element)
+                        } else if (tugas.status_tugas === "dikerjakan") {
+                            $("#dikerjakan").append(element)
+                        } else if (tugas.status_tugas === "revisi") {
+                            $("#revisi").append(element)
+                        } else {
+                            $("#selesai").append(element)
+                        }
+                    });
+
+
+                })
+                .catch((err) => {
+                    console.log(err);
                 });
 
+        }
 
+
+
+        function editTugas(codeTugas) {
+            console.log(codeTugas);
+            $("#select2Primary").empty();
+            $("#formEditTugas").attr("data-codetugas", codeTugas);
+            axios.get("data-edit-tugas/" + codeTugas)
+                .then((res) => {
+                    const data = res.data
+                    const user = data.tim.user;
+                    const userSelected = data.user
+                    $("#title").val(data.nama)
+                    $("#due-date").val(data.deadline)
+
+                    Object.keys(user).forEach(key => {
+    const userOption = user[key];
+    console.log(userOption);
+   const option = document.createElement('option')
+   option.value = userOption.uuid;
+   option.textContent = userOption.username
+
+   userSelected.forEach(data=>{
+    if(data.uuid === userOption.uuid){
+        option.setAttribute("selected",true);
+    }
+   })
+    $("#select2Primary").append(option);
+});
+
+
+                })
+        }
+
+
+
+
+
+        $("#formEditTugas").submit(function (e) {
+            e.preventDefault()
+            const nama = $("#title").val();
+            const deadline = $("#due-date").val();
+            const status_tugas = $("#status").val();
+            const prioritas = $("#newPriority").val();
+            const penugasan = $("#select2Primary").val()
+            const codeTugas = $(this).data('codetugas');
+
+            console.log(codeTugas);
+            axios.put("{{ route('editTugas') }}",{codeTugas,nama,deadline,status_tugas,penugasan,prioritas})
+            .then((res) => {
+                get();
             })
             .catch((err) => {
                 console.log(err);
             })
 
-
         })
 
 
 
-        $(document).ready(()=>{
 
-            $("#formTambahTugas").submit((event)=>{
-                event.preventDefault()
-
-                const nama = $('#tugas').val();
-                const tim_id = "{{ $tim->code }}";
-
-                axios.post("{{ route('tim.tambah-tugas') }}",{nama,tim_id})
-                .then((res) => {
-                    console.log(res.data);
-                    const div = $(`<div>`)
-                        .addClass('col-12 p-2 mt-3 card')
-                        .html(
-                            `
-    <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1 ">
-        <div class="item-badges">
-          <div class="badge rounded-pill bg-label-success">UX</div>
-        </div>
-        <div class="dropdown kanban-tasks-item-dropdown">
-          <i class="ti ti-dots-vertical" id="kanban-tasks-item-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="kanban-tasks-item-dropdown" style="">
-            <button type="button" class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#editTugasBar" >Edit</button>
-            <a class="dropdown-item" href="javascript:void(0)">Delete</a>
-          </div>
-        </div>
-      </div>
-      <span class="kanban-text">${res.data.nama}</span>
-      <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
-        <div class="d-flex">
-          <span class="d-flex align-items-center ms-1">
-            <i class="ti ti-message-dots ti-xs me-1"></i>
-            <span>${res.data.comments.length}</span>
-          </span>
-        </div>
-        <div class="avatar-group d-flex align-items-center assigned-avatar">
-          <div id="list-ditugaskan-${res.data.code}" class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Bruce" data-bs-original-title="Bruce">
-            <img src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png" alt="Avatar" class="rounded-circle pull-up">
-          </div>
-        </div>
-    </div>
- `
-);
-    $("#tugas_baru").append(div);
-    
-
-                    })
-
-            })
-
-        });
-
-
+      
     </script>
 @endsection
