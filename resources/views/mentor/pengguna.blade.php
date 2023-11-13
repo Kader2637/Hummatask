@@ -363,6 +363,7 @@
                                     $no_manage = 1;
                                 @endphp
                                 @foreach ($pengelolaMagang as $item)
+                                @if ($magang->masih_menjabat)
                                     <tr>
                                         <th scope="row">{{ $no_manage++ }}</th>
                                         <td class="nama">
@@ -396,6 +397,7 @@
                                         </td>
 
                                     </tr>
+                                    @endif
                                 @endforeach
                             </tbody>
                         </table>
@@ -652,14 +654,14 @@
                                     <div class="col mb-3">
                                         <label for="username" class="form-label">Nama</label>
                                         <input name="username" type="text" id="username" class="form-control"
-                                            placeholder="Masukkan nama pengguna" required>
+                                            placeholder="Masukkan nama pengguna" value="" required>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col mb-3">
                                         <label for="email" class="form-label">Email</label>
                                         <input name="email" type="text" id="email" class="form-control"
-                                            placeholder="Masukkan email" required>
+                                            placeholder="Masukkan email" value="" required>
                                     </div>
                                 </div>
                             </div>

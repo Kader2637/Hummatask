@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\HistoriPengelola;
 use App\Models\HistoryPresentasi;
+use App\Models\PenglolaMagang;
 use App\Models\Presentasi;
 use App\Models\Project;
 use App\Models\Tema;
@@ -125,20 +126,48 @@ class mentorController extends Controller
         $users = User::with('peran')->where('peran_id', 1)->get();
         $pengelolaMagang = new Collection();
         $bukanPengelolaMagang = new Collection();
-
+        $magang = PenglolaMagang::all();
+        
         foreach ($roles as $peran) {
             $penggunaDenganPeran = User::whereHas('roles', function ($query) use ($peran) {
                 $query->where('name', $peran->name);
             })->get();
             $pengelolaMagang = $pengelolaMagang->concat($penggunaDenganPeran);
-
+            
             $bukanPengelolaMagang = User::whereDoesntHave('permissions', function ($query) use ($peran) {
                 $query->where('name', $peran);
             })->get();
             $bukanPengelolaMagang = $bukanPengelolaMagang->concat($penggunaDenganPeran);
         }
+        
+        foreach ($penggunaDenganPeran as $pengguna) {
+            if (!$pengguna->hasRole('ketua magang')) {
+                HistoriPengelola::create([
+                    'user_id' => $pengguna->id,
+                    'action' => 'Diberikan peran Pengelola Magang',
+                    'role' => 'ketua magang',
+                    'name' => $pengguna->name,
+                    'email' => $pengguna->email,
+                ]);
+            }
+        }
 
-        return response()->view('mentor.pengguna', compact('users', 'pengelolaMagang', 'bukanPengelolaMagang', 'mentors', 'roles'));
+        foreach ($users as $user) {
+            $penglolaMagang = PenglolaMagang::where('user_id', $user->id)->first();
+    
+            if ($penglolaMagang && $penglolaMagang->akhir_menjabat < Carbon::now()) {
+                PenglolaMagang::where('user_id', $user->id)
+                    ->update(['masih_menjabat' => false]);
+    
+                $updatedPenglolaMagang = PenglolaMagang::where('user_id', $user->id)->first();
+    
+                if ($updatedPenglolaMagang && !$updatedPenglolaMagang->masih_menjabat) {
+                    $user->removeRole('ketua magang');
+                }
+            }
+        }
+            
+        return response()->view('mentor.pengguna', compact('users', 'pengelolaMagang', 'bukanPengelolaMagang', 'mentors', 'roles','magang'));
     }
 
     // Return view history mentor
