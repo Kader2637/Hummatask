@@ -256,15 +256,9 @@
                             <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
                                 data-bs-target="#navs-pills-top-profile" aria-controls="navs-pills-top-profile"
                                 aria-selected="false" tabindex="-1">Anggota</button>
-
                         </div>
-                            <a style="cursor: pointer" data-bs-toggle="offcanvas" data-bs-target="#offcanvasEnd"
-                            class="menu-link d-flex align-items-center ">
-                            <i class="menu-icon tf-icons ti ti-chart-line"></i>
-                            <div class="w-100 d-flex align-items-center justify-content-between">Statistik Project
-                            </div>
-                        </a>
                     </div>
+
                     <div class="" role="presentation">
                         @if (!$project)
                             <button class="btn btn-primary button-nav waves-effect waves-light" data-bs-toggle="modal"
@@ -311,150 +305,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-                            {{-- statistic --}}
-                            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEnd" aria-labelledby="offcanvasEndLabel">
-                                <div class="offcanvas-header">
-                                    <h5 id="offcanvasEndLabel" class="offcanvas-title">Statistik Project</h5>
-                                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                </div>
-                                <div class="offcanvas-body my-auto mx-0 flex-grow-0">
-
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="nav-align-top nav-tabs-shadow mb-4">
-                                                <ul class="nav nav-tabs" role="tablist">
-                                                    <li class="nav-item" role="presentation">
-                                                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
-                                                            data-bs-target="#navs-top-home" aria-controls="navs-top-home"
-                                                            aria-selected="true">Card</button>
-                                                    </li>
-                                                </ul>
-
-                                                <div class="tab-content">
-                                                    <div class="tab-pane fade active show" id="navs-top-home" role="tabpanel">
-                                                        {{-- @foreach ($selesaiCount as $card ) --}}
-                                                        {{-- @dump($selesaiCount) --}}
-                                                        <div class="row gap-4">
-                                                            <div class="col-12">
-                                                                <div class="card h-100">
-                                                                    <div class="card-body d-flex justify-content-between align-items-center">
-                                                                        <div class="card-title mb-0">
-                                                                            <h5 class="mb-0 me-2">{{ $selesaiCount }}</h5>
-                                                                            <small>Tugas dengan status selesai</small>
-                                                                        </div>
-                                                                        <div class="card-icon">
-                                                                            <span class="badge bg-label-primary rounded-pill p-2">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                                    height="20" viewBox="0 0 24 24">
-                                                                                    <path fill="currentColor"
-                                                                                        d="M13 19c0 1.1.3 2.12.81 3H6c-1.11 0-2-.89-2-2V4a2 2 0 0 1 2-2h1v7l2.5-1.5L12 9V2h6a2 2 0 0 1 2 2v9.09c-.33-.05-.66-.09-1-.09c-3.31 0-6 2.69-6 6m7-1v-3h-2v3h-3v2h3v3h2v-3h3v-2h-3Z" />
-                                                                                </svg>
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <div class="card h-100">
-                                                                    <div class="card-body d-flex justify-content-between align-items-center">
-                                                                        <div class="card-title mb-0">
-                                                                            <h5 class="mb-0 me-2">{{ $persentase }}%</h5>
-                                                                            <small>Tugas belum dikerjakan</small>
-                                                                        </div>
-                                                                        <div class="card-icon">
-                                                                            <span class="badge bg-label-primary rounded-pill p-2">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                                    height="20" viewBox="0 0 24 24">
-                                                                                    <path fill="currentColor"
-                                                                                        d="M17 4v6l-2-2l-2 2V4H9v16h3.1c.1.7.4 1.4.7 2H7c-1.1 0-2-1-2-2v-1H3v-2h2v-4H3v-2h2V7H3V5h2V4c0-1.1.9-2 2-2h12c1 0 2 1 2 2v9.8c-.6-.4-1.3-.6-2-.7V4h-2M5 19h2v-2H5v2m0-6h2v-2H5v2m0-6h2V5H5v2m15.1 8.5L18 17.6l-2.1-2.1l-1.4 1.4l2.1 2.1l-2.1 2.1l1.4 1.4l2.1-2.1l2.1 2.1l1.4-1.4l-2.1-2.1l2.1-2.1l-1.4-1.4Z" />
-                                                                                </svg>
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <div class="card h-100">
-                                                                    <div class="card-body d-flex justify-content-between align-items-center">
-                                                                        <div class="card-title mb-0">
-                                                                            @if(!empty($tanggal))
-                                                                            @foreach ($tanggal as $tgl)
-                                                                            <h5 class="mb-0 me-2">{{ $tgl }} Jam</h5>
-                                                                            @endforeach
-                                                                            @else
-                                                                            <h6 class="mb-0 me-0">Belum ada project</h6>
-                                                                            @endif
-                                                                            <small>Waktu pengerjaan project</small>
-                                                                        </div>
-                                                                        <div class="card-icon">
-                                                                            <span class="badge bg-label-primary rounded-pill p-2">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                                    height="20" viewBox="0 0 24 24">
-                                                                                    <path fill="currentColor"
-                                                                                        d="m10.45 14.55l1.325 2.95q.075.15.225.15t.225-.15l1.325-2.95l2.95-1.325q.15-.075.15-.225t-.15-.225l-2.95-1.325l-1.325-2.95q-.075-.15-.225-.15t-.225.15l-1.325 2.95l-2.95 1.325q-.15.075-.15.225t.15.225l2.95 1.325ZM10 3q-.425 0-.712-.288T9 2q0-.425.288-.713T10 1h4q.425 0 .713.288T15 2q0 .425-.288.713T14 3h-4Zm2 19q-1.85 0-3.487-.713T5.65 19.35q-1.225-1.225-1.938-2.863T3 13q0-1.85.713-3.488T5.65 6.65q1.225-1.225 2.863-1.938T12 4q1.55 0 2.975.5t2.675 1.45l.7-.7q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7l-.7.7Q20 8.6 20.5 10.025T21 13q0 1.85-.713 3.488T18.35 19.35q-1.225 1.225-2.863 1.938T12 22Zm0-2q2.9 0 4.95-2.05T19 13q0-2.9-2.05-4.95T12 6Q9.1 6 7.05 8.05T5 13q0 2.9 2.05 4.95T12 20Zm0-7Z" />
-                                                                                </svg>
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <div class="card h-100">
-                                                                    <div class="card-body d-flex justify-content-between align-items-center">
-                                                                        <div class="card-title mb-0">
-                                                                            <h5 class="mb-0 me-2">{{ $revisiCount }}</h5>
-                                                                            <small>Tugas pernah masuk revisi</small>
-                                                                        </div>
-                                                                        <div class="card-icon">
-                                                                            <span class="badge bg-label-primary rounded-pill p-2">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                                    height="20" viewBox="0 0 24 24">
-                                                                                    <path fill="currentColor"
-                                                                                        d="M8.3 19.3q-.275-.275-.275-.7t.275-.7l1.1-1.1q-3.2-.425-5.3-1.75T2 12q0-2.075 2.888-3.538T12 7q4.225 0 7.113 1.463T22 12q0 1.35-1.3 2.475t-3.475 1.8q-.5.15-.863-.125T16 15.325q0-.3.213-.587t.512-.388q1.575-.5 2.425-1.175T20 12q0-.8-2.137-1.9T12 9q-3.725 0-5.863 1.1T4 12q0 .6 1.275 1.438T8.9 14.7l-.6-.6q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275l2.6 2.6q.15.15.212.325t.063.375q0 .2-.063.375t-.212.325l-2.6 2.6q-.275.275-.7.275t-.7-.275Z" />
-                                                                                </svg>
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <div class="card h-100">
-                                                                    <div class="card-body d-flex justify-content-between align-items-center">
-                                                                        <div class="card-title mb-0">
-                                                                            @if(!empty($days))
-                                                                            @foreach($days as $day)
-                                                                            <h5 class="mb-0 me-2">{{ $day }} Hari</h5>
-                                                                            @endforeach
-                                                                            @else
-                                                                            <h6 class="mb-0 me-2">Belum ada project</h6>
-                                                                            @endif
-                                                                            <small>Tenggat waktu</small>
-                                                                        </div>
-                                                                        <div class="card-icon">
-                                                                            <span class="badge bg-label-primary rounded-pill p-2">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                                    height="20" viewBox="0 0 24 24">
-                                                                                    <path fill="currentColor"
-                                                                                        d="M8 3.28L6.6 1.86l-.86.71L7.16 4m9.31 14.39C15.26 19.39 13.7 20 12 20a7 7 0 0 1-7-7c0-1.7.61-3.26 1.61-4.47M2.92 2.29L1.65 3.57L3 4.9l-1.13.93l1.42 1.42l1.11-.94l.8.8A8.964 8.964 0 0 0 3 13a9 9 0 0 0 9 9c2.25 0 4.31-.83 5.89-2.2l2.2 2.2l1.27-1.27L3.89 3.27l-.97-.98M22 5.72l-4.6-3.86l-1.29 1.53l4.6 3.86L22 5.72M12 6a7 7 0 0 1 7 7c0 .84-.16 1.65-.43 2.4l1.52 1.52c.58-1.19.91-2.51.91-3.92a9 9 0 0 0-9-9c-1.41 0-2.73.33-3.92.91L9.6 6.43C10.35 6.16 11.16 6 12 6Z" />
-                                                                                </svg>
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        {{-- @endforeach --}}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {{-- statistic --}}
-
                             <div class="col-lg-8">
                                 {{-- card projects --}}
                                 <div class="card">
@@ -619,6 +469,7 @@
     </div>
 @endsection
 
+
 @section('script')
     <script src="{{ asset('assets/vendor/libs/jquery/jquery1e84.js?id=0f7eb1f3a93e3e19e8505fd8c175925a') }}"></script>
     <script src="{{ asset('assets/vendor/libs/popper/popper0a73.js?id=baf82d96b7771efbcc05c3b77135d24c') }}"></script>
@@ -636,6 +487,5 @@
     <script src="{{ asset('assets/vendor/libs/tagify/tagify.js') }}"></script>
     <script src="{{ asset('assets/js/forms-tagify.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 @endsection
-
-

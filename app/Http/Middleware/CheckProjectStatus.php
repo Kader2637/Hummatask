@@ -6,15 +6,19 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use function Laravel\Prompts\alert;
+
 class CheckProjectStatus
 {
     public function handle($request, Closure $next)
 {
-    if ($request->project->deskripsi !== null) {
+    $tim = $request->route('tim');
+
+    if ($tim && $tim->project && $tim->project->deskripsi) {
         return $next($request);
     }
     
-    return back()->with('tolak', 'Tolong lengkapi deskripsi terlebih dahulu');
+    return back()->with('error', 'Tolong lengkapi deskripsi terlebih dahulu', 'Error');
 }
 
 }

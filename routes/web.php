@@ -61,7 +61,7 @@ Route::prefix('tim')->controller(timController::class)->group(function () {
         Route::get('history/{code}', 'historyPage')->name('tim.history');
         Route::get('history-presentasi/{code}', 'historyPresentasiPage')->name('tim.historyPresentasi');
         Route::get('history-catatan/{code}', 'historyCatatanPage')->name('tim.historyCatatan');
-
+        
         Route::patch('/ubah-status', 'ubahStatus')->name('ubahStatus');
         Route::delete('/delete-tugas', 'hapusTugas')->name('delete.tugas');
         Route::post('/add-comment', 'comments')->name('tim.addComment');
@@ -69,7 +69,7 @@ Route::prefix('tim')->controller(timController::class)->group(function () {
         Route::post('catatan', [catatanController::class, 'store'])->name('catatan.store');
         Route::patch('catatan/update/{code}', [catatanController::class, 'update'])->name('catatan.update');
 
-
+        
         // proses di halaman tim
         Route::get('tampil-tugas/{code}', [TugasController::class, 'getData'])->name('tim.tampilTugas');
         Route::post('tambah-tugas', [TugasController::class, 'buatTugas'])  ->name('tim.tambah-tugas');
@@ -113,7 +113,6 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::get('history', [mentorController::class, 'history'])->name('history.mentor');
     Route::get('presentasi', [mentorController::class, 'presentasi'])->name('presentasi.mentor');
     Route::get('project', [mentorController::class, 'Project'])->name('Project');
-    Route::get('tim', [mentorController::class, 'tim'])->name('tim');
 
     // Process`
     Route::post('tampil-detail-presentasi/{code}', [PresentasiController::class, 'tampilkanDetailPresentasi']);
@@ -135,7 +134,6 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::post('tambah-user-user', [tambahUsersController::class, 'storeCsv'])->name('tambah.users.csv');
     Route::post('tambah-user', [tambahUsersController::class, 'store'])->name('tambah.users');
     Route::post('tambah-mentor', [tambahUsersController::class, 'store_mentor'])->name('tambah.mentor');
-    Route::put('edit-mentor/{uuid}', [tambahUsersController::class, 'edit_mentor'])->name('edit.mentor');
     Route::post('tambah-pengelola', [tambahUsersController::class, 'tambah_pengelola'])->name('tambah.pengelola');
     Route::post('tambah-role', [tambahUsersController::class, 'tambah_role'])->name('tambah.roles');
 

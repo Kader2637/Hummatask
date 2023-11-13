@@ -72,29 +72,28 @@ class PengajuanTimController extends Controller
     protected function pembuatanTimProject(RequestPembentukanTimProject $request)
     {
         try {
+            // Memeriksa kesamaan nilai kolom ID
             $daftarAnggota = $request->anggota;
             $daftarAnggota[] = $request->ketuaKelompok;
+            $daftarAnggota[] = $request->ketuaProjek;
             $uniqueDaftarAnggota = array_unique($daftarAnggota);
 
+            // Memeriksa apakah ID anggota sudah terdaftar di tim lain
             $existingAnggota = Anggota::whereIn('user_id', $uniqueDaftarAnggota)->first();
             if ($existingAnggota) {
-                return back()->with('warning', 'Anggota telah masuk di tim lain.');
+                throw new \Exception('ID anggota sudah digunakan di opsi lain.');
             }
 
+            // Melanjutkan proses pendaftaran tim baru
             $tim = new Tim;
             $tim->code = Str::uuid();
-            if ($request->status_tim == 2) {
-                $tim->nama = 'Pre Mini Project Team';
-            } else if ($request->status_tim == 3) {
-                $tim->nama = 'Mini Project Team';
-            } else if ($request->status_tim == 4) {
-                $tim->nama = 'Big Project Team';
-            }
-            $tim->status_tim = $request->status_tim;
-            $tim->logo = 'assets/img/avatars/1.png';
+            // $tim->nama = $request->nama;
+            $statusTim = is_array($request->status_tim) ? $request->status_tim : [$request->status_tim];
+            $tim->status_tim = implode(',', $statusTim);
             $tim->kadaluwarsa = true;
             $tim->save();
 
+            // Membuat anggota
             foreach ($uniqueDaftarAnggota as $anggota) {
                 $anggotaModel = new Anggota;
                 $anggotaModel->tim_id = $tim->id;
@@ -115,34 +114,37 @@ class PengajuanTimController extends Controller
                 $anggotaModel->save();
             }
 
-            return back()->with('success', 'Berhasil membuat tim');
+            return response()->json(['message' => 'Berhasil membentuk tim'], 200);
         } catch (QueryException $e) {
             // Tangani exception terkait query/database
-            return back()->with('error', 'Gagal membentuk tim');
+            return response()->json(['message' => 'Gagal membentuk tim. Terjadi kesalahan pada database.'], 500);
+        } catch (\Exception $e) {
+            // Tangani exception umum, termasuk kesalahan validasi
+            return response()->json(['message' => $e->getMessage()], 422);
         }
     }
-    // membuat notif
-    // $notifAnggota = $tim->user;
-    // foreach ($notifAnggota as $user) {
-    //     $notif = new Notifikasi;
-    //     $notif->code = Str::uuid();
-    //     $notif->judul = "Kamu bergabung dengan Tim Baru";
-    //     $notif->body = "Kamu bergabung di Tim dengan status tim " . $tim->status_tim;
-    //     $notif->url = "tim/project/" . $tim->code;
-    //     $notif->user_id = $user->id;
-    //     $notif->save();
-    // }
+           // membuat notif
+            // $notifAnggota = $tim->user;
+            // foreach ($notifAnggota as $user) {
+            //     $notif = new Notifikasi;
+            //     $notif->code = Str::uuid();
+            //     $notif->judul = "Kamu bergabung dengan Tim Baru";
+            //     $notif->body = "Kamu bergabung di Tim dengan status tim " . $tim->status_tim;
+            //     $notif->url = "tim/project/" . $tim->code;
+            //     $notif->user_id = $user->id;
+            //     $notif->save();
+            // }
     protected function pembuatanTimProjectKetua(RequestPembentukanTimProjectKetua $request)
     {
         try {
-            // Memeriksa kesamaan nilai kolom ID
-            $daftarAnggota = $request->anggota;
-            $daftarAnggota[] = $request->ketuaKelompok;
-            $daftarAnggota[] = $request->ketuaProjek;
-            $uniqueDaftarAnggota = array_unique($daftarAnggota);
-            if (count($daftarAnggota) !== count($uniqueDaftarAnggota)) {
-                throw new \Exception('User sudah digunakan di opsi lain.');
-            }
+        // Memeriksa kesamaan nilai kolom ID
+        $daftarAnggota = $request->anggota;
+        $daftarAnggota[] = $request->ketuaKelompok;
+        $daftarAnggota[] = $request->ketuaProjek;
+        $uniqueDaftarAnggota = array_unique($daftarAnggota);
+        if (count($daftarAnggota) !== count($uniqueDaftarAnggota)) {
+            throw new \Exception('User sudah digunakan di opsi lain.');
+        }
             $tim = new Tim;
             $tim->code = Str::uuid();
             $statusTim = is_array($request->status_tim) ? $request->status_tim : [$request->status_tim];
@@ -154,8 +156,8 @@ class PengajuanTimController extends Controller
             $daftarAnggota = $request->anggota;
             $daftarAnggota[] = $request->ketuaKelompok;
             $daftarAnggota[] = $request->ketuaProjek;
-            $uniqueDaftarAnggota = array_unique($daftarAnggota);
-            foreach ($uniqueDaftarAnggota as $anggota) {
+           $uniqueDaftarAnggota = array_unique($daftarAnggota);
+           foreach ($uniqueDaftarAnggota as $anggota) {
                 $anggotaModel = new Anggota;
                 $anggotaModel->tim_id = $tim->id;
                 if ($anggota === $request->ketuaKelompok) {

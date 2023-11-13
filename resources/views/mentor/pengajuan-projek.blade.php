@@ -64,9 +64,6 @@
                 <p>Tidak ada data pengajuan project.</p>
             @endforelse
         </div>
-        <div>
-            {{$projects->links('pagination::bootstrap-5')}}
-        </div>
 
         {{-- script modal detail --}}
         <script>
@@ -159,6 +156,40 @@
         </script>
         {{-- script modal detail --}}
 
+        {{-- pagination --}}
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-end">
+                <li class="page-item first">
+                    <a class="page-link" href="javascript:void(0);"><i class="ti ti-chevrons-left ti-xs"></i></a>
+                </li>
+                <li class="page-item prev">
+                    <a class="page-link" href="javascript:void(0);"><i class="ti ti-chevron-left ti-xs"></i></a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);">1</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);">2</a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link" href="javascript:void(0);">3</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);">4</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);">5</a>
+                </li>
+                <li class="page-item next">
+                    <a class="page-link" href="javascript:void(0);"><i class="ti ti-chevron-right ti-xs"></i></a>
+                </li>
+                <li class="page-item last">
+                    <a class="page-link" href="javascript:void(0);"><i class="ti ti-chevrons-right ti-xs"></i></a>
+                </li>
+            </ul>
+        </nav>
+        {{-- pagination --}}
+
         <!-- Modal Terima-->
         <div class="modal fade" id="modalTerima" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -210,7 +241,7 @@
 
         {{-- Modal Detail --}}
         <div class="modal fade" id="modalDetail" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+            <div class="modal-dialog modal-fullscreen modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalCenterTitle">Detail tim</h5>
