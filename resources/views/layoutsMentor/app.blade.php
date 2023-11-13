@@ -103,7 +103,7 @@
     }
 
     #loader {
-        z-index: 100;
+        z-index: 100000000000;
         /* Tambahkan z-index di sini */
         position: absolute;
         width: 100%;
@@ -240,7 +240,14 @@
                         </a>
                     </li>
                     <li
-                        class="menu-item {{ request()->routeIs('pengajuan-projek', 'detail-pengajuan-projek') ? 'active' : '' }}">
+                        class="menu-item {{ request()->routeIs('tim') ? 'active' : '' }}">
+                        <a href="{{ route('tim') }}" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-users-group"></i>
+                            <div>Tim</div>
+                        </a>
+                    </li>
+                    <li
+                        class="menu-item {{ request()->routeIs('pengajuan-projek') ? 'active' : '' }}">
                         <a href="{{ route('pengajuan-projek') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-report-analytics"></i>
                             <div>Pengajuan Project</div>
@@ -249,7 +256,7 @@
                     <li class="menu-item {{ request()->routeIs('projek', 'detail-projek') ? 'active' : '' }}">
                         <a href="{{ route('projek') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-folder-cog"></i>
-                            <div>Tim</div>
+                            <div>Project</div>
                         </a>
                     </li>
                     <li class="menu-item {{ request()->routeIs('pengguna.mentor') ? 'active' : '' }}">
