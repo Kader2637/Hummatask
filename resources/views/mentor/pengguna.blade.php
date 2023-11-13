@@ -362,36 +362,36 @@
                                 @php
                                     $no_manage = 1;
                                 @endphp
-                                @foreach ($pengelolaMagang as $item)
-                                @if ($magang->masih_menjabat)
+                                @foreach ($magang as $item)
+                                @if ($item->masih_menjabat)
                                     <tr>
                                         <th scope="row">{{ $no_manage++ }}</th>
                                         <td class="nama">
-                                            @if ($item->avatar)
-                                                <img src="{{ asset('storage/' . $item->avatar) }}" alt=""
+                                            @if ($item->user->avatar)
+                                                <img src="{{ asset('storage/' . $item->user->avatar) }}" alt=""
                                                     style="width:30px;hight:30px;border-radius:50%">
-                                                {{ $item->username }}
+                                                {{ $item->user->username }}
                                             @else
                                                 <img src="{{ asset('assets/img/avatars/1.png') }}" alt=""
                                                     style="width:30px;hight:30px;border-radius:50%">
-                                                {{ $item->username }}
+                                                {{ $item->user->username }}
                                             @endif
                                         </td>
-                                        <td>{{ $item->email }}</td>
+                                        <td>{{ $item->user->email }}</td>
                                         <td>
                                             <div class="d-flex flex-wrap flex-row gap-2">
                                                 <span class="detail-user" href="javascript:void(0);"
                                                     data-bs-toggle="modal" data-bs-target="#detail"
-                                                    data-username="{{ $item->username }}"
-                                                    data-avatar="{{ $item->avatar }}" data-tlp="{{ $item->tlp }}"
-                                                    data-peran="{{ $item->peran->peran }}"
-                                                    data-sekolah="{{ $item->sekolah }}"
-                                                    data-email="{{ $item->email }}"><i
+                                                    data-username="{{ $item->user->username }}"
+                                                    data-avatar="{{ $item->user->avatar }}" data-tlp="{{ $item->user->tlp }}"
+                                                    data-peran="{{ $item->user->peran->peran }}"
+                                                    data-sekolah="{{ $item->user->sekolah }}"
+                                                    data-email="{{ $item->user->email }}"><i
                                                         class="ti ti-eye me-1"></i></span>
                                                 <span class="" href="javascript:void(0);" data-bs-toggle="modal"
                                                     data-bs-target="#edit-data-permisions"><i
                                                         class="ti ti-pencil me-1"></i></span>
-                                                <span class="" id="delete-button-permisions-{{ $item->uuid }}"
+                                                <span class="" id="delete-button-permisions-{{ $item->user->uuid }}"
                                                     href="javascript:void(0);"><i class="ti ti-trash me-1"></i></span>
                                             </div>
                                         </td>
@@ -465,16 +465,26 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($magang as $item)
+                                @if ($item->masih_menjabat === 0)
                                 <tr>
                                     <th scope="row">1</th>
                                     <td class="nama">
-                                        <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                            style="width:30px;hight:30px;border-radius:50%">
-                                        Adi
+                                        @if ($item->user->avatar)
+                                            <img src="{{ asset('storage/' . $item->user->avatar) }}" alt=""
+                                                style="width:30px;hight:30px;border-radius:50%">
+                                            {{ $item->user->username }}
+                                        @else
+                                            <img src="{{ asset('assets/img/avatars/1.png') }}" alt=""
+                                                style="width:30px;hight:30px;border-radius:50%">
+                                            {{ $item->user->username }}
+                                        @endif
                                     </td>
-                                    <td>Example@gmail.com</td>
-                                    <td class="masa-jabatan">10 Januari s.d 10 Februari</td>
+                                    <td>{{ $item->user->email }}</td>
+                                    <td class="masa-jabatan">{{ $item->awal_menjabat }} sampai {{ $item->akhir_menjabat }}</td>
                                 </tr>
+                                @endif
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
