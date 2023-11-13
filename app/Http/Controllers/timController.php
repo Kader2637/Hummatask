@@ -29,8 +29,6 @@ class timController extends Controller
         $tugas_revisi = $tim->tugas()->where('status_tugas', 'revisi')->get();
         $tugas_selesai = $tim->tugas()->where('status_tugas', 'selesai')->get();
 
-        $hasProjectRelation = $tim->project()->exists();
-
         $selesaiCount = $tim->tugas->where('status_tugas', 'selesai')->count();
         $revisiCount = $tim->tugas->where('status_tugas', 'revisi')->count();
         $tugasBaruCount = $tim->tugas->where('status_tugas', 'tugas_baru')->count();
@@ -42,7 +40,7 @@ class timController extends Controller
             ['Tugas Baru', $tugasBaruCount]
         ];
 
-        return view('siswa.tim.board', compact('chartData','title', 'tim', 'anggota', 'tugas_baru', 'tugas_dikerjakan', 'tugas_revisi', 'tugas_selesai','hasProjectRelation','project'));
+        return view('siswa.tim.board', compact('chartData','title', 'tim', 'anggota', 'tugas_baru', 'tugas_dikerjakan', 'tugas_revisi', 'tugas_selesai','project'));
     }
 
 
