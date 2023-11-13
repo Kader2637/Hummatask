@@ -98,7 +98,7 @@
                                         </div>
                                         <div class="d-flex justify-content-between">
                                             <span>Tema : </span>
-                                            <div>{{ $item->tema->nama_tema }}</div>
+                                            <div data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="{{$item->tema->nama_tema}}">{{ Str::limit($item->tema->nama_tema, $limit = 20, $end = '...') }}</div>
                                         </div>
                                     </div>
                                     <a data-bs-toggle="" data-bs-target="#modalDetailProjek"
