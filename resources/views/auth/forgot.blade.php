@@ -18,22 +18,37 @@
                             class="app-brand-link gap-2">
                         </a>
                     </div>
-                    <h3 class="mb-1">Forgot Password? </h3>
-                    <p class="mb-4">Enter your email and we'll send you instructions to reset your password</p>
-                    <form id="formAuthentication" class="mb-3"
-                        action="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/auth/reset-password-cover"
-                        method="GET">
+
+                    <h3 class="mb-1">Lupa password? </h3>
+                    <p class="mb-4">
+                        Masukan email anda dan akam mengirim intruksi untuk atur ulang kata sandi
+                    </p>
+                    <form id="formAuthentication" class="mb-3" action="{{ Route('lupa-password.store') }}" method="post">
+                        @csrf
+
+                        @error('email')
+                            <div class="alert alert-danger mt-2">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                        @if (session('status'))
+                            <div class="alert alert-success mt-2">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+
+
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input type="text" class="form-control" id="email" name="email"
                                 placeholder="Enter your email" autofocus>
                         </div>
-                        <button class="btn btn-primary d-grid w-100">Send Reset Link</button>
+                        <button class="btn btn-primary d-grid w-100">Kirim</button>
                     </form>
                     <div class="text-center">
                         <a href="{{ route('login') }}" class="d-flex align-items-center justify-content-center">
                             <i class="ti ti-chevron-left scaleX-n1-rtl"></i>
-                            Back to login
+                            Kembali ke login
                         </a>
                     </div>
                 </div>

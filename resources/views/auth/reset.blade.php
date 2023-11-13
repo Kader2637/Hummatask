@@ -19,13 +19,24 @@
                             class="app-brand-link gap-2">
                         </a>
                     </div>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $item)
+                                    <li>{{ $item }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <h4 class="mb-1">Reset Password </h4>
-                    <p class="mb-4">for <span class="fw-medium">john.doe@email.com</span></p>
-                    <form id="formAuthentication" class="mb-3"
-                        action="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1/auth/login-cover"
-                        method="GET">
+                    <p class="mb-4">untuk <span class="fw-medium">{{request()->email}}m</span></p>
+                    
+                    <form id="formAuthentication" class="mb-3" action="{{ Route('password.update') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="token" value="{{ request()->token }}">
+                        <input type="hidden" name="email" value="{{ request()->email }}">
                         <div class="mb-3 form-password-toggle">
-                            <label class="form-label" for="password">New Password</label>
+                            <label class="form-label" for="password">Password baru</label>
                             <div class="input-group input-group-merge">
                                 <input type="password" id="password" class="form-control" name="password"
                                     placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
@@ -34,7 +45,7 @@
                             </div>
                         </div>
                         <div class="mb-3 form-password-toggle">
-                            <label class="form-label" for="confirm-password">Confirm Password</label>
+                            <label class="form-label" for="confirm-password">Konfirmasi password</label>
                             <div class="input-group input-group-merge">
                                 <input type="password" id="confirm-password" class="form-control" name="confirm-password"
                                     placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
@@ -42,8 +53,8 @@
                                 <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
                             </div>
                         </div>
-                        <button class="btn btn-primary d-grid w-100 mb-3">
-                            Set new password
+                        <button type="submit" class="btn btn-primary d-grid w-100 mb-3">
+                            Kirim password baru
                         </button>
                         <div class="text-center">
                             <a href="{{ route('login') }}">

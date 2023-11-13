@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'please_wait' => 'Harap tunggu sebelum mencoba lagi.',
     'accepted'             => ':attribute harus diterima.',
     'active_url'           => ':attribute bukan URL yang valid.',
     'after'                => ':attribute harus tanggal setelah :date.',
@@ -107,5 +108,5 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
-    ]
+    ],
 ];
