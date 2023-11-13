@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Excel;
 use Intervention\Image\ImageManagerStatic as Image;
 use App\Imports\CsvImport;
+use App\Models\PenglolaMagang;
 use App\Models\Tim;
 use App\Models\User;
 use Carbon\Carbon;
@@ -221,10 +222,27 @@ class tambahUsersController extends Controller
         try {
             $role = Role::find($request->role);
             $user = User::find($request->user);
+
             $user->assignRole($role);
+
+            if ($role->name == 'ketua magang') {
+                $awal_menjabat = Carbon::now();
+                $akhir_menjabat = Carbon::now()->addMonth(); 
+
+
+                PenglolaMagang::create([
+                    'user_id' => $user->id,
+                    'role_id' => $role->id,
+                    'awal_menjabat' => $awal_menjabat,
+                    'akhir_menjabat' => $akhir_menjabat,
+                    'masih_menjabat' => true, 
+                ]);
+            }
+        
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Gagal memberikan hak akses!');
         }
+
         return redirect()->back()->with('success', 'Berhasil memberikan hak akses!');
     }
 
@@ -271,14 +289,21 @@ class tambahUsersController extends Controller
     }
 
     protected function delete_permisions(string $code)
-    {
-        try {
-            $user = User::where('uuid', $code)->first();
-            $role = $user->getRoleNames()[0];
-            $user->removeRole($role);
-        } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'User berhasil di hapus!');
+{
+    try {
+        $user = User::where('uuid', $code)->first();
+
+        if ($user->hasRole('ketua magang')) {
+            PenglolaMagang::where('user_id', $user->id)
+                ->update(['masih_menjabat' => false]);
         }
-        return redirect()->back()->with('success', 'User berhasil di hapus!');
+
+        $role = $user->getRoleNames()[0];
+        $user->removeRole($role);
+    } catch (\Throwable $th) {
+        return redirect()->back()->with('error', 'User berhasil dihapus!');
     }
+
+    return redirect()->back()->with('success', 'User berhasil dihapus!');
+}
 }
