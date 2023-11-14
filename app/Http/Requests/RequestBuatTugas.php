@@ -22,7 +22,15 @@ class RequestBuatTugas extends FormRequest
     public function rules(): array
     {
         return [
-            'nama' => 'string'
+            'nama' => 'string|max:100'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'nama.string' => "Nama tugas harus menggunakan tipe data string ",
+            "nama.max:100" => "Nama tugas memiliki batas 100 karakter"
         ];
     }
 }

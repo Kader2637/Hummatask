@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RequestBuatTugas;
-use App\Http\Requests\RequestEditTugas;
 use App\Models\Penugasan;
 use App\Models\Tim;
 use App\Models\Tugas;
 use App\Models\User;
 use Exception;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 
@@ -39,8 +39,27 @@ class TugasController extends Controller
         ]);
     }
 
-    protected function buatTugas(RequestBuatTugas $request)
+    protected function buatTugas(Request $request)
     {
+
+        $validator = validator($request->all(),
+        [
+            "nama" => "string|max:100"
+        ],
+        [
+            "nama.string" => "Nama tugas harus berupa strinig",
+            "nama.max:100" => "Nama tugas memiliki maksimal 100 karakter",
+        ]
+        );
+
+        if($validator->fails()){
+            return response()->json(
+                [
+                    "errors" => $validator->errors()
+                ],422
+                );
+        }
+
         $tim = Tim::where('code', $request->tim_id)->first();
         $tugas = new Tugas;
         $tugas->tim_id = $tim->id;
@@ -48,9 +67,12 @@ class TugasController extends Controller
         $tugas->nama = $request->nama;
         $tugas->save();
 
-        $pengugasan = new Penugasan;
-        $pengugasan->tugas_id = $tugas->id;
-        $pengugasan->save();
+        if($tim->status_tim === "solo"){
+            $penugasan = new Penugasan;
+            $penugasan->tugas_id = $tugas->id;
+            $penugasan->user_id = Auth::user()->id;
+            $penugasan->save();
+        }
 
         return response()->json($tugas->with(['user','comments'])->latest()->first());
     }
@@ -73,22 +95,43 @@ class TugasController extends Controller
 
     protected function prosesEditTugas(Request $request)
     {
+
         $tugas = Tugas::where('code',$request->codeTugas)->first();
 
         $tugas->nama = $request->nama;
         $tugas->prioritas = $request->prioritas;
         $tugas->deadline = $request->deadline;
         $tugas->status_tugas = $request->status_tugas;
-        $tugas->save();
 
         $penugasan = $request->penugasan;
-        foreach ($penugasan as $i => $data) {
-            $tbPenugasan = new Penugasan;
-            $tbPenugasan->tugas_id = $tugas->id;
-            $user = User::where('uuid',$data)->first();
-            $tbPenugasan->user_id = $user->id;
-            $tbPenugasan->save();
+        $currentPenugasan = $tugas->user->pluck('uuid')->toArray();
+
+        $userToAdd = array_diff($penugasan,$currentPenugasan);
+        $userToRemove = array_diff($currentPenugasan,$penugasan);
+
+
+
+        foreach ($userToAdd as $i => $data) {
+            $user = User::where('uuid', $data)->first();
+            if ($user) {
+                $penugasan = new Penugasan;
+                $penugasan->tugas_id = $tugas->id;
+                $penugasan->user_id = $user->id;
+                $penugasan->save();
+            }
         }
+
+
+        foreach ($userToRemove as $data) {
+            $user = User::where('uuid', $data)->first();
+            if ($user) {
+                $penugasanTb = Penugasan::where('tugas_id', $tugas->id)->where('user_id', $user->id)->delete();
+
+            }
+        }
+
+
+        $tugas->save();
         return response()->json("sukses");
     }
 

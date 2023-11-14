@@ -14,11 +14,13 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/app-kanban.css') }}" />
 
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}">
+
 @endsection
 
 @section('content')
-    <div style="height: 80vh;overflow-x: auto; " class="container-fluid row mt-2">
-        <div class="d-flex mt-3 mb-0 pb-5 " style="width: 100%; overflow-x: auto ; gap:50px;">
+    <div style="height: 80vh" class="container-fluid row mt-2 ">
+        <div class="d-flex mt-3 mb-0 pb-5 overflow-y-scroll " style="width: 100%; gap:50px;">
 
             <div style="" class="col-3">
                 <div class="card">
@@ -49,14 +51,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12">
-                    <div class="row d-flex flex-column justify-content-center align-items-center" id="tugas_baru">
+                <div class="col-12 d-flex justify-content-center">
+                    <div class="row d-flex flex-column justify-content-center align-items-center w-100" id="tugas_baru">
 
                     </div>
                 </div>
             </div>
 
-            <div style="" class=" col-3">
+            <div style="" class=" col-3 ">
                 <div class="card">
                     <div class="card-body p-2 py-2 row">
                         <div class="col-8 d-flex align-items-center">
@@ -64,8 +66,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="row row d-flex flex-column justify-content-center align-items-center" id="dikerjakan">
-
+                <div class="col-12 d-flex justify-content-center">
+                    <div class="row row d-flex flex-column justify-content-center align-items-center w-100" id="dikerjakan">
+                    </div>
                 </div>
             </div>
             <div style="" class=" col-3">
@@ -76,8 +79,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="row d-flex flex-column justify-content-center align-items-center" id="revisi">
+                <div class="col-12 d-flex justify-content-center">
+                    <div class="w-100 row d-flex flex-column justify-content-center align-items-center" id="revisi">
 
+                    </div>
                 </div>
             </div>
             <div style="" class=" col-3">
@@ -88,8 +93,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="row d-flex flex-column justify-content-center align-items-center" id="selesai">
-
+                <div class="col-12 d-flex justify-content-center">
+                    <div class="row d-flex flex-column justify-content-center align-items-center w-100" id="selesai">
+                    </div>
                 </div>
             </div>
         </div>
@@ -151,10 +157,11 @@
                                 <option data-color="bg-label-warning" value="penting">Penting</option>
                                 <option data-color="bg-label-info" value="biasa">Biasa</option>
                                 <option data-color="bg-label-info" value="tambahan">Tambahan</option>
-                                <option data-color="bg-label-secondari" value="opsional">Opsional</option>
+                                <option data-color="bg-label-secondary" value="opsional">Opsional</option>
                             </select>
                         </div>
                         <div class="mb-3">
+                            @if ($tim->status_tim !== "solo")
                             <div class="col-md-12 mb-4" data-select2-id="93">
                                 <label for="select2Primary" class="form-label">Tugas untuk</label>
                                 <div class="select2-primary" data-select2-id="92">
@@ -167,6 +174,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         </div>
                         <div class="d-flex flex-wrap">
                             <button type="submit"  class="btn btn-primary me-3" data-bs-dismiss="offcanvas">
@@ -223,6 +231,11 @@
     {{-- <script src="{{ asset('assets/js/forms-tagify.js') }}"></script> --}}
     <script src="{{ asset('assets/vendor/libs/bloodhound/bloodhound.js') }}"></script>
     <script src="{{ asset('utils/prioritas.js') }}" ></script>
+
+    <script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+    <script src="{{ asset('assets/js/extended-ui-perfect-scrollbar.js')}}"></script>
+    <script src="{{ asset('assets/js/ui-popover.js') }}"></script>
+
     <script>
         // let dataEmpty
 
@@ -254,20 +267,22 @@
                     // TugasBaru
                     dataTugas.forEach((data, index) => {
                         const tugas = data;
-                        const {user} = tugas
-                        let tugaskan = '';
+                        const {user} = tugas;
+                        console.log({user});
+                        let tugaskan = "  ";
                         let avatar = user.avatar ? 'storage/' + user.avatar : 'assets/img/avatars/1.png';
-                        user.forEach(element => {
-        if (element === null || element === undefined) {
-            tugaskan = "";
-        } else {
-            tugaskan =
-                `
-                <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Bruce" data-bs-original-title="${element.username}">
-                    <img src="{{ asset('${avatar}') }}" alt="Avatar" class="rounded-circle pull-up">
-                </div>
-                `;
-        }
+                        userTugaskan = user.filter((element, index) => user.indexOf(element) === index);
+                        userTugaskan.forEach(element => {
+                        if (element === null || element === undefined) {
+                            tugaskan += "";
+                        } else {
+                            tugaskan +=
+                                `
+                                <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="${element.username}" data-bs-original-title="${element.username}">
+                                    <img src="{{ asset('${avatar}') }}" alt="Avatar" class="rounded-circle pull-up">
+                                </div>
+                                `;
+                        }
 
 
 
@@ -290,11 +305,11 @@
 
                         const element = $(`<div>`)
                             .attr("id","board-"+tugas.code)
-                            .addClass('col-12 p-2 mt-3 card px-4')
+                            .addClass('col-12 p-2 mt-3 card')
                             .html(
                                 `
                         <div>
-                            <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1  ">
+                            <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
                                 <div class="d-flex align-items-center gap-2">
                                     <div class="item-badges">
                                         ${elementPrioritas}
@@ -427,10 +442,9 @@
             axios.put("{{ route('editTugas') }}",{codeTugas,nama,deadline,status_tugas,penugasan,prioritas})
             .then((res) => {
 
-
-                $('#tugas_baru').empty()
-               $('#dikerjakan').empty()
-              $('#revisi').empty()
+                 $('#tugas_baru').empty()
+                 $('#dikerjakan').empty()
+                 $('#revisi').empty()
                  $('#selesai').empty()
 
                 get();
@@ -446,11 +460,10 @@
             })
             .catch((err) => {
                 console.log(err);
-            })
 
         })
 
-
+    })
         $("#formTambahTugas").submit((event)=>{
                 event.preventDefault();
 
@@ -477,21 +490,79 @@
                     $("#formEditTugas").attr("data-codetugas","");
 
                 })
-                .catch((err) => {
-                    console.log(err);
+                .catch((error) => {
+                    if (error.response && error.response.status === 422) {
+                    const errors = error.response.data.errors;
+                    console.log(errors);
+                    // Tampilkan pesan validasi menggunakan SweetAlert
+                    let errorMessage = '';
+                    for (const key in errors) {
+                        if (errors.hasOwnProperty(key)) {
+                        errorMessage += `${errors[key]}\n`;
+                        }
+                    }
+                    $("#formTambahTugas").trigger("reset");
+                    Swal.fire('Validasi gagal', errorMessage, 'error');
+                } else {
+                // Tangani error lainnya
+                console.log(error);
+                // Tampilkan pesan error umum kepada pengguna atau lakukan tindakan lainnya
+                }
                 })
             });
 
             function deleteTugas (codetugas){
-                axios.delete("delete/tugas/"+codetugas)
+
+
+                const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: "btn btn-success",
+                    cancelButton: "btn btn-danger"
+                },
+                buttonsStyling: false
+                });
+                swalWithBootstrapButtons.fire({
+                title: "Apakah Kamu Yakin?",
+                text: "Data yang kamu hapus tidak bisa dipulihkan",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Iya",
+                cancelButtonText: "Tidak",
+                reverseButtons: true
+                }).then((result) => {
+                if (result.isConfirmed) {
+
+
+
+
+                    axios.delete("delete/tugas/"+codetugas)
                 .then((res) => {
                     const data = res.data;
                     $("#board-"+codetugas).addClass("d-none")
                     console.log(data);
+
+                    swalWithBootstrapButtons.fire({
+                    title: "Terhapus!",
+                    text: "Datamu berhasil terhapus.",
+                    icon: "success"
+                    });
+
                 })
                 .catch((err) => {
                     console.log(err);
                 })
+
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire({
+                    title: "Batal!",
+                    text: "Datamu batal dihapus",
+                    icon: "error"
+                    });
+                }
+                });
             }
 
 
