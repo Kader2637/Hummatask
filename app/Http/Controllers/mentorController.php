@@ -286,7 +286,7 @@ class mentorController extends Controller
 
     protected function tim()
     {
-        $tims = tim::with('anggota', 'user')->paginate(12);
+        $tims = tim::with('user')->paginate(12);
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
         return response()->view('mentor.tim', compact('tims', 'status_tim'));
     }

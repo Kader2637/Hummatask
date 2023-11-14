@@ -16,4 +16,9 @@ class PenglolaMagang extends Model
         'akhir_menjabat',
         'masih_menjabat',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

@@ -15,8 +15,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use illuminate\Support\Str;
 use Illuminate\Database\QueryException;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManagerStatic;
 
 // use Illuminate\Http\Request;
 
@@ -81,17 +81,39 @@ class PengajuanTimController extends Controller
                 return back()->with('warning', 'Anggota telah masuk di tim lain.');
             }
 
+            if ($request->status_tim == 2) {
+                $namaTim = 'Pre-Mini Project Team';
+            } else if ($request->status_tim == 3) {
+                $namaTim = 'Mini Project Team';
+            } else if ($request->status_tim == 4) {
+                $namaTim = 'Big Project Team';
+            }
+
+            if ($namaTim == 'Pre-Mini Project Team') {
+                $name = 'PreMini';
+            } else if ($namaTim == 'Mini Project Team') {
+                $name = 'Mini';
+            } else if ($namaTim == 'Big Project Team') {
+                $name = 'Big';
+            }
+
+            $image = ImageManagerStatic::canvas(200, 200, '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT));
+
+            $image->text($name, 100, 100, function ($font) {
+                $font->file(public_path('assets/font/Poppins-Regular.ttf'));
+                $font->size(36);
+                $font->color('#ffffff');
+                $font->align('center');
+                $font->valign('middle');
+            });
+            $nameImage = 'logo/' . Str::random(20) . '.jpg';
+            Storage::disk('public')->put($nameImage, $image->stream());
+
             $tim = new Tim;
             $tim->code = Str::uuid();
-            if ($request->status_tim == 2) {
-                $tim->nama = 'Pre Mini Project Team';
-            } else if ($request->status_tim == 3) {
-                $tim->nama = 'Mini Project Team';
-            } else if ($request->status_tim == 4) {
-                $tim->nama = 'Big Project Team';
-            }
+            $tim->nama = $namaTim;
             $tim->status_tim = $request->status_tim;
-            $tim->logo = 'assets/img/avatars/1.png';
+            $tim->logo = $nameImage;
             $tim->kadaluwarsa = true;
             $tim->save();
 

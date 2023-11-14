@@ -33,18 +33,18 @@
                 <div class="col-md-6 col-lg-3">
                     <div class="card text-center mb-3 tim-item" data-status-tim="{{ $tim->status_tim }}">
                         <div class="card-body">
-                            <img src="{{ asset($tim->logo) }}" alt="logo tim" class="rounded-circle mb-3"
+                            <img src="{{ Storage::url($tim->logo) }}" alt="logo tim" class="rounded-circle mb-3"
                                 style="width: 100px; height: 100px">
                             <div class="d-flex align-items-center justify-content-center">
                                 <div class="d-flex align-items-center pt-1 mb-3 justify-content-center">
                                     <div class="d-flex align-items-center">
                                         <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
-                                            @foreach ($tim->anggota as $anggota)
+                                            @foreach ($tim->user as $anggota)
                                                 <li data-bs-toggle="tooltip" data-popup="tooltip-custom"
-                                                    data-bs-placement="top" title="{{ $anggota->user->username }}"
+                                                    data-bs-placement="top" title="{{ $anggota->username }}"
                                                     class="avatar avatar-sm pull-up">
                                                     <img class="rounded-circle"
-                                                        src="{{ $anggota->user->avatar ? Storage::url($anggota->user->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                        src="{{ $anggota->avatar ? Storage::url($anggota->avatar) : asset('assets/img/avatars/1.png') }}"
                                                         alt="Avatar">
                                                 </li>
                                             @endforeach
@@ -71,7 +71,7 @@
                                 {{ $tim->created_at->translatedFormat('l, j F Y') }}
                             </p>
                             <div class="f-flex">
-                                
+
                             </div>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
             @endforeach
         </div>
         <div>
-            {{ $tims->links('pagination::bootstrap-5') }}
+            {{-- {{ $tims->links('pagination::bootstrap-5') }} --}}
         </div>
 
         {{-- Modal Buat Tim --}}
@@ -210,10 +210,10 @@
             var status_tim = $('#status_tim').val();
             var ketuaKelompok = $('#ketuaKelompok').val();
             var anggota = $('#anggota').val();
-
-            if (!status_tim || !ketuaKelompok || !anggota) {
+            
+            if (!status_tim || !ketuaKelompok || !anggota.length) {
                 event.preventDefault();
-                swal.fire('Peringatan', 'Mohon isi catatan sebelum simpan', 'warning');
+                swal.fire('Peringatan', 'Mohon lengkapi data sebelum simpan', 'warning');
             }
         });
 

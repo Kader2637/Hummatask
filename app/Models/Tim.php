@@ -50,7 +50,7 @@ class Tim extends Model
 
     public function anggota(): HasMany
     {
-        return $this->hasMany(Anggota::class,);
+        return $this->hasMany(Anggota::class);
     }
 
     public function project(): HasMany

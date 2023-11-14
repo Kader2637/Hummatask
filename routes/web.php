@@ -8,15 +8,10 @@ use App\Http\Controllers\PengajuanProjekController;
 use App\Http\Controllers\PengajuanTimController;
 use App\Http\Controllers\PresentasiController;
 use App\Http\Controllers\profileController;
-use App\Http\Controllers\ProfileMentor;
-use App\Http\Controllers\ProfileSiswaController;
-use App\Http\Controllers\ProjekController;
 use App\Http\Controllers\siswaController;
 use App\Http\Controllers\tambahUsersController;
 use App\Http\Controllers\timController;
 use App\Http\Controllers\TugasController;
-use App\Models\Presentasi;
-use App\Models\StatusTim;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->controller(authController::class)->group(function () {
@@ -77,6 +72,10 @@ Route::prefix('tim')->controller(timController::class)->group(function () {
         Route::get('tampil-tugas/{code}', [TugasController::class, 'getData'])->name('tim.tampilTugas');
         Route::post('tambah-tugas', [TugasController::class, 'buatTugas'])->name('tim.tambah-tugas');
         Route::post('ajukan-presentasi/{code}', [PresentasiController::class, 'ajukanPresentasi'])->name('ajukan-presentasi');
+        Route::patch('edit-project/{code}', [PengajuanProjekController::class, 'editProject'])->name('tim.editProject');
+        Route::get('board/ambil-data-tugas/{code}',[TugasController::class, 'getData'])->name('tim.proses.ambilTugas');
+        Route::get('board/data-edit-tugas/{codeTugas}',[TugasController::class,'dataEditTugas']);
+        Route::put('board/proses-edit-tugas',[TugasController::class,'prosesEditTugas'])->name("editTugas");
     });
 });
 
@@ -140,4 +139,6 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::put('edit-mentor/{uuid}', [tambahUsersController::class, 'edit_mentor'])->name('edit.mentor');
     Route::post('tambah-pengelola', [tambahUsersController::class, 'tambah_pengelola'])->name('tambah.pengelola');
     Route::post('tambah-role', [tambahUsersController::class, 'tambah_role'])->name('tambah.roles');
+
+
 });
