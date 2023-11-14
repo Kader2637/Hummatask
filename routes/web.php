@@ -37,7 +37,6 @@ Route::middleware('guest')->controller(authController::class)->group(function ()
     Route::post('register', 'register')->name('register.store');
     Route::post('forgot', 'sendResetLinkEmail')->name('lupa-password.store');
     Route::post('/reset-password', 'passwordReset')->name('password.update');
-    
 });
 
 Route::get('logout', [authController::class, 'logout'])->name('logout');
@@ -47,6 +46,7 @@ Route::prefix('siswa')->middleware(['auth', 'siswa'])->group(function () {
     Route::get('profile', [siswaController::class, 'profilePage'])->name('profile.siswa');
     Route::post('buat-tim-solo', [PengajuanTimController::class, 'pengajuanSoloProject'])->name('buat_tim_solo');
     Route::Post('profile-store', [profileController::class, 'update'])->name('profile.store');
+    Route::put('/password.update', [ProfileController::class, 'updatePassword'])->name('password.updatee');
 });
 
 Route::prefix('tim')->controller(timController::class)->group(function () {
@@ -140,6 +140,4 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::put('edit-mentor/{uuid}', [tambahUsersController::class, 'edit_mentor'])->name('edit.mentor');
     Route::post('tambah-pengelola', [tambahUsersController::class, 'tambah_pengelola'])->name('tambah.pengelola');
     Route::post('tambah-role', [tambahUsersController::class, 'tambah_role'])->name('tambah.roles');
-
-    
 });

@@ -137,10 +137,16 @@
                                 class="ti ti-clipboard-text"></i>Buat Catatan</a>
                     </li>
                     <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="pills-password-tab" data-bs-toggle="pill" data-bs-target="#pills-password"
+                            href="#5" role="tab" aria-controls="pills-password" aria-selected="false"><i
+                                class="ti ti-asterisk me-1"></i>Ganti password</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
                         <a class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
                             href="#4" role="tab" aria-controls="pills-profile" aria-selected="false"><i
                                 class="ti ti-clipboard-check"></i>History Kelompok</a>
                     </li>
+
                 </div>
             </div>
 
@@ -166,8 +172,8 @@
                                                 @enderror
                                             </div>
                                             <div class="form-floating my-3">
-                                                <input name="email" type="email" class="form-control" id="floatingInput"
-                                                    placeholder="{{ $user->email }}"
+                                                <input name="email" type="email" class="form-control"
+                                                    id="floatingInput" placeholder="{{ $user->email }}"
                                                     aria-describedby="floatingInputHelp" />
                                                 <label for="floatingInput">Email</label>
                                                 @error('email')
@@ -466,11 +472,155 @@
 
 
         </form>
+        <div class="tab-content px-0 mt-2" id="pills-tabContent">
+            <div class="tab-pane fade" id="pills-password" role="tabpanel" aria-labelledby="pills-password-tab">
+                <div class="">
+                    <div class="d-flex justify-content-center">
+                        <div class="col-12">
+                            <div class="col-12">
+                                <div class="card mb-4">
+                                    <h5 class="card-header">Ganti password</h5>
+                                    <div class="card-body row">
+                                        <form id="update-password-form"` action="{{ Route('password.updatee') }}">
+                                            @method('PUT')
+                                            @csrf
+                                            <div class="card mb-4">
+
+                                                <div class="card-body row">
+                                                    <div class="col-md-6">
+                                                        <label class="form-label fs-6" for="password">Password
+                                                            Lama</label>
+                                                        <div class="form-floating my-2 form-password-toggle">
+                                                            <div class="input-group input-group-merge">
+                                                                <input type="password" id="current_password"
+                                                                    class="form-control" name="current_password"
+                                                                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                                                    aria-describedby="password" />
+
+                                                                <span class="input-group-text cursor-pointer"><i
+                                                                        class="ti ti-eye-off"></i></span>
+                                                            </div>
+                                                            <span id="current_password-error" class="text-danger"></span>
+                                                        </div>
+
+                                                        <label class="form-label fs-6" for="password">Konfirmasi password
+                                                            baru</label>
+                                                        <div class="form-floating my-2 form-password-toggle">
+
+                                                            <div class="input-group input-group-merge">
+                                                                <input type="password" id="confirm-password"
+                                                                    class="form-control" name="new_password"
+                                                                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                                                    aria-describedby="password" />
+                                                                <span class="input-group-text cursor-pointer"><i
+                                                                        class="ti ti-eye-off"></i></span>
+                                                            </div>
+                                                            <div class="mt-1 ms-1">
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="form-label fs-6" for="password">Password
+                                                            baru</label>
+                                                        <div class="form-floating my-2 form-password-toggle">
+                                                            <label class="form-label" for="confirm-password">Konfirmasi
+                                                                password</label>
+                                                            <div class="input-group input-group-merge">
+                                                                <input type="password" id="confirm-password"
+                                                                    class="form-control" name="new_password_confirmation"
+                                                                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                                                    aria-describedby="password" />
+                                                                <span class="input-group-text cursor-pointer"><i
+                                                                        class="ti ti-eye-off"></i></span>
+                                                                    </div>
+                                                                    <span id="new_password-error" class="text-danger"></span>
+                                                        </div>
+
+                                                        <div class="form-floating my-2 form-password-toggle mt-3">
+                                                            <div class="button my-auto">
+                                                                <button type="submit"
+                                                                    class="btn btn-outline-primary mt-4">Simpan</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex my-2">
+
+                                                </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 @endsection
 
 @section('script')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    <script>
+        $('#update-password-form').submit(function(e) {
+            e.preventDefault();
+
+            var formData = new FormData(this);
+
+
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    if (response.success) {
+                        // Sembunyikan tombol
+                        $('#saveButton').hide();
+
+                        // Tampilkan SweetAlert
+                        Swal.fire({
+                            title: 'Sukses',
+                            text: 'Password berhasil diperbarui.',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 1700,
+                        }).then(() => {
+                            $('#saveButton').show();
+
+                            window.location.reload();
+                        });
+                    }
+                },
+
+                error: function(xhr, status, error) {
+                    if (xhr.status === 422) {
+                        var errors = xhr.responseJSON.errors;
+
+                        console.log(errors); // Add this line for debugging
+
+                        $('.text-danger').text('');
+
+                        $.each(errors, function(field, messages) {
+                            var errorMessage = messages[0];
+                            $('#' + field + '-error').text(errorMessage);
+                        });
+
+
+
+                    } else {
+                        toastr.error('Terjadi kesalahan: ' + error, 'Kesalahan');
+
+                    }
+                }
+            });
+        });
+    </script>
     <script>
         $(document).ready(function() {
             $('.btn-detail-projek').click(function() {
@@ -539,6 +689,7 @@
                         '</div>' +
                         '</div>');
                     anggotaList.append(anggotaItem);
+
                 });
 
                 $('#modalDetailProjek').modal('show');
@@ -562,8 +713,8 @@
             }
         }
     </script>
-     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
             // Memeriksa hash pada URL dan menetapkan tab yang sesuai sebagai tab aktif
             var currentHash = window.location.hash;
             if (currentHash) {
@@ -580,7 +731,7 @@
             }
 
             // Mendengarkan perubahan tab
-            document.getElementById('myTabs').addEventListener('shown.bs.tab', function (e) {
+            document.getElementById('myTabs').addEventListener('shown.bs.tab', function(e) {
                 // Mengambil ID tab yang aktif
                 var activeTabId = e.target.getAttribute('href').substring(1);
                 // Memanggil fungsi untuk menangani perubahan tab

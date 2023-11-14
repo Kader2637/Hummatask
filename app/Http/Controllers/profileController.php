@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -60,5 +61,39 @@ class profileController extends Controller
             // Menangkap dan menampilkan pesan kesalahan
             return response()->json(['error' => 'Gagal Update Profile', 'message' => $th->getMessage()], 500);
         }
+    }
+    public function updatePassword(Request $request)
+    {
+        $rules = [
+            'current_password' => 'required',
+            'new_password' => 'required|string|min:8|confirmed',
+        ];
+
+        $messages = [
+            'current_password.required' => 'Kata sandi saat ini wajib diisi.',
+            'new_password.required' => 'Kata sandi baru wajib diisi.',
+            'new_password.string' => 'Kata sandi baru harus berupa teks.',
+            'new_password.min' => 'Kata sandi baru minimal 8 karakter.',
+            'new_password.confirmed' => 'Konfirmasi kata sandi baru tidak cocok.',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+        $user = Auth::user();
+
+        if (!Hash::check($request->input('current_password'), $user->password)) {
+            $passwordError = ['Kata sandi saat ini salah'];
+            return response()->json(['errors' => ['current_password' => $passwordError], 'message' => 'Silakan periksa formulir untuk mengatasi kesalahan.'], 422);
+        }
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->toArray(), 'message' => 'Silakan periksa formulir untuk mengatasi kesalahan.'], 422);
+        }
+
+
+
+
+        $user->password = Hash::make($request->input('new_password'));
+        $user->save();
+
+        return response()->json(['success' => 'Kata sandi berhasil diperbarui.']);
     }
 }
