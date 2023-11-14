@@ -44,7 +44,7 @@ class timController extends Controller
             ['Tugas Baru', $tugasBaruCount]
         ];
 
-        return view('siswa.tim.board', compact('chartData','title', 'tim', 'anggota', 'tugas_baru', 'tugas_dikerjakan', 'tugas_revisi', 'tugas_selesai'));
+        return view('siswa.tim.board', compact('code','chartData','title', 'tim', 'anggota', 'tugas_baru', 'tugas_dikerjakan', 'tugas_revisi', 'tugas_selesai','project'));
     }
 
 
@@ -165,8 +165,10 @@ class timController extends Controller
             ['Revisi', $revisiCount],
             ['Tugas Baru', $tugasBaruCount]
         ];
+
+
         // dd($tanggal);
-        return view('siswa.tim.project', compact('hasProjectRelation','days','tanggal','persentase','selesaiCount','revisiCount','chartData', 'title', 'tim', 'anggota', 'project'));
+        return view('siswa.tim.project', compact('hasProjectRelation','days','tanggal','persentase','selesaiCount','revisiCount','chartData', 'title', 'tim', 'anggota', 'project',));
 
     }
 
@@ -274,14 +276,9 @@ class timController extends Controller
         $revisiCount = $tim->tugas->where('status_tugas', 'revisi')->count();
         $tugasBaruCount = $tim->tugas->where('status_tugas', 'tugas_baru')->count();
 
-        $chartData = [
-            ['Status Tugas', 'Jumlah'],
-            ['Selesai', $selesaiCount],
-            ['Revisi', $revisiCount],
-            ['Tugas Baru', $tugasBaruCount]
-        ];
 
-        return view('siswa.tim.history-catatan', compact('chartData','title', 'anggota', 'tim'));
+
+        return view('siswa.tim.history-catatan', compact('title', 'anggota', 'tim'));
     }
 
     // // protected function statistic($code) {

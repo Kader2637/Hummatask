@@ -50,7 +50,7 @@
                     </div>
                 </div>
                 <div class="col-12">
-                    <div class="row px-2" id="tugas_baru">
+                    <div class="row d-flex flex-column justify-content-center align-items-center" id="tugas_baru">
 
                     </div>
                 </div>
@@ -64,10 +64,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="row px-2" id="dikerjakan">
+                <div class="row row d-flex flex-column justify-content-center align-items-center" id="dikerjakan">
 
-                    </div>
                 </div>
             </div>
             <div style="" class=" col-3">
@@ -78,10 +76,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="row px-2" id="revisi">
+                <div class="row d-flex flex-column justify-content-center align-items-center" id="revisi">
 
-                    </div>
                 </div>
             </div>
             <div style="" class=" col-3">
@@ -92,10 +88,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="row px-2" id="selesai">
+                <div class="row d-flex flex-column justify-content-center align-items-center" id="selesai">
 
-                    </div>
                 </div>
             </div>
         </div>
@@ -155,8 +149,9 @@
                             <select class="select2 select2-label form-select" id="newPriority" name="newPriority">
                                 <option data-color="bg-label-success" value="mendesak">Mendesak</option>
                                 <option data-color="bg-label-warning" value="penting">Penting</option>
-                                <option data-color="bg-label-info" value="mendesak">Tambahan</option>
-                                <option data-color="bg-label-info" value="mendesak">Opsional</option>
+                                <option data-color="bg-label-info" value="biasa">Biasa</option>
+                                <option data-color="bg-label-info" value="tambahan">Tambahan</option>
+                                <option data-color="bg-label-secondari" value="opsional">Opsional</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -227,6 +222,7 @@
     <script src="{{ asset('assets/js/forms-typeahead.js') }}"></script>
     {{-- <script src="{{ asset('assets/js/forms-tagify.js') }}"></script> --}}
     <script src="{{ asset('assets/vendor/libs/bloodhound/bloodhound.js') }}"></script>
+    <script src="{{ asset('utils/prioritas.js') }}" ></script>
     <script>
         // let dataEmpty
 
@@ -254,36 +250,64 @@
                     $('#tugas_baru').empty()
                     $('#dikerjakan').empty()
                     $('#revisi').empty()
-                    $('#selesao').empty()
+                    $('#selesai').empty()
                     // TugasBaru
                     dataTugas.forEach((data, index) => {
                         const tugas = data;
                         const {user} = tugas
-                        let tugaskan;
+                        let tugaskan = '';
+                        let avatar = user.avatar ? 'storage/' + user.avatar : 'assets/img/avatars/1.png';
                         user.forEach(element => {
-                           tugaskan = 
-                           `
-                                          <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Bruce" data-bs-original-title="${element.username}">
-                                            <img src="{{ asset('assets/img/avatars/10.png') }}" alt="Avatar" class="rounded-circle pull-up">
-                                          </div>
-                            `
-                            console.log(tugaskan);
-                        });
+        if (element === null || element === undefined) {
+            tugaskan = "";
+        } else {
+            tugaskan =
+                `
+                <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Bruce" data-bs-original-title="${element.username}">
+                    <img src="{{ asset('${avatar}') }}" alt="Avatar" class="rounded-circle pull-up">
+                </div>
+                `;
+        }
 
+
+
+    });
+
+                        let deadline;
+                        if(tugas.deadline !== null)
+                        {
+                            const hariIni = new Date();
+
+                        const hariDeadline = new Date(tugas.deadline);
+                         deadline = Math.ceil((hariDeadline-hariIni) / (1000*60*60*24));
+
+                        }
+                        else{
+                            deadline = 0;
+                        }
+
+                        let elementPrioritas = prioritas(tugas.prioritas)
 
                         const element = $(`<div>`)
-                            .addClass('col-12 p-2 mt-3 card')
+                            .attr("id","board-"+tugas.code)
+                            .addClass('col-12 p-2 mt-3 card px-4')
                             .html(
                                 `
-                            <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1 ">
-                                <div class="item-badges">
-                                <div class="badge rounded-pill bg-label-success">UX</div>
+                        <div>
+                            <div class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1  ">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="item-badges">
+                                        ${elementPrioritas}
+                                    </div>
+                                    <div style="font-size:12px">
+                                        ${deadline} hari lagi
+                                    </div>
                                 </div>
                                 <div class="dropdown kanban-tasks-item-dropdown">
                                 <i class="ti ti-dots-vertical" id="kanban-tasks-item-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="kanban-tasks-item-dropdown" style="">
                                     <button onclick="editTugas('${tugas.code}')" type="button" class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#editTugasBar" >Edit</button>
-                                    <a class="dropdown-item" href="javascript:void(0)">Delete</a>
+                                    <button onclick="deleteTugas('${tugas.code}')" class="dropdown-item" href="javascript:void(0)">Delete</button>
                                 </div>
                                 </div>
                             </div>
@@ -296,12 +320,10 @@
                                 </span>
                                 </div>
                                 <div class="avatar-group d-flex align-items-center assigned-avatar">
-                                    
                                     ${tugaskan}
-    
                                 </div>
                             </div>
-                            </div>
+                        </div>
     `
                             );
 
@@ -330,29 +352,57 @@
         function editTugas(codeTugas) {
             console.log(codeTugas);
             $("#select2Primary").empty();
+
             $("#formEditTugas").attr("data-codetugas", codeTugas);
             axios.get("data-edit-tugas/" + codeTugas)
-                .then((res) => {
-                    const data = res.data
-                    const user = data.tim.user;
-                    const userSelected = data.user
+            .then((res) => {
+
+                console.log("klik edit code "  +   codeTugas);
+                const data = res.data
+                const user = data.tim.user;
+                const userSelected = data.user
+
+                    const optStatusTugas = document.querySelector("#status")
+
+                    optStatusTugas.querySelectorAll('option').forEach(status => {
+                        if(status.value === data.status_tugas){
+                            status.selected = true
+                        }else{
+                            status.selected = false
+                        }
+                    });
+
+
+                    const optPrioritas = document.querySelector("#newPriority")
+
+                    optPrioritas.querySelectorAll('option').forEach(priority => {
+                        if(priority.value === data.prioritas){
+                            priority.selected = true
+                        }else{
+                            priority.selected = false
+                        }
+                    });
+
+
+                    console.log(data);
+
                     $("#title").val(data.nama)
                     $("#due-date").val(data.deadline)
 
                     Object.keys(user).forEach(key => {
-    const userOption = user[key];
-    console.log(userOption);
-   const option = document.createElement('option')
-   option.value = userOption.uuid;
-   option.textContent = userOption.username
+                    const userOption = user[key];
+                    console.log(userOption);
+                    const option = document.createElement('option')
+                    option.value = userOption.uuid;
+                    option.textContent = userOption.username
 
-   userSelected.forEach(data=>{
-    if(data.uuid === userOption.uuid){
-        option.setAttribute("selected",true);
-    }
-   })
-    $("#select2Primary").append(option);
-});
+                    userSelected.forEach(data=>{
+                        if(data.uuid === userOption.uuid){
+                            option.setAttribute("selected",true);
+                        }
+                    })
+                        $("#select2Primary").append(option);
+                    });
 
 
                 })
@@ -364,17 +414,35 @@
 
         $("#formEditTugas").submit(function (e) {
             e.preventDefault()
+
+
             const nama = $("#title").val();
             const deadline = $("#due-date").val();
             const status_tugas = $("#status").val();
             const prioritas = $("#newPriority").val();
             const penugasan = $("#select2Primary").val()
-            const codeTugas = $(this).data('codetugas');
+            let codeTugas = $(this).data('codetugas');
+            console.log("edit tugas code "+ codeTugas);
 
-            console.log(codeTugas);
             axios.put("{{ route('editTugas') }}",{codeTugas,nama,deadline,status_tugas,penugasan,prioritas})
             .then((res) => {
+
+
+                $('#tugas_baru').empty()
+               $('#dikerjakan').empty()
+              $('#revisi').empty()
+                 $('#selesai').empty()
+
                 get();
+
+                $("#title").trigger('reset')
+                $("#due-date").trigger('reset')
+                $("#status").trigger('reset')
+                $("#newPrioritas").trigger('reset')
+                $(this).removeData('codetugas');
+               console.log(codeTugas);
+
+
             })
             .catch((err) => {
                 console.log(err);
@@ -383,8 +451,49 @@
         })
 
 
+        $("#formTambahTugas").submit((event)=>{
+                event.preventDefault();
 
 
-      
+                const nama = $('#tugas').val();
+                const tim_id = "{{ $tim->code }}";
+
+                axios.post("{{ route('tim.tambah-tugas') }}",{nama,tim_id})
+                .then((res) => {
+                    $('#tugas_baru').empty()
+                    $('#dikerjakan').empty()
+                    $('#revisi').empty()
+                    $('#selesai').empty()
+                    get();
+                    $("#formTambahTugas").trigger("reset");
+                    console.log(res.data);
+                    Swal.fire({
+                        icon: 'success',
+                        title : "Sukses",
+                        text : "Sukses Membuat Tugas",
+                        timer : 800,
+                    })
+
+                    $("#formEditTugas").attr("data-codetugas","");
+
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+            });
+
+            function deleteTugas (codetugas){
+                axios.delete("delete/tugas/"+codetugas)
+                .then((res) => {
+                    const data = res.data;
+                    $("#board-"+codetugas).addClass("d-none")
+                    console.log(data);
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+            }
+
+
     </script>
 @endsection

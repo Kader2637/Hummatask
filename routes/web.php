@@ -12,6 +12,7 @@ use App\Http\Controllers\siswaController;
 use App\Http\Controllers\tambahUsersController;
 use App\Http\Controllers\timController;
 use App\Http\Controllers\TugasController;
+use App\Models\Tugas;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->controller(authController::class)->group(function () {
@@ -77,6 +78,7 @@ Route::prefix('tim')->controller(timController::class)->group(function () {
         Route::get('board/ambil-data-tugas/{code}',[TugasController::class, 'getData'])->name('tim.proses.ambilTugas');
         Route::get('board/data-edit-tugas/{codeTugas}',[TugasController::class,'dataEditTugas']);
         Route::put('board/proses-edit-tugas',[TugasController::class,'prosesEditTugas'])->name("editTugas");
+        Route::delete('board/delete/tugas/{codeTugas}',[TugasController::class,'hapusTugas']);
     });
 });
 

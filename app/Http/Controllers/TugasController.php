@@ -80,7 +80,7 @@ class TugasController extends Controller
         $tugas->deadline = $request->deadline;
         $tugas->status_tugas = $request->status_tugas;
         $tugas->save();
-        
+
         $penugasan = $request->penugasan;
         foreach ($penugasan as $i => $data) {
             $tbPenugasan = new Penugasan;
@@ -89,10 +89,14 @@ class TugasController extends Controller
             $tbPenugasan->user_id = $user->id;
             $tbPenugasan->save();
         }
-
-       
-
-
         return response()->json("sukses");
+    }
+
+    protected function hapusTugas($codeTugas)
+    {
+        $tugas = Tugas::where('code',$codeTugas)->first();
+        $tugas->delete();
+
+        return response()->json(["success"=>"Berhasil menghapus tugas"]);
     }
 }
