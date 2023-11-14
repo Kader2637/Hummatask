@@ -10,22 +10,23 @@
 
 @section('content')
     <div class="container-fluid mt-4">
-        <form action="{{ route('profile.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="row">
-                <div class="col-12">
-                    <div class="card mb-4">
-                        <div class="user-profile-header-banner">
-                            <img src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/pages/profile-banner.png"
-                                alt="Banner image" class="rounded-top">
-                        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="user-profile-header-banner">
+                        <img src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/pages/profile-banner.png"
+                            alt="Banner image" class="rounded-top">
+                    </div>
+                    <form action="{{ route('profile.store') }}" method="POST" enctype="multipart/form-data"
+                        id="update-profile-form">
+                        @csrf
                         <div class="user-profile-header d-flex flex-column flex-sm-row text-sm-start text-center mb-4">
                             <div class="flex-shrink-0 mt-n2 mx-sm-0 mx-auto">
                                 <label class="form-label text-white" for="image-input3">
                                     <img id="preview-image3"
                                         src="{{ $user->avatar ? Storage::url($user->avatar) : asset('assets/img/avatars/pen.png') }}"
                                         alt="example placeholder"
-                                        style="width: 150px; height: 150px; border-radius: 10px; cursor: pointer;"
+                                        style="width: 150px; height: 150px; border-radius: 10px; cursor: pointer; object-fit:cover;"
                                         class="d-block ms-0 ms-sm-4 rounded user-profile-img" />
 
                                     <input type="file" class="d-none" id="image-input3" name='photo'
@@ -57,173 +58,82 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
-
-            {{-- <div class="card">
-                <h5 class="card-header">Edit Profil</h5>
-                <div class="card-body row">
-                    <div class="col-md-6">
-                        <div class="form-floating my-3">
-                            <input name="username" type="text" class="form-control" id="floatingInput"
-                                placeholder="{{ $user->username }}" aria-describedby="floatingInputHelp" />
-                            <label for="floatingInput">Nama</label>
-                            @error('username')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="form-floating my-3">
-                            <input name="email" type="email" class="form-control" id="floatingInput"
-                                placeholder="{{ $user->email }}" aria-describedby="floatingInputHelp" />
-                            <label for="floatingInput">Email</label>
-                            @error('email')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="form-floating my-3">
-                            <input name="tlp" type="number" class="form-control" id="floatingInput"
-                                placeholder="{{ $user->tlp ? $user->tlp : 'Isi nomer telefon anda' }}"
-                                aria-describedby="floatingInputHelp" />
-                            <label for="floatingInput">Nomor Telpon</label>
-                            @error('tlp')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-floating my-3">
-                            <input name="sekolah" type="text" class="form-control" id="floatingInput"
-                                placeholder="{{ $user->sekolah ? $user->sekolah : 'Isi alamat sekolah anda' }}"
-                                aria-describedby="floatingInputHelp" />
-                            <label for="floatingInput">Asal Sekolah</label>
-                            @error('sekolah')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="form-floating my-3">
-                            <textarea name="deskripsi" style="resize: none; height: 133.5px;" class="form-control" id="floatingInput"
-                                placeholder="{{ $user->deskripsi != 'none' ? $user->deskripsi : 'I am a programmer' }}"
-                                aria-describedby="floatingInputHelp"></textarea>
-                            <label for="floatingInput">deskripsi</label>
-                            @error('deskripsi')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="d-flex my-2">
-                        <div class="button ms-auto">
-                            <button type="submit" class="btn btn-outline-primary">Simpan</button>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-
-            <div class="d-flex card flex-md-row align-items-center justify-content-between">
-                <div class="nav nav-pills mb-3 mt-3 d-flex flex-wrap navbar-ul px-3" id="pills-tab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
-                            href="#3" role="tab" aria-controls="pills-home" aria-selected="true"><i
-                                class="ti ti-clipboard-text"></i>Buat Catatan</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="pills-password-tab" data-bs-toggle="pill" data-bs-target="#pills-password"
-                            href="#5" role="tab" aria-controls="pills-password" aria-selected="false"><i
-                                class="ti ti-asterisk me-1"></i>Ganti password</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
-                            href="#4" role="tab" aria-controls="pills-profile" aria-selected="false"><i
-                                class="ti ti-clipboard-check"></i>History Kelompok</a>
-                    </li>
-
-                </div>
+        </div>
+        <div class="d-flex card flex-md-row align-items-center justify-content-between">
+            <div class="nav nav-pills mb-3 mt-3 d-flex flex-wrap navbar-ul px-3" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+                        href="" role="tab" aria-controls="pills-home" aria-selected="true" data-tab="1"><i
+                            class="ti ti-clipboard-text"></i>Buat Catatan</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="pills-password-tab" data-bs-toggle="pill" data-bs-target="#pills-password"
+                        href="" role="tab" aria-controls="pills-password" aria-selected="false" data-tab="2"><i
+                            class="ti ti-asterisk me-1"></i>Ganti password</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
+                        href="" role="tab" aria-controls="pills-profile" aria-selected="false" data-tab="3"><i
+                            class="ti ti-clipboard-check"></i>History Kelompok</a>
+                </li>
             </div>
-
-            <div class="tab-content px-0 mt-2" id="pills-tabContent">
-                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-
-                    <div class="">
-                        <div class="d-flex justify-content-center">
-                            <div class="col-12">
-                                <div class="card mb-4">
-                                    <h5 class="card-header">Edit Profil</h5>
-                                    <div class="card-body row">
-                                        <div class="col-md-6">
-                                            <div class="form-floating my-3">
-                                                <input name="username" type="text" class="form-control"
-                                                    id="floatingInput" placeholder="{{ $user->username }}"
-                                                    aria-describedby="floatingInputHelp" />
-                                                <label for="floatingInput">Nama</label>
-                                                @error('username')
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                            </div>
-                                            <div class="form-floating my-3">
-                                                <input name="email" type="email" class="form-control"
-                                                    id="floatingInput" placeholder="{{ $user->email }}"
-                                                    aria-describedby="floatingInputHelp" />
-                                                <label for="floatingInput">Email</label>
-                                                @error('email')
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                            </div>
-                                            <div class="form-floating my-3">
-                                                <input name="tlp" type="number" class="form-control"
-                                                    id="floatingInput"
-                                                    placeholder="{{ $user->tlp ? $user->tlp : 'Isi nomer telefon anda' }}"
-                                                    aria-describedby="floatingInputHelp" />
-                                                <label for="floatingInput">Nomor Telpon</label>
-                                                @error('tlp')
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                            </div>
+        </div>
+        <div class="tab-content px-0 mt-2" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="">
+                    <div class="d-flex justify-content-center">
+                        <div class="col-12">
+                            <div class="card mb-4">
+                                <h5 class="card-header">Edit Profil</h5>
+                                <div class="card-body row">
+                                    <div class="col-md-6">
+                                        <div class="form-floating my-3">
+                                            <input name="username" type="text" class="form-control" id="floatingInput"
+                                                placeholder="{{ $user->username }}"
+                                                aria-describedby="floatingInputHelp" />
+                                            <label for="floatingInput">Nama</label>
+                                            <span class="text-danger" id="username-error">
+                                            </span>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-floating my-3">
-                                                <input name="sekolah" type="text" class="form-control"
-                                                    id="floatingInput"
-                                                    placeholder="{{ $user->sekolah ? $user->sekolah : 'Isi alamat sekolah anda' }}"
-                                                    aria-describedby="floatingInputHelp" />
-                                                <label for="floatingInput">Asal Sekolah</label>
-                                                @error('sekolah')
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                            </div>
-                                            <div class="form-floating my-3">
-                                                <textarea name="deskripsi" style="resize: none; height: 133.5px;" class="form-control" id="floatingInput"
-                                                    placeholder="{{ $user->deskripsi != 'none' ? $user->deskripsi : 'I am a programmer' }}"
-                                                    aria-describedby="floatingInputHelp"></textarea>
-                                                <label for="floatingInput">deskripsi</label>
-                                                @error('deskripsi')
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                            </div>
+                                        <div class="form-floating my-3">
+                                            <input name="email" type="email" class="form-control" id="floatingInput"
+                                                placeholder="{{ $user->email }}" aria-describedby="floatingInputHelp" />
+                                            <label for="floatingInput">Email</label>
+                                            <span class="text-danger" id="email-error">
+                                            </span>
                                         </div>
-                                        <div class="d-flex my-2">
-                                            <div class="button ms-auto">
-                                                <button type="submit" class="btn btn-outline-primary">Simpan</button>
-                                            </div>
+                                        <div class="form-floating my-3">
+                                            <input name="tlp" type="number" class="form-control" id="floatingInput"
+                                                placeholder="{{ $user->tlp ? $user->tlp : 'Isi nomer telefon anda' }}"
+                                                aria-describedby="floatingInputHelp" />
+                                            <label for="floatingInput">Nomor Telpon</label>
+                                            <span class="text-danger" id="tlp-error">
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating my-3">
+                                            <input name="sekolah" type="text" class="form-control" id="floatingInput"
+                                                placeholder="{{ $user->sekolah ? $user->sekolah : 'Isi alamat sekolah anda' }}"
+                                                aria-describedby="floatingInputHelp" />
+                                            <label for="floatingInput">Asal Sekolah</label>
+                                            <span class="text-danger" id="alamat-error">
+                                            </span>
+                                        </div>
+                                        <div class="form-floating my-3">
+                                            <textarea name="deskripsi" style="resize: none; height: 133.5px;" class="form-control" id="floatingInput"
+                                                placeholder="{{ $user->deskripsi != 'none' ? $user->deskripsi : 'I am a programmer' }}"
+                                                aria-describedby="floatingInputHelp"></textarea>
+                                            <label for="floatingInput">deskripsi</label>
+                                            <span class="text-danger" id="deskripsi-error">
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex my-2">
+                                        <div class="button ms-auto">
+                                            <button type="submit" class="btn btn-outline-primary">Simpan</button>
                                         </div>
                                     </div>
                                 </div>
@@ -232,246 +142,241 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-content px-0 mt-2" id="pills-tabContent">
-                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-
-                    <div class="">
-                        <div class="d-flex justify-content-center">
-                            <div class="col-12">
-
-                                {{-- card team --}}
-                                <div class="d-flex flex-wrap">
-                                    @forelse ($tims as $item)
-                                        @php
-                                            $anggotaArray = [];
-                                            foreach ($item->anggota as $anggota) {
-                                                $anggotaArray[] = [
-                                                    'name' => $anggota->user->username,
-                                                    'avatar' => $anggota->user->avatar,
-                                                    'jabatan' => $anggota->jabatan->nama_jabatan,
-                                                ];
-                                            }
-                                            $anggotaArray = array_reverse($anggotaArray);
-                                            $anggotaJson = json_encode($anggotaArray);
-                                            $tanggalMulai = $item->created_at->translatedFormat('Y-m-d');
-                                            $totalDeadline = null;
-                                            $dayLeft = null;
-
-                                            $deadline = \Carbon\Carbon::parse($item->deadline)->translatedFormat('Y-m-d');
-                                            $totalDeadline = \Carbon\Carbon::parse($deadline)->diffInDays($tanggalMulai);
-
-                                            // Periksa apakah $totalDeadline tidak nol sebelum melakukan pembagian
-                                            if ($totalDeadline > 0) {
-                                                $dayLeft = \Carbon\Carbon::parse($deadline)->diffInDays(\Carbon\Carbon::now());
-                                                $progressPercentage = 100 - ($dayLeft / $totalDeadline) * 100;
-                                            } else {
-                                                // Tangani kasus di mana $totalDeadline adalah nol
-                                                $progressPercentage = null; // Tetapkan nilai default atau tangani sesuai kebutuhan
-                                            }
-                                        @endphp
-
-                                        <div class="col-md-4 col-lg-4 col-sm-4 mb-3 " id="projectList">
-
-                                            <div class="card text-center mb-3 me-3 projek-item"
-                                                data-status-tim="{{ $item->status_tim }}">
-                                                <div class="card-body">
-                                                    <div class="d-flex flex-row gap-3">
-                                                        <img src="{{ asset('storage/' . $item->logo) }}" alt="foto logo"
-                                                            style="width: 100px; height: 100px"
-                                                            class="rounded-circle mb-3">
-                                                        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;"
-                                                            class="">
-                                                            <span class="text-black fs-6">{{ $item->nama }}</span>
-                                                            <div class="d-flex align-items-center">
-                                                                <span
-                                                                    class="badge bg-label-warning my-1">{{ $item->status_tim }}</span>
-                                                            </div>
-                                                            <div class="d-flex align-items-center justify-content-center">
-                                                                <div
-                                                                    class="d-flex align-items-center pt-1 mb-3 justify-content-center">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <ul
-                                                                            class="list-unstyled d-flex align-items-center avatar-group mb-0">
-                                                                            @foreach ($item->anggota as $anggota)
-                                                                                <li data-bs-toggle="tooltip"
-                                                                                    data-popup="tooltip-custom"
-                                                                                    data-bs-placement="top"
-                                                                                    title="{{ $anggota->user->username }}"
-                                                                                    class="avatar avatar-sm pull-up">
-                                                                                    <img class="rounded-circle"
-                                                                                        src="{{ $anggota->user->avatar ? Storage::url($anggota->user->avatar) : asset('assets/img/avatars/1.png') }}"
-                                                                                        alt="Avatar">
-                                                                                </li>
-                                                                            @endforeach
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div id="info" class="my-4">
-                                                        <div class="d-flex justify-content-between">
-                                                            <span>Mulai : </span>
-                                                            <div>{{ $item->created_at->translatedFormat('l, j F Y') }}
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="d-flex justify-content-between">
-                                                            <span>Tema :@if (isset($item->project[0]))
-                                                                    {{ $item->project[0]->tema->nama_tema }}
-                                                                @else
-                                                                    belum ada
-                                                                @endif
-                                                            </span>
-                                                            {{-- <div>{{ $item->tema->nama_tema }}</div> --}}
-                                                        </div>
-                                                    </div>
-                                                    <a data-bs-toggle="" data-bs-target="#modalDetailProjek"
-                                                        class="w-100 btn btn-primary btn-detail-projek"
-                                                        data-logo="{{ asset('storage/' . $item->logo) }}"
-                                                        data-namatim="{{ $item->nama }}"
-                                                        data-status="{{ $item->status_tim }}"
-                                                        data-tema="{{ isset($item->project[0]) ? $item->project[0]->tema->nama_tema : 'belum ada' }}"
-                                                        data-tglmulai="{{ $item->created_at->translatedFormat('l, j F Y') }}"
-                                                        data-deadline="{{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}"
-                                                        data-anggota="{{ $anggotaJson }}"
-                                                        data-deskripsi="{{ $item->deskripsi }}"
-                                                        data-dayleft="{{ $dayLeft }}"
-                                                        data-total-deadline="{{ $totalDeadline }}"
-                                                        data-progress="{{ $progressPercentage }}"
-                                                        data-repo="{{ $item->repository }}"><span
-                                                            class="text-white">Detail</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @empty
-                                    @endforelse
-                                </div>
-                                {{-- card team end --}}
-
-                                <div class="modal fade" id="modalDetailProjek" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog modal-fullscreen modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="btn-close btn-lg " data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="container-fluid">
-                                                    <div class="col-12">
-                                                        <div class="nav-align-top d-flex justify-between">
-                                                            <div class="nav nav-pills d-flex justify-content-between my-4"
-                                                                role="tablist">
-                                                                <div class="d-flex justify-content-between">
-                                                                    <div class="nav-item" role="presentation">
-                                                                        <button type="button"
-                                                                            class="nav-link active button-nav"
-                                                                            role="tab" data-bs-toggle="tab"
-                                                                            data-bs-target="#navs-pills-top-home"
-                                                                            aria-controls="navs-pills-top-home"
-                                                                            aria-selected="true" disabled>Detail
-                                                                            Anggota</button>
-                                                                    </div>
-
-                                                                </div>
-                                                                <div class="d-flex justify-content-end">
-                                                                    <button class="btn btn-primary" disabled>Detail
-                                                                        Projek</button>
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="tab-content bg-transparent pb-0"
-                                                                style="box-shadow: none;">
-                                                                <div class="tab-pane fade active show"
-                                                                    id="navs-pills-top-home" role="tabpanel">
-                                                                    <div class="row">
-                                                                        <div class="col-lg-6 mb-4">
-
-                                                                            <div class="">
-                                                                                <div class="mt-2 justify-content-center align-items-center grid"
-                                                                                    id="anggota-list-Projek">
-                                                                                    {{-- Anggota --}}
-                                                                                    {{-- Anggota --}}
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-lg-6">
-                                                                            {{-- card projects --}}
-                                                                            <div class="card">
-                                                                                <div class="card-header">
-                                                                                    <div
-                                                                                        class="card-header d-flex justify-content-center">
-                                                                                        <div
-                                                                                            class="d-flex flex-column align-items-center">
-                                                                                            <span>Tanggal Mulai: <span
-                                                                                                    id="tglmulai"></span></span>
-                                                                                            <span>Tenggat: <span
-                                                                                                    id="deadline"></span></span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <hr class="my-0">
-                                                                                <div
-                                                                                    class="card-body d-flex flex-column align-items-center">
-                                                                                    <div class="row">
-                                                                                        <div class="col-lg-12">
-                                                                                            <div
-                                                                                                class="d-flex flex-row gap-3">
-                                                                                                <img id="logo-tim"
-                                                                                                    src=""
-                                                                                                    alt='logo tim'
-                                                                                                    class="rounded-circle"
-                                                                                                    style="width: 90px; height: 90px">
-                                                                                                <div
-                                                                                                    class="d-flex flex-column justify-content-center align-items-center">
-                                                                                                    <span
-                                                                                                        class="d-block text-black fs-5"
-                                                                                                        id="nama-tim">nama
-                                                                                                        tim</span>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="mt-4">
-                                                                                                <div class="mb-3">
-                                                                                                    Status: <span
-                                                                                                        class="badge bg-label-warning"
-                                                                                                        id="status"></span>
-                                                                                                </div>
-                                                                                                <div>
-                                                                                                    Tema: <span
-                                                                                                        class="badge bg-label-warning"
-                                                                                                        id="tema"></span>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                            </div>
-                                                                            {{-- card projects --}}
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
+        </div>
         </form>
+        <div class="tab-content px-0 mt-2" id="pills-tabContent">
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div class="">
+                    <div class="d-flex justify-content-center">
+                        <div class="col-12">
+
+                            {{-- card team --}}
+                            <div class="d-flex flex-wrap">
+                                @forelse ($tims as $item)
+                                    @php
+                                        $anggotaArray = [];
+                                        foreach ($item->anggota as $anggota) {
+                                            $anggotaArray[] = [
+                                                'name' => $anggota->user->username,
+                                                'avatar' => $anggota->user->avatar,
+                                                'jabatan' => $anggota->jabatan->nama_jabatan,
+                                            ];
+                                        }
+                                        $anggotaArray = array_reverse($anggotaArray);
+                                        $anggotaJson = json_encode($anggotaArray);
+                                        $tanggalMulai = $item->created_at->translatedFormat('Y-m-d');
+                                        $totalDeadline = null;
+                                        $dayLeft = null;
+
+                                        $deadline = \Carbon\Carbon::parse($item->deadline)->translatedFormat('Y-m-d');
+                                        $totalDeadline = \Carbon\Carbon::parse($deadline)->diffInDays($tanggalMulai);
+
+                                        // Periksa apakah $totalDeadline tidak nol sebelum melakukan pembagian
+                                        if ($totalDeadline > 0) {
+                                            $dayLeft = \Carbon\Carbon::parse($deadline)->diffInDays(\Carbon\Carbon::now());
+                                            $progressPercentage = 100 - ($dayLeft / $totalDeadline) * 100;
+                                        } else {
+                                            // Tangani kasus di mana $totalDeadline adalah nol
+                                            $progressPercentage = null; // Tetapkan nilai default atau tangani sesuai kebutuhan
+                                        }
+                                    @endphp
+
+                                    <div class="col-md-4 col-lg-4 col-sm-4 mb-3 " id="projectList">
+
+                                        <div class="card text-center mb-3 me-3 projek-item"
+                                            data-status-tim="{{ $item->status_tim }}">
+                                            <div class="card-body">
+                                                <div class="d-flex flex-row gap-3">
+                                                    <img src="{{ asset('storage/' . $item->logo) }}" alt="foto logo"
+                                                        style="width: 100px; height: 100px; object-fit: cover"
+                                                        class="rounded-circle mb-3">
+                                                    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;"
+                                                        class="">
+                                                        <span class="text-black fs-6">{{ $item->nama }}</span>
+                                                        <div class="d-flex align-items-center">
+                                                            <span
+                                                                class="badge bg-label-warning my-1">{{ $item->status_tim }}</span>
+                                                        </div>
+                                                        <div class="d-flex align-items-center justify-content-center">
+                                                            <div
+                                                                class="d-flex align-items-center pt-1 mb-3 justify-content-center">
+                                                                <div class="d-flex align-items-center">
+                                                                    <ul
+                                                                        class="list-unstyled d-flex align-items-center avatar-group mb-0">
+                                                                        @foreach ($item->anggota as $anggota)
+                                                                            <li data-bs-toggle="tooltip"
+                                                                                data-popup="tooltip-custom"
+                                                                                data-bs-placement="top"
+                                                                                title="{{ $anggota->user->username }}"
+                                                                                class="avatar avatar-sm pull-up">
+                                                                                <img class="rounded-circle"
+                                                                                    src="{{ $anggota->user->avatar ? Storage::url($anggota->user->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                                                    alt="Avatar"
+                                                                                    style="object-fit: cover">
+                                                                            </li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="info" class="my-4">
+                                                    <div class="d-flex justify-content-between">
+                                                        <span>Mulai : </span>
+                                                        <div>{{ $item->created_at->translatedFormat('l, j F Y') }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="d-flex justify-content-between">
+                                                        <span>Tema :@if (isset($item->project[0]))
+                                                                {{ $item->project[0]->tema->nama_tema }}
+                                                            @else
+                                                                belum ada
+                                                            @endif
+                                                        </span>
+                                                        {{-- <div>{{ $item->tema->nama_tema }}</div> --}}
+                                                    </div>
+                                                </div>
+                                                <a data-bs-toggle="" data-bs-target="#modalDetailProjek"
+                                                    class="w-100 btn btn-primary btn-detail-projek"
+                                                    data-logo="{{ asset('storage/' . $item->logo) }}"
+                                                    data-namatim="{{ $item->nama }}"
+                                                    data-status="{{ $item->status_tim }}"
+                                                    data-tema="{{ isset($item->project[0]) ? $item->project[0]->tema->nama_tema : 'belum ada' }}"
+                                                    data-tglmulai="{{ $item->created_at->translatedFormat('l, j F Y') }}"
+                                                    data-deadline="{{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}"
+                                                    data-anggota="{{ $anggotaJson }}"
+                                                    data-deskripsi="{{ $item->deskripsi }}"
+                                                    data-dayleft="{{ $dayLeft }}"
+                                                    data-total-deadline="{{ $totalDeadline }}"
+                                                    data-progress="{{ $progressPercentage }}"
+                                                    data-repo="{{ $item->repository }}"><span
+                                                        class="text-white">Detail</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @empty
+                                @endforelse
+                            </div>
+                            {{-- card team end --}}
+
+                            <div class="modal fade" id="modalDetailProjek" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="btn-close btn-lg " data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="container-fluid">
+                                                <div class="col-12">
+                                                    <div class="nav-align-top d-flex justify-between">
+                                                        <div class="nav nav-pills d-flex justify-content-between my-4"
+                                                            role="tablist">
+                                                            <div class="d-flex justify-content-between">
+                                                                <div class="nav-item" role="presentation">
+                                                                    <button type="button"
+                                                                        class="nav-link active button-nav" role="tab"
+                                                                        data-bs-toggle="tab"
+                                                                        data-bs-target="#navs-pills-top-home"
+                                                                        aria-controls="navs-pills-top-home"
+                                                                        aria-selected="true" disabled>Detail
+                                                                        Anggota</button>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="d-flex justify-content-end">
+                                                                <button class="btn btn-primary" disabled>Detail
+                                                                    Projek</button>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-content bg-transparent pb-0"
+                                                            style="box-shadow: none;">
+                                                            <div class="tab-pane fade active show"
+                                                                id="navs-pills-top-home" role="tabpanel">
+                                                                <div class="row">
+                                                                    <div class="col-lg-6 mb-4">
+
+                                                                        <div class="">
+                                                                            <div class="mt-2 justify-content-center align-items-center grid"
+                                                                                id="anggota-list-Projek">
+                                                                                {{-- Anggota --}}
+                                                                                {{-- Anggota --}}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-6">
+                                                                        {{-- card projects --}}
+                                                                        <div class="card">
+                                                                            <div class="card-header">
+                                                                                <div
+                                                                                    class="card-header d-flex justify-content-center">
+                                                                                    <div
+                                                                                        class="d-flex flex-column align-items-center">
+                                                                                        <span>Tanggal Mulai: <span
+                                                                                                id="tglmulai"></span></span>
+                                                                                        <span>Tenggat: <span
+                                                                                                id="deadline"></span></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <hr class="my-0">
+                                                                            <div
+                                                                                class="card-body d-flex flex-column align-items-center">
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-12">
+                                                                                        <div class="d-flex flex-row gap-3">
+                                                                                            <img id="logo-tim"
+                                                                                                src=""
+                                                                                                alt='logo tim'
+                                                                                                class="rounded-circle"
+                                                                                                style="width: 90px; height: 90px">
+                                                                                            <div
+                                                                                                class="d-flex flex-column justify-content-center align-items-center">
+                                                                                                <span
+                                                                                                    class="d-block text-black fs-5"
+                                                                                                    id="nama-tim">nama
+                                                                                                    tim</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="mt-4">
+                                                                                            <div class="mb-3">
+                                                                                                Status: <span
+                                                                                                    class="badge bg-label-warning"
+                                                                                                    id="status"></span>
+                                                                                            </div>
+                                                                                            <div>
+                                                                                                Tema: <span
+                                                                                                    class="badge bg-label-warning"
+                                                                                                    id="tema"></span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                        {{-- card projects --}}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="tab-content px-0 mt-2" id="pills-tabContent">
             <div class="tab-pane fade" id="pills-password" role="tabpanel" aria-labelledby="pills-password-tab">
                 <div class="">
@@ -503,7 +408,8 @@
                                                             <span id="current_password-error" class="text-danger"></span>
                                                         </div>
 
-                                                        <label class="form-label fs-6" for="password">Konfirmasi password
+                                                        <label class="form-label fs-6" for="password">Konfirmasi
+                                                            password
                                                             baru</label>
                                                         <div class="form-floating my-2 form-password-toggle">
 
@@ -534,8 +440,8 @@
                                                                     aria-describedby="password" />
                                                                 <span class="input-group-text cursor-pointer"><i
                                                                         class="ti ti-eye-off"></i></span>
-                                                                    </div>
-                                                                    <span id="new_password-error" class="text-danger"></span>
+                                                            </div>
+                                                            <span id="new_password-error" class="text-danger"></span>
                                                         </div>
 
                                                         <div class="form-floating my-2 form-password-toggle mt-3">
@@ -563,14 +469,67 @@
 @endsection
 
 @section('script')
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
     <script>
         $('#update-password-form').submit(function(e) {
             e.preventDefault();
 
             var formData = new FormData(this);
 
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    if (response.success) {
+                        // Sembunyikan tombol
+                        $('#saveButton').hide();
+
+                        // Tampilkan SweetAlert
+                        Swal.fire({
+                            title: 'Sukses',
+                            text: 'Password berhasil diperbarui.',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 1700,
+                        }).then(() => {
+                            $('#saveButton').show();
+
+                            window.location.reload();
+                        });
+                    }
+                },
+
+                error: function(xhr, status, error) {
+                    if (xhr.status === 422) {
+                        var errors = xhr.responseJSON.errors;
+
+                        console.log(errors); // Add this line for debugging
+
+                        $('.text-danger').text('');
+
+                        $.each(errors, function(field, messages) {
+                            console.log(field);
+                            var errorMessage = messages[0];
+                            $('#' + field + '-error').text(errorMessage);
+                        });
+
+
+
+                    } else {
+                        toastr.error('Terjadi kesalahan: ' + error, 'Kesalahan');
+
+                    }
+                }
+            });
+        });
+
+        $('#update-profile-form').submit(function(e) {
+            e.preventDefault();
+
+
+            var formData = new FormData(this);
 
             $.ajax({
                 type: 'POST',
@@ -617,7 +576,7 @@
                         toastr.error('Terjadi kesalahan: ' + error, 'Kesalahan');
 
                     }
-                }
+                },
             });
         });
     </script>
@@ -695,48 +654,33 @@
                 $('#modalDetailProjek').modal('show');
 
             });
-        });
 
-        function previewImage() {
-            var preview = document.getElementById('preview-image3');
-            var fileInput = document.getElementById('image-input3');
-            var file = fileInput.files[0];
+            function previewImage() {
+                var preview = document.getElementById('preview-image3');
+                var fileInput = document.getElementById('image-input3');
+                var file = fileInput.files[0];
 
-            if (file) {
-                var reader = new FileReader();
+                if (file) {
+                    var reader = new FileReader();
 
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                };
+                    reader.onload = function(e) {
+                        preview.src = e.target.result;
+                    };
 
-                reader.readAsDataURL(file);
-            }
-        }
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Memeriksa hash pada URL dan menetapkan tab yang sesuai sebagai tab aktif
-            var currentHash = window.location.hash;
-            if (currentHash) {
-                var tabToActivate = document.querySelector('.nav-link[href="' + currentHash + '"]');
-                if (tabToActivate) {
-                    new bootstrap.Tab(tabToActivate).show();
+                    reader.readAsDataURL(file);
                 }
             }
 
-            // Fungsi untuk menangani perubahan tab
-            function handleTabChange(tabId) {
-                // Mengubah URI dengan menambahkan hash
-                window.history.replaceState({}, document.title, '#' + tabId);
+            $('[data-tab]').click(function() {
+                var activeTab = $(this).attr('data-tab');
+                localStorage.setItem('activeTab', activeTab);
+            });
+
+            var activeTab = localStorage.getItem('activeTab');
+            if (activeTab) {
+                $('[data-tab="' + activeTab + '"]').tab('show');
             }
 
-            // Mendengarkan perubahan tab
-            document.getElementById('myTabs').addEventListener('shown.bs.tab', function(e) {
-                // Mengambil ID tab yang aktif
-                var activeTabId = e.target.getAttribute('href').substring(1);
-                // Memanggil fungsi untuk menangani perubahan tab
-                handleTabChange(activeTabId);
-            });
         });
     </script>
 @endsection

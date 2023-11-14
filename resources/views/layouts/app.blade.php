@@ -572,7 +572,7 @@
                                     data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
                                         <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : asset('assets/img/avatars/1.png') }}"
-                                            alt class="h-auto rounded-circle">
+                                            alt class="rounded-circle" style="object-fit: cover">
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -582,7 +582,7 @@
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
                                                         <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : asset('assets/img/avatars/1.png') }}"
-                                                            class="h-auto rounded-circle">
+                                                            class="rounded-circle" style="object-fit: cover">
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">

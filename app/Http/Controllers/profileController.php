@@ -18,9 +18,9 @@ class profileController extends Controller
             [
                 'username' => 'nullable|string|max:50',
                 'email' => 'nullable|email|unique:users,email',
-                'tlp' => 'nullable|regex:/^\d+$/',
+                'tlp' => 'nullable|regex:/^\d+$/|min:10|max:13',
                 'sekolah' => 'nullable|string|max:50',
-                'deskripsi' => 'nullable|string|max:255',
+                'deskripsi' => 'nullable|string|max:100',
                 'photo' => 'nullable|image',
             ],
             [
@@ -32,7 +32,7 @@ class profileController extends Controller
         );
 
         if ($validate->fails()) {
-            return response()->json(['error' => $validate->errors()], 422);
+            return response()->json(['errors' => $validate->errors()], 422);
         }
 
         try {
