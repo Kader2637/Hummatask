@@ -80,85 +80,7 @@
             </div>
         </div>
     </div>
-
-    {{-- Validasi --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const ajukanModal = document.getElementById('ajukanModal');
-
-            ajukanModal.addEventListener('submit', function(event) {
-                const repositoryInput = document.querySelector('input[name="repository"]');
-                const temaInput = document.getElementById('TagifyBasic').value;
-                console.log(temaInput.length);
-                console.log(temaInput);
-
-                // Validasi input kosong
-                if (temaInput.trim() === '' || repositoryInput.value.trim() === '') {
-                    event.preventDefault(); // Mencegah pengiriman formulir
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Peringatan',
-                        text: 'Pastikan semua input diisi!',
-                    });
-                    return;
-                }
-                // Validasi repositoryInput sebagai URL
-                if (!repositoryInput.value.match(
-                        /^(http(s)?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/)) {
-                    event.preventDefault(); // Mencegah pengiriman formulir
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Peringatan',
-                        text: 'URL Repository tidak valid!',
-                    });
-                    return;
-                }
-                // Validasi jumlah array
-                try {
-                    const temaArray = JSON.parse(temaInput);
-                    console.log(temaArray);
-                    if (!Array.isArray(temaArray) || temaArray.length !== 5) {
-                        throw new Error();
-                    }
-                } catch (error) {
-                    event.preventDefault(); // Mencegah pengiriman formulir
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Peringatan',
-                        text: 'Inputkan 5 tema!',
-                    });
-                    return;
-                }
-            });
-        });
-    </script>
-    {{-- Validasi --}}
-
     {{-- Modal --}}
-
-    {{-- Validasi --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const editModal = document.getElementById('editProject');
-            editModal.addEventListener('submit', function(event) {
-                const repoInput = document.getElementById('repoInput');
-                if (repoInput.value.trim() === '') {
-                    return;
-                }
-
-                if (!repoInput.value.match(
-                        /^(http(s)?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/)) {
-                    event.preventDefault(); // Mencegah pengiriman formulir
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Peringatan',
-                        text: 'URL Repository tidak valid!',
-                    });
-                }
-            });
-        });
-    </script>
-    {{-- Validasi --}}
 
     {{-- Modal Edit Project --}}
     <div class="modal fade" id="editProject" tabindex="-1" aria-hidden="true">
@@ -177,7 +99,7 @@
                                 <label class="form-label text-white" for="image-input">
                                     <img id="preview-image" src="{{ asset('storage/' . $tim->logo) }}"
                                         alt="example placeholder"
-                                        style="width: 150px; height: 150px; border-radius: 10px; cursor: pointer" />
+                                        style="width: 150px; height: 150px; border-radius: 10px; cursor: pointer; object-fit: cover" />
                                     <input type="file" class="form-control d-none" id="image-input" name="logo" />
                                     @error('logo')
                                         <p class="text-danger">
@@ -250,20 +172,18 @@
                         <div class="nav-item" role="presentation">
                             <button type="button" class="nav-link active button-nav" role="tab"
                                 data-bs-toggle="tab" data-bs-target="#navs-pills-top-home"
-                                aria-controls="navs-pills-top-home" aria-selected="true">Project</button>
+                                aria-controls="navs-pills-top-home" aria-selected="true" data-tab="1">Project</button>
                         </div>
                         <div class="nav-item button-nav" role="presentation">
                             <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
                                 data-bs-target="#navs-pills-top-profile" aria-controls="navs-pills-top-profile"
-                                aria-selected="false" tabindex="-1">Anggota</button>
-
+                                aria-selected="false" data-tab="2">Anggota</button>
                         </div>
-                            <a style="cursor: pointer" data-bs-toggle="offcanvas" data-bs-target="#offcanvasEnd"
-                            class="menu-link d-flex align-items-center ">
-                            <i class="menu-icon tf-icons ti ti-chart-line"></i>
-                            <div class="w-100 d-flex align-items-center justify-content-between">Statistik Project
-                            </div>
-                        </a>
+                        <div class="nav-item button-nav" role="eeee">
+                            <button type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasEnd"
+                                class="nav-link"><i class="menu-icon tf-icons ti ti-chart-line"></i>
+                                Statistik Project</button>
+                        </div>
                     </div>
                     <div class="" role="presentation">
                         @if (!$project)
@@ -288,36 +208,38 @@
                                     <div class="card-body">
                                         <canvas id="project" class="chartjs mb-4" data-height="267"
                                             style="display: block; box-sizing: border-box; height: 200px; width: 200px;"></canvas>
-                                            <ul class="doughnut-legend d-flex justify-content-around ps-0 mb-2 pt-1">
-                                                <li class="ct-series-0 d-flex flex-column">
-                                                    <h5 class="mb-0">Tugas Baru</h5>
-                                                    <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                                        style="background-color: grey; height:6px;width:30px;"></span>
-                                                    <div class="text-muted"></div>
-                                                </li>
-                                                <li class="ct-series-1 d-flex flex-column">
-                                                    <h5 class="mb-0">Revisi</h5>
-                                                    <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                                        style="background-color: blue; height:6px; width:30px;"></span>
-                                                    <div class="text-muted"></div>
-                                                </li>
-                                                <li class="ct-series-1 d-flex flex-column">
-                                                    <h5 class="mb-0">Selesai</h5>
-                                                    <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                                        style="background-color: yellow; height:6px; width: 30px;"></span>
-                                                    <div class="text-muted"></div>
-                                                </li>
-                                            </ul>
+                                        <ul class="doughnut-legend d-flex justify-content-around ps-0 mb-2 pt-1">
+                                            <li class="ct-series-0 d-flex flex-column">
+                                                <h5 class="mb-0">Tugas Baru</h5>
+                                                <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
+                                                    style="background-color: grey; height:6px;width:30px;"></span>
+                                                <div class="text-muted"></div>
+                                            </li>
+                                            <li class="ct-series-1 d-flex flex-column">
+                                                <h5 class="mb-0">Revisi</h5>
+                                                <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
+                                                    style="background-color: blue; height:6px; width:30px;"></span>
+                                                <div class="text-muted"></div>
+                                            </li>
+                                            <li class="ct-series-1 d-flex flex-column">
+                                                <h5 class="mb-0">Selesai</h5>
+                                                <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
+                                                    style="background-color: yellow; height:6px; width: 30px;"></span>
+                                                <div class="text-muted"></div>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
 
 
                             {{-- statistic --}}
-                            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEnd" aria-labelledby="offcanvasEndLabel">
+                            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEnd"
+                                aria-labelledby="offcanvasEndLabel">
                                 <div class="offcanvas-header">
                                     <h5 id="offcanvasEndLabel" class="offcanvas-title">Statistik Project</h5>
-                                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                        aria-label="Close"></button>
                                 </div>
                                 <div class="offcanvas-body my-auto mx-0 flex-grow-0">
 
@@ -326,28 +248,33 @@
                                             <div class="nav-align-top nav-tabs-shadow mb-4">
                                                 <ul class="nav nav-tabs" role="tablist">
                                                     <li class="nav-item" role="presentation">
-                                                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
-                                                            data-bs-target="#navs-top-home" aria-controls="navs-top-home"
+                                                        <button type="button" class="nav-link active" role="tab"
+                                                            data-bs-toggle="tab" data-bs-target="#navs-top-home"
+                                                            aria-controls="navs-top-home"
                                                             aria-selected="true">Card</button>
                                                     </li>
                                                 </ul>
 
                                                 <div class="tab-content">
-                                                    <div class="tab-pane fade active show" id="navs-top-home" role="tabpanel">
-                                                        {{-- @foreach ($selesaiCount as $card ) --}}
+                                                    <div class="tab-pane fade active show" id="navs-top-home"
+                                                        role="tabpanel">
+                                                        {{-- @foreach ($selesaiCount as $card) --}}
                                                         {{-- @dump($selesaiCount) --}}
                                                         <div class="row gap-4">
                                                             <div class="col-12">
                                                                 <div class="card h-100">
-                                                                    <div class="card-body d-flex justify-content-between align-items-center">
+                                                                    <div
+                                                                        class="card-body d-flex justify-content-between align-items-center">
                                                                         <div class="card-title mb-0">
                                                                             <h5 class="mb-0 me-2">{{ $selesaiCount }}</h5>
                                                                             <small>Tugas dengan status selesai</small>
                                                                         </div>
                                                                         <div class="card-icon">
-                                                                            <span class="badge bg-label-primary rounded-pill p-2">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                                    height="20" viewBox="0 0 24 24">
+                                                                            <span
+                                                                                class="badge bg-label-primary rounded-pill p-2">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="20" height="20"
+                                                                                    viewBox="0 0 24 24">
                                                                                     <path fill="currentColor"
                                                                                         d="M13 19c0 1.1.3 2.12.81 3H6c-1.11 0-2-.89-2-2V4a2 2 0 0 1 2-2h1v7l2.5-1.5L12 9V2h6a2 2 0 0 1 2 2v9.09c-.33-.05-.66-.09-1-.09c-3.31 0-6 2.69-6 6m7-1v-3h-2v3h-3v2h3v3h2v-3h3v-2h-3Z" />
                                                                                 </svg>
@@ -358,15 +285,19 @@
                                                             </div>
                                                             <div class="col-12">
                                                                 <div class="card h-100">
-                                                                    <div class="card-body d-flex justify-content-between align-items-center">
+                                                                    <div
+                                                                        class="card-body d-flex justify-content-between align-items-center">
                                                                         <div class="card-title mb-0">
-                                                                            <h5 class="mb-0 me-2">{{ $persentase }}%</h5>
+                                                                            <h5 class="mb-0 me-2">{{ $persentase }}%
+                                                                            </h5>
                                                                             <small>Tugas belum dikerjakan</small>
                                                                         </div>
                                                                         <div class="card-icon">
-                                                                            <span class="badge bg-label-primary rounded-pill p-2">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                                    height="20" viewBox="0 0 24 24">
+                                                                            <span
+                                                                                class="badge bg-label-primary rounded-pill p-2">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="20" height="20"
+                                                                                    viewBox="0 0 24 24">
                                                                                     <path fill="currentColor"
                                                                                         d="M17 4v6l-2-2l-2 2V4H9v16h3.1c.1.7.4 1.4.7 2H7c-1.1 0-2-1-2-2v-1H3v-2h2v-4H3v-2h2V7H3V5h2V4c0-1.1.9-2 2-2h12c1 0 2 1 2 2v9.8c-.6-.4-1.3-.6-2-.7V4h-2M5 19h2v-2H5v2m0-6h2v-2H5v2m0-6h2V5H5v2m15.1 8.5L18 17.6l-2.1-2.1l-1.4 1.4l2.1 2.1l-2.1 2.1l1.4 1.4l2.1-2.1l2.1 2.1l1.4-1.4l-2.1-2.1l2.1-2.1l-1.4-1.4Z" />
                                                                                 </svg>
@@ -377,21 +308,26 @@
                                                             </div>
                                                             <div class="col-12">
                                                                 <div class="card h-100">
-                                                                    <div class="card-body d-flex justify-content-between align-items-center">
+                                                                    <div
+                                                                        class="card-body d-flex justify-content-between align-items-center">
                                                                         <div class="card-title mb-0">
-                                                                            @if(!empty($tanggal))
-                                                                            @foreach ($tanggal as $tgl)
-                                                                            <h5 class="mb-0 me-2">{{ $tgl }} Jam</h5>
-                                                                            @endforeach
+                                                                            @if (!empty($tanggal))
+                                                                                @foreach ($tanggal as $tgl)
+                                                                                    <h5 class="mb-0 me-2">
+                                                                                        {{ $tgl }} Jam</h5>
+                                                                                @endforeach
                                                                             @else
-                                                                            <h6 class="mb-0 me-0">Belum ada project</h6>
+                                                                                <h6 class="mb-0 me-0">Belum ada project
+                                                                                </h6>
                                                                             @endif
                                                                             <small>Waktu pengerjaan project</small>
                                                                         </div>
                                                                         <div class="card-icon">
-                                                                            <span class="badge bg-label-primary rounded-pill p-2">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                                    height="20" viewBox="0 0 24 24">
+                                                                            <span
+                                                                                class="badge bg-label-primary rounded-pill p-2">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="20" height="20"
+                                                                                    viewBox="0 0 24 24">
                                                                                     <path fill="currentColor"
                                                                                         d="m10.45 14.55l1.325 2.95q.075.15.225.15t.225-.15l1.325-2.95l2.95-1.325q.15-.075.15-.225t-.15-.225l-2.95-1.325l-1.325-2.95q-.075-.15-.225-.15t-.225.15l-1.325 2.95l-2.95 1.325q-.15.075-.15.225t.15.225l2.95 1.325ZM10 3q-.425 0-.712-.288T9 2q0-.425.288-.713T10 1h4q.425 0 .713.288T15 2q0 .425-.288.713T14 3h-4Zm2 19q-1.85 0-3.487-.713T5.65 19.35q-1.225-1.225-1.938-2.863T3 13q0-1.85.713-3.488T5.65 6.65q1.225-1.225 2.863-1.938T12 4q1.55 0 2.975.5t2.675 1.45l.7-.7q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7l-.7.7Q20 8.6 20.5 10.025T21 13q0 1.85-.713 3.488T18.35 19.35q-1.225 1.225-2.863 1.938T12 22Zm0-2q2.9 0 4.95-2.05T19 13q0-2.9-2.05-4.95T12 6Q9.1 6 7.05 8.05T5 13q0 2.9 2.05 4.95T12 20Zm0-7Z" />
                                                                                 </svg>
@@ -402,15 +338,18 @@
                                                             </div>
                                                             <div class="col-12">
                                                                 <div class="card h-100">
-                                                                    <div class="card-body d-flex justify-content-between align-items-center">
+                                                                    <div
+                                                                        class="card-body d-flex justify-content-between align-items-center">
                                                                         <div class="card-title mb-0">
                                                                             <h5 class="mb-0 me-2">{{ $revisiCount }}</h5>
                                                                             <small>Tugas pernah masuk revisi</small>
                                                                         </div>
                                                                         <div class="card-icon">
-                                                                            <span class="badge bg-label-primary rounded-pill p-2">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                                    height="20" viewBox="0 0 24 24">
+                                                                            <span
+                                                                                class="badge bg-label-primary rounded-pill p-2">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="20" height="20"
+                                                                                    viewBox="0 0 24 24">
                                                                                     <path fill="currentColor"
                                                                                         d="M8.3 19.3q-.275-.275-.275-.7t.275-.7l1.1-1.1q-3.2-.425-5.3-1.75T2 12q0-2.075 2.888-3.538T12 7q4.225 0 7.113 1.463T22 12q0 1.35-1.3 2.475t-3.475 1.8q-.5.15-.863-.125T16 15.325q0-.3.213-.587t.512-.388q1.575-.5 2.425-1.175T20 12q0-.8-2.137-1.9T12 9q-3.725 0-5.863 1.1T4 12q0 .6 1.275 1.438T8.9 14.7l-.6-.6q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275l2.6 2.6q.15.15.212.325t.063.375q0 .2-.063.375t-.212.325l-2.6 2.6q-.275.275-.7.275t-.7-.275Z" />
                                                                                 </svg>
@@ -421,21 +360,26 @@
                                                             </div>
                                                             <div class="col-12">
                                                                 <div class="card h-100">
-                                                                    <div class="card-body d-flex justify-content-between align-items-center">
+                                                                    <div
+                                                                        class="card-body d-flex justify-content-between align-items-center">
                                                                         <div class="card-title mb-0">
-                                                                            @if(!empty($days))
-                                                                            @foreach($days as $day)
-                                                                            <h5 class="mb-0 me-2">{{ $day }} Hari</h5>
-                                                                            @endforeach
+                                                                            @if (!empty($days))
+                                                                                @foreach ($days as $day)
+                                                                                    <h5 class="mb-0 me-2">
+                                                                                        {{ $day }} Hari</h5>
+                                                                                @endforeach
                                                                             @else
-                                                                            <h6 class="mb-0 me-2">Belum ada project</h6>
+                                                                                <h6 class="mb-0 me-2">Belum ada project
+                                                                                </h6>
                                                                             @endif
                                                                             <small>Tenggat waktu</small>
                                                                         </div>
                                                                         <div class="card-icon">
-                                                                            <span class="badge bg-label-primary rounded-pill p-2">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                                    height="20" viewBox="0 0 24 24">
+                                                                            <span
+                                                                                class="badge bg-label-primary rounded-pill p-2">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="20" height="20"
+                                                                                    viewBox="0 0 24 24">
                                                                                     <path fill="currentColor"
                                                                                         d="M8 3.28L6.6 1.86l-.86.71L7.16 4m9.31 14.39C15.26 19.39 13.7 20 12 20a7 7 0 0 1-7-7c0-1.7.61-3.26 1.61-4.47M2.92 2.29L1.65 3.57L3 4.9l-1.13.93l1.42 1.42l1.11-.94l.8.8A8.964 8.964 0 0 0 3 13a9 9 0 0 0 9 9c2.25 0 4.31-.83 5.89-2.2l2.2 2.2l1.27-1.27L3.89 3.27l-.97-.98M22 5.72l-4.6-3.86l-1.29 1.53l4.6 3.86L22 5.72M12 6a7 7 0 0 1 7 7c0 .84-.16 1.65-.43 2.4l1.52 1.52c.58-1.19.91-2.51.91-3.92a9 9 0 0 0-9-9c-1.41 0-2.73.33-3.92.91L9.6 6.43C10.35 6.16 11.16 6 12 6Z" />
                                                                                 </svg>
@@ -494,7 +438,8 @@
                                             <div class="col-lg-6">
                                                 <div class="d-flex flex-row gap-3">
                                                     <img src="{{ asset('storage/' . $tim->logo) }}" alt='logo tim'
-                                                        class="rounded-circle" style="width: 90px; height: 90px">
+                                                        class="rounded-circle"
+                                                        style="width: 90px; height: 90px; object-fit: cover">
                                                     <div
                                                         style="display: flex; flex-direction: column; justify-content: center; align-items: center">
                                                         <span class="d-block text-black fs-5">{{ $tim->nama }}</span>
@@ -563,7 +508,8 @@
                                                     <span class="alert-icon text-warning me-2">
                                                         <i class="ti ti-bell ti-xs"></i>
                                                     </span>
-                                                    Tim ini belum memiliki deskripsi tema, mohon isi agar dapat mengakses fitur lain nya!
+                                                    Tim ini belum memiliki deskripsi tema, mohon isi agar dapat mengakses
+                                                    fitur lain nya!
                                                 </div>
                                             @endif
                                         </div>
@@ -579,7 +525,7 @@
                         <div class="row">
                             <div class="card cursor-default col-12 d-flex align-items-center justify-content-center">
                                 <div class="card-body d-flex flex-column align-items-center justify-content-center">
-                                    <img width="90px" height="90px" class="rounded-circle"
+                                    <img width="90px" height="90px" class="rounded-circle" style="object-fit: cover"
                                         src="{{ asset('storage/' . $tim->logo) }}" alt="">
                                     <h1>{{ $tim->nama }}</h1>
                                 </div>
@@ -592,7 +538,8 @@
                                     <div class="card">
                                         <div class="card-body d-flex gap-3 align-items-center">
                                             <div>
-                                                <img width="30px" height="30px" class="rounded-circle object-cover"
+                                                <img width="30px" height="30px" class="rounded-circle"
+                                                    style="object-fit: cover"
                                                     src="{{ $item->user->avatar ? Storage::url($item->user->avatar) : asset('assets/img/avatars/1.png') }}"
                                                     alt="foto user">
                                             </div>
@@ -636,6 +583,89 @@
     <script src="{{ asset('assets/vendor/libs/tagify/tagify.js') }}"></script>
     <script src="{{ asset('assets/js/forms-tagify.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {{-- Validasi --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const editModal = document.getElementById('editProject');
+            editModal.addEventListener('submit', function(event) {
+                const repoInput = document.getElementById('repoInput');
+                if (repoInput.value.trim() === '') {
+                    return;
+                }
+
+                if (!repoInput.value.match(
+                        /^(http(s)?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/)) {
+                    event.preventDefault(); // Mencegah pengiriman formulir
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Peringatan',
+                        text: 'URL Repository tidak valid!',
+                    });
+                }
+            });
+        });
+    </script>
+    {{-- Validasi --}}
+    {{-- Validasi --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ajukanModal = document.getElementById('ajukanModal');
+
+            ajukanModal.addEventListener('submit', function(event) {
+                const repositoryInput = document.querySelector('input[name="repository"]');
+                const temaInput = document.getElementById('TagifyBasic').value;
+                console.log(temaInput.length);
+                console.log(temaInput);
+
+                // Validasi input kosong
+                if (temaInput.trim() === '' || repositoryInput.value.trim() === '') {
+                    event.preventDefault(); // Mencegah pengiriman formulir
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Peringatan',
+                        text: 'Pastikan semua input diisi!',
+                    });
+                    return;
+                }
+                // Validasi repositoryInput sebagai URL
+                if (!repositoryInput.value.match(
+                        /^(http(s)?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/)) {
+                    event.preventDefault(); // Mencegah pengiriman formulir
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Peringatan',
+                        text: 'URL Repository tidak valid!',
+                    });
+                    return;
+                }
+                // Validasi jumlah array
+                try {
+                    const temaArray = JSON.parse(temaInput);
+                    console.log(temaArray);
+                    if (!Array.isArray(temaArray) || temaArray.length !== 5) {
+                        throw new Error();
+                    }
+                } catch (error) {
+                    event.preventDefault(); // Mencegah pengiriman formulir
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Peringatan',
+                        text: 'Inputkan 5 tema!',
+                    });
+                    return;
+                }
+            });
+
+            $('[data-tab]').click(function() {
+                var projectTab = $(this).attr('data-tab');
+                sessionStorage.setItem('projectTab', projectTab);
+            });
+
+            var projectTab = sessionStorage.getItem('projectTab');
+            if (projectTab) {
+                $('[data-tab="' + projectTab + '"]').tab('show');
+            }
+        });
+    </script>
+    {{-- Validasi --}}
 @endsection
-
-

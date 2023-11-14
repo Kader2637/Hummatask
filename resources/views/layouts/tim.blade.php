@@ -231,15 +231,6 @@
                         </li>
                     @endif
                     @if ($project && $project->deskripsi)
-                        <li class="menu-item @if ($title == 'Tim/kalender') active @endif ">
-                            <a href="{{ route('tim.kalender', $tim->code) }}"
-                                class="menu-link d-flex align-items-center gap-2">
-                                <i class="menu-icon tf-icons ti ti-calendar"></i>
-                                <div class="w-100 d-flex align-items-center justify-content-between">Kalender</div>
-                            </a>
-                        </li>
-                    @endif
-                    @if ($project && $project->deskripsi)
                         <li class="menu-item @if ($title == 'Tim/history') active @endif ">
                             <a href="{{ route('tim.history', $tim->code) }}"
                                 class="menu-link d-flex align-items-center gap-2">
@@ -567,7 +558,7 @@
                                     data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
                                         <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : asset('assets/img/avatars/1.png') }}"
-                                            alt class="h-auto rounded-circle">
+                                            alt class="rounded-circle" style="object-fit: cover">
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -577,7 +568,7 @@
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
                                                         <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : asset('assets/img/avatars/1.png') }}"
-                                                            class="h-auto rounded-circle">
+                                                            class="rounded-circle" style="object-fit: cover">
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">

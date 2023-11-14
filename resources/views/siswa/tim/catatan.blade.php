@@ -18,12 +18,12 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
                         type="button" role="tab" aria-controls="pills-home" aria-selected="true" data-tab="1"><i
-                            class="ti ti-clipboard-text"></i>Buat Catatan</button>
+                            class="ti ti-clipboard-text me-1"></i>Buat Catatan</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
                         type="button" role="tab" aria-controls="pills-profile" aria-selected="false" data-tab="2"><i
-                            class="ti ti-clipboard-check"></i>History Catatan</button>
+                            class="ti ti-clipboard-check me-1"></i>History Catatan</button>
                 </li>
             </div>
         </div>
@@ -180,7 +180,7 @@
 
                     {{-- Modal Edit --}}
                     <div class="modal fade" id="edit-catatan" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog modal-xl modal-simple modal-edit-user">
+                        <div class="modal-dialog modal-dialog-centered modal-xl modal-simple modal-edit-user">
                             <div class="modal-content">
                                 <div class="modal-body p-0 m-0">
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -221,7 +221,7 @@
 
                     {{-- Modal Show --}}
                     <div class="modal fade" id="modal-show" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog modal-xl modal-simple modal-edit-user">
+                        <div class="modal-dialog modal-dialog-centered modal-xl modal-simple modal-edit-user">
                             <div class="modal-content">
                                 <form method="POST" action="">
                                     <div class="modal-body p-0 m-0">
@@ -252,8 +252,9 @@
 @section('script')
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <script src="{{ asset('assets/js/forms-editors.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+\    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     {{-- Script Append Item to Show Modal && Edit Modal --}}
     <script>
         let quillEdit;
@@ -392,7 +393,4 @@
             });
         });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 @endsection

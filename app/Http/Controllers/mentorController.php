@@ -140,18 +140,6 @@ class mentorController extends Controller
             $bukanPengelolaMagang = $bukanPengelolaMagang->concat($penggunaDenganPeran);
         }
 
-        foreach ($penggunaDenganPeran as $pengguna) {
-            if (!$pengguna->hasRole('ketua magang')) {
-                HistoriPengelola::create([
-                    'user_id' => $pengguna->id,
-                    'action' => 'Diberikan peran Pengelola Magang',
-                    'role' => 'ketua magang',
-                    'name' => $pengguna->name,
-                    'email' => $pengguna->email,
-                ]);
-            }
-        }
-
         foreach ($users as $user) {
             $penglolaMagang = PenglolaMagang::where('user_id', $user->id)->first();
 
@@ -286,7 +274,7 @@ class mentorController extends Controller
 
     protected function tim()
     {
-        $tims = tim::with('user')->paginate(2);
+        $tims = tim::with('user')->get();
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
         return response()->view('mentor.tim', compact('tims', 'status_tim'));
     }

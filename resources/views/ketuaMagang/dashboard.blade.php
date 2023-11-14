@@ -11,7 +11,7 @@
         <!-- Card Border Shadow -->
         <div class="row">
             <div class="col-sm-6 col-lg-4 mb-4">
-                <div class="card card-border-shadow-primary">
+                <div class="card card-border-shadow-primary cursor-pointer">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-2 pb-1">
                             <div class="avatar me-2">
@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="col-sm-6 col-lg-4 mb-4">
-                <div class="card card-border-shadow-warning">
+                <div class="card card-border-shadow-warning cursor-pointer">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-2 pb-1">
                             <div class="avatar me-2">
@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="col-sm-6 col-lg-4 mb-4">
-                <div class="card card-border-shadow-danger">
+                <div class="card card-border-shadow-danger cursor-pointer">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-2 pb-1">
                             <div class="avatar me-2">

@@ -97,10 +97,11 @@ class PengajuanTimController extends Controller
                 $name = 'Big';
             }
 
-            $image = ImageManagerStatic::canvas(200, 200, '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT));
+            $backgroundHexColor = '#' . str_pad(dechex(mt_rand(0xAAAAAA, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
+            $image = ImageManagerStatic::canvas(200, 200, $backgroundHexColor);
 
             $image->text($name, 100, 100, function ($font) {
-                $font->file(public_path('assets/font/Poppins-Regular.ttf'));
+                $font->file(public_path('assets/font/Poppins-Bold.ttf'));
                 $font->size(36);
                 $font->color('#ffffff');
                 $font->align('center');
