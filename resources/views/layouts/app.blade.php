@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en" class="light-style" dir="ltr"
+<html lang="en" class="light-style layout-compact layout-navbar-fixed layout-menu-fixed   " dir="ltr"
     data-theme="theme-default"
     data-assets-path="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/"
     data-base-url="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1" data-framework="laravel"

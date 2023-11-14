@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/page-profile.css') }}" />
 @endsection
 
-
 @section('content')
     <div class="container-fluid mt-4">
         <div class="row">
@@ -64,19 +63,19 @@
         <div class="d-flex card flex-md-row align-items-center justify-content-between">
             <div class="nav nav-pills mb-3 mt-3 d-flex flex-wrap navbar-ul px-3" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
-                        href="" role="tab" aria-controls="pills-home" aria-selected="true" data-tab="1"><i
-                            class="ti ti-clipboard-text"></i>Buat Catatan</a>
+                    <a class="nav-link cursor-pointer active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+                         role="tab" aria-controls="pills-home" aria-selected="true" data-tab="1"><i
+                            class="ti ti-user-circle me-1"></i>Edit Profile</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="pills-password-tab" data-bs-toggle="pill" data-bs-target="#pills-password"
-                        href="" role="tab" aria-controls="pills-password" aria-selected="false" data-tab="2"><i
+                    <a class="nav-link cursor-pointer" id="pills-password-tab" data-bs-toggle="pill" data-bs-target="#pills-password"
+                         role="tab" aria-controls="pills-password" aria-selected="false" data-tab="2"><i
                             class="ti ti-asterisk me-1"></i>Ganti password</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
-                        href="" role="tab" aria-controls="pills-profile" aria-selected="false" data-tab="3"><i
-                            class="ti ti-clipboard-check"></i>History Kelompok</a>
+                    <a class="nav-link cursor-pointer" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
+                         role="tab" aria-controls="pills-profile" aria-selected="false" data-tab="3"><i
+                            class="ti ti-clipboard-check me-1"></i>History Kelompok</a>
                 </li>
             </div>
         </div>
@@ -90,7 +89,7 @@
                                 <div class="card-body row">
                                     <div class="col-md-6">
                                         <div class="form-floating my-3">
-                                            <input name="username" type="text" class="form-control" id="floatingInput"
+                                            <input name="username" type="text" class="form-control"
                                                 placeholder="{{ $user->username }}"
                                                 aria-describedby="floatingInputHelp" />
                                             <label for="floatingInput">Nama</label>
@@ -98,14 +97,14 @@
                                             </span>
                                         </div>
                                         <div class="form-floating my-3">
-                                            <input name="email" type="email" class="form-control" id="floatingInput"
+                                            <input name="email" type="email" class="form-control"
                                                 placeholder="{{ $user->email }}" aria-describedby="floatingInputHelp" />
                                             <label for="floatingInput">Email</label>
                                             <span class="text-danger" id="email-error">
                                             </span>
                                         </div>
                                         <div class="form-floating my-3">
-                                            <input name="tlp" type="number" class="form-control" id="floatingInput"
+                                            <input name="tlp" type="number" class="form-control"
                                                 placeholder="{{ $user->tlp ? $user->tlp : 'Isi nomer telefon anda' }}"
                                                 aria-describedby="floatingInputHelp" />
                                             <label for="floatingInput">Nomor Telpon</label>
@@ -115,7 +114,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating my-3">
-                                            <input name="sekolah" type="text" class="form-control" id="floatingInput"
+                                            <input name="sekolah" type="text" class="form-control"
                                                 placeholder="{{ $user->sekolah ? $user->sekolah : 'Isi alamat sekolah anda' }}"
                                                 aria-describedby="floatingInputHelp" />
                                             <label for="floatingInput">Asal Sekolah</label>
@@ -123,7 +122,7 @@
                                             </span>
                                         </div>
                                         <div class="form-floating my-3">
-                                            <textarea name="deskripsi" style="resize: none; height: 133.5px;" class="form-control" id="floatingInput"
+                                            <textarea name="deskripsi" style="resize: none; height: 133.5px;" class="form-control"
                                                 placeholder="{{ $user->deskripsi != 'none' ? $user->deskripsi : 'I am a programmer' }}"
                                                 aria-describedby="floatingInputHelp"></textarea>
                                             <label for="floatingInput">deskripsi</label>
@@ -414,7 +413,7 @@
                                                         <div class="form-floating my-2 form-password-toggle">
 
                                                             <div class="input-group input-group-merge">
-                                                                <input type="password" id="confirm-password"
+                                                                <input type="password" id="confirm-new-password"
                                                                     class="form-control" name="new_password"
                                                                     placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                                                     aria-describedby="password" />
@@ -672,13 +671,13 @@
             }
 
             $('[data-tab]').click(function() {
-                var activeTab = $(this).attr('data-tab');
-                localStorage.setItem('activeTab', activeTab);
+                var tabProfile = $(this).attr('data-tab');
+                sessionStorage.setItem('tabProfile', tabProfile);
             });
 
-            var activeTab = localStorage.getItem('activeTab');
-            if (activeTab) {
-                $('[data-tab="' + activeTab + '"]').tab('show');
+            var tabProfile = sessionStorage.getItem('tabProfile');
+            if (tabProfile) {
+                $('[data-tab="' + tabProfile + '"]').tab('show');
             }
 
         });

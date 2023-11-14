@@ -199,24 +199,24 @@
             <div class=" nav nav-pills mb-3 mt-3 d-flex flex-wrap navbar-ul px-3" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
-                        type="button" role="tab" aria-controls="pills-home" aria-selected="true"><i
+                        type="button" role="tab" aria-controls="pills-home" aria-selected="true" data-tab="1"><i
                             class="fa-solid fa-calendar-xmark icon-text"></i>Telat
                         Deadline</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
-                        type="button" role="tab" aria-controls="pills-profile" aria-selected="false"><i
+                        type="button" role="tab" aria-controls="pills-profile" aria-selected="false" data-tab="2"><i
                             class="fa-solid fa-person-chalkboard icon-text"></i>Selesai
                         Presentasi</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact"
-                        type="button" role="tab" aria-controls="pills-contact" aria-selected="false"><i
+                        type="button" role="tab" aria-controls="pills-contact" aria-selected="false" data-tab="3"><i
                             class="fa-solid fa-user icon-text"></i>Solo</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-team"
-                        type="button" role="tab" aria-controls="pills-contact" aria-selected="false"><i
+                        type="button" role="tab" aria-controls="pills-contact" aria-selected="false" data-tab="4"><i
                             class="fa-solid fa-users icon-text"></i>Team</button>
                 </li>
             </div>
@@ -277,7 +277,9 @@
                                         <td>{{ $loop->iteration }}.</td>
                                         <td>
                                             <img src="{{ Storage::url($item->tim->logo) }}" alt=""
-                                                style="width:30px;height:30px;border-radius:50%;cursor: pointer;" data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" title="{{$item->tim->nama}}">
+                                                style="width:30px;height:30px;border-radius:50%;cursor: pointer;"
+                                                data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
+                                                title="{{ $item->tim->nama }}">
                                         </td>
                                         @foreach ($item->tim->project as $item)
                                             <td>{{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}
@@ -316,7 +318,9 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
                                             <img src="{{ Storage::url($item->logo) }}" alt=""
-                                                style="width:30px;height:30px;border-radius:50%; cursor: pointer" data-bs-toggle="tooltip" data-bs-placement="top" data-popup="tooltip-custom" title="{{$item->nama}}">
+                                                style="width:30px;height:30px;border-radius:50%; cursor: pointer"
+                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                data-popup="tooltip-custom" title="{{ $item->nama }}">
                                         </td>
                                         <td>{{ $item->anggota[0]->user->email }}</td>
                                         <td>{{ $item->status_tim }}</td>
@@ -370,7 +374,9 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
                                             <img src="{{ Storage::url($item->logo) }}" alt=""
-                                                style="width:30px;height:30px;border-radius:50%; cursor: pointer" data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" title="{{$item->nama}}">
+                                                style="width:30px;height:30px;border-radius:50%; cursor: pointer"
+                                                data-bs-toggle="tooltip" data-popup="tooltip-custom"
+                                                data-bs-placement="top" title="{{ $item->nama }}">
                                         </td>
                                         <td>{{ $item->ketuaTim[0]->username }}</td>
                                         <td>
@@ -778,6 +784,19 @@
                 $('#modalDetail').modal('show');
 
             });
+
+            $('[data-tab]').click(function() {
+                var historyKetuaMagangTab = $(this).attr('data-tab');
+                sessionStorage.setItem('historyKetuaMagangTab', historyKetuaMagangTab);
+            });
+
+            var historyKetuaMagangTab = sessionStorage.getItem('historyKetuaMagangTab');
+            if (historyKetuaMagangTab) {
+                var tabToActivate = document.querySelector('[data-tab="' + historyKetuaMagangTab + '"]');
+                if (tabToActivate) {
+                    tabToActivate.click();
+                }
+            }
         });
     </script>
     {{-- Script detail modal --}}
