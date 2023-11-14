@@ -284,19 +284,19 @@ class timController extends Controller
         return view('siswa.tim.history-catatan', compact('chartData','title', 'anggota', 'tim'));
     }
 
-    // protected function statistic($code) {
-    //     $tim = Tim::where('code', $code)->firstOrFail();
-    //     $selesaiCount = $tim->tugas->where('status_tugas', 'selesai')->count();
-    //     $revisiCount = $tim->tugas->where('status_tugas', 'revisi')->count();
-    //     $tugasBaruCount = $tim->tugas->where('status_tugas', 'tugas_baru')->count();
+    // // protected function statistic($code) {
+    // //     $tim = Tim::where('code', $code)->firstOrFail();
+    // //     $selesaiCount = $tim->tugas->where('status_tugas', 'selesai')->count();
+    // //     $revisiCount = $tim->tugas->where('status_tugas', 'revisi')->count();
+    // //     $tugasBaruCount = $tim->tugas->where('status_tugas', 'tugas_baru')->count();
 
-        $chartData = [
-            ['Status Tugas', 'Jumlah'],
-            ['Selesai', $selesaiCount],
-            ['Revisi', $revisiCount],
-            ['Tugas Baru', $tugasBaruCount]
-        ];
+    //     $chartData = [
+    //         ['Status Tugas', 'Jumlah'],
+    //         ['Selesai', $selesaiCount],
+    //         ['Revisi', $revisiCount],
+    //         ['Tugas Baru', $tugasBaruCount]
+    //     ];
 
-        return view('siswa.tim.history-catatan', compact('chartData','title', 'anggota', 'tim'));
-    }
+    //     return view('siswa.tim.history-catatan', compact('chartData','title', 'anggota', 'tim'));
+    // }
 }

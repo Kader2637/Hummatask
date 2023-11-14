@@ -17,12 +17,12 @@
             <div class="nav nav-pills mb-3 mt-3 d-flex flex-wrap navbar-ul px-3" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
-                        type="button" role="tab" aria-controls="pills-home" aria-selected="true"><i
+                        type="button" role="tab" aria-controls="pills-home" aria-selected="true" data-tab="1"><i
                             class="ti ti-clipboard-text"></i>Buat Catatan</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
-                        type="button" role="tab" aria-controls="pills-profile" aria-selected="false"><i
+                        type="button" role="tab" aria-controls="pills-profile" aria-selected="false" data-tab="2"><i
                             class="ti ti-clipboard-check"></i>History Catatan</button>
                 </li>
             </div>
@@ -327,6 +327,16 @@
     {{-- Script Append Item to Show Modal && Edit Modal --}}
     <script>
         $(document).ready(function() {
+            $('[data-tab]').click(function() {
+                var historyCatatanTimTab = $(this).attr('data-tab');
+                sessionStorage.setItem('historyCatatanTimTab', historyCatatanTimTab);
+            });
+
+            var historyCatatanTimTab = sessionStorage.getItem('historyCatatanTimTab');
+            if (historyCatatanTimTab) {
+                $('[data-tab="' + historyCatatanTimTab + '"]').tab('show');
+            }
+
             $('.btn-label-danger').click(function() {
                 var editor = $('.ql-editor');
                 editor.empty();

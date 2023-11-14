@@ -34,7 +34,7 @@
                     <div class="card text-center mb-3 tim-item" data-status-tim="{{ $tim->status_tim }}">
                         <div class="card-body">
                             <img src="{{ Storage::url($tim->logo) }}" alt="logo tim" class="rounded-circle mb-3"
-                                style="width: 100px; height: 100px">
+                                style="width: 100px; height: 100px; object-fit: cover">
                             <div class="d-flex align-items-center justify-content-center">
                                 <div class="d-flex align-items-center pt-1 mb-3 justify-content-center">
                                     <div class="d-flex align-items-center">
@@ -45,7 +45,7 @@
                                                     class="avatar avatar-sm pull-up">
                                                     <img class="rounded-circle"
                                                         src="{{ $anggota->avatar ? Storage::url($anggota->avatar) : asset('assets/img/avatars/1.png') }}"
-                                                        alt="Avatar">
+                                                        alt="Avatar" style="object-fit: cover">
                                                 </li>
                                             @endforeach
                                         </ul>
@@ -210,7 +210,7 @@
             var status_tim = $('#status_tim').val();
             var ketuaKelompok = $('#ketuaKelompok').val();
             var anggota = $('#anggota').val();
-            
+
             if (!status_tim || !ketuaKelompok || !anggota.length) {
                 event.preventDefault();
                 swal.fire('Peringatan', 'Mohon lengkapi data sebelum simpan', 'warning');

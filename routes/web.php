@@ -66,6 +66,7 @@ Route::prefix('tim')->controller(timController::class)->group(function () {
         Route::get('/view-comment', 'viewComments');
         Route::post('catatan', [catatanController::class, 'store'])->name('catatan.store');
         Route::patch('catatan/update/{code}', [catatanController::class, 'update'])->name('catatan.update');
+        Route::delete('catatan/delete/{code}', [catatanController::class, 'delete'])->name('catatan.delete');
 
 
         // proses di halaman tim
