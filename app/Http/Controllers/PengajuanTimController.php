@@ -114,7 +114,7 @@ class PengajuanTimController extends Controller
             $tim->nama = $namaTim;
             $tim->status_tim = $request->status_tim;
             $tim->logo = $nameImage;
-            $tim->kadaluwarsa = true;
+            $tim->kadaluwarsa = false;
             $tim->save();
 
             foreach ($uniqueDaftarAnggota as $anggota) {

@@ -563,7 +563,7 @@
                                                     <span class="alert-icon text-warning me-2">
                                                         <i class="ti ti-bell ti-xs"></i>
                                                     </span>
-                                                    Tim ini belum memiliki deskripsi tema!
+                                                    Tim ini belum memiliki deskripsi tema, mohon isi agar dapat mengakses fitur lain nya!
                                                 </div>
                                             @endif
                                         </div>

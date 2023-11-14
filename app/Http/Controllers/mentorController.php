@@ -127,19 +127,19 @@ class mentorController extends Controller
         $pengelolaMagang = new Collection();
         $bukanPengelolaMagang = new Collection();
         $magang = PenglolaMagang::all();
-        
+
         foreach ($roles as $peran) {
             $penggunaDenganPeran = User::whereHas('roles', function ($query) use ($peran) {
                 $query->where('name', $peran->name);
             })->get();
             $pengelolaMagang = $pengelolaMagang->concat($penggunaDenganPeran);
-            
+
             $bukanPengelolaMagang = User::whereDoesntHave('permissions', function ($query) use ($peran) {
                 $query->where('name', $peran);
             })->get();
             $bukanPengelolaMagang = $bukanPengelolaMagang->concat($penggunaDenganPeran);
         }
-        
+
         foreach ($penggunaDenganPeran as $pengguna) {
             if (!$pengguna->hasRole('ketua magang')) {
                 HistoriPengelola::create([
@@ -154,19 +154,19 @@ class mentorController extends Controller
 
         foreach ($users as $user) {
             $penglolaMagang = PenglolaMagang::where('user_id', $user->id)->first();
-    
+
             if ($penglolaMagang && $penglolaMagang->akhir_menjabat < Carbon::now()) {
                 PenglolaMagang::where('user_id', $user->id)
                     ->update(['masih_menjabat' => false]);
-    
+
                 $updatedPenglolaMagang = PenglolaMagang::where('user_id', $user->id)->first();
-    
+
                 if ($updatedPenglolaMagang && !$updatedPenglolaMagang->masih_menjabat) {
                     $user->removeRole('ketua magang');
                 }
             }
         }
-            
+
         return response()->view('mentor.pengguna', compact('users', 'pengelolaMagang', 'bukanPengelolaMagang', 'mentors', 'roles','magang'));
     }
 
@@ -260,7 +260,7 @@ class mentorController extends Controller
 
         $users = User::where('peran_id', 1)
             ->whereDoesntHave('tim', function ($query) {
-                $query->where('kadaluwarsa', true);
+                $query->where('kadaluwarsa', false);
             })
             ->get();
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
@@ -286,7 +286,7 @@ class mentorController extends Controller
 
     protected function tim()
     {
-        $tims = tim::with('user')->paginate(12);
+        $tims = tim::with('user')->paginate(2);
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
         return response()->view('mentor.tim', compact('tims', 'status_tim'));
     }
