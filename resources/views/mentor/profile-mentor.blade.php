@@ -266,7 +266,7 @@
                             // Tampilkan SweetAlert
                             Swal.fire({
                                 title: 'Sukses',
-                                text: 'Profile berhasil diperbarui.',
+                                text: 'Password berhasil diperbarui.',
                                 icon: 'success',
                                 showConfirmButton: false,
                                 timer: 1700,
@@ -322,7 +322,7 @@
                             // Tampilkan SweetAlert
                             Swal.fire({
                                 title: 'Sukses',
-                                text: 'Password berhasil diperbarui.',
+                                text: 'Profile berhasil diperbarui.',
                                 icon: 'success',
                                 showConfirmButton: false,
                                 timer: 1700,
