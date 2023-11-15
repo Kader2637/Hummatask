@@ -118,6 +118,8 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::get('presentasi', [mentorController::class, 'presentasi'])->name('presentasi.mentor');
     Route::get('project', [mentorController::class, 'Project'])->name('Project');
     Route::get('tim', [mentorController::class, 'tim'])->name('tim');
+    Route::get('/tim/filter', [mentorController::class, 'filter'])->name('tim.filter');
+    Route::get('/tim/cari', [mentorController::class, 'cari'])->name('cari_tim');
 
     // Process`
     Route::post('tampil-detail-presentasi/{code}', [PresentasiController::class, 'tampilkanDetailPresentasi']);

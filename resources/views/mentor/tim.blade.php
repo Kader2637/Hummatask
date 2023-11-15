@@ -18,15 +18,35 @@
             <div class="d-flex justify-content-between mb-4">
                 <div class="filter col-lg-3 col-md-3 col-sm-3">
                     <label for="select2Basic" class="form-label">Filter</label>
-                    <select id="select2Basic" name="temaProjek" class="select2 form-select form-select-lg"
-                        data-allow-clear="true" onchange="filterProjek(this)">
-                        <option value="" disabled selected>Pilih Data</option>
-                        <option value="all">Semua</option>
-                        <option value="solo">Solo Project</option>
-                        <option value="pre_mini">Pre-mini Project</option>
-                        <option value="mini">Mini Project</option>
-                        <option value="big">Big Project</option>
-                    </select>
+                    <form id="filterForm" action="{{ route('tim.filter') }}" method="get">
+                        <select id="select2Basic" name="status_tim" class="form-select" data-allow-clear="true"
+                            onchange="filterProjek(this)">
+                            <option value="" disabled selected>Pilih Data</option>
+                            <option value="all" {{ request('status_tim') == 'all' ? 'selected' : '' }}>Semua</option>
+                            <option value="solo" {{ request('status_tim') == 'solo' ? 'selected' : '' }}>Solo Project
+                            </option>
+                            <option value="pre_mini" {{ request('status_tim') == 'pre_mini' ? 'selected' : '' }}>Pre-mini
+                                Project</option>
+                            <option value="mini" {{ request('status_tim') == 'mini' ? 'selected' : '' }}>Mini Project
+                            </option>
+                            <option value="big" {{ request('status_tim') == 'big' ? 'selected' : '' }}>Big Project
+                            </option>
+                        </select>
+                    </form>
+
+                </div>
+                <div class="filter col-lg-3 col-md-3 col-sm-3">
+                    <label for="select2Basic" class="form-label">Cari</label>
+                    <form action="{{ route('cari_tim') }}" method="get">
+
+                        <div class="flex-grow-1 input-group input-group-merge rounded-pill">
+                            <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-search"></i></span>
+                            <input name="nama_tim" type="text" class="form-control chat-search-input"
+                                placeholder="Cari nama tim..." aria-label="Cari nama tim..."
+                                aria-describedby="basic-addon-search31" value="{{ request('nama_tim') }}">
+                            <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
+                        </div>
+                    </form>
                 </div>
             </div>
             @foreach ($tims as $tim)
@@ -64,6 +84,15 @@
                                         Big Project
                                     @endif
                                 </span>
+                                @if ($tim->kadaluwarsa == 0)
+                                    <span class="ms-1 badge bg-label-danger">
+                                        Sudah expired
+                                    </span>
+                                @elseif ($tim->kadaluwarsa == 1)
+                                    <span class="ms-1 badge bg-label-success">
+                                        Belum expired
+                                    </span>
+                                @endif
                             </p>
                             <h5 class="card-title">{{ $tim->nama }}</h5>
                             <p class="card-text" data-bs-toggle="tooltip" data-popup="tooltip-custom"
@@ -78,9 +107,97 @@
                 </div>
             @endforeach
         </div>
-        <div>
-            {{-- {{ $tims->links('pagination::bootstrap-5') }} --}}
+        <div class="d-flex justify-content-center mt-3">
+            <nav aria-label="Page navigation">
+                <div>
+                    <ul class="pagination">
+                        <!-- Tampilkan link "First" -->
+                        <li class="page-item {{ $tims->currentPage() == 1 ? 'disabled' : '' }}">
+                            <form action="{{ route('tim.filter') }}" method="post" style="display: inline;">
+                                @csrf
+                                <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
+                                <input type="hidden" name="page" value="1">
+                                <button type="submit" class="page-link">
+                                    <i class="ti ti-arrow-big-left-lines"></i>
+                                </button>
+                            </form>
+                        </li>
+
+                        <!-- Tampilkan link "Previous" -->
+                        @if ($tims->onFirstPage())
+                            <!-- Jika di halaman pertama, link "Previous" nonaktif -->
+                            <li class="page-item disabled">
+                                <span class="page-link"><i class="ti ti-arrow-big-left"></i></span>
+                            </li>
+                        @else
+                            <!-- Jika tidak di halaman pertama, tampilkan link "Previous" aktif -->
+                            <li class="page-item">
+                                <form action="{{ route('tim.filter') }}" method="get" style="display: inline;">
+                                   
+                                    <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
+                                    <input type="hidden" name="page" value="{{ $tims->currentPage() - 1 }}">
+                                    <button type="submit" class="page-link">
+                                        <i class="ti ti-arrow-big-left"></i>
+                                    </button>
+                                </form>
+                            </li>
+                        @endif
+
+                        <!-- Tampilkan link halaman -->
+                        @php
+                            $startPage = max(1, $tims->currentPage() - 3);
+                            $endPage = min($tims->lastPage(), $tims->currentPage() + 3);
+                        @endphp
+
+                        @for ($i = $startPage; $i <= $endPage; $i++)
+                            <li class="page-item {{ $tims->currentPage() == $i ? 'active' : '' }}">
+                                <form action="{{ route('tim.filter') }}" method="get" style="display: inline;">
+                                   
+                                    <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
+                                    <input type="hidden" name="page" value="{{ $i }}">
+                                    <button type="submit" class="page-link">
+                                        {{ $i }}
+                                    </button>
+                                </form>
+                            </li>
+                        @endfor
+
+                        <!-- Tampilkan link "Next" -->
+                        @if ($tims->hasMorePages())
+                            <!-- Jika ada halaman berikutnya, tampilkan link "Next" aktif -->
+                            <li class="page-item">
+                                <form action="{{ route('tim.filter') }}" method="get" style="display: inline;">
+                                     
+                                    <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
+                                    <input type="hidden" name="page" value="{{ $tims->currentPage() + 1 }}">
+                                    <button type="submit" class="page-link">
+                                        <i class="ti ti-arrow-big-right"></i>
+                                    </button>
+                                </form>
+                            </li>
+                        @else
+                            <!-- Jika tidak ada halaman berikutnya, link "Next" nonaktif -->
+                            <li class="page-item disabled">
+                                <span class="page-link"><i class="ti ti-arrow-big-right"></i></span>
+                            </li>
+                        @endif
+
+                        <!-- Tampilkan link "Last" -->
+                        <li class="page-item {{ $tims->currentPage() == $tims->lastPage() ? 'disabled' : '' }}">
+                            <form action="{{ route('tim.filter') }}" method="get" style="display: inline;">
+                                
+                                <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
+                                <input type="hidden" name="page" value="{{ $tims->lastPage() }}">
+                                <button type="submit" class="page-link">
+                                    <i class="ti ti-arrow-big-right-lines"></i>
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         </div>
+        {{-- {{ $tims->links('pagination::bootstrap-5') }} --}}
 
         {{-- Modal Buat Tim --}}
         <form action="{{ route('pembuatan.tim') }}" id="createForm" method="post">
@@ -90,7 +207,8 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="modalCenterTitle">Buat Tim</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="row">
@@ -158,8 +276,16 @@
 @endsection
 
 @section('script')
-    {{-- filter projek --}}
     <script>
+        function filterProjek(selectElement) {
+            document.getElementById('filterForm').submit();
+        }
+    </script>
+
+
+    {{-- filter projek --}}
+
+    {{-- <script>
         function filterProjek(selectElement) {
             var code = selectElement.value;
             var projekElements = document.getElementsByClassName('tim-item');
@@ -175,7 +301,7 @@
                 }
             }
         }
-    </script>
+    </script> --}}
     {{-- filter Projek --}}
 
     {{-- ajax buat tim --}}

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->foreignId('jabatan_id')->references('id')->on('jabatans');
             $table->foreignId('user_id')->constrained();
             $table->foreignId('tim_id')->references('id')->on('tims');
+            $table->boolean('status')->default(false);
             $table->timestamps();
             $table->primary(['user_id','tim_id', 'jabatan_id']);
         });

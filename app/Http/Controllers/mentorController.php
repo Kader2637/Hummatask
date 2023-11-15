@@ -15,7 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Code;
 use Spatie\Permission\Models\Role;
 
@@ -155,7 +155,7 @@ class mentorController extends Controller
             }
         }
 
-        return response()->view('mentor.pengguna', compact('users', 'pengelolaMagang', 'bukanPengelolaMagang', 'mentors', 'roles','magang'));
+        return response()->view('mentor.pengguna', compact('users', 'pengelolaMagang', 'bukanPengelolaMagang', 'mentors', 'roles', 'magang'));
     }
 
     // Return view history mentor
@@ -236,47 +236,71 @@ class mentorController extends Controller
         return response()->view('mentor.projek', compact('members', 'tims', 'pengajuan', 'projek', 'users', 'status_tim', 'projects', 'tim'));
     }
 
-    protected function Project(Request $request)
+    protected function Project()
     {
-        $projects = Project::with('tim', 'tema')
-            ->where('status_project', 'approved')
-            ->get();
-
-        $anggota = $projects->flatMap(function ($project) {
-            return $project->tim->anggota;
-        });
-
         $users = User::where('peran_id', 1)
             ->whereDoesntHave('tim', function ($query) {
                 $query->where('kadaluwarsa', false);
             })
             ->get();
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
-
-        $request = Request::instance();
-        $code = $request->input('temaProjek');
-        $projects = Tim::query();
-
-        if ($code === 'solo') {
-            $projects->where('status_tim', 'solo');
-        } elseif ($code === 'pre_mini') {
-            $projects->where('status_tim', 'pre_mini');
-        } elseif ($code === 'mini') {
-            $projects->where('status_tim', 'mini');
-        } elseif ($code === 'big') {
-            $projects->where('status_tim', 'big');
-        }
-
-        $projects = $projects->get();
-
-        return response()->json(['projects' => $projects, 'anggota' => $anggota, 'users' => $users, 'status_tim' => $status_tim]);
+        return response()->json(['users' => $users, 'status_tim' => $status_tim]);
     }
 
     protected function tim()
     {
-        $tims = tim::with('user')->get();
+        $tims = Tim::with('user')->paginate(2);
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
+
         return response()->view('mentor.tim', compact('tims', 'status_tim'));
+    }
+
+    public function filter(Request $request)
+    {
+        $requestData = $request->all();
+        // dd($requestData);
+        $status = $request->input('status_tim');
+
+        if ($status === 'all') {
+            $tims = Tim::with('user')->paginate(2);
+        } elseif ($status === 'solo') {
+            $tims = Tim::with('user')->where('status_tim', 'solo')->paginate(2);
+        } elseif ($status === 'pre_mini') {
+            $tims = Tim::with('user')->where('status_tim', 'pre_mini')->paginate(2);
+        } elseif ($status === 'mini') {
+            $tims = Tim::with('user')->where('status_tim', 'mini')->paginate(2);
+        } elseif ($status === 'big') {
+            $tims = Tim::with('user')->where('status_tim', 'big')->paginate(2);
+        } else {
+            $tims = Tim::with('user')->paginate(2);
+        }
+
+        $status_tim = StatusTim::whereNot('status', 'solo')->get();
+
+        return view('mentor.tim', compact('tims', 'status_tim'));
+    }
+
+    public function cari(Request $request)
+    {
+        $namaTim = $request->input('nama_tim');
+        $statusTim = $request->input('status_tim');
+
+        $query = Tim::query();
+
+        if (!empty($namaTim)) {
+            $query->where('nama', 'like', '%' . $namaTim . '%');
+        }
+
+        if (!empty($statusTim) && $statusTim !== 'all') {
+            $query->where('status_tim', $statusTim);
+        } else {
+            $query->whereIn('status_tim', ['pre_mini', 'big', 'solo', 'mini']);
+        }
+
+        $tims = $query->paginate(99999);
+        $status_tim = StatusTim::whereNot('status', 'solo')->get();
+        dd($tims);
+        return view('mentor.tim', compact('tims', 'status_tim'));
     }
 
     protected function detailProjekPage($code)
