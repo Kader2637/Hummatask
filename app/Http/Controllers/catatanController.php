@@ -17,16 +17,25 @@ class catatanController extends Controller
             }
 
             $user = Auth::user();
-
+            $tim = $user->tim[0]->id;
             $catatan = new catatan();
             $catatan->code = Str::uuid();
-            $catatan->user_id = $user->id;
+            $catatan->tim_id = $tim;
 
-            if ($request->titleCreate != null) {
-                $catatan->title = $request->titleCreate;
-            } else {
-                $jumlahCatatan = catatan::where('user_id', $user->id)->count();
-                $catatan->title = 'Untitled ' . ($jumlahCatatan + 1);
+            if ($request->type_note == 'private') {
+                if ($request->titleCreate != null) {
+                    $catatan->title = $request->titleCreate;
+                } else {
+                    $jumlahCatatan = catatan::where('tim_id', $tim)->where('type_note', 'private')->count();
+                    $catatan->title = 'Catatan Tim ' . ($jumlahCatatan + 1);
+                }
+            } else if ($request->type_note == 'revisi') {
+                if ($request->titleCreate != null) {
+                    $catatan->title = $request->titleCreate;
+                } else {
+                    $jumlahCatatan = catatan::where('tim_id', $tim)->where('type_note', 'revisi')->count();
+                    $catatan->title = 'Catatan Revisi ' . ($jumlahCatatan + 1);
+                }
             }
 
             $catatan->content = $request->contentCreate;
@@ -44,7 +53,6 @@ class catatanController extends Controller
     {
         try {
 
-            // dd($request->all());
             $catatan = catatan::where('code', $code)->firstOrFail();
 
             if ($catatan->type_note === 'revisi') {

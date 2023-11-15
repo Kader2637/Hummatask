@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('catatans', function (Blueprint $table) {
             $table->id();
             $table->string('code');
-            $table->foreignId('user_id')->nullable()->constrained('users');
+            $table->foreignId('tim_id')->nullable()->constrained('tims');
             $table->string('title')->nullable();
             $table->longText('content');
             $table->enum('type_note', ['private', 'revisi']);

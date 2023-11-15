@@ -325,11 +325,6 @@
 @endsection
 
 @section('script')
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.5.0/js/bootstrap.min.js"></script> --}}
-
-
-
-
     <script>
         jQuery.noConflict();
 

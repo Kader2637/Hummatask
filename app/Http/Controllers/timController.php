@@ -235,7 +235,7 @@ class timController extends Controller
     {
         $title = "catatan";
         $tim = Tim::where('code', $code)->firstOrFail();
-        $catatans = catatan::where('user_id', Auth::user()->id)->get();
+        $catatans = catatan::where('tim_id', $tim->id)->get();
 
         $project = $tim->project->first();
         if ($project->deskripsi === null) {

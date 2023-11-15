@@ -321,7 +321,7 @@
                                                         <div class="avatar">
                                                             @if (Auth::user()->avatar)
                                                                 <img src="{{ asset('storage/' . Auth::user()->avatar) }}"
-                                                                    class="h-auto rounded-circle">
+                                                                    class="rounded-circle">
                                                             @else
                                                                 <img src="{{ asset('assets/img/avatars/1.png') }}"
                                                                     class="h-auto rounded-circle">
@@ -563,7 +563,7 @@
                                     <div class="avatar avatar-online">
                                         @if (Auth::user()->avatar)
                                             <img src="{{ asset('storage/' . Auth::user()->avatar) }}"
-                                                class="h-auto rounded-circle">
+                                                class="rounded-circle" style="object-fit: cover">
                                         @else
                                             <img src="{{ asset('assets/img/avatars/1.png') }}"
                                                 class="h-auto rounded-circle">
@@ -578,7 +578,7 @@
                                                     <div class="avatar avatar-online">
                                                         @if (Auth::user()->avatar)
                                                             <img src="{{ asset('storage/' . Auth::user()->avatar) }}"
-                                                                class="h-auto rounded-circle">
+                                                                class="rounded-circle" style="object-fit: cover">
                                                         @else
                                                             <img src="{{ asset('assets/img/avatars/1.png') }}"
                                                                 class="h-auto rounded-circle">

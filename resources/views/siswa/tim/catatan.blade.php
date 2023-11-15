@@ -59,7 +59,7 @@
                                                     <input name="type_note" class="form-check-input" type="radio"
                                                         value="private" id="customRadioTemp1" checked />
                                                     <span class="custom-option-header">
-                                                        <span class="h6 mb-0">Catatan Pribadi <span
+                                                        <span class="h6 mb-0">Catatan Tim <span
                                                                 class="text-warning">(Bisa
                                                                 kamu edit sesuka hati)</span></span>
                                                     </span>
@@ -128,7 +128,7 @@
                                                     <td>
                                                         @if ($item->type_note === 'private')
                                                             <span class="badge bg-label-warning me-1">
-                                                                Catatan Pribadi</span>
+                                                                Catatan Tim</span>
                                                         @else
                                                             <span class="badge bg-label-warning me-1">
                                                                 Catatan Revisi</span>
