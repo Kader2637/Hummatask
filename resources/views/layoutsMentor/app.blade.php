@@ -105,7 +105,7 @@
     #loader {
         z-index: 100000000000;
         /* Tambahkan z-index di sini */
-        position: absolute;
+        position: fixed;
         width: 100%;
         height: 100%;
         background: #ffffff;
@@ -173,7 +173,7 @@
     }
 </style>
 
-<body>
+<body class="overflow-hidden">
     <script src="https://code.jquery.com/jquery-2.2.3.min.js"
         integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
     <div id="loader">
@@ -190,12 +190,10 @@
 
             $('.progress').css("animation", "loading " + rnd + "ms linear");
 
-            console.log(rnd);
-
             setTimeout(function() {
 
                 $('#loader').fadeOut();
-                $('#page').removeClass('hidden');
+                $('body').removeClass('overflow-hidden');
 
             }, rnd);
 

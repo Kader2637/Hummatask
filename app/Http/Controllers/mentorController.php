@@ -155,7 +155,7 @@ class mentorController extends Controller
             }
         }
 
-        return response()->view('mentor.pengguna', compact('users', 'pengelolaMagang', 'bukanPengelolaMagang', 'mentors', 'roles','magang'));
+        return response()->view('mentor.pengguna', compact('users', 'pengelolaMagang', 'bukanPengelolaMagang', 'mentors', 'roles', 'magang'));
     }
 
     // Return view history mentor
@@ -199,41 +199,17 @@ class mentorController extends Controller
     // Return view projek mentor
     protected function projekPage()
     {
-        $pengajuan = Project::with('tim.anggota.user', 'tim.tema', 'anggota.jabatan', 'anggota.user')->where('status_project', 'notapproved')->paginate(5);
-        $projects = Project::with('tim.anggota', 'tema')
+        $projects = Project::with('tim.anggota', 'tema', 'tim.tugas')
             ->where('status_project', 'approved')
             ->paginate(5);
-
-        $request = Request::instance();
-        $code = $request->input('temaProjek');
-        $projek = Tim::query();
-        // dd($projects);
-        if ($code === 'all') {
-            // Tidak ada filter, tampilkan semua proyek
-        } elseif ($code === 'solo') {
-            $projek->where('status_tim', 'solo');
-        } elseif ($code === 'pre_mini') {
-            $projek->where('status_tim', 'pre_mini');
-        } elseif ($code === 'mini') {
-            $projek->where('status_tim', 'mini');
-        } elseif ($code === 'big') {
-            $projek->where('status_tim', 'big');
-        }
-
-        $projek = $projek->get();
 
         $users = User::where('peran_id', 1)
             ->whereDoesntHave('tim', function ($query) {
                 $query->where('kadaluwarsa', true);
             })
             ->get();
-        $tim = Tim::all();
 
-        $status_tim = StatusTim::whereNot('status', 'solo')->get();
-        $tims = Tim::with('user')->where('kadaluwarsa', '1')->paginate(5);
-        $members = Tim::with('user')->where('kadaluwarsa', '1')->get();
-
-        return response()->view('mentor.projek', compact('members', 'tims', 'pengajuan', 'projek', 'users', 'status_tim', 'projects', 'tim'));
+        return response()->view('mentor.projek', compact('users', 'projects'));
     }
 
     protected function Project(Request $request)
@@ -274,7 +250,7 @@ class mentorController extends Controller
 
     protected function tim()
     {
-        $tims = tim::with('user')->get();
+        $tims = tim::with('user')->paginate(12);
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
         return response()->view('mentor.tim', compact('tims', 'status_tim'));
     }
@@ -291,7 +267,8 @@ class mentorController extends Controller
     // Return view profile mentor
     protected function profilePage()
     {
-        return response()->view('mentor.profile-mentor');
+        $user = Auth::user();
+        return response()->view('mentor.profile-mentor', compact('user'));
     }
 
     // return view presentasi mentor

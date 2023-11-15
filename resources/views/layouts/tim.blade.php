@@ -20,13 +20,11 @@
     <link rel="canonical" href="https://1.envato.market/vuexy_admin">
     <link rel="icon" type="image/x-icon"
         href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/favicon/favicon.ico" />
-
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap"
         rel="stylesheet">
-
     <link rel="stylesheet"
         href="{{ asset('assets/vendor/fonts/tabler-iconsea04.css?id=6ad8bc28559d005d792d577cf02a2116') }}" />
     <link rel="stylesheet"
@@ -45,26 +43,19 @@
         href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar7358.css?id=280196ccb54c8ae7e29ea06932c9a4b6') }}" />
     <link rel="stylesheet"
         href="{{ asset('assets/vendor/libs/typeahead-js/typeaheadb5e1.css?id=2603197f6b29a6654cb700bd9367e2a3') }}" />
-
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/apex-charts/apex-charts.css') }}" />
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('assets/js/config.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/fullcalendar/fullcalendar.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/flatpickr/flatpickr.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/editor.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/%40form-validation/umd/styles/index.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" />
-    {{-- <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" /> --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/app-calendar.css') }}" />
-
-    {{-- <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" /> --}}
-    {{-- <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" /> --}}
-    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> --}}
     <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -166,7 +157,7 @@
 
 @yield('style')
 
-<body>
+<body class="overflow-hidden">
     <script src="https://code.jquery.com/jquery-2.2.3.min.js"
         integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
     <div id="loader">
@@ -183,12 +174,10 @@
 
             $('.progress').css("animation", "loading " + rnd + "ms linear");
 
-            console.log(rnd);
-
             setTimeout(function() {
 
                 $('#loader').fadeOut();
-                $('#page').removeClass('hidden');
+                $('body').removeClass('overflow-hidden');
 
             }, rnd);
 
@@ -202,9 +191,7 @@
 
     <div class="layout-wrapper layout-content-navbar ">
         <div class="layout-container">
-
             <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-
                 <div class="app-brand demo">
                     <a href="{{ route('dashboard.siswa') }}" class="app-brand-link">
                         <span class="app-brand-logo demo">
@@ -241,7 +228,8 @@
                     @endif
                     @if ($project && $project->deskripsi)
                         <li class="menu-item @if ($title == 'catatan') active @endif">
-                            <a href="{{ route('tim.catatan', $tim->code) }}" class="menu-link d-flex align-items-center gap-2">
+                            <a href="{{ route('tim.catatan', $tim->code) }}"
+                                class="menu-link d-flex align-items-center gap-2">
                                 <i class="menu-icon tf-icons ti ti-clipboard-text"></i>
                                 <div class="w-100 d-flex align-items-center justify-content-between">Catatan</div>
                             </a>
@@ -249,7 +237,8 @@
                     @endif
                     @if ($project && $project->deskripsi)
                         <li class="menu-item @if ($title == 'Tim/presentasi') active @endif">
-                            <a href="{{ route('tim.historyPresentasi', $tim->code) }}" class="menu-link d-flex align-items-center gap-2">
+                            <a href="{{ route('tim.historyPresentasi', $tim->code) }}"
+                                class="menu-link d-flex align-items-center gap-2">
                                 <i class="menu-icon tf-icons ti ti-presentation"></i>
                                 <div class="w-100 d-flex align-items-center justify-content-between">Presentasi</div>
                             </a>
@@ -271,23 +260,16 @@
                     </li>
 
                 </ul>
-                </li>
-                </ul>
-
-
             </aside>
 
             <div class="layout-page">
-
                 <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
                     id="layout-navbar">
-
                     <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0  d-xl-none ">
                         <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
                             <i class="ti ti-menu-2 ti-sm"></i>
                         </a>
                     </div>
-
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
                         <div class="d-flex align-items-center justify-content-center gap-2 ">
                             Login sebagai :
@@ -637,9 +619,7 @@
     <script src="{{ asset('assets/vendor/js/menu2dc9.js?id=c6ce30ded4234d0c4ca0fb5f2a2990d8') }}"></script>
     <script src="{{ asset('assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
     <script src="{{ asset('assets/js/mainf696.js?id=8bd0165c1c4340f4d4a66add0761ae8a') }}"></script>
-
     <script src="{{ asset('assets/js/dashboards-crm.js') }}"></script>
-
     <script src="{{ asset('assets/vendor/libs/fullcalendar/fullcalendar.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/%40form-validation/umd/bundle/popular.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/%40form-validation/umd/plugin-bootstrap5/index.min.js') }}"></script>
@@ -693,7 +673,7 @@
                                 label: function(context) {
                                     const label = context.label || '';
                                     const value = context.parsed;
-                                    const output = ' ' + label + ' : ' + value ;
+                                    const output = ' ' + label + ' : ' + value;
                                     return output;
                                 }
                             },
@@ -727,9 +707,6 @@
                 icon: 'error',
                 title: 'Akses Ditolak',
                 text: '{{ session('unauthorize') }}', // Teks pesan dari sesi
-                showClass: {
-                    popup: "animate__animated animate__tada"
-                },
                 customClass: {
                     confirmButton: "btn btn-primary"
                 },
@@ -742,8 +719,10 @@
                 icon: 'success',
                 title: 'Berhasil',
                 text: '{{ session('success') }}', // Teks pesan dari sesi
-                showConfirmButton: false,
-                timer: 3000
+                customClass: {
+                    confirmButton: "btn btn-primary"
+                },
+                buttonsStyling: !1,
             });
         </script>
     @elseif (session()->has('error'))
@@ -752,22 +731,26 @@
                 icon: 'error',
                 title: 'Error',
                 text: '{{ session('error') }}', // Teks pesan dari sesi
-                showConfirmButton: false,
-                timer: 3000
+                customClass: {
+                    confirmButton: "btn btn-primary"
+                },
+                buttonsStyling: !1,
             });
         </script>
     @endif
     @if (session()->has('tolak'))
-    <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: '{{ session('tolak') }}', // Teks pesan dari sesi
-            showConfirmButton: false,
-            timer: 3000
-        });
-    </script>
-@endif
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '{{ session('tolak') }}', // Teks pesan dari sesi
+                customClass: {
+                    confirmButton: "btn btn-primary"
+                },
+                buttonsStyling: !1,
+            });
+        </script>
+    @endif
 
 </body>
 

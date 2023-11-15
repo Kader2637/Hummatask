@@ -129,6 +129,8 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::put('atur-urutan/{code}', [PresentasiController::class, 'gantiUrutan']);
     Route::get('ambil-urutan/{codeHistory}', [PresentasiController::class, 'ambilUrutan']);
     Route::get('ambil-detail-history-presentasi/{codeHistory}/{codeTim}', [PresentasiController::class, 'ambilDetailHistoryPresentasi']);
+    Route::Post('profile-store', [profileController::class, 'update'])->name('profile.mentor.store');
+    Route::put('/password.update', [ProfileController::class, 'updatePassword'])->name('password.mentor.updatee');
 
     Route::post('pembuatantim', [PengajuanTimController::class, 'pembuatanTimProject'])->name('pembuatan.tim');
 
