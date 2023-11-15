@@ -67,6 +67,7 @@
                                 <th class="text-white">Tanggal</th>
                                 <th class="text-white">Status Presentasi</th>
                                 <th class="text-white">Status Pengajuan</th>
+                                <th class="text-white">Dikonfirmasi oleh</th>
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
@@ -94,6 +95,19 @@
                                         @endif
                                         @if ($data->status_pengajuan === 'ditolak')
                                             <span class="badge bg-label-danger me-1">ditolak</span>
+                                        @endif
+                                    </td>
+                                    <td class="d-flex align-items-center justify-content-center">
+                                        @if ($data->user_approval_id === null)
+                                        <span class="badge bg-label-warning me-1">menunggu</span>
+
+                                        @else
+                                        <div data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
+                                        title="{{ $data->user_approval->username }}" class="avatar avatar-sm pull-up">
+                                        <img class="rounded-circle"
+                                            src="{{ $data->user_approval->avatar ? Storage::url($data->user_approval->avatar) : asset('assets/img/avatars/1.png') }}"
+                                            alt="Avatar">
+                                         </div>
                                         @endif
                                     </td>
                                 </tr>

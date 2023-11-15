@@ -24,7 +24,7 @@ class TugasController extends Controller
             //code...
             $tim = Tim::where('code', $code)->first();
         } catch (\Throwable $th) {
-            return response()->json(['error'=>'Tim tidak dapat ditemukan']);
+            return response()->json(['error'=>'Tim tidak dapat ditemukan'   ]);
         }
 
         $tugas = $tim->tugas()->with('comments.user','user')->get();

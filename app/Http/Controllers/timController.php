@@ -84,27 +84,6 @@ class timController extends Controller
         return redirect()->back()->with('success', 'Tugas berhasil dihapus');
     }
 
-    public function comments(Request $request)
-    {
-        $request->validate([
-            'tugas_id' => 'required', // Tambahkan aturan validasi tambahan jika diperlukan
-            'text' => 'required', // Tambahkan aturan validasi tambahan jika diperlukan
-        ]);
-
-        $comments = new Comments;
-        $comments->user_id = Auth::user()->id;
-        $comments->tugas_id = $request->input('tugas_id');
-        $comments->text = $request->input('text');
-        $comments->save();
-
-        return response()->json(['message' => 'Komentar berhasil ditambahkan']);
-    }
-
-    public function viewComments(Request $request)
-    {
-        $comments = Comments::where('tugas_id', $request->input('tugas_id'))->get();
-        return response()->json($comments);
-    }
     protected function kalenderPage($code)
     {
         $title = "Tim/kalender";
@@ -209,7 +188,7 @@ class timController extends Controller
             return back()->with('tolak', 'Tolong lengkapi deskripsi proyek terlebih dahulu');
         }
         $anggota = $tim->user()->get();
-        $presentasi = $tim->presentasi()->get();
+        $presentasi = $tim->presentasi()->orderBy('created_at','desc')->get();
         $project = $tim->project->first();
 
         $hasProjectRelation = $tim->project()->exists();

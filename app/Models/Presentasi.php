@@ -35,4 +35,9 @@ class Presentasi extends Model
     {
         return $this->belongsTo(HistoryPresentasi::class);
     }
+
+    public function user_approval():BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }
