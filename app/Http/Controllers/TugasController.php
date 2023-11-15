@@ -177,6 +177,25 @@ class TugasController extends Controller
     protected function tambahKomentar(Request $request)
     {
 
+        $validator = Validator($request->all(),
+        [
+            "text" => "required|string|max:244"
+        ],
+        [
+            "text.required" => "Komentar wajin diisi",
+            "text.string" => "Komentar harus berupa string",
+            "text.max" => "Komentar tidak boleh lebih dari 244 karakter",
+        ]
+    );
+
+        if($validator->fails()){
+            return response()->json(
+                [
+                    "errors" => $validator->errors()
+                ],422
+                );
+        }
+
         if($request->komentar_id === 0){
             $tugas = Tugas::where("code",$request->tugas_code)->first();
             $komentar = new Comments;

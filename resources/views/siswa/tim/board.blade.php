@@ -250,6 +250,7 @@
     <script src="{{ asset('assets/vendor/libs/jkanban/jkanban.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/quill/katex.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/quill/quill.js') }}"></script>
+    <script src="{{ asset('utils/handleErrorResponse.js') }}"></script>
     <!-- END: Page Vendor JS-->
     <!-- BEGIN: Theme JS-->
     <script src="{{ asset('assets/js/mainf696.js?id=8bd0165c1c4340f4d4a66add0761ae8a') }}"></script>
@@ -543,30 +544,7 @@
 
             })
             .catch((error) => {
-
-
-                if (error.response && error.response.status === 422) {
-                    const errors = error.response.data.errors;
-                    console.log(errors);
-                    // Tampilkan pesan validasi menggunakan SweetAlert
-                    let errorMessage = '';
-                    for (const key in errors) {
-                        if (errors.hasOwnProperty(key)) {
-                        errorMessage += `${errors[key]}\n`;
-                        }
-                    }
-                    $("#formTambahTugas").trigger("reset");
-                    Swal.fire({
-                        icon:"error",
-                        title : "Error",
-                        text  : errorMessage,
-                    });
-                } else {
-                // Tangani error lainnya
-                console.log(error);
-                // Tampilkan pesan error umum kepada pengguna atau lakukan tindakan lainnya
-                }
-
+                alertError(error)
                 console.log(error);
                 $(this).removeData('codetugas')
 
@@ -614,7 +592,6 @@
 
     $("#tambahKomentar").submit(function(event){
         event.preventDefault();
-
         const text = $(".inp-tambah-komentar").val();
         const tugas_code = $(this).data("codetugas");
         let komentar_id = $(this).data("komentar-id");
@@ -629,26 +606,33 @@
 
         axios.post("tambah-komentar",{tugas_code,text,komentar_id})
         .then((res) => {
-        console.log("komentar =>" + komentar_id);
+            console.log("komentar =>" + komentar_id);
             console.log(komentar_id);
             editTugas(tugas_code);
             $("#tambahKomentar").trigger("reset");
+            let komentar_tes_id = $("#tambahKomentar").data("komentar-id");
+            console.log("kometar tes id 1 =>" + komentar_tes_id);
+            $(".btn-edit-komentar").addClass("d-none");
+            $("#komentar-" + komentar_id).removeClass("border border-primary");
+            komentar_tes_id = 0; // Menghapus nilai komentar_id
+            console.log("komentar_tes_id 2 =>"+komentar_tes_id);
             $(this).removeData("komentar-id");
+            $(this).removeAttr("data-komentar-id");
             $(this).removeData('codetugas');
             get();
-            $(".btn-edit-komentar").addClass("d-none")
-            $("#komentar-"+komentar_id).removeClass("border border-primary");
-            komentar_id = 0;
         })
         .catch((error) => {
 
+            // komentar_id = 0;
+            alertError(error)
 
             console.log(error);
-            $(this).removeData("komentar-id");
-            $(this).removeData('codetugas');
-            $(".btn-edit-komentar").addClass("d-none");
-            $("#komentar-"+komentar_id).removeClass("border border-primary");
-            $(this).removeData('codetugas');
+            // $(this).removeData("komentar-id");
+            // $(this).removeData('codetugas');
+            // $(".btn-edit-komentar").addClass("d-none");
+            // $("#komentar-"+komentar_id).removeClass("border border-primary");
+            // $(this).removeData('codetugas');
+
         })
     })
 
@@ -676,29 +660,11 @@
                         timer : 800,
                     })
 
-
-
                     $("#formEditTugas").attr("data-codetugas","");
 
                 })
                 .catch((error) => {
-                    if (error.response && error.response.status === 422) {
-                    const errors = error.response.data.errors;
-                    console.log(errors);
-                    // Tampilkan pesan validasi menggunakan SweetAlert
-                    let errorMessage = '';
-                    for (const key in errors) {
-                        if (errors.hasOwnProperty(key)) {
-                        errorMessage += `${errors[key]}\n`;
-                        }
-                    }
-                    $("#formTambahTugas").trigger("reset");
-                    Swal.fire('Validasi gagal', errorMessage, 'error');
-                } else {
-                // Tangani error lainnya
-                console.log(error);
-                // Tampilkan pesan error umum kepada pengguna atau lakukan tindakan lainnya
-                }
+
                 })
             });
 
@@ -722,9 +688,6 @@
                 reverseButtons: true
                 }).then((result) => {
                 if (result.isConfirmed) {
-
-
-
 
                     axios.delete("delete/tugas/"+codetugas)
                 .then((res) => {
