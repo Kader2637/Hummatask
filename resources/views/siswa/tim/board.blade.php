@@ -18,6 +18,17 @@
 
 @endsection
 
+@section('style')
+   <style>
+        .form-komentar{
+            position: absolute;
+            bottom: 0px;
+            background-color: white;
+            margin-right: 10px;
+        }
+   </style>
+@endsection
+
 @section('content')
     <div style="height: 80vh" class="container-fluid row mt-2 ">
         <div class="d-flex mt-3 mb-0 pb-5 overflow-y-scroll " style="width: 100%; gap:50px;">
@@ -118,7 +129,7 @@
                     </button>
                 </li>
                 <li class="nav-item">
-                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#selesai">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#komentar">
                         <i class="ti ti-message-dots ti-xs me-1"></i>
                         <span class="align-middle">Komentar</span>
                     </button>
@@ -165,31 +176,53 @@
                             <div class="col-md-12 mb-4" data-select2-id="93">
                                 <label for="select2Primary" class="form-label">Tugas untuk</label>
                                 <div class="select2-primary" data-select2-id="92">
-                                    <div class="position-relative" data-select2-id="91"></div>
+                                    <div class="position-relative" data-select2-id="91">
+
+                                    </div>
                                     <select name="penugasan[]" id="select2Primary"
                                             class="select2 form-select select2-hidden-accessible" multiple=""
                                             data-select2-id="select2Primary" tabindex="-1" aria-hidden="true">
 
                                         </select>
-                                    </div>
                                 </div>
                             </div>
+                        </div>
                             @endif
-                        </div>
-                        <div class="d-flex flex-wrap">
-                            <button type="submit"  class="btn btn-primary me-3" data-bs-dismiss="offcanvas">
-                                Update
-                            </button>
-                            <button type="button" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">
-                                Close
-                            </button>
-                        </div>
+                            <div class="d-flex flex-wrap">
+                                <button type="submit"  class="btn btn-primary me-3" data-bs-dismiss="offcanvas">
+                                    Update
+                                </button>
+                                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">
+                                    Close
+                                </button>
+                            </div>
+                    </div>
                     </form>
                 </div>
                 <!-- Activities -->
 
-                <div class="tab-pane fade" id="selesai" role="tabpanel">
+                <div class="tab-pane fade" id="komentar" role="tabpanel">
 
+                    <div class="list-komentar mt-3" style="margin-bottom: 80px">
+
+                    </div>
+
+                    <div class="form-komentar" style="width: 100%;">
+                        <div class="row w-100 justify-content-center d-flex mb-3">
+                            <div class="col-11">
+                                <form id="tambahKomentar" method="post">
+                                    @csrf
+                                    <label class="form-label" for="bootstrap-maxlength-example2">Komentar</label>
+                                    <div class="w-100 d-flex justify-content-between align-items-center gap-2">
+                                        <textarea style="resize: none" id="bootstrap-maxlength-example2" class="form-control bootstrap-maxlength-example inp-tambah-komentar" rows="1" maxlength="" style="height: 43px;"></textarea>
+                                 <button class="btn btn-primary">
+                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><g fill="none"><path d="M24 0v24H0V0h24ZM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018Zm.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022Zm-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01l-.184-.092Z"/><path fill="currentColor" d="m21.433 4.861l-6 15.5a1 1 0 0 1-1.624.362l-3.382-3.235l-2.074 2.073a.5.5 0 0 1-.853-.354v-4.519L2.309 9.723a1 1 0 0 1 .442-1.691l17.5-4.5a1 1 0 0 1 1.181 1.329ZM19 6.001L8.032 13.152l1.735 1.66L19 6Z"/></g></svg>
+                                    </button>
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+                   </div>
                 </div>
             </div>
         </div>
@@ -268,7 +301,6 @@
                     dataTugas.forEach((data, index) => {
                         const tugas = data;
                         const {user} = tugas;
-                        console.log({user});
                         let tugaskan = "  ";
                         let avatar = user.avatar ? 'storage/' + user.avatar : 'assets/img/avatars/1.png';
                         userTugaskan = user.filter((element, index) => user.indexOf(element) === index);
@@ -354,7 +386,6 @@
                         }
                     });
 
-
                 })
                 .catch((err) => {
                     console.log(err);
@@ -369,13 +400,15 @@
             $("#select2Primary").empty();
 
             $("#formEditTugas").attr("data-codetugas", codeTugas);
+            $("#tambahKomentar").attr("data-codetugas", codeTugas);
             axios.get("data-edit-tugas/" + codeTugas)
             .then((res) => {
 
                 console.log("klik edit code "  +   codeTugas);
-                const data = res.data
+                const data = res.data;
                 const user = data.tim.user;
-                const userSelected = data.user
+                const userSelected = data.user;
+                const comments = data.comments;
 
                     const optStatusTugas = document.querySelector("#status")
 
@@ -386,7 +419,6 @@
                             status.selected = false
                         }
                     });
-
 
                     const optPrioritas = document.querySelector("#newPriority")
 
@@ -419,9 +451,47 @@
                         $("#select2Primary").append(option);
                     });
 
+                    $(".list-komentar").empty();
 
-                })
-        }
+                    comments.forEach(komentar => {
+  let div = document.createElement("div");
+  div.className = "media mb-4 d-flex align-items-start card flex-row px-3 py-2 mb-3 w-100";
+  div.setAttribute('id', 'komentar-' + komentar.id);
+
+  let elementComments = `
+    <div class="avatar me-2 flex-shrink-0 mt-1">
+      <img src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/2.png"
+        alt="Avatar" class="rounded-circle">
+    </div>
+    <div class="d-flex flex-column w-100">
+      <div class="media-body">
+        <div class="d-flex justify-content-between align-items-center">
+          <span class="fw-medium">${komentar.user.username} <small class="text-muted">Today 10:00 AM</small></span>
+          <div class="dropdown kanban-tasks-item-dropdown">
+            <i class="ti ti-dots-vertical" id="kanban-tasks-item" data-bs-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false"></i>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="kanban-tasks-item" style="">
+              <button type="button" class="dropdown-item">Edit</button>
+              <button onclick="deleteKomentar('${komentar.id}')" class="dropdown-item" href="javascript:void(0)">Delete</button>
+            </div>
+          </div>
+        </div>
+        <span class="mb-0" style="font-size: 13px;">${komentar.text}</span>
+      </div>
+    </div>
+  `;
+
+  div.innerHTML = elementComments;
+  $(".list-komentar").append(div);
+});
+
+                    });
+                }
+
+
+
+
+
 
 
 
@@ -429,8 +499,6 @@
 
         $("#formEditTugas").submit(function (e) {
             e.preventDefault()
-
-
             const nama = $("#title").val();
             const deadline = $("#due-date").val();
             const status_tugas = $("#status").val();
@@ -460,14 +528,51 @@
             })
             .catch((err) => {
                 console.log(err);
+                $(this).removeData('codetugas')
 
         })
 
     })
+
+
+    function deleteKomentar(komentar_id){
+        axios.delete("hapus-komentar/"+komentar_id)
+        .then((res) => {
+
+            $("#komentar-"+komentar_id).addClass("d-none");
+
+            console.log(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+
+
+    $("#tambahKomentar").submit(function(event){
+        event.preventDefault();
+        const text = $(".inp-tambah-komentar").val()
+        const tugas_code = $(this).data("codetugas");
+        console.log(text);
+        axios.post("tambah-komentar",{tugas_code,text})
+        .then((res) => {
+            console.log(tugas_code);
+            editTugas(tugas_code);
+            get()
+
+            $(this).removeData('codetugas');
+        })
+        .catch((err) => {
+            console.log(err);
+            $(this).removeData('codetugas');
+        })
+
+    })
+
+
+
         $("#formTambahTugas").submit((event)=>{
                 event.preventDefault();
-
-
                 const nama = $('#tugas').val();
                 const tim_id = "{{ $tim->code }}";
 

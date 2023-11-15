@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comments;
 use App\Models\Penugasan;
 use App\Models\Tim;
 use App\Models\Tugas;
@@ -25,7 +26,7 @@ class TugasController extends Controller
             return response()->json(['error'=>'Tim tidak dapat ditemukan']);
         }
 
-        $tugas = $tim->tugas()->with('comments','user')->get();
+        $tugas = $tim->tugas()->with('comments.user','user')->get();
         $dataTugas = [
             "tugas_baru" =>  $tugas->where('status_tugas','tugas_baru'),
             "tugas_dikerjakan" => $tugas->where('status_tugas','dikerjakan'),
@@ -81,7 +82,7 @@ class TugasController extends Controller
     {
         try {
             //code...
-            $tugas = Tugas::with('comments','user','tim.user')->where('code',$codeTugas)->first();
+            $tugas = Tugas::with('comments.user','user','tim.user')->where('code',$codeTugas)->first();
 
 
             return response()->json(
@@ -142,4 +143,27 @@ class TugasController extends Controller
 
         return response()->json(["success"=>"Berhasil menghapus tugas"]);
     }
+
+    protected function tambahKomentar(Request $request)
+    {
+        $tugas = Tugas::where("code",$request->tugas_code)->first();
+        $komentar = new Comments;
+        $komentar->user_id = Auth::user()->id;
+        $komentar->tugas_id = $tugas->id;
+        $komentar->text = $request->text;
+        $komentar->save();
+
+        return response()->json(["success"=>"Berhasil membuat komentar"]);
+    }
+
+    protected function hapusKomentar($komentar_id)
+    {
+        
+        $komentar = Comments::find($komentar_id);
+        $komentar->delete();
+
+        return response()->json(["success","Menghapus komentar"]);
+    }
+
+
 }
