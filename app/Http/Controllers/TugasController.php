@@ -146,19 +146,32 @@ class TugasController extends Controller
 
     protected function tambahKomentar(Request $request)
     {
-        $tugas = Tugas::where("code",$request->tugas_code)->first();
-        $komentar = new Comments;
-        $komentar->user_id = Auth::user()->id;
-        $komentar->tugas_id = $tugas->id;
-        $komentar->text = $request->text;
-        $komentar->save();
 
-        return response()->json(["success"=>"Berhasil membuat komentar"]);
+        if($request->komentar_id === 0){
+            $tugas = Tugas::where("code",$request->tugas_code)->first();
+            $komentar = new Comments;
+            $komentar->user_id = Auth::user()->id;
+            $komentar->tugas_id = $tugas->id;
+            $komentar->text = $request->text;
+            $komentar->save();
+
+            return response()->json(["success"=>"Berhasil membuat komentar"]);
+        }else{
+            $komentar = Comments::where('id',$request->komentar_id)->first();
+            $komentar->text = $request->text;
+            $komentar->save();
+
+            return response()->json(["success","Berhasil mengupdate komentar"]);
+        }
+
+
+
+
     }
 
     protected function hapusKomentar($komentar_id)
     {
-        
+
         $komentar = Comments::find($komentar_id);
         $komentar->delete();
 

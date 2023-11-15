@@ -215,11 +215,14 @@
                                     <label class="form-label" for="bootstrap-maxlength-example2">Komentar</label>
                                     <div class="w-100 d-flex justify-content-between align-items-center gap-2">
                                         <textarea style="resize: none" id="bootstrap-maxlength-example2" class="form-control bootstrap-maxlength-example inp-tambah-komentar" rows="1" maxlength="" style="height: 43px;"></textarea>
-                                 <button class="btn btn-primary">
+                                    <button type="submit" class="btn btn-primary">
                                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><g fill="none"><path d="M24 0v24H0V0h24ZM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018Zm.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022Zm-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01l-.184-.092Z"/><path fill="currentColor" d="m21.433 4.861l-6 15.5a1 1 0 0 1-1.624.362l-3.382-3.235l-2.074 2.073a.5.5 0 0 1-.853-.354v-4.519L2.309 9.723a1 1 0 0 1 .442-1.691l17.5-4.5a1 1 0 0 1 1.181 1.329ZM19 6.001L8.032 13.152l1.735 1.66L19 6Z"/></g></svg>
                                     </button>
+                                    <button type="button" onclick="cancelEdit()" class="btn btn-danger btn-edit-komentar d-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M6.4 19L5 17.6l5.6-5.6L5 6.4L6.4 5l5.6 5.6L17.6 5L19 6.4L13.4 12l5.6 5.6l-1.4 1.4l-5.6-5.6L6.4 19Z"/></svg>
+                                    </button>
                                 </div>
-                            </form>
+                                </form>
                             </div>
                         </div>
                    </div>
@@ -471,7 +474,7 @@
             <i class="ti ti-dots-vertical" id="kanban-tasks-item" data-bs-toggle="dropdown" aria-haspopup="true"
               aria-expanded="false"></i>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="kanban-tasks-item" style="">
-              <button type="button" class="dropdown-item">Edit</button>
+              <button onclick="editKomentar('${komentar.id}','${komentar.text}')" type="button" class="dropdown-item">Edit</button>
               <button onclick="deleteKomentar('${komentar.id}')" class="dropdown-item" href="javascript:void(0)">Delete</button>
             </div>
           </div>
@@ -487,14 +490,6 @@
 
                     });
                 }
-
-
-
-
-
-
-
-
 
 
         $("#formEditTugas").submit(function (e) {
@@ -548,26 +543,77 @@
         })
     }
 
+    function editKomentar(komentar_id,text){
+        $("#tambahKomentar").removeData("data-komentar-id")
+        $("#tambahKomentar").attr("data-komentar-id",komentar_id)
+        $(".inp-tambah-komentar").val(text);
+        $("#komentar-"+komentar_id).addClass("border border-primary");
+        $(".btn-edit-komentar").removeClass("d-none")
+    }
+
+    function cancelEdit(){
+        let komentar_id = $("#tambahKomentar").data("komentar-id");
+  console.log(komentar_id);
+  console.log("Ini cancel");
+
+  $(".btn-edit-komentar").addClass("d-none");
+  $("#komentar-" + komentar_id).removeClass("border border-primary");
+
+  // Mengubah nilai komentar_id menjadi 0
+  komentar_id = 0;
+
+  $("#tambahKomentar").removeData("komentar-id");
+  $("#tambahKomentar").removeAttr("data-komentar-id");
+  $("#tambahKomentar").trigger("reset");
+
+  console.log(komentar_id);
+    }
 
     $("#tambahKomentar").submit(function(event){
         event.preventDefault();
-        const text = $(".inp-tambah-komentar").val()
+
+        const text = $(".inp-tambah-komentar").val();
         const tugas_code = $(this).data("codetugas");
+        let komentar_id = $(this).data("komentar-id");
+        console.log(komentar_id);
+
+        if (typeof komentar_id == 'undefined') {
+        komentar_id = 0;
+        console.log(komentar_id);
+        } else {
+        console.log(komentar_id);
+        }
+
+
         console.log(text);
-        axios.post("tambah-komentar",{tugas_code,text})
+        axios.post("tambah-komentar",{tugas_code,text,komentar_id})
         .then((res) => {
-            console.log(tugas_code);
+        console.log("komentar =>" + komentar_id);
+            console.log(komentar_id);
             editTugas(tugas_code);
+            $("#tambahKomentar").trigger("reset");
+            $(this).removeData("komentar-id");
+            $(this).removeData('codetugas');
             get()
 
-            $(this).removeData('codetugas');
+            $(".btn-edit-komentar").addClass("d-none")
+          $("#komentar-"+komentar_id).removeClass("border border-primary");
+            komentar_id = 0;
+
+
         })
         .catch((err) => {
             console.log(err);
+            $(this).removeData("komentar-id")
+            $(this).removeData('codetugas');
+
+
+          $(".btn-edit-komentar").addClass("d-none")
+          $("#komentar-"+komentar_id).removeClass("border border-primary");
             $(this).removeData('codetugas');
         })
-
     })
+
 
 
 
@@ -591,6 +637,8 @@
                         text : "Sukses Membuat Tugas",
                         timer : 800,
                     })
+
+
 
                     $("#formEditTugas").attr("data-codetugas","");
 
