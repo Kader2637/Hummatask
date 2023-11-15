@@ -196,6 +196,16 @@
                 const tabId = $(this).attr('aria-controls');
                 toggleContent(tabId);
             });
+
+            $('[data-tab]').click(function() {
+                var penggunaMentorTab = $(this).attr('data-tab');
+                sessionStorage.setItem('penggunaMentorTab', penggunaMentorTab);
+            });
+
+            var penggunaMentorTab = sessionStorage.getItem('penggunaMentorTab');
+            if (penggunaMentorTab) {
+                $('[data-tab="' + penggunaMentorTab + '"]').tab('show');
+            }
         });
     </script>
 
@@ -208,24 +218,26 @@
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home-tab"
-                                aria-selected="true"><i class="fa-solid fa-users icon-text"></i>Siswa</button>
+                                aria-selected="true" data-tab="1"><i
+                                    class="fa-solid fa-users icon-text"></i>Siswa</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-profile" type="button" role="tab"
-                                aria-controls="pills-profile-tab" aria-selected="false"><i
+                                aria-controls="pills-profile-tab" aria-selected="false" data-tab="2"><i
                                     class="fa-solid fa-user-group icon-text"></i>Pengelola Magang</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-contact" type="button" role="tab"
-                                aria-controls="pills-contact-tab" aria-selected="false"><i
+                                aria-controls="pills-contact-tab" aria-selected="false" data-tab="3"><i
                                     class="fa-solid fa-user-tie icon-text"></i>Mentor</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-team" type="button" role="tab" aria-controls="pills-histori-tab"
-                                aria-selected="false"><i class="fa-solid fa-user-slash icon-text"></i>Histori Pengelola
+                                aria-selected="false" data-tab="4"><i class="fa-solid fa-user-slash icon-text"></i>Histori
+                                Pengelola
                                 Magang</button>
                         </li>
                     </ul>
@@ -327,7 +339,7 @@
                                         <td>{{ $item->email }}</td>
                                         <td>
                                             <div class="d-flex flex-wrap flex-row">
-                                                <span class="detail-user" href="javascript:void(0);"
+                                                <span class="detail-user cursor-pointer" href="javascript:void(0);"
                                                     data-bs-toggle="modal" data-bs-target="#detail"
                                                     data-username="{{ $item->username }}"
                                                     data-avatar="{{ $item->avatar }}" data-tlp="{{ $item->tlp }}"
@@ -335,7 +347,7 @@
                                                     data-sekolah="{{ $item->sekolah }}"
                                                     data-email="{{ $item->email }}"><i
                                                         class="ti ti-eye me-1"></i></span>
-                                                <span class="" id="delete-button-{{ $item->uuid }}"
+                                                <span class="cursor-pointer" id="delete-button-{{ $item->uuid }}"
                                                     href="javascript:void(0);"><i class="ti ti-trash me-1"></i></span>
                                             </div>
                                         </td>
@@ -363,40 +375,42 @@
                                     $no_manage = 1;
                                 @endphp
                                 @foreach ($magang as $item)
-                                @if ($item->masih_menjabat)
-                                    <tr>
-                                        <th scope="row">{{ $no_manage++ }}</th>
-                                        <td class="nama">
-                                            @if ($item->user->avatar)
-                                                <img src="{{ asset('storage/' . $item->user->avatar) }}" alt=""
-                                                    style="width:30px;hight:30px;border-radius:50%">
-                                                {{ $item->user->username }}
-                                            @else
-                                                <img src="{{ asset('assets/img/avatars/1.png') }}" alt=""
-                                                    style="width:30px;hight:30px;border-radius:50%">
-                                                {{ $item->user->username }}
-                                            @endif
-                                        </td>
-                                        <td>{{ $item->user->email }}</td>
-                                        <td>
-                                            <div class="d-flex flex-wrap flex-row gap-2">
-                                                <span class="detail-user" href="javascript:void(0);"
-                                                    data-bs-toggle="modal" data-bs-target="#detail"
-                                                    data-username="{{ $item->user->username }}"
-                                                    data-avatar="{{ $item->user->avatar }}" data-tlp="{{ $item->user->tlp }}"
-                                                    data-peran="{{ $item->user->peran->peran }}"
-                                                    data-sekolah="{{ $item->user->sekolah }}"
-                                                    data-email="{{ $item->user->email }}"><i
-                                                        class="ti ti-eye me-1"></i></span>
-                                                <span class="" href="javascript:void(0);" data-bs-toggle="modal"
-                                                    data-bs-target="#edit-data-permisions"><i
-                                                        class="ti ti-pencil me-1"></i></span>
-                                                <span class="" id="delete-button-permisions-{{ $item->user->uuid }}"
-                                                    href="javascript:void(0);"><i class="ti ti-trash me-1"></i></span>
-                                            </div>
-                                        </td>
+                                    @if ($item->masih_menjabat)
+                                        <tr>
+                                            <th scope="row">{{ $no_manage++ }}</th>
+                                            <td class="nama">
+                                                @if ($item->user->avatar)
+                                                    <img src="{{ asset('storage/' . $item->user->avatar) }}"
+                                                        alt="" style="width:30px;hight:30px;border-radius:50%">
+                                                    {{ $item->user->username }}
+                                                @else
+                                                    <img src="{{ asset('assets/img/avatars/1.png') }}" alt=""
+                                                        style="width:30px;hight:30px;border-radius:50%">
+                                                    {{ $item->user->username }}
+                                                @endif
+                                            </td>
+                                            <td>{{ $item->user->email }}</td>
+                                            <td>
+                                                <div class="d-flex flex-wrap flex-row gap-2">
+                                                    <span class="detail-user cursor-pointer" href="javascript:void(0);"
+                                                        data-bs-toggle="modal" data-bs-target="#detail"
+                                                        data-username="{{ $item->user->username }}"
+                                                        data-avatar="{{ $item->user->avatar }}"
+                                                        data-tlp="{{ $item->user->tlp }}"
+                                                        data-peran="{{ $item->user->peran->peran }}"
+                                                        data-sekolah="{{ $item->user->sekolah }}"
+                                                        data-email="{{ $item->user->email }}"><i
+                                                            class="ti ti-eye me-1"></i></span>
+                                                    <span class="cursor-pointer" href="javascript:void(0);"
+                                                        data-bs-toggle="modal" data-bs-target="#edit-data-permisions"><i
+                                                            class="ti ti-pencil me-1"></i></span>
+                                                    <span class="cursor-pointer"
+                                                        id="delete-button-permisions-{{ $item->user->uuid }}"
+                                                        href="javascript:void(0);"><i class="ti ti-trash me-1"></i></span>
+                                                </div>
+                                            </td>
 
-                                    </tr>
+                                        </tr>
                                     @endif
                                 @endforeach
                             </tbody>
@@ -434,14 +448,14 @@
                                         </td>
                                         <td>{{ $item->email }}</td>
                                         <td>
-                                            <div class="d-flex flex-wrap flex-row">
+                                            <div class="d-flex flex-wrap flex-row cursor-pointer">
                                                 <span class="edit-button" href="javascript:void(0);"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#edit-data-mentor"
+                                                    data-bs-toggle="modal" data-bs-target="#edit-data-mentor"
                                                     data-url="{{ $item->uuid }}">
                                                     <i class="ti ti-pencil me-1"></i>
                                                 </span>
-                                                <span class="" id="delete-button-mentor-{{ $item->uuid }}"
+                                                <span class="cursor-pointer"
+                                                    id="delete-button-mentor-{{ $item->uuid }}"
                                                     href="javascript:void(0);"><i class="ti ti-trash me-1"></i></span>
                                             </div>
                                         </td>
@@ -466,24 +480,25 @@
                             </thead>
                             <tbody>
                                 @foreach ($magang as $item)
-                                @if ($item->masih_menjabat === 0)
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td class="nama">
-                                        @if ($item->user->avatar)
-                                            <img src="{{ asset('storage/' . $item->user->avatar) }}" alt=""
-                                                style="width:30px;hight:30px;border-radius:50%">
-                                            {{ $item->user->username }}
-                                        @else
-                                            <img src="{{ asset('assets/img/avatars/1.png') }}" alt=""
-                                                style="width:30px;hight:30px;border-radius:50%">
-                                            {{ $item->user->username }}
-                                        @endif
-                                    </td>
-                                    <td>{{ $item->user->email }}</td>
-                                    <td class="masa-jabatan">{{ $item->awal_menjabat }} sampai {{ $item->akhir_menjabat }}</td>
-                                </tr>
-                                @endif
+                                    @if ($item->masih_menjabat === 0)
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td class="nama">
+                                                @if ($item->user->avatar)
+                                                    <img src="{{ asset('storage/' . $item->user->avatar) }}"
+                                                        alt="" style="width:30px;hight:30px;border-radius:50%">
+                                                    {{ $item->user->username }}
+                                                @else
+                                                    <img src="{{ asset('assets/img/avatars/1.png') }}" alt=""
+                                                        style="width:30px;hight:30px;border-radius:50%">
+                                                    {{ $item->user->username }}
+                                                @endif
+                                            </td>
+                                            <td>{{ $item->user->email }}</td>
+                                            <td class="masa-jabatan">{{ $item->awal_menjabat }} sampai
+                                                {{ $item->akhir_menjabat }}</td>
+                                        </tr>
+                                    @endif
                                 @endforeach
                             </tbody>
                         </table>

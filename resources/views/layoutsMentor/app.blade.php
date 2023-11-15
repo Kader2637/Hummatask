@@ -186,7 +186,7 @@
     <script>
         $(window).load(function() {
 
-            var rnd = Math.random() * ( 3000 - 2000) + 2000;
+            var rnd = Math.random() * (3000 - 2000) + 2000;
 
             $('.progress').css("animation", "loading " + rnd + "ms linear");
 
@@ -237,15 +237,13 @@
                             <div>Presentasi</div>
                         </a>
                     </li>
-                    <li
-                        class="menu-item {{ request()->routeIs('tim') ? 'active' : '' }}">
+                    <li class="menu-item {{ request()->routeIs('tim') ? 'active' : '' }}">
                         <a href="{{ route('tim') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-users-group"></i>
                             <div>Tim</div>
                         </a>
                     </li>
-                    <li
-                        class="menu-item {{ request()->routeIs('pengajuan-projek') ? 'active' : '' }}">
+                    <li class="menu-item {{ request()->routeIs('pengajuan-projek') ? 'active' : '' }}">
                         <a href="{{ route('pengajuan-projek') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-report-analytics"></i>
                             <div>Pengajuan Project</div>
@@ -683,13 +681,6 @@
                 icon: 'error',
                 title: 'Akses Ditolak',
                 text: '{{ session('unauthorize') }}', // Teks pesan dari sesi
-                showClass: {
-                    popup: "animate__animated animate__tada"
-                },
-                customClass: {
-                    confirmButton: "btn btn-primary"
-                },
-                buttonsStyling: !1,
             });
         </script>
     @elseif (session()->has('success'))

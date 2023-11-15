@@ -29,7 +29,7 @@ class tambahUsersController extends Controller
                 $inisial = strtoupper(implode('', array_map(fn ($name) => substr($name, 0, 1), array_slice(explode(' ', $row[0]), 0, 3))));
                 $image = Image::canvas(200, 200, '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT));
                 $image->text($inisial, 100, 100, function ($font) {
-                    $font->file(public_path('assets/font/Poppins-Regular.ttf'));
+                    $font->file(public_path('assets/font/Poppins-Bold.ttf'));
                     $font->size(48);
                     $font->color('#ffffff');
                     $font->align('center');
@@ -227,7 +227,7 @@ class tambahUsersController extends Controller
 
             if ($role->name == 'ketua magang') {
                 $awal_menjabat = Carbon::now();
-                $akhir_menjabat = Carbon::now()->addMonth(); 
+                $akhir_menjabat = Carbon::now()->addMonth();
 
 
                 PenglolaMagang::create([
@@ -235,10 +235,10 @@ class tambahUsersController extends Controller
                     'role_id' => $role->id,
                     'awal_menjabat' => $awal_menjabat,
                     'akhir_menjabat' => $akhir_menjabat,
-                    'masih_menjabat' => true, 
+                    'masih_menjabat' => true,
                 ]);
             }
-        
+
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Gagal memberikan hak akses!');
         }
