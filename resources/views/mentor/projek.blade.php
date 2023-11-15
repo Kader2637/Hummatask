@@ -293,107 +293,108 @@
     </div>
     {{-- Modal detail --}}
 
-    {{-- filter projek --}}
-    <script>
-        function filterProjek(selectElement) {
-            var code = selectElement.value;
-            var projekElements = document.getElementsByClassName('projek-item');
-
-            for (var i = 0; i < projekElements.length; i++) {
-                var projekElement = projekElements[i];
-                var statusTim = projekElement.getAttribute('data-status-tim');
-
-                if (code === 'all' || code === statusTim) {
-                    projekElement.style.display = 'block';
-                } else {
-                    projekElement.style.display = 'none';
-                }
-            }
-        }
-    </script>
-    {{-- filter Projek --}}
-
-    {{-- JS Modal Detail --}}
-    <script>
-        $(document).ready(function() {
-            $('.btn-detail-projek').click(function() {
-                var logo = $(this).data('logo');
-                var namatim = $(this).data('namatim');
-                var status = $(this).data('status');
-                var tema = $(this).data('tema');
-                var tglmulai = $(this).data('tglmulai');
-                var deadline = $(this).data('deadline');
-                var anggota = $(this).data('anggota');
-                var deskripsi = $(this).data('deskripsi');
-                var dayLeft = $(this).data('dayleft');
-                var repo = $(this).data('repo');
-                var total = $(this).data('total-deadline');
-                var progress = $(this).data('progress');
-                var progressFormat = Math.round(progress);
-
-                $('#logo-tim').attr('src', logo);
-                $('#logo-tim2').attr('src', logo);
-                $('#nama-tim').text(namatim);
-                $('#nama-tim2').text(namatim);
-                $('#status').text(status);
-                $('#tema').text(tema);
-                $('#tglmulai').text(tglmulai);
-                $('#deadline').text(deadline);
-                $('#dayLeft').text(dayLeft);
-                $('#dayleft').text(dayLeft);
-                $('#total').text(total);
-                $('#text-repo').text(repo);
-                $('#repository').attr('href', repo);
-                $('#textPercent').text(progressFormat);
-                $('.progress-bar').css('width', progressFormat + '%');
-                $('.progress-bar').attr('aria-valuenow', progressFormat);
-                if (deskripsi) {
-                    $('#deskripsi').text(deskripsi);
-                } else {
-                    $('#deskripsi').html(
-                        '<div class="alert alert-warning d-flex align-items-center mt-3 cursor-pointer" role="alert">' +
-                        '<span class="alert-icon text-warning me-2">' +
-                        '<i class="ti ti-bell ti-xs"></i>' +
-                        '</span>' +
-                        'Tim ini belum memiliki deskripsi tema!' +
-                        '</div>'
-                    );
-                }
-                var anggotaList = $('#anggota-list-Projek');
-
-                anggotaList.empty();
-
-                anggota.forEach(function(anggota, index) {
-                    var avatarSrc = anggota.avatar ? '/storage/' + anggota.avatar :
-                        '/assets/img/avatars/1.png';
-
-                    var anggotaItem = $('<div class="col-lg-4 p-2" style="box-shadow: none">' +
-                        '<div class="card">' +
-                        '<div class="card-body d-flex gap-3 align-items-center">' +
-                        '<div>' +
-                        '<img width="30px" height="30px" class="rounded-circle object-cover" src="' +
-                        avatarSrc + '" alt="foto user">' +
-                        '</div>' +
-                        '<div>' +
-                        '<h5 class="mb-0" style="font-size: 15px">' + anggota.name + '</h5>' +
-                        '<span class="badge bg-label-warning">' + anggota.jabatan + '</span>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>');
-                    anggotaList.append(anggotaItem);
-                });
-
-                $('#modalDetailProjek').modal('show');
-
-            });
-        });
-    </script>
-    {{-- js Modal Detail --}}
     </div>
 @endsection
 
 @section('script')
     <script src="{{ asset('assets/js/forms-selects.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
+        {{-- filter projek --}}
+        <script>
+            function filterProjek(selectElement) {
+                var code = selectElement.value;
+                var projekElements = document.getElementsByClassName('projek-item');
+
+                for (var i = 0; i < projekElements.length; i++) {
+                    var projekElement = projekElements[i];
+                    var statusTim = projekElement.getAttribute('data-status-tim');
+
+                    if (code === 'all' || code === statusTim) {
+                        projekElement.style.display = 'block';
+                    } else {
+                        projekElement.style.display = 'none';
+                    }
+                }
+            }
+        </script>
+        {{-- filter Projek --}}
+
+        {{-- JS Modal Detail --}}
+        <script>
+            $(document).ready(function() {
+                $('.btn-detail-projek').click(function() {
+                    var logo = $(this).data('logo');
+                    var namatim = $(this).data('namatim');
+                    var status = $(this).data('status');
+                    var tema = $(this).data('tema');
+                    var tglmulai = $(this).data('tglmulai');
+                    var deadline = $(this).data('deadline');
+                    var anggota = $(this).data('anggota');
+                    var deskripsi = $(this).data('deskripsi');
+                    var dayLeft = $(this).data('dayleft');
+                    var repo = $(this).data('repo');
+                    var total = $(this).data('total-deadline');
+                    var progress = $(this).data('progress');
+                    var progressFormat = Math.round(progress);
+
+                    $('#logo-tim').attr('src', logo);
+                    $('#logo-tim2').attr('src', logo);
+                    $('#nama-tim').text(namatim);
+                    $('#nama-tim2').text(namatim);
+                    $('#status').text(status);
+                    $('#tema').text(tema);
+                    $('#tglmulai').text(tglmulai);
+                    $('#deadline').text(deadline);
+                    $('#dayLeft').text(dayLeft);
+                    $('#dayleft').text(dayLeft);
+                    $('#total').text(total);
+                    $('#text-repo').text(repo);
+                    $('#repository').attr('href', repo);
+                    $('#textPercent').text(progressFormat);
+                    $('.progress-bar').css('width', progressFormat + '%');
+                    $('.progress-bar').attr('aria-valuenow', progressFormat);
+                    if (deskripsi) {
+                        $('#deskripsi').text(deskripsi);
+                    } else {
+                        $('#deskripsi').html(
+                            '<div class="alert alert-warning d-flex align-items-center mt-3 cursor-pointer" role="alert">' +
+                            '<span class="alert-icon text-warning me-2">' +
+                            '<i class="ti ti-bell ti-xs"></i>' +
+                            '</span>' +
+                            'Tim ini belum memiliki deskripsi tema!' +
+                            '</div>'
+                        );
+                    }
+                    var anggotaList = $('#anggota-list-Projek');
+
+                    anggotaList.empty();
+
+                    anggota.forEach(function(anggota, index) {
+                        var avatarSrc = anggota.avatar ? '/storage/' + anggota.avatar :
+                            '/assets/img/avatars/1.png';
+
+                        var anggotaItem = $('<div class="col-lg-4 p-2" style="box-shadow: none">' +
+                            '<div class="card">' +
+                            '<div class="card-body d-flex gap-3 align-items-center">' +
+                            '<div>' +
+                            '<img width="30px" height="30px" class="rounded-circle object-cover" src="' +
+                            avatarSrc + '" alt="foto user">' +
+                            '</div>' +
+                            '<div>' +
+                            '<h5 class="mb-0" style="font-size: 15px">' + anggota.name + '</h5>' +
+                            '<span class="badge bg-label-warning">' + anggota.jabatan + '</span>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>');
+                        anggotaList.append(anggotaItem);
+                    });
+
+                    $('#modalDetailProjek').modal('show');
+
+                });
+            });
+        </script>
+        {{-- js Modal Detail --}}
+
 @endsection

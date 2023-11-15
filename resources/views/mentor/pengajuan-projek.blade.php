@@ -69,99 +69,8 @@
             @endforelse
         </div>
         <div>
-            {{$projects->links('pagination::bootstrap-5')}}
+            {{ $projects->links('pagination::bootstrap-5') }}
         </div>
-
-        {{-- script modal detail --}}
-        <script>
-            $(document).ready(function() {
-                $('.btn-detail').click(function() {
-                    var namaTim = $(this).data('nama-tim');
-                    var typeProject = $(this).data('type-project');
-                    var logo = $(this).data('logo');
-                    var createdAt = $(this).data('created-at');
-                    var anggota = $(this).data('anggota');
-                    var tema = $(this).data('tema');
-                    var temaHtml = JSON.stringify(tema);
-
-                    $('#btn-terima').attr('data-tema', temaHtml);
-                    $('#nama-tim').text(namaTim);
-                    $('#type-project').text(typeProject);
-                    $('#created-at').text(createdAt);
-                    $('#logo-tim').attr('src', logo);
-
-                    var anggotaList = $('#anggota-list');
-                    anggotaList.empty();
-
-                    anggota.forEach(function(anggota, index) {
-                        var avatarSrc = anggota.avatar ? '/storage/' + anggota.avatar :
-                            '/assets/img/avatars/1.png';
-
-                        var anggotaItem = $(
-                            '<tr>' +
-                            '<td>' +
-                            '<div class="d-flex align-items-center mt-lg-3">' +
-                            '<div class="avatar me-3 avatar-sm">' +
-                            '<img src="' + avatarSrc +
-                            '" alt="Avatar" class="h-auto rounded-circle" />' +
-                            '</div>' +
-                            '<div class="d-flex flex-column">' +
-                            '<h6 class="mb-0">' + anggota.username + '</h6>' +
-                            '<small class="text-truncate text-muted">' + anggota.jabatan +
-                            '</small>' +
-                            '</div>' +
-                            '</div>' +
-                            '</td>' +
-                            '</tr>'
-                        );
-
-                        anggotaList.append(anggotaItem);
-                    });
-
-                    var temaList = $('#tema-list');
-                    temaList.empty();
-
-                    tema.forEach(function(tema, index) {
-                        var temaItem = $(
-                            '<tr>' +
-                            '<td>' + (index + 1) + '.' + '</td>' +
-                            '<td>' + tema.nama_tema + '</td>' +
-                            '</tr>'
-                        );
-                        temaList.append(temaItem);
-                    });
-                });
-
-                $('#btn-terima').click(function() {
-                    var tema = $(this).data('tema');
-                    var temaList = $('#tema');
-                    temaList.empty();
-                    tema.forEach(function(tema, index) {
-                        temaList.append("<option data-url="+ tema.tema_code +" value=" + tema.tema_id + ">" + tema.nama_tema +
-                            "</option>");
-                    });
-
-                    temaList.on('change', function() {
-                        var selectedTema = $(this).find(':selected').data('url');
-                        var formAction =
-                            "{{ route('persetujuan-project', ['code' => ':temaId']) }}";
-                        formAction = formAction.replace(':temaId', selectedTema);
-                        $('#terima-project').attr('action', formAction);
-                    });
-
-                });
-
-                const oneWeekFromToday = new Date();
-                oneWeekFromToday.setDate(oneWeekFromToday.getDate() + 7);
-
-                flatpickr("#deadline", {
-                    minDate: oneWeekFromToday,
-                    dateFormat: "Y-m-d",
-                });
-
-            });
-        </script>
-        {{-- script modal detail --}}
 
         <!-- Modal Terima-->
         <div class="modal fade" id="modalTerima" tabindex="-1" aria-hidden="true">
@@ -197,8 +106,8 @@
                                         harus
                                         1 minggu dari sekarang)
                                     </div>
-                                    <input type="text" class="form-control" placeholder="YYYY-MM-DD"
-                                        name="deadlineInput" id="deadline" />
+                                    <input type="text" class="form-control" placeholder="YYYY-MM-DD" name="deadlineInput"
+                                        id="deadline" />
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -293,31 +202,6 @@
             </div>
         </div>
         {{-- Modal Detail --}}
-
-        {{-- Validasi --}}
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const ajukanModal = document.getElementById('terima-project');
-
-                ajukanModal.addEventListener('submit', function(event) {
-                    const temaInput = document.querySelector('select[name="temaInput"]');
-                    const deadlineInput = document.querySelector('input[name="deadlineInput"]');
-
-                    // Validasi input kosong
-                    if (temaInput.value.trim() === '') {
-                        event.preventDefault(); // Mencegah pengiriman formulir
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Peringatan',
-                            text: 'Inputkan Tema Project!',
-                        });
-                        return;
-                    }
-                });
-            });
-        </script>
-        {{-- Validasi --}}
-
         <!-- Modal Terima-->
 
 
@@ -325,39 +209,120 @@
 @endsection
 
 @section('script')
+    {{-- script modal detail --}}
     <script>
-        jQuery.noConflict();
+        $(document).ready(function() {
+            $('.btn-detail').click(function() {
+                var namaTim = $(this).data('nama-tim');
+                var typeProject = $(this).data('type-project');
+                var logo = $(this).data('logo');
+                var createdAt = $(this).data('created-at');
+                var anggota = $(this).data('anggota');
+                var tema = $(this).data('tema');
+                var temaHtml = JSON.stringify(tema);
 
-        jQuery(document).ready(function($) {
-            $('#jstabel').DataTable({
-                "lengthMenu": [
-                    [5, 10, 15, -1],
-                    [5, 10, 15, "All"]
-                ],
-                "pageLength": 5,
+                $('#btn-terima').attr('data-tema', temaHtml);
+                $('#nama-tim').text(namaTim);
+                $('#type-project').text(typeProject);
+                $('#created-at').text(createdAt);
+                $('#logo-tim').attr('src', logo);
 
-                "order": [],
+                var anggotaList = $('#anggota-list');
+                anggotaList.empty();
 
-                "ordering": false,
+                anggota.forEach(function(anggota, index) {
+                    var avatarSrc = anggota.avatar ? '/storage/' + anggota.avatar :
+                        '/assets/img/avatars/1.png';
 
-                "language": {
-                    "sProcessing": "Sedang memproses...",
-                    "sLengthMenu": "Tampilkan _MENU_ data",
-                    "sZeroRecords": "Tidak ditemukan Data",
-                    "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-                    "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
-                    "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Cari :",
-                    "sUrl": "",
-                    "oPaginate": {
-                        "sFirst": "Pertama",
-                        "sPrevious": "&#8592;",
-                        "sNext": "&#8594;",
-                        "sLast": "Terakhir"
-                    }
+                    var anggotaItem = $(
+                        '<tr>' +
+                        '<td>' +
+                        '<div class="d-flex align-items-center mt-lg-3">' +
+                        '<div class="avatar me-3 avatar-sm">' +
+                        '<img src="' + avatarSrc +
+                        '" alt="Avatar" class="h-auto rounded-circle" />' +
+                        '</div>' +
+                        '<div class="d-flex flex-column">' +
+                        '<h6 class="mb-0">' + anggota.username + '</h6>' +
+                        '<small class="text-truncate text-muted">' + anggota.jabatan +
+                        '</small>' +
+                        '</div>' +
+                        '</div>' +
+                        '</td>' +
+                        '</tr>'
+                    );
+
+                    anggotaList.append(anggotaItem);
+                });
+
+                var temaList = $('#tema-list');
+                temaList.empty();
+
+                tema.forEach(function(tema, index) {
+                    var temaItem = $(
+                        '<tr>' +
+                        '<td>' + (index + 1) + '.' + '</td>' +
+                        '<td>' + tema.nama_tema + '</td>' +
+                        '</tr>'
+                    );
+                    temaList.append(temaItem);
+                });
+            });
+
+            $('#btn-terima').click(function() {
+                var tema = $(this).data('tema');
+                var temaList = $('#tema');
+                temaList.empty();
+                temaList.append("<option disabled selected value=''>Pilih tema</option>");
+                tema.forEach(function(tema, index) {
+                    temaList.append("<option data-url=" + tema.tema_code + " value=" + tema
+                        .tema_id + ">" + tema.nama_tema +
+                        "</option>");
+                });
+
+                temaList.on('change', function() {
+                    var selectedTema = $(this).find(':selected').data('url');
+                    var formAction =
+                        "{{ route('persetujuan-project', ['code' => ':temaId']) }}";
+                    formAction = formAction.replace(':temaId', selectedTema);
+                    $('#terima-project').attr('action', formAction);
+                });
+
+            });
+
+            const oneWeekFromToday = new Date();
+            oneWeekFromToday.setDate(oneWeekFromToday.getDate() + 7);
+
+            flatpickr("#deadline", {
+                minDate: oneWeekFromToday,
+                dateFormat: "Y-m-d",
+            });
+
+        });
+    </script>
+    {{-- script modal detail --}}
+
+    {{-- Validasi --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ajukanModal = document.getElementById('terima-project');
+
+            ajukanModal.addEventListener('submit', function(event) {
+                const temaInput = document.querySelector('select[name="temaInput"]');
+                const deadlineInput = document.querySelector('input[name="deadlineInput"]');
+
+                // Validasi input kosong
+                if (temaInput.value.trim() === '') {
+                    event.preventDefault(); // Mencegah pengiriman formulir
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Peringatan',
+                        text: 'Inputkan Tema Project!',
+                    });
+                    return;
                 }
             });
         });
     </script>
+    {{-- Validasi --}}
 @endsection

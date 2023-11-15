@@ -170,7 +170,7 @@ class PengajuanTimController extends Controller
             $tim->code = Str::uuid();
             $statusTim = is_array($request->status_tim) ? $request->status_tim : [$request->status_tim];
             $tim->status_tim = implode(',', $statusTim);
-            $tim->kadaluwarsa = true;
+            $tim->kadaluwarsa = false;
             $tim->save();
 
             //membuat tim
