@@ -63,7 +63,7 @@
                             <li class="ct-series-1 d-flex flex-column">
                                 <h5 class="mb-0">Tim</h5>
                                 <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                    style="background-color: grey; height:6px; width: 30px;"></span>
+                                    style="background-color: #5ca904; height:6px; width: 30px;"></span>
                                 <div class="text-muted"></div>
                             </li>
                         </ul>
@@ -136,7 +136,7 @@ if (doughnutChart) {
     // Menggabungkan data dari kedua set data
     const mergedDataValues = acount.concat(dataValues).concat(tims);
     const mergedBackgroundColor = acount.map(() => 'yellow').concat(dataValues.map(() => 'blue')).concat(tims.map(() =>
-        'grey'));
+        '#5ca904'));
 
     const doughnutChartVar = new Chart(doughnutChart, {
         type: 'doughnut',

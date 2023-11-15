@@ -5,7 +5,7 @@
 
 @section('content')
     <div class="container-fluid mt-4 ">
-        <h5 class="header">Daftar Pengajuan Projek</h5>
+        <h5 class="header mt-2 ms-2">Daftar Pengajuan Projek</h5>
         <div class="row">
             @forelse ($projects as $item)
                 @php
@@ -61,7 +61,11 @@
                     </div>
                 </div>
             @empty
-                <p>Tidak ada data pengajuan project.</p>
+                <h6 class="text-center mt-4">Tidak Ada Pengajuan Projek <i class="ti ti-address-book-off"></i></h6>
+                <div class="mt-4 mb-3 d-flex justify-content-evenly">
+                    <img src="{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}"
+                        alt="page-misc-under-maintenance" width="300" class="img-fluid">
+                </div>
             @endforelse
         </div>
         <div>
