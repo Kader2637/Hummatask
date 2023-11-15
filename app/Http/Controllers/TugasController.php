@@ -8,6 +8,7 @@ use App\Models\Tim;
 use App\Models\Tugas;
 use App\Models\User;
 use Exception;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -45,11 +46,11 @@ class TugasController extends Controller
 
         $validator = validator($request->all(),
         [
-            "nama" => "string|max:100"
+            "nama" => "string|max:50"
         ],
         [
             "nama.string" => "Nama tugas harus berupa strinig",
-            "nama.max:100" => "Nama tugas memiliki maksimal 100 karakter",
+            "nama.max" => "Nama tugas memiliki maksimal 50 karakter",
         ]
         );
 
@@ -97,6 +98,30 @@ class TugasController extends Controller
     protected function prosesEditTugas(Request $request)
     {
 
+      $validator = validator($request->all(),
+      [
+        'nama' => 'max:50',
+        'deadline' => 'nullable|date',
+        'status_tugas' => 'required|in:tugas_baru,dikerjakan,revisi,selesai',
+        'prioritas' => 'required|in:mendesak,penting,biasa,tambahan,opsional',
+      ],
+      [
+        'nama.max:50' => ' Nama tugas tidak boleh lebih dari 50 karakter',
+        'deadline.date' => 'Format tanggal Deadline tidak valid.',
+        'status_tugas.required' => 'Kolom Status Tugas wajib diisi.',
+        'status_tugas.in' => 'Status Tugas tidak valid.',
+        'prioritas.required' => 'Kolom Prioritas wajib diisi.',
+        'prioritas.in' => 'Prioritas tidak valid.'
+      ]);
+
+      if($validator->fails()){
+        return response()->json(
+            [
+                "errors" => $validator->errors()
+            ],422
+            );
+    }
+
         $tugas = Tugas::where('code',$request->codeTugas)->first();
 
         $tugas->nama = $request->nama;
@@ -113,6 +138,11 @@ class TugasController extends Controller
 
 
         foreach ($userToAdd as $i => $data) {
+
+            if(!($tugas->tim->user->contains("uuid",$data))){
+                return response()->json(["error"=>"User yang ditambahkan bukan dari anggota tim"],422);
+            }
+
             $user = User::where('uuid', $data)->first();
             if ($user) {
                 $penugasan = new Penugasan;

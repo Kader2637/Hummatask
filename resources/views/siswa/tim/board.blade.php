@@ -459,7 +459,24 @@
                     comments.forEach(komentar => {
   let div = document.createElement("div");
   div.className = "media mb-4 d-flex align-items-start card flex-row px-3 py-2 mb-3 w-100";
+  div.style.overflowWrap = "anywhere";
   div.setAttribute('id', 'komentar-' + komentar.id);
+
+
+  let editButtonKomentar =
+  `
+  <div class="dropdown kanban-tasks-item-dropdown">
+            <i class="ti ti-dots-vertical" id="kanban-tasks-item" data-bs-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false"></i>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="kanban-tasks-item" style="">
+              <button onclick="editKomentar('${komentar.id}','${komentar.text}')" type="button" class="dropdown-item">Edit</button>
+              <button onclick="deleteKomentar('${komentar.id}')" class="dropdown-item" href="javascript:void(0)">Delete</button>
+            </div>
+          </div>
+
+  `
+
+
 
   let elementComments = `
     <div class="avatar me-2 flex-shrink-0 mt-1">
@@ -470,14 +487,18 @@
       <div class="media-body">
         <div class="d-flex justify-content-between align-items-center">
           <span class="fw-medium">${komentar.user.username} <small class="text-muted">Today 10:00 AM</small></span>
-          <div class="dropdown kanban-tasks-item-dropdown">
-            <i class="ti ti-dots-vertical" id="kanban-tasks-item" data-bs-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false"></i>
-            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="kanban-tasks-item" style="">
-              <button onclick="editKomentar('${komentar.id}','${komentar.text}')" type="button" class="dropdown-item">Edit</button>
-              <button onclick="deleteKomentar('${komentar.id}')" class="dropdown-item" href="javascript:void(0)">Delete</button>
-            </div>
-          </div>
+          ${
+
+            ( komentar.user.id == "{{ Auth::user()->id }}" )
+
+            ?
+
+            editButtonKomentar
+
+          : ''
+
+
+          }
         </div>
         <span class="mb-0" style="font-size: 13px;">${komentar.text}</span>
       </div>
@@ -521,8 +542,32 @@
 
 
             })
-            .catch((err) => {
-                console.log(err);
+            .catch((error) => {
+
+
+                if (error.response && error.response.status === 422) {
+                    const errors = error.response.data.errors;
+                    console.log(errors);
+                    // Tampilkan pesan validasi menggunakan SweetAlert
+                    let errorMessage = '';
+                    for (const key in errors) {
+                        if (errors.hasOwnProperty(key)) {
+                        errorMessage += `${errors[key]}\n`;
+                        }
+                    }
+                    $("#formTambahTugas").trigger("reset");
+                    Swal.fire({
+                        icon:"error",
+                        title : "Error",
+                        text  : errorMessage,
+                    });
+                } else {
+                // Tangani error lainnya
+                console.log(error);
+                // Tampilkan pesan error umum kepada pengguna atau lakukan tindakan lainnya
+                }
+
+                console.log(error);
                 $(this).removeData('codetugas')
 
         })
@@ -533,9 +578,7 @@
     function deleteKomentar(komentar_id){
         axios.delete("hapus-komentar/"+komentar_id)
         .then((res) => {
-
             $("#komentar-"+komentar_id).addClass("d-none");
-
             console.log(res.data);
         })
         .catch((err) => {
@@ -553,8 +596,8 @@
 
     function cancelEdit(){
         let komentar_id = $("#tambahKomentar").data("komentar-id");
-  console.log(komentar_id);
-  console.log("Ini cancel");
+        console.log(komentar_id);
+        console.log("Ini cancel");
 
   $(".btn-edit-komentar").addClass("d-none");
   $("#komentar-" + komentar_id).removeClass("border border-primary");
@@ -584,8 +627,6 @@
         console.log(komentar_id);
         }
 
-
-        console.log(text);
         axios.post("tambah-komentar",{tugas_code,text,komentar_id})
         .then((res) => {
         console.log("komentar =>" + komentar_id);
@@ -594,22 +635,19 @@
             $("#tambahKomentar").trigger("reset");
             $(this).removeData("komentar-id");
             $(this).removeData('codetugas');
-            get()
-
+            get();
             $(".btn-edit-komentar").addClass("d-none")
-          $("#komentar-"+komentar_id).removeClass("border border-primary");
+            $("#komentar-"+komentar_id).removeClass("border border-primary");
             komentar_id = 0;
-
-
         })
-        .catch((err) => {
-            console.log(err);
-            $(this).removeData("komentar-id")
+        .catch((error) => {
+
+
+            console.log(error);
+            $(this).removeData("komentar-id");
             $(this).removeData('codetugas');
-
-
-          $(".btn-edit-komentar").addClass("d-none")
-          $("#komentar-"+komentar_id).removeClass("border border-primary");
+            $(".btn-edit-komentar").addClass("d-none");
+            $("#komentar-"+komentar_id).removeClass("border border-primary");
             $(this).removeData('codetugas');
         })
     })
