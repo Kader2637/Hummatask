@@ -52,7 +52,7 @@
                         <div class="col-12 col-md-12 d-flex flex-row gap-3 align-items-center">
                             <div class="col-12 col-md-12 d-flex flex-wrap flex-col align-items-center">
                                 <label class="form-label m-0 p-0 mt-2" for="modalEditUserLastName">Link Repository
-                                    Github</label>
+                                    Github <span class="text-warning">(Harap inputkan url valid)</span></label>
                                 <input type="text" id="modalEditUserLastName" name="repository"
                                     class="form-control @error('repository') is-invalid @enderror"
                                     placeholder="https://.." />
@@ -63,7 +63,8 @@
                         </div>
 
                         <div class="col-12 justify-content-center">
-                            <label for="TagifyBasic" class="form-label">Tema</label>
+                            <label for="TagifyBasic" class="form-label">Tema <span class="text-warning">(Inputkan 5 tema,
+                                    tekan enter di setiap tema)</span></label>
                             <input id="TagifyBasic" class="form-control @error('temaInput') is-invalid @enderror"
                                 name="temaInput" placeholder="Masukkan 5 tema pilihan anda" />
                             @error('temaInput')
@@ -600,6 +601,8 @@
                         icon: 'warning',
                         title: 'Peringatan',
                         text: 'URL Repository tidak valid!',
+                        showConfirmButton: false,
+                        timer: 1500,
                     });
                 }
             });
@@ -624,6 +627,8 @@
                         icon: 'warning',
                         title: 'Peringatan',
                         text: 'Pastikan semua input diisi!',
+                        showConfirmButton: false,
+                        timer: 1500,
                     });
                     return;
                 }
@@ -635,6 +640,8 @@
                         icon: 'warning',
                         title: 'Peringatan',
                         text: 'URL Repository tidak valid!',
+                        showConfirmButton: false,
+                        timer: 1500,
                     });
                     return;
                 }
@@ -651,6 +658,8 @@
                         icon: 'warning',
                         title: 'Peringatan',
                         text: 'Inputkan 5 tema!',
+                        showConfirmButton: false,
+                        timer: 1500,
                     });
                     return;
                 }

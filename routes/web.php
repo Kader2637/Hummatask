@@ -79,6 +79,8 @@ Route::prefix('tim')->controller(timController::class)->group(function () {
         Route::get('board/data-edit-tugas/{codeTugas}',[TugasController::class,'dataEditTugas']);
         Route::put('board/proses-edit-tugas',[TugasController::class,'prosesEditTugas'])->name("editTugas");
         Route::delete('board/delete/tugas/{codeTugas}',[TugasController::class,'hapusTugas']);
+        Route::post("board/tambah-komentar",[TugasController::class,'tambahKomentar']);
+        Route::delete('board/hapus-komentar/{tugas_id}',[TugasController::class,'hapusKomentar']);
     });
 });
 
@@ -103,6 +105,7 @@ Route::prefix('ketuaMagang')->middleware(['auth', 'siswa', 'can:kelola siswa'])-
     Route::get('ketua/ambil-urutan/{codeHistory}', [PresentasiController::class, 'ambilUrutan']);
     Route::get('ketua/ambil-urutan/{codeHistory}', [PresentasiController::class, 'ambilUrutan']);
     Route::get('ketua/ambil-detail-history-presentasi/{codeHistory}/{codeTim}', [PresentasiController::class, 'ambilDetailHistoryPresentasi']);
+
 });
 
 // Halaman Mentor
@@ -131,6 +134,8 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::put('atur-urutan/{code}', [PresentasiController::class, 'gantiUrutan']);
     Route::get('ambil-urutan/{codeHistory}', [PresentasiController::class, 'ambilUrutan']);
     Route::get('ambil-detail-history-presentasi/{codeHistory}/{codeTim}', [PresentasiController::class, 'ambilDetailHistoryPresentasi']);
+    Route::Post('profile-store', [profileController::class, 'update'])->name('profile.mentor.store');
+    Route::put('/password.update', [ProfileController::class, 'updatePassword'])->name('password.mentor.updatee');
 
     Route::post('pembuatantim', [PengajuanTimController::class, 'pembuatanTimProject'])->name('pembuatan.tim');
 

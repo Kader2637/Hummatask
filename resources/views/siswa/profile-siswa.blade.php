@@ -63,19 +63,19 @@
         <div class="d-flex card flex-md-row align-items-center justify-content-between">
             <div class="nav nav-pills mb-3 mt-3 d-flex flex-wrap navbar-ul px-3" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link cursor-pointer active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
-                         role="tab" aria-controls="pills-home" aria-selected="true" data-tab="1"><i
-                            class="ti ti-user-circle me-1"></i>Edit Profile</a>
+                    <a class="nav-link cursor-pointer active" id="pills-home-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"
+                        data-tab="1"><i class="ti ti-user-circle me-1"></i>Edit Profile</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link cursor-pointer" id="pills-password-tab" data-bs-toggle="pill" data-bs-target="#pills-password"
-                         role="tab" aria-controls="pills-password" aria-selected="false" data-tab="2"><i
-                            class="ti ti-asterisk me-1"></i>Ganti password</a>
+                    <a class="nav-link cursor-pointer" id="pills-password-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-password" role="tab" aria-controls="pills-password" aria-selected="false"
+                        data-tab="2"><i class="ti ti-asterisk me-1"></i>Ganti password</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link cursor-pointer" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
-                         role="tab" aria-controls="pills-profile" aria-selected="false" data-tab="3"><i
-                            class="ti ti-clipboard-check me-1"></i>History Kelompok</a>
+                    <a class="nav-link cursor-pointer" id="pills-profile-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"
+                        data-tab="3"><i class="ti ti-clipboard-check me-1"></i>History Kelompok</a>
                 </li>
             </div>
         </div>
@@ -90,8 +90,7 @@
                                     <div class="col-md-6">
                                         <div class="form-floating my-3">
                                             <input name="username" type="text" class="form-control"
-                                                placeholder="{{ $user->username }}"
-                                                aria-describedby="floatingInputHelp" />
+                                                placeholder="{{ $user->username }}" aria-describedby="floatingInputHelp" />
                                             <label for="floatingInput">Nama</label>
                                             <span class="text-danger" id="username-error">
                                             </span>
@@ -469,6 +468,22 @@
 
 @section('script')
     <script>
+        function previewImage() {
+            var preview = document.getElementById('preview-image3');
+            var fileInput = document.getElementById('image-input3');
+            var file = fileInput.files[0];
+
+            if (file) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                };
+
+                reader.readAsDataURL(file);
+            }
+        }
+
         $('#update-password-form').submit(function(e) {
             e.preventDefault();
 
@@ -653,22 +668,6 @@
                 $('#modalDetailProjek').modal('show');
 
             });
-
-            function previewImage() {
-                var preview = document.getElementById('preview-image3');
-                var fileInput = document.getElementById('image-input3');
-                var file = fileInput.files[0];
-
-                if (file) {
-                    var reader = new FileReader();
-
-                    reader.onload = function(e) {
-                        preview.src = e.target.result;
-                    };
-
-                    reader.readAsDataURL(file);
-                }
-            }
 
             $('[data-tab]').click(function() {
                 var tabProfile = $(this).attr('data-tab');

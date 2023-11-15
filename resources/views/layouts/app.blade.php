@@ -161,7 +161,7 @@
 
 @yield('style')
 
-<body>
+<body class="overflow-hidden">
     <script src="https://code.jquery.com/jquery-2.2.3.min.js"
         integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
     <div id="loader">
@@ -178,12 +178,10 @@
 
             $('.progress').css("animation", "loading " + rnd + "ms linear");
 
-            console.log(rnd);
-
             setTimeout(function() {
 
                 $('#loader').fadeOut();
-                $('#page').removeClass('hidden');
+                $('body').removeClass('overflow-hidden');
 
             }, rnd);
 
@@ -719,6 +717,8 @@
                                     icon: 'warning',
                                     title: 'Peringatan',
                                     text: 'Pastikan semua input diisi!',
+                                    showConfirmButton: false,
+                                    timer: 1500,
                                 });
                             }
                             // Validasi repositoryInput sebagai URL
@@ -729,6 +729,8 @@
                                     icon: 'warning',
                                     title: 'Peringatan',
                                     text: 'URL Repository tidak valid!',
+                                    showConfirmButton: false,
+                                    timer: 1500,
                                 });
                             }
                             // Validasi logoInput sebagai gambar (image)
@@ -742,6 +744,8 @@
                                         icon: 'warning',
                                         title: 'Peringatan',
                                         text: 'File yang diunggah harus berupa gambar (jpeg, jpg, png, atau gif)!',
+                                        showConfirmButton: false,
+                                        timer: 1500,
                                     });
                                 }
                                 // Validasi panjang maksimum untuk namaInput dan repositoryInput
@@ -751,6 +755,8 @@
                                         icon: 'warning',
                                         title: 'Peringatan',
                                         text: 'Nama Tim harus kurang dari atau sama dengan 50 karakter!',
+                                        showConfirmButton: false,
+                                        timer: 1500,
                                     });
                                 } else if (repositoryInput.value.length > 100) {
                                     event.preventDefault(); // Mencegah pengiriman formulir
@@ -758,6 +764,8 @@
                                         icon: 'warning',
                                         title: 'Peringatan',
                                         text: 'URL Repository harus kurang dari atau sama dengan 100 karakter!',
+                                        showConfirmButton: false,
+                                        timer: 1500,
                                     });
                                 }
                             }
@@ -813,6 +821,8 @@
             Swal.fire({
                 icon: 'success',
                 title: 'Berhasil Membuat Tim'
+                showConfirmButton: false,
+                timer: 1500,
             })
         }
     </script>
@@ -823,13 +833,6 @@
                 icon: 'error',
                 title: 'Akses Ditolak',
                 text: '{{ session('unauthorize') }}', // Teks pesan dari sesi
-                showClass: {
-                    popup: "animate__animated animate__tada"
-                },
-                customClass: {
-                    confirmButton: "btn btn-primary"
-                },
-                buttonsStyling: !1,
             });
         </script>
     @elseif (session()->has('success'))
