@@ -36,13 +36,13 @@ class PresentasiController extends Controller
             return back()->with('error', 'Deskripsi presentasi tidak boleh melebihi 700 karakter');
         }
 
-        // if (Carbon::now()->isoFormat('HH:m:ss') < "08:00:00") {
-        //     return back()->with('error', 'Pengajuan Presentasi dimulai pukul 08:00');
-        // }
+        if (Carbon::now()->isoFormat('HH:m:ss') < "08:00:00") {
+            return back()->with('error', 'Pengajuan Presentasi dimulai pukul 08:00');
+        }
 
-        // if (Carbon::now()->isoFormat('HH:m:ss') > "15:00:00") {
-        //     return back()->with('error', 'Pengajuan Presentasi tidak boleh lebih dari pukul 15:00');
-        // }
+        if (Carbon::now()->isoFormat('HH:m:ss') > "15:00:00") {
+            return back()->with('error', 'Pengajuan Presentasi tidak boleh lebih dari pukul 15:00');
+        }
 
         try {
             //code...
@@ -50,12 +50,12 @@ class PresentasiController extends Controller
             $tim->sudah_presentasi = true;
             $tim->save();
 
-            // $validasi = $tim->presentasi->where('jadwal', Carbon::now()->isoFormat('YYYY-M-DD'))->first();
+            $validasi = $tim->presentasi->where('jadwal', Carbon::now()->isoFormat('YYYY-M-DD'))->first();
 
 
-            // if ($validasi != null) {
-            //     return back()->with('error', 'Pengajuan presentasi dalam sehari hanya boleh 1 kali');
-            // }
+            if ($validasi != null) {
+                return back()->with('error', 'Pengajuan presentasi dalam sehari hanya boleh 1 kali');
+            }
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Timmu tidak ditemukan');
         }
@@ -326,7 +326,7 @@ class PresentasiController extends Controller
     {
         $history = HistoryPresentasi::where('code', $codeHistory)->first();
         $tim = Tim::with('ketuaTim')->where('code', $codeTim)->first();
-        $presentaseRevisi = ($tim->presentasi->where('status_revisi', 'selesai')->count() / $tim->presentasi->count()) * 100;
+        $presentaseRevisi = ($tim->presentasi->where('status_revisi', 'selesai')->count() / $tim->presentasi->where("status_presentasi",'selesai')->count()) * 100;
         $waktu = [];
 
         foreach ($tim->presentasi as $data) {

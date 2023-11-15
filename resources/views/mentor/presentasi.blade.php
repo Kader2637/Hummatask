@@ -672,6 +672,7 @@
 
                         Object.keys(data1).forEach((key) => {
                         let presentasi = data1[key]
+
                         let div = document.createElement('div')
                         div.id = "card-persetujuan-" + presentasi.code;
                         div.className = "col-md-6 col-lg-4";
@@ -682,9 +683,9 @@
                             <img src="{{ asset('storage/${presentasi.tim.logo}') }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 150px; height: 150px; object-fit: cover; ">
                             <div class="d-flex justify-content-center align-items-center gap-2 flex-column">
                                 <h4 class="card-title text-capitalize">${presentasi.tim.nama}</h4>
-                                <a href="#"><span class="badge bg-label-warning mb-3">${presentasi.status_tim}</span></a>
+                                <a href="#"><span class="badge bg-label-warning mb-3">${presentasi.tim.status_tim}</span></a>
                             </div>
-                            <p class="card-text">${presentasi.jadwal}</p>
+                            <p class="card-text">${res.data.judulModal}</p>
 
                             <div class="d-flex justify-content-center gap-2">
                                 <button onclick="tolakPresentasi('${presentasi.code}')" data-bs-toggle="modal" data-bs-target="#Reject" class="px-3 py-1 btn btn-danger" >Tolak</button>
