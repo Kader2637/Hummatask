@@ -84,13 +84,13 @@
                                         Big Project
                                     @endif
                                 </span>
-                                @if ($tim->kadaluwarsa == 0)
+                                @if ($tim->kadaluwarsa == 1)
                                     <span class="ms-1 badge bg-label-danger">
-                                        Sudah expired
+                                        Expired Team
                                     </span>
-                                @elseif ($tim->kadaluwarsa == 1)
+                                @elseif ($tim->kadaluwarsa == 0)
                                     <span class="ms-1 badge bg-label-success">
-                                        Belum expired
+                                        Active Team
                                     </span>
                                 @endif
                             </p>
@@ -133,7 +133,7 @@
                             <!-- Jika tidak di halaman pertama, tampilkan link "Previous" aktif -->
                             <li class="page-item">
                                 <form action="{{ route('tim.filter') }}" method="get" style="display: inline;">
-                                   
+
                                     <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
                                     <input type="hidden" name="page" value="{{ $tims->currentPage() - 1 }}">
                                     <button type="submit" class="page-link">
@@ -152,7 +152,7 @@
                         @for ($i = $startPage; $i <= $endPage; $i++)
                             <li class="page-item {{ $tims->currentPage() == $i ? 'active' : '' }}">
                                 <form action="{{ route('tim.filter') }}" method="get" style="display: inline;">
-                                   
+
                                     <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
                                     <input type="hidden" name="page" value="{{ $i }}">
                                     <button type="submit" class="page-link">
@@ -167,7 +167,7 @@
                             <!-- Jika ada halaman berikutnya, tampilkan link "Next" aktif -->
                             <li class="page-item">
                                 <form action="{{ route('tim.filter') }}" method="get" style="display: inline;">
-                                     
+
                                     <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
                                     <input type="hidden" name="page" value="{{ $tims->currentPage() + 1 }}">
                                     <button type="submit" class="page-link">
@@ -185,7 +185,7 @@
                         <!-- Tampilkan link "Last" -->
                         <li class="page-item {{ $tims->currentPage() == $tims->lastPage() ? 'disabled' : '' }}">
                             <form action="{{ route('tim.filter') }}" method="get" style="display: inline;">
-                                
+
                                 <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
                                 <input type="hidden" name="page" value="{{ $tims->lastPage() }}">
                                 <button type="submit" class="page-link">
