@@ -8,8 +8,6 @@ use App\Models\Tim;
 use App\Models\Tugas;
 use App\Models\User;
 use Exception;
-use Illuminate\Auth\Events\Validated;
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -46,9 +44,10 @@ class TugasController extends Controller
 
         $validator = validator($request->all(),
         [
-            "nama" => "string|max:50"
+            "nama" => "required|string|max:50"
         ],
         [
+            "nama.required" => "Nama tugas wajib diisi",
             "nama.string" => "Nama tugas harus berupa strinig",
             "nama.max" => "Nama tugas memiliki maksimal 50 karakter",
         ]
@@ -101,13 +100,14 @@ class TugasController extends Controller
       $validator = validator($request->all(),
       [
         'nama' => 'max:50',
-        'deadline' => 'nullable|date',
+        'deadline' => 'nullable|date|after_or_equal:today',
         'status_tugas' => 'required|in:tugas_baru,dikerjakan,revisi,selesai',
         'prioritas' => 'required|in:mendesak,penting,biasa,tambahan,opsional',
       ],
       [
         'nama.max:50' => ' Nama tugas tidak boleh lebih dari 50 karakter',
         'deadline.date' => 'Format tanggal Deadline tidak valid.',
+        'deadline.after_or_equal' => 'Tanggal tidak boleh hari kemarin',
         'status_tugas.required' => 'Kolom Status Tugas wajib diisi.',
         'status_tugas.in' => 'Status Tugas tidak valid.',
         'prioritas.required' => 'Kolom Prioritas wajib diisi.',

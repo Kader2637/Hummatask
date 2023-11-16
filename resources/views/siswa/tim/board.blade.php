@@ -272,6 +272,7 @@
     <script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
     <script src="{{ asset('assets/js/extended-ui-perfect-scrollbar.js')}}"></script>
     <script src="{{ asset('assets/js/ui-popover.js') }}"></script>
+    <script src="{{ asset('utils/handleSuccessResponse.js') }}" ></script>
 
     <script>
         // let dataEmpty
@@ -653,18 +654,14 @@
                     get();
                     $("#formTambahTugas").trigger("reset");
                     console.log(res.data);
-                    Swal.fire({
-                        icon: 'success',
-                        title : "Sukses",
-                        text : "Sukses Membuat Tugas",
-                        timer : 800,
-                    })
+
+                    successRes("Berhasil membuat tugas baru")
 
                     $("#formEditTugas").attr("data-codetugas","");
 
                 })
                 .catch((error) => {
-
+                    alertError(error);
                 })
             });
 

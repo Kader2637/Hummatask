@@ -10,7 +10,13 @@ function alertError(error){
             }
         }
         $("#formTambahTugas").trigger("reset");
-        Swal.fire('Validasi gagal', errorMessage, 'error');
+        Swal.fire({
+            icon : 'error',
+            title : "Error!",
+            text  : errorMessage,
+            showConfirmButton : false,
+            timer : 1000,
+        });
     } else {
 
     console.log(error);
