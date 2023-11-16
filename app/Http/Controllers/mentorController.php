@@ -139,7 +139,6 @@ class mentorController extends Controller
             })->get();
             $bukanPengelolaMagang = $bukanPengelolaMagang->concat($penggunaDenganPeran);
         }
-
         foreach ($users as $user) {
             $penglolaMagang = PenglolaMagang::where('user_id', $user->id)->first();
 

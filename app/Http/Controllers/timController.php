@@ -6,8 +6,10 @@ use App\Models\Anggota;
 use App\Models\catatan;
 use App\Models\Comments;
 use App\Models\Project;
+use App\Models\Notifikasi;
 use App\Models\Tim;
 use App\Models\Tugas;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +21,8 @@ class timController extends Controller
     {
         $title = "Tim/board";
         $tim = Tim::where('code', $code)->firstOrFail();
+        $userID = Auth::user()->id;
+        $notifikasi = Notifikasi::where('user_id', $userID)->get();
 
         $project = $tim->project->first();
         if ($project->deskripsi === null) {
@@ -44,10 +48,8 @@ class timController extends Controller
             ['Tugas Baru', $tugasBaruCount]
         ];
 
-        return view('siswa.tim.board', compact('code','chartData','title', 'tim', 'anggota', 'tugas_baru', 'tugas_dikerjakan', 'tugas_revisi', 'tugas_selesai','project'));
+        return view('siswa.tim.board', compact('chartData','title', 'tim', 'anggota', 'tugas_baru', 'tugas_dikerjakan', 'tugas_revisi', 'tugas_selesai','project','notifikasi'));
     }
-
-
 
     protected function ubahStatus(Request $request)
     {
@@ -88,6 +90,8 @@ class timController extends Controller
     {
         $title = "Tim/kalender";
         $tim = Tim::where('code', $code)->firstOrFail();
+        $userID = Auth::user()->id;
+        $notifikasi = Notifikasi::where('user_id', $userID)->get();
         $project = $tim->project->first();
         if ($project->deskripsi === null) {
             return back()->with('tolak', 'Tolong lengkapi deskripsi proyek terlebih dahulu');
@@ -107,13 +111,15 @@ class timController extends Controller
             ['Tugas Baru', $tugasBaruCount]
         ];
 
-        return view('siswa.tim.kalender', compact('chartData','title', 'tim', 'anggota','hasProjectRelation','project'));
+        return view('siswa.tim.kalender', compact('chartData','title', 'tim', 'anggota','hasProjectRelation','project','notifikasi'));
     }
 
     protected function projectPage($code)
     {
         $title = "Tim/project";
         $tim = Tim::where('code', $code)->firstOrFail();
+        $userID = Auth::user()->id;
+        $notifikasi = Notifikasi::where('user_id', $userID)->get();
         $anggota = $tim->anggota()->get();
         $project = $tim->project->first();
 
@@ -146,8 +152,19 @@ class timController extends Controller
         ];
 
 
-        // dd($tanggal);
-        return view('siswa.tim.project', compact('hasProjectRelation','days','tanggal','persentase','selesaiCount','revisiCount','chartData', 'title', 'tim', 'anggota', 'project',));
+
+        // $daysRemaining = in_array(1, $days);
+        // if ($daysRemaining) {
+        //     $user = Auth::user()->id;
+        //     $notification = Notifikasi::create([
+        //         'user_id' => $user,
+        //         'judul' => 'Deadline Project',
+        //         'body' => 'Deadline project Anda tinggal 1 hari lagi!',
+        //         'status' => 'belum_dibaca',
+        //     ]);
+        // }
+        
+        return view('siswa.tim.project', compact('hasProjectRelation','days','tanggal','persentase','selesaiCount','revisiCount','chartData', 'title', 'tim', 'anggota', 'project','notifikasi',));
 
     }
 
@@ -155,6 +172,8 @@ class timController extends Controller
     {
         $title = "Tim/history";
         $tim = Tim::where('code', $code)->firstOrFail();
+        $userID = Auth::user()->id;
+        $notifikasi = Notifikasi::where('user_id', $userID)->get();
 
         $project = $tim->project->first();
         if ($project->deskripsi === null) {
@@ -175,13 +194,15 @@ class timController extends Controller
             ['Tugas Baru', $tugasBaruCount]
         ];
 
-        return view('siswa.tim.history', compact('chartData','title', 'tim', 'anggota','hasProjectRelation','project'));
+        return view('siswa.tim.history', compact('chartData','title', 'tim', 'anggota','hasProjectRelation','project','notifikasi','project'));
     }
 
     protected function historyPresentasiPage($code)
     {
         $title = "Tim/presentasi";
         $tim = Tim::where('code', $code)->firstOrFail();
+        $userID = Auth::user()->id;
+        $notifikasi = Notifikasi::where('user_id', $userID)->get();
 
         $project = $tim->project->first();
         if ($project->deskripsi === null) {
@@ -207,7 +228,7 @@ class timController extends Controller
             ['Tugas Baru', $tugasBaruCount]
         ];
 
-        return view('siswa.tim.history-presentasi', compact('chartData','title', 'tim', 'anggota', 'presentasi', 'jadwal','hasProjectRelation','project'));
+        return view('siswa.tim.history-presentasi', compact('chartData','title', 'tim', 'anggota', 'presentasi', 'jadwal','hasProjectRelation','project', 'notifikasi', 'project'));
     }
 
     protected function catatanPage($code)
@@ -215,6 +236,8 @@ class timController extends Controller
         $title = "catatan";
         $tim = Tim::where('code', $code)->firstOrFail();
         $catatans = catatan::where('tim_id', $tim->id)->get();
+        $userID = Auth::user()->id;
+        $notifikasi = Notifikasi::where('user_id', $userID)->get();
 
         $project = $tim->project->first();
         if ($project->deskripsi === null) {
@@ -236,7 +259,7 @@ class timController extends Controller
             ['Tugas Baru', $tugasBaruCount]
         ];
 
-        return view('siswa.tim.catatan', compact('chartData','title', 'anggota', 'tim','catatans', 'project'));
+        return view('siswa.tim.catatan', compact('chartData','title', 'anggota', 'tim','catatans', 'project','notifikasi'));
     }
 
     protected function historyCatatanPage($code)

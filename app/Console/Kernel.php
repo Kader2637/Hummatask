@@ -4,6 +4,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Console\Commands\HistoriPresentasiMingguan;
+use App\Console\Commands\Notifikasi;
 use App\Console\Commands\ResetUrutanPresentasi;
 use App\Console\Commands\RestSudahPresentasiTim;
 
@@ -14,6 +15,7 @@ class Kernel extends ConsoleKernel
         Commands\RestSudahPresentasiTim::class,
         Commands\HistoriPresentasiMingguan::class,
         Commands\ResetUrutanPresentasi::class,
+        Commands\Notifikasi::class,
     ];
 
     /**
@@ -24,6 +26,7 @@ class Kernel extends ConsoleKernel
         $schedule->command(HistoriPresentasiMingguan::class)->weeklyOn(5,'17.00');
         $schedule->command(ResetUrutanPresentasi::class)->dailyAt('18:00');
         $schedule->command(RestSudahPresentasiTim::class)->weeklyOn('');
+        $schedule->command(Notifikasi::class)->daily();
     }
 
 

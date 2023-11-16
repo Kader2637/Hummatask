@@ -4,11 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\editProjectRequest;
 use App\Http\Requests\PengajuanProjectRequest;
+use App\Models\Notifikasi;
 use App\Models\Project;
 use App\Models\Tema;
 use App\Models\Tim;
+use App\Models\User;
+use App\Notifications\DeadlineNotif;
 use Carbon\Carbon;
+use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class PengajuanProjekController extends Controller
@@ -48,45 +54,63 @@ class PengajuanProjekController extends Controller
     }
 
     protected function persetujuanProject(Request $request, $code)
-    {
-        dd($request);
-        $project = Project::where('code', $code)->firstOrFail();
-        $project->tema_id = $request->temaInput;
-        $project->status_project = 'approved';
+{
+    $project = Project::where('code', $code)->firstOrFail();
+    $project->tema_id = $request->temaInput;
+    $project->status_project = 'approved';
 
-        $deadline = Carbon::now();
+    $deadline = Carbon::now();
 
-        switch ($project->type_project) {
-            case 'solo':
-                $deadline->addWeek();
-                break;
-            case 'pre_mini':
-                $deadline->addWeek(2);
-                break;
-            case 'mini':
-                $deadline->addWeek(4);
-                break;
-            case 'pre_big':
-                $deadline->addWeek(8);
-                break;
-            default:
-                $deadline->addWeek(8);
-                break;
-        }
-
-        if ($request->deadlineInput) {
-            if ($request->deadlineInput < $deadline) {
-                return back()->with('warning', 'Deadline tidak valid');
-            } else {
-                $deadline = $request->deadlineInput;
-            }
-        }
-
-        $project->deadline = $deadline;
-        $project->save();
-
-        return back()->with('success', 'Berhasil menyetujui project');
+    switch ($project->type_project) {
+        case 'solo':
+            $deadline->addWeek();
+            break;
+        case 'pre_mini':
+            $deadline->addWeek(2);
+            break;
+        case 'mini':
+            $deadline->addWeek(4);
+            break;
+        case 'pre_big':
+            $deadline->addWeek(8);
+            break;
+        default:
+            $deadline->addWeek(8);
+            break;
     }
+
+    if ($request->deadlineInput) {
+        if ($request->deadlineInput < $deadline) {
+            return back()->with('warning', 'Deadline tidak valid');
+        } else {
+            $deadline = $request->deadlineInput;
+        }
+    }
+
+    $project->deadline = $deadline;
+    $project->save();
+
+    $teamLeader = $project->tim->user;
+    
+    $tema = $project->tema;
+    foreach ($teamLeader as $member) {
+        $this->sendNotification($member->id, 'Project Tim Telah Disetujui','Project dengan tema "' . $tema->nama_tema . '" telah disetujui.');
+    }
+
+    return back()->with('success', 'Berhasil menyetujui project');
+}
+
+protected function sendNotification($userId, $title, $message)
+{
+    // Perbaiki nama model menjadi Notifikasi dan pastikan model diimpor di atas
+    Notifikasi::create([
+        'user_id' => $userId,
+        'judul' => $title,
+        'body' => $message,
+        'status' => 'belum_dibaca',
+    ]);
+}
+
 
     protected function editProject(editProjectRequest $request, $code)
     {
@@ -113,4 +137,25 @@ class PengajuanProjekController extends Controller
             return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
+    public function destroy($id)
+{
+    $notification = Notifikasi::find($id);
+
+    if (!$notification) {
+        return response()->json(['error' => 'Notification not found'], 404);
+    }
+
+    $notification->delete();
+
+    return response()->json(['message' => 'Notification deleted successfully']);
+}
+
+public function ambilNotifikasi()
+    {
+        $userID = Auth::user()->id;
+        $notifikasi = Notifikasi::where('user_id', $userID)->get();
+
+        return response()->json(['notifikasi' => $notifikasi]);
+    }
+
 }
