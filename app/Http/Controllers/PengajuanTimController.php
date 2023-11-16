@@ -30,6 +30,13 @@ class PengajuanTimController extends Controller
             return redirect()->back()->with('error', 'input Foto ataupun nama tim tidak boleh kosong');
         }
 
+        $timDulu = Tim::latest()->first();
+
+        if($timDulu->kadaluwarsa === 0){
+            return redirect()->back()->with('error','Timmu yang dahulu belum selesai');
+        }
+
+
         // menyimpan logo
         $logo = $request->logo->store('logo', 'public');
 
@@ -75,7 +82,7 @@ class PengajuanTimController extends Controller
             $daftarAnggota = $request->anggota;
             $daftarAnggota[] = $request->ketuaKelompok;
             $uniqueDaftarAnggota = array_unique($daftarAnggota);
-            
+
             $existingAnggota = Anggota::whereIn('user_id', $uniqueDaftarAnggota)->first();
             if ($existingAnggota) {
                 return back()->with('warning', 'Anggota telah masuk di tim lain.');
@@ -129,14 +136,14 @@ class PengajuanTimController extends Controller
                     $anggotaModel->jabatan_id = '2';
                 } else {
                     $anggotaModel->jabatan_id = '3';
-                    
+
                     $this->sendNotification($anggota, 'Anda Ditambahkan ke Tim', 'Anda telah ditambahkan sebagai Anggota Tim ' . $namaTim);
                 }
-    
+
                 if ($anggotaModel->jabatan_id === '2' && empty($anggota)) {
-                    continue; 
+                    continue;
                 }
-    
+
                 $anggotaModel->user_id = $anggota;
                 $anggotaModel->save();
             }

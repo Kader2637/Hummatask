@@ -29,16 +29,15 @@
 @endsection
 
 @section('content')
-    <div style="height: 80vh" class="container-fluid row mt-2 ">
-        <div class="d-flex mt-3 mb-0 pb-5 overflow-y-scroll " style="width: 100%; gap:50px;">
-
+    <div style="height: 80vh" class="container-fluid row mt-2">
+        <div class="d-flex mt-3 mb-0  " style="width: 100%; gap:50px; ">
             <div style="" class="col-3">
                 <div class="card">
                     <div class="card-body p-2 py-2 row">
                         <div class="col-8 d-flex align-items-center">
                             <span style="font-size: 15px" class="">Tugas Baru</span>
                         </div>
-                        <div class="col-4 d-flex justify-content-end">
+                        <div class="col-4 d-flex justify-content-end cursor-pointer">
                             <svg onclick="showForm('tambahTugas')" xmlns="http://www.w3.org/2000/svg" width="20"
                                 height="20" viewBox="0 0 1024 1024">
                                 <path fill="currentColor" d="M352 480h320a32 32 0 1 1 0 64H352a32 32 0 0 1 0-64z" />
@@ -372,7 +371,7 @@
                                 <div class="dropdown kanban-tasks-item-dropdown">
                                 <i class="ti ti-dots-vertical" id="kanban-tasks-item-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="kanban-tasks-item-dropdown" style="">
-                                    <button onclick="editTugas('${tugas.code}')" type="button" class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#editTugasBar" >Edit</button>
+                                    <button onclick="editTugas('${tugas.code}')" type="button" class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#editTugasBar">Edit</button>
                                     <button onclick="deleteTugas('${tugas.code}')" class="dropdown-item" href="javascript:void(0)">Delete</button>
                                 </div>
                                 </div>
@@ -425,9 +424,10 @@
 
                     console.log("klik edit code " + codeTugas);
                     const data = res.data;
-                    const user = data.tim.user;
+                    const user = data.tugas.tim.user;
                     const userSelected = data.user;
-                    const comments = data.comments;
+                    const comments = data.tugas.comments;
+
 
                     const optStatusTugas = document.querySelector("#status")
 
@@ -450,40 +450,50 @@
                     });
 
 
-                    console.log(data);
+
 
                     $("#title").val(data.nama)
                     $("#due-date").val(data.deadline)
 
-                    Object.keys(user).forEach(key => {
-                        const userOption = user[key];
-                        console.log(userOption);
-                        const option = document.createElement('option')
-                        option.value = userOption.uuid;
-                        option.textContent = userOption.username
+                    if(data.tugas.tim.status_tim !== "solo"){
+                        Object.keys(user).forEach(key => {
+                            const userOption = user[key];
+                            const option = document.createElement('option')
+                            option.value = userOption.uuid;
+                            option.textContent = userOption.username
 
-                        userSelected.forEach(data => {
-                            if (data.uuid === userOption.uuid) {
-                                option.setAttribute("selected", true);
-                            }
-                        })
-                        $("#select2Primary").append(option);
-                    });
+                            userSelected.forEach(data => {
+                                if (data.uuid === userOption.uuid) {
+                                        option.setAttribute("selected", true);
+                                }
+                            });
+                            $("#select2Primary").append(option);
+                        });
+                    }
 
                     $(".list-komentar").empty();
 
-                    comments.forEach(komentar => {
+                    console.log(comments);
+                    Object.keys(comments).forEach((keys,i) =>
+                    {
+                        const jadwal = res.data.komentarTerbuat[i];
+                        const komentar = comments[keys];
+                        console.log(jadwal);
                         let div = document.createElement("div");
+
+
+                        const user = komentar.user;
                         div.className =
                         "media mb-4 d-flex align-items-start card flex-row px-3 py-2 mb-3 w-100";
                         div.style.overflowWrap = "anywhere";
                         div.setAttribute('id', 'komentar-' + komentar.id);
 
+                        let avatar = user.avatar ? 'storage/' + user.avatar : 'assets/img/avatars/1.png';
 
                         let editButtonKomentar =
                             `
-  <div class="dropdown kanban-tasks-item-dropdown">
-            <i class="ti ti-dots-vertical" id="kanban-tasks-item" data-bs-toggle="dropdown" aria-haspopup="true"
+  <div class="dropdown kanban-tasks-item-dropdown dropdown-edit">
+            <i class="ti ti-dots-vertical cursor-pointer" id="kanban-tasks-item" data-bs-toggle="dropdown" aria-haspopup="true"
               aria-expanded="false"></i>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="kanban-tasks-item" style="">
               <button onclick="editKomentar('${komentar.id}','${komentar.text}')" type="button" class="dropdown-item">Edit</button>
@@ -497,13 +507,13 @@
 
                         let elementComments = `
     <div class="avatar me-2 flex-shrink-0 mt-1">
-      <img src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/2.png"
+      <img src="{{ asset('${avatar}') }}"
         alt="Avatar" class="rounded-circle">
     </div>
     <div class="d-flex flex-column w-100">
       <div class="media-body">
         <div class="d-flex justify-content-between align-items-center">
-          <span class="fw-medium">${komentar.user.username} <small class="text-muted">Today 10:00 AM</small></span>
+          <span class="fw-medium">${komentar.user.username} <small class="text-muted">${jadwal}</small></span>
           ${
 
             ( komentar.user.id == "{{ Auth::user()->id }}" )
@@ -549,21 +559,19 @@
                     prioritas
                 })
                 .then((res) => {
-
+                    console.log(res.data);
                     $('#tugas_baru').empty()
                     $('#dikerjakan').empty()
                     $('#revisi').empty()
                     $('#selesai').empty()
-
                     get();
-
+                    successRes("Berhasil mengedit tugas")
                     $("#title").trigger('reset')
                     $("#due-date").trigger('reset')
                     $("#status").trigger('reset')
                     $("#newPrioritas").trigger('reset')
                     $(this).removeData('codetugas');
                     console.log(codeTugas);
-
 
                 })
                 .catch((error) => {
@@ -577,28 +585,67 @@
 
 
         function deleteKomentar(komentar_id) {
-            axios.delete("hapus-komentar/" + komentar_id)
+
+
+            const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: "btn btn-success",
+    cancelButton: "btn btn-danger"
+  },
+  buttonsStyling: false
+});
+            swalWithBootstrapButtons.fire({
+  title: "Apakah kamu yakin?",
+  text: "Datamu tidak bisa dipulihkan setelah ini",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonText: "Hapus",
+  cancelButtonText: "Batal",
+  reverseButtons: true
+}).then((result) => {
+  if (result.isConfirmed) {
+
+
+    axios.delete("hapus-komentar/" + komentar_id)
                 .then((res) => {
                     $("#komentar-" + komentar_id).addClass("d-none");
                     console.log(res.data);
+
                 })
                 .catch((err) => {
                     console.log(err);
                 })
+
+                successRes("Berhasil Menghapus komentar");
+  } else if (
+
+    result.dismiss === Swal.DismissReason.cancel
+  ) {
+    swalWithBootstrapButtons.fire({
+      title: "Terbatalkan",
+      text: "Datamu sekarang aman:)",
+      icon: "error"
+    });
+  }
+});
         }
 
         function editKomentar(komentar_id, text) {
-            $("#tambahKomentar").removeData("data-komentar-id")
-            $("#tambahKomentar").attr("data-komentar-id", komentar_id)
+            $("#tambahKomentar").removeData("data-komentar-id");
+            $("#tambahKomentar").attr("data-komentar-id", komentar_id);
             $(".inp-tambah-komentar").val(text);
             $("#komentar-" + komentar_id).addClass("border border-primary");
-            $(".btn-edit-komentar").removeClass("d-none")
+            $(".btn-edit-komentar").removeClass("d-none");
+            $(".dropdown-edit").empty();
         }
 
         function cancelEdit() {
             let komentar_id = $("#tambahKomentar").data("komentar-id");
-            console.log(komentar_id);
+            let tugas_code = $("#tambahKomentar").data("codetugas");
+            console.log("tugas code tercancel"+tugas_code);
             console.log("Ini cancel");
+            editTugas(tugas_code);
+            get()
 
             $(".btn-edit-komentar").addClass("d-none");
             $("#komentar-" + komentar_id).removeClass("border border-primary");
@@ -646,6 +693,7 @@
                     $(this).removeData("komentar-id");
                     $(this).removeAttr("data-komentar-id");
                     $(this).removeData('codetugas');
+                    successRes("Berhasil membuat komentar")
                     get();
                 })
                 .catch((error) => {
@@ -693,8 +741,6 @@
         });
 
         function deleteTugas(codetugas) {
-
-
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
                     confirmButton: "btn btn-success",
@@ -712,7 +758,6 @@
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
-
                     axios.delete("delete/tugas/" + codetugas)
                         .then((res) => {
                             const data = res.data;

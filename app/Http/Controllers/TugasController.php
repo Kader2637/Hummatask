@@ -7,6 +7,7 @@ use App\Models\Penugasan;
 use App\Models\Tim;
 use App\Models\Tugas;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -86,7 +87,25 @@ class TugasController extends Controller
     {
         try {
             //code...
-            $tugas = Tugas::with('comments.user', 'user', 'tim.user')->where('code', $codeTugas)->first();
+            $tugass = Tugas::with('comments.user', 'user', 'tim.user')->where('code', $codeTugas)->first();
+
+            $jadwal =[];
+foreach ($tugass->comments as $data) {
+    if(Carbon::parse($data->created_at)->isoFormat("Y-M-DD") === Carbon::now()->isoFormat("Y-M-DD")){
+        $jadwal[] = "Today ".Carbon::parse($data->created_at)->format("h:i A");
+    }else{
+        $tanggal1 = Carbon::parse($data->created_at);
+        $tanggal2 = Carbon::now();
+        $jadwal[] = $tanggal2->diffInDays($tanggal1);
+    }
+
+}
+
+$tugas = [
+    "tugas" => $tugass,
+    "komentarTerbuat" => $jadwal
+];
+
 
 
             return response()->json(
@@ -135,36 +154,40 @@ class TugasController extends Controller
         $tugas->deadline = $request->deadline;
         $tugas->status_tugas = $request->status_tugas;
 
-        $penugasan = $request->penugasan;
-        $currentPenugasan = $tugas->user->pluck('uuid')->toArray();
+        if($tugas->tim->status_tim !== "solo"){
+            $penugasan = $request->penugasan;
+            $currentPenugasan = $tugas->user->pluck('uuid')->toArray();
 
-        $userToAdd = array_diff($penugasan, $currentPenugasan);
-        $userToRemove = array_diff($currentPenugasan, $penugasan);
+            $userToAdd = array_diff($penugasan, $currentPenugasan);
+            $userToRemove = array_diff($currentPenugasan, $penugasan);
 
 
 
-        foreach ($userToAdd as $i => $data) {
+            foreach ($userToAdd as $i => $data) {
 
-            if (!($tugas->tim->user->contains("uuid", $data))) {
-                return response()->json(["error" => "User yang ditambahkan bukan dari anggota tim"], 422);
+                if (!($tugas->tim->user->contains("uuid", $data))) {
+                    return response()->json(["error" => "User yang ditambahkan bukan dari anggota tim"], 422);
+                }
+
+                $user = User::where('uuid', $data)->first();
+                if ($user) {
+                    $penugasan = new Penugasan;
+                    $penugasan->tugas_id = $tugas->id;
+                    $penugasan->user_id = $user->id;
+                    $penugasan->save();
+                }
             }
 
-            $user = User::where('uuid', $data)->first();
-            if ($user) {
-                $penugasan = new Penugasan;
-                $penugasan->tugas_id = $tugas->id;
-                $penugasan->user_id = $user->id;
-                $penugasan->save();
+
+            foreach ($userToRemove as $data) {
+                $user = User::where('uuid', $data)->first();
+                if ($user) {
+                    $penugasanTb = Penugasan::where('tugas_id', $tugas->id)->where('user_id', $user->id)->delete();
+                }
             }
+
         }
 
-
-        foreach ($userToRemove as $data) {
-            $user = User::where('uuid', $data)->first();
-            if ($user) {
-                $penugasanTb = Penugasan::where('tugas_id', $tugas->id)->where('user_id', $user->id)->delete();
-            }
-        }
 
 
         $tugas->save();
