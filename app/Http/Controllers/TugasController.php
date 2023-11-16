@@ -33,6 +33,8 @@ class TugasController extends Controller
             "tugas_selesai" => $tugas->where('status_tugas','selesai'),
         ];
 
+        
+
 
         return response()->json([
             "tugas" => $tugas,

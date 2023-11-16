@@ -48,7 +48,7 @@ class timController extends Controller
             ['Tugas Baru', $tugasBaruCount]
         ];
 
-        return view('siswa.tim.board', compact('chartData','title', 'tim', 'anggota', 'tugas_baru', 'tugas_dikerjakan', 'tugas_revisi', 'tugas_selesai','project','notifikasi'));
+        return view('siswa.tim.board', compact('chartData','title', 'tim', 'anggota', 'tugas_baru', 'tugas_dikerjakan', 'tugas_revisi', 'tugas_selesai','project','notifikasi','code'));
     }
 
     protected function ubahStatus(Request $request)
@@ -163,7 +163,7 @@ class timController extends Controller
         //         'status' => 'belum_dibaca',
         //     ]);
         // }
-        
+
         return view('siswa.tim.project', compact('hasProjectRelation','days','tanggal','persentase','selesaiCount','revisiCount','chartData', 'title', 'tim', 'anggota', 'project','notifikasi',));
 
     }
