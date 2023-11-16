@@ -683,9 +683,7 @@
                     get();
                     $("#formTambahTugas").trigger("reset");
                     console.log(res.data);
-
                     successRes("Berhasil membuat tugas baru")
-
                     $("#formEditTugas").attr("data-codetugas", "");
 
                 })
