@@ -159,7 +159,6 @@ class TugasController extends Controller
         }
 
 
-        
         foreach ($userToRemove as $data) {
             $user = User::where('uuid', $data)->first();
             if ($user) {

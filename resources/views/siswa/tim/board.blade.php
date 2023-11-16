@@ -671,7 +671,7 @@
             const nama = $('#tugas').val();
             const tim_id = "{{ $tim->code }}";
 
-            axios.post("{{ route('tim.tambah-tugas') }}", {
+            axios.post("tambah-tugas/"+tim_id, {
                     nama,
                     tim_id
                 })

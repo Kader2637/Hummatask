@@ -15,21 +15,27 @@ class CekAnggotaTim
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle($request, Closure $next)
-    {
-        $code = $request->route('code');
 
-        if (Auth::check()) {
-            $user = Auth::user();
-            
-            $anggota = $user->tim->contains('code', $code);
 
-            if ($anggota) {
-                return $next($request);
-            }
+     public function handle($request, Closure $next)
+{
+    $code = $request->route('code');
+
+    if (Auth::check()) {
+        $user = Auth::user();
+
+        $tim = $user->tim->where('code', $code)->first();
+
+        if ($tim) {
+            // Pengguna adalah anggota tim, lanjutkan dengan permintaan
+            return $next($request);
         }
-
-        return back()->with('error', 'Anda tidak memiliki akses ke tim ini.');
     }
+
+    // Pengguna tidak memiliki akses ke tim ini, kembalikan respons dengan pesan error
+    return redirect()->back()->with('error', 'Anda tidak memiliki akses ke tim ini.');
+}
+
+
 
 }

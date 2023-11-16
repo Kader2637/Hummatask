@@ -61,7 +61,7 @@ Route::prefix('tim')->controller(timController::class)->group(function () {
         Route::patch('catatan/update/{code}', [catatanController::class, 'update'])->name('catatan.update');
         Route::patch('catatan/delete/{code}', [catatanController::class, 'delete'])->name('catatan.delete');
     });
-    Route::middleware(['auth', 'siswa', 'cekanggota'])->group(function () {
+    Route::middleware(['auth', 'siswa','cekanggota'])->group(function () {
         Route::get('board/{code}', 'boardPage')->name('tim.board');
         Route::get('kalender/{code}', 'kalenderPage')->name('tim.kalender');
         Route::get('catatan/{code}', 'catatanPage')->name('tim.catatan');
@@ -73,12 +73,11 @@ Route::prefix('tim')->controller(timController::class)->group(function () {
         Route::delete('/delete-tugas', 'hapusTugas')->name('delete.tugas');
         Route::post('/add-comment', 'comments')->name('tim.addComment');
         Route::get('/view-comment', 'viewComments');
-        
+    });
 
-
-        // proses di halaman tim
+    Route::middleware(['auth','siswa'])->group(function(){
         Route::get('tampil-tugas/{code}', [TugasController::class, 'getData'])->name('tim.tampilTugas');
-        Route::post('tambah-tugas', [TugasController::class, 'buatTugas'])->name('tim.tambah-tugas');
+        Route::post('board/tambah-tugas/{code}', [TugasController::class, 'buatTugas']);
         Route::post('ajukan-presentasi/{code}', [PresentasiController::class, 'ajukanPresentasi'])->name('ajukan-presentasi');
         Route::patch('edit-project/{code}', [PengajuanProjekController::class, 'editProject'])->name('tim.editProject');
         Route::get('board/ambil-data-tugas/{code}',[TugasController::class, 'getData'])->name('tim.proses.ambilTugas');
@@ -88,6 +87,7 @@ Route::prefix('tim')->controller(timController::class)->group(function () {
         Route::post("board/tambah-komentar",[TugasController::class,'tambahKomentar']);
         Route::delete('board/hapus-komentar/{tugas_id}',[TugasController::class,'hapusKomentar']);
     });
+
 });
 
 // Halaman Ketua Magang
