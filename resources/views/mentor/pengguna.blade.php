@@ -345,7 +345,8 @@
                                                     data-avatar="{{ $item->avatar }}" data-tlp="{{ $item->tlp }}"
                                                     data-peran="{{ $item->peran->peran }}"
                                                     data-sekolah="{{ $item->sekolah }}"
-                                                    data-email="{{ $item->email }}"><i
+                                                    data-email="{{ $item->email }}"
+                                                    data-masa-magang="{{$item->created_at->translatedFormat('l, j F Y')}}"><i
                                                         class="ti ti-eye me-1"></i></span>
                                                 <span class="cursor-pointer" id="delete-button-{{ $item->uuid }}"
                                                     href="javascript:void(0);"><i class="ti ti-trash me-1"></i></span>
@@ -869,6 +870,7 @@
                                                 width="100" id="avatar" />
                                             <div class="user-info text-center">
                                                 <h4 class="mb-2" id="username-siswa"></h4>
+                                                <p id="masaMagang">21-01-2023 sampai 20-12-2024</p>
                                             </div>
                                         </div>
                                     </div>
@@ -981,9 +983,10 @@
             let avatar = $(this).data('avatar');
             let username = $(this).data('username');
             let email = $(this).data('email');
-            let tlp = $(this).data('tlp') != '' ? $(this).data('tlp') : '-';
+            let tlp = $(this).data('tlp') != '' ? $(this).data('tlp') : 'User ini belum mengisi nomor telpon';
             let peran = $(this).data('peran');
-            let sekolah = $(this).data('sekolah');
+            let sekolah = $(this).data('sekolah') != '' ? $(this).data('sekolah') : 'User ini belum mengisi asal sekolah';
+            let bergabung = $(this).data('masa-magang');
 
             $('#avatar').attr('src', (avatar == '' ? 'http://127.0.0.1:8000/assets/img/avatars/1.png' :
                 `/storage/${avatar}`));
@@ -992,6 +995,7 @@
             $('#tlp-siswa').text(tlp);
             $('#peran-siswa').text(peran);
             $('#sekolah-siswa').text(sekolah);
+            $('#masaMagang').text('Bergabung pada : ' + bergabung);
 
             $('#detail').modal('show');
         });
