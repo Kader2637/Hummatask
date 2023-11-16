@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Anggota;
+use App\Models\Notifikasi;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +15,9 @@ class siswaController extends Controller
     {
         $title = "Dashboard";
         $tims = User::find(Auth::user()->id)->tim()->get();
-        return response()->view('siswa.dashboard', compact('title','tims'));
+        $userID = Auth::user()->id;
+        $notifikasi = Notifikasi::where('user_id', $userID)->get();
+        return response()->view('siswa.dashboard', compact('title','tims','notifikasi'));
     }
 
     // Return view profile siswa

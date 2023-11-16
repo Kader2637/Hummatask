@@ -75,7 +75,7 @@ class PengajuanTimController extends Controller
             $daftarAnggota = $request->anggota;
             $daftarAnggota[] = $request->ketuaKelompok;
             $uniqueDaftarAnggota = array_unique($daftarAnggota);
-
+            
             $existingAnggota = Anggota::whereIn('user_id', $uniqueDaftarAnggota)->first();
             if ($existingAnggota) {
                 return back()->with('warning', 'Anggota telah masuk di tim lain.');
@@ -123,17 +123,20 @@ class PengajuanTimController extends Controller
                 $anggotaModel->tim_id = $tim->id;
                 if ($anggota === $request->ketuaKelompok) {
                     $anggotaModel->jabatan_id = '1';
+
+                    $this->sendNotification($anggota, 'Anda Ditambahkan ke Tim', 'Anda telah ditambahkan sebagai Ketua Tim ' . $namaTim);
                 } else if ($anggota === $request->ketuaProjek) {
                     $anggotaModel->jabatan_id = '2';
                 } else {
                     $anggotaModel->jabatan_id = '3';
+                    
+                    $this->sendNotification($anggota, 'Anda Ditambahkan ke Tim', 'Anda telah ditambahkan sebagai Anggota Tim ' . $namaTim);
                 }
-
-                // Tambahkan kondisi untuk jabatan_id 2
+    
                 if ($anggotaModel->jabatan_id === '2' && empty($anggota)) {
-                    continue; // Lewatkan iterasi jika jabatan_id 2 tidak diisi
+                    continue; 
                 }
-
+    
                 $anggotaModel->user_id = $anggota;
                 $anggotaModel->save();
             }
@@ -144,6 +147,15 @@ class PengajuanTimController extends Controller
             return back()->with('error', 'Gagal membentuk tim');
         }
     }
+    protected function sendNotification($userId, $title, $message)
+{
+    Notifikasi::create([
+        'user_id' => $userId,
+        'judul' => $title,
+        'body' => $message,
+        'status' => 'belum_dibaca',
+    ]);
+}
     // membuat notif
     // $notifAnggota = $tim->user;
     // foreach ($notifAnggota as $user) {

@@ -4,6 +4,7 @@ use App\Http\Controllers\authController;
 use App\Http\Controllers\catatanController;
 use App\Http\Controllers\KetuaMagangController;
 use App\Http\Controllers\mentorController;
+use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\PengajuanProjekController;
 use App\Http\Controllers\PengajuanTimController;
 use App\Http\Controllers\PresentasiController;
@@ -45,6 +46,8 @@ Route::prefix('siswa')->middleware(['auth', 'siswa'])->group(function () {
     Route::put('/password.update', [ProfileController::class, 'updatePassword'])->name('password.updatee');
 });
 
+Route::delete('tim/notifikasi/{id}', [PengajuanProjekController::class, 'destroy']);
+Route::get('/ambil-notifikasi', [PengajuanProjekController::class, 'ambilNotifikasi']);
 Route::prefix('tim')->controller(timController::class)->group(function () {
     // Halaman Tim
     Route::middleware(['auth', 'siswa', 'cekanggota'])->group(function () {
@@ -53,7 +56,12 @@ Route::prefix('tim')->controller(timController::class)->group(function () {
         Route::patch('edit-project/{code}', [PengajuanProjekController::class, 'editProject'])->name('tim.editProject');
         Route::post('project/ajukan-project/{code}', [PengajuanProjekController::class, 'ajukanProject'])->name('tim.ajukanProject');
     });
-    Route::middleware(['auth', 'siswa'])->group(function () {
+    Route::middleware(['auth', 'siswa', 'cekanggota'])->group(function () {
+        Route::post('catatan', [catatanController::class, 'store'])->name('catatan.store');
+        Route::patch('catatan/update/{code}', [catatanController::class, 'update'])->name('catatan.update');
+        Route::patch('catatan/delete/{code}', [catatanController::class, 'delete'])->name('catatan.delete');
+    });
+    Route::middleware(['auth', 'siswa', 'cekanggota'])->group(function () {
         Route::get('board/{code}', 'boardPage')->name('tim.board');
         Route::get('kalender/{code}', 'kalenderPage')->name('tim.kalender');
         Route::get('catatan/{code}', 'catatanPage')->name('tim.catatan');
@@ -65,9 +73,7 @@ Route::prefix('tim')->controller(timController::class)->group(function () {
         Route::delete('/delete-tugas', 'hapusTugas')->name('delete.tugas');
         Route::post('/add-comment', 'comments')->name('tim.addComment');
         Route::get('/view-comment', 'viewComments');
-        Route::post('catatan', [catatanController::class, 'store'])->name('catatan.store');
-        Route::patch('catatan/update/{code}', [catatanController::class, 'update'])->name('catatan.update');
-        Route::delete('catatan/delete/{code}', [catatanController::class, 'delete'])->name('catatan.delete');
+        
 
 
         // proses di halaman tim
