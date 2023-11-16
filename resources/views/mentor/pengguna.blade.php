@@ -344,9 +344,8 @@
                                                     data-username="{{ $item->username }}"
                                                     data-avatar="{{ $item->avatar }}" data-tlp="{{ $item->tlp }}"
                                                     data-peran="{{ $item->peran->peran }}"
-                                                    data-sekolah="{{ $item->sekolah }}"
-                                                    data-email="{{ $item->email }}"
-                                                    data-masa-magang="{{$item->created_at->translatedFormat('l, j F Y')}}"><i
+                                                    data-sekolah="{{ $item->sekolah }}" data-email="{{ $item->email }}"
+                                                    data-masa-magang="{{ $item->created_at->translatedFormat('l, j F Y') }}"><i
                                                         class="ti ti-eye me-1"></i></span>
                                                 <span class="cursor-pointer" id="delete-button-{{ $item->uuid }}"
                                                     href="javascript:void(0);"><i class="ti ti-trash me-1"></i></span>
@@ -452,7 +451,8 @@
                                             <div class="d-flex flex-wrap flex-row cursor-pointer">
                                                 <span class="edit-button" href="javascript:void(0);"
                                                     data-bs-toggle="modal" data-bs-target="#edit-data-mentor"
-                                                    data-url="{{ $item->uuid }}">
+                                                    data-url="{{ $item->uuid }}" data-username="{{ $item->username }}"
+                                                    data-email="{{ $item->email }}">
                                                     <i class="ti ti-pencil me-1"></i>
                                                 </span>
                                                 <span class="cursor-pointer"
@@ -675,7 +675,7 @@
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="modalCenterTitle">Tambah Mentor</h5>
+                                <h5 class="modal-title" id="modalCenterTitle">Edit Mentor</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -683,14 +683,14 @@
                                 <div class="row">
                                     <div class="col mb-3">
                                         <label for="username" class="form-label">Nama</label>
-                                        <input name="username" type="text" id="username" class="form-control"
+                                        <input name="username" type="text" id="username-mentor" class="form-control"
                                             placeholder="Masukkan nama pengguna" value="" required>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col mb-3">
                                         <label for="email" class="form-label">Email</label>
-                                        <input name="email" type="text" id="email" class="form-control"
+                                        <input name="email" type="text" id="email-mentor" class="form-control"
                                             placeholder="Masukkan email" value="" required>
                                     </div>
                                 </div>
@@ -985,7 +985,8 @@
             let email = $(this).data('email');
             let tlp = $(this).data('tlp') != '' ? $(this).data('tlp') : 'User ini belum mengisi nomor telpon';
             let peran = $(this).data('peran');
-            let sekolah = $(this).data('sekolah') != '' ? $(this).data('sekolah') : 'User ini belum mengisi asal sekolah';
+            let sekolah = $(this).data('sekolah') != '' ? $(this).data('sekolah') :
+                'User ini belum mengisi asal sekolah';
             let bergabung = $(this).data('masa-magang');
 
             $('#avatar').attr('src', (avatar == '' ? 'http://127.0.0.1:8000/assets/img/avatars/1.png' :
@@ -1135,6 +1136,11 @@
                 var dataUrl = $(this).data('url');
                 var formAction = "{{ route('edit.mentor', ['uuid' => ':Id']) }}";
                 var form = $('#edit-form');
+                var nama = $(this).data('username');
+                var email = $(this).data('email');
+
+                $('#username-mentor').val(nama);
+                $('#email-mentor').val(email);
 
                 formAction = formAction.replace(':Id', dataUrl);
                 $('#edit-form').attr('action', formAction);
