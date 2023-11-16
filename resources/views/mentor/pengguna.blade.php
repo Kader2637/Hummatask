@@ -536,6 +536,7 @@
                     </div>
                 </form>
             </div>
+
             <div class="modal fade" id="add-pengelola" tabindex="-1" aria-hidden="true">
                 <form action="{{ route('tambah.pengelola') }}" method="POST">
                     @csrf
@@ -579,6 +580,7 @@
                     </div>
                 </form>
             </div>
+
             <div class="modal fade" id="add-data" tabindex="-1" aria-hidden="true">
                 <form action="{{ route('tambah.users') }}" method="POST">
                     @csrf
@@ -628,6 +630,7 @@
                     </div>
                 </form>
             </div>
+
             <div class="modal fade" id="add-data-mentor" tabindex="-1" aria-hidden="true">
                 <form action="{{ route('tambah.mentor') }}" method="POST">
                     @csrf
@@ -663,6 +666,7 @@
                     </div>
                 </form>
             </div>
+
             <div class="modal fade" id="edit-data-mentor" tabindex="-1" aria-hidden="true">
                 <form action="" id="edit-form" method="POST">
                     @csrf
@@ -699,6 +703,7 @@
                     </div>
                 </form>
             </div>
+
             <div class="modal fade" id="edit-data-permisions" tabindex="-1" aria-hidden="true">
                 <form action="{{ route('tambah.users') }}" method="POST">
                     @csrf
@@ -777,7 +782,6 @@
                     </div>
                 </div>
             </div>
-
 
             {{-- modal team --}}
             <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
@@ -878,7 +882,7 @@
                                                 <span id="email-siswa"></span>
                                             </li>
                                             <li class="mb-4 pt-1">
-                                                <span class="fw-medium me-1">Contact:</span>
+                                                <span class="fw-medium me-1">Kontak:</span>
                                                 <span id="tlp-siswa"></span>
                                             </li>
                                             <li class="mb-4 pt-1">
@@ -982,7 +986,7 @@
             let sekolah = $(this).data('sekolah');
 
             $('#avatar').attr('src', (avatar == '' ? 'http://127.0.0.1:8000/assets/img/avatars/1.png' :
-                `http://127.0.0.1:8000/storage/${avatar}`));
+                `/storage/${avatar}`));
             $('#username-siswa').text(username);
             $('#email-siswa').text(email);
             $('#tlp-siswa').text(tlp);

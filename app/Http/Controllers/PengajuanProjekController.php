@@ -54,10 +54,10 @@ class PengajuanProjekController extends Controller
     }
 
     protected function persetujuanProject(Request $request, $code)
-{
-    $project = Project::where('code', $code)->firstOrFail();
-    $project->tema_id = $request->temaInput;
-    $project->status_project = 'approved';
+    {
+        $project = Project::where('code', $code)->firstOrFail();
+        $project->tema_id = $request->temaInput;
+        $project->status_project = 'approved';
 
     $deadline = Carbon::now();
 
@@ -91,7 +91,7 @@ class PengajuanProjekController extends Controller
     $project->save();
 
     $teamLeader = $project->tim->user;
-    
+
     $tema = $project->tema;
     foreach ($teamLeader as $member) {
         $this->sendNotification($member->id, 'Project Tim Telah Disetujui','Project dengan tema "' . $tema->nama_tema . '" telah disetujui.');
