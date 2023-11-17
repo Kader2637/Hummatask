@@ -25,7 +25,7 @@
     <link rel="canonical" href="https://1.envato.market/vuexy_admin">
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon"
-        href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/favicon/favicon.ico" />
+        href="{{ url('assets/img/icons/icon.svg') }}" />
 
     <!-- Include Styles -->
     <!-- $isFront is used to append the front layout styles only on the front layout otherwise the variable will be blank -->
@@ -681,6 +681,8 @@
                 icon: 'error',
                 title: 'Akses Ditolak',
                 text: '{{ session('unauthorize') }}', // Teks pesan dari sesi
+                shwoConfirmButton: false,
+                timer: 3000,
             });
         </script>
     @elseif (session()->has('success'))
@@ -689,6 +691,8 @@
                 icon: 'success',
                 title: 'Berhasil!',
                 text: '{{ session('success') }}', // Teks pesan dari sesi
+                shwoConfirmButton: false,
+                timer: 3000,
             });
         </script>
     @elseif (session()->has('warning'))
@@ -697,6 +701,8 @@
                 icon: 'warning',
                 title: 'Peringatan!',
                 text: '{{ session('warning') }}', // Teks pesan dari sesi
+                shwoConfirmButton: false,
+                timer: 3000,
             });
         </script>
     @endif

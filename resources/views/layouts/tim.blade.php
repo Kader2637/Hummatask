@@ -19,7 +19,7 @@
     <meta name="csrf-token" content="y0lzh53YmoH0xFgY2vFjhD4S1TOiq6lE58zbW7ec">
     <link rel="canonical" href="https://1.envato.market/vuexy_admin">
     <link rel="icon" type="image/x-icon"
-        href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/favicon/favicon.ico" />
+        href="{{ url('assets/img/icons/icon.svg') }}" />
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link
@@ -458,48 +458,48 @@
         }
     </script>
 
-<script>
-    $(document).ready(function() {
-        function ambilNotifikasi() {
-            $.ajax({
-                url: '/ambil-notifikasi',
-                method: 'GET',
-                success: function(response) {
-                    tampilkanNotifikasi(response.notifikasi);
-                },
-                error: function(error) {
-                    console.log('Error mengambil notifikasi:', error);
-                }
-            });
-        }
-
-        function tampilkanNotifikasi(notifikasi) {
-            var daftarNotifikasi = $('#notification-list');
-            var countBadge = $('#notification-count');
-
-            daftarNotifikasi.empty();
-
-            countBadge.text(notifikasi.length);
-
-            notifikasi.forEach(function(item) {
-                var waktuNotifikasi = new Date(item.created_at);
-                var waktuSekarang = new Date();
-                var perbedaanWaktu = Math.floor((waktuSekarang - waktuNotifikasi) /
-                1000);
-
-                function formatWaktu(detik) {
-                    if (detik < 60) {
-                        return detik + ' detik yang lalu';
-                    } else if (detik < 3600) {
-                        return Math.floor(detik / 60) + ' menit yang lalu';
-                    } else if (detik < 86400) {
-                        return Math.floor(detik / 3600) + ' jam yang lalu';
-                    } else {
-                        return Math.floor(detik / 86400) + ' hari yang lalu';
+    <script>
+        $(document).ready(function() {
+            function ambilNotifikasi() {
+                $.ajax({
+                    url: '/ambil-notifikasi',
+                    method: 'GET',
+                    success: function(response) {
+                        tampilkanNotifikasi(response.notifikasi);
+                    },
+                    error: function(error) {
+                        console.log('Error mengambil notifikasi:', error);
                     }
-                }
+                });
+            }
 
-                var notifikasiBaru = `
+            function tampilkanNotifikasi(notifikasi) {
+                var daftarNotifikasi = $('#notification-list');
+                var countBadge = $('#notification-count');
+
+                daftarNotifikasi.empty();
+
+                countBadge.text(notifikasi.length);
+
+                notifikasi.forEach(function(item) {
+                    var waktuNotifikasi = new Date(item.created_at);
+                    var waktuSekarang = new Date();
+                    var perbedaanWaktu = Math.floor((waktuSekarang - waktuNotifikasi) /
+                        1000);
+
+                    function formatWaktu(detik) {
+                        if (detik < 60) {
+                            return detik + ' detik yang lalu';
+                        } else if (detik < 3600) {
+                            return Math.floor(detik / 60) + ' menit yang lalu';
+                        } else if (detik < 86400) {
+                            return Math.floor(detik / 3600) + ' jam yang lalu';
+                        } else {
+                            return Math.floor(detik / 86400) + ' hari yang lalu';
+                        }
+                    }
+
+                    var notifikasiBaru = `
                     <div class="d-flex mt-2 mb-2" id="notifikasi-${item.id}">
                         <div class="flex-shrink-0 me-3">
                             <div class="">
@@ -520,17 +520,17 @@
                     </div>
                 `;
 
-                daftarNotifikasi.append(notifikasiBaru);
-            });
-        }
+                    daftarNotifikasi.append(notifikasiBaru);
+                });
+            }
 
-        ambilNotifikasi();
-
-        setInterval(function() {
             ambilNotifikasi();
-        }, 5000);
-    });
-</script>
+
+            setInterval(function() {
+                ambilNotifikasi();
+            }, 5000);
+        });
+    </script>
 
 
     <script>
@@ -604,10 +604,8 @@
                 icon: 'error',
                 title: 'Akses Ditolak',
                 text: '{{ session('unauthorize') }}', // Teks pesan dari sesi
-                customClass: {
-                    confirmButton: "btn btn-primary"
-                },
-                buttonsStyling: !1,
+                shwoConfirmButton: false,
+                timer: 3000,
             });
         </script>
     @elseif (session()->has('success'))
@@ -616,10 +614,8 @@
                 icon: 'success',
                 title: 'Berhasil',
                 text: '{{ session('success') }}', // Teks pesan dari sesi
-                customClass: {
-                    confirmButton: "btn btn-primary"
-                },
-                buttonsStyling: !1,
+                shwoConfirmButton: false,
+                timer: 3000,
             });
         </script>
     @elseif (session()->has('error'))
@@ -628,10 +624,8 @@
                 icon: 'error',
                 title: 'Error',
                 text: '{{ session('error') }}', // Teks pesan dari sesi
-                customClass: {
-                    confirmButton: "btn btn-primary"
-                },
-                buttonsStyling: !1,
+                shwoConfirmButton: false,
+                timer: 3000,
             });
         </script>
     @endif
@@ -641,10 +635,8 @@
                 icon: 'error',
                 title: 'Error',
                 text: '{{ session('tolak') }}', // Teks pesan dari sesi
-                customClass: {
-                    confirmButton: "btn btn-primary"
-                },
-                buttonsStyling: !1,
+                shwoConfirmButton: false,
+                timer: 3000,
             });
         </script>
     @endif
