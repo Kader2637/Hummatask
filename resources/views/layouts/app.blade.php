@@ -19,8 +19,7 @@
     <meta name="keywords" content="dashboard, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
     <meta name="csrf-token" content="y0lzh53YmoH0xFgY2vFjhD4S1TOiq6lE58zbW7ec">
     <link rel="canonical" href="https://1.envato.market/vuexy_admin">
-    <link rel="icon" type="image/x-icon"
-        href="{{ url('assets/img/icons/icon.svg') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ url('assets/img/icons/icon.svg') }}" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
@@ -500,103 +499,6 @@
                         </div>
                     </div>
                 </div>
-
-                {{-- validasi --}}
-                <script>
-
-
-
-       $(document).ready(function() {
-  // Ketika input file berubah
-  $('#image-input1').on('change', function(e) {
-    var file = e.target.files[0];
-    var reader = new FileReader();
-
-    reader.onload = function(e) {
-      // Mengubah src gambar preview
-      $('#preview-image1').attr('src', e.target.result);
-    }
-
-    reader.readAsDataURL(file);
-  });
-});
-
-
-                    document.addEventListener('DOMContentLoaded', function() {
-                        const editUserForm = document.getElementById('editUserForm');
-
-                        editUserForm.addEventListener('submit', function(event) {
-                            const namaInput = document.querySelector('input[name="nama"]');
-                            const repositoryInput = document.querySelector('input[name="repository"]');
-                            const logoInput = document.querySelector('input[name="logo"]');
-                            const temaInput = document.querySelector('input[name="temaInput"]');
-
-                            // Validasi input kosong
-                            if (namaInput.value.trim() === '' || repositoryInput.value.trim() === '' || temaInput.value
-                                .trim() === '' || logoInput.files
-                                .length === 0) {
-                                event.preventDefault(); // Mencegah pengiriman formulir
-                                Swal.fire({
-                                    icon: 'warning',
-                                    title: 'Peringatan',
-                                    text: 'Pastikan semua input diisi!',
-                                    showConfirmButton: false,
-                                    timer: 1500,
-                                });
-                            }
-                            // Validasi repositoryInput sebagai URL
-                            else if (!repositoryInput.value.match(
-                                    /^(http(s)?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/)) {
-                                event.preventDefault(); // Mencegah pengiriman formulir
-                                Swal.fire({
-                                    icon: 'warning',
-                                    title: 'Peringatan',
-                                    text: 'URL Repository tidak valid!',
-                                    showConfirmButton: false,
-                                    timer: 1500,
-                                });
-                            }
-                            // Validasi logoInput sebagai gambar (image)
-                            else {
-                                const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
-                                const file = logoInput.files[0];
-
-                                if (!allowedImageTypes.includes(file.type)) {
-                                    event.preventDefault(); // Mencegah pengiriman formulir
-                                    Swal.fire({
-                                        icon: 'warning',
-                                        title: 'Peringatan',
-                                        text: 'File yang diunggah harus berupa gambar (jpeg, jpg, png, atau gif)!',
-                                        showConfirmButton: false,
-                                        timer: 1500,
-                                    });
-                                }
-                                // Validasi panjang maksimum untuk namaInput dan repositoryInput
-                                else if (namaInput.value.length > 50) {
-                                    event.preventDefault(); // Mencegah pengiriman formulir
-                                    Swal.fire({
-                                        icon: 'warning',
-                                        title: 'Peringatan',
-                                        text: 'Nama Tim harus kurang dari atau sama dengan 50 karakter!',
-                                        showConfirmButton: false,
-                                        timer: 1500,
-                                    });
-                                } else if (repositoryInput.value.length > 100) {
-                                    event.preventDefault(); // Mencegah pengiriman formulir
-                                    Swal.fire({
-                                        icon: 'warning',
-                                        title: 'Peringatan',
-                                        text: 'URL Repository harus kurang dari atau sama dengan 100 karakter!',
-                                        showConfirmButton: false,
-                                        timer: 1500,
-                                    });
-                                }
-                            }
-                        });
-                    });
-                </script>
-                {{-- validasi --}}
-
                 {{-- Modal Tambah Tim --}}
 
             </div>
@@ -623,83 +525,163 @@
     <script src="{{ asset('assets/js/extended-ui-sweetalert2.js') }}"></script>
     <script src="{{ asset('assets/js/dashboards-crm.js') }}"></script>
 
+    {{-- validasi --}}
     <script>
+        $(document).ready(function() {
+            // Ketika input file berubah
+            $('#image-input1').on('change', function(e) {
+                var file = e.target.files[0];
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    // Mengubah src gambar preview
+                    $('#preview-image1').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(file);
+            });
+        });
 
 
-        const buatTim = () => {
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil Membuat Tim'
-                showConfirmButton: false,
-                timer: 1500,
-            })
+        document.addEventListener('DOMContentLoaded', function() {
+            const editUserForm = document.getElementById('editUserForm');
+
+            editUserForm.addEventListener('submit', function(event) {
+                const namaInput = document.querySelector('input[name="nama"]');
+                const repositoryInput = document.querySelector('input[name="repository"]');
+                const logoInput = document.querySelector('input[name="logo"]');
+                const temaInput = document.querySelector('input[name="temaInput"]');
+
+                // Validasi input kosong
+                if (namaInput.value.trim() === '' || repositoryInput.value.trim() === '' || temaInput.value
+                    .trim() === '' || logoInput.files
+                    .length === 0) {
+                    event.preventDefault(); // Mencegah pengiriman formulir
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Peringatan',
+                        text: 'Pastikan semua input diisi!',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                }
+                // Validasi repositoryInput sebagai URL
+                else if (!repositoryInput.value.match(
+                        /^(http(s)?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/)) {
+                    event.preventDefault(); // Mencegah pengiriman formulir
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Peringatan',
+                        text: 'URL Repository tidak valid!',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                }
+                // Validasi logoInput sebagai gambar (image)
+                else {
+                    const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                    const file = logoInput.files[0];
+
+                    if (!allowedImageTypes.includes(file.type)) {
+                        event.preventDefault(); // Mencegah pengiriman formulir
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Peringatan',
+                            text: 'File yang diunggah harus berupa gambar (jpeg, jpg, png, atau gif)!',
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
+                    }
+                    // Validasi panjang maksimum untuk namaInput dan repositoryInput
+                    else if (namaInput.value.length > 50) {
+                        event.preventDefault(); // Mencegah pengiriman formulir
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Peringatan',
+                            text: 'Nama Tim harus kurang dari atau sama dengan 50 karakter!',
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
+                    } else if (repositoryInput.value.length > 100) {
+                        event.preventDefault(); // Mencegah pengiriman formulir
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Peringatan',
+                            text: 'URL Repository harus kurang dari atau sama dengan 100 karakter!',
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+    {{-- validasi --}}
+
+    <script>
+        function deletenotifikasi(id) {
+            console.log('notifikasiId:', id);
+            axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute(
+                'content');
+            console.log('Request URL:', `http://127.0.0.1:8000/tim/notifikasi/${id}`);
+            axios.delete(`http://127.0.0.1:8000/tim/notifikasi/${id}`)
+                .then(response => {
+                    console.log('Axios Response:', response);
+                    const notifikasiElement = document.getElementById(`notifikasi-${id}`);
+                    console.log('notifikasiElement:', notifikasiElement);
+                    if (notifikasiElement) {
+                        notifikasiElement.remove();
+                    }
+                })
+                .catch(error => {
+                    console.error('Gagal Menghapus notifikasi:', error);
+                });
+
         }
     </script>
 
-<script>
-    function deletenotifikasi(id) {
-        console.log('notifikasiId:', id);
-        axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute(
-            'content');
-        console.log('Request URL:', `http://127.0.0.1:8000/tim/notifikasi/${id}`);
-        axios.delete(`http://127.0.0.1:8000/tim/notifikasi/${id}`)
-            .then(response => {
-                console.log('Axios Response:', response);
-                const notifikasiElement = document.getElementById(`notifikasi-${id}`);
-                console.log('notifikasiElement:', notifikasiElement);
-                if (notifikasiElement) {
-                    notifikasiElement.remove();
-                }
-            })
-            .catch(error => {
-                console.error('Gagal Menghapus notifikasi:', error);
-            });
-
-    }
-</script>
-
-<script>
-    $(document).ready(function() {
-        function ambilNotifikasi() {
-            $.ajax({
-                url: '/ambil-notifikasi',
-                method: 'GET',
-                success: function(response) {
-                    tampilkanNotifikasi(response.notifikasi);
-                },
-                error: function(error) {
-                    console.log('Error mengambil notifikasi:', error);
-                }
-            });
-        }
-
-        function tampilkanNotifikasi(notifikasi) {
-            var daftarNotifikasi = $('#notification-list');
-            var countBadge = $('#notification-count');
-
-            daftarNotifikasi.empty();
-
-            countBadge.text(notifikasi.length);
-
-            notifikasi.forEach(function(item) {
-                var waktuNotifikasi = new Date(item.created_at);
-                var waktuSekarang = new Date();
-                var perbedaanWaktu = Math.floor((waktuSekarang - waktuNotifikasi) /
-                1000);
-
-                function formatWaktu(detik) {
-                    if (detik < 60) {
-                        return detik + ' detik yang lalu';
-                    } else if (detik < 3600) {
-                        return Math.floor(detik / 60) + ' menit yang lalu';
-                    } else if (detik < 86400) {
-                        return Math.floor(detik / 3600) + ' jam yang lalu';
-                    } else {
-                        return Math.floor(detik / 86400) + ' hari yang lalu';
+    <script>
+        $(document).ready(function() {
+            function ambilNotifikasi() {
+                $.ajax({
+                    url: '/ambil-notifikasi',
+                    method: 'GET',
+                    success: function(response) {
+                        tampilkanNotifikasi(response.notifikasi);
+                    },
+                    error: function(error) {
+                        console.log('Error mengambil notifikasi:', error);
                     }
-                }
+                });
+            }
 
-                var notifikasiBaru = `
+            function tampilkanNotifikasi(notifikasi) {
+                var daftarNotifikasi = $('#notification-list');
+                var countBadge = $('#notification-count');
+
+                daftarNotifikasi.empty();
+
+                countBadge.text(notifikasi.length);
+
+                notifikasi.forEach(function(item) {
+                    var waktuNotifikasi = new Date(item.created_at);
+                    var waktuSekarang = new Date();
+                    var perbedaanWaktu = Math.floor((waktuSekarang - waktuNotifikasi) /
+                        1000);
+
+                    function formatWaktu(detik) {
+                        if (detik < 60) {
+                            return detik + ' detik yang lalu';
+                        } else if (detik < 3600) {
+                            return Math.floor(detik / 60) + ' menit yang lalu';
+                        } else if (detik < 86400) {
+                            return Math.floor(detik / 3600) + ' jam yang lalu';
+                        } else {
+                            return Math.floor(detik / 86400) + ' hari yang lalu';
+                        }
+                    }
+
+                    var notifikasiBaru = `
                     <div class="d-flex mt-2 mb-2" id="notifikasi-${item.id}">
                         <div class="flex-shrink-0 me-3">
                             <div class="">
@@ -720,17 +702,17 @@
                     </div>
                 `;
 
-                daftarNotifikasi.append(notifikasiBaru);
-            });
-        }
+                    daftarNotifikasi.append(notifikasiBaru);
+                });
+            }
 
-        ambilNotifikasi();
-
-        setInterval(function() {
             ambilNotifikasi();
-        }, 5000);
-    });
-</script>
+
+            setInterval(function() {
+                ambilNotifikasi();
+            }, 5000);
+        });
+    </script>
 
     @if (session()->has('unauthorize'))
         <script>
