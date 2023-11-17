@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\HistoriPengelola;
 use App\Models\HistoryPresentasi;
+use App\Models\Notifikasi;
 use App\Models\PenglolaMagang;
 use App\Models\Presentasi;
 use App\Models\Project;
@@ -26,6 +27,8 @@ class mentorController extends Controller
     {
         $jadwal = [];
         $hari = [];
+        $userID = Auth::user()->id;
+        $notifikasi = Notifikasi::where('user_id', $userID)->get();
         $presentasi = Presentasi::with('tim')->where('status_pengajuan', 'disetujui')->latest('created_at')->take(5)->get()->reverse();
         foreach ($presentasi as $i => $data) {
             $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
@@ -115,7 +118,7 @@ class mentorController extends Controller
         }
 
         $chartData = array_values($processedData);
-        return response()->view('mentor.dashboard', compact('presentasi', 'chartData', 'jadwal', 'hari'));
+        return response()->view('mentor.dashboard', compact('presentasi', 'chartData', 'jadwal', 'hari', 'notifikasi'));
     }
 
     // Return view pengguna mentor
@@ -124,6 +127,8 @@ class mentorController extends Controller
         $roles = Role::all();
         $mentors = User::where('peran_id', 2)->get();
         $users = User::with('peran')->where('peran_id', 1)->get();
+        $userID = Auth::user()->id;
+        $notifikasi = Notifikasi::where('user_id', $userID)->get();
         $pengelolaMagang = new Collection();
         $bukanPengelolaMagang = new Collection();
         $magang = PenglolaMagang::all();
@@ -154,12 +159,15 @@ class mentorController extends Controller
             }
         }
 
-        return response()->view('mentor.pengguna', compact('users', 'pengelolaMagang', 'bukanPengelolaMagang', 'mentors', 'roles', 'magang'));
+        return response()->view('mentor.pengguna', compact('users', 'pengelolaMagang', 'bukanPengelolaMagang', 'mentors', 'roles', 'magang', 'notifikasi'));
     }
 
     // Return view history mentor
     protected function history()
     {
+        $userID = Auth::user()->id;
+        $notifikasi = Notifikasi::where('user_id', $userID)->get();
+
         $telatDeadline = Project::with('tim.anggota.user', 'tema')
             ->where('deadline', '<', now())
             ->get();
@@ -176,15 +184,17 @@ class mentorController extends Controller
             ->whereHas('project')
             ->get();
 
-        return response()->view('mentor.history', compact('telatDeadline', 'presentasiSelesai', 'timSolo', 'timGroup'));
+        return response()->view('mentor.history', compact('telatDeadline', 'presentasiSelesai', 'timSolo', 'timGroup', 'notifikasi'));
     }
 
     // Return view pengajuan projek mentor
     protected function pengajuanProjekPage()
     {
         $projects = Project::with('tim.anggota.user', 'tim.tema', 'anggota.jabatan', 'anggota.user')->where('status_project', 'notapproved')->paginate(12);
+        $userID = Auth::user()->id;
+        $notifikasi = Notifikasi::where('user_id', $userID)->get();
 
-        return response()->view('mentor.pengajuan-projek', compact('projects'));
+        return response()->view('mentor.pengajuan-projek', compact('projects', 'notifikasi'));
     }
 
     // Return view detail pengajuan projek mentor
@@ -198,6 +208,8 @@ class mentorController extends Controller
     // Return view projek mentor
     protected function projekPage()
     {
+        $userID = Auth::user()->id;
+        $notifikasi = Notifikasi::where('user_id', $userID)->get();
         $projects = Project::with('tim.anggota', 'tema', 'tim.tugas')
             ->where('status_project', 'approved')
             ->paginate(5);
@@ -208,7 +220,7 @@ class mentorController extends Controller
             })
             ->get();
 
-        return response()->view('mentor.projek', compact('users', 'projects'));
+        return response()->view('mentor.projek', compact('users', 'projects', 'notifikasi'));
     }
 
     protected function Project()
@@ -225,9 +237,11 @@ class mentorController extends Controller
     protected function tim()
     {
         $tims = tim::with('user')->paginate(12);
+        $userID = Auth::user()->id;
+        $notifikasi = Notifikasi::where('user_id', $userID)->get();
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
 
-        return response()->view('mentor.tim', compact('tims', 'status_tim'));
+        return response()->view('mentor.tim', compact('tims', 'status_tim', 'notifikasi'));
     }
 
     public function filter(Request $request)
@@ -281,17 +295,21 @@ class mentorController extends Controller
     protected function detailProjekPage($code)
     {
         $tim = Tim::where('code', $code)->firstOrFail();
+        $userID = Auth::user()->id;
+        $notifikasi = Notifikasi::where('user_id', $userID)->get();
         $anggota = $tim->anggota()->get();
         $project = $tim->project()->first();
 
-        return response()->view('mentor.detail-projek', compact('tim', 'anggota', 'project'));
+        return response()->view('mentor.detail-projek', compact('tim', 'anggota', 'project', 'notifikasi'));
     }
 
     // Return view profile mentor
     protected function profilePage()
     {
         $user = Auth::user();
-        return response()->view('mentor.profile-mentor', compact('user'));
+        $userID = Auth::user()->id;
+        $notifikasi = Notifikasi::where('user_id', $userID)->get();
+        return response()->view('mentor.profile-mentor', compact('user', 'notifikasi'));
     }
 
     // return view presentasi mentor
@@ -302,12 +320,14 @@ class mentorController extends Controller
         $historyPresentasi = HistoryPresentasi::all();
         $persetujuan_presentasi = $presentasi->where('status_pengajuan', 'menunggu');
         $konfirmasi_presentasi = $presentasi->where('status_pengajuan', 'disetujui')->where('status_presentasi', 'menunggu');
+        $userID = Auth::user()->id;
+        $notifikasi = Notifikasi::where('user_id', $userID)->get();
         $jadwal = [];
         $hari = [];
         foreach ($presentasi as $i => $data) {
             $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
             $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd');
         }
-        return response()->view('mentor.presentasi', compact('persetujuan_presentasi', 'konfirmasi_presentasi', 'jadwal', 'hari', 'historyPresentasi'));
+        return response()->view('mentor.presentasi', compact('persetujuan_presentasi', 'konfirmasi_presentasi', 'jadwal', 'hari', 'historyPresentasi', 'notifikasi'));
     }
 }

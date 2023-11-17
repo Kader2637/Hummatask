@@ -636,18 +636,16 @@
         </script>
     @endif
     @if (session()->has('tolak'))
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: '{{ session('tolak') }}', // Teks pesan dari sesi
-                customClass: {
-                    confirmButton: "btn btn-primary"
-                },
-                buttonsStyling: !1,
-            });
-        </script>
-    @endif
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '{{ session('tolak') }}', // Teks pesan dari sesi
+            showConfirmButton: false,
+            timer: 3000
+        });
+    </script>
+@endif
 
 </body>
 

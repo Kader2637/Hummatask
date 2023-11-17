@@ -50,7 +50,22 @@ class PengajuanProjekController extends Controller
             'type_project' => $tim->status_tim,
         ]);
 
+        $mentorId = User::where('peran_id', 2)->pluck('id')->first();
+        if ($mentorId) {
+            $this->sendNotificationToMentor($mentorId, 'Pengajuan Project!', 'Ada anggota yang mengajukan project.');
+        }
+
         return back()->with('success', 'Berhasil mengajukan Project, mohon tunggu konfirmasi mentor');
+    }
+
+    protected function sendNotificationToMentor($mentorId, $title, $message)
+    {
+        Notifikasi::create([
+            'user_id' => $mentorId,
+            'judul' => $title,
+            'body' => $message,
+            'status' => 'belum_dibaca',
+        ]);
     }
 
     protected function persetujuanProject(Request $request, $code)
@@ -102,7 +117,6 @@ class PengajuanProjekController extends Controller
 
 protected function sendNotification($userId, $title, $message)
 {
-    // Perbaiki nama model menjadi Notifikasi dan pastikan model diimpor di atas
     Notifikasi::create([
         'user_id' => $userId,
         'judul' => $title,

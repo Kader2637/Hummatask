@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comments;
+use App\Models\Notifikasi;
 use App\Models\Penugasan;
 use App\Models\Tim;
 use App\Models\Tugas;
@@ -72,6 +73,7 @@ class TugasController extends Controller
         $tugas->code = Str::uuid();
         $tugas->nama = $request->nama;
         $tugas->save();
+        $this->sendNotificationToTeamMembers($tim->user, 'Tugas Baru', 'Anggota tim telah membuat tugas baru : ' . $tugas->nama);
 
         if ($tim->status_tim === "solo") {
             $penugasan = new Penugasan;
@@ -82,6 +84,18 @@ class TugasController extends Controller
 
         return response()->json($tugas->with(['user', 'comments'])->latest()->first());
     }
+
+    protected function sendNotificationToTeamMembers($teamMembers, $title, $message)
+{
+    foreach ($teamMembers as $member) {
+        Notifikasi::create([
+            'user_id' => $member->id,
+            'judul' => $title,
+            'body' => $message,
+            'status' => 'belum_dibaca',
+        ]);
+    }
+}
 
     protected function dataEditTugas($codeTugas)
     {
@@ -154,6 +168,13 @@ $tugas = [
         $tugas->deadline = $request->deadline;
         $tugas->status_tugas = $request->status_tugas;
 
+        if ($tugas->status_tugas === 'selesai') {
+            $teamMembers = $tugas->tim->user;
+            foreach ($teamMembers as $member) {
+                $this->sendNotificationToUser($member->id, 'Tugas Selesai', 'Tugas "' . $tugas->nama . '" telah selesai.');
+            }
+        }
+
         if($tugas->tim->status_tim !== "solo"){
             $penugasan = $request->penugasan;
             $currentPenugasan = $tugas->user->pluck('uuid')->toArray();
@@ -175,6 +196,8 @@ $tugas = [
                     $penugasan->tugas_id = $tugas->id;
                     $penugasan->user_id = $user->id;
                     $penugasan->save();
+
+                    $this->sendNotificationToUser($user->id, 'Anda Diberi Tugas Baru', 'Anda telah diberi tugas baru "' . $tugas->nama . '" dengan prioritas ' . $tugas->prioritas);
                 }
             }
 
@@ -192,6 +215,16 @@ $tugas = [
 
         $tugas->save();
         return response()->json("sukses");
+    }
+
+    protected function sendNotificationToUser($userId, $title, $message)
+    {
+        Notifikasi::create([
+            'user_id' => $userId,
+            'judul' => $title,
+            'body' => $message,
+            'status' => 'belum_dibaca',
+        ]);
     }
 
     protected function hapusTugas($codeTugas)

@@ -18,7 +18,7 @@ class siswaController extends Controller
         $tims = User::find(Auth::user()->id)->tim()->get();
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
-
+        
         $tugas = User::find(Auth::user()->id)->tugas()->where('status_tugas', 'tugas_baru')->get()
             ->sortBy(function ($item) {
                 $deadline = \Carbon\Carbon::parse($item->deadline);
@@ -35,7 +35,7 @@ class siswaController extends Controller
                 return $deadline->diffInDays($created);
             });
 
-        return response()->view('siswa.dashboard', compact('title', 'tims', 'tugas', 'tugasBelum', 'notifikasi'));
+        return response()->view('siswa.dashboard', compact('title','tims','notifikasi','tugas','tugasBelum'));
     }
 
     // Return view profile siswa

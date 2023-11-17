@@ -6,6 +6,7 @@ use App\Http\Requests\RequestPengajuanPresentasi;
 use App\Http\Requests\RequestPenolakanPresentasi;
 use App\Http\Requests\RequestPersetujuanPresentasi;
 use App\Models\HistoryPresentasi;
+use App\Models\Notifikasi;
 use App\Models\Presentasi;
 use App\Models\Tim;
 use Carbon\Carbon;
@@ -96,6 +97,8 @@ class PresentasiController extends Controller
         $presentasi->user_approval_id = Auth::user()->id;
         $presentasi->status_pengajuan = 'disetujui';
         $presentasi->save();
+        $this->sendNotificationToTeamMembers($presentasi->tim->user, 'Presentasi Disetujui', 'Presentasi Anda telah disetujui.');
+
         return response()->json([
             "presentasi" => $presentasi,
             "totalPresentasi" => $presentasi->where('status_presentasi', 'selesai')->count(),
@@ -104,6 +107,19 @@ class PresentasiController extends Controller
             "revisiTidakSelesai" => $presentasi->where('status_revisi', 'tidak_selesai')->count(),
             "codeHistory" => $presentasi->historyPresentasi->code,
         ]);
+    }
+
+    protected function sendNotificationToTeamMembers($teamMembers, $title, $message)
+    {
+        foreach ($teamMembers as $member) {
+            $notif = new Notifikasi;
+            $notif->user_id = $member->id;
+            $notif->judul = $title;
+            $notif->body = $message;
+            $notif->status = 'belum_dibaca';
+
+            $notif->save();
+        }
     }
 
     protected function penolakanPresentasi(RequestPenolakanPresentasi $request, $code)

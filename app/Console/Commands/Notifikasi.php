@@ -4,7 +4,9 @@ namespace App\Console\Commands;
 
 use App\Models\Anggota;
 use App\Models\Notifikasi as ModelsNotifikasi;
+use App\Models\Presentasi;
 use App\Models\Project;
+use App\Models\Tim;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
@@ -43,6 +45,7 @@ class Notifikasi extends Command
             }
         }
     }
+    
 
     // protected function checkTeamMembership()
     // {
