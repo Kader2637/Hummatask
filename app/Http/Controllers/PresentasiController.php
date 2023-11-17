@@ -51,12 +51,12 @@ class PresentasiController extends Controller
             $tim->sudah_presentasi = true;
             $tim->save();
 
-            $validasi = $tim->presentasi->where('jadwal', Carbon::now()->isoFormat('YYYY-M-DD'))->first();
+            // $validasi = $tim->presentasi->where('jadwal', Carbon::now()->isoFormat('YYYY-M-DD'))->first();
 
 
-            if ($validasi != null) {
-                return back()->with('error', 'Pengajuan presentasi dalam sehari hanya boleh 1 kali');
-            }
+            // if ($validasi != null) {
+            //     return back()->with('error', 'Pengajuan presentasi dalam sehari hanya boleh 1 kali');
+            // }
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Timmu tidak ditemukan');
         }
