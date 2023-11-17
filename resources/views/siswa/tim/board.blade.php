@@ -416,9 +416,9 @@
         function editTugas(codeTugas) {
             console.log(codeTugas);
             $("#select2Primary").empty();
-
             $("#formEditTugas").attr("data-codetugas", codeTugas);
             $("#tambahKomentar").attr("data-codetugas", codeTugas);
+
             axios.get("data-edit-tugas/" + codeTugas)
                 .then((res) => {
 
@@ -452,8 +452,8 @@
 
 
 
-                    $("#title").val(data.nama)
-                    $("#due-date").val(data.deadline)
+                    $("#title").val(data.tugas.nama)
+                    $("#due-date").val(data.tugas.deadline)
 
                     if(data.tugas.tim.status_tim !== "solo"){
                         Object.keys(user).forEach(key => {

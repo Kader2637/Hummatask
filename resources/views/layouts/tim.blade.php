@@ -218,11 +218,11 @@
                         </li>
                     @endif
                     @if ($project && $project->deskripsi)
-                        <li class="menu-item @if ($title == 'Tim/history') active @endif ">
+                        <li class="menu-item @if ($title == 'Tim/Statistik') active @endif ">
                             <a href="{{ route('tim.history', $tim->code) }}"
                                 class="menu-link d-flex align-items-center gap-2">
                                 <i class="menu-icon tf-icons ti ti-history"></i>
-                                <div class="w-100 d-flex align-items-center justify-content-between">History</div>
+                                <div class="w-100 d-flex align-items-center justify-content-between">Statistik</div>
                             </a>
                         </li>
                     @endif
@@ -330,7 +330,7 @@
                                     <li class="dropdown-menu-footer border-top">
                                         <a href="javascript:void(0);"
                                             class="dropdown-item d-flex justify-content-center text-primary p-2 h-px-40 mb-1 align-items-center">
-                                            
+
                                         </a>
                                     </li>
                                 </ul>
@@ -485,7 +485,7 @@
                 var waktuNotifikasi = new Date(item.created_at);
                 var waktuSekarang = new Date();
                 var perbedaanWaktu = Math.floor((waktuSekarang - waktuNotifikasi) /
-                1000); 
+                1000);
 
                 function formatWaktu(detik) {
                     if (detik < 60) {
@@ -528,7 +528,7 @@
 
         setInterval(function() {
             ambilNotifikasi();
-        }, 5000); 
+        }, 5000);
     });
 </script>
 

@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\Tim;
 use App\Models\Anggota;
 use App\Models\HistoryPresentasi;
+use App\Models\Notifikasi;
 use App\Models\Presentasi;
 use App\Models\StatusTim;
 use App\Models\User;
@@ -70,7 +71,8 @@ class KetuaMagangController extends Controller
         }
 
         $chartData = array_values($processedData);
-        return view('ketuaMagang.dashboard', compact('title', 'tims', 'usercount', 'timcount', 'chartData', 'presentasi', 'present'));
+        $notifikasi = Notifikasi::where('user_id', Auth::user()->id)->get();
+        return view('ketuaMagang.dashboard', compact('title', 'tims', 'usercount', 'timcount', 'chartData', 'presentasi', 'present','notifikasi'));
     }
     protected function presentasiPage()
     {
@@ -86,7 +88,8 @@ class KetuaMagangController extends Controller
             $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
             $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd');
         }
-        return response()->view('ketuaMagang.presentasi', compact('persetujuan_presentasi', 'konfirmasi_presentasi', 'jadwal', 'hari', 'historyPresentasi', 'title', 'tims'));
+        $notifikasi = Notifikasi::where('user_id', Auth::user()->id)->get();
+        return response()->view('ketuaMagang.presentasi', compact('notifikasi','persetujuan_presentasi', 'konfirmasi_presentasi', 'jadwal', 'hari', 'historyPresentasi', 'title', 'tims'));
     }
     protected function projectPage()
     {
@@ -115,7 +118,8 @@ class KetuaMagangController extends Controller
             })
             ->get();
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
-        return view('ketuaMagang.project', compact('title', 'tims', 'users', 'status_tim', 'projects'));
+        $notifikasi = Notifikasi::where('user_id', Auth::user()->id)->get();
+        return view('ketuaMagang.project', compact('notifikasi','title', 'tims', 'users', 'status_tim', 'projects'));
     }
 
     protected function projek()
@@ -129,6 +133,7 @@ class KetuaMagangController extends Controller
             })
             ->get();
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
+
         return response()->json(['project' => $project, 'title' => $title, 'tims' => $tims, 'users' => $users, 'status_tim' => $status_tim]);
     }
     protected function detailProject($code)
@@ -162,6 +167,8 @@ class KetuaMagangController extends Controller
             ->whereHas('project')
             ->get();
 
-        return view('ketuaMagang.history', compact('title', 'tims', 'telatDeadline', 'presentasiSelesai', 'timSolo', 'timGroup'));
+            $notifikasi = Notifikasi::where('user_id', Auth::user()->id)->get();
+
+        return view('ketuaMagang.history', compact('notifikasi','title', 'tims', 'telatDeadline', 'presentasiSelesai', 'timSolo', 'timGroup'));
     }
 }

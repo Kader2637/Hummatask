@@ -122,10 +122,10 @@ $tugas = [
         $validator = validator(
             $request->all(),
             [
-                'nama' => 'max:50',
+                'nama' => '|max:50',
                 'deadline' => 'nullable|date|after_or_equal:today',
-                'status_tugas' => 'required|in:tugas_baru,dikerjakan,revisi,selesai',
-                'prioritas' => 'required|in:mendesak,penting,biasa,tambahan,opsional',
+                'status_tugas' => 'in:tugas_baru,dikerjakan,revisi,selesai',
+                'prioritas' => 'in:mendesak,penting,biasa,tambahan,opsional',
             ],
             [
                 'nama.max:50' => ' Nama tugas tidak boleh lebih dari 50 karakter',

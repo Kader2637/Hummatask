@@ -167,9 +167,9 @@ class timController extends Controller
         return view('siswa.tim.project', compact('hasProjectRelation', 'days', 'tanggal', 'persentase', 'selesaiCount', 'revisiCount', 'chartData', 'title', 'tim', 'anggota', 'project', 'notifikasi',));
     }
 
-    protected function historyPage($code)
+    protected function statistikPage($code)
     {
-        $title = "Tim/history";
+        $title = "Tim/Statistik";
         $tim = Tim::where('code', $code)->firstOrFail();
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
@@ -193,7 +193,7 @@ class timController extends Controller
             ['Tugas Baru', $tugasBaruCount]
         ];
 
-        return view('siswa.tim.history', compact('chartData', 'title', 'tim', 'anggota', 'hasProjectRelation', 'project', 'notifikasi', 'project'));
+        return view('siswa.tim.statistik', compact('chartData', 'title', 'tim', 'anggota', 'hasProjectRelation', 'project', 'notifikasi', 'project'));
     }
 
     protected function historyPresentasiPage($code)
@@ -275,8 +275,6 @@ class timController extends Controller
         $selesaiCount = $tim->tugas->where('status_tugas', 'selesai')->count();
         $revisiCount = $tim->tugas->where('status_tugas', 'revisi')->count();
         $tugasBaruCount = $tim->tugas->where('status_tugas', 'tugas_baru')->count();
-
-
 
         return view('siswa.tim.history-catatan', compact('title', 'anggota', 'tim'));
     }

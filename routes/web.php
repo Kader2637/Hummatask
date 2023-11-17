@@ -65,7 +65,7 @@ Route::prefix('tim')->controller(timController::class)->group(function () {
         Route::get('board/{code}', 'boardPage')->name('tim.board');
         Route::get('kalender/{code}', 'kalenderPage')->name('tim.kalender');
         Route::get('catatan/{code}', 'catatanPage')->name('tim.catatan');
-        Route::get('history/{code}', 'historyPage')->name('tim.history');
+        Route::get('statistik/{code}', 'statistikPage')->name('tim.history');
         Route::get('history-presentasi/{code}', 'historyPresentasiPage')->name('tim.historyPresentasi');
         Route::get('history-catatan/{code}', 'historyCatatanPage')->name('tim.historyCatatan');
 
