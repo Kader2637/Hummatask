@@ -426,7 +426,7 @@
                                         const data = res.data;
                                         console.log(data);
                                         const user = data.tugas.tim.user;
-                                        const userSelected = data.user;
+                                        const userSelected = data.tugas.user;
                                         const comments = data.tugas.comments;
 
 
@@ -478,6 +478,7 @@
                                         Object.keys(comments).forEach((keys,i) =>
                                         {
                                             const jadwal = res.data.komentarTerbuat[i];
+                                           
                                             const komentar = comments[keys];
                                             console.log(jadwal);
                                             let div = document.createElement("div");
@@ -632,6 +633,7 @@
                             }
 
                             function editKomentar(komentar_id, text) {
+                                console.log(res.data);
                                 $("#tambahKomentar").removeData("data-komentar-id");
                                 $("#tambahKomentar").attr("data-komentar-id", komentar_id);
                                 $(".inp-tambah-komentar").val(text);
