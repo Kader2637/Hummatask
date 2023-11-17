@@ -979,7 +979,6 @@
 
     <script>
         $('.detail-user').click(function() {
-
             let avatar = $(this).data('avatar');
             let username = $(this).data('username');
             let email = $(this).data('email');
@@ -996,7 +995,7 @@
             $('#tlp-siswa').text(tlp);
             $('#peran-siswa').text(peran);
             $('#sekolah-siswa').text(sekolah);
-            $('#masaMagang').text('Bergabung pada : ' + bergabung);
+            $('#masaMagang').text('Bergabung pada : ${bergabung}');
 
             $('#detail').modal('show');
         });
