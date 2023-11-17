@@ -233,7 +233,7 @@
                                                                 belum ada
                                                             @endif
                                                         </span>
-                                                        {{-- <div>{{ $item->tema->nama_tema }}</div> --}}
+                                                       
                                                     </div>
                                                 </div>
                                                 <a data-bs-toggle="" data-bs-target="#modalDetailProjek"

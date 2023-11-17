@@ -234,12 +234,49 @@ class mentorController extends Controller
         return response()->json(['users' => $users, 'status_tim' => $status_tim]);
     }
 
+    protected function ProjectEdit($tim)
+    {
+
+        $ketuaId = Tim::where('id', $tim)
+            ->with(['anggota' => function ($query) {
+                $query->where('jabatan_id', 1);
+            }])
+            ->first()
+            ->anggota
+            ->pluck('user_id');
+
+
+        $ketua = User::where('peran_id', 1)
+            ->whereHas('tim', function ($query) use ($tim) {
+                $query->where('id', $tim);
+            })
+            ->get();
+        $users = User::where('peran_id', 1)
+            ->where(function ($query) use ($tim) {
+                $query->whereDoesntHave('tim', function ($subQuery) {
+                    $subQuery->where('kadaluwarsa', false);
+                })
+                    ->orWhere(function ($subQuery) use ($tim) {
+                        $subQuery->whereHas('tim', function ($innerSubQuery) use ($tim) {
+                            $innerSubQuery->where('id', $tim);
+                        });
+                    });
+            })
+            ->get();
+
+        $status_tim = StatusTim::whereNot('status', 'solo')->get();
+        return response()->json(['users' => $users, 'status_tim' => $status_tim, 'ketua' => $ketua, 'ketua_id' => $ketuaId]);
+    }
+
+
+
     protected function tim()
     {
         $tims = tim::with('user')->paginate(12);
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
+
 
         return response()->view('mentor.tim', compact('tims', 'status_tim', 'notifikasi'));
     }

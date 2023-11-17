@@ -73,10 +73,10 @@
                             <div class="row">
                                 <div class="col-lg-3">
                                     <label class="form-label text-white m-1" for="image-input">
-                                        <img id="preview-image" src="{{ asset('assets/img/avatars/pen.png') }}"
+                                        <img id="preview-image3" src="{{ asset('assets/img/avatars/pen.png') }}"
                                             class="rounded-circle" alt="example placeholder"
                                             style="width: 200px; height: 200px;" />
-                                        <input type="file" class="form-control d-none" id="image-input" name="avatar" />
+                                        <input type="file" class="form-control d-none" id="image-input3" name="avatar" />
                                     </label>
                                 </div>
 
@@ -195,10 +195,10 @@
     <script>
         $(document).ready(function() {
 
-            let imageInput = $("#image-input");
+            let imageInput = $("#image-input3");
 
             imageInput.on('change', function() {
-                let previewImage = $("#preview-image");
+                let previewImage = $("#preview-image3");
                 let file = imageInput[0].files[0];
 
                 if (file) {
@@ -224,10 +224,10 @@
                 const username = localStorage.getItem("username");
                 if (userImage || username) {
                     if (userImage) {
-                        $("#preview-image").attr('src', userImage);
+                        $("#preview-image3").attr('src', userImage);
                     }
                 }
-                $("#image-input").on('change', function(e) {
+                $("#image-input3").on('change', function(e) {
                     const file = e.target.files[0];
                     const reader = new FileReader();
 

@@ -59,6 +59,7 @@
                                 <div class="d-flex align-items-center pt-1 mb-3 justify-content-center">
                                     <div class="d-flex align-items-center">
                                         <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
+
                                             @foreach ($tim->user as $anggota)
                                                 <li data-bs-toggle="tooltip" data-popup="tooltip-custom"
                                                     data-bs-placement="top" title="{{ $anggota->username }}"
@@ -100,7 +101,16 @@
                                 {{ $tim->created_at->translatedFormat('l, j F Y') }}
                             </p>
                             <div class="f-flex">
-
+                                @if ($tim->status_tim == 'solo')
+                                @else
+                                    <a data-bs-toggle="modal" data-bs-target="#edit"
+                                        class="w-100 btn btn-primary btn-detail-projek edit-tim btn-edit"
+                                        data-anggota="{{ json_encode($tim->user->pluck('id')) }}"
+                                        data-id="{{ $tim->id }}" data-url="/mentor/tim/edit/{{ $tim->id }}"
+                                        data-status="{{ $tim->status_tim }}">
+                                        <span class="text-white">Update</span>
+                                    </a>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -202,6 +212,7 @@
         {{-- Modal Buat Tim --}}
         <form action="{{ route('pembuatan.tim') }}" id="createForm" method="post">
             @csrf
+
             <div class="modal fade" id="modalBuatTim" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -273,48 +284,222 @@
         {{-- Modal Buat Tim --}}
 
     </div>
+    <form method="post" action="{{ route('tim.update', ['timId' => $tim->id]) }}" id="updateTimForm">
+        <input type="hidden" name="logo" value="{{ $tim->logo }}">
+        @csrf
+        <input type="hidden" name="modalDataId" id="modalDataIdInput" value="">
+
+        <div class="modal fade" id="edit" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalCenterTitle">Edit Tim</h5>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="modalDataId"></p>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="status_tim" class="form-label">Kategori Tim</label>
+                                <select id="tim_status_modal" name="status_tim" class=" form-select form-select"
+                                    data-allow-clear="true">
+                                    <option value="" disabled selected>Pilih Tim</option>
+                                    <option class="nowStatus" value="pre_mini">Pre mini projek</option>
+                                    <option class="nowStatus" value="mini">Mini projek</option>
+                                    <option class="nowStatus" value="big">Big projek</option>
+                                </select>
+
+
+                                @error('status_tim')
+                                    <p class="text-danger">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row" id="kelompok_ketua" style="display: block">
+                            <div class="col mb-3">
+                                <label for="ketua" class="form-label">Ketua Tim</label>
+                                <select id="ketua" name="ketuaKelompok"
+                                    class="select2 form-select form-select-lg selecto" data-allow-clear="true">
+                                    <option value="" disabled selected>Pilih Kelompok</option>
+                                </select>
+                                @error('ketua')
+                                    <p class="text-danger">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="anggota_kelompok" class="form-label">Anggota</label>
+                                <select id="anggota_kelompok" name="anggota[]" class="select2 form-select selecto"
+                                    multiple>
+                                </select>
+                                @error('anggota_kelompok')
+                                    <p class="text-danger">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
+                        <button type="submit" class="btn btn-primary" id="createButton">Simpan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 @endsection
 
 @section('script')
     <script>
+        $(document).ready(function() {
+
+            $('#updateTimForm').submit(function(e) {
+                e.preventDefault();
+                var formData = $(this).serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: $(this).attr('action'),
+                    data: formData,
+                    success: function(data) {
+                        $('#saveButton').hide();
+
+                        Swal.fire({
+                            title: 'Sukses',
+                            text: 'Password berhasil diperbarui.',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 1700,
+                        }).then(() => {
+                            $('#saveButton').show();
+
+                            window.location.reload();
+                        });
+                    },
+                    error: function(error) {
+                        console.error('Error submitting form', error.responseText);
+                    }
+                });
+            });
+        });
+
         function filterProjek(selectElement) {
             document.getElementById('filterForm').submit();
         }
     </script>
 
 
-    {{-- filter projek --}}
+    <script>
+      
+    </script>
 
-    {{-- <script>
-        function filterProjek(selectElement) {
-            var code = selectElement.value;
-            var projekElements = document.getElementsByClassName('tim-item');
 
-            for (var i = 0; i < projekElements.length; i++) {
-                var projekElement = projekElements[i];
-                var statusTim = projekElement.getAttribute('data-status-tim');
+    <script>
+        $('.btn-edit').on('click', function() {
+            var anggotaData = $(this).data('anggota');
+            var timId = $(this).data('id');
+            var url = $(this).data('url');
+            var dataId = $(this).data('id');
+            var status = $(this).data('status');
+            $('#modalDataIdInput').val(dataId);
+            $('#nowStatus').text(status);
+            console.log(status);
+            $('#updateTimForm').attr('action', '/mentor/update-tim/' + dataId);
 
-                if (code === 'all' || code === statusTim || code === '') {
-                    projekElement.style.display = 'block';
-                } else {
-                    projekElement.style.display = 'none';
+            $(".nowStatus").each(function() {
+                if ($(this).val() === status) {
+                    // Menjadikan elemen tersebut sebagai selected
+                    $(this).prop("selected", true);
                 }
+            });
+
+            // $('#tim_status_modal').select2();
+            // $('#tim_status_modal').val(status).trigger('change');
+
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    $('#ketua').html('')
+                    $('#anggota_kelompok').html('')
+                    $("#ketua").append("<option disabled selected>Pilih Data</option>");
+
+                    // Populate the anggota_kelompok select
+                    $.each(data.users, function(index, user) {
+                        var option = new Option(user.username, user.id, false, false);
+
+                        if ($.inArray(user.id, anggotaData) !== -1) {
+                            option.selected = true;
+                        }
+
+                        $("#anggota_kelompok").append(option);
+                    });
+
+                    $.each(data.ketua, function(index, ketua) {
+                        var option = new Option(ketua.username, ketua.id, false, false);
+                        var ketua_id = data.ketua_id;
+                        if ($.inArray(ketua.id, ketua_id) !== -1) {
+                            option.selected = true;
+                        }
+                        $("#ketua").append(option);
+                    });
+
+
+                },
+                error: function(xhr, status, error) {
+                    console.error("Terjadi kesalahan: " + error);
+
+                    // Tambahkan kondisi
+                    var status_tim = $('#tim_status_modal').val();
+                    var ketuaKelompok = $('#kelompok_ketua').val();
+                    var anggota = $('#anggota_kelompok').val();
+
+                    if (!status_tim || !ketuaKelompok || !anggota.length) {
+                        event.preventDefault();
+                        swal.fire('Peringatan', 'Mohon lengkapi data sebelum simpan', 'warning');
+                    }
+                }
+            });
+        });
+
+
+
+        $("#ketua").change(function() {
+            var selectedValue = $(this).val();
+            if (selectedValue) {
+                $("#anggota_kelompok option[value='" + selectedValue + "']").remove();
             }
-        }
-    </script> --}}
-    {{-- filter Projek --}}
+        });
+
+
+        $('#editForm').submit(function(event) {
+            var status_tim = $('#status').val();
+            var ketua = $('#ketua').val();
+            var anggota_kelompok = $('#anggota_kelompok').val();
+
+            if (!status_tim || !ketua || !anggota_kelompok.length) {
+                event.preventDefault();
+                swal.fire('Peringatan', 'Mohon lengkapi data sebelum simpan', 'warning');
+            }
+        });
+    </script>
 
     {{-- ajax buat tim --}}
     <script>
-        get()
+        geto()
 
-        function get() {
+        function geto() {
             $.ajax({
                 url: "{{ route('Project') }}",
                 type: "GET",
                 dataType: "json",
                 success: function(data) {
-                    console.log(data)
                     $('#ketuaKelompok').html('')
                     $('#anggota').html('')
                     $("#ketuaKelompok").append("<option disabled selected>Pilih Data</option>");

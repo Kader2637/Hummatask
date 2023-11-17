@@ -13,6 +13,7 @@ use App\Models\Tema;
 use App\Models\Tim;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use illuminate\Support\Str;
 use Illuminate\Database\QueryException;
@@ -165,6 +166,93 @@ class PengajuanTimController extends Controller
             'status' => 'belum_dibaca',
         ]);
     }
+
+    protected function updateTimProject(RequestPembentukanTimProject $request, $timId)
+    {
+        $tim = Tim::findOrFail($timId);
+
+        // Validasi jika ada anggota yang sudah masuk di tim lain
+        $daftarAnggota = $request->anggota;
+        $daftarAnggota[] = $request->ketuaKelompok;
+        $logo = $request->logo;
+
+        $uniqueDaftarAnggota = array_unique($daftarAnggota);
+
+        $existingAnggota = Anggota::whereIn('user_id', $uniqueDaftarAnggota)
+            ->where('tim_id', '<>', $tim->id)
+            ->first();
+
+        if ($existingAnggota) {
+            return back()->with('warning', 'Anggota telah masuk di tim lain.');
+        }
+
+        // Update status dan nama tim
+        $tim->status_tim = $request->status_tim;
+
+        if ($request->status_tim == "pre_mini") {
+            $tim->nama = 'Pre-Mini Project Team';
+        } elseif ($request->status_tim == "mini") {
+            $tim->nama = 'Mini Project Team';
+        } elseif ($request->status_tim == "big") {
+            $tim->nama = 'Big Project Team';
+        }
+
+        // Generate logo baru
+        $backgroundHexColor = '#' . str_pad(dechex(mt_rand(0xAAAAAA, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
+        $image = ImageManagerStatic::canvas(200, 200, $backgroundHexColor);
+
+        if ($nama = $tim->nama == 'Mini Project Team') {
+            $nama = "Mini";
+        } elseif ($nama = $tim->nama == 'Pre-Mini Project Team') {
+            $nama = "PreMini";
+        } elseif ($nama = $tim->nama == 'Big Project Team') {
+            $nama = "Big";
+        }
+
+        
+        $image->text($nama, 100, 100, function ($font) {
+            $font->file(public_path('assets/font/Poppins-Bold.ttf'));
+            $font->size(36);
+            $font->color('#ffffff');
+            $font->align('center');
+            $font->valign('middle');
+        });
+
+        $nameImage = 'logo/' . Str::random(20) . '.jpg';
+        Storage::disk('public')->put($nameImage, $image->stream());
+
+        // Simpan nama file logo baru ke dalam database
+        $tim->logo = $nameImage;
+
+        $tim->save();
+
+        // Hapus anggota lama
+        $tim->anggota()->delete();
+
+        foreach ($uniqueDaftarAnggota as $anggota) {
+            $anggotaModel = new Anggota;
+            $anggotaModel->tim_id = $tim->id;
+
+            if ($anggota === $request->ketuaKelompok) {
+                $anggotaModel->jabatan_id = '1';
+            } else {
+                // Tambahkan kondisi untuk jabatan_id 2
+                $anggotaModel->jabatan_id = '3';
+            }
+
+            // Tambahkan kondisi untuk jabatan_id 2
+            if ($anggotaModel->jabatan_id === '2' && empty($anggota)) {
+                continue; // Lewatkan iterasi jika jabatan_id 2 tidak diisi
+            }
+
+            $anggotaModel->user_id = $anggota;
+            $anggotaModel->save();
+        }
+
+        return response()->json(['success' => 'Berhasil update tim'], 200);
+    }
+
+
     // membuat notif
     // $notifAnggota = $tim->user;
     // foreach ($notifAnggota as $user) {
