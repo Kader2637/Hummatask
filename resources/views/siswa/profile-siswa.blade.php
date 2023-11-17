@@ -57,7 +57,6 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -289,7 +288,6 @@
                                                             <div class="d-flex justify-content-end">
                                                                 <button class="btn btn-primary" disabled>Detail
                                                                     Projek</button>
-
                                                             </div>
                                                         </div>
                                                         <div class="tab-content bg-transparent pb-0"
@@ -370,7 +368,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -389,7 +386,6 @@
                                             @method('PUT')
                                             @csrf
                                             <div class="card mb-4">
-
                                                 <div class="card-body row">
                                                     <div class="col-md-6">
                                                         <label class="form-label fs-6" for="password">Password
@@ -451,9 +447,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="d-flex my-2">
-
-                                                </div>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -529,9 +523,6 @@
                             var errorMessage = messages[0];
                             $('#' + field + '-error').text(errorMessage);
                         });
-
-
-
                     } else {
                         toastr.error('Terjadi kesalahan: ' + error, 'Kesalahan');
 
@@ -542,7 +533,6 @@
 
         $('#update-profile-form').submit(function(e) {
             e.preventDefault();
-
 
             var formData = new FormData(this);
 
@@ -584,9 +574,6 @@
                             var errorMessage = messages[0];
                             $('#' + field + '-error').text(errorMessage);
                         });
-
-
-
                     } else {
                         toastr.error('Terjadi kesalahan: ' + error, 'Kesalahan');
 
