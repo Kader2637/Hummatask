@@ -18,8 +18,7 @@
     <meta name="keywords" content="dashboard, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
     <meta name="csrf-token" content="y0lzh53YmoH0xFgY2vFjhD4S1TOiq6lE58zbW7ec">
     <link rel="canonical" href="https://1.envato.market/vuexy_admin">
-    <link rel="icon" type="image/x-icon"
-        href="{{ url('assets/img/icons/icon.svg') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ url('assets/img/icons/icon.svg') }}" />
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link
@@ -604,7 +603,7 @@
                 icon: 'error',
                 title: 'Akses Ditolak',
                 text: '{{ session('unauthorize') }}', // Teks pesan dari sesi
-                shwoConfirmButton: false,
+                showConfirmButton: false,
                 timer: 3000,
             });
         </script>
@@ -614,7 +613,7 @@
                 icon: 'success',
                 title: 'Berhasil',
                 text: '{{ session('success') }}', // Teks pesan dari sesi
-                shwoConfirmButton: false,
+                showConfirmButton: false,
                 timer: 3000,
             });
         </script>
@@ -624,7 +623,7 @@
                 icon: 'error',
                 title: 'Error',
                 text: '{{ session('error') }}', // Teks pesan dari sesi
-                shwoConfirmButton: false,
+                showConfirmButton: false,
                 timer: 3000,
             });
         </script>
@@ -635,7 +634,7 @@
                 icon: 'error',
                 title: 'Error',
                 text: '{{ session('tolak') }}', // Teks pesan dari sesi
-                shwoConfirmButton: false,
+                showConfirmButton: false,
                 timer: 3000,
             });
         </script>

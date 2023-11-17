@@ -681,7 +681,7 @@
                 icon: 'error',
                 title: 'Akses Ditolak',
                 text: '{{ session('unauthorize') }}', // Teks pesan dari sesi
-                shwoConfirmButton: false,
+                showConfirmButton: false,
                 timer: 3000,
             });
         </script>
@@ -691,7 +691,7 @@
                 icon: 'success',
                 title: 'Berhasil!',
                 text: '{{ session('success') }}', // Teks pesan dari sesi
-                shwoConfirmButton: false,
+                showConfirmButton: false,
                 timer: 3000,
             });
         </script>
@@ -701,7 +701,7 @@
                 icon: 'warning',
                 title: 'Peringatan!',
                 text: '{{ session('warning') }}', // Teks pesan dari sesi
-                shwoConfirmButton: false,
+                showConfirmButton: false,
                 timer: 3000,
             });
         </script>

@@ -472,7 +472,7 @@
                                             <label class="form-label m-0 p-0 mt-2" for="modalEditUserLastName">Link
                                                 Repository
                                                 Github</label>
-                                            <input type="text" id="modalEditUserLastName" name="repository"
+                                            <input type="url" id="modalEditUserLastName" name="repository"
                                                 class="form-control" placeholder="https://.." />
                                             @error('repository')
                                                 <p class="text-danger">
@@ -738,7 +738,7 @@
                 icon: 'error',
                 title: 'Akses Ditolak',
                 text: '{{ session('unauthorize') }}', // Teks pesan dari sesi
-                shwoConfirmButton: false,
+                showConfirmButton: false,
                 timer: 3000,
             });
         </script>
@@ -748,7 +748,7 @@
                 icon: 'success',
                 title: 'Berhasil!',
                 text: '{{ session('success') }}', // Teks pesan dari sesi
-                shwoConfirmButton: false,
+                showConfirmButton: false,
                 timer: 3000,
             });
         </script>
@@ -758,7 +758,7 @@
                 icon: 'error',
                 title: 'error!',
                 text: '{{ session('error') }}', // Teks pesan dari sesi
-                shwoConfirmButton: false,
+                showConfirmButton: false,
                 timer: 3000,
             });
         </script>
