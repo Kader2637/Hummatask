@@ -47,4 +47,5 @@ class siswaController extends Controller
         $notifikasi = Notifikasi::where('user_id',Auth::user()->id)->get();
         return response()->view('siswa.profile-siswa', compact('title', 'user', 'tims','notifikasi'));
     }
+    
 }
