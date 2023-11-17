@@ -20,7 +20,7 @@
     <meta name="csrf-token" content="y0lzh53YmoH0xFgY2vFjhD4S1TOiq6lE58zbW7ec">
     <link rel="canonical" href="https://1.envato.market/vuexy_admin">
     <link rel="icon" type="image/x-icon"
-        href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/favicon/favicon.ico" />
+        href="{{ url('assets/img/icons/icon.svg') }}" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
@@ -472,7 +472,7 @@
                                             <label class="form-label m-0 p-0 mt-2" for="modalEditUserLastName">Link
                                                 Repository
                                                 Github</label>
-                                            <input type="text" id="modalEditUserLastName" name="repository"
+                                            <input type="url" id="modalEditUserLastName" name="repository"
                                                 class="form-control" placeholder="https://.." />
                                             @error('repository')
                                                 <p class="text-danger">
@@ -738,6 +738,8 @@
                 icon: 'error',
                 title: 'Akses Ditolak',
                 text: '{{ session('unauthorize') }}', // Teks pesan dari sesi
+                showConfirmButton: false,
+                timer: 3000,
             });
         </script>
     @elseif (session()->has('success'))
@@ -746,6 +748,8 @@
                 icon: 'success',
                 title: 'Berhasil!',
                 text: '{{ session('success') }}', // Teks pesan dari sesi
+                showConfirmButton: false,
+                timer: 3000,
             });
         </script>
     @elseif (session()->has('error'))
@@ -754,6 +758,8 @@
                 icon: 'error',
                 title: 'error!',
                 text: '{{ session('error') }}', // Teks pesan dari sesi
+                showConfirmButton: false,
+                timer: 3000,
             });
         </script>
     @endif

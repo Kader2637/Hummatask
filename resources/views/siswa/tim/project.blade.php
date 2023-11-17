@@ -603,8 +603,6 @@
             ajukanModal.addEventListener('submit', function(event) {
                 const repositoryInput = document.querySelector('input[name="repository"]');
                 const temaInput = document.getElementById('TagifyBasic').value;
-                console.log(temaInput.length);
-                console.log(temaInput);
 
                 // Validasi input kosong
                 if (temaInput.trim() === '' || repositoryInput.value.trim() === '') {

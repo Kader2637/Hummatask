@@ -44,11 +44,11 @@
                             Masuk
                         </button>
                     </form>
-                    
+
                     <div class="text-center">
                         <a href="{{ route('lupa-password') }}">Lupa Password?</a>
                     </div>
-                    
+
                 </div>
             </div>
         </div>

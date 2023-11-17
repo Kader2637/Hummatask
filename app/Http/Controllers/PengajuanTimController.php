@@ -11,6 +11,7 @@ use App\Models\Notifikasi;
 use App\Models\Project;
 use App\Models\Tema;
 use App\Models\Tim;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use illuminate\Support\Str;
@@ -30,12 +31,13 @@ class PengajuanTimController extends Controller
             return redirect()->back()->with('error', 'input Foto ataupun nama tim tidak boleh kosong');
         }
 
-        $timDulu = Tim::latest()->first();
+        $timDulu = User::find(Auth::user()->id)->tim->first();
 
-        if($timDulu->kadaluwarsa === 0){
-            return redirect()->back()->with('error','Timmu yang dahulu belum selesai');
+        if (isset($timDulu)) {
+            if ($timDulu->kadaluwarsa === 0) {
+                return redirect()->back()->with('error', 'Kamu masih memiliki tim yang belum selesai');
+            }
         }
-
 
         // menyimpan logo
         $logo = $request->logo->store('logo', 'public');
@@ -155,14 +157,14 @@ class PengajuanTimController extends Controller
         }
     }
     protected function sendNotification($userId, $title, $message)
-{
-    Notifikasi::create([
-        'user_id' => $userId,
-        'judul' => $title,
-        'body' => $message,
-        'status' => 'belum_dibaca',
-    ]);
-}
+    {
+        Notifikasi::create([
+            'user_id' => $userId,
+            'judul' => $title,
+            'body' => $message,
+            'status' => 'belum_dibaca',
+        ]);
+    }
     // membuat notif
     // $notifAnggota = $tim->user;
     // foreach ($notifAnggota as $user) {

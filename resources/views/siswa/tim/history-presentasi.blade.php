@@ -17,7 +17,8 @@
                 <div class="d-flex flex-row flex-wrap justify-content-between p-0 m-0">
                     <span class="card-header fs-4">Daftar Presentasi</span>
                     <span class="card-header">
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#ajukanPresentasi" class="btn btn-primary mx-2">Ajukan Presentasi</button>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#ajukanPresentasi"
+                            class="btn btn-primary mx-2">Ajukan Presentasi</button>
                     </span>
                 </div>
                 {{-- Modal Ajukan presentasi --}}
@@ -99,15 +100,15 @@
                                     </td>
                                     <td class="d-flex align-items-center justify-content-center">
                                         @if ($data->user_approval_id === null)
-                                        <span class="badge bg-label-warning me-1">menunggu</span>
-
+                                            <span class="badge bg-label-warning me-1">menunggu</span>
                                         @else
-                                        <div data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        title="{{ $data->user_approval->username }}" class="avatar avatar-sm pull-up">
-                                        <img class="rounded-circle"
-                                            src="{{ $data->user_approval->avatar ? Storage::url($data->user_approval->avatar) : asset('assets/img/avatars/1.png') }}"
-                                            alt="Avatar">
-                                         </div>
+                                            <div data-bs-toggle="tooltip" data-popup="tooltip-custom"
+                                                data-bs-placement="top" title="{{ $data->user_approval->username }}"
+                                                class="avatar avatar-sm pull-up">
+                                                <img class="rounded-circle"
+                                                    src="{{ $data->user_approval->avatar ? Storage::url($data->user_approval->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                    alt="Avatar">
+                                            </div>
                                         @endif
                                     </td>
                                 </tr>
@@ -127,6 +128,23 @@
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <script src="{{ asset('assets/js/forms-editors.js') }}"></script>
+    <script>
+        $('#formAjukanPresentasi').on('submit', function(event) {
+            var judul = $('#judul').val();
+            var deskripsi = $('#deskripsi').val();
+
+            if (judul.length === 0 || deskripsi.length === 0) {
+                swal.fire('Peringatan', 'Mohon lengkapi semua data', 'warning');
+                event.preventDefault();
+            } else if (judul.length > 50) {
+                swal.fire('Peringatan', 'Judul terlalu panjang', 'warning');
+                event.preventDefault();
+            } else if (deskripsi.length > 250) {
+                swal.fire('Peringatan', 'Deskripsi terlalu panjang', 'warning');
+                event.preventDefault();
+            }
+        })
+    </script>
     <script>
         jQuery.noConflict();
 
