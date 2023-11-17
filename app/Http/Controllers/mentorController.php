@@ -286,31 +286,33 @@ class mentorController extends Controller
         $requestData = $request->all();
         // dd($requestData);
         $status = $request->input('status_tim');
-
+        $userID = Auth::user()->id;
+        $notifikasi = Notifikasi::where('user_id', $userID)->get();
         if ($status === 'all') {
-            $tims = Tim::with('user')->paginate(2);
+            $tims = Tim::with('user')->paginate(12);
         } elseif ($status === 'solo') {
-            $tims = Tim::with('user')->where('status_tim', 'solo')->paginate(2);
+            $tims = Tim::with('user')->where('status_tim', 'solo')->paginate(12);
         } elseif ($status === 'pre_mini') {
-            $tims = Tim::with('user')->where('status_tim', 'pre_mini')->paginate(2);
+            $tims = Tim::with('user')->where('status_tim', 'pre_mini')->paginate(12);
         } elseif ($status === 'mini') {
-            $tims = Tim::with('user')->where('status_tim', 'mini')->paginate(2);
+            $tims = Tim::with('user')->where('status_tim', 'mini')->paginate(12);
         } elseif ($status === 'big') {
-            $tims = Tim::with('user')->where('status_tim', 'big')->paginate(2);
+            $tims = Tim::with('user')->where('status_tim', 'big')->paginate(12);
         } else {
-            $tims = Tim::with('user')->paginate(2);
+            $tims = Tim::with('user')->paginate(12);
         }
 
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
 
-        return view('mentor.tim', compact('tims', 'status_tim'));
+        return view('mentor.tim', compact('tims', 'status_tim','notifikasi'));
     }
 
     public function cari(Request $request)
     {
         $namaTim = $request->input('nama_tim');
         $statusTim = $request->input('status_tim');
-
+        $userID = Auth::user()->id;
+        $notifikasi = Notifikasi::where('user_id', $userID)->get();
         $query = Tim::query();
 
         if (!empty($namaTim)) {
@@ -325,8 +327,8 @@ class mentorController extends Controller
 
         $tims = $query->paginate(99999);
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
-        dd($tims);
-        return view('mentor.tim', compact('tims', 'status_tim'));
+        // dd($tims);
+        return view('mentor.tim', compact('tims', 'status_tim','notifikasi'));
     }
 
     protected function detailProjekPage($code)

@@ -24,8 +24,7 @@
     <!-- Canonical SEO -->
     <link rel="canonical" href="https://1.envato.market/vuexy_admin">
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon"
-        href="{{ url('assets/img/icons/icon.svg') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ url('assets/img/icons/icon.svg') }}" />
 
     <!-- Include Styles -->
     <!-- $isFront is used to append the front layout styles only on the front layout otherwise the variable will be blank -->
@@ -237,7 +236,8 @@
                             <div>Presentasi</div>
                         </a>
                     </li>
-                    <li class="menu-item {{ request()->routeIs('tim') ? 'active' : '' }}">
+                    <li
+                        class="menu-item {{ request()->routeIs('tim') || request()->routeIs('cari_tim') || request()->routeIs('tim.filter') ? 'active' : '' }}">
                         <a href="{{ route('tim') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-users-group"></i>
                             <div>Tim</div>
@@ -340,7 +340,7 @@
                                     <li class="dropdown-menu-footer border-top">
                                         <a href="javascript:void(0);"
                                             class="dropdown-item d-flex justify-content-center text-primary p-2 h-px-40 mb-1 align-items-center">
-                                            
+
                                         </a>
                                     </li>
                                 </ul>
@@ -478,21 +478,21 @@
                     }
                 });
             }
-    
+
             function tampilkanNotifikasi(notifikasi) {
                 var daftarNotifikasi = $('#notification-list');
                 var countBadge = $('#notification-count');
-    
+
                 daftarNotifikasi.empty();
-    
+
                 countBadge.text(notifikasi.length);
-    
+
                 notifikasi.forEach(function(item) {
                     var waktuNotifikasi = new Date(item.created_at);
                     var waktuSekarang = new Date();
                     var perbedaanWaktu = Math.floor((waktuSekarang - waktuNotifikasi) /
-                    1000);
-    
+                        1000);
+
                     function formatWaktu(detik) {
                         if (detik < 60) {
                             return detik + ' detik yang lalu';
@@ -504,7 +504,7 @@
                             return Math.floor(detik / 86400) + ' hari yang lalu';
                         }
                     }
-    
+
                     var notifikasiBaru = `
                         <div class="d-flex mt-2 mb-2" id="notifikasi-${item.id}">
                             <div class="flex-shrink-0 me-3">
@@ -525,13 +525,13 @@
                             </div>
                         </div>
                     `;
-    
+
                     daftarNotifikasi.append(notifikasiBaru);
                 });
             }
-    
+
             ambilNotifikasi();
-    
+
             setInterval(function() {
                 ambilNotifikasi();
             }, 5000);
