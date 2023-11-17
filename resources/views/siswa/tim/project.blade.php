@@ -126,7 +126,7 @@
                         <div class="row">
                             <div class="col mb-3">
                                 <label for="nameWithTitle" class="form-label">Nama Tim</label>
-                                <input type="text" id="nameWithTitle" class="form-control" name="namaTimInput"
+                                <input type="text" id="nama-tim" class="form-control" name="namaTimInput"
                                     placeholder="Masukkan nama tim" value="{{ $tim->nama }}">
                             </div>
                         </div>
@@ -141,7 +141,7 @@
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="nameWithTitle" class="form-label">Deskripsi</label>
-                                    <textarea style="height: 150px; resize: none;" name="deskripsiInput" id="nameWithTitle" class="form-control"
+                                    <textarea style="height: 150px; resize: none;" name="deskripsiInput" id="deskripsi" class="form-control"
                                         placeholder="Masukkan deskripsi project anda">{{ $project->deskripsi ?? '' }}</textarea>
                                 </div>
                             </div>
@@ -207,8 +207,8 @@
                                 <div class="card">
                                     <h5 class="card-header">Progres Tim</h5>
                                     <div class="card-body">
-                                            <canvas id="project" class="chartjs mb-4" data-height="267"
-                                                style="display: block; box-sizing: border-box;  height: 200px; width: 200px;"></canvas>
+                                        <canvas id="project" class="chartjs mb-4" data-height="267"
+                                            style="display: block; box-sizing: border-box;  height: 200px; width: 200px;"></canvas>
                                         <ul class="doughnut-legend d-flex justify-content-around ps-0 mb-2 pt-1">
                                             <li class="ct-series-0 d-flex flex-column">
                                                 <h5 class="mb-0">Tugas Baru</h5>
@@ -335,13 +335,23 @@
                                                         {{ $project->deskripsi }}
                                                     </div>
                                                 </div>
-                                            @else
+                                            @elseif (@isset($project) && $project->deskripsi == null)
                                                 <div class="alert alert-warning d-flex align-items-center mt-4 cursor-pointer"
                                                     role="alert" data-bs-toggle="modal" data-bs-target="#editProject">
                                                     <span class="alert-icon text-warning me-2">
                                                         <i class="ti ti-bell ti-xs"></i>
                                                     </span>
                                                     Tim ini belum memiliki deskripsi tema, mohon isi agar dapat mengakses
+                                                    fitur lain nya!
+                                                </div>
+                                            @else
+                                                <div class="alert alert-warning d-flex align-items-center mt-4 cursor-pointer"
+                                                    role="alert" data-bs-toggle="modal" data-bs-target="#editProject">
+                                                    <span class="alert-icon text-warning me-2">
+                                                        <i class="ti ti-bell ti-xs"></i>
+                                                    </span>
+                                                    Tim ini belum memiliki project, mohon ajukan project agar dapat
+                                                    mengakses
                                                     fitur lain nya!
                                                 </div>
                                             @endif
@@ -572,26 +582,49 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     {{-- Validasi --}}
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const editModal = document.getElementById('editProject');
-            editModal.addEventListener('submit', function(event) {
-                const repoInput = document.getElementById('repoInput');
-                if (repoInput.value.trim() === '') {
-                    return;
-                }
+        $('#editProject').on('submit', function(e) {
+            var foto = $('#image-input').val();
+            var namaTim = $('#nama-tim').val();
+            var repo = $('#repo-input').val();
+            var deskripsi = $('#deskripsi').val();
 
-                if (!repoInput.value.match(
-                        /^(http(s)?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/)) {
-                    event.preventDefault(); // Mencegah pengiriman formulir
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Peringatan',
-                        text: 'URL Repository tidak valid!',
-                        showConfirmButton: false,
-                        timer: 1500,
-                    });
+            if (foto !== '') {
+                var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+                if (!allowedExtensions.exec(foto)) {
+                    e.preventDefault(); // Menghentikan pengiriman formulir
+                    swal.fire('Peringatan', 'File harus berupa gambar (jpg, jpeg, png, gif)', 'warning');
                 }
-            });
+            }
+
+            if (namaTim.length === 0) {
+                e.preventDefault();
+                swal.fire('Peringatan', 'Nama tim tidak boleh kosong', 'warning');
+            } else if (namaTim.length > 50) {
+                e.preventDefault();
+                swal.fire('Peringatan', 'Nama tim terlalu panjang', 'warning');
+            }
+
+            // Validasi repo (URL)
+            if (repo.length === 0) {
+                e.preventDefault();
+                swal.fire('Peringatan', 'Nama repo tidak boleh kosong', 'warning');
+            } else {
+                // Pengecekan apakah repo adalah URL menggunakan regex
+                var urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
+                if (!urlRegex.test(repo)) {
+                    e.preventDefault();
+                    swal.fire('Peringatan', 'Nama repo harus berupa URL yang valid', 'warning');
+                }
+            }
+            // Validasi deskripsi
+            if (deskripsi.length === 0) {
+                e.preventDefault();
+                swal.fire('Peringatan', 'Deskripsi tidak boleh kosong', 'warning');
+            } else if (deskripsi.length > 250) {
+                e.preventDefault();
+                swal.fire('Peringatan', 'Deskripsi terlalu panjang', 'warning');
+            }
+
         });
     </script>
     {{-- Validasi --}}
@@ -632,8 +665,7 @@
                 // Validasi jumlah array
                 try {
                     const temaArray = JSON.parse(temaInput);
-                    console.log(temaArray);
-                    if (!Array.isArray(temaArray) || temaArray.length !== 5) {
+                    if (!Array.isArray(temaArray) || temaArray.length !== 10) {
                         throw new Error();
                     }
                 } catch (error) {
@@ -641,7 +673,7 @@
                     Swal.fire({
                         icon: 'warning',
                         title: 'Peringatan',
-                        text: 'Inputkan 5 tema!',
+                        text: 'Inputkan 10 tema!',
                         showConfirmButton: false,
                         timer: 1500,
                     });
