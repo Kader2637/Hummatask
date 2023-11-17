@@ -157,7 +157,7 @@ class timController extends Controller
     protected function statistikPage($code)
     {
         $title = "Tim/Statistik";
-        $tim = Tim::where('code', $code)->firstOrFail();
+        $tim = Tim::with('anggota.jabatan')->where('code', $code)->firstOrFail();
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
 
