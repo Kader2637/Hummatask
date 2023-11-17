@@ -424,6 +424,7 @@
 
                                         console.log("klik edit code " + codeTugas);
                                         const data = res.data;
+                                        console.log(data);
                                         const user = data.tugas.tim.user;
                                         const userSelected = data.user;
                                         const comments = data.tugas.comments;

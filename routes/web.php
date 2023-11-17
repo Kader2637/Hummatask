@@ -76,6 +76,8 @@ Route::prefix('tim')->controller(timController::class)->group(function () {
 
 
         // proses di halaman tim
+    });
+    Route::middleware(['auth','siswa'])->group(function(){
         Route::get('tampil-tugas/{code}', [TugasController::class, 'getData'])->name('tim.tampilTugas');
         Route::post('board/tambah-tugas/{code}', [TugasController::class, 'buatTugas']);
         Route::post('ajukan-presentasi/{code}', [PresentasiController::class, 'ajukanPresentasi'])->name('ajukan-presentasi');
