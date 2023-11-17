@@ -151,19 +151,6 @@ class timController extends Controller
             ['Tugas Baru', $tugasBaruCount]
         ];
 
-
-
-        // $daysRemaining = in_array(1, $days);
-        // if ($daysRemaining) {
-        //     $user = Auth::user()->id;
-        //     $notification = Notifikasi::create([
-        //         'user_id' => $user,
-        //         'judul' => 'Deadline Project',
-        //         'body' => 'Deadline project Anda tinggal 1 hari lagi!',
-        //         'status' => 'belum_dibaca',
-        //     ]);
-        // }
-
         return view('siswa.tim.project', compact('hasProjectRelation', 'days', 'tanggal', 'persentase', 'selesaiCount', 'revisiCount', 'chartData', 'title', 'tim', 'anggota', 'project', 'notifikasi',));
     }
 

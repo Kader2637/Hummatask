@@ -13,7 +13,6 @@ use App\Http\Controllers\siswaController;
 use App\Http\Controllers\tambahUsersController;
 use App\Http\Controllers\timController;
 use App\Http\Controllers\TugasController;
-use App\Models\Tugas;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->controller(authController::class)->group(function () {
@@ -73,9 +72,10 @@ Route::prefix('tim')->controller(timController::class)->group(function () {
         Route::delete('/delete-tugas', 'hapusTugas')->name('delete.tugas');
         Route::post('/add-comment', 'comments')->name('tim.addComment');
         Route::get('/view-comment', 'viewComments');
-    });
 
-    Route::middleware(['auth','siswa'])->group(function(){
+
+
+        // proses di halaman tim
         Route::get('tampil-tugas/{code}', [TugasController::class, 'getData'])->name('tim.tampilTugas');
         Route::post('board/tambah-tugas/{code}', [TugasController::class, 'buatTugas']);
         Route::post('ajukan-presentasi/{code}', [PresentasiController::class, 'ajukanPresentasi'])->name('ajukan-presentasi');
