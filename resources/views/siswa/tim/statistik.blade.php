@@ -1,5 +1,20 @@
 @extends('layouts.tim')
 
+@section('style')
+    <style>
+
+        .user-kontribusi{
+            cursor: pointer;
+        }
+
+        .user-kontribusi:hover{
+            border-left: 20px solid blueviolet;
+            border-right: 20px solid blueviolet;
+            transition: 0.2s ease-in-out;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="container-fluid d-flex mt-5 justify-content-center">
         <div class="col-12">
@@ -47,7 +62,7 @@
                                     <div class="card-body">
                                         <ul class="p-0 m-0">
                                             @foreach ($anggota as $i => $user)
-                                                <li class="d-flex align-items-center mb-4" id="user-kontribusi-{{ $user->uuid }}" onclick="getKontribusi('{{ $user->uuid }}')">
+                                                <li class="d-flex align-items-center mb-4 user-kontribusi" id="user-kontribusi-{{ $user->uuid }}" onclick="getKontribusi('{{ $user->uuid }}')">
                                                     <img src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/svg/flags/us.svg"
                                                         alt="User" class="rounded-circle me-3" width="34">
                                                     <div
@@ -57,7 +72,7 @@
                                                                 <h6 class="mb-0 me-1">{{ $user->username }}</h6>
                                                             </div>
 
-                                                            {{-- <small class="text-muted">{{ $user->anggota->jabatan[0]->nama_jabatan }}</small> --}}
+                                                            <small class="text-muted">{{ $jabatan[$i] }}</small>
                                                         </div>
                                                         <div class="user-progress">
                                                             <p
@@ -382,8 +397,8 @@
         function getKontribusi(uuid){
 
 
-
             const code =  "{{ $tim->code }}";
+            console.log(uuid);
             axios.get(`data-kontribusi/${code}/${uuid}`)
             .then((res) => {
 
@@ -394,7 +409,7 @@
                 const tugasBiasa = data.tugasBiasa;
                 const persentase = data.presentaseTugasSelesai;
 
-                console.log(tugasMendesak);
+                console.log(data);
 
                 $("#totalKontribusiTugas").html(tugasTerkontribusi);
                 $("#tugasMendesak").html(tugasMendesak);

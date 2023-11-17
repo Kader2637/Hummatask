@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tim;
 use App\Models\User;
-use Illuminate\Http\Request;
-use PhpParser\Node\Stmt\TryCatch;
+
 
 class StatistikTimController extends Controller
 {
@@ -14,10 +14,14 @@ class StatistikTimController extends Controller
         // $user = User::where('uuid', $uuid)->with(['tim' => function ($query) use ($code) {
         //     $query->where('code', $code)->with('tugas');
         // }])->first();
-        $tugasTerkontribusi = User::where('uuid', $uuid)->first()->tim->where('code',$code)->first()->tugas;
-        $tugasMendesak = $tugasTerkontribusi->where('prioritas','mendesak')->count();
-        $tugasPenting = $tugasTerkontribusi->where('prioritas','penting')->count();
-        $tugasBiasa = $tugasTerkontribusi->where('prioritas','biasa')->count();
+
+        $user = Tim::where('code',$code)->first()->user->where('uuid',$uuid)->first();
+
+        $tugasTerkontribusi = $user->tugas;
+        $tugasMendesak = $user->tugas->where('prioritas','mendesak')->count();
+        $tugasPenting = $user->tugas->where('prioritas','penting')->count();
+        $tugasBiasa = $user->tugas->where('prioritas','biasa')->count();
+
         try {
             $presentaseTugasSelesai = ($tugasTerkontribusi->where('status_tugas', 'selesai')->count() / $tugasTerkontribusi->count()) * 100;
         } catch (\Throwable $th) {
