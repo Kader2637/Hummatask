@@ -137,12 +137,13 @@ $tugas = [
             $request->all(),
             [
                 'nama' => '|max:50',
-                'deadline' => 'nullable|date|after_or_equal:today',
+                'deadline' => 'required|date|after_or_equal:today',
                 'status_tugas' => 'in:tugas_baru,dikerjakan,revisi,selesai',
                 'prioritas' => 'in:mendesak,penting,biasa,tambahan,opsional',
             ],
             [
                 'nama.max:50' => ' Nama tugas tidak boleh lebih dari 50 karakter',
+                'deadline.required' => 'Wajib mengisi deadline',
                 'deadline.date' => 'Format tanggal Deadline tidak valid.',
                 'deadline.after_or_equal' => 'Tanggal tidak boleh hari kemarin',
                 'status_tugas.required' => 'Kolom Status Tugas wajib diisi.',

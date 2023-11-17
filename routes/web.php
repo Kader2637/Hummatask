@@ -10,6 +10,7 @@ use App\Http\Controllers\PengajuanTimController;
 use App\Http\Controllers\PresentasiController;
 use App\Http\Controllers\profileController;
 use App\Http\Controllers\siswaController;
+use App\Http\Controllers\StatistikTimController;
 use App\Http\Controllers\tambahUsersController;
 use App\Http\Controllers\timController;
 use App\Http\Controllers\TugasController;
@@ -88,6 +89,8 @@ Route::prefix('tim')->controller(timController::class)->group(function () {
         Route::delete('board/delete/tugas/{codeTugas}',[TugasController::class,'hapusTugas']);
         Route::post("board/tambah-komentar",[TugasController::class,'tambahKomentar']);
         Route::delete('board/hapus-komentar/{tugas_id}',[TugasController::class,'hapusKomentar']);
+
+        Route::get('statistik/data-kontribusi/{codeTim}/{uuid}',[StatistikTimController::class,'getDataKontribusi']);
     });
 
 });
