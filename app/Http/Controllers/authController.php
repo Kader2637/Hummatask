@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\peran;
+use App\Models\Presentasi;
+use App\Models\Project;
+use App\Models\Tim;
+use App\Models\Tugas;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -23,7 +27,11 @@ class authController extends Controller
     protected function welcomePage(Request $request)
     {
         $title = 'Hummatask';
-        return response()->view('welcome', compact('title'));
+        $user = User::all()->where('peran_id', 1)->count();
+        $tim = Tim::all()->count();
+        $project = Project::all()->count();
+        $task = Presentasi::all()->where('status_presentasi', 'selesai')->count();
+        return response()->view('welcome', compact('title', 'user', 'tim', 'project', 'task'));
     }
 
     protected function loginPage(Request $request)
@@ -61,23 +69,23 @@ class authController extends Controller
     public function sendResetLinkEmail(Request $request)
     {
         $request->validate(['email' => 'required|email']);
-    
+
         $user = User::where('email', $request->email)->first();
         if (!$user) {
             throw ValidationException::withMessages(['email' => 'Email tidak ditemukan']);
         }
-    
+
         $status = Password::sendResetLink(
             $request->only('email')
         );
-    
+
         if ($status === Password::RESET_LINK_SENT) {
             return back()->with(['status' => __('Reset link telah dikirim. Silakan cek email Anda untuk petunjuk lebih lanjut.')]);
         } else {
             return back()->withErrors(['email' => __('Tunggu beberapa saat lagi untuk kirim email')]);
         }
     }
-    
+
 
     public function passwordReset(Request $request)
     {

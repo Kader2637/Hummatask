@@ -40,12 +40,12 @@
     <script src="{{ asset('assets/vendor/js/template-customizer.js') }}"></script>
     <script src="{{ asset('assets/js/front-config.js') }}"></script>
 
-<!-- Vendor Styles -->
-<link rel="stylesheet" href="{{ asset('assets/vendor/libs/swiper/swiper.css')}}" />
+    <!-- Vendor Styles -->
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/swiper/swiper.css') }}" />
 
 
-<!-- Page Styles -->
-<link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/ui-carousel.css')}}" />
+    <!-- Page Styles -->
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/ui-carousel.css') }}" />
     <script>
         window.templateCustomizer = new TemplateCustomizer({
             cssPath: '',
@@ -275,7 +275,6 @@
                 </div>
             </div>
         </section>
-
         <section id="landingFunFacts" class="section-py bg-body landing-reviews pb-0">
             <div class="container">
                 <div class="row gy-3">
@@ -284,9 +283,9 @@
                             <div class="card-body text-center">
                                 <img src="{{ asset('assets/img/front-pages/icons/laptop.png') }}" alt="laptop"
                                     class="mb-2" />
-                                <h5 class="h2 mb-1">7</h5>
+                                <h5 class="h2 mb-1">{{ $task }}</h5>
                                 <p class="fw-medium mb-0">
-                                    Materi di LMS
+                                    Presentasi selesai
                                 </p>
                             </div>
                         </div>
@@ -296,9 +295,9 @@
                             <div class="card-body text-center">
                                 <img src="{{ asset('assets/img/front-pages/icons/user-success.png') }}"
                                     alt="laptop" class="mb-2" />
-                                <h5 class="h2 mb-1">50</h5>
+                                <h5 class="h2 mb-1">{{ $user }}</h5>
                                 <p class="fw-medium mb-0">
-                                    Siswa Magang
+                                    Siswa Magang Hummatech
                                 </p>
                             </div>
                         </div>
@@ -308,9 +307,9 @@
                             <div class="card-body text-center">
                                 <img src="{{ asset('assets/img/front-pages/icons/user.png') }}" alt="laptop"
                                     class="mb-2" />
-                                <h5 class="h2 mb-1">200</h5>
+                                <h5 class="h2 mb-1" id="countingElement">{{ $tim }}</h5>
                                 <p class="fw-medium mb-0">
-                                    Siswa Alumni<br />
+                                    Team terbuat di Hummatask<br />
                                 </p>
                             </div>
                         </div>
@@ -320,9 +319,9 @@
                             <div class="card-body text-center">
                                 <img src="{{ asset('assets/img/front-pages/icons/check-warning.png') }}"
                                     alt="laptop" class="mb-2" />
-                                <h5 class="h2 mb-1">100%</h5>
+                                <h5 class="h2 mb-1">{{ $project }}</h5>
                                 <p class="fw-medium mb-0">
-                                    Reating Google Maps
+                                    Project selesai
                                 </p>
                             </div>
                         </div>
@@ -336,7 +335,7 @@
                 <div class="row align-items-center gx-0 gy-4 g-lg-5">
                     <div class="col-md-6 col-lg-5 col-xl-3">
                         <div class="mb-3 pb-1">
-                            <span class="badge bg-label-primary">menjalin kerja sama</span>
+                            <span class="badge bg-label-primary text-capitalize">menjalin kerja sama</span>
                         </div>
                         <h3 class="mb-1"><span class="section-title">Sekolah yang bekerja sama</span></h3>
                         <p class="mb-0 mb-md-1">
@@ -445,15 +444,20 @@
                     <div class="swiper gallery-top">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide"
-                                style="background-image:url({{ asset('assets/img/backgrounds/2.jpg')}})">Slide 1</div>
+                                style="background-image:url({{ asset('assets/img/backgrounds/2.jpg') }})">Slide 1
+                            </div>
                             <div class="swiper-slide"
-                                style="background-image:url({{ asset('assets/img/backgrounds/1.jpg')}})">Slide 2</div>
+                                style="background-image:url({{ asset('assets/img/backgrounds/1.jpg') }})">Slide 2
+                            </div>
                             <div class="swiper-slide"
-                                style="background-image:url({{ asset('assets/img/backgrounds/3.jpg')}})">Slide 3</div>
+                                style="background-image:url({{ asset('assets/img/backgrounds/3.jpg') }})">Slide 3
+                            </div>
                             <div class="swiper-slide"
-                                style="background-image:url({{ asset('assets/img/backgrounds/4.jpg')}})">Slide 4</div>
+                                style="background-image:url({{ asset('assets/img/backgrounds/4.jpg') }})">Slide 4
+                            </div>
                             <div class="swiper-slide"
-                                style="background-image:url({{ asset('assets/img/backgrounds/6.jpg')}})">Slide 5</div>
+                                style="background-image:url({{ asset('assets/img/backgrounds/6.jpg') }})">Slide 5
+                            </div>
                         </div>
                         <!-- Add Arrows -->
                         <div class="swiper-button-next swiper-button-white"></div>
@@ -462,15 +466,20 @@
                     <div class="swiper gallery-thumbs">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide"
-                                style="background-image:url({{ asset('assets/img/backgrounds/2.jpg')}})">Slide 1</div>
+                                style="background-image:url({{ asset('assets/img/backgrounds/2.jpg') }})">Slide 1
+                            </div>
                             <div class="swiper-slide"
-                                style="background-image:url({{ asset('assets/img/backgrounds/1.jpg')}})">Slide 2</div>
+                                style="background-image:url({{ asset('assets/img/backgrounds/1.jpg') }})">Slide 2
+                            </div>
                             <div class="swiper-slide"
-                                style="background-image:url({{ asset('assets/img/backgrounds/3.jpg')}})">Slide 3</div>
+                                style="background-image:url({{ asset('assets/img/backgrounds/3.jpg') }})">Slide 3
+                            </div>
                             <div class="swiper-slide"
-                                style="background-image:url({{ asset('assets/img/backgrounds/4.jpg')}})">Slide 4</div>
+                                style="background-image:url({{ asset('assets/img/backgrounds/4.jpg') }})">Slide 4
+                            </div>
                             <div class="swiper-slide"
-                                style="background-image:url({{ asset('assets/img/backgrounds/6.jpg')}})">Slide 5</div>
+                                style="background-image:url({{ asset('assets/img/backgrounds/6.jpg') }})">Slide 5
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -500,18 +509,16 @@
                                     <button type="button" class="accordion-button" data-bs-toggle="collapse"
                                         data-bs-target="#accordionOne" aria-expanded="true"
                                         aria-controls="accordionOne">
-                                        Do you charge for each upgrade?
+                                        Web apa ini?
                                     </button>
                                 </h2>
 
                                 <div id="accordionOne" class="accordion-collapse collapse show"
                                     data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        Lemon drops chocolate cake gummies carrot cake chupa chups muffin topping.
-                                        Sesame snaps icing
-                                        marzipan gummi bears macaroon dragée danish caramels powder. Bear claw dragée
-                                        pastry topping
-                                        soufflé. Wafer gummi bears marshmallow pastry pie.
+                                        Ini adalah sebuah web pengelola tugas anak magang di Hummatech, harapan nya
+                                        dengan ada nya web ini, para siswa magang dapat mengelola pekerjaan mereka
+                                        dengan lebih efisien.
                                     </div>
                                 </div>
                             </div>
@@ -520,17 +527,15 @@
                                     <button type="button" class="accordion-button collapsed"
                                         data-bs-toggle="collapse" data-bs-target="#accordionTwo"
                                         aria-expanded="false" aria-controls="accordionTwo">
-                                        Do I need to purchase a license for each website?
+                                        Apa fitur-fitur nya?
                                     </button>
                                 </h2>
                                 <div id="accordionTwo" class="accordion-collapse collapse"
                                     aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        Dessert ice cream donut oat cake jelly-o pie sugar plum cheesecake. Bear claw
-                                        dragée oat cake
-                                        dragée ice cream halvah tootsie roll. Danish cake oat cake pie macaroon tart
-                                        donut gummies. Jelly
-                                        beans candy canes carrot cake. Fruitcake chocolate chupa chups.
+                                        Fitur-fitur yang ada di web ini adalah Board untuk mengelola tugas, Catatan
+                                        untuk catatan tim atau catatan presentasi, Pengajuan dan history presentasi, dan
+                                        ada halaman project untuk melihat statistik project.
                                     </div>
                                 </div>
                             </div>
@@ -539,23 +544,14 @@
                                     <button type="button" class="accordion-button collapsed"
                                         data-bs-toggle="collapse" data-bs-target="#accordionThree"
                                         aria-expanded="false" aria-controls="accordionThree">
-                                        What is regular license?
+                                        Apakah web ini memerlukan biaya tambahan?
                                     </button>
                                 </h2>
                                 <div id="accordionThree" class="accordion-collapse collapse"
                                     aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        Regular license can be used for end products that do not charge users for access
-                                        or service(access
-                                        is free and there will be no monthly subscription fee). Single regular license
-                                        can be used for
-                                        single end product and end product can be used by you or your client. If you
-                                        want to sell end
-                                        product to multiple clients then you will need to purchase separate license for
-                                        each client. The
-                                        same rule applies if you want to use the same end product on multiple
-                                        domains(unique setup). For
-                                        more info on regular license you can check official description.
+                                        Tidak ada, karena web ini di khususkan untuk siswa magang Hummatech dan dapat
+                                        digunakan secara gratis.
                                     </div>
                                 </div>
                             </div>
@@ -564,17 +560,13 @@
                                     <button type="button" class="accordion-button collapsed"
                                         data-bs-toggle="collapse" data-bs-target="#accordionFour"
                                         aria-expanded="false" aria-controls="accordionFour">
-                                        What is extended license?
+                                        Web ini dibuat menggunakan bahasa apa?
                                     </button>
                                 </h2>
                                 <div id="accordionFour" class="accordion-collapse collapse"
                                     aria-labelledby="headingFour" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis et aliquid
-                                        quaerat possimus maxime!
-                                        Mollitia reprehenderit neque repellat deleniti delectus architecto dolorum
-                                        maxime, blanditiis
-                                        earum ea, incidunt quam possimus cumque.
+                                        Web ini dibuat menggunakan Laravel, yaitu framework dari bahasa php.
                                     </div>
                                 </div>
                             </div>
@@ -583,17 +575,13 @@
                                     <button type="button" class="accordion-button collapsed"
                                         data-bs-toggle="collapse" data-bs-target="#accordionFive"
                                         aria-expanded="false" aria-controls="accordionFive">
-                                        Which license is applicable for SASS application?
+                                        Kapan web ini dibuat?
                                     </button>
                                 </h2>
                                 <div id="accordionFive" class="accordion-collapse collapse"
                                     aria-labelledby="headingFive" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sequi molestias
-                                        exercitationem ab cum
-                                        nemo facere voluptates veritatis quia, eveniet veniam at et repudiandae mollitia
-                                        ipsam quasi
-                                        labore enim architecto non!
+                                        Web ini dibuat pada bulan oktober tahun 2023.
                                     </div>
                                 </div>
                             </div>
@@ -706,15 +694,16 @@
     </footer>
     <script src="{{ asset('assets/vendor/js/dropdown-hover.js') }}"></script>
     <script src="{{ asset('assets/vendor/js/mega-dropdown.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/node-waves/node-waves259f.js?id=4fae469a3ded69fb59fce3dcc14cd638') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/node-waves/node-waves259f.js?id=4fae469a3ded69fb59fce3dcc14cd638') }}">
+    </script>
     <script src="{{ asset('assets/vendor/libs/popper/popper0a73.js?id=baf82d96b7771efbcc05c3b77135d24c') }}"></script>
     <script src="{{ asset('assets/vendor/js/bootstraped84.js?id=9a6c701557297a042348b5aea69e9b76') }}"></script>
     <script src="{{ asset('assets/vendor/libs/nouislider/nouislider.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/swiper/swiper.js') }}"></script>
     <script src="{{ asset('assets/js/front-main1b3c.js?id=2c2564d4c142df108c8f3152af8e0460') }}"></script>
     <script src="{{ asset('assets/js/front-page-landing.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/swiper/swiper.js')}}"></script>
-    <script src="{{ asset('assets/js/ui-carousel.js')}}"></script>
+    <script src="{{ asset('assets/vendor/libs/swiper/swiper.js') }}"></script>
+    <script src="{{ asset('assets/js/ui-carousel.js') }}"></script>
 </body>
 
 </html>
