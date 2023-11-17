@@ -363,7 +363,7 @@
                                     <li class="dropdown-menu-footer border-top">
                                         <a href="javascript:void(0);"
                                             class="dropdown-item d-flex justify-content-center text-primary p-2 h-px-40 mb-1 align-items-center">
-                                            
+
                                         </a>
                                     </li>
                                 </ul>
@@ -503,6 +503,25 @@
 
                 {{-- validasi --}}
                 <script>
+
+
+
+       $(document).ready(function() {
+  // Ketika input file berubah
+  $('#image-input1').on('change', function(e) {
+    var file = e.target.files[0];
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      // Mengubah src gambar preview
+      $('#preview-image1').attr('src', e.target.result);
+    }
+
+    reader.readAsDataURL(file);
+  });
+});
+
+
                     document.addEventListener('DOMContentLoaded', function() {
                         const editUserForm = document.getElementById('editUserForm');
 
@@ -605,21 +624,7 @@
     <script src="{{ asset('assets/js/dashboards-crm.js') }}"></script>
 
     <script>
-        let imageInput = $("#image-input1");
-        imageInput.on('change', function() {
-            let previewImage = $("#preview-image1");
-            let file = imageInput[0].files[0];
 
-            if (file) {
-                let reader = new FileReader();
-                reader.onload = function(e) {
-                    previewImage.attr('src', e.target.result);
-                }
-                reader.readAsDataURL(file);
-            } else {
-                previewImage.attr('src', '');
-            }
-        });
 
         const buatTim = () => {
             Swal.fire({
@@ -680,7 +685,7 @@
                 var waktuNotifikasi = new Date(item.created_at);
                 var waktuSekarang = new Date();
                 var perbedaanWaktu = Math.floor((waktuSekarang - waktuNotifikasi) /
-                1000); 
+                1000);
 
                 function formatWaktu(detik) {
                     if (detik < 60) {
@@ -723,7 +728,7 @@
 
         setInterval(function() {
             ambilNotifikasi();
-        }, 5000); 
+        }, 5000);
     });
 </script>
 
@@ -752,7 +757,7 @@
             });
         </script>
     @endif
-    
+
     @yield('script')
 
 </body>
