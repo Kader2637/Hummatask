@@ -18,7 +18,7 @@
                     <li class="nav-item" role="presentation">
                         <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
                             data-bs-target="#navs-pills-top-messages" aria-controls="navs-pills-top-messages"
-                            aria-selected="false" tabindex="-1">Semua</button>
+                            aria-selected="false" tabindex="-1">Project</button>
                     </li>
                 </ul>
                 <div class="tab-content py-0 px-0" style="border: none; background: none; box-shadow: none;">

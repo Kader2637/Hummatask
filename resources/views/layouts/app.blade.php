@@ -449,7 +449,7 @@
                                                 <img id="preview-image1"
                                                     src="{{ asset('assets/img/avatars/pen.png') }}"
                                                     alt="example placeholder"
-                                                    style="width: 150px; height: 150px; border-radius: 10px; cursor: pointer" />
+                                                    style="width: 150px; height: 150px; border-radius: 10px; cursor: pointer;object-fit: cover" />
                                                 <input type="file" class="form-control d-none" id="image-input1"
                                                     name="logo" />
                                                 @error('logo')

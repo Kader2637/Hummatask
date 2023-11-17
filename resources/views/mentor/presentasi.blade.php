@@ -363,7 +363,7 @@
 
 
     <div class="container mt-3">
-        <h2 class="fs-4">Presentasi</h2>
+        <h2 class="fs-4 mt-3">Presentasi</h2>
         <div class="row">
             @forelse ($historyPresentasi as $history)
                 <div class="col-md-4 mb-4">
@@ -390,6 +390,10 @@
                     </div>
                 </div>
             @empty
+            <div class="container">
+                <img style="width: 40%;" class="d-block mx-auto" src="{{ asset('assets/img/no-data-presentasi.png') }}" alt="">
+                <h3 style="margin-top: -20px;" class="text-center text-primary">Belum ada History Presentasi</h3>
+            </div>
 
             @endforelse
         </div>
