@@ -327,10 +327,10 @@
                                         <td class="nama">
                                             @if ($item->avatar)
                                                 <img src="{{ asset('storage/' . $item->avatar) }}" alt=""
-                                                    style="width:30px;hight:30px;border-radius:50%">
+                                                    style="width:30px;height:30px;border-radius:50%">
                                             @else
                                                 <img src="{{ asset('assets/img/avatars/1.png') }}" alt=""
-                                                    style="width:30px;hight:30px;border-radius:50%">
+                                                    style="width:30px;height:30px;border-radius:50%">
                                             @endif
                                             <span class="ml-3">
                                                 {{ $item->username }}
@@ -345,7 +345,7 @@
                                                     data-avatar="{{ $item->avatar }}" data-tlp="{{ $item->tlp }}"
                                                     data-peran="{{ $item->peran->peran }}"
                                                     data-sekolah="{{ $item->sekolah }}" data-email="{{ $item->email }}"
-                                                    data-masa-magang="{{ $item->created_at->translatedFormat('l, j F Y') }}"><i
+                                                    data-masa-magang="{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('l, j F Y') }}"><i
                                                         class="ti ti-eye me-1"></i></span>
                                                 <span class="cursor-pointer" id="delete-button-{{ $item->uuid }}"
                                                     href="javascript:void(0);"><i class="ti ti-trash me-1"></i></span>
@@ -381,11 +381,11 @@
                                             <td class="nama">
                                                 @if ($item->user->avatar)
                                                     <img src="{{ asset('storage/' . $item->user->avatar) }}"
-                                                        alt="" style="width:30px;hight:30px;border-radius:50%">
+                                                        alt="" style="width:30px;height:30px;border-radius:50%">
                                                     {{ $item->user->username }}
                                                 @else
                                                     <img src="{{ asset('assets/img/avatars/1.png') }}" alt=""
-                                                        style="width:30px;hight:30px;border-radius:50%">
+                                                        style="width:30px;height:30px;border-radius:50%">
                                                     {{ $item->user->username }}
                                                 @endif
                                             </td>
@@ -439,10 +439,10 @@
                                         <td class="nama">
                                             @if ($item->avatar)
                                                 <img src="{{ asset('storage/' . $item->avatar) }}" alt=""
-                                                    style="width:30px;hight:30px;border-radius:50%">
+                                                    style="width:30px;height:30px;border-radius:50%">
                                             @else
                                                 <img src="{{ asset('assets/img/avatars/1.png') }}" alt=""
-                                                    style="width:30px;hight:30px;border-radius:50%">
+                                                    style="width:30px;height:30px;border-radius:50%">
                                             @endif
                                             {{ $item->username }}
                                         </td>
@@ -487,11 +487,11 @@
                                             <td class="nama">
                                                 @if ($item->user->avatar)
                                                     <img src="{{ asset('storage/' . $item->user->avatar) }}"
-                                                        alt="" style="width:30px;hight:30px;border-radius:50%">
+                                                        alt="" style="width:30px;height:30px;border-radius:50%">
                                                     {{ $item->user->username }}
                                                 @else
                                                     <img src="{{ asset('assets/img/avatars/1.png') }}" alt=""
-                                                        style="width:30px;hight:30px;border-radius:50%">
+                                                        style="width:30px;height:30px;border-radius:50%">
                                                     {{ $item->user->username }}
                                                 @endif
                                             </td>
@@ -798,7 +798,7 @@
                                 <label for="emailWithTitle" class="form-label">TEAM</label>
                                 <div class="col mb-3">
                                     <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                        style="width: 80%;hight:80%;border-radius:20%">
+                                        style="width: 80%;height:80%;border-radius:20%">
                                     <span>Hummatech</span>
                                 </div>
                                 <div class="col mb-0">
@@ -806,18 +806,18 @@
                                     <div class="avatar-container">
                                         <div class="d-flex">
                                             <img src="{{ asset('assets/img/avatars/5.png') }}" alt="Avatar"
-                                                style="width:30px;hight:30px;border-radius:50%" class="avatar">
+                                                style="width:30px;height:30px;border-radius:50%" class="avatar">
                                             <span>saputra</span>
                                         </div>
                                         <div class="d-flex">
                                             <img src="{{ asset('assets/img/avatars/12.png') }}" alt="Avatar"
-                                                style="width:30px;hight:30px;border-radius:50%" class="avatar">
+                                                style="width:30px;height:30px;border-radius:50%" class="avatar">
                                             <span>saputra</span>
                                         </div>
                                         <img src="{{ asset('assets/img/avatars/9.png') }}" alt="Avatar"
-                                            style="width:30px;hight:30px;border-radius:50%" class="avatar">
+                                            style="width:30px;height:30px;border-radius:50%" class="avatar">
                                         <img src="{{ asset('assets/img/avatars/6.png') }}" alt="Avatar"
-                                            style="width:30px;hight:30px;border-radius:50%" class="avatar">
+                                            style="width:30px;height:30px;border-radius:50%" class="avatar">
                                     </div>
                                 </div>
                             </div>
@@ -826,7 +826,7 @@
                                     <label for="emailWithTitle" class="form-label">KETUA</label>
                                     <div class="col mb-3">
                                         <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                            style="width: 10%;hight:10%;border-radius:20%">
+                                            style="width: 10%;height:10%;border-radius:20%">
                                     </div>
                                 </div>
                             </div>
