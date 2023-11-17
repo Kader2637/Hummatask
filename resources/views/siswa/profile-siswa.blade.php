@@ -227,7 +227,7 @@
                                                     </div>
 
                                                     <div class="d-flex justify-content-between">
-                                                        <span>Tema :@if (isset($item->project[0]))
+                                                        <span>Tema :@if (isset($item->project[0]) && $item->project[0]->tema_id != null)
                                                                 {{ $item->project[0]->tema->nama_tema }}
                                                             @else
                                                                 belum ada
@@ -241,7 +241,7 @@
                                                     data-logo="{{ asset('storage/' . $item->logo) }}"
                                                     data-namatim="{{ $item->nama }}"
                                                     data-status="{{ $item->status_tim }}"
-                                                    data-tema="{{ isset($item->project[0]) ? $item->project[0]->tema->nama_tema : 'belum ada' }}"
+                                                    data-tema="{{ isset($item->project[0]) && $item->project[0]->tema_id != null ? $item->project[0]->tema->nama_tema : 'belum ada' }}"
                                                     data-tglmulai="{{ $item->created_at->translatedFormat('l, j F Y') }}"
                                                     data-deadline="{{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}"
                                                     data-anggota="{{ $anggotaJson }}"
