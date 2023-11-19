@@ -107,7 +107,8 @@
                                         class="w-100 btn btn-primary btn-detail-projek edit-tim btn-edit"
                                         data-anggota="{{ json_encode($tim->user->pluck('id')) }}"
                                         data-id="{{ $tim->id }}" data-url="/mentor/tim/edit/{{ $tim->id }}"
-                                        data-status="{{ $tim->status_tim }}">
+                                        data-status="{{ $tim->status_tim }}" data-logo="{{ $tim->logo }}"
+                                        data-kadaluwarsa="{{ $tim->kadaluwarsa }}">
                                         <span class="text-white">Update</span>
                                     </a>
                                 @endif
@@ -284,11 +285,11 @@
         {{-- Modal Buat Tim --}}
 
     </div>
-    <form method="post" action="{{ route('tim.update', ['timId' => $tim->id]) }}" id="updateTimForm">
-        <input type="hidden" name="logo" value="{{ $tim->logo }}">
+    <form method="post" id="updateTimForm">
         @csrf
         <input type="hidden" name="modalDataId" id="modalDataIdInput" value="">
-
+        <input type="hidden" id="logoInput" name="logo" value="">
+        {{-- <input type="text" id="exp" value=""> --}}
         <div class="modal fade" id="edit" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -302,14 +303,13 @@
                         <div class="row">
                             <div class="col mb-3">
                                 <label for="status_tim" class="form-label">Kategori Tim</label>
-                                <select id="tim_status_modal" name="status_tim" class=" form-select form-select"
+                                <select id="tim_status_modal" name="status_tim" class="form-select form-select"
                                     data-allow-clear="true">
                                     <option value="" disabled selected>Pilih Tim</option>
                                     <option class="nowStatus" value="pre_mini">Pre mini projek</option>
                                     <option class="nowStatus" value="mini">Mini projek</option>
                                     <option class="nowStatus" value="big">Big projek</option>
                                 </select>
-
 
                                 @error('status_tim')
                                     <p class="text-danger">{{ $message }}</p>
@@ -342,6 +342,28 @@
                                     </p>
                                 @enderror
                             </div>
+                        </div>
+
+                        <div>
+                            <label for="ketua" class="form-label">Kondisi Tim</label>
+
+                            <div class="form-check">
+                                <input name="kadaluwarsa" class="form-check-input aktif" type="radio" value="0"
+                                    id="aktif" />
+
+                                <label class="form-check-label" for="aktif">
+                                    Aktif
+                                </label>
+                            </div>
+                            <div class="form-check mt-3">
+                                <input name="kadaluwarsa" class="form-check-input aktif" id="deaktif" type="radio"
+                                    value="1" />
+
+                                <label class="form-check-label" for="deaktif">
+                                    De aktif
+                                </label>
+                            </div>
+
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -376,13 +398,38 @@
                             showConfirmButton: false,
                             timer: 1700,
                         }).then(() => {
+                            $('#updateTimForm ').modal('hide');
                             $('#saveButton').show();
 
                             window.location.reload();
                         });
                     },
-                    error: function(error) {
-                        console.error('Error submitting form', error.responseText);
+                    error: function(xhr, status, errors) {
+                        console.log('Response:', xhr.responseText);
+
+                        if (xhr.status === 422) {
+                            // Handle validation errors
+                            var errorMessages = xhr.responseJSON.errors;
+
+                            // Display error messages to the user (you can customize this part based on your needs)
+                            var errorMessageText = 'Terjadi kesalahan:';
+                            for (var key in errorMessages) {
+                                errorMessageText += '\n' + errorMessages[key];
+                            }
+
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: errorMessageText,
+                            });
+                        } else {
+                            // For other errors, display a generic error message
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: 'Terjadi kesalahan: ' + errors,
+                            });
+                        }
                     }
                 });
             });
@@ -393,30 +440,35 @@
         }
     </script>
 
-
-    <script>
-      
-    </script>
-
-
     <script>
         $('.btn-edit').on('click', function() {
+            var exp = $(this).data('kadaluwarsa');
+
+            // Check the radio button based on the 'kadaluwarsa' value
+            if (exp === 0) {
+                $('#aktif').prop('checked', true);
+            } else if (exp === 1) {
+                $('#deaktif').prop('checked', true);
+            }
             var anggotaData = $(this).data('anggota');
             var timId = $(this).data('id');
             var url = $(this).data('url');
             var dataId = $(this).data('id');
             var status = $(this).data('status');
+            var logo = $(this).data('logo');
             $('#modalDataIdInput').val(dataId);
+            $('#logoInput').val(logo);
             $('#nowStatus').text(status);
-            console.log(status);
             $('#updateTimForm').attr('action', '/mentor/update-tim/' + dataId);
+
+            console.log("exp", exp);
 
             $(".nowStatus").each(function() {
                 if ($(this).val() === status) {
-                    // Menjadikan elemen tersebut sebagai selected
                     $(this).prop("selected", true);
                 }
             });
+
 
             // $('#tim_status_modal').select2();
             // $('#tim_status_modal').val(status).trigger('change');
@@ -433,11 +485,9 @@
                     // Populate the anggota_kelompok select
                     $.each(data.users, function(index, user) {
                         var option = new Option(user.username, user.id, false, false);
-
                         if ($.inArray(user.id, anggotaData) !== -1) {
                             option.selected = true;
                         }
-
                         $("#anggota_kelompok").append(option);
                     });
 

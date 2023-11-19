@@ -12,6 +12,7 @@ class RequestPembentukanTimProject extends FormRequest
     public function authorize(): bool
     {
         return true;
+        
     }
 
     /**
@@ -26,5 +27,6 @@ class RequestPembentukanTimProject extends FormRequest
             'ketuaKelompok' => 'required',
             'anggota' => 'required',
         ];
+        
     }
 }

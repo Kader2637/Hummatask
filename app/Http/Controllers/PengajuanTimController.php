@@ -170,11 +170,12 @@ class PengajuanTimController extends Controller
     protected function updateTimProject(RequestPembentukanTimProject $request, $timId)
     {
         $tim = Tim::findOrFail($timId);
+        $validator = $request->validated();
 
-        // Validasi jika ada anggota yang sudah masuk di tim lain
         $daftarAnggota = $request->anggota;
         $daftarAnggota[] = $request->ketuaKelompok;
         $logo = $request->logo;
+        $exp = $request->kadaluwarsa;
 
         $uniqueDaftarAnggota = array_unique($daftarAnggota);
 
@@ -188,7 +189,7 @@ class PengajuanTimController extends Controller
 
         // Update status dan nama tim
         $tim->status_tim = $request->status_tim;
-
+        $tim->kadaluwarsa = $exp;
         if ($request->status_tim == "pre_mini") {
             $tim->nama = 'Pre-Mini Project Team';
         } elseif ($request->status_tim == "mini") {
@@ -209,7 +210,7 @@ class PengajuanTimController extends Controller
             $nama = "Big";
         }
 
-        
+
         $image->text($nama, 100, 100, function ($font) {
             $font->file(public_path('assets/font/Poppins-Bold.ttf'));
             $font->size(36);
@@ -248,6 +249,9 @@ class PengajuanTimController extends Controller
             $anggotaModel->user_id = $anggota;
             $anggotaModel->save();
         }
+
+
+
 
         return response()->json(['success' => 'Berhasil update tim'], 200);
     }
