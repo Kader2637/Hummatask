@@ -59,7 +59,7 @@
             <div class="col-lg-8 col-12 mb-4">
                 <div class="card">
                     <div class="card-header header-elements">
-                        <h5 class="card-title mb-0">Latest Statistics</h5>
+                        <h5 class="card-title mb-0">Jumlah Tim</h5>
                         <div class="card-action-element ms-auto py-0">
                             <div class="dropdown">
                                 <button type="button" class="btn dropdown-toggle px-0" data-bs-toggle="dropdown"
@@ -181,9 +181,29 @@
                 data: {
                     labels: chartData.map(data => data.month),
                     datasets: [{
-                        label: 'Data Persentasi',
-                        data: chartData.map(data => parseInt(data.disetujui)),
+                        label: 'Jumlah Tim Mini',
+                        data: chartData.map(data => parseInt(data.mini)),
                         backgroundColor: chartData.map(data => data.color),
+                        borderColor: 'transparent',
+                        maxBarThickness: 15,
+                        borderRadius: {
+                            topRight: 15,
+                            topLeft: 15
+                        }
+                    }, {
+                        label: 'Jumlah Tim Pre_mini',
+                        data: chartData.map(data => parseInt(data.pre_mini)),
+                        backgroundColor: chartData.map(data => data.colors),
+                        borderColor: 'transparent',
+                        maxBarThickness: 15,
+                        borderRadius: {
+                            topRight: 15,
+                            topLeft: 15
+                        }
+                    }, {
+                        label: 'Jumlah Tim Big',
+                        data: chartData.map(data => parseInt(data.big)),
+                        backgroundColor: chartData.map(data => data.colorwait),
                         borderColor: 'transparent',
                         maxBarThickness: 15,
                         borderRadius: {
@@ -224,14 +244,14 @@
                         },
                         y: {
                             min: 0,
-                            max: 100,
+                            max: 300,
                             grid: {
                                 color: borderColor,
                                 drawBorder: true,
                                 borderColor: borderColor
                             },
                             ticks: {
-                                stepSize: 50,
+                                stepSize: 100,
                                 color: labelColor
                             }
                         }

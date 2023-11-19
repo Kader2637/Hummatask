@@ -85,7 +85,7 @@ Route::prefix('tim')->controller(timController::class)->group(function () {
         Route::patch('edit-project/{code}', [PengajuanProjekController::class, 'editProject'])->name('tim.editProject');
         Route::get('board/ambil-data-tugas/{code}',[TugasController::class, 'getData'])->name('tim.proses.ambilTugas');
         Route::get('board/data-edit-tugas/{codeTugas}',[TugasController::class,'dataEditTugas']);
-        Route::put('board/proses-edit-tugas',[TugasController::class,'prosesEditTugas'])->name("editTugas");
+        Route::put('board/proses-edit-tugas',[TugasController::class,'prosesEditTugas'])->name('editTugas');
         Route::delete('board/delete/tugas/{codeTugas}',[TugasController::class,'hapusTugas']);
         Route::post("board/tambah-komentar",[TugasController::class,'tambahKomentar']);
         Route::delete('board/hapus-komentar/{tugas_id}',[TugasController::class,'hapusKomentar']);
@@ -103,6 +103,7 @@ Route::prefix('ketuaMagang')->middleware(['auth', 'siswa', 'can:kelola siswa'])-
     Route::get('projek', 'projek')->name('tampilprojek');
     Route::get('detail_project/{code}', 'detailProject')->name('ketua.detail_project');
     Route::get('history', 'historyPage')->name('ketua.history');
+    Route::get('pieprojectKetua/{timId}', 'pieProjectKetua')->name('pie.projectKetua');
     Route::post('pembuatantim', [PengajuanTimController::class, 'pembuatanTimProjectKetua'])->name('pembuatantim.ketua');
 
     // proses
@@ -135,6 +136,8 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::get('tim/edit/{tim}', [mentorController::class, 'ProjectEdit'])->name('tim.edit');
     Route::get('/tim/filter', [mentorController::class, 'filter'])->name('tim.filter');
     Route::get('/tim/cari', [mentorController::class, 'cari'])->name('cari_tim');
+    Route::get('laporanProgres', [mentorController::class, 'laporanProgres'])->name('laporan');
+    Route::get('pieproject/{timId}', [mentorController::class,'pieproject'])->name('piechart');
 
     // Process`
     Route::post('tampil-detail-presentasi/{code}', [PresentasiController::class, 'tampilkanDetailPresentasi']);
@@ -166,3 +169,4 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
 
 
 });
+

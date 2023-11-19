@@ -3,6 +3,8 @@
 @section('link')
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"> --}}
     <style>
         .tim-detail {
@@ -102,14 +104,17 @@
                                     <div>{{ $item->tema->nama_tema }}</div>
                                 </div>
                             </div>
-                            <a data-bs-toggle="" data-bs-target="#modalDetail" class="w-100 btn btn-primary btn-detail"
-                                data-logo="{{ asset('storage/' . $item->tim->logo) }}" data-namatim="{{ $item->tim->nama }}"
-                                data-status="{{ $item->tim->status_tim }}" data-tema="{{ $item->tema->nama_tema }}"
+                            <a onclick="pieChart('{{ $item->tim->code }}')" data-bs-toggle="" data-bs-target="#modalDetail"
+                                class="w-100 btn btn-primary btn-detail"
+                                data-logo="{{ asset('storage/' . $item->tim->logo) }}"
+                                data-namatim="{{ $item->tim->nama }}" data-status="{{ $item->tim->status_tim }}"
+                                data-tema="{{ $item->tema->nama_tema }}"
                                 data-tglmulai="{{ $item->created_at->translatedFormat('l, j F Y') }}"
                                 data-deadline="{{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}"
                                 data-anggota="{{ $anggotaJson }}" data-deskripsi="{{ $item->deskripsi }}"
                                 data-dayleft="{{ $dayLeft }}" data-total-deadline="{{ $totalDeadline }}"
-                                data-progress="{{ $progressPercentage }}" data-repo="{{$item->tim->repository}}"><span class="text-white">Detail</span></a>
+                                data-progress="{{ $progressPercentage }}" data-repo="{{ $item->tim->repository }}"><span
+                                    class="text-white">Detail</span></a>
                         </div>
                     </div>
                 </div>
@@ -231,8 +236,33 @@
                                                     <div class="card">
                                                         <h5 class="card-header">Progres Tim</h5>
                                                         <div class="card-body">
-                                                            <canvas id="project" class="chartjs mb-4" data-height="267"
+                                                            <canvas id="" class="chartjs mb-4 mt-2 pie-project"
+                                                                data-height="267"
                                                                 style="display: block; box-sizing: border-box; height: 200px; width: 200px;"></canvas>
+                                                            <ul
+                                                                class="doughnut-legend d-flex justify-content-around ps-0 mb-2 pt-1">
+                                                                <li class="ct-series-0 d-flex flex-column">
+                                                                    <h5 class="mb-0">Tugas Baru</h5>
+                                                                    <span
+                                                                        class="badge badge-dot my-2 cursor-pointer rounded-pill"
+                                                                        style="background-color: #ff7f00; height:6px;width:30px;"></span>
+                                                                    <div class="text-muted"></div>
+                                                                </li>
+                                                                <li class="ct-series-1 d-flex flex-column">
+                                                                    <h5 class="mb-0">Revisi</h5>
+                                                                    <span
+                                                                        class="badge badge-dot my-2 cursor-pointer rounded-pill"
+                                                                        style="background-color: blue; height:6px; width:30px;"></span>
+                                                                    <div class="text-muted"></div>
+                                                                </li>
+                                                                <li class="ct-series-1 d-flex flex-column">
+                                                                    <h5 class="mb-0">Selesai</h5>
+                                                                    <span
+                                                                        class="badge badge-dot my-2 cursor-pointer rounded-pill"
+                                                                        style="background-color: yellow; height:6px; width: 30px;"></span>
+                                                                    <div class="text-muted"></div>
+                                                                </li>
+                                                            </ul>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -306,7 +336,9 @@
                                                                                     id="dayleft"></span> hari lagi</span>
                                                                         </div>
                                                                     </div>
-                                                                    <a href="" id="repository" target="_blank"><span class="text-blue" id="text-repo"></span></a>
+                                                                    <a href="" id="repository"
+                                                                        target="_blank"><span class="text-blue"
+                                                                            id="text-repo"></span></a>
                                                                     <div class="deskripsi mt-2">
                                                                         <div class="title text-dark">
                                                                             Deskripsi :
@@ -427,6 +459,109 @@
         </form>
 
         <script>
+            const cardColor = '#28dac6';
+            const headingColor = '#FDAC34';
+            const black = '#000000';
+            let doughnutChartVar;
+
+            if (true) {
+
+                function pieChart(code) {
+                    var doughnutChart = $(".pie-project");
+                    console.log(doughnutChart)
+
+                    if (doughnutChartVar) {
+                        doughnutChartVar.destroy();
+                    }
+
+                    $.ajax({
+                        url: "pieprojectKetua/" + code,
+                        json: "GET",
+                        dataType: "json",
+
+                        success: function(response) {
+                            const processedData = response.chartData;
+                            const labels = processedData.map((data) => data[0]);
+                            const values = processedData.map((data) => data[1]);
+
+                            doughnutChartVar = new Chart(doughnutChart, {
+                                type: "doughnut",
+                                data: {
+                                    labels: labels,
+                                    datasets: [{
+                                        data: values,
+                                        backgroundColor: [
+                                            cardColor,
+                                            "yellow",
+                                            "blue",
+                                            "#ff7f00"
+                                        ],
+                                        hoverOffset: 4
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    animation: {
+                                        duration: 500
+                                    },
+                                    cutout: "68%",
+                                    plugins: {
+                                        legend: {
+                                            display: false
+                                        },
+                                        tooltip: {
+                                            callbacks: {
+                                                label: function(context) {
+                                                    const label = context.label || "";
+                                                    const value = context.parsed;
+                                                    const output = " " + label + " : " + value;
+                                                    return output;
+                                                }
+                                            },
+                                            backgroundColor: cardColor,
+                                            titleColor: cardColor,
+                                            bodyColor: black,
+                                            borderWidth: 1,
+                                            borderColor: cardColor,
+                                            afterLabel: function(context) {
+                                                const datasetIndex = context.datasetIndex;
+                                                const dataIndex = context.dataIndex;
+                                                const data =
+                                                    doughnutChartVar.data.datasets[datasetIndex].data;
+                                                const label =
+                                                    doughnutChartVar.data.labels[dataIndex];
+                                                const value = data[dataIndex];
+
+                                                const amountDescription =
+                                                    label === "Revisi" ?
+                                                    "Revisi" :
+                                                    label === "Tugas Baru" ?
+                                                    "Tugas Baru" :
+                                                    "Selesai";
+                                                return `Jumlah ${amountDescription}: ${value}`;
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+
+                            processedData.forEach(function(data) {
+                                const label = data[0];
+                                const value = data[1];
+                                console.log(label, value);
+                            });
+
+                        },
+                        error: function(xhr, status, error) {
+                            console.log(xhr
+                                .responseText.status.error);
+                        }
+                    });
+                }
+            }
+        </script>
+
+        <script>
             get()
 
             function get() {
@@ -496,7 +631,8 @@
                             var errorMessage = 'Pastikan data terisi semua.';
                             if (error.responseJSON && error.responseJSON.message) {
                                 errorMessage = error.responseJSON.message;
-                            }else if (error.responseJSON && error.responseJSON.errors && error.responseJSON.error.anggota){
+                            } else if (error.responseJSON && error.responseJSON.errors && error.responseJSON
+                                .error.anggota) {
                                 errroMessage = 'Data sudah digunakan di opsi lain.';
                             }
                             Swal.fire({

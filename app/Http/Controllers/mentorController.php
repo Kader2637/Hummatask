@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Anggota;
 use App\Models\HistoriPengelola;
 use App\Models\HistoryPresentasi;
 use App\Models\Notifikasi;
@@ -29,7 +30,7 @@ class mentorController extends Controller
         $hari = [];
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
-        $presentasi = Presentasi::with('tim')->where('status_pengajuan', 'disetujui')->latest('created_at')->take(5)->get()->reverse();
+        $presentasi = Presentasi::with('tim')->where('status_presentasi', 'selesai')->whereDate('created_at', now())->latest('created_at')->take(5)->get()->reverse();
         foreach ($presentasi as $i => $data) {
             $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
             $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd');
@@ -62,12 +63,12 @@ class mentorController extends Controller
         $tim = Tim::select(
             DB::raw('MONTH(created_at) as month'),
             DB::raw('YEAR(created_at) as year'),
-            'kadaluwarsa',
+            'status_tim',
             DB::raw('count(*) as total')
         )
-            ->whereIn('kadaluwarsa', ['1'])
+            ->whereIn('status_tim', ['mini', 'pre_mini', 'big'])
             ->whereYear('created_at', Carbon::now()->year)
-            ->groupBy('year', 'month', 'kadaluwarsa')
+            ->groupBy('year', 'month', 'status_tim')
             ->get();
 
         $processedData = [];
@@ -81,15 +82,19 @@ class mentorController extends Controller
             $color = ($month == $currentMonth) ? 'blue' : 'yellow';
             $colorwait = ($month == $currentMonth) ? 'grey' : 'pink';
             $colors = ($month == $currentMonth) ? 'red' : 'green';
+            $piecolor = ($month == $currentMonth) ? 'orange' : 'yellow';
 
             $processedData[$yearMonth] = [
                 'month' => $yearMonth,
                 'disetujui' => 0,
                 '1' => 0,
-                '2' => 0,
+                'mini' => 0,
+                'pre_mini' => 0,
+                'big' => 0,
                 'color' => $color,
                 'colorwait' => $colorwait,
-                'colors' => $colors
+                'colors' => $colors,
+                'piecolor' => $piecolor
             ];
         }
 
@@ -113,7 +118,8 @@ class mentorController extends Controller
             $yearMonth = Carbon::createFromDate($tims->year, $tims->month, 1)->isoFormat('MMMM');
 
             if (isset($processedData[$yearMonth])) {
-                $processedData[$yearMonth]['2'] = $tims->total;
+                $status_tim = strtolower($tims->status_tim);
+                $processedData[$yearMonth][$status_tim] = $tims->total;
             }
         }
 
@@ -220,7 +226,27 @@ class mentorController extends Controller
             })
             ->get();
 
-        return response()->view('mentor.projek', compact('users', 'projects', 'notifikasi'));
+        return response()->view('mentor.projek', compact('users', 'projects','notifikasi'));
+    }
+
+    protected function pieproject($timId){
+
+        $tim = Tim::where('code',$timId)->first();
+
+        $selesai = $tim->tugas->where('status_tugas','selesai')->count();
+
+        $revisi = $tim->tugas->where('status_tugas','revisi')->count();
+
+        $tugas_baru = $tim->tugas->where('status_tugas','tugas_baru')->count();
+
+        $chartData = [
+                ['Status Tugas', 'Jumlah'],
+                ['Selesai', $selesai],
+                ['Revisi', $revisi],
+                ['Tugas Baru', $tugas_baru]
+            ];
+
+        return response()->json(['selesai' => $selesai, 'revisi' => $revisi, 'tugas_baru' => $tugas_baru , 'chartData' => $chartData]);
     }
 
     protected function Project()
@@ -339,7 +365,20 @@ class mentorController extends Controller
         $anggota = $tim->anggota()->get();
         $project = $tim->project()->first();
 
-        return response()->view('mentor.detail-projek', compact('tim', 'anggota', 'project', 'notifikasi'));
+        $selesai = $tim->tugas()->where('status_tugas', 'selesai')->count();
+        $revisi = $tim->tugas()->where('status_tugas', 'revisi')->count();
+        $tugas_baru = $tim->tugas()->where('status_tugas', 'tugas_baru')->count();
+
+        $code = $tim->code;
+
+        $chartData = [
+            ['Status Tugas', 'Jumlah'],
+            ['Selesai', $selesai],
+            ['Revisi', $revisi],
+            ['Tugas Baru', $tugas_baru]
+        ];
+
+        return response()->view('mentor.detail-projek', compact('tim', 'anggota', 'project', 'chartData','notifikasi'));
     }
 
     // Return view profile mentor
@@ -368,5 +407,10 @@ class mentorController extends Controller
             $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd');
         }
         return response()->view('mentor.presentasi', compact('persetujuan_presentasi', 'konfirmasi_presentasi', 'jadwal', 'hari', 'historyPresentasi', 'notifikasi'));
+    }
+
+    protected function laporanProgres()
+    {
+        return response()->view('mentor.laporan-progres');
     }
 }
