@@ -395,20 +395,13 @@ class mentorController extends Controller
     // return view presentasi mentor
     protected function presentasi()
     {
-
-        $presentasi = Presentasi::all();
-        $historyPresentasi = HistoryPresentasi::all();
-        $persetujuan_presentasi = $presentasi->where('status_pengajuan', 'menunggu');
-        $konfirmasi_presentasi = $presentasi->where('status_pengajuan', 'disetujui')->where('status_presentasi', 'menunggu');
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
-        $jadwal = [];
-        $hari = [];
-        foreach ($presentasi as $i => $data) {
-            $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
-            $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd');
-        }
-        return response()->view('mentor.presentasi', compact('persetujuan_presentasi', 'konfirmasi_presentasi', 'jadwal', 'hari', 'historyPresentasi', 'notifikasi'));
+
+
+        $historyPresentasi = HistoryPresentasi::whereMonth('created_at', Carbon::now()->month)->get();
+
+        return response()->view('mentor.presentasi', compact( 'historyPresentasi', 'notifikasi'));
     }
 
     protected function laporanProgres()
