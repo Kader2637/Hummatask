@@ -11,6 +11,7 @@ use App\Models\Presentasi;
 use App\Models\Project;
 use App\Models\Tema;
 use App\Models\StatusTim;
+use App\Models\TidakPresentasiMingguan;
 use App\Models\Tim;
 use App\Models\User;
 use Carbon\Carbon;
@@ -190,7 +191,12 @@ class mentorController extends Controller
             ->whereHas('project')
             ->get();
 
-        return response()->view('mentor.history', compact('telatDeadline', 'presentasiSelesai', 'timSolo', 'timGroup', 'notifikasi'));
+
+
+
+            $tidakPresentasiMingguan = TidakPresentasiMingguan::with('tim.ketuaTim')->get();
+
+        return response()->view('mentor.history', compact('tidakPresentasiMingguan','telatDeadline', 'presentasiSelesai', 'timSolo', 'timGroup', 'notifikasi'));
     }
 
     // Return view pengajuan projek mentor
@@ -296,7 +302,7 @@ class mentorController extends Controller
         return response()->json(['users' => $users, 'status_tim' => $status_tim, 'ketua' => $ketua, 'ketua_id' => $ketuaId]);
     }
 
-  
+
 
     protected function tim()
     {
