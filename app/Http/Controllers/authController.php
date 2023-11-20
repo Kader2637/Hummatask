@@ -219,10 +219,13 @@ class authController extends Controller
             'password.required' => 'Password wajib diisi.',
         ]);
 
+        $rememberMe = $request->has('remember'); // Check if the remember checkbox is checked
+
         try {
-            if (Auth::attempt($credentials)) {
+            if (Auth::attempt($credentials, $rememberMe)) {
                 $user = auth()->user();
                 User::where('id', $user->id)->update(['is_login' => true]);
+
                 switch ($user->peran_id) {
                     case 1:
                         return redirect()->intended(route('dashboard.siswa'));
@@ -236,6 +239,7 @@ class authController extends Controller
 
         return redirect()->route('login')->withErrors(['password' => 'Email atau password tidak sesuai.'])->withInput();
     }
+
 
     protected function register(Request $request)
     {

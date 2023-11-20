@@ -124,8 +124,7 @@
                     <ul class="pagination">
                         <!-- Tampilkan link "First" -->
                         <li class="page-item {{ $tims->currentPage() == 1 ? 'disabled' : '' }}">
-                            <form action="{{ route('tim.filter') }}" method="post" style="display: inline;">
-                                @csrf
+                            <form action="{{ route('tim.filter') }}" method="get" style="display: inline;">
                                 <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
                                 <input type="hidden" name="page" value="1">
                                 <button type="submit" class="page-link">
@@ -305,7 +304,6 @@
                                 <label for="status_tim" class="form-label">Kategori Tim</label>
                                 <select id="tim_status_modal" name="status_tim" class="select2 form-select form-select"
                                     data-allow-clear="true">
-                                    <option value="" disabled selected>Pilih Tim</option>
                                     <option class="nowStatus" value="pre_mini">Pre mini projek</option>
                                     <option class="nowStatus" value="mini">Mini projek</option>
                                     <option class="nowStatus" value="big">Big projek</option>
@@ -464,8 +462,6 @@
             $('#logoInput').val(logo);
             $('#nowStatus').text(status);
             $('#updateTimForm').attr('action', '/mentor/update-tim/' + dataId);
-
-            console.log("exp", exp);
 
             $(".nowStatus").each(function() {
                 if ($(this).val() === status) {
