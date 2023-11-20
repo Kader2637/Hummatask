@@ -26,18 +26,17 @@ class KetuaMagangController extends Controller
         $present = Presentasi::where('status_pengajuan', 'disetujui')->whereDate('created_at', now())->count();
         $tims = User::find(Auth::user()->id)->tim()->get();
 
-
         $presentasi = Presentasi::with('tim')->where('status_pengajuan', 'disetujui')->whereDate('created_at', now())->latest('created_at')->take(5)->get()->reverse();
 
-        $data = Presentasi::select(
+        $data = Tim::select(
             DB::raw('MONTH(created_at) as month'),
             DB::raw('YEAR(created_at) as year'),
-            'status_pengajuan',
+            'status_tim',
             DB::raw('count(*) as total')
         )
-            ->whereIn('status_pengajuan', ['disetujui'])
+            ->whereIn('status_tim', ['mini','pre_mini','big'])
             ->whereYear('created_at', Carbon::now()->year)
-            ->groupBy('year', 'month', 'status_pengajuan')
+            ->groupBy('year', 'month', 'status_tim')
             ->get();
 
         $processedData = [];
@@ -50,12 +49,16 @@ class KetuaMagangController extends Controller
 
             $color = ($month == $currentMonth) ? 'blue' : 'green';
             $colorwait = ($month == $currentMonth) ? 'grey' : 'green';
+            $colors = ($month == $currentMonth) ? 'orange' : 'green';
 
             $processedData[$yearMonth] = [
                 'month' => $yearMonth,
-                'disetujui' => 0,
+                'mini' => 0,
+                'pre_mini' => 0,
+                'big' => 0,
                 'color' => $color,
-                'colorwait' => $colorwait
+                'colorwait' => $colorwait,
+                'colors' => $colors
             ];
         }
 
@@ -63,14 +66,14 @@ class KetuaMagangController extends Controller
             $yearMonth = Carbon::createFromDate($item->year, $item->month, 1)->isoFormat('MMMM');
 
             if (isset($processedData[$yearMonth])) {
-                $status_pengajuan = strtolower($item->status_pengajuan);
-                $processedData[$yearMonth][$status_pengajuan] = $item->total;
+                $status_tim = strtolower($item->status_tim);
+                $processedData[$yearMonth][$status_tim] = $item->total;
             }
         }
 
         $chartData = array_values($processedData);
         $notifikasi = Notifikasi::where('user_id', Auth::user()->id)->get();
-        return view('ketuaMagang.dashboard', compact('title', 'tims', 'usercount', 'timcount', 'chartData', 'presentasi', 'present','notifikasi'));
+        return view('ketuaMagang.dashboard', compact('title', 'tims', 'usercount', 'timcount', 'chartData', 'presentasi', 'present', 'notifikasi'));
     }
     protected function presentasiPage()
     {
@@ -87,7 +90,7 @@ class KetuaMagangController extends Controller
             $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd');
         }
         $notifikasi = Notifikasi::where('user_id', Auth::user()->id)->get();
-        return response()->view('ketuaMagang.presentasi', compact('notifikasi','persetujuan_presentasi', 'konfirmasi_presentasi', 'jadwal', 'hari', 'historyPresentasi', 'title', 'tims'));
+        return response()->view('ketuaMagang.presentasi', compact('notifikasi', 'persetujuan_presentasi', 'konfirmasi_presentasi', 'jadwal', 'hari', 'historyPresentasi', 'title', 'tims'));
     }
     protected function projectPage()
     {
@@ -117,7 +120,29 @@ class KetuaMagangController extends Controller
             ->get();
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
         $notifikasi = Notifikasi::where('user_id', Auth::user()->id)->get();
-        return view('ketuaMagang.project', compact('notifikasi','title', 'tims', 'users', 'status_tim', 'projects'));
+
+        return view('ketuaMagang.project', compact('notifikasi', 'title', 'tims', 'users', 'status_tim', 'projects'));
+    }
+
+    protected function pieProjectKetua($timId)
+    {
+
+        $tim = Tim::where('code', $timId)->first();
+
+        $selesai = $tim->tugas->where('status_tugas', 'selesai')->count();
+
+        $revisi = $tim->tugas->where('status_tugas', 'revisi')->count();
+
+        $tugas_baru = $tim->tugas->where('status_tugas', 'tugas_baru')->count();
+
+        $chartData = [
+            ['Status Tugas', 'Jumlah'],
+            ['Selesai', $selesai],
+            ['Revisi', $revisi],
+            ['Tugas Baru', $tugas_baru]
+        ];
+
+        return response()->json(['selesai' => $selesai, 'revisi' => $revisi, 'tugas_baru' => $tugas_baru, 'chartData' => $chartData]);
     }
 
     protected function projek()
@@ -165,8 +190,8 @@ class KetuaMagangController extends Controller
             ->whereHas('project')
             ->get();
 
-            $notifikasi = Notifikasi::where('user_id', Auth::user()->id)->get();
+        $notifikasi = Notifikasi::where('user_id', Auth::user()->id)->get();
 
-        return view('ketuaMagang.history', compact('notifikasi','title', 'tims', 'telatDeadline', 'presentasiSelesai', 'timSolo', 'timGroup'));
+        return view('ketuaMagang.history', compact('notifikasi', 'title', 'tims', 'telatDeadline', 'presentasiSelesai', 'timSolo', 'timGroup'));
     }
 }

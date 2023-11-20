@@ -98,11 +98,13 @@
                                         </div>
                                         <div class="d-flex justify-content-between">
                                             <span>Tema : </span>
-                                            <div data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom" title="{{$item->tema->nama_tema}}">{{ Str::limit($item->tema->nama_tema, $limit = 20, $end = '...') }}</div>
+                                            <div data-bs-placement="top" data-bs-toggle="tooltip"
+                                                data-popup="tooltip-custom" title="{{ $item->tema->nama_tema }}">
+                                                {{ Str::limit($item->tema->nama_tema, $limit = 20, $end = '...') }}</div>
                                         </div>
                                     </div>
-                                    <a data-bs-toggle="" data-bs-target="#modalDetailProjek"
-                                        class="w-100 btn btn-primary btn-detail-projek"
+                                    <a onclick="pieGet('{{ $item->tim->code }}')" data-bs-toggle=""
+                                        data-bs-target="#modalDetailProjek" class="w-100 btn btn-primary btn-detail-projek"
                                         data-logo="{{ asset('storage/' . $item->tim->logo) }}"
                                         data-namatim="{{ $item->tim->nama }}" data-status="{{ $item->tim->status_tim }}"
                                         data-tema="{{ $item->tema->nama_tema }}"
@@ -161,8 +163,33 @@
                                                 <div class="card">
                                                     <h5 class="card-header">Progres Tim</h5>
                                                     <div class="card-body">
-                                                        <canvas id="project" class="chartjs mb-4" data-height="267"
+                                                        <canvas id="" class="chartjs mb-4 mt-2 piechart-project"
+                                                            data-height="267"
                                                             style="display: block; box-sizing: border-box; height: 200px; width: 200px;"></canvas>
+                                                        <ul
+                                                            class="doughnut-legend d-flex justify-content-around ps-0 mb-2 pt-1">
+                                                            <li class="ct-series-0 d-flex flex-column">
+                                                                <h5 class="mb-0">Tugas Baru</h5>
+                                                                <span
+                                                                    class="badge badge-dot my-2 cursor-pointer rounded-pill"
+                                                                    style="background-color: #ff7f00; height:6px;width:30px;"></span>
+                                                                <div class="text-muted"></div>
+                                                            </li>
+                                                            <li class="ct-series-1 d-flex flex-column">
+                                                                <h5 class="mb-0">Revisi</h5>
+                                                                <span
+                                                                    class="badge badge-dot my-2 cursor-pointer rounded-pill"
+                                                                    style="background-color: blue; height:6px; width:30px;"></span>
+                                                                <div class="text-muted"></div>
+                                                            </li>
+                                                            <li class="ct-series-1 d-flex flex-column">
+                                                                <h5 class="mb-0">Selesai</h5>
+                                                                <span
+                                                                    class="badge badge-dot my-2 cursor-pointer rounded-pill"
+                                                                    style="background-color: yellow; height:6px; width: 30px;"></span>
+                                                                <div class="text-muted"></div>
+                                                            </li>
+                                                        </ul>
                                                     </div>
                                                 </div>
                                             </div>
@@ -299,102 +326,202 @@
 @section('script')
     <script src="{{ asset('assets/js/forms-selects.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
-        {{-- filter projek --}}
-        <script>
-            function filterProjek(selectElement) {
-                var code = selectElement.value;
-                var projekElements = document.getElementsByClassName('projek-item');
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    {{-- filter projek --}}
+    <script>
+        const cardColor = '#28dac6';
+        const headingColor = '#FDAC34';
+        const black = '#000000';
 
-                for (var i = 0; i < projekElements.length; i++) {
-                    var projekElement = projekElements[i];
-                    var statusTim = projekElement.getAttribute('data-status-tim');
+        let doughnutChartVar; // Variabel untuk menyimpan instance grafik
 
-                    if (code === 'all' || code === statusTim) {
-                        projekElement.style.display = 'block';
-                    } else {
-                        projekElement.style.display = 'none';
-                    }
+        if (true) {
+            function pieGet(code) {
+                var doughnutChart = $(".piechart-project");
+
+                // Menghancurkan grafik yang ada jika ada
+                if (doughnutChartVar) {
+                    doughnutChartVar.destroy();
+                }
+
+                axios
+                    .get("pieproject/" + code)
+                    .then((res) => {
+                        console.log(res.data[1]);
+                        const data = res.data.chartData;
+                        const processedData = res.data.chartData;
+
+                        const labels = processedData.map((data) => data[0]);
+                        const values = processedData.map((data) => data[1]);
+
+                        doughnutChartVar = new Chart(doughnutChart, {
+                            type: "doughnut",
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    data: values,
+                                    backgroundColor: [
+                                        cardColor,
+                                        "yellow",
+                                        "blue",
+                                        "#ff7f00"
+                                    ],
+                                    hoverOffset: 4
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                animation: {
+                                    duration: 500
+                                },
+                                cutout: "68%",
+                                plugins: {
+                                    legend: {
+                                        display: false
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function(context) {
+                                                const label = context.label || "";
+                                                const value = context.parsed;
+                                                const output = " " + label + " : " + value;
+                                                return output;
+                                            }
+                                        },
+                                        backgroundColor: cardColor,
+                                        titleColor: cardColor,
+                                        bodyColor: black,
+                                        borderWidth: 1,
+                                        borderColor: cardColor,
+                                        afterLabel: function(context) {
+                                            const datasetIndex = context.datasetIndex;
+                                            const dataIndex = context.dataIndex;
+                                            const data =
+                                                doughnutChartVar.data.datasets[datasetIndex].data;
+                                            const label =
+                                                doughnutChartVar.data.labels[dataIndex];
+                                            const value = data[dataIndex];
+
+                                            const amountDescription =
+                                                label === "Revisi" ?
+                                                "Revisi" :
+                                                label === "Tugas Baru" ?
+                                                "Tugas Baru" :
+                                                "Selesai";
+                                            return `Jumlah ${amountDescription}: ${value}`;
+                                        }
+                                    }
+                                }
+                            }
+                        });
+
+                        processedData.forEach(function(data) {
+                            const label = data[0];
+                            const value = data[1];
+                            console.log(label, value);
+                        });
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            }
+        }
+
+        function filterProjek(selectElement) {
+            var code = selectElement.value;
+            var projekElements = document.getElementsByClassName('projek-item');
+
+            for (var i = 0; i < projekElements.length; i++) {
+                var projekElement = projekElements[i];
+                var statusTim = projekElement.getAttribute('data-status-tim');
+
+                if (code === 'all' || code === statusTim) {
+                    projekElement.style.display = 'block';
+                } else {
+                    projekElement.style.display = 'none';
                 }
             }
-        </script>
-        {{-- filter Projek --}}
+        }
+    </script>
+    {{-- filter Projek --}}
 
-        {{-- JS Modal Detail --}}
-        <script>
-            $(document).ready(function() {
-                $('.btn-detail-projek').click(function() {
-                    var logo = $(this).data('logo');
-                    var namatim = $(this).data('namatim');
-                    var status = $(this).data('status');
-                    var tema = $(this).data('tema');
-                    var tglmulai = $(this).data('tglmulai');
-                    var deadline = $(this).data('deadline');
-                    var anggota = $(this).data('anggota');
-                    var deskripsi = $(this).data('deskripsi');
-                    var dayLeft = $(this).data('dayleft');
-                    var repo = $(this).data('repo');
-                    var total = $(this).data('total-deadline');
-                    var progress = $(this).data('progress');
-                    var progressFormat = Math.round(progress);
 
-                    $('#logo-tim').attr('src', logo);
-                    $('#logo-tim2').attr('src', logo);
-                    $('#nama-tim').text(namatim);
-                    $('#nama-tim2').text(namatim);
-                    $('#status').text(status);
-                    $('#tema').text(tema);
-                    $('#tglmulai').text(tglmulai);
-                    $('#deadline').text(deadline);
-                    $('#dayLeft').text(dayLeft);
-                    $('#dayleft').text(dayLeft);
-                    $('#total').text(total);
-                    $('#text-repo').text(repo);
-                    $('#repository').attr('href', repo);
-                    $('#textPercent').text(progressFormat);
-                    $('.progress-bar').css('width', progressFormat + '%');
-                    $('.progress-bar').attr('aria-valuenow', progressFormat);
-                    if (deskripsi) {
-                        $('#deskripsi').text(deskripsi);
-                    } else {
-                        $('#deskripsi').html(
-                            '<div class="alert alert-warning d-flex align-items-center mt-3 cursor-pointer" role="alert">' +
-                            '<span class="alert-icon text-warning me-2">' +
-                            '<i class="ti ti-bell ti-xs"></i>' +
-                            '</span>' +
-                            'Tim ini belum memiliki deskripsi tema!' +
-                            '</div>'
-                        );
-                    }
-                    var anggotaList = $('#anggota-list-Projek');
 
-                    anggotaList.empty();
+    {{-- JS Modal Detail --}}
+    <script>
+        $(document).ready(function() {
+            $('.btn-detail-projek').click(function() {
+                var logo = $(this).data('logo');
+                var namatim = $(this).data('namatim');
+                var status = $(this).data('status');
+                var tema = $(this).data('tema');
+                var tglmulai = $(this).data('tglmulai');
+                var deadline = $(this).data('deadline');
+                var anggota = $(this).data('anggota');
+                var deskripsi = $(this).data('deskripsi');
+                var dayLeft = $(this).data('dayleft');
+                var repo = $(this).data('repo');
+                var total = $(this).data('total-deadline');
+                var progress = $(this).data('progress');
+                var progressFormat = Math.round(progress);
 
-                    anggota.forEach(function(anggota, index) {
-                        var avatarSrc = anggota.avatar ? '/storage/' + anggota.avatar :
-                            '/assets/img/avatars/1.png';
+                $('#logo-tim').attr('src', logo);
+                $('#logo-tim2').attr('src', logo);
+                $('#nama-tim').text(namatim);
+                $('#nama-tim2').text(namatim);
+                $('#status').text(status);
+                $('#tema').text(tema);
+                $('#tglmulai').text(tglmulai);
+                $('#deadline').text(deadline);
+                $('#dayLeft').text(dayLeft);
+                $('#dayleft').text(dayLeft);
+                $('#total').text(total);
+                $('#text-repo').text(repo);
+                $('#repository').attr('href', repo);
+                $('#textPercent').text(progressFormat);
+                $('.progress-bar').css('width', progressFormat + '%');
+                $('.progress-bar').attr('aria-valuenow', progressFormat);
+                if (deskripsi) {
+                    $('#deskripsi').text(deskripsi);
+                } else {
+                    $('#deskripsi').html(
+                        '<div class="alert alert-warning d-flex align-items-center mt-3 cursor-pointer" role="alert">' +
+                        '<span class="alert-icon text-warning me-2">' +
+                        '<i class="ti ti-bell ti-xs"></i>' +
+                        '</span>' +
+                        'Tim ini belum memiliki deskripsi tema!' +
+                        '</div>'
+                    );
+                }
+                var anggotaList = $('#anggota-list-Projek');
 
-                        var anggotaItem = $('<div class="col-lg-4 p-2" style="box-shadow: none">' +
-                            '<div class="card">' +
-                            '<div class="card-body d-flex gap-3 align-items-center">' +
-                            '<div>' +
-                            '<img width="30px" height="30px" class="rounded-circle object-cover" src="' +
-                            avatarSrc + '" alt="foto user">' +
-                            '</div>' +
-                            '<div>' +
-                            '<h5 class="mb-0" style="font-size: 15px">' + anggota.name + '</h5>' +
-                            '<span class="badge bg-label-warning">' + anggota.jabatan + '</span>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>');
-                        anggotaList.append(anggotaItem);
-                    });
+                anggotaList.empty();
 
-                    $('#modalDetailProjek').modal('show');
+                anggota.forEach(function(anggota, index) {
+                    var avatarSrc = anggota.avatar ? '/storage/' + anggota.avatar :
+                        '/assets/img/avatars/1.png';
 
+                    var anggotaItem = $('<div class="col-lg-4 p-2" style="box-shadow: none">' +
+                        '<div class="card">' +
+                        '<div class="card-body d-flex gap-3 align-items-center">' +
+                        '<div>' +
+                        '<img width="30px" height="30px" class="rounded-circle object-cover" src="' +
+                        avatarSrc + '" alt="foto user">' +
+                        '</div>' +
+                        '<div>' +
+                        '<h5 class="mb-0" style="font-size: 15px">' + anggota.name + '</h5>' +
+                        '<span class="badge bg-label-warning">' + anggota.jabatan + '</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>');
+                    anggotaList.append(anggotaItem);
                 });
-            });
-        </script>
-        {{-- js Modal Detail --}}
 
+                $('#modalDetailProjek').modal('show');
+
+            });
+        });
+    </script>
+    {{-- js Modal Detail --}}
 @endsection
