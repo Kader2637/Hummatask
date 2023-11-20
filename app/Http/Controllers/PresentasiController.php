@@ -48,6 +48,11 @@ class PresentasiController extends Controller
         try {
             //code...
             $tim = Tim::where('code', $code)->first();
+
+            if ($tim->kadaluwarsa == 1) {
+                return back()->with('error', 'Tim anda sudah kadaluwarsa');
+            }
+
             $tim->sudah_presentasi = true;
             $tim->save();
 
@@ -86,7 +91,6 @@ class PresentasiController extends Controller
 
         return redirect()->back()->with('success', 'Berhasil mengajukan presentasi');
     }
-
 
 
     protected function persetujuanPresentasi(RequestPersetujuanPresentasi $request, $code)
@@ -242,18 +246,14 @@ class PresentasiController extends Controller
                 ->orderBy('urutan', 'asc')
                 ->get();
 
-
-
             if (!(is_numeric($request->urutanTergantikan) && ctype_digit($request->urutanTergantikan))) {
                 return response()->json(['error' => 'Kamu memasukan urutan yang bukan bernilai integer']);
             }
-
 
             $validasi = Presentasi::where('status_presentasi', 'selesai')->where('jadwal', Carbon::now()->isoFormat('Y-M-DD'))->where('urutan', $request->urutanTergantikan)->first();
             if (isset($validasi)) {
                 return response()->json(['error' => 'kamu memasukan urutan yang sudah dikonfirmasi']);
             }
-
 
             if ($request->urutanTergantikan > $presentasi->last()->urutan) {
                 return response()->json(['error' => 'kamu memasukan urutan yang lebih besar dari data']);
@@ -269,7 +269,6 @@ class PresentasiController extends Controller
             if ($pengganti === null) {
                 return response(['error', 'Tidak bisa menemukan data Presentasi']);
             }
-
 
             // Jika presentasi pengganti ditemukan
             if ($pengganti) {

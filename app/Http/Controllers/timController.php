@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 
 class timController extends Controller
 {
+
     protected function boardPage($code)
     {
         $title = "Tim/board";

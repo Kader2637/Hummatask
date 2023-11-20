@@ -3,12 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\catatan;
+use App\Models\Tim;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class catatanController extends Controller
 {
+    protected function checkTeam(Tim $tim)
+    {
+        if ($tim->kadaluwarsa == 1) {
+            return back()->with('error', 'Tim anda sudah kadaluwarsa');
+        }
+    }
+
     protected function store(Request $request)
     {
         try {
@@ -18,6 +26,13 @@ class catatanController extends Controller
 
             $user = Auth::user();
             $tim = $user->tim[0]->id;
+            $tims = Tim::where('id', $user->tim[0]->id)->first();
+
+            $checkResult = $this->checkTeam($tims);
+            if ($checkResult) {
+                return $checkResult;
+            }
+
             $catatan = new catatan();
             $catatan->code = $user->tim[0]->code;
             $catatan->tim_id = $tim;
@@ -52,8 +67,13 @@ class catatanController extends Controller
     protected function update(Request $request, string $code)
     {
         try {
-
             $catatan = catatan::where('code', $code)->firstOrFail();
+            $tim = $catatan->tim;
+
+            $checkResult = $this->checkTeam($tim);
+            if ($checkResult) {
+                return $checkResult;
+            }
 
             if ($catatan->type_note === 'revisi') {
                 return back()->with('warning', 'Jenis catatan ini tidak bisa di edit');
@@ -81,6 +101,13 @@ class catatanController extends Controller
     {
         try {
             $catatan = catatan::where('code', $code)->firstOrFail();
+            $tim = $catatan->tim;
+
+            $checkResult = $this->checkTeam($tim);
+            if ($checkResult) {
+                return $checkResult;
+            }
+
             if ($catatan->type_note === 'revisi') {
                 return back()->with('error', 'Jenis catatan ini tidak bisa di hapus');
             } else {

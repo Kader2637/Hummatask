@@ -274,7 +274,8 @@
                         <ul class="menu-sub">
                             @forelse ($tims as $item)
                                 <li class="menu-item">
-                                    <a href="{{ route('tim.project', $item->code) }}"
+                                    @if ($item->project[0]->deskripsi != null)
+                                    <a href="{{ route('tim.board', $item->code) }}"
                                         class="menu-link d-flex align-items-center gap-2">
                                         <img width="30" height="30"
                                             style="width: 30px;height:30px;object-fit: cover"
@@ -282,6 +283,16 @@
                                             src="{{ asset('storage/' . $item->logo) }}" alt="">
                                         <div class="">{{ $item->nama }}</div>
                                     </a>
+                                    @else
+                                    <a href="{{ route('tim.project', $item->code) }}"
+                                        class="menu-link d-flex align-items-center gap-2">
+                                        <img width="30" height="30"
+                                        style="width: 30px;height:30px;object-fit: cover"
+                                        class="rounded-circle border border-primary"
+                                        src="{{ asset('storage/' . $item->logo) }}" alt="">
+                                        <div class="">{{ $item->nama }}</div>
+                                    </a>
+                                    @endif
                                 </li>
                             @empty
                                 <li class="menu-item">
