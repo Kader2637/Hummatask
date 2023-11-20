@@ -274,7 +274,7 @@
                         <ul class="menu-sub">
                             @forelse ($tims as $item)
                                 <li class="menu-item">
-                                    @if ($item->project[0]->deskripsi != null)
+                                    @if (@isset($item->project) && $item->project[0]->deskripsi != null)
                                     <a href="{{ route('tim.board', $item->code) }}"
                                         class="menu-link d-flex align-items-center gap-2">
                                         <img width="30" height="30"

@@ -522,8 +522,6 @@
             });
         });
 
-
-
         $("#ketua").change(function() {
             var selectedValue = $(this).val();
             if (selectedValue) {
