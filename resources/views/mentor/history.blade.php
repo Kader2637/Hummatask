@@ -266,7 +266,7 @@
                                 <tr>
                                     <th scope="col">NO</th>
                                     <th scope="col">TEAM</th>
-                                    <th scope="col">DEADLINE</th>
+                                    <th scope="col">TANGGAl</th>
                                     <th scope="col">PROJECT</th>
                                     <th scope="col">TEMA</th>
                                 </tr>
@@ -281,8 +281,8 @@
                                                 data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
                                                 title="{{ $item->tim->nama }}">
                                         </td>
-                                        @foreach ($item->tim->project as $item)
-                                            <td>{{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}
+                                        @foreach ($item->tim->presentasi as $item)
+                                            <td>{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('l, j F Y') }}
                                             </td>
                                         @endforeach
                                         <td>{{ $item->tim->status_tim }}</td>

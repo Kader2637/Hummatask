@@ -14,7 +14,8 @@
                         <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/app-kanban.css') }}" />
 
                         <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
-                        <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}">
+                        <link rel="stylesheet"
+                            href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}">
                     @endsection
 
                     @section('style')
@@ -38,10 +39,12 @@
                                                 <span style="font-size: 15px" class="">Tugas Baru</span>
                                             </div>
                                             <div class="col-4 d-flex justify-content-end cursor-pointer">
-                                                <svg onclick="showForm('tambahTugas')" xmlns="http://www.w3.org/2000/svg" width="20"
-                                                    height="20" viewBox="0 0 1024 1024">
-                                                    <path fill="currentColor" d="M352 480h320a32 32 0 1 1 0 64H352a32 32 0 0 1 0-64z" />
-                                                    <path fill="currentColor" d="M480 672V352a32 32 0 1 1 64 0v320a32 32 0 0 1-64 0z" />
+                                                <svg onclick="showForm('tambahTugas')" xmlns="http://www.w3.org/2000/svg"
+                                                    width="20" height="20" viewBox="0 0 1024 1024">
+                                                    <path fill="currentColor"
+                                                        d="M352 480h320a32 32 0 1 1 0 64H352a32 32 0 0 1 0-64z" />
+                                                    <path fill="currentColor"
+                                                        d="M480 672V352a32 32 0 1 1 64 0v320a32 32 0 0 1-64 0z" />
                                                     <path fill="currentColor"
                                                         d="M512 896a384 384 0 1 0 0-768a384 384 0 0 0 0 768zm0 64a448 448 0 1 1 0-896a448 448 0 0 1 0 896z" />
                                                 </svg>
@@ -52,7 +55,8 @@
                                                 <form id="formTambahTugas" method="post">
                                                     @csrf
                                                     <label for="tugas">Nama Tugas</label>
-                                                    <input type="text" class="form-control" id="tugas" name="tugas">
+                                                    <input type="text" class="form-control" id="tugas"
+                                                        name="tugas">
                                                     <div class="d-flex justify-content-end mt-3">
                                                         <button type="submit" class="btn btn-primary">Submit</button>
                                                     </div>
@@ -61,7 +65,8 @@
                                         </div>
                                     </div>
                                     <div class="col-12 d-flex justify-content-center">
-                                        <div class="row d-flex flex-column justify-content-center align-items-center w-100" id="tugas_baru">
+                                        <div class="row d-flex flex-column justify-content-center align-items-center w-100"
+                                            id="tugas_baru">
 
                                         </div>
                                     </div>
@@ -76,7 +81,8 @@
                                         </div>
                                     </div>
                                     <div class="col-12 d-flex justify-content-center">
-                                        <div class="row row d-flex flex-column justify-content-center align-items-center w-100" id="dikerjakan">
+                                        <div class="row row d-flex flex-column justify-content-center align-items-center w-100"
+                                            id="dikerjakan">
                                         </div>
                                     </div>
                                 </div>
@@ -89,7 +95,8 @@
                                         </div>
                                     </div>
                                     <div class="col-12 d-flex justify-content-center">
-                                        <div class="w-100 row d-flex flex-column justify-content-center align-items-center" id="revisi">
+                                        <div class="w-100 row d-flex flex-column justify-content-center align-items-center"
+                                            id="revisi">
 
                                         </div>
                                     </div>
@@ -103,7 +110,8 @@
                                         </div>
                                     </div>
                                     <div class="col-12 d-flex justify-content-center">
-                                        <div class="row d-flex flex-column justify-content-center align-items-center w-100" id="selesai">
+                                        <div class="row d-flex flex-column justify-content-center align-items-center w-100"
+                                            id="selesai">
                                         </div>
                                     </div>
                                 </div>
@@ -116,7 +124,8 @@
                         <div class="offcanvas offcanvas-end kanban-update-item-sidebar" id="editTugasBar">
                             <div class="offcanvas-header border-bottom">
                                 <h5 class="offcanvas-title">Edit Task</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                    aria-label="Close"></button>
                             </div>
                             <div class="offcanvas-body">
                                 <ul class="nav nav-tabs tabs-line">
@@ -141,17 +150,20 @@
                                             @method('PUT')
                                             <div class="mb-3">
                                                 <label class="form-label" for="title">Nama Tugas</label>
-                                                <input type="text" id="title" class="form-control" value="" name="nama" />
+                                                <input type="text" id="title" class="form-control" value=""
+                                                    name="nama" />
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="due-date">Deadline</label>
-                                                <input type="date" id="due-date" name="deadline" value="" class="form-control"
-                                                    placeholder="Enter Deadline" />
+                                                <input type="date" id="due-date" name="deadline" value=""
+                                                    class="form-control" placeholder="Enter Deadline" />
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="newStatus"> Status</label>
-                                                <select class="select2 select2-label form-select" id="status" name="newStatus">
-                                                    <option data-color="bg-label-success" value="tugas_baru">Tugas Baru</option>
+                                                <select class="select2 select2-label form-select" id="status"
+                                                    name="newStatus">
+                                                    <option data-color="bg-label-success" value="tugas_baru">Tugas Baru
+                                                    </option>
                                                     <option data-color="bg-label-warning" value="dikerjakan">
                                                         Dikerjakan</option>
                                                     <option data-color="bg-label-info" value="revisi">Direvisi
@@ -161,12 +173,15 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label class a="form-label" for="newPriority">Prioritas</label>
-                                                <select class="select2 select2-label form-select" id="newPriority" name="newPriority">
-                                                    <option data-color="bg-label-success" value="mendesak">Mendesak</option>
+                                                <select class="select2 select2-label form-select" id="newPriority"
+                                                    name="newPriority">
+                                                    <option data-color="bg-label-success" value="mendesak">Mendesak
+                                                    </option>
                                                     <option data-color="bg-label-warning" value="penting">Penting</option>
                                                     <option data-color="bg-label-info" value="biasa">Biasa</option>
                                                     <option data-color="bg-label-info" value="tambahan">Tambahan</option>
-                                                    <option data-color="bg-label-secondary" value="opsional">Opsional</option>
+                                                    <option data-color="bg-label-secondary" value="opsional">Opsional
+                                                    </option>
                                                 </select>
                                             </div>
                                             <div class="mb-3">
@@ -178,8 +193,9 @@
 
                                                             </div>
                                                             <select name="penugasan[]" id="select2Primary"
-                                                                class="select2 form-select select2-hidden-accessible" multiple=""
-                                                                data-select2-id="select2Primary" tabindex="-1" aria-hidden="true">
+                                                                class="select2 form-select select2-hidden-accessible"
+                                                                multiple="" data-select2-id="select2Primary"
+                                                                tabindex="-1" aria-hidden="true">
 
                                                             </select>
                                                         </div>
@@ -187,10 +203,12 @@
                                             </div>
                                             @endif
                                             <div class="d-flex flex-wrap">
-                                                <button type="submit" class="btn btn-primary me-3" data-bs-dismiss="offcanvas">
+                                                <button type="submit" class="btn btn-primary me-3"
+                                                    data-bs-dismiss="offcanvas">
                                                     Update
                                                 </button>
-                                                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">
+                                                <button type="button" class="btn btn-label-secondary"
+                                                    data-bs-dismiss="offcanvas">
                                                     Close
                                                 </button>
                                             </div>
@@ -210,14 +228,16 @@
                                             <div class="col-11">
                                                 <form id="tambahKomentar" method="post">
                                                     @csrf
-                                                    <label class="form-label" for="bootstrap-maxlength-example2">Komentar</label>
-                                                    <div class="w-100 d-flex justify-content-between align-items-center gap-2">
+                                                    <label class="form-label"
+                                                        for="bootstrap-maxlength-example2">Komentar</label>
+                                                    <div
+                                                        class="w-100 d-flex justify-content-between align-items-center gap-2">
                                                         <textarea style="resize: none" id="bootstrap-maxlength-example2"
                                                             class="form-control bootstrap-maxlength-example inp-tambah-komentar" rows="1" maxlength=""
                                                             style="height: 43px;"></textarea>
                                                         <button type="submit" class="btn btn-primary">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                                viewBox="0 0 24 24">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                                height="20" viewBox="0 0 24 24">
                                                                 <g fill="none">
                                                                     <path
                                                                         d="M24 0v24H0V0h24ZM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018Zm.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022Zm-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01l-.184-.092Z" />
@@ -228,8 +248,8 @@
                                                         </button>
                                                         <button type="button" onclick="cancelEdit()"
                                                             class="btn btn-danger btn-edit-komentar d-none">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                                viewBox="0 0 24 24">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                                height="20" viewBox="0 0 24 24">
                                                                 <path fill="currentColor"
                                                                     d="M6.4 19L5 17.6l5.6-5.6L5 6.4L6.4 5l5.6 5.6L17.6 5L19 6.4L13.4 12l5.6 5.6l-1.4 1.4l-5.6-5.6L6.4 19Z" />
                                                             </svg>
@@ -368,7 +388,7 @@
                                                             ${deadline} hari lagi
                                                         </div>
                                                     </div>
-                                                    <div class="dropdown kanban-tasks-item-dropdown">
+                                                    <div class="dropdown kanban-tasks-item-dropdown cursor-pointer">
                                                     <i class="ti ti-dots-vertical" id="kanban-tasks-item-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="kanban-tasks-item-dropdown" style="">
                                                         <button onclick="editTugas('${tugas.code}')" type="button" class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#editTugasBar">Edit</button>
@@ -426,7 +446,7 @@
                                         const data = res.data;
                                         console.log(data);
                                         const user = data.tugas.tim.user;
-                                        const userSelected = data. tugas.user;
+                                        const userSelected = data.tugas.user;
                                         const comments = data.tugas.comments;
 
 
@@ -450,13 +470,10 @@
                                             }
                                         });
 
-
-
-
                                         $("#title").val(data.tugas.nama)
                                         $("#due-date").val(data.tugas.deadline)
 
-                                        if(data.tugas.tim.status_tim !== "solo"){
+                                        if (data.tugas.tim.status_tim !== "solo") {
                                             Object.keys(user).forEach(key => {
                                                 const userOption = user[key];
                                                 const option = document.createElement('option')
@@ -465,7 +482,7 @@
 
                                                 userSelected.forEach(data => {
                                                     if (data.uuid === userOption.uuid) {
-                                                            option.setAttribute("selected", true);
+                                                        option.setAttribute("selected", true);
                                                     }
                                                 });
                                                 $("#select2Primary").append(option);
@@ -475,10 +492,9 @@
                                         $(".list-komentar").empty();
 
                                         console.log(comments);
-                                        Object.keys(comments).forEach((keys,i) =>
-                                        {
+                                        Object.keys(comments).forEach((keys, i) => {
                                             const jadwal = res.data.komentarTerbuat[i];
-                                           
+
                                             const komentar = comments[keys];
                                             console.log(jadwal);
                                             let div = document.createElement("div");
@@ -486,7 +502,7 @@
 
                                             const user = komentar.user;
                                             div.className =
-                                            "media mb-4 d-flex align-items-start card flex-row px-3 py-2 mb-3 w-100";
+                                                "media mb-4 d-flex align-items-start card flex-row px-3 py-2 mb-3 w-100";
                                             div.style.overflowWrap = "anywhere";
                                             div.setAttribute('id', 'komentar-' + komentar.id);
 
@@ -587,53 +603,50 @@
 
 
                             function deleteKomentar(komentar_id) {
-
-
                                 const swalWithBootstrapButtons = Swal.mixin({
-                    customClass: {
-                        confirmButton: "btn btn-success",
-                        cancelButton: "btn btn-danger"
-                    },
-                    buttonsStyling: false
-                    });
+                                    customClass: {
+                                        confirmButton: "btn btn-success",
+                                        cancelButton: "btn btn-danger"
+                                    },
+                                    buttonsStyling: false
+                                });
                                 swalWithBootstrapButtons.fire({
-                    title: "Apakah kamu yakin?",
-                    text: "Datamu tidak bisa dipulihkan setelah ini",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "Hapus",
-                    cancelButtonText: "Batal",
-                    reverseButtons: true
-                    }).then((result) => {
-                    if (result.isConfirmed) {
+                                    title: "Apakah kamu yakin?",
+                                    text: "Datamu tidak bisa dipulihkan setelah ini",
+                                    icon: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonText: "Hapus",
+                                    cancelButtonText: "Batal",
+                                    reverseButtons: true
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        axios.delete("hapus-komentar/" + komentar_id)
+                                            .then((res) => {
+                                                $("#komentar-" + komentar_id).addClass("d-none");
+                                                console.log(res.data);
+                                                successRes("Berhasil Menghapus komentar");
 
+                                            })
+                                            .catch((err) => {
+                                                console.log(err);
+                                                alertError(err);
+                                            })
 
-                        axios.delete("hapus-komentar/" + komentar_id)
-                                    .then((res) => {
-                                        $("#komentar-" + komentar_id).addClass("d-none");
-                                        console.log(res.data);
+                                    } else if (
 
-                                    })
-                                    .catch((err) => {
-                                        console.log(err);
-                                    })
-
-                                    successRes("Berhasil Menghapus komentar");
-                    } else if (
-
-                        result.dismiss === Swal.DismissReason.cancel
-                    ) {
-                        swalWithBootstrapButtons.fire({
-                        title: "Terbatalkan",
-                        text: "Datamu sekarang aman:)",
-                        icon: "error"
-                        });
-                    }
-                    });
+                                        result.dismiss === Swal.DismissReason.cancel
+                                    ) {
+                                        swalWithBootstrapButtons.fire({
+                                            title: "Terbatalkan",
+                                            text: "Datamu sekarang aman:)",
+                                            icon: "error"
+                                        });
+                                    }
+                                });
                             }
 
                             function editKomentar(komentar_id, text) {
-                               
+
                                 $("#tambahKomentar").removeData("data-komentar-id");
                                 $("#tambahKomentar").attr("data-komentar-id", komentar_id);
                                 $(".inp-tambah-komentar").val(text);
@@ -645,7 +658,7 @@
                             function cancelEdit() {
                                 let komentar_id = $("#tambahKomentar").data("komentar-id");
                                 let tugas_code = $("#tambahKomentar").data("codetugas");
-                                console.log("tugas code tercancel"+tugas_code);
+                                console.log("tugas code tercancel" + tugas_code);
                                 console.log("Ini cancel");
                                 editTugas(tugas_code);
                                 get()
@@ -722,7 +735,7 @@
                                 const nama = $('#tugas').val();
                                 const tim_id = "{{ $tim->code }}";
 
-                                axios.post("tambah-tugas/"+tim_id, {
+                                axios.post("tambah-tugas/" + tim_id, {
                                         nama,
                                         tim_id
                                     })
@@ -776,6 +789,7 @@
                                             })
                                             .catch((err) => {
                                                 console.log(err);
+                                                alertError(err);
                                             })
 
                                     } else if (

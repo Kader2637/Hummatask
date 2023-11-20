@@ -58,6 +58,8 @@ Route::prefix('tim')->controller(timController::class)->group(function () {
     });
     Route::middleware(['auth', 'siswa'])->group(function () {
         Route::post('catatan', [catatanController::class, 'store'])->name('catatan.store');
+        Route::patch('catatan/update/{code}', [catatanController::class, 'update'])->name('catatan.update');
+        Route::delete('catatan/delete/{code}', [catatanController::class, 'delete'])->name('catatan.delete');
     });
     Route::middleware(['auth', 'siswa','cekanggota'])->group(function () {
         Route::get('board/{code}', 'boardPage')->name('tim.board');
@@ -66,16 +68,11 @@ Route::prefix('tim')->controller(timController::class)->group(function () {
         Route::get('statistik/{code}', 'statistikPage')->name('tim.history');
         Route::get('history-presentasi/{code}', 'historyPresentasiPage')->name('tim.historyPresentasi');
         Route::get('history-catatan/{code}', 'historyCatatanPage')->name('tim.historyCatatan');
-        Route::patch('catatan/update/{code}', [catatanController::class, 'update'])->name('catatan.update');
-        Route::delete('catatan/delete/{code}', [catatanController::class, 'delete'])->name('catatan.delete');
 
         Route::patch('/ubah-status', 'ubahStatus')->name('ubahStatus');
         Route::delete('/delete-tugas', 'hapusTugas')->name('delete.tugas');
         Route::post('/add-comment', 'comments')->name('tim.addComment');
         Route::get('/view-comment', 'viewComments');
-
-
-
         // proses di halaman tim
     });
     Route::middleware(['auth','siswa'])->group(function(){

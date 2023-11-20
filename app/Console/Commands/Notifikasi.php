@@ -48,24 +48,28 @@ class Notifikasi extends Command
         }
     }
     protected function checkTugasDeadlines()
-{
-    $tugasList = Tugas::all();
+    {
+        $tugasList = Tugas::all();
 
-    foreach ($tugasList as $tugas) {
-        if ($tugas->deadline && $tugas->status_tugas !== 'selesai') {
-            $deadlineDate = Carbon::parse($tugas->deadline);
-            $daysRemaining = $deadlineDate->diffInDays(Carbon::now());
-    
-            if ($daysRemaining === 1) {
-                $teamMembers = $tugas->penugasan->user;
+        foreach ($tugasList as $tugas) {
+            if ($tugas->deadline && $tugas->status_tugas !== 'selesai') {
+                $deadlineDate = Carbon::parse($tugas->deadline);
+                $daysRemaining = $deadlineDate->diffInDays(Carbon::now());
 
-                foreach ($teamMembers as $member) {
-                    $this->sendNotification($member->id, 'Deadline Tugas', 'Deadline tugas "' . $tugas->nama . '" tinggal 1 hari lagi!');
+                if ($daysRemaining === 1) {
+                    if ($tugas->penugasan) {
+                        $userIds = $tugas->penugasan->pluck('user_id')->toArray();
+
+                        foreach ($userIds as $userId) {
+                            $this->sendNotification($userId, 'Deadline Tugas', 'Deadline tugas "' . $tugas->nama . '" tinggal 1 hari lagi!');
+                        }
+                    }
                 }
             }
         }
     }
-}
+
+
 
     
 

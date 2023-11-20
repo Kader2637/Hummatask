@@ -17,6 +17,19 @@ use Illuminate\Support\Str;
 
 class TugasController extends Controller
 {
+    protected function checkTeam(Tim $tim)
+    {
+        if ($tim->kadaluwarsa == 1) {
+            return response()->json(
+                [
+                    "errors" => [
+                        "message" => "Tim anda sudah kadaluwarsa"
+                    ]
+                ],
+                422
+            );
+        }
+    }
 
     protected function getData($code)
     {
@@ -35,9 +48,6 @@ class TugasController extends Controller
             "tugas_selesai" => $tugas->where('status_tugas', 'selesai'),
         ];
 
-
-
-
         return response()->json([
             "tugas" => $tugas,
         ]);
@@ -45,9 +55,13 @@ class TugasController extends Controller
 
     protected function buatTugas(Request $request)
     {
-        $tugasList = Tugas::get();
+        $tim = Tim::where('code', $request->tim_id)->first();
+        $checkResult = $this->checkTeam($tim);
 
-        
+        if ($checkResult) {
+            return $checkResult;
+        }
+
         $validator = validator(
             $request->all(),
             [
@@ -55,7 +69,7 @@ class TugasController extends Controller
             ],
             [
                 "nama.required" => "Nama tugas wajib diisi",
-                "nama.string" => "Nama tugas harus berupa strinig",
+                "nama.string" => "Nama tugas harus berupa string",
                 "nama.max" => "Nama tugas memiliki maksimal 50 karakter",
             ]
         );
@@ -69,7 +83,6 @@ class TugasController extends Controller
             );
         }
 
-        $tim = Tim::where('code', $request->tim_id)->first();
         $tugas = new Tugas;
         $tugas->tim_id = $tim->id;
         $tugas->code = Str::uuid();
@@ -88,41 +101,37 @@ class TugasController extends Controller
     }
 
     protected function sendNotificationToTeamMembers($teamMembers, $title, $message)
-{
-    foreach ($teamMembers as $member) {
-        Notifikasi::create([
-            'user_id' => $member->id,
-            'judul' => $title,
-            'body' => $message,
-            'status' => 'belum_dibaca',
-        ]);
+    {
+        foreach ($teamMembers as $member) {
+            Notifikasi::create([
+                'user_id' => $member->id,
+                'judul' => $title,
+                'body' => $message,
+                'status' => 'belum_dibaca',
+            ]);
+        }
     }
-}
 
     protected function dataEditTugas($codeTugas)
     {
         try {
-            //code...
             $tugass = Tugas::with('comments.user', 'user', 'tim.user')->where('code', $codeTugas)->first();
 
-            $jadwal =[];
-foreach ($tugass->comments as $data) {
-    if(Carbon::parse($data->created_at)->isoFormat("Y-M-DD") === Carbon::now()->isoFormat("Y-M-DD")){
-        $jadwal[] = "Today ".Carbon::parse($data->created_at)->format("h:i A");
-    }else{
-        $tanggal1 = Carbon::parse($data->created_at);
-        $tanggal2 = Carbon::now();
-        $jadwal[] = $tanggal2->diffInDays($tanggal1);
-    }
+            $jadwal = [];
+            foreach ($tugass->comments as $data) {
+                if (Carbon::parse($data->created_at)->isoFormat("Y-M-DD") === Carbon::now()->isoFormat("Y-M-DD")) {
+                    $jadwal[] = "Today " . Carbon::parse($data->created_at)->format("h:i A");
+                } else {
+                    $tanggal1 = Carbon::parse($data->created_at);
+                    $tanggal2 = Carbon::now();
+                    $jadwal[] = $tanggal2->diffInDays($tanggal1);
+                }
+            }
 
-}
-
-$tugas = [
-    "tugas" => $tugass,
-    "komentarTerbuat" => $jadwal
-];
-
-
+            $tugas = [
+                "tugas" => $tugass,
+                "komentarTerbuat" => $jadwal
+            ];
 
             return response()->json(
                 $tugas
@@ -134,6 +143,13 @@ $tugas = [
 
     protected function prosesEditTugas(Request $request)
     {
+        $tugas = Tugas::where('code', $request->codeTugas)->first();
+        $tim = $tugas->tim;
+        $checkResult = $this->checkTeam($tim);
+
+        if ($checkResult) {
+            return $checkResult;
+        }
 
         $validator = validator(
             $request->all(),
@@ -164,8 +180,6 @@ $tugas = [
             );
         }
 
-        $tugas = Tugas::where('code', $request->codeTugas)->first();
-
         $tugas->nama = $request->nama;
         $tugas->prioritas = $request->prioritas;
         $tugas->deadline = $request->deadline;
@@ -178,7 +192,7 @@ $tugas = [
             }
         }
 
-        if($tugas->tim->status_tim !== "solo"){
+        if ($tugas->tim->status_tim !== "solo") {
             $penugasan = $request->penugasan;
             $currentPenugasan = $tugas->user->pluck('uuid')->toArray();
 
@@ -211,7 +225,6 @@ $tugas = [
                     $penugasanTb = Penugasan::where('tugas_id', $tugas->id)->where('user_id', $user->id)->delete();
                 }
             }
-
         }
 
 
@@ -233,6 +246,13 @@ $tugas = [
     protected function hapusTugas($codeTugas)
     {
         $tugas = Tugas::where('code', $codeTugas)->first();
+        $tim = $tugas->tim;
+        $checkResult = $this->checkTeam($tim);
+
+        if ($checkResult) {
+            return $checkResult;
+        }
+
         $tugas->delete();
 
         return response()->json(["success" => "Berhasil menghapus tugas"]);
@@ -240,6 +260,14 @@ $tugas = [
 
     protected function tambahKomentar(Request $request)
     {
+
+        $tugas = Tugas::where('code', $request->tugas_code)->first();
+        $tim = $tugas->tim;
+        $checkResult = $this->checkTeam($tim);
+
+        if ($checkResult) {
+            return $checkResult;
+        }
 
         $validator = Validator(
             $request->all(),
@@ -282,8 +310,15 @@ $tugas = [
 
     protected function hapusKomentar($komentar_id)
     {
-
         $komentar = Comments::find($komentar_id);
+        $tugas = $komentar->tugas->first();
+        $tim = $tugas->tim;
+        $checkResult = $this->checkTeam($tim);
+
+        if ($checkResult) {
+            return $checkResult;
+        }
+
         $komentar->delete();
 
         return response()->json(["success", "Menghapus komentar"]);
