@@ -187,18 +187,24 @@
                         </div>
                     </div>
                     <div class="" role="presentation">
-                        @if (!$project)
-                            <button class="btn btn-primary button-nav waves-effect waves-light" data-bs-toggle="modal"
-                                data-bs-target="#ajukanModal">
-                                Ajukan Project
-                            </button>
-                        @else
-                            <button class="btn btn-primary button-nav waves-effect waves-light" data-bs-toggle="modal"
-                                data-bs-target="#editProject">
-                                Edit Project
-                            </button>
-                        @endif
+                        @auth
+                            @if (auth()->user()->anggota->jabatan_id == '1')
+                                @if (!$project)
+                                    <button class="btn btn-primary button-nav waves-effect waves-light" data-bs-toggle="modal"
+                                        data-bs-target="#ajukanModal">
+                                        Ajukan Project
+                                    </button>
+                                @else
+                                    <button class="btn btn-primary button-nav waves-effect waves-light" data-bs-toggle="modal"
+                                        data-bs-target="#editProject">
+                                        Edit Project
+                                    </button>
+                                @endif
+                            @endif
+                        @endauth
                     </div>
+                    
+                    
                 </div>
                 <div class="tab-content bg-transparent pb-0" style="box-shadow: none;">
                     <div class="tab-pane fade active show" id="navs-pills-top-home" role="tabpanel">

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <html lang="en" class="light-style layout-compact layout-navbar-fixed layout-menu-fixed   " dir="ltr"
-    data-assets-path="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/"
+    {{-- data-assets-path="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/" --}}
     data-base-url="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1" data-framework="laravel"
     data-template="vertical-menu-theme-default-light">
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
@@ -420,7 +420,7 @@
     <script src="{{ asset('assets/vendor/js/menu2dc9.js?id=c6ce30ded4234d0c4ca0fb5f2a2990d8') }}"></script>
     <script src="{{ asset('assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
     <script src="{{ asset('assets/js/mainf696.js?id=8bd0165c1c4340f4d4a66add0761ae8a') }}"></script>
-    <script src="{{ asset('assets/js/dashboards-crm.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/dashboards-crm.js') }}"></script> --}}
     <script src="{{ asset('assets/vendor/libs/fullcalendar/fullcalendar.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/%40form-validation/umd/bundle/popular.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/%40form-validation/umd/plugin-bootstrap5/index.min.js') }}"></script>
@@ -501,8 +501,8 @@
                     }
 
                     var notifikasiBaru = `
-                                        <li class="list-group-item" id="notification-list">
-                    <div class="d-flex mt-2 mb-2 pl-5" id="notifikasi-${item.id}">
+                                        <li class="list-group-item" id="notification-list-${item.id}">
+                    <div class="d-flex mt-2 mb-2 pl-5">
                         <div class="flex-shrink-0 me-3">
                             <div class="">
                                 <img src="" alt class="h-auto rounded-circle">
@@ -531,7 +531,7 @@
 
             setInterval(function() {
                 ambilNotifikasi();
-            }, 30000);
+            }, 5000);
         });
     </script>
 

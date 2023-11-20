@@ -31,4 +31,9 @@ class Tugas extends Model
         return $this->hasMany(Comments::class);
     }
 
+    public function penugasan(): BelongsTo
+    {
+        return $this->belongsTo(Penugasan::class);
+    }
+
 }
