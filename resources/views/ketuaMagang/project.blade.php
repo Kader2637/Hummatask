@@ -26,13 +26,15 @@
         <div class="d-flex justify-content-between">
             <div class="filter col-lg-3 col-md-3 col-sm-3">
                 <label for="select2Basic" class="form-label">Filter</label>
-                <select id="select2Basic" name="temaProjek" class="select2 form-select form-select-lg" data-allow-clear="true">
-                    <option disabled selected>Filter type project</option>
+                <select id="select2Basic" name="temaProjek" class="select2 form-select form-select-lg" data-allow-clear="true"
+                    onchange="filterProjek(this)">
+                    <option value="" disabled selected>Pilih Data</option>
+                    <option value="all">Semua</option>
+                    <option value="solo">Solo Project</option>
+                    <option value="pre_mini">Pre-mini Project</option>
+                    <option value="mini">Mini Project</option>
+                    <option value="big">Big Project</option>
                 </select>
-            </div>
-            <div id="buatTim" class="d-flex align-items-end">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalBuatTim">Buat
-                    Tim</button>
             </div>
         </div>
         {{-- Header --}}
@@ -60,7 +62,7 @@
                     $progressPercentage = 100 - ($dayLeft / $totalDeadline) * 100;
                 @endphp
                 <div class="col-md-4 col-lg-4 col-sm-4">
-                    <div class="card text-center mb-3">
+                    <div class="card text-center mb-3 projek-item" data-status-tim="{{ $item->tim->status_tim }}">
                         <div class="card-body">
                             <div class="d-flex flex-row gap-3">
                                 <img src="{{ asset('storage/' . $item->tim->logo) }}" alt="foto logo"
@@ -222,8 +224,8 @@
                                                     aria-selected="true">Project</button>
                                             </div>
                                             <div class="nav-item button-nav" role="presentation">
-                                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                                                    data-bs-target="#navs-pills-top-profile"
+                                                <button type="button" class="nav-link" role="tab"
+                                                    data-bs-toggle="tab" data-bs-target="#navs-pills-top-profile"
                                                     aria-controls="navs-pills-top-profile" aria-selected="false"
                                                     tabindex="-1">Anggota</button>
                                             </div>
@@ -385,80 +387,24 @@
         </div>
         {{-- Modal detail --}}
 
-        {{-- Modal Buat Tim --}}
-        <form action="" id="createForm" method="post">
-            @csrf
-            <div class="modal fade" id="modalBuatTim" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalCenterTitle">Buat Tim</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col mb-3">
-                                    <label for="" class="form-label">Tim</label>
-                                    <select name="status_tim" id="status_tim" onchange="run()"
-                                        class="select2 form-select form-select-lg" data-allow-clear="true">
-                                        <option value="" disabled selected>Pilih Tim</option>
-                                        @foreach ($status_tim as $status)
-                                            <option class="text-capitalize" value="{{ $status->id }}">
-                                                {{ $status->status }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('status_tim')
-                                        <p class="text-danger">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="row" id="kelompok_ketua" style="display: block">
-                                <div class="col mb-3">
-                                    <label for="ketuaKelompok" class="form-label">Ketua Kelompok</label>
-                                    <select id="ketuaKelompok" name="ketuaKelompok"
-                                        class="select2 form-select form-select-lg" data-allow-clear="true">
-                                        <option value="" disabled selected>Pilih Data</option>
-                                    </select>
-                                    @error('ketuaKelompok')
-                                        <p class="text-danger">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="row" id="project_ketua" style="display: block">
-                                <div class="col mb-3">
-                                    <label for="KetuaProjek" class="form-label">Ketua Projek</label>
-                                    <select id="KetuaProjek" name="ketuaProjek"
-                                        class="select2 form-select form-select-lg" data-allow-clear="true">
-                                        <option value="" disabled selected>Pilih Data</option>
-                                    </select>
-                                    @error('ketuaProjek')
-                                        <p class="text-danger">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col mb-3">
-                                    <label for="anggota" class="form-label">Anggota</label>
-                                    <select id="anggota" name="anggota[]" class="select2 form-select" multiple>
-                                    </select>
-                                    @error('anggota')
-                                        <p class="text-danger">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-label-secondary"
-                                data-bs-dismiss="modal">Kembali</button>
-                            <button type="submit" id="createButton" class="btn btn-primary">Simpan</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
 
         <script>
+            function filterProjek(selectElement) {
+                var code = selectElement.value;
+                var projekElements = document.getElementsByClassName('projek-item');
+
+                for (var i = 0; i < projekElements.length; i++) {
+                    var projekElement = projekElements[i];
+                    var statusTim = projekElement.getAttribute('data-status-tim');
+
+                    if (code === 'all' || code === statusTim) {
+                        projekElement.style.display = 'block';
+                    } else {
+                        projekElement.style.display = 'none';
+                    }
+                }
+            }
+
             const cardColor = '#28dac6';
             const headingColor = '#FDAC34';
             const black = '#000000';
@@ -590,70 +536,6 @@
                     }
                 });
             }
-            $(document).ready(function() {
-                var isCreatingTim = false;
-                // Fungsi untuk menangani pembuatan tim menggunakan AJAX
-                function createTim() {
-                    // Mendapatkan data formulir
-                    $('#createButton').prop('disabled', true);
-                    isCreatingTim = true;
-                    $('#loader').show();
-                    var formData = new FormData($('#createForm')[0]);
-                    // Menggunakan AJAX untuk mengirim data ke server
-                    $.ajax({
-                        type: 'POST',
-                        url: '{{ route('pembuatantim.ketua') }}',
-                        data: formData,
-                        contentType: false,
-                        processData: false,
-                        success: function(response) {
-                            // Tanggapan dari server, bisa ditangani sesuai kebutuhan
-                            get();
-                            isCreatingTim = false;
-                            // Aktifkan kembali button create
-                            $('#createButton').prop('disabled', false);
-                            // Tutup modal
-                            $('#status_tim').val('');
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Sukses',
-                                text: 'Data Berhasil Ditambahkan',
-                            });
-                            $('#ketuaKelompok, #status_tim, #anggota').val(null).trigger('change');
-                            $('#modalBuatTim').modal('hide');
-                            get();
-                            $('#loader').fadeOut();
-                        },
-                        error: function(error) {
-                            $('#modalBuatTim').modal('hide');
-                            // Tanggapan error dari server
-                            console.log(error);
-                            var errorMessage = 'Pastikan data terisi semua.';
-                            if (error.responseJSON && error.responseJSON.message) {
-                                errorMessage = error.responseJSON.message;
-                            } else if (error.responseJSON && error.responseJSON.errors && error.responseJSON
-                                .error.anggota) {
-                                errroMessage = 'Data sudah digunakan di opsi lain.';
-                            }
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'Peringatan',
-                                text: errorMessage,
-                            });
-                            $('#loader').fadeOut();
-                            isCreatingTim = false;
-
-                            // Aktifkan kembali button create
-                            $('#createButton').prop('disabled', false);
-                        }
-                    });
-                }
-                // Menangani submit formulir menggunakan AJAX
-                $('#createForm').submit(function(e) {
-                    e.preventDefault(); // Mencegah formulir melakukan submit bawaan
-                    createTim(); // Panggil fungsi untuk membuat tim menggunakan AJAX
-                });
-            });
         </script>
 
         <script>
