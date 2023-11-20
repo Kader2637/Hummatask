@@ -130,7 +130,7 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::get('presentasi', [mentorController::class, 'presentasi'])->name('presentasi.mentor');
     Route::get('project', [mentorController::class, 'Project'])->name('Project');
     Route::get('tim', [mentorController::class, 'tim'])->name('tim');
-    Route::get('tim/edit/{tim}', [mentorController::class, 'ProjectEdit'])->name('tim.edit');
+    Route::get('tim/edit/{tim}', [mentorController:: class, 'timEdit'])->name('tim.edit');  
     Route::get('/tim/filter', [mentorController::class, 'filter'])->name('tim.filter');
     Route::get('/tim/cari', [mentorController::class, 'cari'])->name('cari_tim');
     Route::get('laporanProgres', [mentorController::class, 'laporanProgres'])->name('laporan');
@@ -151,6 +151,7 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
 
     Route::post('pembuatantim', [PengajuanTimController::class, 'pembuatanTimProject'])->name('pembuatan.tim');
     Route::post('/update-tim/{timId}', [PengajuanTimController::class, 'updateTimProject'])->name('tim.update');
+    Route::post('solo/edit/{timId}', [PengajuanTimController:: class, 'updateSolo'])->name('solo.edit');  
 
 
     Route::get('delete-user/{code}', [tambahUsersController::class, 'delete'])->name('delete.user.pengguna');

@@ -226,27 +226,28 @@ class mentorController extends Controller
             })
             ->get();
 
-        return response()->view('mentor.projek', compact('users', 'projects','notifikasi'));
+        return response()->view('mentor.projek', compact('users', 'projects', 'notifikasi'));
     }
 
-    protected function pieproject($timId){
+    protected function pieproject($timId)
+    {
 
-        $tim = Tim::where('code',$timId)->first();
+        $tim = Tim::where('code', $timId)->first();
 
-        $selesai = $tim->tugas->where('status_tugas','selesai')->count();
+        $selesai = $tim->tugas->where('status_tugas', 'selesai')->count();
 
-        $revisi = $tim->tugas->where('status_tugas','revisi')->count();
+        $revisi = $tim->tugas->where('status_tugas', 'revisi')->count();
 
-        $tugas_baru = $tim->tugas->where('status_tugas','tugas_baru')->count();
+        $tugas_baru = $tim->tugas->where('status_tugas', 'tugas_baru')->count();
 
         $chartData = [
-                ['Status Tugas', 'Jumlah'],
-                ['Selesai', $selesai],
-                ['Revisi', $revisi],
-                ['Tugas Baru', $tugas_baru]
-            ];
+            ['Status Tugas', 'Jumlah'],
+            ['Selesai', $selesai],
+            ['Revisi', $revisi],
+            ['Tugas Baru', $tugas_baru]
+        ];
 
-        return response()->json(['selesai' => $selesai, 'revisi' => $revisi, 'tugas_baru' => $tugas_baru , 'chartData' => $chartData]);
+        return response()->json(['selesai' => $selesai, 'revisi' => $revisi, 'tugas_baru' => $tugas_baru, 'chartData' => $chartData]);
     }
 
     protected function Project()
@@ -260,7 +261,8 @@ class mentorController extends Controller
         return response()->json(['users' => $users, 'status_tim' => $status_tim]);
     }
 
-    protected function ProjectEdit($tim)
+    protected function
+    timEdit($tim)
     {
 
         $ketuaId = Tim::where('id', $tim)
@@ -294,7 +296,7 @@ class mentorController extends Controller
         return response()->json(['users' => $users, 'status_tim' => $status_tim, 'ketua' => $ketua, 'ketua_id' => $ketuaId]);
     }
 
-
+  
 
     protected function tim()
     {
@@ -330,7 +332,7 @@ class mentorController extends Controller
 
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
 
-        return view('mentor.tim', compact('tims', 'status_tim','notifikasi'));
+        return view('mentor.tim', compact('tims', 'status_tim', 'notifikasi'));
     }
 
     public function cari(Request $request)
@@ -354,7 +356,7 @@ class mentorController extends Controller
         $tims = $query->paginate(99999);
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
         // dd($tims);
-        return view('mentor.tim', compact('tims', 'status_tim','notifikasi'));
+        return view('mentor.tim', compact('tims', 'status_tim', 'notifikasi'));
     }
 
     protected function detailProjekPage($code)
@@ -378,7 +380,7 @@ class mentorController extends Controller
             ['Tugas Baru', $tugas_baru]
         ];
 
-        return response()->view('mentor.detail-projek', compact('tim', 'anggota', 'project', 'chartData','notifikasi'));
+        return response()->view('mentor.detail-projek', compact('tim', 'anggota', 'project', 'chartData', 'notifikasi'));
     }
 
     // Return view profile mentor

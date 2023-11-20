@@ -1,4 +1,5 @@
 @extends('layoutsMentor.app')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 @section('style')
 @endsection
@@ -100,8 +101,16 @@
                                 data-bs-placement="top" title="Tanggal Dibentuk">
                                 {{ $tim->created_at->translatedFormat('l, j F Y') }}
                             </p>
-                            <div class="f-flex">
+                            <div class="d-flex justify-content-center">
                                 @if ($tim->status_tim == 'solo')
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                            data-uri="/mentor/solo/edit/{{ $tim->id }}"
+                                            data-kadaluwarsa="{{ $tim->kadaluwarsa }}"
+                                            @if ($tim->kadaluwarsa == 0) checked @endif>
+
+                                        <label class="form-check-label" for="flexSwitchCheckDefault">Kondisi Tim</label>
+                                    </div>
                                 @else
                                     <a data-bs-toggle="modal" data-bs-target="#edit"
                                         class="w-100 btn btn-primary btn-detail-projek edit-tim btn-edit"
@@ -376,7 +385,81 @@
 
 @section('script')
     <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         $(document).ready(function() {
+
+            $('#flexSwitchCheckDefault').on('change', function() {
+                var uri = $(this).data('uri');
+                var isChecked = $(this).prop('checked');
+                var kadaluwarsa = $(this).data('kadaluwarsa');
+                var isChecked = $(this).prop('checked');
+                var ikan = ($('meta[name="csrf-token"]').attr('content'));
+
+                // Perbarui nilai checkbox berdasarkan kondisi
+                if (isChecked && kadaluwarsa == 1) {
+                    $(this).prop('checked', false);
+                } else if (!isChecked && kadaluwarsa == 0) {
+                    $(this).prop('checked', true);
+                }
+
+                // Lakukan permintaan Ajax di sini jika diperlukan
+                $.ajax({
+                    url: uri,
+                    method: 'POST', // Gantilah dengan metode HTTP yang sesuai
+                    data: {
+                        _token: ikan,
+                        kadaluwarsa: isChecked ? 0 : 1
+                    },
+                    success: function(data) {
+                        $('#saveButton').hide();
+
+                        Swal.fire({
+                            title: 'Sukses',
+                            text: 'Password berhasil diperbarui.',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 1700,
+                        }).then(() => {
+                            $('#updateTimForm ').modal('hide');
+                            $('#saveButton').show();
+
+                            window.location.reload();
+                        });
+                    },
+                    error: function(xhr, status, errors) {
+                        console.log('Response:', xhr.responseText);
+
+                        if (xhr.status === 422) {
+                            // Handle validation errors
+                            var errorMessages = xhr.responseJSON.errors;
+
+                            // Display error messages to the user (you can customize this part based on your needs)
+                            var errorMessageText = 'Terjadi kesalahan:';
+                            for (var key in errorMessages) {
+                                errorMessageText += '\n' + errorMessages[key];
+                            }
+
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: errorMessageText,
+                            });
+                        } else {
+                            // For other errors, display a generic error message
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: 'Terjadi kesalahan: ' + errors,
+                            });
+                        }
+                    }
+                });
+            })
+
 
             $('#updateTimForm').submit(function(e) {
                 e.preventDefault();
@@ -406,7 +489,6 @@
                         console.log('Response:', xhr.responseText);
 
                         if (xhr.status === 422) {
-                            // Handle validation errors
                             var errorMessages = xhr.responseJSON.errors;
 
                             // Display error messages to the user (you can customize this part based on your needs)

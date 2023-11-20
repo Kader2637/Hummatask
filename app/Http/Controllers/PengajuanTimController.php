@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use illuminate\Support\Str;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic;
 
@@ -165,6 +166,16 @@ class PengajuanTimController extends Controller
             'body' => $message,
             'status' => 'belum_dibaca',
         ]);
+    }
+
+    function updateSolo($timId, Request $request)
+    {
+        $tim = Tim::findOrFail($timId);
+        $kadaluwarsa = $request->input('kadaluwarsa');
+        $tim->kadaluwarsa = $kadaluwarsa;
+        $tim->save();
+
+        return response()->json(['success' => 'Berhasil update tim'], 200);
     }
 
     protected function updateTimProject(RequestPembentukanTimProject $request, $timId)
