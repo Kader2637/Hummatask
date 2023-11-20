@@ -45,7 +45,9 @@ class TugasController extends Controller
 
     protected function buatTugas(Request $request)
     {
+        $tugasList = Tugas::get();
 
+        
         $validator = validator(
             $request->all(),
             [

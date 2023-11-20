@@ -7,6 +7,7 @@ use App\Models\Notifikasi as ModelsNotifikasi;
 use App\Models\Presentasi;
 use App\Models\Project;
 use App\Models\Tim;
+use App\Models\Tugas;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
@@ -27,6 +28,7 @@ class Notifikasi extends Command
     public function handle()
     {
         $this->checkProjectDeadlines();
+        $this->checkTugasDeadlines();
     }
 
     protected function checkProjectDeadlines()
@@ -40,11 +42,31 @@ class Notifikasi extends Command
                 $teamMembers = $project->tim->user;
 
                 foreach ($teamMembers as $member) {
-                    $this->sendNotification($member->id, 'Deadline Project', 'Deadline proyek tim Anda tinggal ' . $daysRemaining . ' hari lagi!');
+                    $this->sendNotification($member->id, 'Deadline Project', 'Deadline project tim Anda tinggal ' . $daysRemaining . ' hari lagi!');
                 }
             }
         }
     }
+    protected function checkTugasDeadlines()
+{
+    $tugasList = Tugas::all();
+
+    foreach ($tugasList as $tugas) {
+        if ($tugas->deadline && $tugas->status_tugas !== 'selesai') {
+            $deadlineDate = Carbon::parse($tugas->deadline);
+            $daysRemaining = $deadlineDate->diffInDays(Carbon::now());
+    
+            if ($daysRemaining === 1) {
+                $teamMembers = $tugas->penugasan->user;
+
+                foreach ($teamMembers as $member) {
+                    $this->sendNotification($member->id, 'Deadline Tugas', 'Deadline tugas "' . $tugas->nama . '" tinggal 1 hari lagi!');
+                }
+            }
+        }
+    }
+}
+
     
 
     // protected function checkTeamMembership()
