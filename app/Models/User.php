@@ -89,4 +89,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Presentasi::class,'user_approval_id');
     }
+
+    public function anggota():BelongsTo
+    {
+        return $this->belongsTo(Anggota::class,'id','user_id');
+    }
 }

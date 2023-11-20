@@ -19,7 +19,7 @@ class catatanController extends Controller
             $user = Auth::user();
             $tim = $user->tim[0]->id;
             $catatan = new catatan();
-            $catatan->code = Str::uuid();
+            $catatan->code = $user->tim[0]->code;
             $catatan->tim_id = $tim;
 
             if ($request->type_note == 'private') {

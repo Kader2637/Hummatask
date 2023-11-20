@@ -165,7 +165,13 @@ class timController extends Controller
         if ($project->deskripsi === null) {
             return back()->with('tolak', 'Tolong lengkapi deskripsi proyek terlebih dahulu');
         }
-        $anggota = $tim->user()->get();
+        $anggota = $tim->user;
+        $jabatan=[];
+
+        foreach ($anggota as $data) {
+           $jabatan[] = $data->anggota->jabatan->nama_jabatan;
+        }
+
         $project = $tim->project->first();
 
         $hasProjectRelation = $tim->project()->exists();
@@ -180,7 +186,7 @@ class timController extends Controller
             ['Tugas Baru', $tugasBaruCount]
         ];
 
-        return view('siswa.tim.statistik', compact('chartData', 'title', 'tim', 'anggota', 'hasProjectRelation', 'project', 'notifikasi', 'project'));
+        return view('siswa.tim.statistik', compact('jabatan','chartData', 'title', 'tim', 'anggota', 'hasProjectRelation', 'project', 'notifikasi', 'project'));
     }
 
     protected function historyPresentasiPage($code)

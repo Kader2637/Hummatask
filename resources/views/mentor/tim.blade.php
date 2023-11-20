@@ -303,7 +303,7 @@
                         <div class="row">
                             <div class="col mb-3">
                                 <label for="status_tim" class="form-label">Kategori Tim</label>
-                                <select id="tim_status_modal" name="status_tim" class="form-select form-select"
+                                <select id="tim_status_modal" name="status_tim" class="select2 form-select form-select"
                                     data-allow-clear="true">
                                     <option value="" disabled selected>Pilih Tim</option>
                                     <option class="nowStatus" value="pre_mini">Pre mini projek</option>
@@ -440,6 +440,10 @@
         }
     </script>
 
+
+    <script></script>
+
+
     <script>
         $('.btn-edit').on('click', function() {
             var exp = $(this).data('kadaluwarsa');
@@ -575,6 +579,9 @@
             if (!status_tim || !ketuaKelompok || !anggota.length) {
                 event.preventDefault();
                 swal.fire('Peringatan', 'Mohon lengkapi data sebelum simpan', 'warning');
+            } else if (anggota.length > 4) {
+                event.preventDefault();
+                swal.fire('Peringatan', 'Anggota maksimal 4', 'warning');
             }
         });
 

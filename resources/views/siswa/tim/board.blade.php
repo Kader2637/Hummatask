@@ -426,7 +426,7 @@
                                         const data = res.data;
                                         console.log(data);
                                         const user = data.tugas.tim.user;
-                                        const userSelected = data.tugas.user;
+                                        const userSelected = data. tugas.user;
                                         const comments = data.tugas.comments;
 
 
@@ -501,7 +501,7 @@
                                 <button onclick="editKomentar('${komentar.id}','${komentar.text}')" type="button" class="dropdown-item">Edit</button>
                                 <button onclick="deleteKomentar('${komentar.id}')" class="dropdown-item" href="javascript:void(0)">Delete</button>
                                 </div>
-                            </div>
+                    </div>
 
                     `
 
@@ -633,7 +633,7 @@
                             }
 
                             function editKomentar(komentar_id, text) {
-                                console.log(res.data);
+                               
                                 $("#tambahKomentar").removeData("data-komentar-id");
                                 $("#tambahKomentar").attr("data-komentar-id", komentar_id);
                                 $(".inp-tambah-komentar").val(text);

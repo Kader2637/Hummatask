@@ -63,7 +63,7 @@
                         </div>
 
                         <div class="col-12 justify-content-center">
-                            <label for="TagifyBasic" class="form-label">Tema <span class="text-warning">(Inputkan 5 tema,
+                            <label for="TagifyBasic" class="form-label">Tema <span class="text-warning">(Inputkan 10 tema,
                                     tekan enter di setiap tema)</span></label>
                             <input id="TagifyBasic" class="form-control @error('temaInput') is-invalid @enderror"
                                 name="temaInput" placeholder="Masukkan 5 tema pilihan anda" />
@@ -126,7 +126,7 @@
                         <div class="row">
                             <div class="col mb-3">
                                 <label for="nameWithTitle" class="form-label">Nama Tim</label>
-                                <input type="text" id="nama-tim" class="form-control" name="namaTimInput"
+                                <input type="text" id="namaTim" class="form-control" name="namaTimInput"
                                     placeholder="Masukkan nama tim" value="{{ $tim->nama }}">
                             </div>
                         </div>
@@ -141,7 +141,7 @@
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="nameWithTitle" class="form-label">Deskripsi</label>
-                                    <textarea style="height: 150px; resize: none;" name="deskripsiInput" id="deskripsi" class="form-control"
+                                    <textarea style="height: 150px; resize: none;" name="deskripsiInput" id="deskripsiEdit" class="form-control"
                                         placeholder="Masukkan deskripsi project anda">{{ $project->deskripsi ?? '' }}</textarea>
                                 </div>
                             </div>
@@ -584,9 +584,9 @@
     <script>
         $('#editProject').on('submit', function(e) {
             var foto = $('#image-input').val();
-            var namaTim = $('#nama-tim').val();
-            var repo = $('#repo-input').val();
-            var deskripsi = $('#deskripsi').val();
+            var namaTim = $('#namaTim').val();
+            var repo = $('#repoInput').val();
+            var deskripsi = $('#deskripsiEdit').val();
 
             if (foto !== '') {
                 var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
@@ -620,7 +620,7 @@
             if (deskripsi.length === 0) {
                 e.preventDefault();
                 swal.fire('Peringatan', 'Deskripsi tidak boleh kosong', 'warning');
-            } else if (deskripsi.length > 250) {
+            } else if (deskripsi.length > 100) {
                 e.preventDefault();
                 swal.fire('Peringatan', 'Deskripsi terlalu panjang', 'warning');
             }
