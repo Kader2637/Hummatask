@@ -988,14 +988,14 @@
                 'User ini belum mengisi asal sekolah';
             let bergabung = $(this).data('masa-magang');
 
-            $('#avatar').attr('src', (avatar == '' ? 'http://127.0.0.1:8000/assets/img/avatars/1.png' :
+            $('#avatar').attr('src', (avatar == '' ? '/assets/img/avatars/1.png' :
                 `/storage/${avatar}`));
             $('#username-siswa').text(username);
             $('#email-siswa').text(email);
             $('#tlp-siswa').text(tlp);
             $('#peran-siswa').text(peran);
             $('#sekolah-siswa').text(sekolah);
-            $('#masaMagang').text('Bergabung pada : ${bergabung}');
+            $('#masaMagang').text(`Bergabung pada: ${bergabung}`);
 
             $('#detail').modal('show');
         });

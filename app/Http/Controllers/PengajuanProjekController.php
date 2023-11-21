@@ -125,7 +125,6 @@ protected function sendNotification($userId, $title, $message)
     ]);
 }
 
-
     protected function editProject(editProjectRequest $request, $code)
     {
         try {

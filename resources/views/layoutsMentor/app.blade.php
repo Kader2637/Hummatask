@@ -546,7 +546,7 @@
                 title: 'Akses Ditolak',
                 text: '{{ session('unauthorize') }}', // Teks pesan dari sesi
                 showConfirmButton: false,
-                timer: 3000,
+                timer: 5000,
             });
         </script>
     @elseif (session()->has('success'))
@@ -556,7 +556,7 @@
                 title: 'Berhasil!',
                 text: '{{ session('success') }}', // Teks pesan dari sesi
                 showConfirmButton: false,
-                timer: 3000,
+                timer: 5000,
             });
         </script>
     @elseif (session()->has('warning'))
@@ -566,7 +566,7 @@
                 title: 'Peringatan!',
                 text: '{{ session('warning') }}', // Teks pesan dari sesi
                 showConfirmButton: false,
-                timer: 3000,
+                timer: 5000,
             });
         </script>
     @endif

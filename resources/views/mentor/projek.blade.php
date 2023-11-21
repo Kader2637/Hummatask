@@ -445,8 +445,6 @@
     </script>
     {{-- filter Projek --}}
 
-
-
     {{-- JS Modal Detail --}}
     <script>
         $(document).ready(function() {

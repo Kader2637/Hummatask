@@ -193,8 +193,22 @@ class mentorController extends Controller
     // Return view pengajuan projek mentor
     protected function pengajuanProjekPage(Request $request)
     {
-        dd($request);
-        $projects = Project::with('tim.anggota.user', 'tim.tema', 'anggota.jabatan', 'anggota.user')->where('status_project', 'notapproved')->paginate(12);
+        $projectsQuery = Project::with('tim.anggota.user', 'tim.tema', 'anggota.jabatan', 'anggota.user')
+            ->where('status_project', 'notapproved');
+
+        if ($request->has('status_tim')) {
+            $projectsQuery->where('type_project', $request->status_tim);
+        }
+
+        if ($request->has('nama_tim')) {
+            $namaTim = $request->nama_tim;
+            $projectsQuery->whereHas('tim', function ($query) use ($namaTim) {
+                $query->where('nama', 'like', "%$namaTim%");
+            });
+        }
+
+        $projects = $projectsQuery->paginate(12);
+
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
 
@@ -251,8 +265,12 @@ class mentorController extends Controller
     protected function Project()
     {
         $users = User::where('peran_id', 1)
-            ->whereDoesntHave('tim', function ($query) {
-                $query->where('kadaluwarsa', false);
+            ->where(function ($query) {
+                $query->whereDoesntHave('tim', function ($query) {
+                    $query->where('kadaluwarsa', false);
+                })->orWhereHas('tim', function ($query) {
+                    $query->whereIn('status', ['kicked', 'expired']);
+                });
             })
             ->get();
         $status_tim = StatusTim::whereNot('status', 'solo')->get();

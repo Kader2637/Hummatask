@@ -24,12 +24,12 @@
                             <option value="big" {{ request('status_tim') == 'big' ? 'selected' : '' }}>Big Project
                             </option>
                         </select>
+                        <input type="hidden" name="nama_tim" value="{{ request('nama_tim') }}">
                     </form>
                 </div>
                 <div class="filter col-lg-3 col-md-3 col-sm-3">
                     <label for="select2Basic" class="form-label">Cari</label>
                     <form action="{{ route('pengajuan-projek') }}" method="get">
-
                         <div class="flex-grow-1 input-group input-group-merge rounded-pill">
                             <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-search"></i></span>
                             <input name="nama_tim" type="text" class="form-control chat-search-input"
@@ -90,7 +90,7 @@
                                 data-logo="{{ Storage::url($item->tim->logo) }}"
                                 data-created-at="{{ $item->created_at->translatedFormat('l, j F Y') }}"
                                 data-anggota="{{ $anggotaJson }}" data-tema="{{ $temaJson }}"
-                                class="btn btn-primary btn-detail"><span class="text-white">Detail</span></a>
+                                class="btn btn-primary btn-detail w-100"><span class="text-white">Detail</span></a>
                         </div>
                     </div>
                 </div>
@@ -332,11 +332,11 @@
                 dateFormat: "Y-m-d",
             });
 
-            function filterProjek(selectElement) {
-                document.getElementById('filterForm').submit();
-            }
 
         });
+        function filterProjek(selectElement) {
+            document.getElementById('filterForm').submit();
+        }
     </script>
     {{-- script modal detail --}}
 
