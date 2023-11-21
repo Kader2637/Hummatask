@@ -221,7 +221,7 @@
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-tidak-presentasi"
-                        type="button" role="tab" aria-controls="pills-contact" aria-selected="false" data-tab="4"><i
+                        type="button" role="tab" aria-controls="pills-contact" aria-selected="false" data-tab="5"><i
                             class="fa-solid fa-users icon-text"></i>Tidak Presentasi Mingguan</button>
                 </li>
             </div>
@@ -463,6 +463,16 @@
             </div>
             <div class="tab-pane fade" id="pills-tidak-presentasi" role="tabpanel" aria-labelledby="pills-disabled-tab"
                 tabindex="0">
+                <div class="alert alert-warning alert-dismissible d-flex align-items-baseline" role="alert">
+                    <span class="alert-icon alert-icon-lg text-warning me-2">
+                        <i class="ti ti-bookmark ti-sm"></i>
+                    </span>
+                    <div class="d-flex flex-column ps-1">
+                        <h5 class="alert-heading mb-2">Tab Tidak Presentasi Mingguan</h5>
+                        <p class="mb-0">Tab Tidak Presentasi Mingguan berisi data data siswa magang yang masih belum presentasi setiap minggunya</p>
+                        </button>
+                    </div>
+                </div>
                 <div class="card">
                     <div class="card-datatable table-responsive">
                         <table id="jstabel5" class="dt-responsive table">

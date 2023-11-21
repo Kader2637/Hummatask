@@ -224,6 +224,16 @@
         <div class="tab-content px-0 mt-2" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
                 tabindex="0">
+                <div class="alert alert-danger alert-dismissible d-flex align-items-baseline mt-4" role="alert">
+                    <span class="alert-icon alert-icon-lg text-danger me-2">
+                        <i class="ti ti-bookmark ti-sm"></i>
+                    </span>
+                    <div class="d-flex flex-column ps-1">
+                        <h5 class="alert-heading mb-2">Tab Telat Deadline</h5>
+                        <p class="mb-0">Tab telat deadline berisi data data tim yang sudah melewati batas waktu pengerjaan projek yang telah diberikan</p>
+                        </button>
+                    </div>
+                </div>
                 <div class="card">
                     <div class="card-datatable table-responsive">
                         <table id="jstabel1" class="dt-responsive table">
@@ -259,6 +269,16 @@
             </div>
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
                 tabindex="0">
+                <div class="alert alert-primary alert-dismissible d-flex align-items-baseline mt-4" role="alert">
+                    <span class="alert-icon alert-icon-lg text-primary me-2">
+                        <i class="ti ti-bookmark ti-sm"></i>
+                    </span>
+                    <div class="d-flex flex-column ps-1">
+                        <h5 class="alert-heading mb-2">Tab Selesai Presentasi</h5>
+                        <p class="mb-0">Tab Selesai Presentasi berisi data data tim yang sudah selesai presentasi mingguan</p>
+                        </button>
+                    </div>
+                </div>
                 <div class="card">
                     <div class="card-datatable table-responsive">
                         <table id="jstabel2" class="dt-responsive table">
@@ -299,6 +319,16 @@
             </div>
             <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"
                 tabindex="0">
+                <div class="alert alert-success alert-dismissible d-flex align-items-baseline mt-4" role="alert">
+                    <span class="alert-icon alert-icon-lg text-success me-2">
+                        <i class="ti ti-bookmark ti-sm"></i>
+                    </span>
+                    <div class="d-flex flex-column ps-1">
+                        <h5 class="alert-heading mb-2">Tab Solo</h5>
+                        <p class="mb-0">Tab Solo berisi data data anak magang yang mengerjakan projeknya secara individu</p>
+                        </button>
+                    </div>
+                </div>
                 <div class="card">
                     <div class="card-datatable table-responsive">
                         <table id="jstabel3" class="dt-responsive table">
@@ -336,6 +366,16 @@
             </div>
             <div class="tab-pane fade" id="pills-team" role="tabpanel" aria-labelledby="pills-disabled-tab"
                 tabindex="0">
+                <div class="alert alert-success alert-dismissible d-flex align-items-baseline mt-4" role="alert">
+                    <span class="alert-icon alert-icon-lg text-success me-2">
+                        <i class="ti ti-bookmark ti-sm"></i>
+                    </span>
+                    <div class="d-flex flex-column ps-1">
+                        <h5 class="alert-heading mb-2">Tab Team</h5>
+                        <p class="mb-0">Tab Team berisi data data siswa magang yang mengerjakan projeknya secara berkelompok atau berteam</p>
+                        </button>
+                    </div>
+                </div>
                 <div class="card">
                     <div class="card-datatable table-responsive">
                         <table id="jstabel4" class="dt-responsive table">

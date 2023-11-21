@@ -22,7 +22,10 @@ class KetuaMagangController extends Controller
     {
         $title = "Dashboard Ketua Magang";
         $usercount = User::where('peran_id', 1)->count();
-        $timcount = Tim::where('kadaluwarsa', 0)->count();
+        $timcount = Tim::where(function ($query) {
+           $query->whereIn('status_tim',['pre_mini','mini','big'])
+                 ->where('kadaluwarsa', 0);
+        })->count();
         $present = Presentasi::where('status_pengajuan', 'disetujui')->whereDate('created_at', now())->count();
         $tims = User::find(Auth::user()->id)->tim()->get();
 
