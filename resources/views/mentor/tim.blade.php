@@ -33,6 +33,7 @@
                             <option value="big" {{ request('status_tim') == 'big' ? 'selected' : '' }}>Big Project
                             </option>
                         </select>
+                        <input type="hidden" name="nama_tim" value="{{ request('nama_tim') }}">
                     </form>
 
                 </div>
