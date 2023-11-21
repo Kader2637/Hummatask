@@ -39,17 +39,6 @@ class mentorController extends Controller
         $jadwal = array_reverse($jadwal);
         $hari = array_reverse($hari);
 
-        $data = Presentasi::select(
-            DB::raw('MONTH(created_at) as month'),
-            DB::raw('YEAR(created_at) as year'),
-            'status_pengajuan',
-            DB::raw('count(*) as total')
-        )
-            ->whereIn('status_pengajuan', ['disetujui'])
-            ->whereYear('created_at', Carbon::now()->year)
-            ->groupBy('year', 'month', 'status_pengajuan')
-            ->get();
-
         $users = User::select(
             DB::raw('MONTH(created_at) as month'),
             DB::raw('YEAR(created_at) as year'),
@@ -99,15 +88,6 @@ class mentorController extends Controller
             ];
         }
 
-        foreach ($data as $item) {
-            $yearMonth = Carbon::createFromDate($item->year, $item->month, 1)->isoFormat('MMMM');
-
-            if (isset($processedData[$yearMonth])) {
-                $status_pengajuan = strtolower($item->status_pengajuan);
-                $processedData[$yearMonth][$status_pengajuan] = $item->total;
-            }
-        }
-
         foreach ($users as $user) {
             $yearMonth = Carbon::createFromDate($user->year, $user->month, 1)->isoFormat('MMMM');
 
@@ -125,7 +105,18 @@ class mentorController extends Controller
         }
 
         $chartData = array_values($processedData);
-        return response()->view('mentor.dashboard', compact('presentasi', 'chartData', 'jadwal', 'hari', 'notifikasi'));
+
+        $timActive = Tim::where('kadaluwarsa','0')->count();
+        $timNonActive = Tim::where('kadaluwarsa','1')->count();
+        $akunUser = User::where('peran_id','1')->count();
+
+        $chart = [
+            ['Jumlah' , 'Data'],
+            ['Tim Yang Aktif', $timActive],
+            ['Tim Yang Tidak Aktif', $timNonActive],
+            ['Jumlah Akun User', $akunUser]
+        ];
+        return response()->view('mentor.dashboard', compact('presentasi', 'chartData', 'jadwal', 'hari', 'chart', 'notifikasi'));
     }
 
     // Return view pengguna mentor
@@ -413,6 +404,8 @@ class mentorController extends Controller
 
     protected function laporanProgres()
     {
-        return response()->view('mentor.laporan-progres');
+        $userID = Auth::user()->id;
+        $notifikasi = Notifikasi::where('user_id', $userID)->get();
+        return response()->view('mentor.laporan-progres',compact('notifikasi'));
     }
 }

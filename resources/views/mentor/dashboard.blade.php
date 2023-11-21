@@ -8,7 +8,7 @@
                 <h5 class="pb-0">Data Presentasi</h5>
                 <a href="{{ route('presentasi.mentor') }}" class="btn btn-primary d-flex justify-content-end">Detail</a>
             </div>
-            <li class="ms-4" style="margin-top:-10px;">Yang Telah Selesai</li>
+            <li class="ms-4" style="margin-top:-10px;">Yang Telah Selesai Hari Ini</li>
             <div class="table-responsive text-nowrap card-datatable">
                 <table id="myTable" class="table">
                     <thead>
@@ -47,24 +47,24 @@
                 <div class="card">
                     <h5 class="card-header">Data</h5>
                     <div class="card-body">
-                        <canvas id="doughnutChart" class="chartjs mb-4" data-height="350"></canvas>
+                        <canvas id="piechart" class="chartjs mb-4" data-height="350"></canvas>
                         <ul class="doughnut-legend d-flex justify-content-around ps-0 mb-2 pt-1">
                             <li class="ct-series-0 d-flex flex-column">
-                                <h5 class="mb-0">Presentasi</h5>
+                                <h5 class="mb-0">Tim aktif</h5>
                                 <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                    style="background-color: blue; height:6px;width:30px;"></span>
+                                    style="background-color: yellow; height:6px;width:30px;"></span>
                                 <div class="text-muted"></div>
                             </li>
                             <li class="ct-series-1 d-flex flex-column">
-                                <h5 class="mb-0">Akun User</h5>
+                                <h5 class="mb-0">Tim tidak aktif</h5>
                                 <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                    style="background-color: yellow; height:6px; width:30px;"></span>
+                                    style="background-color: red; height:6px; width:30px;"></span>
                                 <div class="text-muted"></div>
                             </li>
                             <li class="ct-series-1 d-flex flex-column">
-                                <h5 class="mb-0">Tim</h5>
+                                <h5 class="mb-0">Akun user</h5>
                                 <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                    style="background-color: #5ca904; height:6px; width: 30px;"></span>
+                                    style="background-color: #ff7f00; height:6px; width: 30px;"></span>
                                 <div class="text-muted"></div>
                             </li>
                         </ul>
@@ -115,41 +115,29 @@
 @endsection
 @section('script')
     <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        const doughnutChart = document.getElementById('doughnutChart');
-        const cyanColor = '#28dac6';
-        const orangeLightColor = '#FDAC34';
-        let cardColor, headingColor, labelColor, borderColor, legendColor;
+        const cardColor = '#28dac6';
+        const headingColor = '#FDAC34';
+        const black = '#000000';
 
-        cardColor = config.colors.cardColor;
-        headingColor = config.colors.headingColor;
-        labelColor = config.colors.textMuted;
-        legendColor = config.colors.bodyColor;
-        borderColor = config.colors.borderColor;
+        const piechart = document.getElementById('piechart');
+        const processedData = @json($chart);
 
-        if (doughnutChart) {
-            const processedData = <?php echo json_encode($chartData); ?>;
-            const dataValues = processedData.map(data => data.disetujui);
-            const acount = processedData.map(data => data['1']);
-            const tims = processedData.map(data => data['2']);
+        if (piechart) {
+            const pie = processedData.map(data => data[0]);
+            const jumlah = processedData.map(data => data[1]);
 
-            // Menggabungkan data dari kedua set data
-            const mergedDataValues = acount.concat(dataValues).concat(tims);
-            const mergedBackgroundColor = acount.map(() => 'grey').concat(dataValues.map(() => 'blue')).concat(tims.map(
-                () =>
-                '#5ca904'));
-
-            const doughnutChartVar = new Chart(doughnutChart, {
+            const doughnutChartVar = new Chart(piechart, {
                 type: 'doughnut',
                 data: {
+                    labels: pie,
                     datasets: [{
-                        data: mergedDataValues,
-                        backgroundColor: mergedBackgroundColor,
-                        borderWidth: 0,
-                        pointStyle: 'rectRounded'
-                    }],
-                    labels: ['Jumlah User', 'Jumlah Presentasi', 'Jumlah Tim']
+                        data: jumlah,
+                        backgroundColor: [cardColor, 'yellow', 'red', '#ff7f00'],
+                        hoverOffset: 4
+                    }]
                 },
                 options: {
                     responsive: true,
@@ -166,42 +154,34 @@
                                 label: function(context) {
                                     const label = context.label || '';
                                     const value = context.parsed;
-                                    const datasetLabel = context.dataset.label || '';
-
-                                    let amountDescription = '';
-                                    if (datasetLabel === 'Jumlah User') {
-                                        amountDescription =
-                                            `Jumlah Akun User: ${acount[value.index]}`; // Menambahkan keterangan jumlah akun user
-                                    } else if (datasetLabel === 'Jumlah Presentasi') {
-                                        amountDescription =
-                                            `Jumlah Presentasi: ${dataValues[value.index]}`; // Menambahkan keterangan jumlah presentasi
-                                    } else if (datasetLabel === 'Jumlah Tim') {
-                                        amountDescription =
-                                            `Jumlah Tim: ${tims[value.index]}`; // Menambahkan keterangan jumlah tim
-                                    }
-
-                                    return `${label}: ${amountDescription} (${value})`;
+                                    const output = ' ' + label + ' : ' + value ;
+                                    return output;
                                 }
                             },
-                        },
-                        tooltips: {
                             backgroundColor: cardColor,
-                            titleColor: headingColor,
-                            bodyColor: legendColor,
+                            titleColor: cardColor,
+                            bodyColor: black,
                             borderWidth: 1,
-                            borderColor: borderColor,
-                            titleFontColor: labelColor,
-                            bodyFontColor: labelColor,
-                            displayColors: false,
-                            titleFontSize: 14
+                            borderColor: cardColor,
+                            afterLabel: function(context) {
+                                const datasetIndex = context.datasetIndex;
+                                const dataIndex = context.dataIndex;
+                                const data = doughnutChartVar.data.datasets[datasetIndex].data;
+                                const label = doughnutChartVar.data.labels[dataIndex];
+                                const value = data[dataIndex];
+
+                                // Menampilkan jumlah saat kursor mengarah ke elemen chart
+                                const amountDescription = label === 'Jumlah Akun User' ? 'Jumlah Akun User' : label ===
+                                    'Tim Yang Aktif' ? 'Tim Yang Aktif' : 'Tim Yang Tidak Aktif';
+                                return `Jumlah ${amountDescription}: ${value}`;
+                            }
                         }
                     }
                 }
             });
         }
-    </script>
 
-    <script>
+        let barCardColor, barHeadingColor, barLabelColor, barBorderColor, barLegendColor;
         var chartData = @json($chartData);
 
         if (chartData) {
@@ -261,11 +241,11 @@
                     },
                     plugins: {
                         tooltip: {
-                            backgroundColor: cardColor,
-                            titleColor: headingColor,
-                            bodyColor: legendColor,
+                            backgroundColor: barCardColor,
+                            titleColor: barHeadingColor,
+                            bodyColor: barLegendColor,
                             borderWidth: 1,
-                            borderColor: borderColor
+                            borderColor: barBorderColor
                         },
                         legend: {
                             display: false
@@ -274,25 +254,25 @@
                     scales: {
                         x: {
                             grid: {
-                                color: borderColor,
+                                color: barBorderColor,
                                 drawBorder: true,
-                                borderColor: borderColor
+                                borderColor: barBorderColor
                             },
                             ticks: {
-                                color: labelColor
+                                color: barLabelColor
                             }
                         },
                         y: {
                             min: 0,
                             max: 300,
                             grid: {
-                                color: borderColor,
+                                color: barBorderColor,
                                 drawBorder: true,
-                                borderColor: borderColor
+                                borderColor: barBorderColor
                             },
                             ticks: {
                                 stepSize: 100,
-                                color: labelColor
+                                color: barLabelColor
                             }
                         }
                     }
