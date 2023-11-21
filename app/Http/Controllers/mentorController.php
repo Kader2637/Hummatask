@@ -194,14 +194,15 @@ class mentorController extends Controller
 
 
 
-            $tidakPresentasiMingguan = TidakPresentasiMingguan::with('tim.ketuaTim')->get();
+        $tidakPresentasiMingguan = TidakPresentasiMingguan::with('tim.ketuaTim')->get();
 
-        return response()->view('mentor.history', compact('tidakPresentasiMingguan','telatDeadline', 'presentasiSelesai', 'timSolo', 'timGroup', 'notifikasi'));
+        return response()->view('mentor.history', compact('tidakPresentasiMingguan', 'telatDeadline', 'presentasiSelesai', 'timSolo', 'timGroup', 'notifikasi'));
     }
 
     // Return view pengajuan projek mentor
-    protected function pengajuanProjekPage()
+    protected function pengajuanProjekPage(Request $request)
     {
+        dd($request);
         $projects = Project::with('tim.anggota.user', 'tim.tema', 'anggota.jabatan', 'anggota.user')->where('status_project', 'notapproved')->paginate(12);
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
@@ -407,7 +408,7 @@ class mentorController extends Controller
 
         $historyPresentasi = HistoryPresentasi::whereMonth('created_at', Carbon::now()->month)->get();
 
-        return response()->view('mentor.presentasi', compact( 'historyPresentasi', 'notifikasi'));
+        return response()->view('mentor.presentasi', compact('historyPresentasi', 'notifikasi'));
     }
 
     protected function laporanProgres()

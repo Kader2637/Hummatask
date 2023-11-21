@@ -66,7 +66,7 @@
                             <label for="TagifyBasic" class="form-label">Tema <span class="text-warning">(Inputkan 10 tema,
                                     tekan enter di setiap tema)</span></label>
                             <input id="TagifyBasic" class="form-control @error('temaInput') is-invalid @enderror"
-                                name="temaInput" placeholder="Masukkan 5 tema pilihan anda" />
+                                name="temaInput" placeholder="Masukkan 10 tema pilihan anda" />
                             @error('temaInput')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
