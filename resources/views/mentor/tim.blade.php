@@ -385,6 +385,20 @@
 
 @section('script')
     <script>
+        $(document).ready(function() {
+            // Ambil nilai dan atribut yang diperlukan saat halaman dimuat
+            var uri = $('#flexSwitchCheckDefault').data('uri');
+            var kadaluwarsa = $('#flexSwitchCheckDefault').data('kadaluwarsa');
+            var ikan = $('meta[name="csrf-token"]').attr('content');
+
+            // Perbarui nilai checkbox berdasarkan kondisi
+            if ($('#flexSwitchCheckDefault').prop('checked') && kadaluwarsa == 1) {
+                $('#flexSwitchCheckDefault').prop('checked', false);
+            } else if (!$('#flexSwitchCheckDefault').prop('checked') && kadaluwarsa == 0) {
+                $('#flexSwitchCheckDefault').prop('checked', true);
+            }
+        });
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
