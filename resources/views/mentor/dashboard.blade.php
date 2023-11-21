@@ -45,28 +45,34 @@
         <div class="row mt-3">
             <div class="col-lg-4 col-12 mb-4">
                 <div class="card">
-                    <h5 class="card-header">Data</h5>
+                    <h5 class="card-header">Jumlah Tim Saat Ini</h5>
                     <div class="card-body">
                         <canvas id="piechart" class="chartjs mb-4" data-height="350"></canvas>
                         <ul class="doughnut-legend d-flex justify-content-around ps-0 mb-2 pt-1">
                             <li class="ct-series-0 d-flex flex-column">
-                                <h5 class="mb-0">Tim aktif</h5>
+                                <h5 class="mb-0">Solo</h5>
                                 <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
                                     style="background-color: yellow; height:6px;width:30px;"></span>
-                                <div class="text-muted"></div>
-                            </li>
-                            <li class="ct-series-1 d-flex flex-column">
-                                <h5 class="mb-0">Tim tidak aktif</h5>
-                                <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                    style="background-color: red; height:6px; width:30px;"></span>
-                                <div class="text-muted"></div>
-                            </li>
-                            <li class="ct-series-1 d-flex flex-column">
-                                <h5 class="mb-0">Akun user</h5>
-                                <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
+                                    <div class="text-muted"></div>
+                                </li>
+                                <li class="ct-series-1 d-flex flex-column">
+                                    <h5 class="mb-0">Premini</h5>
+                                    <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
+                                    style="background-color: #43eb25; height:6px; width:30px;"></span>
+                                    <div class="text-muted"></div>
+                                </li>
+                                <li class="ct-series-1 d-flex flex-column">
+                                    <h5 class="mb-0">Mini</h5>
+                                    <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
                                     style="background-color: #ff7f00; height:6px; width: 30px;"></span>
-                                <div class="text-muted"></div>
-                            </li>
+                                    <div class="text-muted"></div>
+                                </li>
+                                <li class="ct-series-0 d-flex flex-column">
+                                    <h5 class="mb-0">Big</h5>
+                                    <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
+                                        style="background-color: blue; height:6px;width:30px;"></span>
+                                    <div class="text-muted"></div>
+                                </li>
                         </ul>
                     </div>
                 </div>
@@ -135,7 +141,7 @@
                     labels: pie,
                     datasets: [{
                         data: jumlah,
-                        backgroundColor: [cardColor, 'yellow', 'red', '#ff7f00'],
+                        backgroundColor: [cardColor, 'yellow', '#43eb25', '#ff7f00','blue'],
                         hoverOffset: 4
                     }]
                 },
@@ -171,8 +177,8 @@
                                 const value = data[dataIndex];
 
                                 // Menampilkan jumlah saat kursor mengarah ke elemen chart
-                                const amountDescription = label === 'Jumlah Akun User' ? 'Jumlah Akun User' : label ===
-                                    'Tim Yang Aktif' ? 'Tim Yang Aktif' : 'Tim Yang Tidak Aktif';
+                                const amountDescription = label === 'Jumlah Solo' ? 'Jumlah Solo' : label ===
+                                    'Jumlah Pre Mini' ? 'Jumlah Pre Mini' : 'Jumlah Mini';
                                 return `Jumlah ${amountDescription}: ${value}`;
                             }
                         }

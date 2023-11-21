@@ -106,15 +106,29 @@ class mentorController extends Controller
 
         $chartData = array_values($processedData);
 
-        $timActive = Tim::where('kadaluwarsa','0')->count();
-        $timNonActive = Tim::where('kadaluwarsa','1')->count();
-        $akunUser = User::where('peran_id','1')->count();
+        $solo = Tim::where(function ($query) {
+            $query->whereIn('status_tim', ['solo'])
+            ->where('kadaluwarsa', '0');
+        })->count();
+        $preMini = Tim::where(function ($query) {
+            $query->whereIn('status_tim', ['pre_mini'])
+                ->where('kadaluwarsa', '0');
+        })->count();
+        $mini = Tim::where(function ($query) {
+            $query->whereIn('status_tim',['mini'])
+            ->where('kadaluwarsa','0');
+        })->count();
+        $big = Tim::where(function ($query) {
+            $query->whereIn('status_tim',['big'])
+            ->where('kadaluwarsa','0');
+        })->count();
 
         $chart = [
-            ['Jumlah' , 'Data'],
-            ['Tim Yang Aktif', $timActive],
-            ['Tim Yang Tidak Aktif', $timNonActive],
-            ['Jumlah Akun User', $akunUser]
+            ['Jumlah', 'Data'],
+            ['Jumlah Solo Projek', $solo],
+            ['Jumlah Tim Premini Projek', $preMini],
+            ['Jumlah Tim Mini Projek', $mini],
+            ['Jumlah Tim Big Projek', $big]
         ];
         return response()->view('mentor.dashboard', compact('presentasi', 'chartData', 'jadwal', 'hari', 'chart', 'notifikasi'));
     }
@@ -424,6 +438,6 @@ class mentorController extends Controller
     {
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
-        return response()->view('mentor.laporan-progres',compact('notifikasi'));
+        return response()->view('mentor.laporan-progres', compact('notifikasi'));
     }
 }
