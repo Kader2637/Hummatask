@@ -23,6 +23,9 @@ class timController extends Controller
         $title = "Tim/board";
         $tim = Tim::where('code', $code)->firstOrFail();
         $userID = Auth::user()->id;
+
+        $anggota = Anggota::all();
+
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
 
         $project = $tim->project->first();
@@ -203,6 +206,7 @@ class timController extends Controller
         }
         $anggota = $tim->user()->get();
         $presentasi = $tim->presentasi()->orderBy('created_at', 'desc')->get();
+        // dd($presentasi);
         $project = $tim->project->first();
 
         $hasProjectRelation = $tim->project()->exists();

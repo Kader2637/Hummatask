@@ -7,6 +7,40 @@
     <div class="container-fluid mt-4 ">
         <h5 class="header mt-2 ms-2">Daftar Pengajuan Projek</h5>
         <div class="row">
+            <div class="d-flex justify-content-between mb-4">
+                <div class="filter col-lg-3 col-md-3 col-sm-3">
+                    <label for="select2Basic" class="form-label">Filter</label>
+                    <form id="filterForm" action="{{ route('pengajuan-projek') }}" method="get">
+                        <select id="select2Basic" name="status_tim" class="form-select select2" data-allow-clear="true"
+                            onchange="filterProjek(this)">
+                            <option value="" disabled selected>Pilih Data</option>
+                            <option value="all" {{ request('status_tim') == 'all' ? 'selected' : '' }}>Semua</option>
+                            <option value="solo" {{ request('status_tim') == 'solo' ? 'selected' : '' }}>Solo Project
+                            </option>
+                            <option value="pre_mini" {{ request('status_tim') == 'pre_mini' ? 'selected' : '' }}>Pre-mini
+                                Project</option>
+                            <option value="mini" {{ request('status_tim') == 'mini' ? 'selected' : '' }}>Mini Project
+                            </option>
+                            <option value="big" {{ request('status_tim') == 'big' ? 'selected' : '' }}>Big Project
+                            </option>
+                        </select>
+                    </form>
+                </div>
+                <div class="filter col-lg-3 col-md-3 col-sm-3">
+                    <label for="select2Basic" class="form-label">Cari</label>
+                    <form action="{{ route('pengajuan-projek') }}" method="get">
+
+                        <div class="flex-grow-1 input-group input-group-merge rounded-pill">
+                            <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-search"></i></span>
+                            <input name="nama_tim" type="text" class="form-control chat-search-input"
+                                placeholder="Cari nama tim..." aria-label="Cari nama tim..."
+                                aria-describedby="basic-addon-search31" value="{{ request('nama_tim') }}">
+                            <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
             @forelse ($projects as $item)
                 @php
                     $anggotaArray = [];
@@ -106,8 +140,8 @@
                                         harus
                                         1 minggu dari sekarang)
                                     </div>
-                                    <input type="text" class="form-control" placeholder="YYYY-MM-DD" name="deadlineInput"
-                                        id="deadline" />
+                                    <input type="text" class="form-control" placeholder="YYYY-MM-DD"
+                                        name="deadlineInput" id="deadline" />
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -298,9 +332,14 @@
                 dateFormat: "Y-m-d",
             });
 
+            function filterProjek(selectElement) {
+                document.getElementById('filterForm').submit();
+            }
+
         });
     </script>
     {{-- script modal detail --}}
+
 
     {{-- Validasi --}}
     <script>

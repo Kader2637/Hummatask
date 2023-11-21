@@ -57,4 +57,10 @@ class Tim extends Model
     {
         return $this->hasMany(Project::class);
     }
+
+    public function tidakPresentasiMingguan():HasMany
+    {
+        return $this->hasMany(TidakPresentasiMingguan::class);
+    }
+
 }

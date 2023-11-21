@@ -219,6 +219,11 @@
                         type="button" role="tab" aria-controls="pills-contact" aria-selected="false" data-tab="4"><i
                             class="fa-solid fa-users icon-text"></i>Team</button>
                 </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-tidak-presentasi"
+                        type="button" role="tab" aria-controls="pills-contact" aria-selected="false" data-tab="4"><i
+                            class="fa-solid fa-users icon-text"></i>Tidak Presentasi Mingguan</button>
+                </li>
             </div>
         </div>
         <div class="tab-content px-0 mt-2" id="pills-tabContent">
@@ -408,6 +413,51 @@
                                                 data-repo="{{ $item->repository }}">
                                                 Detail
                                             </button></td>
+                                    </tr>
+                                @empty
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-tidak-presentasi" role="tabpanel" aria-labelledby="pills-disabled-tab"
+                tabindex="0">
+                <div class="card">
+                    <div class="card-datatable table-responsive">
+                        <table id="jstabel5" class="dt-responsive table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">NO</th>
+                                    <th scope="col">NAMA</th>
+                                    <th scope="col">STATUS TIM</th>
+                                    <th scope="col">TANGGAL</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($tidakPresentasiMingguan as $i => $item)
+                                    <tr>
+                                        <td>{{ ++$i }}</td>
+                                        @if ($item->status_tim === "solo")
+                                            <td>{{ $item->tim->ketuaTim->username }}</td>
+                                        @else
+                                            <td>{{ $item->tim->nama }}</td>
+                                        @endif
+                                        <td>
+                                            @if ($item->tim->status_tim === "solo")
+                                                <span class="badge bg-label-danger">Solo Project</span>
+                                                @elseif ($item->tim->status_tim === "pre_mini")
+                                                <span class="badge bg-label-warning">Pre Mini Project</span>
+                                                @elseif ($item->tim->status_tim === "mini")
+                                                <span class="badge bg-label-success">Mini Project</span>
+                                                @else
+                                                <span class="badge bg-label-primary">Big Project</span>
+
+                                            @endif
+
+                                        </td>
+                                        <td>{{ \Carbon\Carbon::parse($item->created_at)->isoFormat('dddd MMMM YYYY') }}</td>
                                     </tr>
                                 @empty
                                 @endforelse
@@ -680,6 +730,37 @@
 
         jQuery(document).ready(function($) {
             $('#jstabel4').DataTable({
+                "lengthMenu": [
+                    [5, 10, 15, -1],
+                    [5, 10, 15, "All"]
+                ],
+                "pageLength": 5,
+
+                "order": [],
+
+                "ordering": false,
+
+                "language": {
+                    "sProcessing": "Sedang memproses...",
+                    "sLengthMenu": "Tampilkan _MENU_ data",
+                    "sZeroRecords": "Tidak ditemukan Data",
+                    "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
+                    "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Cari :",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "Pertama",
+                        "sPrevious": "&#8592;",
+                        "sNext": "&#8594;",
+                        "sLast": "Terakhir"
+                    }
+                }
+            });
+        });
+        jQuery(document).ready(function($) {
+            $('#jstabel5').DataTable({
                 "lengthMenu": [
                     [5, 10, 15, -1],
                     [5, 10, 15, "All"]

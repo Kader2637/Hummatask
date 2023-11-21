@@ -11,6 +11,28 @@
 @endsection
 
 @section('content')
+
+
+<div class="modal fade" id="feedbackModal" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel3">Feedback</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div id="text-feedback" class="row mb-3">
+
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-label-secondary waves-effect" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
     <div class="container-fluid d-flex mt-5 justify-content-center">
         <div class="col-12">
             <div class="card">
@@ -69,6 +91,7 @@
                                 <th class="text-white">Status Presentasi</th>
                                 <th class="text-white">Status Pengajuan</th>
                                 <th class="text-white">Dikonfirmasi oleh</th>
+                                <th class="text-white">Feedback</th>
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
@@ -111,6 +134,11 @@
                                             </div>
                                         @endif
                                     </td>
+                                    <td class="text-center">
+                                        <button class=" border-0 text-secondary bg-transparent btn-feedback-modal" data-bs-toggle="modal" data-bs-target="#feedbackModal" data-feedback="{{ $data->feedback }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z"/></svg>
+                                        </button>
+                                    </td>
                                 </tr>
                             @empty
                             @endforelse
@@ -129,6 +157,17 @@
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <script src="{{ asset('assets/js/forms-editors.js') }}"></script>
     <script>
+
+        $(".btn-feedback-modal").click(function(){
+            const feedback = $(this).data("feedback");
+            console.log(feedback);
+            const text = $("#text-feedback").html(
+                `
+                <p>${feedback}</p>
+                `
+            );
+        })
+
         $('#formAjukanPresentasi').on('submit', function(event) {
             var judul = $('#judul').val();
             var deskripsi = $('#deskripsi').val();

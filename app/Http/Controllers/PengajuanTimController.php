@@ -10,6 +10,7 @@ use App\Models\Anggota;
 use App\Models\Notifikasi;
 use App\Models\Project;
 use App\Models\Tema;
+use App\Models\TidakPresentasiMingguan;
 use App\Models\Tim;
 use App\Models\User;
 use Carbon\Carbon;
@@ -33,13 +34,13 @@ class PengajuanTimController extends Controller
             return redirect()->back()->with('error', 'input Foto ataupun nama tim tidak boleh kosong');
         }
 
-        $timDulu = User::find(Auth::user()->id)->tim->first();
+        // $timDulu = User::find(Auth::user()->id)->tim->first();
 
-        if (isset($timDulu)) {
-            if ($timDulu->kadaluwarsa === 0) {
-                return redirect()->back()->with('error', 'Kamu masih memiliki tim yang belum selesai');
-            }
-        }
+        // if (isset($timDulu)) {
+        //     if ($timDulu->kadaluwarsa === 0) {
+        //         return redirect()->back()->with('error', 'Kamu masih memiliki tim yang belum selesai');
+        //     }
+        // }
 
         // menyimpan logo
         $logo = $request->logo->store('logo', 'public');
@@ -75,6 +76,10 @@ class PengajuanTimController extends Controller
             'status_project' => 'approved',
             'deadline' => Carbon::now()->addWeek(),
             'type_project' => 'solo'
+        ]);
+
+        TidakPresentasiMingguan::create([
+            'tim_id' => $tim->id,
         ]);
 
         return redirect()->back()->with('success', 'Berhasil membuat tim solo project');

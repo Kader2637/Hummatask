@@ -8,6 +8,7 @@ use App\Http\Requests\RequestPersetujuanPresentasi;
 use App\Models\HistoryPresentasi;
 use App\Models\Notifikasi;
 use App\Models\Presentasi;
+use App\Models\TidakPresentasiMingguan;
 use App\Models\Tim;
 use Carbon\Carbon;
 use Exception;
@@ -37,24 +38,38 @@ class PresentasiController extends Controller
             return back()->with('error', 'Deskripsi presentasi tidak boleh melebihi 700 karakter');
         }
 
-        if (Carbon::now()->isoFormat('HH:m:ss') < "08:00:00") {
-            return back()->with('error', 'Pengajuan Presentasi dimulai pukul 08:00');
+        // if (Carbon::now()->isoFormat('HH:m:ss') < "08:00:00") {
+        //     return back()->with('error', 'Pengajuan Presentasi dimulai pukul 08:00');
+        // }
+
+        // if (Carbon::now()->isoFormat('HH:m:ss') > "14:00:00") {
+        //     return back()->with('error', 'Pengajuan Presentasi tidak boleh lebih dari pukul 15:00');
+        // }
+
+        if(Carbon::now()->isoFormat("dddd") === "Minggu" || Carbon::now()->isoFormat("dddd") === "Sabtu"){
+            return back()->with('error', 'Pengajuan Presentasi hanya bisa dilakuakn dijam kantor');
         }
 
-        if (Carbon::now()->isoFormat('HH:m:ss') > "15:00:00") {
-            return back()->with('error', 'Pengajuan Presentasi tidak boleh lebih dari pukul 15:00');
-        }
 
         try {
             //code...
             $tim = Tim::where('code', $code)->first();
-
+            // dd($tim);
             if ($tim->kadaluwarsa == 1) {
                 return back()->with('error', 'Tim anda sudah kadaluwarsa');
             }
 
+
+            if($tim->sudah_presentasi === 0){
+                $tidakPresentasiMingguan = TidakPresentasiMingguan::where('tim_id',$tim->id)->latest()->first();
+                $tidakPresentasiMingguan->delete();
+            }
+
+
+
             $tim->sudah_presentasi = true;
             $tim->save();
+
 
             // $validasi = $tim->presentasi->where('jadwal', Carbon::now()->isoFormat('YYYY-M-DD'))->first();
 
@@ -74,6 +89,8 @@ class PresentasiController extends Controller
         $presentasi->tim_id = $tim->id;
 
         $history = HistoryPresentasi::latest()->first();
+
+
 
         if (($history === null) || (Carbon::parse($history->created_at)->isoFormat("W-Y") != Carbon::now()->isoFormat("W-Y"))) {
             $historyBaru = new HistoryPresentasi;
@@ -185,12 +202,13 @@ class PresentasiController extends Controller
         $history = HistoryPresentasi::with(['presentasi.tim.user', 'presentasi.tim.project.tema'])->where('code', $code)->first();
         $presentasi = $history->presentasi->where('status_pengajuan', 'menunggu');
         $judulModal = Carbon::now()->isoFormat('DD MMMM YYYY');
-        $konfirmasi_presentasi = Presentasi::with(['tim.user', 'tim.project.tema', 'tim.presentasi'])->where('history_presentasi_id', $history->id)->where('status_presentasi', 'menunggu')
+        $konfirmasi_presentasi = Presentasi::with(['tim.user', 'tim.project.tema', 'tim.presentasi'])
+            ->where('history_presentasi_id', $history->id)
+            ->where('status_presentasi', 'menunggu')
             ->where('status_pengajuan', 'disetujui')
             ->whereDate('jadwal', Carbon::now()->format('Y-m-d'))
             ->orderBy('urutan', 'asc')
             ->get();
-
 
 
         $konfirmasi_presentasi_date = [];
@@ -211,7 +229,11 @@ class PresentasiController extends Controller
             $dataPresentasiTim[] = $data->tim->presentasi;
         }
 
-        $tim_belum_presentasi = Tim::with('user', 'project.tema')->where('sudah_presentasi', false)->get();
+        // dd(Carbon::parse($history->created_at)->weekOfYear);
+        $tim_belum_presentasi = TidakPresentasiMingguan::with('tim.project.tema','tim.user')
+         ->whereRaw('WEEK(created_at) = ?', [Carbon::parse($history->created_at)->weekOfYear])
+        ->whereYear('created_at',Carbon::parse($history->created_at)->year)->get();
+        // dd($tim_belum_presentasi);
         $telat_presentasi = $history->presentasi->where('status_presentasi', 'telat');
 
         $data = [
@@ -292,6 +314,8 @@ class PresentasiController extends Controller
             }
 
 
+
+
             $history = HistoryPresentasi::with(['presentasi.tim.user', 'presentasi.tim.project.tema', 'presentasi.tim.presentasiSelesai'])->where('code', $request->codeHistory)->first();
             $urutanPresentasi = $history->presentasi->where('status_presentasi', 'menunggu')->where('jadwal', Carbon::now()->isoFormat('Y-M-DD'));
             $data = [
@@ -333,7 +357,6 @@ class PresentasiController extends Controller
             "revisiSelesai" => $totalRevisiSelesai,
             "revisiTidakSelesai" => $totalRevisiTidakSelesai,
             "presentasiSelesai" => $totalPresentasiSelesai,
-
         ]);
     }
 

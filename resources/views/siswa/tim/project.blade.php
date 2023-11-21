@@ -66,7 +66,7 @@
                             <label for="TagifyBasic" class="form-label">Tema <span class="text-warning">(Inputkan 10 tema,
                                     tekan enter di setiap tema)</span></label>
                             <input id="TagifyBasic" class="form-control @error('temaInput') is-invalid @enderror"
-                                name="temaInput" placeholder="Masukkan 5 tema pilihan anda" />
+                                name="temaInput" placeholder="Masukkan 10 tema pilihan anda" />
                             @error('temaInput')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -180,11 +180,7 @@
                                 data-bs-target="#navs-pills-top-profile" aria-controls="navs-pills-top-profile"
                                 aria-selected="false" data-tab="2">Anggota</button>
                         </div>
-                        <div class="nav-item button-nav" role="tab">
-                            <button type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasEnd"
-                                class="nav-link"><i class="menu-icon tf-icons ti ti-chart-line"></i>
-                                Statistik Project</button>
-                        </div>
+                    
                     </div>
                     <div class="" role="presentation">
                         @auth
@@ -203,8 +199,8 @@
                             @endif
                         @endauth
                     </div>
-                    
-                    
+
+
                 </div>
                 <div class="tab-content bg-transparent pb-0" style="box-shadow: none;">
                     <div class="tab-pane fade active show" id="navs-pills-top-home" role="tabpanel">

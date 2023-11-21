@@ -6,13 +6,10 @@
 
 
     <style>
-
         @media screen and (max-width:768px){
             .nav-item{
                 font-size : 10px;
             }
-
-
         }
 
     </style>
@@ -369,6 +366,7 @@
                 <div class="col-md-4 mb-4">
                     <div class="card">
                         <div class="card-body text-black">
+
                             @php
                                 $date = \Carbon\Carbon::parse($history->created_at);
                                 $month = $date->isoFormat('MMMM');
@@ -419,224 +417,7 @@
     <script src="{{ asset('utils/Kategory.js') }}" ></script>
     <script>
 
-        const tampilDetailTim = (codeTim,codeHistory) =>{
-            document.getElementById('list-group').innerHTML=""
-            axios.get('ambil-detail-history-presentasi/'+codeHistory+'/'+codeTim )
-            .then((res) => {
-                const history = res.data.history;
-                const tim = res.data.tim;
-                const presentasi = res.data.presentasi;
-                const presentaseRevisi = res.data.presentaseRevisi;
-
-
-                $('#persentasiRevisiSelesai').text(`${(presentaseRevisi).toFixed(2)}%`)
-                $('#historyTotalPresentasi').text(`${presentasi[0].length}`)
-                $('#history-ketua-tim').text(`${tim.ketua_tim[0].username}`)
-
-                const kosong = (presentasi[0].length === 0 ? true : false);
-                console.log(kosong);
-                presentasi[0].forEach((data,i) => {
-
-                    let waktu = presentasi[1][i]
-                    const div = document.createElement('div')
-                    let children;
-
-
-                    if (kosong) {
-                            children = `
-                                <h1>Belum pernah presentasi</h1>
-                            `;
-                            console.log("kosong");
-                        } else {
-                            console.log("ada");
-                            children = `
-                                ${(data === presentasi[0][0]
-                                    ? '<a href="javascript:void(0);" class="list-group-item list-group-item-action flex-column align-items-start active">'
-                                    : ''
-                                )}
-                                <a class="list-group-item list-group-item-action flex-column align-items-start ${(data === presentasi[0][0] ? 'active' : '' )}">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <h5 class="mb-1">${data.judul}</h5>
-                                        <small class="text-muted">${waktu} hari lalu</small>
-                                    </div>
-                                    <p class="mb-1">${data.deskripsi}</p>
-                                    <small class="text-muted">Donec id elit non mi porta.</small>
-                                </a>
-                            `;
-                        }
-
-
-
-                    div.innerHTML = children
-                    document.getElementById('list-group').appendChild(div);
-
-                });
-
-
-                // document.getElementById('list-group').innerHTML=""
-
-
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-        }
-
-        const aturUrutan = (code,codeHistory) =>{
-
-            document.getElementById('select2Basic').setAttribute('data-bs-code',code);
-            document.getElementById('select2Basic').setAttribute('data-bs-codeHistory',codeHistory);
-
-
-                axios.get('ambil-urutan/'+codeHistory)
-                .then((res) => {
-                    const data = res.data.presentasi;
-                    console.log(data);
-                    document.getElementById('select2Basic').innerHTML = "";
-                     Object.keys(data).forEach(key => {
-                        let presentasi = data[key]
-                        let option = document.createElement('option')
-                        option.textContent = "Urutan ke-"+presentasi.urutan;
-                        option.value = presentasi.urutan;
-                        option.name = "optUrutan";
-                        document.getElementById('select2Basic').appendChild(option);
-                    });
-
-                })
-                .catch((err) => {
-                    Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: "404 Route tidak ditemukan"
-                        });
-                    console.log(err);
-                })
-
-
-
-
-        }
-
-        const kirimProsesGantiUrutan = () =>
-        {
-            const code = document.getElementById('select2Basic').getAttribute('data-bs-code');
-            const codeHistory = document.getElementById('select2Basic').getAttribute('data-bs-codeHistory');
-            const urutanTergantikan = document.getElementById("select2Basic").value;
-            console.log( typeof urutanTergantikan);
-
-                axios.put('atur-urutan/'+code,{urutanTergantikan,codeHistory})
-                .then((res) => {
-
-                document.getElementById('row-konfirmasi').innerHTML = "";
-                axios.get('ambil-urutan/'+codeHistory)
-                .then((resNew) => {
-
-                    const data = resNew.data;
-                    const presentasi = data.presentasi;
-                    console.log(resNew.data);
-
-
-                    if (res.data.success) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Sukses',
-                            text: res.data.success
-                        })
-                    }
-                    if (res.data.error) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: res.data.error
-                        })
-                    }
-
-
-
-                    presentasi.forEach((presentasi,i) => {
-                        const kategory = handleKategory(presentasi.tim.status_tim)
-                        const presentasiDitolak = data.presentasiDitolak[i];
-                        const revisiSelesai = data.revisiSelesai[i];
-                        const revisiTidakSelesai = data.revisiTidakSelesai[i];
-                        const presentasiSelesai = data.presentasiSelesai[i];
-
-                        let div = document.createElement('div')
-
-
-                        div.id = "card-konfirmasi-" + presentasi.code;
-                        div.className = "col-md-3 col-lg-3";
-                        let childrend =
-                            `
-                            <div class="card text-center mb-3">
-                            <div class="card-body">
-                                <div style="width: 30px; height: 30px; top: -10px;left : -10px;" class="rounded bg-primary d-flex justify-content-center align-items-center text-white position-absolute">
-                                    ${presentasi.urutan}
-                                </div>
-                                <img src="{{ asset('storage/${presentasi.tim.logo}') }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 100px; height: 100px; object-fit: cover; ">
-                                <div class="d-flex justify-content-center align-items-center gap-2 flex-column flex-wrap">
-                                    <h4 class="card-title text-capitalize text-secondary mb-0">${presentasi.tim.nama}</h4>
-                                    <div class="d-flex flex-column gap-2">
-                                    <span class="badge bg-label-warning d-flex align-items-center justify-content-center flex-column" style="" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Status Tim"    >${kategory}</span>
-
-                                    </div>
-                                    <div class="d-flex justify-content-around align-items-center w-100 mb-2 gap-2">
-                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data pengajuan presentasi yang selesai"    class="badge bg-label-success">
-                                            <i class="fas fa-chalkboard"></i>
-                                            ${presentasiSelesai}
-                                        </span>
-                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data pengajuan presentasi yang ditolak"    class="badge bg-label-danger">
-                                            <i class="fas fa-chalkboard"></i>
-                                            ${presentasiDitolak}
-                                        </span>
-                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data Revisi yang selesai"      class="badge bg-label-success">
-                                            <i class="fas fa-exclamation-triangle"></i>
-                                            ${revisiSelesai}
-                                        </span>
-                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data Revisi yang tidak selesai"   class="badge bg-label-danger ">
-                                            <i class="fas fa-exclamation-triangle"></i>
-                                            ${revisiTidakSelesai}
-                                        </span>
-                                    </div>
-
-                                </div>
-
-                                <div class="d-flex justify-content-center gap-2 align-items-center">
-                                        <button onclick="tampilDetailTim('${presentasi.tim.code}','${codeHistory}')"  data-bs-toggle="modal" data-bs-target="#detailTim" class="btn btn-outline-warning d-flex justify-content-center align-items-center p-3 btn-detail-tim" style="font-size:15px; width:20px;height:20px;">
-                                            <i class="fas fa-info-circle"></i>
-                                        </button>
-                                        <button class="border-0 bg-transparent text-white bg-primary p-3 d-flex justify-content-center align-items-center rounded" style="font-size:20px;width:20px;height:20px;" onclick="aturUrutan('${presentasi.code}','${codeHistory}')" data-bs-toggle="modal" id="btnUrutan" data-bs-target="#aturUrutan" >
-                                            <i class="fas fa-list-ol"></i>
-                                        </button>
-                                        <button class="btn btn-success" onclick="sudahPresentasi('${presentasi.code}')"  data-bs-toggle="modal" data-bs-target="#Finish" >Konfirmasi</button>
-                                </div>
-                            </div>
-                    </div>
-                    `
-                        div.innerHTML = childrend
-                        document.getElementById('row-konfirmasi').appendChild(div)
-
-                    });
-
-
-                })
-
-                .catch((err) => {
-                    console.log(err);
-                })
-
-            })
-            .catch((err) => {
-
-                Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: "404 Route tidak ditemukan"
-                        })
-
-            })
-        }
-
-        const tampilkanDetail = (code) =>
+function tampilkanDetail(code)
         {
             axios.post('tampil-detail-presentasi/' + code)
                 .then((res) => {
@@ -692,8 +473,8 @@
                             <p class="card-text">${res.data.judulModal}</p>
 
                             <div class="d-flex justify-content-center gap-2">
-                                <button onclick="tolakPresentasi('${presentasi.code}')" data-bs-toggle="modal" data-bs-target="#Reject" class="px-3 py-1 btn btn-danger" >Tolak</button>
-                                <button onclick="setujuiPresentasi('${presentasi.code}')" class="px-3 py-1 btn btn-success" >Setujui</button>
+                                <button onclick="tolakPresentasi('${presentasi.code}','${code}')" data-bs-toggle="modal" data-bs-target="#Reject" class="px-3 py-1 btn btn-danger" >Tolak</button>
+                                <button onclick="setujuiPresentasi('${presentasi.code}','${code}')" class="px-3 py-1 btn btn-success" >Setujui</button>
                             </div>
                         </div>
                     </div>
@@ -801,7 +582,7 @@
                                         <button class="border-0 bg-transparent text-white bg-primary p-3 d-flex justify-content-center align-items-center rounded" style="font-size:20px;width:20px;height:20px;" onclick="aturUrutan('${presentasi.code}','${codeHistory}')" data-bs-toggle="modal" id="btnUrutan" data-bs-target="#aturUrutan" >
                                             <i class="fas fa-list-ol"></i>
                                         </button>
-                                        <button class="btn btn-success" onclick="sudahPresentasi('${presentasi.code}')"  data-bs-toggle="modal" data-bs-target="#Finish" >Konfirmasi</button>
+                                        <button class="btn btn-success" onclick="sudahPresentasi('${presentasi.code}','${codeHistory}')"  data-bs-toggle="modal" data-bs-target="#Finish" >Konfirmasi</button>
                                 </div>
                             </div>
                     </div>
@@ -811,12 +592,12 @@
                     })
                     }
 
-                    // console.log(res.data)
+                    console.log(data3[0].tim)
 
 
                     document.getElementById('tr-belum-presentasi').innerHTML = ""
                     Object.keys(data3).forEach((keys, i) => {
-                        let presentasi = data3[keys];
+                        let presentasi = data3[keys].tim;
                         let tr = document.createElement('tr');
                         let child;
                         let cell1 = document.createElement('td');
@@ -854,72 +635,175 @@
                         document.getElementById('tr-belum-presentasi').appendChild(tr);
                     });
 
-
-                    document.getElementById('row-telat').innerHTML = "";
-
-                    Object.keys(data4).forEach((keys, i) => {
-
-                        let presentasi = data4[keys]
-                        let tr = document.createElement('tr')
-                        let cell1 = document.createElement('td')
-                        cell1.textContent = i + 1;
-
-                        const date = new Date(presentasi.jadwal)
-                        const day = date.toLocaleString('id-ID', {
-                            weekday: 'long',
-                            timeZone: 'UTC'
-                        });
+1
 
 
-                        let cell6 = document.createElement('td')
-                        cell6.textContent = presentasi.jadwal;
-
-                        let cell3 = document.createElement('td')
-                        cell3.textContent = day;
-
-                        let cell4 = document.createElement('td')
-                        cell4.textContent = presentasi.tim.status_tim;
-
-                        let cell5 = document.createElement('td')
-                        cell5.textContent = presentasi.tim.project[0].tema.nama_tema;
-
-
-                        if (presentasi.tim.status_tim === "solo") {
-                            let cell2 = document.createElement('td')
-                            cell2.innerHTML =
-                                `<img src="{{ asset('assets/${presentasi.tim.logo}') }}" alt="" style="border-radius: 50%; width:40px;"> ${presentasi.tim.user[0].username}</td>`
-                            tr.appendChild(cell1)
-                            tr.appendChild(cell2)
-                            tr.appendChild(cell6)
-                            tr.appendChild(cell3)
-                            tr.appendChild(cell4)
-                            tr.appendChild(cell5)
-                        } else {
-
-                            let cell2 = document.createElement('td')
-                            cell2.innerHTML =
-                                `<img src="{{ asset('assets/${presentasi.tim.logo}') }}" alt="" style="border-radius: 50%; width:40px;"> ${presentasi.tim.nama}</td>`
-
-                            tr.appendChild(cell1)
-                            tr.appendChild(cell2)
-                            tr.appendChild(cell6)
-                            tr.appendChild(cell3)
-                            tr.appendChild(cell4)
-                            tr.appendChild(cell5)
-
-                        }
-
-                        document.getElementById('row-telat').appendChild(tr)
-
-
-                    })
                 })
                 .catch((err) => {
                     console.log(err);
                 })
         }
 
-        const tolakPresentasi = (code) => {
+        const tampilDetailTim = (codeTim,codeHistory) =>{
+            document.getElementById('list-group').innerHTML=""
+            axios.get('ambil-detail-history-presentasi/'+codeHistory+'/'+codeTim )
+            .then((res) => {
+                const history = res.data.history;
+                const tim = res.data.tim;
+                const presentasi = res.data.presentasi;
+                const presentaseRevisi = res.data.presentaseRevisi;
+
+
+                $('#persentasiRevisiSelesai').text(`${(presentaseRevisi).toFixed(2)}%`)
+                $('#historyTotalPresentasi').text(`${presentasi[0].length}`)
+                $('#history-ketua-tim').text(`${tim.ketua_tim[0].username}`)
+
+                const kosong = (presentasi[0].length === 0 ? true : false);
+                console.log(kosong);
+                presentasi[0].forEach((data,i) => {
+
+                    let waktu = presentasi[1][i]
+                    const div = document.createElement('div')
+                    let children;
+
+
+                    if (kosong) {
+                            children = `
+                                <h1>Belum pernah presentasi</h1>
+                            `;
+                            console.log("kosong");
+                        } else {
+                            console.log("ada");
+                            children = `
+                                ${(data === presentasi[0][0]
+                                    ? '<a href="javascript:void(0);" class="list-group-item list-group-item-action flex-column align-items-start active">'
+                                    : ''
+                                )}
+                                <a class="list-group-item list-group-item-action flex-column align-items-start ${(data === presentasi[0][0] ? 'active' : '' )}">
+                                    <div class="d-flex justify-content-between w-100">
+                                        <h5 class="mb-1">${data.judul}</h5>
+                                        <small class="text-muted">${waktu} hari lalu</small>
+                                    </div>
+                                    <p class="mb-1">${data.deskripsi}</p>
+                                    <small class="text-muted">Donec id elit non mi porta.</small>
+                                </a>
+                            `;
+                        }
+
+
+
+                    div.innerHTML = children
+                    document.getElementById('list-group').appendChild(div);
+
+                });
+
+
+
+
+
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+        }
+
+        const aturUrutan = (code,codeHistory) =>{
+
+            document.getElementById('select2Basic').setAttribute('data-bs-code',code);
+            document.getElementById('select2Basic').setAttribute('data-bs-codeHistory',codeHistory);
+
+
+                axios.get('ambil-urutan/'+codeHistory)
+                .then((res) => {
+                    const data = res.data.presentasi;
+                    console.log(data);
+                    document.getElementById('select2Basic').innerHTML = "";
+                     Object.keys(data).forEach(key => {
+                        let presentasi = data[key]
+                        let option = document.createElement('option')
+                        option.textContent = "Urutan ke-"+presentasi.urutan;
+                        option.value = presentasi.urutan;
+                        option.name = "optUrutan";
+                        document.getElementById('select2Basic').appendChild(option);
+                    });
+
+                })
+                .catch((err) => {
+                    Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: "404 Route tidak ditemukan"
+                        });
+                    console.log(err);
+                })
+
+
+
+
+        }
+
+        const kirimProsesGantiUrutan = () =>
+        {
+            const code = document.getElementById('select2Basic').getAttribute('data-bs-code');
+            const codeHistory = document.getElementById('select2Basic').getAttribute('data-bs-codeHistory');
+            const urutanTergantikan = document.getElementById("select2Basic").value;
+            console.log( typeof urutanTergantikan);
+
+                axios.put('atur-urutan/'+code,{urutanTergantikan,codeHistory})
+                .then((res) => {
+
+                document.getElementById('row-konfirmasi').innerHTML = "";
+                axios.get('ambil-urutan/'+codeHistory)
+                .then((resNew) => {
+
+                    const data = resNew.data;
+                    const presentasi = data.presentasi;
+                    console.log(resNew.data);
+
+                    tampilkanDetail(codeHistory);
+
+
+                    if (res.data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Sukses',
+                            text: res.data.success
+                        })
+                    }
+                    if (res.data.error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: res.data.error
+                        })
+                    }
+
+
+
+
+
+
+                })
+
+                .catch((err) => {
+                    console.log(err);
+                })
+
+            })
+            .catch((err) => {
+
+                Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: "404 Route tidak ditemukan"
+                        })
+
+            })
+        }
+
+
+
+        const tolakPresentasi = (code,codeHistory) => {
             const form = document.getElementById("tolakPresentasiForm")
             form.addEventListener("submit", function(e) {
                 e.preventDefault();
@@ -942,7 +826,7 @@
 
                         if (response.data.success) {
 
-                            document.getElementById('card-persetujuan-' + code).classList.add('d-none')
+                            tampilkanDetail(codeHistory);
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Sukses',
@@ -958,10 +842,10 @@
         }
 
 
-        const setujuiPresentasi = (code) => {
+        const setujuiPresentasi = (code,codeHistory) => {
             axios.put('persetujuan-presentasi/' + code)
                 .then((res) => {
-                    document.getElementById('card-persetujuan-' + code).classList.add('d-none');
+                    // document.getElementById('card-persetujuan-' + code).classList.add('d-none');
 
                     const presentasi = res.data.presentasi;
                     const totalPresentasi = res.data.totalPresentasi;
@@ -971,66 +855,9 @@
                     const codeHistory = res.data.codeHistory;
                     const kategoryTim = handleKategory(presentasi.tim.status_tim)
 
-                    if(document.getElementById('notFound-2')){
-                       const not = document.getElementById('notFound-2').classList.add('d-none')
-                   }
+                    tampilkanDetail(codeHistory);
 
 
-                    const div = document.createElement('div');
-                    div.className = 'col-md-3 col-lg-3';
-                    div.id = 'card-konfirmasi-' + code;
-
-                    let data = `
-                    <div class="card text-center mb-3">
-                            <div class="card-body">
-                                <div style="width: 30px; height: 30px; top: -10px;left : -10px;" class="rounded bg-primary d-flex justify-content-center align-items-center text-white position-absolute">
-                                    ${presentasi.urutan}
-                                </div>
-                                <img src="{{ asset('storage/${presentasi.tim.logo}') }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 100px; height: 100px; object-fit: cover; ">
-                                <div class="d-flex justify-content-center align-items-center gap-2 flex-column flex-wrap">
-                                    <h4 class="card-title text-capitalize text-secondary mb-0">${presentasi.tim.nama}</h4>
-                                    <div class="d-flex flex-column gap-2">
-                                    <span class="badge bg-label-warning d-flex align-items-center justify-content-center flex-column" style="" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Status Tim"    >${kategoryTim}</span>
-
-                                    </div>
-                                    <div class="d-flex justify-content-around align-items-center w-100 mb-2 gap-2">
-                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data pengajuan presentasi yang selesai"    class="badge bg-label-success">
-                                            <i class="fas fa-chalkboard"></i>
-                                            ${totalPresentasi}
-                                        </span>
-                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data pengajuan presentasi yang ditolak"    class="badge bg-label-danger">
-                                            <i class="fas fa-chalkboard"></i>
-                                            ${presentasiDitolak}
-                                        </span>
-                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data Revisi yang selesai"      class="badge bg-label-success">
-                                            <i class="fas fa-exclamation-triangle"></i>
-                                            ${revisiSelesai}
-                                        </span>
-                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data Revisi yang tidak selesai"   class="badge bg-label-danger ">
-                                            <i class="fas fa-exclamation-triangle"></i>
-                                            ${revisiTidakSelesai}
-                                        </span>
-                                    </div>
-
-                                </div>
-
-                                <div class="d-flex justify-content-center gap-2 align-items-center">
-                                        <button onclick="tampilDetailTim('${presentasi.tim.code}','${codeHistory}')"  data-bs-toggle="modal" data-bs-target="#detailTim" class="btn btn-outline-warning d-flex justify-content-center align-items-center p-3 btn-detail-tim" style="font-size:15px; width:20px;height:20px;">
-                                            <i class="fas fa-info-circle"></i>
-                                        </button>
-                                        <button class="border-0 bg-transparent text-white bg-primary p-3 d-flex justify-content-center align-items-center rounded" style="font-size:20px;width:20px;height:20px;" onclick="aturUrutan('${presentasi.code}','${codeHistory}')" data-bs-toggle="modal" id="btnUrutan" data-bs-target="#aturUrutan" >
-                                            <i class="fas fa-list-ol"></i>
-                                        </button>
-                                        <button class="btn btn-success" onclick="sudahPresentasi('${presentasi.code}')"  data-bs-toggle="modal" data-bs-target="#Finish" >Konfirmasi</button>
-                                </div>
-                            </div>
-                    </div>
-            `;
-
-                    div.innerHTML = data;
-
-
-                    document.getElementById('row-konfirmasi').appendChild(div);
 
                     Swal.fire({
                         icon: 'success',
@@ -1046,7 +873,7 @@
         };
 
 
-        function sudahPresentasi(code) {
+        function sudahPresentasi(code,codeHistory) {
             const persetujuan = "selesai"
             const form = document.getElementById('selesaiPresentasiForm')
             form.addEventListener("submit", (e) => {
@@ -1081,6 +908,8 @@
                                 }, 400)
 
                                 document.getElementById('card-konfirmasi-' + code).classList.add('d-none');
+                                tampilkanDetail(codeHistory);
+
                             }
                         })
                         .catch((err) => {

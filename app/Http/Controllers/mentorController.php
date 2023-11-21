@@ -11,6 +11,7 @@ use App\Models\Presentasi;
 use App\Models\Project;
 use App\Models\Tema;
 use App\Models\StatusTim;
+use App\Models\TidakPresentasiMingguan;
 use App\Models\Tim;
 use App\Models\User;
 use Carbon\Carbon;
@@ -190,12 +191,18 @@ class mentorController extends Controller
             ->whereHas('project')
             ->get();
 
-        return response()->view('mentor.history', compact('telatDeadline', 'presentasiSelesai', 'timSolo', 'timGroup', 'notifikasi'));
+
+
+
+        $tidakPresentasiMingguan = TidakPresentasiMingguan::with('tim.ketuaTim')->get();
+
+        return response()->view('mentor.history', compact('tidakPresentasiMingguan', 'telatDeadline', 'presentasiSelesai', 'timSolo', 'timGroup', 'notifikasi'));
     }
 
     // Return view pengajuan projek mentor
-    protected function pengajuanProjekPage()
+    protected function pengajuanProjekPage(Request $request)
     {
+        dd($request);
         $projects = Project::with('tim.anggota.user', 'tim.tema', 'anggota.jabatan', 'anggota.user')->where('status_project', 'notapproved')->paginate(12);
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
@@ -296,7 +303,7 @@ class mentorController extends Controller
         return response()->json(['users' => $users, 'status_tim' => $status_tim, 'ketua' => $ketua, 'ketua_id' => $ketuaId]);
     }
 
-  
+
 
     protected function tim()
     {
@@ -395,20 +402,13 @@ class mentorController extends Controller
     // return view presentasi mentor
     protected function presentasi()
     {
-
-        $presentasi = Presentasi::all();
-        $historyPresentasi = HistoryPresentasi::all();
-        $persetujuan_presentasi = $presentasi->where('status_pengajuan', 'menunggu');
-        $konfirmasi_presentasi = $presentasi->where('status_pengajuan', 'disetujui')->where('status_presentasi', 'menunggu');
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
-        $jadwal = [];
-        $hari = [];
-        foreach ($presentasi as $i => $data) {
-            $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
-            $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd');
-        }
-        return response()->view('mentor.presentasi', compact('persetujuan_presentasi', 'konfirmasi_presentasi', 'jadwal', 'hari', 'historyPresentasi', 'notifikasi'));
+
+
+        $historyPresentasi = HistoryPresentasi::whereMonth('created_at', Carbon::now()->month)->get();
+
+        return response()->view('mentor.presentasi', compact('historyPresentasi', 'notifikasi'));
     }
 
     protected function laporanProgres()

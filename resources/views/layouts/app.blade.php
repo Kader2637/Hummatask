@@ -274,8 +274,7 @@
                         <ul class="menu-sub">
                             @forelse ($tims as $item)
                                 <li class="menu-item">
-                                    @if (@isset($item->project) && $item->project[0]->deskripsi != null)
-                                    <a href="{{ route('tim.board', $item->code) }}"
+                                    <a href="{{ route('tim.project', $item->code) }}"
                                         class="menu-link d-flex align-items-center gap-2">
                                         <img width="30" height="30"
                                             style="width: 30px;height:30px;object-fit: cover"
@@ -283,16 +282,6 @@
                                             src="{{ asset('storage/' . $item->logo) }}" alt="">
                                         <div class="">{{ $item->nama }}</div>
                                     </a>
-                                    @else
-                                    <a href="{{ route('tim.project', $item->code) }}"
-                                        class="menu-link d-flex align-items-center gap-2">
-                                        <img width="30" height="30"
-                                        style="width: 30px;height:30px;object-fit: cover"
-                                        class="rounded-circle border border-primary"
-                                        src="{{ asset('storage/' . $item->logo) }}" alt="">
-                                        <div class="">{{ $item->nama }}</div>
-                                    </a>
-                                    @endif
                                 </li>
                             @empty
                                 <li class="menu-item">
@@ -344,34 +333,32 @@
                                                 title="Mark all as read"><i class="ti ti-mail-opened fs-4"></i></a>
                                         </div>
                                     </li>
-                                    @foreach ($notifikasi as $item)
-                                    <ul class="list-group list-group-flush" id="notification-list">
-                                        {{-- <li class="list-group-item" id="notification-list"> --}}
-                                                {{-- <div class="d-flex" id="notifikasi-{{ $item->id }}">
-                                                    <div class="flex-shrink-0 me-3">
-                                                        <div class="avatar">
-                                                            <img src="" alt class="h-auto rounded-circle">
-                                                        </div>
+                                    <li class="list-group list-group-flush" id="notification-list">
+                                        @foreach ($notifikasi as $item)
+                                            {{-- <div class="d-flex" id="notifikasi-{{ $item->id }}">
+                                                <div class="flex-shrink-0 me-3">
+                                                    <div class="avatar">
+                                                        <img src="" alt class="h-auto rounded-circle">
                                                     </div>
-                                                    <div class="flex-grow-1">
-                                                        <h6 class="mb-1">{{ $item->judul }}</h6>
-                                                        <p class="mb-0">{{ $item->body }}</p>
-                                                        <small
-                                                            class="text-muted">{{ $item->created_at->diffForHumans() }}</small>
-                                                    </div>
-                                                    <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-read"><span
-                                                                class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-archive"
-                                                            onclick="deletenotifikasi({{ $item->id }})"><span
-                                                                class="ti ti-x"></span></a>
-                                                    </div>
-                                                </div> --}}
-                                            {{-- </li> --}}
-                                    </ul>
-                                            @endforeach
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <h6 class="mb-1">{{ $item->judul }}</h6>
+                                                    <p class="mb-0">{{ $item->body }}</p>
+                                                    <small
+                                                        class="text-muted">{{ $item->created_at->diffForHumans() }}</small>
+                                                </div>
+                                                <div class="flex-shrink-0 dropdown-notifications-actions">
+                                                    <a href="javascript:void(0)"
+                                                        class="dropdown-notifications-read"><span
+                                                            class="badge badge-dot"></span></a>
+                                                    <a href="javascript:void(0)"
+                                                        class="dropdown-notifications-archive"
+                                                        onclick="deletenotifikasi({{ $item->id }})"><span
+                                                            class="ti ti-x"></span></a>
+                                                </div>
+                                            </div> --}}
+                                        @endforeach
+                                    </li>
                                     <li class="dropdown-menu-footer border-top">
                                         <a href="javascript:void(0);"
                                             class="dropdown-item d-flex justify-content-center text-primary p-2 h-px-40 mb-1 align-items-center">
@@ -619,7 +606,6 @@
                         event.preventDefault(); // Mencegah pengiriman formulir
                         Swal.fire({
                             icon: 'warning',
-                            
                             title: 'Peringatan',
                             text: 'URL Repository harus kurang dari atau sama dengan 100 karakter!',
                             showConfirmButton: false,
@@ -696,8 +682,7 @@
                     }
 
                     var notifikasiBaru = `
-                    <li class="list-group-item" id="notification-list">
-                    <div class="d-flex mt-2 mb-2 pl-5" id="notifikasi-${item.id}">
+                    <div class="d-flex mt-2 mb-2" id="notifikasi-${item.id}">
                         <div class="flex-shrink-0 me-3">
                             <div class="">
                                 <img src="" alt class="h-auto rounded-circle">
@@ -708,14 +693,13 @@
                             <p class="mb-0">${item.body}</p>
                             <small class="text-muted">${formatWaktu(perbedaanWaktu)}</small>
                         </div>
-                        <div class="flex-shrink-0 dropdown-notifications-actions ">
+                        <div class="flex-shrink-0 dropdown-notifications-actions">
                             <a href="javascript:void(0)" class="dropdown-notifications-read"><span
                                     class="badge badge-dot"></span></a>
-                            <a href="javascript:void(0)" class="dropdown-notifications-archive mr-2"
-                                onclick="deletenotifikasi(${item.id})"><span class="ti ti-x"></span></a>
+                            <a href="javascript:void(0)" class="dropdown-notifications-archive"
+                                onclick="deletenotifikasi(${item.id})"><span class="ti ti-x mr-2"></span></a>
                         </div>
                     </div>
-                </li>
                 `;
 
                     daftarNotifikasi.append(notifikasiBaru);
