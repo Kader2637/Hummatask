@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Anggota;
 use App\Models\Notifikasi;
+use App\Models\Penugasan;
 use App\Models\User;
 use App\Models\Tim;
+use App\Models\Tugas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,8 +20,8 @@ class siswaController extends Controller
         $tims = User::find(Auth::user()->id)->tim()->get();
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
-        
-        $tugas = User::find(Auth::user()->id)->tugas()->where('status_tugas', 'tugas_baru')->get()
+
+        $tugas = User::find(Auth::user()->id)->tugas()->where('status_tugas', 'tugas_baru')->with('user')->get()
             ->sortBy(function ($item) {
                 $deadline = \Carbon\Carbon::parse($item->deadline);
                 $created = \Carbon\Carbon::parse($item->created_at);
@@ -28,14 +30,14 @@ class siswaController extends Controller
         $tugasBelum = User::find(Auth::user()->id)->tugas()->where(function ($query) {
             $query->where('status_tugas', 'revisi')
                 ->OrWhere('status_tugas', 'dikerjakan');
-        })->get()
+        })->with('user')->get()
             ->sortBy(function ($item) {
                 $deadline = \Carbon\Carbon::parse($item->deadline);
                 $created = \Carbon\Carbon::parse($item->created_at);
                 return $deadline->diffInDays($created);
             });
 
-        return response()->view('siswa.dashboard', compact('title','tims','notifikasi','tugas','tugasBelum'));
+        return response()->view('siswa.dashboard', compact('title', 'tims', 'tugas', 'tugasBelum', 'notifikasi'));
     }
 
     // Return view profile siswa
@@ -47,5 +49,5 @@ class siswaController extends Controller
         $notifikasi = Notifikasi::where('user_id',Auth::user()->id)->get();
         return response()->view('siswa.profile-siswa', compact('title', 'user', 'tims','notifikasi'));
     }
-    
+
 }

@@ -31,14 +31,14 @@
         </div>
         <div class="row">
             @if (count($tugasBelum) > 0 || count($tugas) > 0)
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <div class="kanban-title-board fs-5 fw-bold">Tugas yang belum selesai</div>
                 </div>
         </div>
         <div class="row mt-4 justify-content-start mb-2" id="navs-tab-sesijalani">
             @php $count = 0; @endphp
             @foreach ($tugasBelum as $data)
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <div class="card text-center mb-3">
                         <div class="kanban-item" data-eid="in-progress-1" data-comments="12" data-badge-text="UX"
                             data-badge="success" data-due-date="5 April" data-attachments="4" data-assigned="12.png,5.png"
@@ -58,20 +58,19 @@
                             </div>
                             <span class="kanban-text text-left">{{ $data->nama }}</span>
                             <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
-                                <div class="d-flex"> <span class="d-flex align-items-center me-2"><i
-                                            class="ti ti-paperclip ti-xs me-1"></i><span class="attachments">4</span></span>
-                                    <span class="d-flex align-items-center ms-1"><i
-                                            class="ti ti-message-dots ti-xs me-1"></i><span> 12 </span></span>
+                                <div class="d-flex">
+                                    {{-- <span class="d-flex align-items-center ms-1">
+                                        <i class="ti ti-message-dots ti-xs me-1"></i>
+                                        <span> {{ $comment->count() }} </span></span> --}}
                                 </div>
                                 <div class="avatar-group d-flex align-items-center assigned-avatar">
-                                    <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        aria-label="Bruce" data-bs-original-title="Bruce"><img
-                                            src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png"
-                                            alt="Avatar" class="rounded-circle  pull-up"></div>
-                                    <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        aria-label="Clark" data-bs-original-title="Clark"><img
-                                            src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png"
-                                            alt="Avatar" class="rounded-circle  pull-up"></div>
+                                    @foreach ($data->user as $item)
+                                        <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            aria-label="{{ $item->username }}"
+                                            data-bs-original-title="{{ $item->username }}"><img
+                                                src="{{ asset('storage/' . $item->avatar) }}" alt="Avatar"
+                                                class="rounded-circle  pull-up"></div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -84,14 +83,14 @@
             @endforeach
         </div>
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="kanban-title-board fs-5 fw-bold">Tugas terbaru</div>
             </div>
         </div>
         <div class="row mt-4 d-flex justify-content-start" id="navs-tab-sesijalani">
             @php $count2 = 0; @endphp
             @foreach ($tugas as $item)
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <div class="card text-center mb-3">
                         <div class="kanban-item" data-eid="in-progress-1" data-comments="12" data-badge-text="UX"
                             data-badge="success" data-due-date="5 April" data-attachments="4" data-assigned="12.png,5.png"
@@ -111,20 +110,19 @@
                             </div>
                             <span class="kanban-text text-left">{{ $item->nama }}</span>
                             <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
-                                <div class="d-flex"> <span class="d-flex align-items-center me-2"><i
-                                            class="ti ti-paperclip ti-xs me-1"></i><span class="attachments">4</span></span>
-                                    <span class="d-flex align-items-center ms-1"><i
-                                            class="ti ti-message-dots ti-xs me-1"></i><span> 12 </span></span>
+                                <div class="d-flex">
+                                    {{-- <span class="d-flex align-items-center ms-1"><i
+                                            class="ti ti-message-dots ti-xs me-1"></i><span> {{ $item->comment }} </span></span> --}}
                                 </div>
                                 <div class="avatar-group d-flex align-items-center assigned-avatar">
-                                    <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        aria-label="Bruce" data-bs-original-title="Bruce"><img
-                                            src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/12.png"
-                                            alt="Avatar" class="rounded-circle  pull-up"></div>
-                                    <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        aria-label="Clark" data-bs-original-title="Clark"><img
-                                            src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/avatars/5.png"
-                                            alt="Avatar" class="rounded-circle  pull-up"></div>
+                                    @foreach ($item->user as $data)
+                                        <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            aria-label="{{ $data->username }}"
+                                            data-bs-original-title="{{ $data->username }}">
+                                            <img src="{{ asset('storage/' . $data->avatar) }}" alt="Avatar"
+                                                class="rounded-circle pull-up">
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
