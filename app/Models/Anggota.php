@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+
 class Anggota extends Model
 {
     use HasFactory;
-    protected $guarded = [];
+    // protected $guarded = [];
+    protected $primaryKey = 'user_id';
 
-   public function jabatan(): BelongsTo
+    public function jabatan(): BelongsTo
     {
         return $this->belongsTo(Jabatan::class);
     }
@@ -27,11 +29,8 @@ class Anggota extends Model
         return $this->belongsTo(Project::class);
     }
 
-    public function tim():HasOne
+    public function tim(): HasOne
     {
         return $this->hasOne(Tim::class, 'id', 'tim_id');
-
     }
-    
-     
 }

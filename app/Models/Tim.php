@@ -66,7 +66,6 @@ class Tim extends Model
     public function anjay()
     {
         return Anggota::where('tim_id', $this->id)->where('status','active')->pluck('user_id');
-      
     }
 
 }

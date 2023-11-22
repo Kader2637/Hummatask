@@ -66,8 +66,8 @@
                 <div class="col-md-6 col-lg-3">
                     <div class="card text-center mb-3">
                         <div class="card-body">
-                            <img src="{{ asset('storage/' . $item->tim->logo) }}" alt="logo tim" class="rounded-circle mb-3"
-                                style="width: 100px; height: 100px">
+                            <img src="{{ asset('storage/' . $item->tim->logo) }}" alt="logo tim"
+                                class="rounded-circle mb-3" style="width: 100px; height: 100px">
                             <h5 class="card-title">{{ $item->tim->nama }}</h5>
                             <div class="d-flex align-items-center pt-1 mb-3 justify-content-center">
                                 <div class="d-flex align-items-center">
@@ -83,10 +83,28 @@
                                     </ul>
                                 </div>
                             </div>
-                            <a><span class="badge bg-label-warning mb-3">{{ $item->tim->status_tim }}</span></a>
+                            <a>
+                                <span class="badge bg-label-warning mb-3">
+                                    @if ($item->tim->status_tim == 'solo')
+                                        Solo Project
+                                    @elseif ($item->tim->status_tim == 'pre_mini')
+                                        Pre-Mini Project
+                                    @elseif ($item->tim->status_tim == 'mini')
+                                        Mini Project
+                                    @elseif ($item->tim->status_tim == 'big')
+                                        Big Project
+                                    @endif
+                                </span>
+                            </a>
                             <p class="card-text">{{ $item->created_at->translatedFormat('l, j F Y') }}</p>
                             <a data-bs-toggle="modal" data-bs-target="#modalDetail" data-nama-tim="{{ $item->tim->nama }}"
-                                data-type-project="{{ $item->type_project }}"
+                                data-type-project="@if ($item->tim->status_tim == 'solo') Solo Project
+                            @elseif ($item->tim->status_tim == 'pre_mini')
+                                Pre-Mini Project
+                            @elseif ($item->tim->status_tim == 'mini')
+                                Mini Project
+                            @elseif ($item->tim->status_tim == 'big')
+                                Big Project @endif"
                                 data-logo="{{ Storage::url($item->tim->logo) }}"
                                 data-created-at="{{ $item->created_at->translatedFormat('l, j F Y') }}"
                                 data-anggota="{{ $anggotaJson }}" data-tema="{{ $temaJson }}"
@@ -334,6 +352,7 @@
 
 
         });
+
         function filterProjek(selectElement) {
             document.getElementById('filterForm').submit();
         }

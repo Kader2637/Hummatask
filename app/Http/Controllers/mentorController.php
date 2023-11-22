@@ -108,19 +108,19 @@ class mentorController extends Controller
 
         $solo = Tim::where(function ($query) {
             $query->whereIn('status_tim', ['solo'])
-            ->where('kadaluwarsa', '0');
+                ->where('kadaluwarsa', '0');
         })->count();
         $preMini = Tim::where(function ($query) {
             $query->whereIn('status_tim', ['pre_mini'])
                 ->where('kadaluwarsa', '0');
         })->count();
         $mini = Tim::where(function ($query) {
-            $query->whereIn('status_tim',['mini'])
-            ->where('kadaluwarsa','0');
+            $query->whereIn('status_tim', ['mini'])
+                ->where('kadaluwarsa', '0');
         })->count();
         $big = Tim::where(function ($query) {
-            $query->whereIn('status_tim',['big'])
-            ->where('kadaluwarsa','0');
+            $query->whereIn('status_tim', ['big'])
+                ->where('kadaluwarsa', '0');
         })->count();
 
         $chart = [
@@ -211,14 +211,18 @@ class mentorController extends Controller
             ->where('status_project', 'notapproved');
 
         if ($request->has('status_tim')) {
-            $projectsQuery->where('type_project', $request->status_tim);
+            if ($request->status_tim != 'all' && $request->status_tim != null) {
+                $projectsQuery->where('type_project', $request->status_tim);
+            }
         }
 
         if ($request->has('nama_tim')) {
-            $namaTim = $request->nama_tim;
-            $projectsQuery->whereHas('tim', function ($query) use ($namaTim) {
-                $query->where('nama', 'like', "%$namaTim%");
-            });
+            if ($request->nama_tim != null) {
+                $namaTim = $request->nama_tim;
+                $projectsQuery->whereHas('tim', function ($query) use ($namaTim) {
+                    $query->where('nama', 'like', "%$namaTim%");
+                });
+            }
         }
 
         $projects = $projectsQuery->paginate(12);
@@ -273,6 +277,8 @@ class mentorController extends Controller
             ['Tugas Baru', $tugas_baru]
         ];
 
+        // dd($chartData);
+
         return response()->json(['selesai' => $selesai, 'revisi' => $revisi, 'tugas_baru' => $tugas_baru, 'chartData' => $chartData]);
     }
 
@@ -284,6 +290,8 @@ class mentorController extends Controller
                     $query->where('kadaluwarsa', false);
                 })->orWhereHas('tim', function ($query) {
                     $query->whereIn('status', ['kicked', 'expired']);
+                })->whereDoesntHave('anggota', function ($query) {
+                    $query->where('status', 'active');
                 });
             })
             ->get();
@@ -328,14 +336,26 @@ class mentorController extends Controller
 
 
 
-    protected function tim()
+    protected function tim(Request $request)
     {
 
-        // dd('ikan');
-         $tims = tim::with('user')->paginate(12);
-        // $tims = Tim::find(6);
-        // dd($tims->anjay());
-        
+        $timQuery = tim::with('user');
+
+        if ($request->has('status_tim')) {
+            if ($request->status_tim != 'all' && $request->status_tim != null) {
+                $timQuery->where('status_tim', $request->status_tim);
+            }
+        }
+
+        if ($request->has('nama_tim')) {
+            $query = $request->nama_tim;
+            if ($query != null) {
+                $timQuery->where('nama', 'like', "%$query%");
+            }
+        }
+
+        $tims = $timQuery->paginate(2);
+
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
         $status_tim = StatusTim::whereNot('status', 'solo')->get();

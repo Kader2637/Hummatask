@@ -56,13 +56,23 @@
                                 <div class="card-body">
                                     <div class="d-flex flex-row gap-3">
                                         <img src="{{ asset('storage/' . $item->tim->logo) }}" alt="foto logo"
-                                            style="width: 100px; height: 100px" class="rounded-circle mb-3">
+                                            style="width: 100px; height: 100px; object-fit: cover"
+                                            class="rounded-circle mb-3">
                                         <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;"
                                             class="">
                                             <span class="text-black fs-6">{{ $item->tim->nama }}</span>
                                             <div class="d-flex align-items-center">
-                                                <span
-                                                    class="badge bg-label-warning my-1">{{ $item->tim->status_tim }}</span>
+                                                <span class="badge bg-label-warning my-1">
+                                                    @if ($item->tim->status_tim == 'solo')
+                                                        Solo Project
+                                                    @elseif ($item->tim->status_tim == 'pre_mini')
+                                                        Pre-Mini Project
+                                                    @elseif ($item->tim->status_tim == 'mini')
+                                                        Mini Project
+                                                    @elseif ($item->tim->status_tim == 'big')
+                                                        Big Project
+                                                    @endif
+                                                </span>
                                             </div>
                                             <div class="d-flex align-items-center justify-content-center">
                                                 <div class="d-flex align-items-center pt-1 mb-3 justify-content-center">
@@ -76,7 +86,7 @@
                                                                     class="avatar avatar-sm pull-up">
                                                                     <img class="rounded-circle"
                                                                         src="{{ $anggota->user->avatar ? Storage::url($anggota->user->avatar) : asset('assets/img/avatars/1.png') }}"
-                                                                        alt="Avatar">
+                                                                        style="object-fit: cover" alt="Avatar">
                                                                 </li>
                                                             @endforeach
                                                         </ul>
@@ -106,7 +116,14 @@
                                     <a onclick="pieGet('{{ $item->tim->code }}')" data-bs-toggle=""
                                         data-bs-target="#modalDetailProjek" class="w-100 btn btn-primary btn-detail-projek"
                                         data-logo="{{ asset('storage/' . $item->tim->logo) }}"
-                                        data-namatim="{{ $item->tim->nama }}" data-status="{{ $item->tim->status_tim }}"
+                                        data-namatim="{{ $item->tim->nama }}"
+                                        data-status="@if ($item->tim->status_tim == 'solo') Solo Project
+                                        @elseif ($item->tim->status_tim == 'pre_mini')
+                                            Pre-Mini Project
+                                        @elseif ($item->tim->status_tim == 'mini')
+                                            Mini Project
+                                        @elseif ($item->tim->status_tim == 'big')
+                                            Big Project @endif"
                                         data-tema="{{ $item->tema->nama_tema }}"
                                         data-tglmulai="{{ $item->created_at->translatedFormat('l, j F Y') }}"
                                         data-deadline="{{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}"
@@ -119,7 +136,11 @@
                             </div>
                         </div>
                     @empty
-                        <p>Tidak ada data project</p>
+                        <h6 class="text-center mt-4">Tidak Ada Projek <i class="ti ti-address-book-off"></i></h6>
+                        <div class="mt-4 mb-3 d-flex justify-content-evenly">
+                            <img src="{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}"
+                                alt="page-misc-under-maintenance" width="300" class="img-fluid">
+                        </div>
                     @endforelse
                     <div>
                         {{ $projects->links('pagination::bootstrap-5') }}
@@ -327,6 +348,8 @@
     <script src="{{ asset('assets/js/forms-selects.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}"></script>
+
     {{-- filter projek --}}
     <script>
         const cardColor = '#28dac6';
@@ -341,6 +364,12 @@
 
                 // Menghancurkan grafik yang ada jika ada
                 if (doughnutChartVar) {
+
+
+
+
+
+                    
                     doughnutChartVar.destroy();
                 }
 
