@@ -60,10 +60,9 @@
                                 <div class="d-flex align-items-center pt-1 mb-3 justify-content-center">
                                     <div class="d-flex align-items-center">
                                         <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
-
                                             @foreach ($tim->user as $anggota)
                                                 <li data-bs-toggle="tooltip" data-popup="tooltip-custom"
-                                                    data-bs-placement="top" title="{{ $anggota->username }}"
+                                                    data-bs-placement="right" title="{{ $anggota->username }}"
                                                     class="avatar avatar-sm pull-up">
                                                     <img class="rounded-circle"
                                                         src="{{ $anggota->avatar ? Storage::url($anggota->avatar) : asset('assets/img/avatars/1.png') }}"
@@ -121,7 +120,7 @@
                                         <span class="text-white">Update</span>
 
                                     </a>
-
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -136,8 +135,6 @@
                         </tr>
                     </tbody>
                 </table> --}}
-
-        @endif
             @endforeach
         </div>
         {{ $tims->links('pagination::bootstrap-5') }}

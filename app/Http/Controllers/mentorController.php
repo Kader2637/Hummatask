@@ -354,7 +354,7 @@ class mentorController extends Controller
             }
         }
 
-        $tims = $timQuery->paginate(2);
+        $tims = $timQuery->paginate(12);
 
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
