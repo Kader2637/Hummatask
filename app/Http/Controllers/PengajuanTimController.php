@@ -92,7 +92,7 @@ class PengajuanTimController extends Controller
             $daftarAnggota[] = $request->ketuaKelompok;
             $uniqueDaftarAnggota = array_unique($daftarAnggota);
 
-            $existingAnggota = Anggota::whereIn('user_id', $uniqueDaftarAnggota)->first();
+            $existingAnggota = Anggota::whereIn('user_id', $uniqueDaftarAnggota)->where('status', 'active')->first();
             if ($existingAnggota) {
                 return back()->with('warning', 'Anggota telah masuk di tim lain.');
             }

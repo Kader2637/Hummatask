@@ -19,7 +19,7 @@
             <div class="d-flex justify-content-between mb-4">
                 <div class="filter col-lg-3 col-md-3 col-sm-3">
                     <label for="select2Basic" class="form-label">Filter</label>
-                    <form id="filterForm" action="{{ route('tim.filter') }}" method="get">
+                    <form id="filterForm" action="{{ route('tim') }}" method="get">
                         <select id="select2Basic" name="status_tim" class="form-select" data-allow-clear="true"
                             onchange="filterProjek(this)">
                             <option value="" disabled selected>Pilih Data</option>
@@ -39,8 +39,7 @@
                 </div>
                 <div class="filter col-lg-3 col-md-3 col-sm-3">
                     <label for="select2Basic" class="form-label">Cari</label>
-                    <form action="{{ route('cari_tim') }}" method="get">
-
+                    <form action="{{ route('tim') }}" method="get">
                         <div class="flex-grow-1 input-group input-group-merge rounded-pill">
                             <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-search"></i></span>
                             <input name="nama_tim" type="text" class="form-control chat-search-input"
@@ -137,99 +136,11 @@
                         </tr>
                     </tbody>
                 </table> --}}
-            @endif
+
+        @endif
             @endforeach
         </div>
-        <div class="d-flex justify-content-center mt-3">
-            <nav aria-label="Page navigation">
-                <div>
-                    <ul class="pagination">
-                        <!-- Tampilkan link "First" -->
-                        <li class="page-item {{ $tims->currentPage() == 1 ? 'disabled' : '' }}">
-                            <form action="{{ route('tim.filter') }}" method="get" style="display: inline;">
-                                <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
-                                <input type="hidden" name="page" value="1">
-                                <button type="submit" class="page-link">
-                                    <i class="ti ti-arrow-big-left-lines"></i>
-                                </button>
-                            </form>
-                        </li>
-
-                        <!-- Tampilkan link "Previous" -->
-                        @if ($tims->onFirstPage())
-                            <!-- Jika di halaman pertama, link "Previous" nonaktif -->
-                            <li class="page-item disabled">
-                                <span class="page-link"><i class="ti ti-arrow-big-left"></i></span>
-                            </li>
-                        @else
-                            <!-- Jika tidak di halaman pertama, tampilkan link "Previous" aktif -->
-                            <li class="page-item">
-                                <form action="{{ route('tim.filter') }}" method="get" style="display: inline;">
-
-                                    <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
-                                    <input type="hidden" name="page" value="{{ $tims->currentPage() - 1 }}">
-                                    <button type="submit" class="page-link">
-                                        <i class="ti ti-arrow-big-left"></i>
-                                    </button>
-                                </form>
-                            </li>
-                        @endif
-
-                        <!-- Tampilkan link halaman -->
-                        @php
-                            $startPage = max(1, $tims->currentPage() - 3);
-                            $endPage = min($tims->lastPage(), $tims->currentPage() + 3);
-                        @endphp
-
-                        @for ($i = $startPage; $i <= $endPage; $i++)
-                            <li class="page-item {{ $tims->currentPage() == $i ? 'active' : '' }}">
-                                <form action="{{ route('tim.filter') }}" method="get" style="display: inline;">
-
-                                    <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
-                                    <input type="hidden" name="page" value="{{ $i }}">
-                                    <button type="submit" class="page-link">
-                                        {{ $i }}
-                                    </button>
-                                </form>
-                            </li>
-                        @endfor
-
-                        <!-- Tampilkan link "Next" -->
-                        @if ($tims->hasMorePages())
-                            <!-- Jika ada halaman berikutnya, tampilkan link "Next" aktif -->
-                            <li class="page-item">
-                                <form action="{{ route('tim.filter') }}" method="get" style="display: inline;">
-
-                                    <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
-                                    <input type="hidden" name="page" value="{{ $tims->currentPage() + 1 }}">
-                                    <button type="submit" class="page-link">
-                                        <i class="ti ti-arrow-big-right"></i>
-                                    </button>
-                                </form>
-                            </li>
-                        @else
-                            <!-- Jika tidak ada halaman berikutnya, link "Next" nonaktif -->
-                            <li class="page-item disabled">
-                                <span class="page-link"><i class="ti ti-arrow-big-right"></i></span>
-                            </li>
-                        @endif
-
-                        <!-- Tampilkan link "Last" -->
-                        <li class="page-item {{ $tims->currentPage() == $tims->lastPage() ? 'disabled' : '' }}">
-                            <form action="{{ route('tim.filter') }}" method="get" style="display: inline;">
-
-                                <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
-                                <input type="hidden" name="page" value="{{ $tims->lastPage() }}">
-                                <button type="submit" class="page-link">
-                                    <i class="ti ti-arrow-big-right-lines"></i>
-                                </button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-        {{-- {{ $tims->links('pagination::bootstrap-5') }} --}}
+        {{ $tims->links('pagination::bootstrap-5') }}
 
         {{-- Modal Buat Tim --}}
         <form action="{{ route('pembuatan.tim') }}" id="createForm" method="post">
@@ -425,7 +336,7 @@
                 var isChecked = $(this).prop('checked');
                 var kadaluwarsa = $(this).data('kadaluwarsa');
                 var isChecked = $(this).prop('checked');
-                var ikan = ($('meta[name="csrf-token"]').attr('content'));
+                var token = ($('meta[name="csrf-token"]').attr('content'));
 
                 // Perbarui nilai checkbox berdasarkan kondisi
                 if (isChecked && kadaluwarsa == 1) {
@@ -439,7 +350,7 @@
                     url: uri,
                     method: 'POST', // Gantilah dengan metode HTTP yang sesuai
                     data: {
-                        _token: ikan,
+                        _token: token,
                         kadaluwarsa: isChecked ? 0 : 1
                     },
                     success: function(data) {
@@ -447,7 +358,7 @@
 
                         Swal.fire({
                             title: 'Sukses',
-                            text: 'Password berhasil diperbarui.',
+                            text: 'Kondisi berhasil diperbarui.',
                             icon: 'success',
                             showConfirmButton: false,
                             timer: 1700,
