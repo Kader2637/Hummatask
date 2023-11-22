@@ -330,7 +330,12 @@ class mentorController extends Controller
 
     protected function tim()
     {
-        $tims = tim::with('user')->paginate(12);
+
+        // dd('ikan');
+         $tims = tim::with('user')->paginate(12);
+        // $tims = Tim::find(6);
+        // dd($tims->anjay());
+        
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
         $status_tim = StatusTim::whereNot('status', 'solo')->get();

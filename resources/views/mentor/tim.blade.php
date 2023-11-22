@@ -115,17 +115,30 @@
                                 @else
                                     <a data-bs-toggle="modal" data-bs-target="#edit"
                                         class="w-100 btn btn-primary btn-detail-projek edit-tim btn-edit"
-                                        data-anggota="{{ json_encode($tim->user->pluck('id')) }}"
+                                        data-anggota="{{ json_encode($tim->anjay()) }}"
                                         data-id="{{ $tim->id }}" data-url="/mentor/tim/edit/{{ $tim->id }}"
                                         data-status="{{ $tim->status_tim }}" data-logo="{{ $tim->logo }}"
                                         data-kadaluwarsa="{{ $tim->kadaluwarsa }}">
                                         <span class="text-white">Update</span>
+                                        
                                     </a>
-                                @endif
+                                   
                             </div>
                         </div>
                     </div>
                 </div>
+                
+                {{-- <table>
+                    <tbody>
+                        <tr>
+                            @foreach($tim->anjay() as $row)
+                            <td>{{$row->user_id}}</td>
+                            @endforeach
+                        </tr>
+                    </tbody>
+                </table> --}}
+              
+        @endif
             @endforeach
         </div>
         <div class="d-flex justify-content-center mt-3">
