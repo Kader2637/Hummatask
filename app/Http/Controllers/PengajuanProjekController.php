@@ -52,19 +52,20 @@ class PengajuanProjekController extends Controller
 
         $mentorId = User::where('peran_id', 2)->pluck('id')->first();
         if ($mentorId) {
-            $this->sendNotificationToMentor($mentorId, 'Pengajuan Project!', 'Ada anggota yang mengajukan project.');
+            $this->sendNotificationToMentor($mentorId, 'Pengajuan Project!', 'Ada anggota tim yang mengajukan project.', 'pemberitahuan');
         }
 
         return back()->with('success', 'Berhasil mengajukan Project, mohon tunggu konfirmasi mentor');
     }
 
-    protected function sendNotificationToMentor($mentorId, $title, $message)
+    protected function sendNotificationToMentor($mentorId, $title, $message, $jenisNotifikasi)
     {
         Notifikasi::create([
             'user_id' => $mentorId,
             'judul' => $title,
             'body' => $message,
             'status' => 'belum_dibaca',
+            'jenis_notifikasi' => $jenisNotifikasi,
         ]);
     }
 
@@ -109,19 +110,20 @@ class PengajuanProjekController extends Controller
 
     $tema = $project->tema;
     foreach ($teamLeader as $member) {
-        $this->sendNotification($member->id, 'Project Tim Telah Disetujui','Project dengan tema "' . $tema->nama_tema . '" telah disetujui.');
+        $this->sendNotification($member->id, 'Project Tim Telah Disetujui','Project dengan tema "' . $tema->nama_tema . '" telah disetujui.', 'pemberitahuan');
     }
 
     return back()->with('success', 'Berhasil menyetujui project');
 }
 
-protected function sendNotification($userId, $title, $message)
+protected function sendNotification($userId, $title, $message, $jenisNotifikasi)
 {
     Notifikasi::create([
         'user_id' => $userId,
         'judul' => $title,
         'body' => $message,
         'status' => 'belum_dibaca',
+        'jenis_notifikasi' => $jenisNotifikasi,
     ]);
 }
 

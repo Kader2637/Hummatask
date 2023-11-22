@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('judul');
             $table->string('body');
             $table->enum('status',['belum_dibaca','sudah_dibaca'])->default('belum_dibaca');
+            $table->string('jenis_notifikasi');
             $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

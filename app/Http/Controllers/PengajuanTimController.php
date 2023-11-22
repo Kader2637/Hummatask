@@ -140,13 +140,13 @@ class PengajuanTimController extends Controller
                 if ($anggota === $request->ketuaKelompok) {
                     $anggotaModel->jabatan_id = '1';
 
-                    $this->sendNotification($anggota, 'Anda Ditambahkan ke Tim', 'Anda telah ditambahkan sebagai Ketua Tim ' . $namaTim);
+                    $this->sendNotification($anggota, 'Anda Ditambahkan ke Tim', 'Anda telah ditambahkan sebagai Ketua Tim ' . $namaTim, 'info');
                 } else if ($anggota === $request->ketuaProjek) {
                     $anggotaModel->jabatan_id = '2';
                 } else {
                     $anggotaModel->jabatan_id = '3';
 
-                    $this->sendNotification($anggota, 'Anda Ditambahkan ke Tim', 'Anda telah ditambahkan sebagai Anggota Tim ' . $namaTim);
+                    $this->sendNotification($anggota, 'Anda Ditambahkan ke Tim', 'Anda telah ditambahkan sebagai Anggota Tim ' . $namaTim, 'info');
                 }
 
                 if ($anggotaModel->jabatan_id === '2' && empty($anggota)) {
@@ -163,13 +163,14 @@ class PengajuanTimController extends Controller
             return back()->with('error', 'Gagal membentuk tim');
         }
     }
-    protected function sendNotification($userId, $title, $message)
+    protected function sendNotification($userId, $title, $message, $jenisNotifikasi)
     {
         Notifikasi::create([
             'user_id' => $userId,
             'judul' => $title,
             'body' => $message,
             'status' => 'belum_dibaca',
+            'jenis_notifikasi' => $jenisNotifikasi,
         ]);
     }
 
