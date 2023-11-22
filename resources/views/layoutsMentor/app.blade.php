@@ -62,6 +62,8 @@
     <link rel="stylesheet"
         href="{{ asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/flatpickr/flatpickr.css') }}" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/tagify/tagify.css') }}" />
@@ -465,6 +467,26 @@
     <!-- END: Page JS-->
 
     <script>
+        function deletenotifikasi(id) {
+            console.log('notifikasiId:', id);
+            axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute(
+                'content');
+            console.log('Request URL:', `http://127.0.0.1:8000/tim/notifikasi/${id}`);
+            axios.delete(`http://127.0.0.1:8000/tim/notifikasi/${id}`)
+                .then(response => {
+                    console.log('Axios Response:', response);
+                    const notifikasiElement = document.getElementById(`notifikasi-${id}`);
+                    console.log('notifikasiElement:', notifikasiElement);
+                    if (notifikasiElement) {
+                        notifikasiElement.remove();
+                    }
+                })
+                .catch(error => {
+                    console.error('Gagal Menghapus notifikasi:', error);
+                });
+        }
+    </script>
+    <script>
         $(document).ready(function() {
             function ambilNotifikasi() {
                 $.ajax({
@@ -505,26 +527,51 @@
                         }
                     }
 
+                    var jenisClass, icon, textClass;
+
+                    switch (item.jenis_notifikasi) {
+                        case 'info':
+                            jenisClass = 'alert-info';
+                            textClass = 'text-info';
+                            icon = '<i class="ti ti-info-circle ti-xs"></i>';
+                            break;
+                        case 'deadline':
+                            jenisClass = 'alert-warning';
+                            textClass = 'text-warning';
+                            icon = '<i class="ti ti-clock ti-xs"></i>';
+                            break;
+                        case 'pemberitahuan':
+                            jenisClass = 'alert-success';
+                            textClass = 'text-success';
+                            icon = '<i class="ti ti-check ti-xs"></i>';
+                            break;
+                        default:
+                            jenisClass = 'bg-secondary';
+                            icon = '<i class="ti ti-alert ti-xs"></i>';
+                    }
+
                     var notifikasiBaru = `
-                        <div class="d-flex mt-2 mb-2" id="notifikasi-${item.id}">
-                            <div class="flex-shrink-0 me-3">
-                                <div class="">
-                                    <img src="" alt class="h-auto rounded-circle">
-                                </div>
-                            </div>
-                            <div class="flex-grow-1">
-                                <h6 class="mb-1">${item.judul}</h6>
-                                <p class="mb-0">${item.body}</p>
-                                <small class="text-muted">${formatWaktu(perbedaanWaktu)}</small>
-                            </div>
-                            <div class="flex-shrink-0 dropdown-notifications-actions">
-                                <a href="javascript:void(0)" class="dropdown-notifications-read"><span
-                                        class="badge badge-dot"></span></a>
-                                <a href="javascript:void(0)" class="dropdown-notifications-archive"
-                                    onclick="deletenotifikasi(${item.id})"><span class="ti ti-x mr-2"></span></a>
-                            </div>
+            <li class="list-group-item" id="notification-list-${item.id}">
+                <div class="d-flex mt-2 mb-2 pl-5">
+                    <div class="flex-grow-1">
+                        <div class="alert ${jenisClass} d-flex align-items-center" role="alert">
+                            <span class="alert-icon ${textClass} me-2">
+                                ${icon}
+                            </span>
+                            ${item.judul}
                         </div>
-                    `;
+                        <p class="mb-0">${item.body}</p>
+                        <small class="text-muted">${formatWaktu(perbedaanWaktu)}</small>
+                    </div>
+                    <div class="flex-shrink-0 dropdown-notifications-actions ">
+                            <a href="javascript:void(0)" class="dropdown-notifications-read"><span
+                                    class="badge badge-dot"></span></a>
+                            <a href="javascript:void(0)" class="dropdown-notifications-archive mr-2"
+                                onclick="deletenotifikasi(${item.id})"><span class="ti ti-x"></span></a>
+                        </div>
+                </div>
+            </li>
+        `;
 
                     daftarNotifikasi.append(notifikasiBaru);
                 });

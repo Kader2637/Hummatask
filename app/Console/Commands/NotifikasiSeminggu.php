@@ -38,18 +38,19 @@ class NotifikasiSeminggu extends Command
             $teamMembers = $tim->user;
 
             foreach ($teamMembers as $member) {
-                $this->sendNotification($member->id, 'Presentasi Belum Dilakukan', 'Tim Anda belum melakukan presentasi!');
+                $this->sendNotification($member->id, 'Presentasi Belum Dilakukan', 'Tim Anda belum melakukan presentasi!', 'pemberitahuan');
             }
         }
     }
 
-protected function sendNotification($userId, $title, $message)
+protected function sendNotification($userId, $title, $message, $jenisNotifikasi)
     {
         Notifikasi::create([
             'user_id' => $userId,
             'judul' => $title,
             'body' => $message,
             'status' => 'belum_dibaca',
+            'jenis_notifikasi' => $jenisNotifikasi,
         ]);
     }
 }

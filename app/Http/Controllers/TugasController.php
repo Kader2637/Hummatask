@@ -57,6 +57,7 @@ class TugasController extends Controller
     {
         $tim = Tim::where('code', $request->tim_id)->first();
         $checkResult = $this->checkTeam($tim);
+        
 
         if ($checkResult) {
             return $checkResult;
@@ -78,7 +79,7 @@ class TugasController extends Controller
             return response()->json(
                 [
                     "errors" => $validator->errors()
-                ],
+                ],  
                 422
             );
         }
@@ -88,7 +89,7 @@ class TugasController extends Controller
         $tugas->code = Str::uuid();
         $tugas->nama = $request->nama;
         $tugas->save();
-        $this->sendNotificationToTeamMembers($tim->user, 'Tugas Baru', 'Anggota tim telah membuat tugas baru : ' . $tugas->nama);
+        $this->sendNotificationToTeamMembers($tim->user, 'Tugas Baru', 'Anggota tim telah membuat tugas baru : ' . $tugas->nama , 'info');
 
         if ($tim->status_tim === "solo") {
             $penugasan = new Penugasan;
@@ -100,7 +101,7 @@ class TugasController extends Controller
         return response()->json($tugas->with(['user', 'comments'])->latest()->first());
     }
 
-    protected function sendNotificationToTeamMembers($teamMembers, $title, $message)
+    protected function sendNotificationToTeamMembers($teamMembers, $title, $message, $jenisNotifikasi)
     {
         foreach ($teamMembers as $member) {
             Notifikasi::create([
@@ -108,6 +109,7 @@ class TugasController extends Controller
                 'judul' => $title,
                 'body' => $message,
                 'status' => 'belum_dibaca',
+                'jenis_notifikasi' => $jenisNotifikasi,
             ]);
         }
     }
@@ -188,7 +190,7 @@ class TugasController extends Controller
         if ($tugas->status_tugas === 'selesai') {
             $teamMembers = $tugas->tim->user;
             foreach ($teamMembers as $member) {
-                $this->sendNotificationToUser($member->id, 'Tugas Selesai', 'Tugas "' . $tugas->nama . '" telah selesai.');
+                $this->sendNotificationToUser($member->id, 'Tugas Selesai', 'Tugas "' . $tugas->nama . '" telah selesai.', 'pemberitahuan');
             }
         }
 
@@ -214,7 +216,7 @@ class TugasController extends Controller
                     $penugasan->user_id = $user->id;
                     $penugasan->save();
 
-                    $this->sendNotificationToUser($user->id, 'Anda Diberi Tugas Baru', 'Anda telah diberi tugas baru "' . $tugas->nama . '" dengan prioritas ' . $tugas->prioritas);
+                    $this->sendNotificationToUser($user->id, 'Anda Diberi Tugas Baru', 'Anda telah diberi tugas baru "' . $tugas->nama . '" dengan prioritas ' . $tugas->prioritas, 'info');
                 }
             }
 
@@ -233,13 +235,14 @@ class TugasController extends Controller
         return response()->json("sukses");
     }
 
-    protected function sendNotificationToUser($userId, $title, $message)
+    protected function sendNotificationToUser($userId, $title, $message, $jenisNotifikasi)
     {
         Notifikasi::create([
             'user_id' => $userId,
             'judul' => $title,
             'body' => $message,
             'status' => 'belum_dibaca',
+            'jenis_notifikasi' => $jenisNotifikasi,
         ]);
     }
 

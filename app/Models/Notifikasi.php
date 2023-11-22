@@ -14,5 +14,6 @@ class Notifikasi extends Model
         'judul',
         'body',
         'status',
+        'jenis_notifikasi',
     ];
 }

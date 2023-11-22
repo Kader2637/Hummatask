@@ -333,41 +333,43 @@
                                                 title="Mark all as read"><i class="ti ti-mail-opened fs-4"></i></a>
                                         </div>
                                     </li>
-                                    <li class="list-group list-group-flush" id="notification-list">
-                                        @foreach ($notifikasi as $item)
+                                    @foreach ($notifikasi as $item)
+                                    <li class="dropdown-notifications-list scrollable-container">
+                                        <ul class="list-group list-group-flush" id="notification-list">
+                                            {{-- <li class="list-group-item" id="notification-list"> --}}
                                             {{-- <div class="d-flex" id="notifikasi-{{ $item->id }}">
-                                                <div class="flex-shrink-0 me-3">
-                                                    <div class="avatar">
-                                                        <img src="" alt class="h-auto rounded-circle">
+                                                    <div class="flex-shrink-0 me-3">
+                                                        <div class="avatar">
+                                                            <img src="" alt class="h-auto rounded-circle">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <h6 class="mb-1">{{ $item->judul }}</h6>
-                                                    <p class="mb-0">{{ $item->body }}</p>
-                                                    <small
-                                                        class="text-muted">{{ $item->created_at->diffForHumans() }}</small>
-                                                </div>
-                                                <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                    <a href="javascript:void(0)"
-                                                        class="dropdown-notifications-read"><span
-                                                            class="badge badge-dot"></span></a>
-                                                    <a href="javascript:void(0)"
-                                                        class="dropdown-notifications-archive"
-                                                        onclick="deletenotifikasi({{ $item->id }})"><span
-                                                            class="ti ti-x"></span></a>
-                                                </div>
-                                            </div> --}}
-                                        @endforeach
+                                                    <div class="flex-grow-1">
+                                                        <h6 class="mb-1">{{ $item->judul }}</h6>
+                                                        <p class="mb-0">{{ $item->body }}</p>
+                                                        <small
+                                                            class="text-muted">{{ $item->created_at->diffForHumans() }}</small>
+                                                    </div>
+                                                    <div class="flex-shrink-0 dropdown-notifications-actions">
+                                                        <a href="javascript:void(0)"
+                                                            class="dropdown-notifications-read"><span
+                                                                class="badge badge-dot"></span></a>
+                                                        <a href="javascript:void(0)"
+                                                            class="dropdown-notifications-archive"
+                                                            onclick="deletenotifikasi({{ $item->id }})"><span
+                                                                class="ti ti-x"></span></a>
+                                                    </div>
+                                                </div> --}}
+                                            {{-- </li> --}}
+                                        </ul>
                                     </li>
+                                    @endforeach
                                     <li class="dropdown-menu-footer border-top">
                                         <a href="javascript:void(0);"
                                             class="dropdown-item d-flex justify-content-center text-primary p-2 h-px-40 mb-1 align-items-center">
-
                                         </a>
                                     </li>
                                 </ul>
                             </li>
-
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
                                     data-bs-toggle="dropdown">
@@ -422,16 +424,13 @@
                             </li>
                         </ul>
                     </div>
-
                     <div class="navbar-search-wrapper search-input-wrapper  d-none">
                         <input type="text" class="form-control search-input container-xxl border-0"
                             placeholder="Search..." aria-label="Search...">
                         <i class="ti ti-x ti-sm search-toggler cursor-pointer"></i>
                     </div>
                 </nav>
-
                 @yield('content')
-
                 {{-- Modal Tambah Tim --}}
                 <div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg modal-simple modal-edit-user">
@@ -500,10 +499,8 @@
                     </div>
                 </div>
                 {{-- Modal Tambah Tim --}}
-
             </div>
         </div>
-
         <div class="layout-overlay layout-menu-toggle"></div>
         <div class="drag-target"></div>
     </div>
@@ -541,7 +538,6 @@
                 reader.readAsDataURL(file);
             });
         });
-
 
         document.addEventListener('DOMContentLoaded', function() {
             const editUserForm = document.getElementById('editUserForm');
@@ -636,7 +632,6 @@
                 .catch(error => {
                     console.error('Gagal Menghapus notifikasi:', error);
                 });
-
         }
     </script>
 
@@ -681,26 +676,51 @@
                         }
                     }
 
+                    var jenisClass, icon, textClass;
+
+                    switch (item.jenis_notifikasi) {
+                        case 'info':
+                            jenisClass = 'alert-info';
+                            textClass = 'text-info';
+                            icon = '<i class="ti ti-info-circle ti-xs"></i>';
+                            break;
+                        case 'deadline':
+                            jenisClass = 'alert-warning';
+                            textClass = 'text-warning';
+                            icon = '<i class="ti ti-clock ti-xs"></i>';
+                            break;
+                        case 'pemberitahuan':
+                            jenisClass = 'alert-success';
+                            textClass = 'text-success';
+                            icon = '<i class="ti ti-check ti-xs"></i>';
+                            break;
+                        default:
+                            jenisClass = 'bg-secondary';
+                            icon = '<i class="ti ti-alert ti-xs"></i>';
+                    }
+
                     var notifikasiBaru = `
-                    <div class="d-flex mt-2 mb-2" id="notifikasi-${item.id}">
-                        <div class="flex-shrink-0 me-3">
-                            <div class="">
-                                <img src="" alt class="h-auto rounded-circle">
-                            </div>
+            <li class="list-group-item" id="notification-list-${item.id}">
+                <div class="d-flex mt-2 mb-2 pl-5">
+                    <div class="flex-grow-1">
+                        <div class="alert ${jenisClass} d-flex align-items-center" role="alert">
+                            <span class="alert-icon ${textClass} me-2">
+                                ${icon}
+                            </span>
+                            ${item.judul}
                         </div>
-                        <div class="flex-grow-1">
-                            <h6 class="mb-1">${item.judul}</h6>
-                            <p class="mb-0">${item.body}</p>
-                            <small class="text-muted">${formatWaktu(perbedaanWaktu)}</small>
-                        </div>
-                        <div class="flex-shrink-0 dropdown-notifications-actions">
+                        <p class="mb-0">${item.body}</p>
+                        <small class="text-muted">${formatWaktu(perbedaanWaktu)}</small>
+                    </div>
+                    <div class="flex-shrink-0 dropdown-notifications-actions ">
                             <a href="javascript:void(0)" class="dropdown-notifications-read"><span
                                     class="badge badge-dot"></span></a>
-                            <a href="javascript:void(0)" class="dropdown-notifications-archive"
-                                onclick="deletenotifikasi(${item.id})"><span class="ti ti-x mr-2"></span></a>
+                            <a href="javascript:void(0)" class="dropdown-notifications-archive mr-2"
+                                onclick="deletenotifikasi(${item.id})"><span class="ti ti-x"></span></a>
                         </div>
-                    </div>
-                `;
+                </div>
+            </li>
+        `;
 
                     daftarNotifikasi.append(notifikasiBaru);
                 });
