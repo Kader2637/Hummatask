@@ -32,4 +32,6 @@ class Anggota extends Model
         return $this->hasOne(Tim::class, 'id', 'tim_id');
 
     }
+    
+     
 }

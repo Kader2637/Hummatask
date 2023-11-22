@@ -186,26 +186,38 @@ class PengajuanTimController extends Controller
     protected function updateTimProject(RequestPembentukanTimProject $request, $timId)
     {
         $tim = Tim::findOrFail($timId);
-        $validator = $request->validated();
 
         $daftarAnggota = $request->anggota;
         $daftarAnggota[] = $request->ketuaKelompok;
-        $logo = $request->logo;
         $exp = $request->kadaluwarsa;
-
         $uniqueDaftarAnggota = array_unique($daftarAnggota);
 
         $existingAnggota = Anggota::whereIn('user_id', $uniqueDaftarAnggota)
             ->where('tim_id', '<>', $tim->id)
             ->first();
-
+        // dd($existingAnggota);
         if ($existingAnggota) {
             return back()->with('warning', 'Anggota telah masuk di tim lain.');
         }
-
+        // dd($uniqueDaftarAnggota);
         // Update status dan nama tim
         $tim->status_tim = $request->status_tim;
         $tim->kadaluwarsa = $exp;
+        // if ($tim->kadaluwarsa = $exp == 0) {
+        //     $tim->anggota()
+        //         ->whereIn('user_id', $uniqueDaftarAnggota)
+        //         ->update(['status' => 'active']);
+        // }
+        if ($request->kadaluwarsa == "0") {
+            $tim->anggota()
+                ->whereIn('user_id', $uniqueDaftarAnggota)
+                ->update(['status' => 'active']);
+        } elseif ($request->kadaluwarsa == "1") {
+            $tim->anggota()
+                ->whereIn('user_id', $uniqueDaftarAnggota)
+                ->update(['status' => 'expired']);
+        }
+        
         if ($request->status_tim == "pre_mini") {
             $tim->nama = 'Pre-Mini Project Team';
         } elseif ($request->status_tim == "mini") {
@@ -244,27 +256,29 @@ class PengajuanTimController extends Controller
         $tim->save();
 
         // Hapus anggota lama
-        $tim->anggota()->delete();
+        $tim->anggota()
+            ->whereNotIn('user_id', $uniqueDaftarAnggota)
+            ->update(['status' => 'kicked']);
 
         foreach ($uniqueDaftarAnggota as $anggota) {
-            $anggotaModel = new Anggota;
-            $anggotaModel->tim_id = $tim->id;
+            $existingAnggota = Anggota::where('tim_id', $tim->id)
+                ->where('user_id', $anggota)
+                ->first();
 
-            if ($anggota === $request->ketuaKelompok) {
-                $anggotaModel->jabatan_id = '1';
+            if ($existingAnggota) {
+                // Update the existing record instead of creating a new one
+                $existingAnggota->jabatan_id = ($anggota === $request->ketuaKelompok) ? '1' : '3';
+                $existingAnggota->save();
             } else {
-                // Tambahkan kondisi untuk jabatan_id 2
-                $anggotaModel->jabatan_id = '3';
+                // Create a new record
+                $anggotaModel = new Anggota;
+                $anggotaModel->tim_id = $tim->id;
+                $anggotaModel->user_id = $anggota;
+                $anggotaModel->jabatan_id = ($anggota === $request->ketuaKelompok) ? '1' : '3';
+                $anggotaModel->save();
             }
-
-            // Tambahkan kondisi untuk jabatan_id 2
-            if ($anggotaModel->jabatan_id === '2' && empty($anggota)) {
-                continue; // Lewatkan iterasi jika jabatan_id 2 tidak diisi
-            }
-
-            $anggotaModel->user_id = $anggota;
-            $anggotaModel->save();
         }
+
 
 
 
