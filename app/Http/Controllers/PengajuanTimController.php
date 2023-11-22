@@ -263,7 +263,6 @@ class PengajuanTimController extends Controller
                 'status' => 'kicked',
                 'jabatan_id' => 3,
             ]);
-        // Hapus anggota lama
 
 
         $iteration = 0;
