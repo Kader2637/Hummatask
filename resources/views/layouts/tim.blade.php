@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 
 <html lang="en" class="light-style layout-compact layout-navbar-fixed layout-menu-fixed   " dir="ltr"
-    {{-- data-assets-path="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/" --}}
-    data-base-url="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1" data-framework="laravel"
-    data-template="vertical-menu-theme-default-light">
+    {{-- data-assets-path="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/" --}} data-base-url="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1"
+    data-framework="laravel" data-template="vertical-menu-theme-default-light">
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 
 <head>
@@ -260,7 +259,6 @@
 
                 </ul>
             </aside>
-
             <div class="layout-page">
                 <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
                     id="layout-navbar">
@@ -301,9 +299,10 @@
                                         </div>
                                     </li>
                                     @foreach ($notifikasi as $item)
-                                    <ul class="list-group list-group-flush" id="notification-list">
-                                        {{-- <li class="list-group-item" id="notification-list"> --}}
-                                                {{-- <div class="d-flex" id="notifikasi-{{ $item->id }}">
+                                    <li class="dropdown-notifications-list scrollable-container">
+                                        <ul class="list-group list-group-flush" id="notification-list">
+                                            {{-- <li class="list-group-item" id="notification-list"> --}}
+                                            {{-- <div class="d-flex" id="notifikasi-{{ $item->id }}">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
                                                             <img src="" alt class="h-auto rounded-circle">
@@ -326,17 +325,16 @@
                                                     </div>
                                                 </div> --}}
                                             {{-- </li> --}}
-                                    </ul>
-                                            @endforeach
+                                        </ul>
+                                    </li>
+                                    @endforeach
                                     <li class="dropdown-menu-footer border-top">
                                         <a href="javascript:void(0);"
                                             class="dropdown-item d-flex justify-content-center text-primary p-2 h-px-40 mb-1 align-items-center">
-
                                         </a>
                                     </li>
                                 </ul>
                             </li>
-
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
                                     data-bs-toggle="dropdown">
@@ -500,28 +498,51 @@
                         }
                     }
 
+                    var jenisClass, icon;
+
+                    switch (item.jenis_notifikasi) {
+                        case 'info':
+                            jenisClass = 'alert-info';
+                            textClass = 'text-info';
+                            icon = '<i class="ti ti-info-circle ti-xs"></i>';
+                            break;
+                        case 'deadline':
+                            jenisClass = 'alert-warning';
+                            textClass = 'text-warning';
+                            icon = '<i class="ti ti-clock ti-xs"></i>';
+                            break;
+                        case 'pemberitahuan':
+                            jenisClass = 'alert-success';
+                            textClass = 'text-success';
+                            icon = '<i class="ti ti-check ti-xs"></i>';
+                            break;
+                        default:
+                            jenisClass = 'bg-secondary';
+                            icon = '<i class="ti ti-alert ti-xs"></i>';
+                    }
+
                     var notifikasiBaru = `
-                                        <li class="list-group-item" id="notification-list-${item.id}">
-                    <div class="d-flex mt-2 mb-2 pl-5">
-                        <div class="flex-shrink-0 me-3">
-                            <div class="">
-                                <img src="" alt class="h-auto rounded-circle">
-                            </div>
+            <li class="list-group-item" id="notification-list-${item.id}">
+                <div class="d-flex mt-2 mb-2 pl-5">
+                    <div class="flex-grow-1">
+                        <div class="alert ${jenisClass} d-flex align-items-center" role="alert">
+                            <span class="alert-icon ${textClass} me-2">
+                                ${icon}
+                            </span>
+                            ${item.judul}
                         </div>
-                        <div class="flex-grow-1">
-                            <h6 class="mb-1">${item.judul}</h6>
-                            <p class="mb-0">${item.body}</p>
-                            <small class="text-muted">${formatWaktu(perbedaanWaktu)}</small>
-                        </div>
-                        <div class="flex-shrink-0 dropdown-notifications-actions ">
+                        <p class="mb-0">${item.body}</p>
+                        <small class="text-muted">${formatWaktu(perbedaanWaktu)}</small>
+                    </div>
+                    <div class="flex-shrink-0 dropdown-notifications-actions ">
                             <a href="javascript:void(0)" class="dropdown-notifications-read"><span
                                     class="badge badge-dot"></span></a>
                             <a href="javascript:void(0)" class="dropdown-notifications-archive mr-2"
                                 onclick="deletenotifikasi(${item.id})"><span class="ti ti-x"></span></a>
                         </div>
-                    </div>
-                </li>
-                `;
+                </div>
+            </li>
+        `;
 
                     daftarNotifikasi.append(notifikasiBaru);
                 });
@@ -633,16 +654,16 @@
         </script>
     @endif
     @if (session()->has('tolak'))
-    <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: '{{ session('tolak') }}', // Teks pesan dari sesi
-            showConfirmButton: false,
-            timer: 3000
-        });
-    </script>
-@endif
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '{{ session('tolak') }}', // Teks pesan dari sesi
+                showConfirmButton: false,
+                timer: 3000
+            });
+        </script>
+    @endif
 
 </body>
 
