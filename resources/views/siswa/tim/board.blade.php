@@ -130,13 +130,13 @@
                             <div class="offcanvas-body">
                                 <ul class="nav nav-tabs tabs-line">
                                     <li class="nav-item">
-                                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-update">
+                                        <button onclick="tutupKomentar()" class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-update">
                                             <i class="ti ti-edit me-2"></i>
                                             <span class="align-middle">Edit</span>
                                         </button>
                                     </li>
                                     <li class="nav-item">
-                                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#komentar">
+                                        <button onclick="bukaKomentar()" class="nav-link" data-bs-toggle="tab" data-bs-target="#komentar">
                                             <i class="ti ti-message-dots ti-xs me-1"></i>
                                             <span class="align-middle">Komentar</span>
                                         </button>
@@ -155,8 +155,9 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="due-date">Deadline</label>
-                                                <input type="date" id="due-date" name="deadline" value=""
-                                                    class="form-control" placeholder="Enter Deadline" />
+
+                                                <input type="text" class="form-control" placeholder="YYYY-MM-DD"
+                                        name="deadline" id="due-date" />
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="newStatus"> Status</label>
@@ -202,7 +203,7 @@
                                                     </div>
                                             </div>
                                             @endif
-                                            <div class="d-flex flex-wrap">
+                                            <div class="d-flex flex-wrap" style="z-index: 1000000;">
                                                 <button type="submit" class="btn btn-primary me-3"
                                                     data-bs-dismiss="offcanvas">
                                                     Update
@@ -212,8 +213,8 @@
                                                     Close
                                                 </button>
                                             </div>
+                                        </form>
                                     </div>
-                                    </form>
                                 </div>
                                 <!-- Activities -->
 
@@ -223,7 +224,7 @@
 
                                     </div>
 
-                                    <div class="form-komentar" style="width: 100%;">
+                                    <div class="form-komentar d-none" style="width: 100%;">
                                         <div class="row w-100 justify-content-center d-flex mb-3">
                                             <div class="col-11">
                                                 <form id="tambahKomentar" method="post">
@@ -310,6 +311,15 @@
                         <script>
                             // let dataEmpty
 
+                            function bukaKomentar(){
+                                $(".form-komentar").removeClass("d-none")
+                                console.log("Buka Komentar");
+                            }
+
+                            function tutupKomentar(){
+                                console.log("tutup Komentar");
+                                $(".form-komentar").addClass("d-none")
+                            }
 
                             function showForm(id) {
                                 let status = false;
@@ -368,7 +378,20 @@
                                                 deadline = Math.ceil((hariDeadline - hariIni) / (1000 * 60 * 60 * 24));
 
                                             } else {
-                                                deadline = 0;
+                                                deadline = '-';
+                                            }
+
+                                            let wordDeadline ;
+                                            if(deadline < 0){
+
+                                                wordDeadline = `${Math.abs(deadline)} hari terlewat`
+
+                                            }else if(deadline == '-'){
+
+                                                wordDeadline = '-'
+                                                
+                                            }else{
+                                                wordDeadline = `${deadline} hari lagi`
                                             }
 
                                             let elementPrioritas = prioritas(tugas.prioritas)
@@ -385,7 +408,7 @@
                                                             ${elementPrioritas}
                                                         </div>
                                                         <div style="font-size:12px">
-                                                            ${deadline} hari lagi
+                                                            ${wordDeadline}
                                                         </div>
                                                     </div>
                                                     <div class="dropdown kanban-tasks-item-dropdown cursor-pointer">
@@ -431,6 +454,13 @@
 
                             }
 
+                            const oneWeekFromToday = new Date();
+            
+
+            flatpickr("#due-date", {
+                minDate: oneWeekFromToday,
+                dateFormat: "Y-m-d",
+            });
 
 
                             function editTugas(codeTugas) {
@@ -442,6 +472,8 @@
                                 axios.get("data-edit-tugas/" + codeTugas)
                                     .then((res) => {
 
+                                       
+
                                         console.log("klik edit code " + codeTugas);
                                         const data = res.data;
                                         console.log(data);
@@ -450,23 +482,27 @@
                                         const comments = data.tugas.comments;
 
 
-                                        const optStatusTugas = document.querySelector("#status")
+                                        const optStatusTugas = document.querySelector("#status");
 
                                         optStatusTugas.querySelectorAll('option').forEach(status => {
-                                            if (status.value === data.status_tugas) {
-                                                status.selected = true
+                                            if (status.value === data.tugas.status_tugas) {
+                                                status.selected = true;
+                                                $("#status").trigger("change");
                                             } else {
                                                 status.selected = false
                                             }
                                         });
+                                            
+                                       
 
                                         const optPrioritas = document.querySelector("#newPriority")
 
                                         optPrioritas.querySelectorAll('option').forEach(priority => {
-                                            if (priority.value === data.prioritas) {
-                                                priority.selected = true
+                                            if (priority.value === data.tugas.prioritas) {
+                                                priority.selected = true;
+                                                $("#newPriority").trigger("change");
                                             } else {
-                                                priority.selected = false
+                                                priority.selected = false;
                                             }
                                         });
 
