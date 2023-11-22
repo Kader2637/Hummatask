@@ -112,7 +112,7 @@
                                         <ul class="p-0 m-0">
                                             @foreach ($anggota as $i => $user)
                                             <li class="d-flex align-items-center mb-4 user-kontribusi" id="user-kontribusi-{{ $user->uuid }}" onclick="getKontribusi('{{ $user->uuid }}')">
-                                                <img src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/svg/flags/us.svg"
+                                                <img style="object-fit: cover;" src="{{ Storage::url($user->avatar) }}"
                                                     alt="User" class="rounded-circle me-3" width="34">
                                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                                     <div class="me-2">

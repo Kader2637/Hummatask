@@ -351,17 +351,21 @@
                                             const {
                                                 user
                                             } = tugas;
+                                            
+                                            
                                             let tugaskan = "  ";
-                                            let avatar = user.avatar ? 'storage/' + user.avatar : 'assets/img/avatars/1.png';
                                             userTugaskan = user.filter((element, index) => user.indexOf(element) === index);
+                                            console.log(userTugaskan);
+
                                             userTugaskan.forEach(element => {
+                                                let avatar = element.avatar ? 'storage/' + element.avatar : 'assets/img/avatars/1.png';
                                                 if (element === null || element === undefined) {
                                                     tugaskan += "";
                                                 } else {
                                                     tugaskan +=
                                                         `
                                                     <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="${element.username}" data-bs-original-title="${element.username}">
-                                                        <img src="{{ asset('${avatar}') }}" alt="Avatar" class="rounded-circle pull-up">
+                                                        <img style="object-fit: cover;" src="{{ asset('${avatar}') }}" alt="Avatar" class="rounded-circle pull-up">
                                                     </div>
                                                     `;
                                                 }
@@ -434,6 +438,7 @@
                                             </div>
                         `
                                                 );
+                                                element.find('[data-bs-toggle="tooltip"]').tooltip();
 
 
                                             if (tugas.status_tugas === "tugas_baru") {
@@ -561,7 +566,7 @@
 
                                             let elementComments = `
                         <div class="avatar me-2 flex-shrink-0 mt-1">
-                        <img src="{{ asset('${avatar}') }}"
+                        <img style="object-fit:cover" src="{{ asset('${avatar}') }}"
                             alt="Avatar" class="rounded-circle">
                         </div>
                         <div class="d-flex flex-column w-100">
