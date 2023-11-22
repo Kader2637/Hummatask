@@ -115,30 +115,29 @@
                                 @else
                                     <a data-bs-toggle="modal" data-bs-target="#edit"
                                         class="w-100 btn btn-primary btn-detail-projek edit-tim btn-edit"
-                                        data-anggota="{{ json_encode($tim->anjay()) }}"
-                                        data-id="{{ $tim->id }}" data-url="/mentor/tim/edit/{{ $tim->id }}"
+                                        data-anggota="{{ json_encode($tim->anjay()) }}" data-id="{{ $tim->id }}"
+                                        data-url="/mentor/tim/edit/{{ $tim->id }}"
                                         data-status="{{ $tim->status_tim }}" data-logo="{{ $tim->logo }}"
                                         data-kadaluwarsa="{{ $tim->kadaluwarsa }}">
                                         <span class="text-white">Update</span>
-                                        
+
                                     </a>
-                                   
+
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 {{-- <table>
                     <tbody>
                         <tr>
-                            @foreach($tim->anjay() as $row)
+                            @foreach ($tim->anjay() as $row)
                             <td>{{$row->user_id}}</td>
                             @endforeach
                         </tr>
                     </tbody>
                 </table> --}}
-              
-        @endif
+            @endif
             @endforeach
         </div>
         <div class="d-flex justify-content-center mt-3">
@@ -325,8 +324,9 @@
                         <div class="row">
                             <div class="col mb-3">
                                 <label for="status_tim" class="form-label">Kategori Tim</label>
-                                <select id="tim_status_modal" name="status_tim" class="select2 form-select form-select"
+                                <select id="tim_status_modal" name="status_tim" class=" form-select form-select"
                                     data-allow-clear="true">
+                                    <option value="" disabled selected>Pilih Data</option>
                                     <option class="nowStatus" value="pre_mini">Pre mini projek</option>
                                     <option class="nowStatus" value="mini">Mini projek</option>
                                     <option class="nowStatus" value="big">Big projek</option>

@@ -187,11 +187,18 @@ class PengajuanTimController extends Controller
     {
         $tim = Tim::findOrFail($timId);
 
+        $exp = $request->kadaluwarsa;
         $daftarAnggota = $request->anggota;
         $daftarAnggota[] = $request->ketuaKelompok;
-        $exp = $request->kadaluwarsa;
-        $uniqueDaftarAnggota = array_unique($daftarAnggota);
+        $uniqueDaftarAnggota = array_values(array_unique($daftarAnggota));
+        $indexKetuaKelompok = array_search($request->ketuaKelompok, $uniqueDaftarAnggota);
+        if ($indexKetuaKelompok !== false && $indexKetuaKelompok !== 0) {
+            unset($uniqueDaftarAnggota[$indexKetuaKelompok]);
+            array_unshift($uniqueDaftarAnggota, $request->ketuaKelompok);
+        }
+        // $idPertama = isset($uniqueDaftarAnggota[0]) ? $uniqueDaftarAnggota[0] : null;
 
+        // dd($idPertama);
         $existingAnggota = Anggota::whereIn('user_id', $uniqueDaftarAnggota)
             ->where('tim_id', '<>', $tim->id)
             ->first();
@@ -203,11 +210,7 @@ class PengajuanTimController extends Controller
         // Update status dan nama tim
         $tim->status_tim = $request->status_tim;
         $tim->kadaluwarsa = $exp;
-        // if ($tim->kadaluwarsa = $exp == 0) {
-        //     $tim->anggota()
-        //         ->whereIn('user_id', $uniqueDaftarAnggota)
-        //         ->update(['status' => 'active']);
-        // }
+
         if ($request->kadaluwarsa == "0") {
             $tim->anggota()
                 ->whereIn('user_id', $uniqueDaftarAnggota)
@@ -217,7 +220,7 @@ class PengajuanTimController extends Controller
                 ->whereIn('user_id', $uniqueDaftarAnggota)
                 ->update(['status' => 'expired']);
         }
-        
+
         if ($request->status_tim == "pre_mini") {
             $tim->nama = 'Pre-Mini Project Team';
         } elseif ($request->status_tim == "mini") {
@@ -230,14 +233,13 @@ class PengajuanTimController extends Controller
         $backgroundHexColor = '#' . str_pad(dechex(mt_rand(0xAAAAAA, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
         $image = ImageManagerStatic::canvas(200, 200, $backgroundHexColor);
 
-        if ($nama = $tim->nama == 'Mini Project Team') {
+        if ($tim->nama == 'Mini Project Team') {
             $nama = "Mini";
-        } elseif ($nama = $tim->nama == 'Pre-Mini Project Team') {
+        } elseif ($tim->nama == 'Pre-Mini Project Team') {
             $nama = "PreMini";
-        } elseif ($nama = $tim->nama == 'Big Project Team') {
+        } elseif ($tim->nama == 'Big Project Team') {
             $nama = "Big";
         }
-
 
         $image->text($nama, 100, 100, function ($font) {
             $font->file(public_path('assets/font/Poppins-Bold.ttf'));
@@ -255,33 +257,29 @@ class PengajuanTimController extends Controller
 
         $tim->save();
 
-        // Hapus anggota lama
         $tim->anggota()
             ->whereNotIn('user_id', $uniqueDaftarAnggota)
-            ->update(['status' => 'kicked']);
+            ->update([
+                'status' => 'kicked',
+                'jabatan_id' => 3,
+            ]);
+        // Hapus anggota lama
 
+
+        $iteration = 0;
         foreach ($uniqueDaftarAnggota as $anggota) {
             $existingAnggota = Anggota::where('tim_id', $tim->id)
                 ->where('user_id', $anggota)
                 ->first();
 
-            if ($existingAnggota) {
-                // Update the existing record instead of creating a new one
-                $existingAnggota->jabatan_id = ($anggota === $request->ketuaKelompok) ? '1' : '3';
-                $existingAnggota->save();
-            } else {
-                // Create a new record
-                $anggotaModel = new Anggota;
-                $anggotaModel->tim_id = $tim->id;
-                $anggotaModel->user_id = $anggota;
-                $anggotaModel->jabatan_id = ($anggota === $request->ketuaKelompok) ? '1' : '3';
-                $anggotaModel->save();
-            }
+            // Mengubah jabatan_id berdasarkan iterasi perulangan
+            $existingAnggota->jabatan_id = ($iteration === 0) ? 1 : 3;
+
+            $existingAnggota->save();
+
+            // Increment iterasi
+            $iteration++;
         }
-
-
-
-
 
         return response()->json(['success' => 'Berhasil update tim'], 200);
     }
