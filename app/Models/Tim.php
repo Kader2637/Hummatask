@@ -58,14 +58,13 @@ class Tim extends Model
         return $this->hasMany(Project::class);
     }
 
-    public function tidakPresentasiMingguan():HasMany
+    public function tidakPresentasiMingguan(): HasMany
     {
         return $this->hasMany(TidakPresentasiMingguan::class);
     }
 
     public function anjay()
     {
-        return Anggota::where('tim_id', $this->id)->where('status','active')->pluck('user_id');
+        return Anggota::where('tim_id', $this->id)->where('status', 'active')->pluck('user_id');
     }
-
 }
