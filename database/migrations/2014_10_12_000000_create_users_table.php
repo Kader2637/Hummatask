@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('sekolah')->nullable();
             $table->text('deskripsi');
             $table->date('tanggal_bergabung')->nullable();
+            $table->date('tanggal_lulus')->nullable();
+            $table->boolean('status_kelulusan')->default(false);
             $table->timestamp('email_verified_at')->nullable();
             $table->boolean('is_login')->default(false);
             $table->rememberToken();

@@ -58,6 +58,8 @@ class tambahUsersController extends Controller
 
     protected function store(Request $request)
     {
+
+
         $dates = explode(' to ', $request->masa_magang);
         $tanggalAwal = $dates[0];
         $tanggalAkhir = $dates[1];
@@ -127,7 +129,8 @@ class tambahUsersController extends Controller
                 'sekolah' => $request->sekolah,
                 'peran_id' => 1,
                 'deskripsi' => "none",
-                'tanggal_bergabung' => $tanggalAwal
+                'tanggal_bergabung' => $tanggalAwal,
+                'tanggal_lulus' => $tanggalAkhir,
             ]);
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'User gagal disimpan!');
@@ -306,4 +309,30 @@ class tambahUsersController extends Controller
 
     return redirect()->back()->with('success', 'User berhasil dihapus!');
 }
+
+    protected function extends(Request $request){
+
+        $validate = $request->validate(
+            [
+                "tanggal_lulus" => "required|date|after_or_equal:today"
+            ],
+            [
+                "tanggal_lulus.required" => "tanggal wajib diisi",
+                "tanggal_lulus.date" => "Terdapat kesalahan format pada tanggal",
+                "tanggal_lulus.after_or_equal" => "Tanggal tidak boleh hari kemarin"
+            ]
+        );
+
+
+        $user = User::find($request->user_id);
+        $user->status_kelulusan = 0;
+        $user->tanggal_lulus = $request->tanggal_lulus;
+        $user->save();
+
+
+
+        // dd($request);
+        return redirect()->back()->with("success", "Sukses memperpanjang masa pkl");
+    }
+
 }
