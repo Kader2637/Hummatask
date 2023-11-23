@@ -342,8 +342,7 @@ class mentorController extends Controller
 
     protected function tim(Request $request)
     {
-        // dd('ikan');
-        $timQuery = tim::with('user');
+        $timQuery = tim::with('user', 'project');
 
         if ($request->has('status_tim')) {
             if ($request->status_tim != 'all' && $request->status_tim != null) {
@@ -363,7 +362,6 @@ class mentorController extends Controller
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
-
 
         return response()->view('mentor.tim', compact('tims', 'status_tim', 'notifikasi'));
     }
