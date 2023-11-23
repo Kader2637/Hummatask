@@ -67,14 +67,10 @@ class Tim extends Model
     {
         return Anggota::where('tim_id', $this->id)->whereIn('status', ['active', 'expired'])->pluck('user_id');
     }
+
     public function anggota_tim()
     {
         return Anggota::where('tim_id', $this->id)->whereIn('status', ['active', 'expired'])->get();
     }
 
-    public function deadline()
-    {
-        $deadline = Project::where('tim_id', $this->id)->pluck('deadline')->first();
-        return \Carbon\Carbon::parse($deadline)->translatedFormat('l, j F Y');
-    }
 }

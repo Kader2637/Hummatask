@@ -409,7 +409,6 @@
                 axios
                     .get("pieproject/" + code)
                     .then((res) => {
-                        console.log(res.data[1]);
                         const data = res.data.chartData;
                         const processedData = res.data.chartData;
 

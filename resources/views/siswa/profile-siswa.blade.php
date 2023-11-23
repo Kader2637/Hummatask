@@ -233,7 +233,7 @@
                                                                 belum ada
                                                             @endif
                                                         </span>
-                                                       
+
                                                     </div>
                                                 </div>
                                                 <a data-bs-toggle="" data-bs-target="#modalDetailProjek"
