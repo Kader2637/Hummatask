@@ -299,10 +299,10 @@
                                         </div>
                                     </li>
                                     @foreach ($notifikasi as $item)
-                                    <li class="dropdown-notifications-list scrollable-container">
-                                        <ul class="list-group list-group-flush" id="notification-list">
-                                            {{-- <li class="list-group-item" id="notification-list"> --}}
-                                            {{-- <div class="d-flex" id="notifikasi-{{ $item->id }}">
+                                        <li class="dropdown-notifications-list scrollable-container">
+                                            <ul class="list-group list-group-flush" id="notification-list">
+                                                {{-- <li class="list-group-item" id="notification-list"> --}}
+                                                {{-- <div class="d-flex" id="notifikasi-{{ $item->id }}">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
                                                             <img src="" alt class="h-auto rounded-circle">
@@ -324,9 +324,9 @@
                                                                 class="ti ti-x"></span></a>
                                                     </div>
                                                 </div> --}}
-                                            {{-- </li> --}}
-                                        </ul>
-                                    </li>
+                                                {{-- </li> --}}
+                                            </ul>
+                                        </li>
                                     @endforeach
                                     <li class="dropdown-menu-footer border-top">
                                         <a href="javascript:void(0);"
@@ -444,7 +444,7 @@
             axios.delete(http://127.0.0.1:8000/tim/notifikasi/${id})
                 .then(response => {
                     console.log('Axios Response:', response);
-                    const notifikasiElement = document.getElementById(notifikasi-${id});
+                    const notifikasiElement = document.getElementById(`notification-list-${id}`);
                     console.log('notifikasiElement:', notifikasiElement);
                     if (notifikasiElement) {
                         notifikasiElement.remove();
@@ -453,7 +453,6 @@
                 .catch(error => {
                     console.error('Gagal Menghapus notifikasi:', error);
                 });
-
         }
     </script>
 

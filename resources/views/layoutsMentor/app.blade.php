@@ -10,6 +10,7 @@
 
 <head>
     <meta charset="utf-8" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
     {!! csrf_field() !!}
@@ -475,7 +476,7 @@
             axios.delete(`http://127.0.0.1:8000/tim/notifikasi/${id}`)
                 .then(response => {
                     console.log('Axios Response:', response);
-                    const notifikasiElement = document.getElementById(`notifikasi-${id}`);
+                    const notifikasiElement = document.getElementById(`notification-list-${id}`);
                     console.log('notifikasiElement:', notifikasiElement);
                     if (notifikasiElement) {
                         notifikasiElement.remove();

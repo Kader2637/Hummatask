@@ -623,7 +623,7 @@
             axios.delete(`http://127.0.0.1:8000/tim/notifikasi/${id}`)
                 .then(response => {
                     console.log('Axios Response:', response);
-                    const notifikasiElement = document.getElementById(`notifikasi-${id}`);
+                    const notifikasiElement = document.getElementById(`notification-list-${id}`);
                     console.log('notifikasiElement:', notifikasiElement);
                     if (notifikasiElement) {
                         notifikasiElement.remove();
