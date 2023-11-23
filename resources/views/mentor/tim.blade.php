@@ -60,16 +60,15 @@
                                 <div class="d-flex align-items-center pt-1 mb-3 justify-content-center">
                                     <div class="d-flex align-items-center">
                                         <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
-                                            @foreach ($tim->anggota_tim() as $row)
+                                            @foreach ($tim->anggota_tim() as $anggota)
                                                 <li data-bs-toggle="tooltip" data-popup="tooltip-custom"
-                                                    data-bs-placement="right" title="{{ $row->user->username }}"
+                                                    data-bs-placement="bottom" title="{{ $anggota->user->username }}"
                                                     class="avatar avatar-sm pull-up">
                                                     <img class="rounded-circle"
-                                                        src="{{ $row->user->avatar ? Storage::url($row->user->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                        src="{{ $anggota->user->avatar ? Storage::url($anggota->user->avatar) : asset('assets/img/avatars/1.png') }}"
                                                         alt="Avatar" style="object-fit: cover">
                                                 </li>
                                             @endforeach
-                                             
                                         </ul>
                                     </div>
                                 </div>
@@ -99,7 +98,7 @@
                             <h5 class="card-title">{{ $tim->nama }}</h5>
                             <p class="card-text" data-bs-toggle="tooltip" data-popup="tooltip-custom"
                                 data-bs-placement="top" title="Tanggal Dibentuk">
-                                {{ $tim->created_at->translatedFormat('l, j F Y') }}
+                                {{ $tim->deadline() }}
                             </p>
                             <div class="d-flex justify-content-center">
                                 @if ($tim->status_tim == 'solo')
@@ -126,16 +125,6 @@
                         </div>
                     </div>
                 </div>
-
-                {{-- <table>
-                    <tbody>
-                        <tr>
-                            @foreach ($tim->anjay() as $row)
-                            <td>{{$row->user_id}}</td>
-                            @endforeach
-                        </tr>
-                    </tbody>
-                </table> --}}
             @endforeach
         </div>
         {{ $tims->links('pagination::bootstrap-5') }}
@@ -488,10 +477,6 @@
                 }
             });
 
-
-            // $('#tim_status_modal').select2();
-            // $('#tim_status_modal').val(status).trigger('change');
-
             $.ajax({
                 url: url,
                 type: "GET",
@@ -599,11 +584,17 @@
         });
 
         $("#ketuaKelompok").change(function() {
-            var selectedValue = $(this).val();
-            if (selectedValue) {
-                $("#anggota option[value='" + selectedValue + "']").remove();
-            }
-        });
+    var selectedValue = $(this).val();
+
+    // Enable all options in #anggota select
+    $("#anggota option").prop('disabled', false);
+
+    if (selectedValue) {
+        // Disable the selected option in #anggota
+        $("#anggota option[value='" + selectedValue + "']").prop('disabled', true);
+    }
+});
+
     </script>
     {{-- ajax buat tim --}}
 @endsection

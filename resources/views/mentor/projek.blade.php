@@ -352,9 +352,9 @@
 
     {{-- filter projek --}}
     <script>
-        const cardColor = '#28dac6';
+        const cardColor = 'gray';
         const headingColor = '#FDAC34';
-        const black = '#000000';
+        const black = '#ffff';
 
         let doughnutChartVar; // Variabel untuk menyimpan instance grafik
 
@@ -364,12 +364,6 @@
 
                 // Menghancurkan grafik yang ada jika ada
                 if (doughnutChartVar) {
-
-
-
-
-
-                    
                     doughnutChartVar.destroy();
                 }
 
@@ -418,7 +412,7 @@
                                             }
                                         },
                                         backgroundColor: cardColor,
-                                        titleColor: cardColor,
+                                        titleColor: black,
                                         bodyColor: black,
                                         borderWidth: 1,
                                         borderColor: cardColor,
