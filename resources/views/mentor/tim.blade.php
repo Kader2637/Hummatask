@@ -598,11 +598,17 @@
         });
 
         $("#ketuaKelompok").change(function() {
-            var selectedValue = $(this).val();
-            if (selectedValue) {
-                $("#anggota option[value='" + selectedValue + "']").remove();
-            }
-        });
+    var selectedValue = $(this).val();
+    
+    // Enable all options in #anggota select
+    $("#anggota option").prop('disabled', false);
+
+    if (selectedValue) {
+        // Disable the selected option in #anggota
+        $("#anggota option[value='" + selectedValue + "']").prop('disabled', true);
+    }
+});
+
     </script>
     {{-- ajax buat tim --}}
 @endsection

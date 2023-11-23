@@ -440,8 +440,8 @@
             console.log('notifikasiId:', id);
             axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute(
                 'content');
-            console.log('Request URL:', http://127.0.0.1:8000/tim/notifikasi/${id});
-            axios.delete(http://127.0.0.1:8000/tim/notifikasi/${id})
+            console.log('Request URL:', `http://127.0.0.1:8000/tim/notifikasi/${id}`);
+            axios.delete(`http://127.0.0.1:8000/tim/notifikasi/${id}`)
                 .then(response => {
                     console.log('Axios Response:', response);
                     const notifikasiElement = document.getElementById(`notification-list-${id}`);
@@ -479,6 +479,8 @@
 
                 countBadge.text(notifikasi.length);
 
+                notifikasi.reverse();
+
                 notifikasi.forEach(function(item) {
                     var waktuNotifikasi = new Date(item.created_at);
                     var waktuSekarang = new Date();
@@ -497,7 +499,7 @@
                         }
                     }
 
-                    var jenisClass, icon;
+                    var jenisClass, icon, textClass;
 
                     switch (item.jenis_notifikasi) {
                         case 'info':
