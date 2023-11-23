@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\editProjectRequest;
 use App\Http\Requests\PengajuanProjectRequest;
+use App\Models\Anggota;
 use App\Models\Notifikasi;
 use App\Models\Project;
 use App\Models\Tema;
@@ -106,11 +107,11 @@ class PengajuanProjekController extends Controller
     $project->deadline = $deadline;
     $project->save();
 
-    $teamLeader = $project->tim->user;
+    $teamLeader = $project->tim->anggota;
 
     $tema = $project->tema;
     foreach ($teamLeader as $member) {
-        $this->sendNotification($member->id, 'Project Tim Telah Disetujui','Project dengan tema "' . $tema->nama_tema . '" telah disetujui.', 'pemberitahuan');
+        $this->sendNotification($member->user_id, 'Project Tim Telah Disetujui','Project dengan tema "' . $tema->nama_tema . '" telah disetujui.', 'pemberitahuan');
     }
 
     return back()->with('success', 'Berhasil menyetujui project');
@@ -118,13 +119,17 @@ class PengajuanProjekController extends Controller
 
 protected function sendNotification($userId, $title, $message, $jenisNotifikasi)
 {
-    Notifikasi::create([
-        'user_id' => $userId,
-        'judul' => $title,
-        'body' => $message,
-        'status' => 'belum_dibaca',
-        'jenis_notifikasi' => $jenisNotifikasi,
-    ]);
+    $statusAnggota = Anggota::where('user_id', $userId)->value('status');
+
+    if ($statusAnggota !== 'kicked') {
+        Notifikasi::create([
+            'user_id' => $userId,
+            'judul' => $title,
+            'body' => $message,
+            'status' => 'belum_dibaca',
+            'jenis_notifikasi' => $jenisNotifikasi,
+        ]);
+    }
 }
 
     protected function editProject(editProjectRequest $request, $code)

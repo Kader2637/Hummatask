@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Anggota;
 use App\Models\Notifikasi;
 use App\Models\Tim;
 use Illuminate\Console\Command;
@@ -38,13 +39,16 @@ class NotifikasiSeminggu extends Command
             $teamMembers = $tim->user;
 
             foreach ($teamMembers as $member) {
-                $this->sendNotification($member->id, 'Presentasi Belum Dilakukan', 'Tim Anda belum melakukan presentasi!', 'pemberitahuan');
+                $this->sendNotification($member->id, 'Presentasi Belum Dilakukan', 'Tim Anda belum melakukan presentasi!', 'deadline');
             }
         }
     }
 
 protected function sendNotification($userId, $title, $message, $jenisNotifikasi)
     {
+        $statusAnggota = Anggota::where('user_id', $userId)->value('status');
+
+    if ($statusAnggota !== 'kicked') {
         Notifikasi::create([
             'user_id' => $userId,
             'judul' => $title,
@@ -52,5 +56,7 @@ protected function sendNotification($userId, $title, $message, $jenisNotifikasi)
             'status' => 'belum_dibaca',
             'jenis_notifikasi' => $jenisNotifikasi,
         ]);
+    }
+
     }
 }

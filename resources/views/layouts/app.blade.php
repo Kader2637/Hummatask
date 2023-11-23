@@ -658,6 +658,8 @@
 
                 countBadge.text(notifikasi.length);
 
+                notifikasi.reverse();
+
                 notifikasi.forEach(function(item) {
                     var waktuNotifikasi = new Date(item.created_at);
                     var waktuSekarang = new Date();

@@ -39,11 +39,13 @@ class Notifikasi extends Command
         foreach ($projects as $project) {
             $daysRemaining = $this->calculateDaysRemaining($project->deadline);
 
-            if ($daysRemaining <= 3) {
-                $teamMembers = $project->tim->user;
+                if ($daysRemaining <= 3) {
+                    $teamMembers = $project->tim->anggota;;
 
-                foreach ($teamMembers as $member) {
-                    $this->sendNotification($member->id, 'Deadline Project', 'Deadline project tim Anda tinggal ' . $daysRemaining . ' hari lagi!', 'deadline');
+                    foreach ($teamMembers as $member) {
+                        if ($member->status !== 'kicked') {
+                        $this->sendNotification($member->user_id, 'Deadline Project', 'Deadline project tim Anda tinggal ' . $daysRemaining . ' hari lagi!', 'deadline');
+                    }
                 }
             }
         }
@@ -121,7 +123,10 @@ class Notifikasi extends Command
     }
 
     protected function sendNotification($userId, $title, $message, $jenisNotifikasi)
-    {
+{
+    $statusAnggota = Anggota::where('user_id', $userId)->value('status');
+
+    if ($statusAnggota !== 'kicked') {
         ModelsNotifikasi::create([
             'user_id' => $userId,
             'judul' => $title,
@@ -130,4 +135,5 @@ class Notifikasi extends Command
             'jenis_notifikasi' => $jenisNotifikasi,
         ]);
     }
+}
 }
