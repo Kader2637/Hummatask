@@ -21,10 +21,13 @@
     @endif
 
     @if (session('error'))
+    <script>
         Swal.fire({
             title:"Kesalahan",
-            text : ""
+            text : "{{ session('error') }}",
+            icon : "error"
         })
+    </script>
     @endif
 
     <script>

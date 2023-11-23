@@ -268,7 +268,7 @@ class tambahUsersController extends Controller
             }
             $user->delete();
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'User berhasil di hapus!');
+            return redirect()->back()->with('error', 'User tidak bisa dihapus!');
         }
         return redirect()->back()->with('success', 'User berhasil di hapus!');
     }
