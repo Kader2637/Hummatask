@@ -33,6 +33,11 @@ class catatanController extends Controller
                 return $checkResult;
             }
 
+            $statusAnggota = $tims->anggota->first()->status;
+            if ($statusAnggota === 'kicked') {
+                return redirect()->back()->with('error', 'Anda tidak dapat membuat catatan karena Anda telah di-kick dari tim!');
+            }
+
             $catatan = new catatan();
             $catatan->code = $user->tim[0]->code;
             $catatan->tim_id = $tim;
