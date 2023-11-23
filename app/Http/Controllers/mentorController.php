@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Anggota;
-use App\Models\HistoriPengelola;
 use App\Models\HistoryPresentasi;
 use App\Models\Notifikasi;
 use App\Models\PenglolaMagang;
 use App\Models\Presentasi;
 use App\Models\Project;
-use App\Models\Tema;
 use App\Models\StatusTim;
 use App\Models\TidakPresentasiMingguan;
 use App\Models\Tim;
@@ -19,7 +16,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use League\CommonMark\Extension\CommonMark\Node\Inline\Code;
 use Spatie\Permission\Models\Role;
 
 class mentorController extends Controller
@@ -27,6 +23,9 @@ class mentorController extends Controller
     // Return view dashboard mentor
     protected function dashboard()
     {
+        $tim = Tim::where("kadaluwarsa",0)->first()->project[0];
+        dd($tim->deadline > Carbon::now()->isoFormat('YYYY-MM-DD'));
+
         $jadwal = [];
         $hari = [];
         $userID = Auth::user()->id;
@@ -60,6 +59,8 @@ class mentorController extends Controller
             ->whereYear('created_at', Carbon::now()->year)
             ->groupBy('year', 'month', 'status_tim')
             ->get();
+
+
 
         $processedData = [];
         $currentYear = Carbon::now()->year;
@@ -295,6 +296,9 @@ class mentorController extends Controller
                 });
             })
             ->get();
+
+
+
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
         return response()->json(['users' => $users, 'status_tim' => $status_tim]);
     }

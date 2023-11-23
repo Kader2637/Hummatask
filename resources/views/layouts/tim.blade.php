@@ -275,8 +275,7 @@
                                 <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Ketua
                                     Magang</span>
                             @else
-                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Siswa
-                                    Magang</span>
+                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Siswa</span>
                             @endif
                         </div>
                         <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">

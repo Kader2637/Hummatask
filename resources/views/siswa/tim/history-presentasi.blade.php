@@ -10,6 +10,13 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/%40form-validation/umd/styles/index.min.css') }}" />
 @endsection
 
+@section('style')
+    <style>
+        @media ( max-width:425px ){
+        }
+    </style>
+@endsection
+
 @section('content')
 
 
@@ -36,12 +43,12 @@
     <div class="container-fluid d-flex mt-5 justify-content-center">
         <div class="col-12">
             <div class="card">
-                <div class="d-flex flex-row flex-wrap justify-content-between p-0 m-0 ">
-                    <span class="card-header fs-4">Daftar Presentasi</span>
+                <div class="d-flex flex-row flex-wrap justify-content-between align-content-center px-md-4 px-2 py-3 mb-3">
+                    <span class="card-header card-header-judul fs-4 p-0">Daftar Presentasi</span>
                     @if ($anggota === "active" || $jabatan === 1)
-                    <span class="card-header btn-ajukan-presentasi">
+                    <span class="card-header btn-ajukan-presentasi p-0">
                         <button type="button" data-bs-toggle="modal" data-bs-target="#ajukanPresentasi"
-                            class="btn btn-primary mx-2 ">Ajukan Presentasi</button>
+                            class="btn btn-primary mx-2 ">Presentasi</button>
                     </span>
                     @endif
                 </div>
@@ -172,7 +179,6 @@
                 icon: 'warning',
                 title : 'Warning!',
                 text  : ' Mentor Belum atau tidak Memberikan feedback '
-                showConfirmButton : false,
             })
         }
 
