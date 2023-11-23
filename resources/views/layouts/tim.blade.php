@@ -440,11 +440,11 @@
             console.log('notifikasiId:', id);
             axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute(
                 'content');
-            console.log('Request URL:', `http://127.0.0.1:8000/tim/notifikasi/${id}`);
-            axios.delete(`http://127.0.0.1:8000/tim/notifikasi/${id}`)
+            console.log('Request URL:', http://127.0.0.1:8000/tim/notifikasi/${id});
+            axios.delete(http://127.0.0.1:8000/tim/notifikasi/${id})
                 .then(response => {
                     console.log('Axios Response:', response);
-                    const notifikasiElement = document.getElementById(`notifikasi-${id}`);
+                    const notifikasiElement = document.getElementById(notifikasi-${id});
                     console.log('notifikasiElement:', notifikasiElement);
                     if (notifikasiElement) {
                         notifikasiElement.remove();
@@ -613,7 +613,7 @@
                                 // Menampilkan jumlah saat kursor mengarah ke elemen chart
                                 const amountDescription = label === 'Revisi' ? 'Revisi' : label ===
                                     'Tugas Baru' ? 'Tugas Baru' : 'Selesai';
-                                return `Jumlah ${amountDescription}: ${value}`;
+                                return Jumlah ${amountDescription}: ${value};
                             }
                         }
                     }

@@ -88,9 +88,6 @@ class profileController extends Controller
             return response()->json(['errors' => $validator->errors()->toArray(), 'message' => 'Silakan periksa formulir untuk mengatasi kesalahan.'], 422);
         }
 
-
-
-
         $user->password = Hash::make($request->input('new_password'));
         $user->save();
 
