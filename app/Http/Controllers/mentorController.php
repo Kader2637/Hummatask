@@ -23,8 +23,6 @@ class mentorController extends Controller
     // Return view dashboard mentor
     protected function dashboard()
     {
-        $tim = Tim::where("kadaluwarsa",0)->first()->project[0];
-        dd($tim->deadline > Carbon::now()->isoFormat('YYYY-MM-DD'));
 
         $jadwal = [];
         $hari = [];
