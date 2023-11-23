@@ -36,12 +36,14 @@
     <div class="container-fluid d-flex mt-5 justify-content-center">
         <div class="col-12">
             <div class="card">
-                <div class="d-flex flex-row flex-wrap justify-content-between p-0 m-0">
+                <div class="d-flex flex-row flex-wrap justify-content-between p-0 m-0 ">
                     <span class="card-header fs-4">Daftar Presentasi</span>
-                    <span class="card-header">
+                    @if ($anggota === "active" || $jabatan === 1)
+                    <span class="card-header btn-ajukan-presentasi">
                         <button type="button" data-bs-toggle="modal" data-bs-target="#ajukanPresentasi"
-                            class="btn btn-primary mx-2">Ajukan Presentasi</button>
+                            class="btn btn-primary mx-2 ">Ajukan Presentasi</button>
                     </span>
+                    @endif
                 </div>
                 {{-- Modal Ajukan presentasi --}}
                 <div class="modal fade" id="ajukanPresentasi" tabindex="-1" style="display: none;" aria-hidden="true">
@@ -66,8 +68,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <label for="deskripsi" class="form-label">Deskripsi Presentasi</label>
-                                            <textarea name="deskripsi" id="deskripsi" cols="20" rows="10" class="form-control" style="resize: none"
-                                                placeholder="Isi deskripsi pengajuan anda"></textarea>
+                                            <textarea name="deskripsi" id="deskripsi" cols="20" rows="10" class="form-control" style="resize: none" placeholder="Isi deskripsi pengajuan anda"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -135,9 +136,15 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
+                                        @if($data->feedback !== null)
                                         <button class=" border-0 text-secondary bg-transparent btn-feedback-modal" data-bs-toggle="modal" data-bs-target="#feedbackModal" data-feedback="{{ $data->feedback }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z"/></svg>
                                         </button>
+                                        @else
+                                        <button onclick="handleNullFeedback()" class=" border-0 text-secondary bg-transparent btn-feedback-modal" >
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z"/></svg>
+                                        </button>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty
@@ -157,6 +164,17 @@
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <script src="{{ asset('assets/js/forms-editors.js') }}"></script>
     <script>
+
+
+
+        function handleNullFeedback(){
+            Swal.fire({
+                icon: 'warning',
+                title : 'Warning!',
+                text  : ' Mentor Belum atau tidak Memberikan feedback '
+                showConfirmButton : false,
+            })
+        }
 
         $(".btn-feedback-modal").click(function(){
             const feedback = $(this).data("feedback");

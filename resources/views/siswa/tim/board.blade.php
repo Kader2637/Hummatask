@@ -351,8 +351,8 @@
                                             const {
                                                 user
                                             } = tugas;
-                                            
-                                            
+
+
                                             let tugaskan = "  ";
                                             userTugaskan = user.filter((element, index) => user.indexOf(element) === index);
                                             console.log(userTugaskan);
@@ -393,12 +393,30 @@
                                             }else if(deadline == '-'){
 
                                                 wordDeadline = '-'
-                                                
+
                                             }else{
                                                 wordDeadline = `${deadline} hari lagi`
                                             }
 
                                             let elementPrioritas = prioritas(tugas.prioritas)
+
+                                            let dropdownTugas =
+                                            `
+                                            <div class="dropdown kanban-tasks-item-dropdown cursor-pointer">
+                                                    <i class="ti ti-dots-vertical" id="kanban-tasks-item-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="kanban-tasks-item-dropdown" style="">
+                                                        <button onclick="editTugas('${tugas.code}')" type="button" class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#editTugasBar">Edit</button>
+                                                        <button onclick="deleteTugas('${tugas.code}')" class="dropdown-item" href="javascript:void(0)">Delete</button>
+                                                      </div>
+                                            </div>
+
+                                            `
+
+                                            if( res.data.status_keanggotaan !== 'active'){
+                                                dropdownTugas = ''
+                                            }
+
+
 
                                             const element = $(`<div>`)
                                                 .attr("id", "board-" + tugas.code)
@@ -415,13 +433,7 @@
                                                             ${wordDeadline}
                                                         </div>
                                                     </div>
-                                                    <div class="dropdown kanban-tasks-item-dropdown cursor-pointer">
-                                                    <i class="ti ti-dots-vertical" id="kanban-tasks-item-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-                                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="kanban-tasks-item-dropdown" style="">
-                                                        <button onclick="editTugas('${tugas.code}')" type="button" class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#editTugasBar">Edit</button>
-                                                        <button onclick="deleteTugas('${tugas.code}')" class="dropdown-item" href="javascript:void(0)">Delete</button>
-                                                    </div>
-                                                    </div>
+                                                    ${dropdownTugas}
                                                 </div>
                                                 <span class="kanban-text">${tugas.nama}</span>
                                                 <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
@@ -460,7 +472,7 @@
                             }
 
                             const oneWeekFromToday = new Date();
-            
+
 
             flatpickr("#due-date", {
                 minDate: oneWeekFromToday,
@@ -476,8 +488,6 @@
 
                                 axios.get("data-edit-tugas/" + codeTugas)
                                     .then((res) => {
-
-                                       
 
                                         console.log("klik edit code " + codeTugas);
                                         const data = res.data;
@@ -497,8 +507,8 @@
                                                 status.selected = false
                                             }
                                         });
-                                            
-                                       
+
+
 
                                         const optPrioritas = document.querySelector("#newPriority")
 
@@ -794,6 +804,8 @@
                                     })
                                     .catch((error) => {
                                         alertError(error);
+                                        $("#formEditTugas").trigger("reset");
+
                                     })
                             });
 
