@@ -467,26 +467,26 @@
     <script src="{{ asset('assets/js/extended-ui-sweetalert2.js') }}"></script>
     <!-- END: Page JS-->
 
-    <script>
-        function deletenotifikasi(id) {
-            console.log('notifikasiId:', id);
-            axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute(
-                'content');
-            console.log('Request URL:', `http://127.0.0.1:8000/tim/notifikasi/${id}`);
-            axios.delete(`http://127.0.0.1:8000/tim/notifikasi/${id}`)
-                .then(response => {
-                    console.log('Axios Response:', response);
-                    const notifikasiElement = document.getElementById(`notification-list-${id}`);
-                    console.log('notifikasiElement:', notifikasiElement);
-                    if (notifikasiElement) {
-                        notifikasiElement.remove();
-                    }
-                })
-                .catch(error => {
-                    console.error('Gagal Menghapus notifikasi:', error);
-                });
-        }
-    </script>
+        <script>
+            function deletenotifikasi(id) {
+                console.log('notifikasiId:', id);
+                axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute(
+                    'content');
+                console.log('Request URL:', `http://127.0.0.1:8000/tim/notifikasi/${id}`);
+                axios.delete(`http://127.0.0.1:8000/tim/notifikasi/${id}`)
+                    .then(response => {
+                        console.log('Axios Response:', response);
+                        const notifikasiElement = document.getElementById(`notification-list-${id}`);
+                        console.log('notifikasiElement:', notifikasiElement);
+                        if (notifikasiElement) {
+                            notifikasiElement.remove();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Gagal Menghapus notifikasi:', error);
+                    });
+            }
+        </script>
     <script>
         $(document).ready(function() {
             function ambilNotifikasi() {
