@@ -20,6 +20,13 @@
         </script>
     @endif
 
+    @if (session('error'))
+        Swal.fire({
+            title:"Kesalahan",
+            text : ""
+        })
+    @endif
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let deleteButtons = document.querySelectorAll('[id^="delete-button-"]');

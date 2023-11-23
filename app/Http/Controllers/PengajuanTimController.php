@@ -134,6 +134,10 @@ class PengajuanTimController extends Controller
             $tim->kadaluwarsa = false;
             $tim->save();
 
+            TidakPresentasiMingguan::create([
+                'tim_id' => $tim->id,
+            ]);
+
             foreach ($uniqueDaftarAnggota as $anggota) {
                 $anggotaModel = new Anggota;
                 $anggotaModel->tim_id = $tim->id;

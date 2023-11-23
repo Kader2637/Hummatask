@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Anggota extends Model
 {
     use HasFactory;
-    // protected $guarded = [];
+    protected $guarded = [];
     protected $primaryKey = 'user_id';
 
     public function jabatan(): BelongsTo

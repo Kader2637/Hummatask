@@ -645,7 +645,7 @@
                                     })
                                     .catch((error) => {
                                         alertError(error)
-                                        console.log(error);
+                                        // console.log(error);
                                         $(this).removeData('codetugas')
 
                                     })

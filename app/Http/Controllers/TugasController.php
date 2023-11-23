@@ -165,14 +165,7 @@ class TugasController extends Controller
     {
         $tugas = Tugas::where('code', $request->codeTugas)->first();
 
-        if($tugas->user->find(Auth::user()->id)->wherePivot('status', '!==' , 'active')){
-            return response()->json(
-                [
-                    "errors" => "Kamu sudah bukan dari anggota tim lagi"
-                ],
-                422
-            );
-        }
+
 
         $tim = $tugas->tim;
         $checkResult = $this->checkTeam($tim);
@@ -234,14 +227,15 @@ class TugasController extends Controller
             foreach ($userToAdd as $i => $data) {
 
                 if (!($tugas->tim->user->contains("uuid", $data))) {
-                    return response()->json(["error" => "User yang ditambahkan bukan dari anggota tim"], 422);
+                    return response()->json(["errors" => "User yang ditambahkan bukan dari anggota tim"], 422);
                 }
 
-                if (!($tugas->tim->user->where('uuid',$data)->first()->wherePivot("status", '!==' , 'active'))) {
-                    return response()->json(["error" => "User yang ditambahkan sudah bukan anggota tim"], 422);
-                }
 
                 $user = User::where('uuid', $data)->first();
+                if ($tugas->tim->user->where('uuid',$data)->first()->anggota->status !== "active") {
+                    return response()->json(["errors" => ["User yang ditambahkan sudah bukan anggota tim"]], 422);
+                }
+
                 if ($user) {
                     $penugasan = new Penugasan;
                     $penugasan->tugas_id = $tugas->id;
