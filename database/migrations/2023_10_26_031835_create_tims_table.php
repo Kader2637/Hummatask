@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('status_tim',['solo','pre_mini','mini','big']);
             $table->boolean('sudah_presentasi')->default(false);
             $table->boolean('kadaluwarsa')->default(false);
+            $table->boolean('status_projek')->nullable();
             $table->timestamps();
         });
     }

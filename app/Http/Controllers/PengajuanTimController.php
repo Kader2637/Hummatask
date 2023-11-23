@@ -191,7 +191,8 @@ class PengajuanTimController extends Controller
     protected function updateTimProject(RequestPembentukanTimProject $request, $timId)
     {
         $tim = Tim::findOrFail($timId);
-
+        $date=$request->expired;
+        dd($date);
         $exp = $request->kadaluwarsa;
         $daftarAnggota = $request->anggota;
         $daftarAnggota[] = $request->ketuaKelompok;

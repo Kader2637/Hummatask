@@ -113,25 +113,30 @@
                                                 {{ Str::limit($item->tema->nama_tema, $limit = 20, $end = '...') }}</div>
                                         </div>
                                     </div>
-                                    <a onclick="pieGet('{{ $item->tim->code }}')" data-bs-toggle=""
-                                        data-bs-target="#modalDetailProjek" class="w-100 btn btn-primary btn-detail-projek"
-                                        data-logo="{{ asset('storage/' . $item->tim->logo) }}"
-                                        data-namatim="{{ $item->tim->nama }}"
-                                        data-status="@if ($item->tim->status_tim == 'solo') Solo Project
+                                    <div class="d-flex gap-2">
+                                        <a onclick="pieGet('{{ $item->tim->code }}')" data-bs-toggle=""
+                                            data-bs-target="#modalDetailProjek"
+                                            class="w-50 btn btn-primary btn-detail-projek"
+                                            data-logo="{{ asset('storage/' . $item->tim->logo) }}"
+                                            data-namatim="{{ $item->tim->nama }}"
+                                            data-status="@if ($item->tim->status_tim == 'solo') Solo Project
                                         @elseif ($item->tim->status_tim == 'pre_mini')
                                             Pre-Mini Project
                                         @elseif ($item->tim->status_tim == 'mini')
                                             Mini Project
                                         @elseif ($item->tim->status_tim == 'big')
                                             Big Project @endif"
-                                        data-tema="{{ $item->tema->nama_tema }}"
-                                        data-tglmulai="{{ $item->created_at->translatedFormat('l, j F Y') }}"
-                                        data-deadline="{{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}"
-                                        data-anggota="{{ $anggotaJson }}" data-deskripsi="{{ $item->deskripsi }}"
-                                        data-dayleft="{{ $dayLeft }}" data-total-deadline="{{ $totalDeadline }}"
-                                        data-progress="{{ $progressPercentage }}"
-                                        data-repo="{{ $item->tim->repository }}"><span class="text-white">Detail</span>
-                                    </a>
+                                            data-tema="{{ $item->tema->nama_tema }}"
+                                            data-tglmulai="{{ $item->created_at->translatedFormat('l, j F Y') }}"
+                                            data-deadline="{{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}"
+                                            data-anggota="{{ $anggotaJson }}" data-deskripsi="{{ $item->deskripsi }}"
+                                            data-dayleft="{{ $dayLeft }}" data-total-deadline="{{ $totalDeadline }}"
+                                            data-progress="{{ $progressPercentage }}"
+                                            data-repo="{{ $item->tim->repository }}"><span class="text-white">Detail</span>
+                                        </a>
+                                        <a data-bs-target="#editModal" data-bs-toggle="modal" data-expired="{{ $item->deadline }}" class="w-50 btn btn-primary btn-edit"><span
+                                                class="text-white">Edit</span></a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -149,7 +154,31 @@
             </div>
         </div>
     </div>
-
+    {{-- modal edit --}}
+    <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+          <div class="modal-content p-3 p-md-5">
+            <div class="modal-body">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <div class="text-center mb-4">
+                <h3 class="mb-2">Add New Card</h3>
+                <p class="text-muted">Add new card to complete payment</p>
+              </div>
+              <form id="addNewCCForm" class="row g-3" onsubmit="return false">
+                <div class="col-12">
+                  <label class="form-label w-100" for="modalAddCard">Card Number</label>
+                  <div class="input-group input-group-merge">
+                    <input type="date" id="expired" value="" name="expired" class="form-control dob-picker flatpickr-input active" placeholder="YYYY-MM-DD" min="{{ date('Y-m-d') }}" >
+                    <span class="input-group-text cursor-pointer p-1" id="modalAddCard2"><span class="card-type"></span></span>
+                  </div>
+                </div>
+              
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    {{-- modal edit end --}}
     {{-- Modal detail --}}
     <div class="modal fade" id="modalDetailProjek" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
@@ -349,6 +378,16 @@
     <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}"></script>
+
+    <script>
+         $('.btn-edit').on('click', function() {
+            var exp = $(this).data('expired');
+            var token = ($('meta[name="csrf-token"]').attr('content'));
+            // console.log(token);
+            $('#expired').val(exp);
+
+         });
+    </script>
 
     {{-- filter projek --}}
     <script>
