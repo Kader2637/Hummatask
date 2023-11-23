@@ -144,6 +144,7 @@ class mentorController extends Controller
         $bukanPengelolaMagang = new Collection();
         $magang = PenglolaMagang::all();
 
+       
         foreach ($roles as $peran) {
             $penggunaDenganPeran = User::whereHas('roles', function ($query) use ($peran) {
                 $query->where('name', $peran->name);
