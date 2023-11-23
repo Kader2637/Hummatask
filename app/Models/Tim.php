@@ -63,8 +63,11 @@ class Tim extends Model
         return $this->hasMany(TidakPresentasiMingguan::class);
     }
 
-    public function anjay()
+    public function anggota_id()
     {
-        return Anggota::where('tim_id', $this->id)->where('status', 'active')->pluck('user_id');
+        return Anggota::where('tim_id', $this->id)->whereIn('status', ['active','expired'])->pluck('user_id');
+    }   
+    public function anggota_tim(){
+        return Anggota::where('tim_id', $this->id)->whereIn('status', ['active','expired'])->get();
     }
-}
+}   
