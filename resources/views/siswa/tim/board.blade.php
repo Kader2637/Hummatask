@@ -26,14 +26,34 @@
                                 background-color: white;
                                 margin-right: 10px;
                             }
+
+                            @media screen and (max-width: 460px){
+                                .card-status-tugas{
+                                    width: 50vw !important;
+                                }
+
+                                #tugas_baru .card{
+                                    width: 50vw !important;
+                                }
+                                #dikerjakan .card{
+                                    width: 50vw !important;
+                                }
+                                #revisi .card{
+                                    width: 50vw !important;
+                                }
+                                #selesai .card{
+                                    width: 50vw !important;
+                                }
+                            }
+
                         </style>
                     @endsection
 
                     @section('content')
-                        <div style="height: 80vh" class="container-fluid row mt-2">
-                            <div class="d-flex mt-3 mb-0  " style="width: 100%; gap:50px; ">
-                                <div style="" class="col-3">
-                                    <div class="card">
+                        <div style="height: 80vh" class="container-fluid mt-2">
+                            <div class="d-flex mt-3 mb-0 overflow-auto " style="gap:50px; height: 83vh">
+                                <div style="width:50vw" class="">
+                                    <div style="width:25vw" class="card card-status-tugas">
                                         <div class="card-body p-2 py-2 row">
                                             <div class="col-8 d-flex align-items-center">
                                                 <span style="font-size: 15px" class="">Tugas Baru</span>
@@ -72,8 +92,8 @@
                                     </div>
                                 </div>
 
-                                <div style="" class=" col-3 ">
-                                    <div class="card">
+                                <div style="width:50vw" class="  ">
+                                    <div style="width:25vw" class="card card-status-tugas">
                                         <div class="card-body p-2 py-2 row">
                                             <div class="col-8 d-flex align-items-center">
                                                 <span style="font-size: 15px" class="">Dikerjakan</span>
@@ -86,8 +106,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div style="" class=" col-3">
-                                    <div class="card">
+                                <div style="width:50vw" class=" ">
+                                    <div style="width:25vw" class="card card-status-tugas">
                                         <div class="card-body p-2 py-2 row">
                                             <div class="col-8 d-flex align-items-center">
                                                 <span style="font-size: 15px" class="">Direvisi</span>
@@ -101,8 +121,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div style="" class=" col-3">
-                                    <div class="card">
+                                <div style="width:50vw" class=" ">
+                                    <div style="width:25vw" class="card card-status-tugas">
                                         <div class="card-body p-2 py-2 row">
                                             <div class="col-8 d-flex align-items-center">
                                                 <span style="font-size: 15px" class="">Selesai</span>
@@ -420,6 +440,7 @@
 
                                             const element = $(`<div>`)
                                                 .attr("id", "board-" + tugas.code)
+                                                .css("width","25vw")
                                                 .addClass('col-12 p-2 mt-3 card')
                                                 .html(
                                                     `
