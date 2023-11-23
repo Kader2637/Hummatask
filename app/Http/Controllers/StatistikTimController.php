@@ -16,9 +16,11 @@ class StatistikTimController extends Controller
         //     $query->where('code', $code)->with('tugas');
         // }])->first();
 
-        $user = Tim::where('code',$code)->first()->user->where('uuid',$uuid)->first();
-
-        $tugasTerkontribusi = $user->tugas;
+        // $user = Tim::where('code',$code)->first()->user->where('uuid',$uuid)->first();
+        $user = User::with('anggota')->where('uuid',$uuid)->first();
+        // dd($user);
+        $tim = Tim::where('code',$code)->first();
+        $tugasTerkontribusi = $user->tugas->where('tim_id',$tim->id);
         $tugasMendesak = $user->tugas->where('prioritas','mendesak')->count();
         $tugasPenting = $user->tugas->where('prioritas','penting')->count();
         $tugasBiasa = $user->tugas->where('prioritas','biasa')->count();
@@ -42,9 +44,10 @@ class StatistikTimController extends Controller
 
     protected function getProgres($codeTim){
 
+
             $tugas = Tim::where('code',$codeTim)->first()->tugas;
 
-        
+
             $tugas_baru = $tugas->where('status_tugas','tugas_baru')->count();
             $tugas_dikerjakan = $tugas->where('status_tugas','dikerjakan')->count();
             $tugas_selesai = $tugas->where('status_tugas','selesai')->count();

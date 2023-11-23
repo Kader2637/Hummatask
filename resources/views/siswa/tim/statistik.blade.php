@@ -112,7 +112,12 @@
                                         <ul class="p-0 m-0">
                                             @foreach ($anggota as $i => $user)
                                             <li class="d-flex align-items-center mb-4 user-kontribusi" id="user-kontribusi-{{ $user->uuid }}" onclick="getKontribusi('{{ $user->uuid }}')">
-                                                <img style="object-fit: cover;" src="{{ Storage::url($user->avatar) }}"
+                                                <img style="object-fit: cover;"
+                                                @if ($user->avatar !== null)
+                                                src="{{ Storage::url($user->avatar) }}"
+                                                @else
+                                                src="{{ asset('assets/img/avatars/1.png') }}"
+                                                @endif
                                                     alt="User" class="rounded-circle me-3" width="34">
                                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                                     <div class="me-2">
@@ -329,8 +334,8 @@
                     </div>
                     <div class="tab-pane fade" id="navs-pills-top-messages" role="tabpanel">
                         <div class="row">
-                            <div class="col-xxl-6 mb-4 order-5 order-xxl-0">
-                                <div class="card">
+                            <div class="col-xl-12 mb-4 order-5 order-xxl-0 tab-project">
+                                <div class="card card-project">
                                   <div class="card-header">
                                     <div class="card-title mb-0">
                                       <h5 class="m-0">Progres Pengerjaan Tugas</h5>
@@ -338,10 +343,10 @@
                                   </div>
                                   <div class="card-body">
                                     <div class="d-none d-lg-flex vehicles-progress-labels mb-4 ">
-                                      <div class="label-tugas_baru vehicles-progress-label on-the-way-text">Tugas Baru</div>
-                                      <div class="label-tugas_dikerjakan vehicles-progress-label unloading-text">Tugas Dikerjakan</div>
-                                      <div class="label-tugas_selesai vehicles-progress-label loading-text">Tugas Selesai</div>
-                                      <div class="label-tugas_direvisi vehicles-progress-label waiting-text text-nowrap">Tugas Direvisi</div>
+                                      <div class=" overflow-hidden label-tugas_baru vehicles-progress-label on-the-way-text">Tugas Baru</div>
+                                      <div class=" overflow-hidden label-tugas_dikerjakan vehicles-progress-label unloading-text">Tugas Dikerjakan</div>
+                                      <div class=" overflow-hidden label-tugas_selesai vehicles-progress-label loading-text">Tugas Selesai</div>
+                                      <div class=" overflow-hidden label-tugas_direvisi vehicles-progress-label waiting-text text-nowrap">Tugas Direvisi</div>
                                     </div>
                                     <div class="vehicles-overview-progress progress rounded-2 my-4 w-100" style="height: 46px;">
                                       <div class="bar-tugas_baru progress-bar fw-medium text-start bg-body text-dark px-3 rounded-0" role="progressbar"  aria-valuenow="39.7" aria-valuemin="0" aria-valuemax="100">39.7%</div>
@@ -434,6 +439,8 @@
 <script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/js/app-logistics-dashboard.js"></script>
     <script>
 
+
+
         getKontribusi("{{ $tim->user[0]->uuid }}")
 
         function getKontribusi(uuid){
@@ -474,11 +481,25 @@
             .then((res) => {
                 const data = res.data;
                 console.log(data);
+
+                if(data.tugas_baru === 0 && data.tugas_dikerjakan === 0 && data.tugas_selesai === 0 && data.tugas_direvisi ===0){
+                    $(".card-project")
+                    .addClass("d-flex justify-content-center align-items-center")
+                    .html(
+                        `
+                        <img width="30%" class="mb-0" src="{{ asset('assets/img/no-data.png') }}" />
+                        <h4 style="margin-top:-3%" class="mb-5" >Timmu belum pernah memiliki tugas</h4>
+                        `
+                    );
+                }
+
+
+
                 $(".jml_tugas_baru").html(`${data.tugas_baru} tugas`)
                 $(".jml_tugas_dikerjakan").html(`${data.tugas_dikerjakan} tugas`)
                 $(".jml_tugas_selesai").html(`${data.tugas_selesai} tugas`)
                 $(".jml_tugas_direvisi").html(`${data.tugas_direvisi} tugas`)
-                
+
                 $(".persentase_tugas_baru").html(data.persentase_tugas_baru.toFixed(1)+"%")
                 $(".persentase_tugas_dikerjakan").html(data.persentase_tugas_dikerjakan.toFixed(1)+"%")
                 $(".persentase_tugas_selesai").html(data.persentase_tugas_selesai.toFixed(1)+"%")
@@ -493,12 +514,12 @@
                 $(".bar-tugas_dikerjakan").html(`${data.persentase_tugas_dikerjakan.toFixed(1)}%`);
                 $(".bar-tugas_selesai").html(`${data.persentase_tugas_selesai.toFixed(1)}%`);
                 $(".bar-tugas_direvisi").html(`${data.persentase_tugas_direvisi.toFixed(1)}%`);
-                
+
                 $(".label-tugas_baru").css("width",`${data.persentase_tugas_baru.toFixed(1)}%`);
                 $(".label-tugas_dikerjakan").css("width",`${data.persentase_tugas_dikerjakan.toFixed(1)}%`);
                 $(".label-tugas_selesai").css("width",`${data.persentase_tugas_selesai.toFixed(1)}%`);
                 $(".label-tugas_direvisi").css("width",`${data.persentase_tugas_direvisi.toFixed(1)}%`);
-           
+
             })
             .catch((err) => {
                 console.log(err);

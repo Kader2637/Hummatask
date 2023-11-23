@@ -170,10 +170,16 @@ class timController extends Controller
             return back()->with('tolak', 'Tolong lengkapi deskripsi proyek terlebih dahulu');
         }
         $anggota = $tim->user;
+        // dd($anggota);
         $jabatan=[];
 
         foreach ($anggota as $data) {
-           $jabatan[] = $data->anggota->jabatan->nama_jabatan;
+            // dd($data->anggota[0]->jabatan);
+            if($data->anggota->status !== "active"){
+                $jabatan[] = "Mantan Anggota";
+            }else{
+                $jabatan[] = $data->anggota->jabatan->nama_jabatan;
+            }
         }
 
         $project = $tim->project->first();
@@ -204,9 +210,10 @@ class timController extends Controller
         if ($project->deskripsi === null) {
             return back()->with('tolak', 'Tolong lengkapi deskripsi proyek terlebih dahulu');
         }
-        $anggota = $tim->user()->get();
+        $anggota = $tim->user()->where('id',$userID)->first()->anggota->status;
+        $jabatan = $tim->user()->where('id',$userID)->first()->anggota->jabatan_id;
         $presentasi = $tim->presentasi()->orderBy('created_at', 'desc')->get();
-        // dd($presentasi);
+        // dd($anggota,$jabatan);
         $project = $tim->project->first();
 
         $hasProjectRelation = $tim->project()->exists();
@@ -225,7 +232,7 @@ class timController extends Controller
             ['Tugas Baru', $tugasBaruCount]
         ];
 
-        return view('siswa.tim.history-presentasi', compact('chartData', 'title', 'tim', 'anggota', 'presentasi', 'jadwal', 'hasProjectRelation', 'project', 'notifikasi', 'project'));
+        return view('siswa.tim.history-presentasi', compact('jabatan','chartData', 'title', 'tim', 'anggota', 'presentasi', 'jadwal', 'hasProjectRelation', 'project', 'notifikasi', 'project'));
     }
 
     protected function catatanPage($code)
