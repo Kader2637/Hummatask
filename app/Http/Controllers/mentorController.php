@@ -201,7 +201,7 @@ class mentorController extends Controller
 
         $tidakPresentasiMingguan = TidakPresentasiMingguan::with('tim.ketuaTim')->get();
 
-           return response()->view('mentor.history', compact('tidakPresentasiMingguan', 'telatDeadline', 'presentasiSelesai', 'timSolo', 'timGroup', 'notifikasi'));
+        return response()->view('mentor.history', compact('tidakPresentasiMingguan', 'telatDeadline', 'presentasiSelesai', 'timSolo', 'timGroup', 'notifikasi'));
     }
 
     // Return view pengajuan projek mentor
@@ -359,7 +359,7 @@ class mentorController extends Controller
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
-        
+
 
         return response()->view('mentor.tim', compact('tims', 'status_tim', 'notifikasi'));
     }

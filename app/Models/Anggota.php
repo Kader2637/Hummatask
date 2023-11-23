@@ -21,7 +21,7 @@ class Anggota extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class,'user_id');
+        return $this->belongsTo(User::class);
     }
 
     public function project(): BelongsTo
@@ -33,5 +33,4 @@ class Anggota extends Model
     {
         return $this->hasOne(Tim::class, 'id', 'tim_id');
     }
-
 }

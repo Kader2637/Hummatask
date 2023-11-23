@@ -60,16 +60,15 @@
                                 <div class="d-flex align-items-center pt-1 mb-3 justify-content-center">
                                     <div class="d-flex align-items-center">
                                         <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
-                                            @foreach ($tim->anggota_tim() as $row)
+                                            @foreach ($tim->user as $anggota)
                                                 <li data-bs-toggle="tooltip" data-popup="tooltip-custom"
-                                                    data-bs-placement="right" title="{{ $row->user->username }}"
+                                                    data-bs-placement="right" title="{{ $anggota->username }}"
                                                     class="avatar avatar-sm pull-up">
                                                     <img class="rounded-circle"
-                                                        src="{{ $row->user->avatar ? Storage::url($row->user->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                        src="{{ $anggota->avatar ? Storage::url($anggota->avatar) : asset('assets/img/avatars/1.png') }}"
                                                         alt="Avatar" style="object-fit: cover">
                                                 </li>
                                             @endforeach
-                                             
                                         </ul>
                                     </div>
                                 </div>
@@ -114,7 +113,7 @@
                                 @else
                                     <a data-bs-toggle="modal" data-bs-target="#edit"
                                         class="w-100 btn btn-primary btn-detail-projek edit-tim btn-edit"
-                                        data-anggota="{{ json_encode($tim->anggota_id()) }}" data-id="{{ $tim->id }}"
+                                        data-anggota="{{ json_encode($tim->anjay()) }}" data-id="{{ $tim->id }}"
                                         data-url="/mentor/tim/edit/{{ $tim->id }}"
                                         data-status="{{ $tim->status_tim }}" data-logo="{{ $tim->logo }}"
                                         data-kadaluwarsa="{{ $tim->kadaluwarsa }}">
@@ -599,11 +598,17 @@
         });
 
         $("#ketuaKelompok").change(function() {
-            var selectedValue = $(this).val();
-            if (selectedValue) {
-                $("#anggota option[value='" + selectedValue + "']").remove();
-            }
-        });
+    var selectedValue = $(this).val();
+    
+    // Enable all options in #anggota select
+    $("#anggota option").prop('disabled', false);
+
+    if (selectedValue) {
+        // Disable the selected option in #anggota
+        $("#anggota option[value='" + selectedValue + "']").prop('disabled', true);
+    }
+});
+
     </script>
     {{-- ajax buat tim --}}
 @endsection
