@@ -1,4 +1,5 @@
 @extends('layoutsMentor.app')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 @section('style')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -134,8 +135,10 @@
                                             data-progress="{{ $progressPercentage }}"
                                             data-repo="{{ $item->tim->repository }}"><span class="text-white">Detail</span>
                                         </a>
-                                        <a data-bs-target="#editModal" data-bs-toggle="modal" data-expired="{{ $item->deadline }}" class="w-50 btn btn-primary btn-edit"><span
-                                                class="text-white">Edit</span></a>
+                                        <a data-bs-target="#editModal" data-bs-toggle="modal"
+                                            data-expired="{{ $item->deadline }}"
+                                            data-url="/mentor/update-deadline/{{ $item->id }}"
+                                            class="w-50 btn btn-primary btn-edit"><span class="text-white">Edit</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -157,27 +160,30 @@
     {{-- modal edit --}}
     <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
-          <div class="modal-content p-3 p-md-5">
-            <div class="modal-body">
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              <div class="text-center mb-4">
-                <h3 class="mb-2">Add New Card</h3>
-                <p class="text-muted">Add new card to complete payment</p>
-              </div>
-              <form id="addNewCCForm" class="row g-3" onsubmit="return false">
-                <div class="col-12">
-                  <label class="form-label w-100" for="modalAddCard">Card Number</label>
-                  <div class="input-group input-group-merge">
-                    <input type="date" id="expired" value="" name="expired" class="form-control dob-picker flatpickr-input active" placeholder="YYYY-MM-DD" min="{{ date('Y-m-d') }}" >
-                    <span class="input-group-text cursor-pointer p-1" id="modalAddCard2"><span class="card-type"></span></span>
-                  </div>
+            <div class="modal-content p-3 p-md-5">
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center mb-4">
+                        <h3 class="mb-2">Edit deadline</h3>
+                        <p class="text-muted">Ganti deadline projek tim</p>
+                    </div>
+                    <form class="row g-3" id="updateTimForm">
+                        <div class="col-12">
+                            <label class="form-label w-100" for="modalAddCard">Deadline</label>
+                            <div class="input-group input-group-merge">
+                                <input type="date" name="xp"
+                                    class="form-control dob-picker flatpickr-input active" min="{{ date('Y-m-d') }}">
+                                <span class="input-group-text cursor-pointer p-1" id="modalAddCard2"><span
+                                        class="card-type"></span></span>
+                            </div>
+                            <button type="submit" class="w-100 btn btn-primary btn-edit mt-2">Simpan</button>
+                        </div>
+
+                    </form>
                 </div>
-              
-              </form>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
     {{-- modal edit end --}}
     {{-- Modal detail --}}
     <div class="modal fade" id="modalDetailProjek" tabindex="-1" aria-hidden="true">
@@ -380,13 +386,70 @@
     <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}"></script>
 
     <script>
-         $('.btn-edit').on('click', function() {
+        $('.btn-edit').on('click', function() {
+            var url = $(this).data('url');
             var exp = $(this).data('expired');
-            var token = ($('meta[name="csrf-token"]').attr('content'));
-            // console.log(token);
-            $('#expired').val(exp);
+            $('#updateTimForm').attr('action', url);
+            $('#deadline').val(exp);
+        });
+    </script>
 
-         });
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('#updateTimForm').submit(function(e) {
+                e.preventDefault();
+                var formData = $(this).serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: $('#updateTimForm').attr('action'),
+                    data: formData,
+                    success: function(data) {
+                        Swal.fire({
+                            title: 'Sukses',
+                            text: 'Password berhasil diperbarui.',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 1700,
+                        }).then(() => {
+                            $('#updateTimForm ').modal('hide');
+                            $('#saveButton').show();
+
+                            window.location.reload();
+                        });
+                    },
+                    error: function(xhr, status, errors) {
+                        console.log('Response:', xhr.responseText);
+
+                        if (xhr.status === 422) {
+                            var errorMessages = xhr.responseJSON.errors;
+
+                            var errorMessageText = 'Terjadi kesalahan:';
+                            for (var key in errorMessages) {
+                                errorMessageText += '\n' + errorMessages[key];
+                            }
+
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: errorMessageText,
+                            });
+                        } else {
+                            // For other errors, display a generic error message
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: 'Terjadi kesalahan: ' + errors,
+                            });
+                        }
+                    }
+                });
+            });
+        });
     </script>
 
     {{-- filter projek --}}

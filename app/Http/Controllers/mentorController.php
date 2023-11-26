@@ -144,7 +144,7 @@ class mentorController extends Controller
         $bukanPengelolaMagang = new Collection();
         $magang = PenglolaMagang::all();
 
-       
+
         foreach ($roles as $peran) {
             $penggunaDenganPeran = User::whereHas('roles', function ($query) use ($peran) {
                 $query->where('name', $peran->name);
@@ -257,6 +257,16 @@ class mentorController extends Controller
             ->get();
 
         return response()->view('mentor.projek', compact('users', 'projects', 'notifikasi'));
+    }
+
+    function updateDeadline($id, Request $request) {
+        // dd($request);
+        $projek = Project::findOrFail($id);
+        $deadline = $request->input('xp');
+        $projek->deadline = $deadline;
+        $projek->save();
+
+        return response()->json(['success' => 'Berhasil update tim'], 200);
     }
 
     protected function pieproject($timId)

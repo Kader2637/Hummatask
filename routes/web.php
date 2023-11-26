@@ -139,6 +139,7 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
 
     // Process`
     Route::post('tampil-detail-presentasi/{code}', [PresentasiController::class, 'tampilkanDetailPresentasi']);
+    Route::post('update-deadline/{id}', [mentorController::class, 'updateDeadline']);
     Route::put('persetujuan-presentasi/{code}', [PresentasiController::class, 'persetujuanPresentasi']);
     Route::put('penolakan-presentasi/{code}', [PresentasiController::class, 'penolakanPresentasi']);
     Route::put('atur-jadwal-presentasi/{code}', [PresentasiController::class, 'aturJadwal']);
