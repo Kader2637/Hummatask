@@ -19,7 +19,6 @@
 @section('content')
     {{-- modal --}}
 
-
     <div class="modal fade" id="aturUrutan" tabindex="-1" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
@@ -30,13 +29,12 @@
                 <div class="modal-body">
                     <div class="row g-2">
                         <div class="col" data-select2-id="45">
-                            <label for="select2Basic" class="form-label">Basic</label>
+                            <label for="select2Basic" class="form-label">Atur Urutan</label>
                             <div class="position-relative" data-select2-id="44">
                                 <select id="select2Basic"
-                                    class="select2 form-select form-select-lg select2-hidden-accessible"
-                                    data-allow-clear="true" data-select2-id="select2Basic" tabindex="-1"
-                                    aria-hidden="true" name="urutan" data-bs-code="">
-                                    <option value="" disabled selected > Pilih Urutan </option>
+                                    class="select2 form-select form-select-lg select2-accessible"
+                                    data-allow-clear="false" data-select2-id="select2Basic" tabindex="-1"
+                                    aria-hidden="false" name="urutan" data-bs-code="">
                                 </select>
                             </div>
                         </div>
@@ -329,8 +327,7 @@
                                                         <tr>
                                                             <th>No</th>
                                                             <th>Nama</th>
-                                                            <th>Project</th>
-                                                            <th>Tema</th>
+                                                            <th>Kategori Project</th>
                                                             <th>Status</th>
                                                         </tr>
                                                     </thead>
@@ -424,13 +421,9 @@ function tampilkanDetail(code)
                     let data1 = res.data.presentasi;
                     let data2 = res.data.konfirmasi;
                     let data3 = res.data.belum_presentasi;
-                    let data4 = res.data.telat_presentasi;
                     let codeHistory =  res.data.codeHistory
 
                     $('#judulModal').text(`Presentasi / ${res.data.judulModal}`)
-
-
-
 
                     document.getElementById('row-persetujuan').innerHTML = ''
 
@@ -487,7 +480,7 @@ function tampilkanDetail(code)
                     }
 
                     console.log(data2)
-
+                    document.getElementById('row-konfirmasi').innerHTML = ''
                     if( data2[0].length == 0 ){
 
                         let div = document.createElement('div')
@@ -587,13 +580,17 @@ function tampilkanDetail(code)
                             </div>
                     </div>
                     `
+
                         div.innerHTML = childrend
                         document.getElementById('row-konfirmasi').appendChild(div)
                     })
                     }
 
-                    console.log(data3[0].tim)
 
+
+                    if ($.fn.DataTable.isDataTable('#jstabel3')) {
+                        $("#jstabel3").DataTable().destroy();
+                     }
 
                     document.getElementById('tr-belum-presentasi').innerHTML = ""
                     Object.keys(data3).forEach((keys, i) => {
@@ -606,36 +603,64 @@ function tampilkanDetail(code)
                         let cell3 = document.createElement('td');
                         cell3.textContent = presentasi.status_tim;
 
-                        let cell4 = document.createElement('td');
-                        cell4.textContent = presentasi.project[0].tema.nama_tema;
-
                         let cell5 = document.createElement('td');
                         cell5.innerHTML = `<span class="badge bg-label-warning">Belum Presentasi</span>`;
 
+
+                        let defaultImg = "img/avatars/1.png";
+
                         if (presentasi.status_tim === "solo") {
                             let cell2 = document.createElement('td');
-                            cell2.innerHTML = `<img src="{{ asset('assets/${presentasi.user[0].avatar}') }}" alt=""
-                          style="border-radius: 50%; width:40px;"> ${presentasi.user[0].username}`;
+                            cell2.innerHTML = `<img src="{{ asset('storage/${presentasi.user[0].avatar || defaultImg }') }}" alt=""
+                          style="border-radius: 50%; width:40px; height:40px;object-fit:cover;"> ${presentasi.user[0].username}`;
                             tr.appendChild(cell1);
                             tr.appendChild(cell2);
                             tr.appendChild(cell3);
-                            tr.appendChild(cell4);
                             tr.appendChild(cell5);
                         } else {
                             let cell2 = document.createElement('td');
-                            cell2.innerHTML = `<img src="{{ asset('assets/${presentasi.logo}') }}" alt=""
-                          style="border-radius: 50%; width:40px;"> ${presentasi.user[0].username}`;
+                            cell2.innerHTML = `<img src="{{ asset('storage/${presentasi.logo}') }}" alt=""
+                          style="border-radius: 50%; width:40px; height:40px;object-fit:cover;"> ${presentasi.nama}`;
                             tr.appendChild(cell1);
                             tr.appendChild(cell2);
                             tr.appendChild(cell3);
-                            tr.appendChild(cell4);
                             tr.appendChild(cell5);
                         }
 
                         document.getElementById('tr-belum-presentasi').appendChild(tr);
                     });
 
-1
+                    $('#jstabel3').DataTable({
+                "lengthMenu": [
+                    [5, 10, 15, -1],
+                    [5, 10, 15, "All"]
+                ],
+                "pageLength": 5,
+
+                "order": [],
+
+                "ordering": false,
+
+                "language": {
+                    "sProcessing": "Sedang memproses...",
+                    "sLengthMenu": "Tampilkan _MENU_ data",
+                    "sZeroRecords": "Tidak ditemukan Data",
+                    "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
+                    "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Cari :",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "Pertama",
+                        "sPrevious": "&#8592;",
+                        "sNext": "&#8594;",
+                        "sLast": "Terakhir"
+                    }
+                }
+            });
+
+
 
 
                 })
@@ -652,7 +677,6 @@ function tampilkanDetail(code)
                 const tim = res.data.tim;
                 const presentasi = res.data.presentasi;
                 const presentaseRevisi = res.data.presentaseRevisi;
-
 
                 $('#persentasiRevisiSelesai').text(`${(presentaseRevisi).toFixed(2)}%`)
                 $('#historyTotalPresentasi').text(`${presentasi[0].length}`)
@@ -713,29 +737,30 @@ function tampilkanDetail(code)
             document.getElementById('select2Basic').setAttribute('data-bs-codeHistory',codeHistory);
 
 
-                axios.get('ambil-urutan/'+codeHistory)
-                .then((res) => {
-                    const data = res.data.presentasi;
-                    console.log(data);
-                    document.getElementById('select2Basic').innerHTML = "";
-                     Object.keys(data).forEach(key => {
-                        let presentasi = data[key]
-                        let option = document.createElement('option')
-                        option.textContent = "Urutan ke-"+presentasi.urutan;
-                        option.value = presentasi.urutan;
-                        option.name = "optUrutan";
-                        document.getElementById('select2Basic').appendChild(option);
-                    });
+            axios.get('ambil-urutan/'+codeHistory)
+            .then((res) => {
+                const data = res.data.presentasi;
 
-                })
-                .catch((err) => {
-                    Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: "404 Route tidak ditemukan"
-                        });
-                    console.log(err);
-                })
+                document.getElementById('select2Basic').innerHTML = "";
+                // $("#select2Basic").select2();
+                    Object.keys(data).forEach(key => {
+                    let presentasi = data[key]
+                    let option = document.createElement('option')
+                    option.textContent = "Urutan ke-"+presentasi.urutan;
+                    option.value = presentasi.urutan;
+                    option.name = "optUrutan";
+                    document.getElementById('select2Basic').appendChild(option);
+                });
+
+            })
+            .catch((err) => {
+                Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: "404 Route tidak ditemukan"
+                    });
+                console.log(err);
+            })
 
 
 
@@ -938,133 +963,5 @@ function tampilkanDetail(code)
 
         };
 
-
-
-        jQuery.noConflict();
-
-        jQuery(document).ready(function($) {
-            $('#jstabel1').DataTable({
-                "lengthMenu": [
-                    [5, 10, 15, -1],
-                    [5, 10, 15, "All"]
-                ],
-                "pageLength": 5,
-
-                "order": [],
-
-                "ordering": false,
-
-                "language": {
-                    "sProcessing": "Sedang memproses...",
-                    "sLengthMenu": "Tampilkan _MENU_ data",
-                    "sZeroRecords": "Tidak ditemukan Data",
-                    "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-                    "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
-                    "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Cari :",
-                    "sUrl": "",
-                    "oPaginate": {
-                        "sFirst": "Pertama",
-                        "sPrevious": "&#8592;",
-                        "sNext": "&#8594;",
-                        "sLast": "Terakhir"
-                    }
-                }
-            });
-        });
-        jQuery(document).ready(function($) {
-            $('#jstabel2').DataTable({
-                "lengthMenu": [
-                    [5, 10, 15, -1],
-                    [5, 10, 15, "All"]
-                ],
-                "pageLength": 5,
-
-                "order": [],
-
-                "ordering": false,
-
-                "language": {
-                    "sProcessing": "Sedang memproses...",
-                    "sLengthMenu": "Tampilkan _MENU_ data",
-                    "sZeroRecords": "Tidak ditemukan Data",
-                    "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-                    "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
-                    "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Cari :",
-                    "sUrl": "",
-                    "oPaginate": {
-                        "sFirst": "Pertama",
-                        "sPrevious": "&#8592;",
-                        "sNext": "&#8594;",
-                        "sLast": "Terakhir"
-                    }
-                }
-            });
-        });
-        jQuery(document).ready(function($) {
-            $('#jstabel3').DataTable({
-                "lengthMenu": [
-                    [5, 10, 15, -1],
-                    [5, 10, 15, "All"]
-                ],
-                "pageLength": 5,
-
-                "order": [],
-
-                "ordering": false,
-
-                "language": {
-                    "sProcessing": "Sedang memproses...",
-                    "sLengthMenu": "Tampilkan _MENU_ data",
-                    "sZeroRecords": "Tidak ditemukan Data",
-                    "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-                    "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
-                    "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Cari :",
-                    "sUrl": "",
-                    "oPaginate": {
-                        "sFirst": "Pertama",
-                        "sPrevious": "&#8592;",
-                        "sNext": "&#8594;",
-                        "sLast": "Terakhir"
-                    }
-                }
-            });
-        });
-        jQuery(document).ready(function($) {
-            $('#jstabel4').DataTable({
-                "lengthMenu": [
-                    [5, 10, 15, -1],
-                    [5, 10, 15, "All"]
-                ],
-                "pageLength": 5,
-
-                "order": [],
-
-                "ordering": false,
-
-                "language": {
-                    "sProcessing": "Sedang memproses...",
-                    "sLengthMenu": "Tampilkan _MENU_ data",
-                    "sZeroRecords": "Tidak ditemukan Data",
-                    "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-                    "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
-                    "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Cari :",
-                    "sUrl": "",
-                    "oPaginate": {
-                        "sFirst": "Pertama",
-                        "sPrevious": "&#8592;",
-                        "sNext": "&#8594;",
-                        "sLast": "Terakhir"
-                    }
-                }
-            });
-        });
     </script>
 @endsection

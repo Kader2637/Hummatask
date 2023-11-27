@@ -312,9 +312,7 @@ class mentorController extends Controller
         return response()->json(['users' => $users, 'status_tim' => $status_tim]);
     }
 
-    protected function
-    timEdit($tim)
-    {
+    protected function timEdit($tim) {
 
         $ketuaId = Tim::where('id', $tim)
             ->with(['anggota' => function ($query) {

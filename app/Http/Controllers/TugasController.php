@@ -119,7 +119,7 @@ class TugasController extends Controller
     {
         foreach ($teamMembers as $member) {
             $statusAnggota = $member->status;
-    
+
             if ($statusAnggota !== 'kicked') {
                 Notifikasi::create([
                     'user_id' => $member->user_id,
@@ -215,7 +215,7 @@ class TugasController extends Controller
         if ($tugas->status_tugas === 'selesai') {
             $teamMembers = $tugas->tim->user;
             foreach ($teamMembers as $member) {
-                $this->sendNotificationToUser($member->id, 'Tugas Selesai', 'Tugas "' . $tugas->nama . '" telah selesai.', 'pemberitahuan');
+                $this->sendNotificationToUser($member, 'Tugas Selesai', 'Tugas "' . $tugas->nama . '" telah selesai.', 'pemberitahuan');
             }
         }
 
@@ -268,6 +268,7 @@ class TugasController extends Controller
     protected function sendNotificationToUser($user, $title, $message, $jenisNotifikasi)
     {
         $statusAnggota = $user->anggota->status;
+
 
         if ($statusAnggota !== 'kicked') {
             Notifikasi::create([

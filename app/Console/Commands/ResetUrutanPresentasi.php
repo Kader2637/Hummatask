@@ -40,5 +40,6 @@ class ResetUrutanPresentasi extends Command
             $data->save();
         }
 
+
     }
 }

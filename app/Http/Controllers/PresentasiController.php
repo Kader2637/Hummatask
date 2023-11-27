@@ -43,7 +43,7 @@ class PresentasiController extends Controller
         // }
 
         // if (Carbon::now()->isoFormat('HH:m:ss') > "14:00:00") {
-        //     return back()->with('error', 'Pengajuan Presentasi tidak boleh lebih dari pukul 15:00');
+        //     return back()->with('error', 'Pengajuan Presentasi tidak boleh lebih dari pukul 14:00');
         // }
 
         if(Carbon::now()->isoFormat("dddd") === "Minggu" || Carbon::now()->isoFormat("dddd") === "Sabtu"){
@@ -60,6 +60,7 @@ class PresentasiController extends Controller
             }
 
 
+
             if($tim->sudah_presentasi === 0){
                 $tidakPresentasiMingguan = TidakPresentasiMingguan::where('tim_id',$tim->id)->latest()->first();
                 // dd($tidakPresentasiMingguan);
@@ -71,9 +72,9 @@ class PresentasiController extends Controller
 
             $validasi = $tim->presentasi->where('jadwal', Carbon::now()->isoFormat('YYYY-M-DD'))->first();
 
-            if ($validasi != null) {
-                return back()->with('error', 'Pengajuan presentasi dalam sehari hanya boleh 1 kali');
-            }
+            // if ($validasi != null) {
+            //     return back()->with('error', 'Pengajuan presentasi dalam sehari hanya boleh 1 kali');
+            // }
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Timmu tidak ditemukan');
         }
@@ -115,7 +116,9 @@ class PresentasiController extends Controller
         $presentasi->user_approval_id = Auth::user()->id;
         $presentasi->status_pengajuan = 'disetujui';
         $presentasi->save();
-        $this->sendNotificationToTeamMembers($presentasi->tim->user, 'Presentasi Disetujui', 'Presentasi Anda telah disetujui.');
+
+        // dd($presentasi)
+        $this->sendNotificationToTeamMembers($presentasi->tim->anggota, 'Presentasi Disetujui', 'Presentasi Anda telah disetujui.','alert-info');
 
         return response()->json([
             "presentasi" => $presentasi,
@@ -127,18 +130,23 @@ class PresentasiController extends Controller
         ]);
     }
 
-    protected function sendNotificationToTeamMembers($teamMembers, $title, $message)
+    protected function sendNotificationToTeamMembers($teamMembers, $title, $message, $jenisNotifikasi)
     {
         foreach ($teamMembers as $member) {
-            $notif = new Notifikasi;
-            $notif->user_id = $member->id;
-            $notif->judul = $title;
-            $notif->body = $message;
-            $notif->status = 'belum_dibaca';
+            $statusAnggota = $member->status;
 
-            $notif->save();
+            if ($statusAnggota !== 'kicked') {
+                Notifikasi::create([
+                    'user_id' => $member->user_id,
+                    'judul' => $title,
+                    'body' => $message,
+                    'status' => 'belum_dibaca',
+                    'jenis_notifikasi' => $jenisNotifikasi,
+                ]);
+            }
         }
     }
+
 
     protected function penolakanPresentasi(RequestPenolakanPresentasi $request, $code)
     {
@@ -231,7 +239,7 @@ class PresentasiController extends Controller
          ->whereRaw('WEEK(created_at) = ?', [Carbon::parse($history->created_at)->weekOfYear])
         ->whereYear('created_at',Carbon::parse($history->created_at)->year)->get();
         // dd($tim_belum_presentasi);
-        $telat_presentasi = $history->presentasi->where('status_presentasi', 'telat');
+
 
         $data = [
             'presentasi' => $presentasi,
@@ -245,7 +253,6 @@ class PresentasiController extends Controller
                 $dataPresentasiTim
             ],
             'belum_presentasi' => $tim_belum_presentasi,
-            'telat_presentasi' => $telat_presentasi,
             'codeHistory'      => $history->code,
             'judulModal'       => $judulModal,
         ];
@@ -256,9 +263,7 @@ class PresentasiController extends Controller
 
     protected function gantiUrutan(Request $request, $code)
     {
-
         try {
-
             $presentasi = Presentasi::where('status_presentasi', 'menunggu')
                 ->where('status_pengajuan', 'disetujui')
                 ->where('jadwal', Carbon::now()->isoFormat('Y-M-DD'))
@@ -309,10 +314,6 @@ class PresentasiController extends Controller
                 $pengganti->urutan = $urutanTergantikan;
                 $pengganti->save();
             }
-
-
-
-
             $history = HistoryPresentasi::with(['presentasi.tim.user', 'presentasi.tim.project.tema', 'presentasi.tim.presentasiSelesai'])->where('code', $request->codeHistory)->first();
             $urutanPresentasi = $history->presentasi->where('status_presentasi', 'menunggu')->where('jadwal', Carbon::now()->isoFormat('Y-M-DD'));
             $data = [
@@ -342,10 +343,12 @@ class PresentasiController extends Controller
         $totalPresentasiSelesai = [];
 
         foreach ($urutanPresentasi as $data) {
+
             $totalPresentasiDitolak[] = $data->tim->presentasi->where('status_pengajuan', 'ditolak')->count();
             $totalRevisiSelesai[] = $data->tim->presentasi->where('status_revisi', 'selesai')->count();
             $totalRevisiTidakSelesai[] = $data->tim->presentasi->where('status_revisi', 'tidak_selesai')->count();
             $totalPresentasiSelesai[] = $data->tim->presentasiSelesai->count();
+            
         }
 
         return response()->json([
