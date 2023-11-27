@@ -62,9 +62,6 @@
     <link rel="stylesheet"
         href="{{ asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
 
@@ -467,7 +464,7 @@
                                             <label class="form-label m-0 p-0 mt-2" for="modalEditUserLastName">Link
                                                 Repository
                                                 Github</label>
-                                            <input type="url" id="modalEditUserLastName" name="repository"
+                                            <input type="text" id="modalEditUserLastName" name="repository"
                                                 class="form-control" placeholder="https://.." />
                                             @error('repository')
                                                 <p class="text-danger">
@@ -516,7 +513,7 @@
     <script src="{{ asset('assets/vendor/js/menu2dc9.js?id=c6ce30ded4234d0c4ca0fb5f2a2990d8') }}"></script>
     <script src="{{ asset('assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
     <script src="{{ asset('assets/js/mainf696.js?id=8bd0165c1c4340f4d4a66add0761ae8a') }}"></script>
-    <script src="{{ asset('assets/js/extended-ui-sweetalert2.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
     <script src="{{ asset('assets/js/dashboards-crm.js') }}"></script>
 
     {{-- validasi --}}

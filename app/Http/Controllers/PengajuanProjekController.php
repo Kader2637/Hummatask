@@ -76,61 +76,65 @@ class PengajuanProjekController extends Controller
         $project->tema_id = $request->temaInput;
         $project->status_project = 'approved';
 
-    $deadline = Carbon::now();
+        Tema::where('tim_id', $project->tim_id)
+            ->where('id', '!=', $project->tema_id)
+            ->delete();
 
-    switch ($project->type_project) {
-        case 'solo':
-            $deadline->addWeek();
-            break;
-        case 'pre_mini':
-            $deadline->addWeek(2);
-            break;
-        case 'mini':
-            $deadline->addWeek(4);
-            break;
-        case 'pre_big':
-            $deadline->addWeek(8);
-            break;
-        default:
-            $deadline->addWeek(8);
-            break;
+        $deadline = Carbon::now();
+
+        switch ($project->type_project) {
+            case 'solo':
+                $deadline->addWeek();
+                break;
+            case 'pre_mini':
+                $deadline->addWeek(2);
+                break;
+            case 'mini':
+                $deadline->addWeek(4);
+                break;
+            case 'pre_big':
+                $deadline->addWeek(8);
+                break;
+            default:
+                $deadline->addWeek(8);
+                break;
+        }
+
+        if ($request->deadlineInput) {
+            if ($request->deadlineInput < $deadline) {
+                return back()->with('warning', 'Deadline tidak valid');
+            } else {
+                $deadline = $request->deadlineInput;
+            }
+        }
+
+        $project->deadline = $deadline;
+        $project->save();
+
+        $teamLeader = $project->tim->anggota;
+
+        $tema = $project->tema;
+        foreach ($teamLeader as $member) {
+            $this->sendNotification($member->user_id, 'Project Tim Telah Disetujui', 'Project dengan tema "' . $tema->nama_tema . '" telah disetujui.', 'pemberitahuan');
+        }
+
+        return back()->with('success', 'Berhasil menyetujui project');
     }
 
-    if ($request->deadlineInput) {
-        if ($request->deadlineInput < $deadline) {
-            return back()->with('warning', 'Deadline tidak valid');
-        } else {
-            $deadline = $request->deadlineInput;
+    protected function sendNotification($userId, $title, $message, $jenisNotifikasi)
+    {
+        $statusAnggota = Anggota::where('user_id', $userId)->value('status');
+
+        if ($statusAnggota !== 'kicked') {
+            Notifikasi::create([
+                'user_id' => $userId,
+                'judul' => $title,
+                'body' => $message,
+                'status' => 'belum_dibaca',
+                'jenis_notifikasi' => $jenisNotifikasi,
+            ]);
         }
     }
-
-    $project->deadline = $deadline;
-    $project->save();
-
-    $teamLeader = $project->tim->anggota;
-
-    $tema = $project->tema;
-    foreach ($teamLeader as $member) {
-        $this->sendNotification($member->user_id, 'Project Tim Telah Disetujui','Project dengan tema "' . $tema->nama_tema . '" telah disetujui.', 'pemberitahuan');
-    }
-
-    return back()->with('success', 'Berhasil menyetujui project');
-}
-
-protected function sendNotification($userId, $title, $message, $jenisNotifikasi)
-{
-    $statusAnggota = Anggota::where('user_id', $userId)->value('status');
-
-    if ($statusAnggota !== 'kicked') {
-        Notifikasi::create([
-            'user_id' => $userId,
-            'judul' => $title,
-            'body' => $message,
-            'status' => 'belum_dibaca',
-            'jenis_notifikasi' => $jenisNotifikasi,
-        ]);
-    }
-}
 
     protected function editProject(editProjectRequest $request, $code)
     {
@@ -158,24 +162,23 @@ protected function sendNotification($userId, $title, $message, $jenisNotifikasi)
         }
     }
     public function destroy($id)
-{
-    $notification = Notifikasi::find($id);
+    {
+        $notification = Notifikasi::find($id);
 
-    if (!$notification) {
-        return response()->json(['error' => 'Notification not found'], 404);
+        if (!$notification) {
+            return response()->json(['error' => 'Notification not found'], 404);
+        }
+
+        $notification->delete();
+
+        return response()->json(['message' => 'Notification deleted successfully']);
     }
 
-    $notification->delete();
-
-    return response()->json(['message' => 'Notification deleted successfully']);
-}
-
-public function ambilNotifikasi()
+    public function ambilNotifikasi()
     {
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
 
         return response()->json(['notifikasi' => $notifikasi]);
     }
-
 }

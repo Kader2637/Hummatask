@@ -10,7 +10,7 @@ $(document).ready(function () {
                 ],
                 [
                     {
-                        font: [],
+                        font: [false],
                     },
                 ],
                 ["bold", "italic", "underline", "strike"],

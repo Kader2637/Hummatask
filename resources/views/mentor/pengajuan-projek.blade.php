@@ -376,6 +376,8 @@
                         icon: 'warning',
                         title: 'Peringatan',
                         text: 'Inputkan Tema Project!',
+                        showConfirmButton: false,
+                        timer: 3000,
                     });
                     return;
                 }

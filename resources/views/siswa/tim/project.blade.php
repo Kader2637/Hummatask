@@ -180,7 +180,7 @@
                                 data-bs-target="#navs-pills-top-profile" aria-controls="navs-pills-top-profile"
                                 aria-selected="false" data-tab="2">Anggota</button>
                         </div>
-                    
+
                     </div>
                     <div class="" role="presentation">
                         @auth
@@ -594,39 +594,81 @@
                 var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
                 if (!allowedExtensions.exec(foto)) {
                     e.preventDefault(); // Menghentikan pengiriman formulir
-                    swal.fire('Peringatan', 'File harus berupa gambar (jpg, jpeg, png, gif)', 'warning');
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Peringatan',
+                        text: 'File harus berupa gambar (jpg, jpeg, png, gif)',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
                 }
             }
 
             if (namaTim.length === 0) {
                 e.preventDefault();
-                swal.fire('Peringatan', 'Nama tim tidak boleh kosong', 'warning');
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Peringatan',
+                    text: 'Nama tim tidak boleh kosong',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
             } else if (namaTim.length > 50) {
                 e.preventDefault();
-                swal.fire('Peringatan', 'Nama tim terlalu panjang', 'warning');
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Peringatan',
+                    text: 'Nama tim terlalu panjang',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
             }
 
             // Validasi repo (URL)
             if (repo.length === 0) {
                 e.preventDefault();
-                swal.fire('Peringatan', 'Nama repo tidak boleh kosong', 'warning');
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Peringatan',
+                    text: 'Nama repo tidak boleh kosong',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
             } else {
                 // Pengecekan apakah repo adalah URL menggunakan regex
                 var urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
                 if (!urlRegex.test(repo)) {
                     e.preventDefault();
-                    swal.fire('Peringatan', 'Nama repo harus berupa URL yang valid', 'warning');
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Peringatan',
+                        text: 'Nama repo harus berupa URL yang valid',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
                 }
             }
+
             // Validasi deskripsi
             if (deskripsi.length === 0) {
                 e.preventDefault();
-                swal.fire('Peringatan', 'Deskripsi tidak boleh kosong', 'warning');
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Peringatan',
+                    text: 'Deskripsi tidak boleh kosong',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
             } else if (deskripsi.length > 100) {
                 e.preventDefault();
-                swal.fire('Peringatan', 'Deskripsi terlalu panjang', 'warning');
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Peringatan',
+                    text: 'Deskripsi terlalu panjang',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
             }
-
         });
     </script>
     {{-- Validasi --}}
