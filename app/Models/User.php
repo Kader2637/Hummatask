@@ -44,6 +44,7 @@ class User extends Authenticatable
         'deskripsi',
         'is_login',
         'tanggal_bergabung',
+        'tanggal_lulus',
     ];
     /**
      * The attributes that should be hidden for serialization.

@@ -5,7 +5,7 @@
 
 @section('content')
     <div class="container-fluid mt-4 ">
-        <h5 class="header mt-2 ms-2">Daftar Pengajuan Projek</h5>
+        <h5 class="header mt-2">Daftar Pengajuan Projek</h5>
         <div class="row">
             <div class="d-flex justify-content-between mb-4">
                 <div class="filter col-lg-3 col-md-3 col-sm-3">
@@ -30,13 +30,13 @@
                 <div class="filter col-lg-3 col-md-3 col-sm-3">
                     <label for="select2Basic" class="form-label">Cari</label>
                     <form action="{{ route('pengajuan-projek') }}" method="get">
-                        <div class="flex-grow-1 input-group input-group-merge rounded-pill">
+                        <div class="flex-grow-1 input-group input-group-merge">
                             <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-search"></i></span>
                             <input name="nama_tim" type="text" class="form-control chat-search-input"
                                 placeholder="Cari nama tim..." aria-label="Cari nama tim..."
                                 aria-describedby="basic-addon-search31" value="{{ request('nama_tim') }}">
-                            <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
                         </div>
+                        <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
                     </form>
                 </div>
             </div>

@@ -53,7 +53,8 @@ class tambahUsersController extends Controller
                     'sekolah' => $row[2],
                     'peran_id' => 1,
                     'deskripsi' => "none",
-                    'tanggal_bergabung' => now(),
+                    'tanggal_bergabung' => date('Y-m-d', strtotime($row[3])),
+                    'tanggal_lulus' => date('Y-m-d', strtotime($row[4])),
                 ]);
             }
 
@@ -61,6 +62,7 @@ class tambahUsersController extends Controller
             return redirect()->back()->with('success', 'Data CSV berhasil disimpan!');
         } catch (\Throwable $th) {
             DB::rollBack();
+            dd($th);
             return redirect()->back()->with('error', 'Data CSV gagal disimpan, tolong perhatikan format data dalam file!');
         }
     }

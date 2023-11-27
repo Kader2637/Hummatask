@@ -1033,6 +1033,7 @@
 
         $("#tanggal").flatpickr({
             minDate: new Date(),
+            defaultDate: '2020-01-11',
             dateFormat: "Y-m-d",
         })
 
@@ -1226,7 +1227,6 @@
                 formAction = formAction.replace(':Id', dataUrl);
                 $('#edit-form').attr('action', formAction);
 
-                console.log(uuid);
             });
         });
     </script>

@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid mt-4 justify-content-center">
+    <div class="container-fluid mt-5 justify-content-center">
         <div class="row">
             <div class="d-flex justify-content-between">
                 <div class="card-header fs-4">
@@ -16,11 +16,11 @@
                         Tim</button>
                 </div>
             </div>
-            <div class="d-flex justify-content-between mb-4">
+            <div class="d-flex justify-content-between mb-4 gap-2">
                 <div class="filter col-lg-3 col-md-3 col-sm-3">
                     <label for="select2Basic" class="form-label">Filter</label>
                     <form id="filterForm" action="{{ route('tim') }}" method="get">
-                        <select id="select2Basic" name="status_tim" class="form-select" data-allow-clear="true"
+                        <select id="select2Basic" name="status_tim" class="form-select select2" data-allow-clear="true"
                             onchange="filterProjek(this)">
                             <option value="" disabled selected>Pilih Data</option>
                             <option value="all" {{ request('status_tim') == 'all' ? 'selected' : '' }}>Semua</option>
@@ -40,13 +40,13 @@
                 <div class="filter col-lg-3 col-md-3 col-sm-3">
                     <label for="select2Basic" class="form-label">Cari</label>
                     <form action="{{ route('tim') }}" method="get">
-                        <div class="flex-grow-1 input-group input-group-merge rounded-pill">
+                        <div class="flex-grow-1 input-group input-group-merge">
                             <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-search"></i></span>
                             <input name="nama_tim" type="text" class="form-control chat-search-input"
                                 placeholder="Cari nama tim..." aria-label="Cari nama tim..."
                                 aria-describedby="basic-addon-search31" value="{{ request('nama_tim') }}">
-                            <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
                         </div>
+                        <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
                     </form>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="mb-0">
+                            <p class="mb-0 d-flex">
                                 <span class="badge bg-label-warning">
                                     @if ($tim->status_tim == 'solo')
                                         Solo Project
@@ -379,6 +379,7 @@
                                 icon: 'error',
                                 title: 'Error!',
                                 text: errorMessageText,
+                                showConfirmButton: false,
                             });
                         } else {
                             // For other errors, display a generic error message
@@ -386,6 +387,7 @@
                                 icon: 'error',
                                 title: 'Error!',
                                 text: 'Terjadi kesalahan: ' + errors,
+                                showConfirmButton: false,
                             });
                         }
                     }
@@ -509,8 +511,6 @@
                         }
                         $("#ketua").append(option);
                     });
-
-
                 },
                 error: function(xhr, status, error) {
                     console.error("Terjadi kesalahan: " + error);
@@ -536,15 +536,21 @@
         });
 
 
-        $('#editForm').submit(function(event) {
+        $('#updateTimForm').submit(function(event) {
             var status_tim = $('#status').val();
             var ketua = $('#ketua').val();
             var anggota_kelompok = $('#anggota_kelompok').val();
 
             if (!status_tim || !ketua || !anggota_kelompok.length) {
                 event.preventDefault();
-                swal.fire('Peringatan', 'Mohon lengkapi data sebelum simpan', 'warning');
-            }
+                swal.fire({
+                    title: 'Peringatan',
+                    text: 'Pastikan semua data terisi!',
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            };
         });
     </script>
 
@@ -575,20 +581,22 @@
             });
         }
 
-        $('#createForm').submit(function() {
+        $('#createForm').submit(function(event) {
             var status_tim = $('#status_tim').val();
             var ketuaKelompok = $('#ketuaKelompok').val();
             var anggota = $('#anggota').val();
 
             if (!status_tim || !ketuaKelompok || !anggota.length) {
                 event.preventDefault();
-                swal.fire('Peringatan', 'Mohon lengkapi data sebelum simpan', 'warning');
-            } else if (anggota.length > 4) {
-                event.preventDefault();
-                swal.fire('Peringatan', 'Anggota maksimal 4', 'warning');
-            }
+                swal.fire({
+                    title: 'Peringatan',
+                    text: 'Pastikan semua data terisi!',
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            };
         });
-
         $("#ketuaKelompok").change(function() {
             var selectedValue = $(this).val();
 
