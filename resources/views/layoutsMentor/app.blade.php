@@ -84,14 +84,11 @@
 <!-- jQuery Plugin -->
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <style>
-    body,
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+
+    body
     {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    position: relative;
-    z-index: 2;
+    font-family: 'Poppins', sans-serif;
     /* Tambahkan z-index di sini */
     }
 
@@ -467,26 +464,26 @@
     <script src="{{ asset('assets/js/extended-ui-sweetalert2.js') }}"></script>
     <!-- END: Page JS-->
 
-        <script>
-            function deletenotifikasi(id) {
-                console.log('notifikasiId:', id);
-                axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute(
-                    'content');
-                console.log('Request URL:', `http://127.0.0.1:8000/tim/notifikasi/${id}`);
-                axios.delete(`http://127.0.0.1:8000/tim/notifikasi/${id}`)
-                    .then(response => {
-                        console.log('Axios Response:', response);
-                        const notifikasiElement = document.getElementById(`notification-list-${id}`);
-                        console.log('notifikasiElement:', notifikasiElement);
-                        if (notifikasiElement) {
-                            notifikasiElement.remove();
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Gagal Menghapus notifikasi:', error);
-                    });
-            }
-        </script>
+    <script>
+        function deletenotifikasi(id) {
+            console.log('notifikasiId:', id);
+            axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute(
+                'content');
+            console.log('Request URL:', `http://127.0.0.1:8000/tim/notifikasi/${id}`);
+            axios.delete(`http://127.0.0.1:8000/tim/notifikasi/${id}`)
+                .then(response => {
+                    console.log('Axios Response:', response);
+                    const notifikasiElement = document.getElementById(`notification-list-${id}`);
+                    console.log('notifikasiElement:', notifikasiElement);
+                    if (notifikasiElement) {
+                        notifikasiElement.remove();
+                    }
+                })
+                .catch(error => {
+                    console.error('Gagal Menghapus notifikasi:', error);
+                });
+        }
+    </script>
     <script>
         $(document).ready(function() {
             function ambilNotifikasi() {
@@ -596,7 +593,7 @@
                 title: 'Akses Ditolak',
                 text: '{{ session('unauthorize') }}', // Teks pesan dari sesi
                 showConfirmButton: false,
-                timer: 5000,
+                timer: 3000,
             });
         </script>
     @elseif (session()->has('success'))
@@ -606,7 +603,7 @@
                 title: 'Berhasil!',
                 text: '{{ session('success') }}', // Teks pesan dari sesi
                 showConfirmButton: false,
-                timer: 5000,
+                timer: 3000,
             });
         </script>
     @elseif (session()->has('warning'))
@@ -616,7 +613,7 @@
                 title: 'Peringatan!',
                 text: '{{ session('warning') }}', // Teks pesan dari sesi
                 showConfirmButton: false,
-                timer: 5000,
+                timer: 3000,
             });
         </script>
     @endif

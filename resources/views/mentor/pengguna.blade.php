@@ -21,13 +21,13 @@
     @endif
 
     @if (session('error'))
-    <script>
-        Swal.fire({
-            title:"Kesalahan",
-            text : "{{ session('error') }}",
-            icon : "error"
-        })
-    </script>
+        <script>
+            Swal.fire({
+                title: "Kesalahan",
+                text: "{{ session('error') }}",
+                icon: "error"
+            })
+        </script>
     @endif
 
     <script>
@@ -358,8 +358,10 @@
                                                     data-masa-magang="{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('l, j F Y') }}"><i
                                                         class="ti ti-eye me-1"></i></span>
 
-                                                <span data-tanggal-lulus="{{ $item->tanggal_lulus }}" data-id="{{ $item->id }}" class="cursor-pointer extends"
-                                                data-bs-toggle="modal" data-bs-target="#extends"> <i class="ti ti-calendar me-1"></i> </span>
+                                                <span data-tanggal-lulus="{{ $item->tanggal_lulus }}"
+                                                    data-id="{{ $item->id }}" class="cursor-pointer extends"
+                                                    data-bs-toggle="modal" data-bs-target="#extends"> <i
+                                                        class="ti ti-calendar me-1"></i> </span>
 
 
                                                 <span class="cursor-pointer" id="delete-button-{{ $item->uuid }}"
@@ -373,25 +375,31 @@
                     </div>
 
                     <div class="modal fade" id="extends" tabindex="-1" style="display: none;" aria-hidden="true">
-                        <form  id="form-extends" method="POST" data-select2-id="17">
+                        <form id="form-extends" method="POST" data-select2-id="17">
                             @csrf
-                            <input type="hidden" name="_token" value="NOwojIduBaXlie96FUTuFWeY8BPzptwpfy2R5S5R" autocomplete="off">                    <div class="modal-dialog modal-dialog-centered" role="document" data-select2-id="16">
+                            <input type="hidden" name="_token" value="NOwojIduBaXlie96FUTuFWeY8BPzptwpfy2R5S5R"
+                                autocomplete="off">
+                            <div class="modal-dialog modal-dialog-centered" role="document" data-select2-id="16">
                                 <div class="modal-content" data-select2-id="15">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="modalCenterTitle">Extend Siswa Magang</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body" data-select2-id="14">
                                         <div class="row" data-select2-id="13">
                                             <div class="col mb-3" data-select2-id="12">
-                                               <label for="tanggal">Tanggal Lulus</label>
-                                               <input class="timepicker form-control" placeholder="pilih waktu" type="text" name="tanggal_lulus" id="tanggal">
+                                                <label for="tanggal">Tanggal Lulus</label>
+                                                <input class="timepicker form-control" placeholder="pilih waktu"
+                                                    type="text" name="tanggal_lulus" id="tanggal">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-label-secondary waves-effect" data-bs-dismiss="modal">Kembali</button>
-                                        <button type="submit" class="btn btn-primary waves-effect waves-light">Simpan</button>
+                                        <button type="button" class="btn btn-label-secondary waves-effect"
+                                            data-bs-dismiss="modal">Kembali</button>
+                                        <button type="submit"
+                                            class="btn btn-primary waves-effect waves-light">Simpan</button>
                                     </div>
                                 </div>
                             </div>
@@ -1012,8 +1020,8 @@
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     <script src="node_modules/axios/dist/axios.min.js"></script>
-    <script src="{{asset('utils/handleSuccessResponse.js')}}"></script>
-    <script src="{{asset('utils/handleErrorResponse.js')}}"></script>
+    <script src="{{ asset('utils/handleSuccessResponse.js') }}"></script>
+    <script src="{{ asset('utils/handleErrorResponse.js') }}"></script>
 
     <script>
         $("#masa_magang").flatpickr({
@@ -1024,17 +1032,20 @@
         });
 
         $("#tanggal").flatpickr({
-                minDate: new Date(),
-                dateFormat: "Y-m-d",
+            minDate: new Date(),
+            dateFormat: "Y-m-d",
         })
 
 
-        $("#extends").submit(function(e){
-                e.preventDefault();
-                const tanggal_lulus = $("#tanggal").val()
-                const user_id = $(".extends").data('id');
+        $("#extends").submit(function(e) {
+            e.preventDefault();
+            const tanggal_lulus = $("#tanggal").val()
+            const user_id = $(".extends").data('id');
 
-                axios.post("{{ route('extends.users') }}",{user_id,tanggal_lulus})
+            axios.post("{{ route('extends.users') }}", {
+                    user_id,
+                    tanggal_lulus
+                })
                 .then(res => {
                     $("#extends").modal('hide')
                     console.log(res)
@@ -1045,10 +1056,7 @@
                     console.error(err);
                     alertError(err)
                 })
-            })
-
-
-
+        })
     </script>
 
     <script>
@@ -1076,9 +1084,6 @@
     </script>
 
     <script>
-
-
-
         jQuery.noConflict();
 
         jQuery(document).ready(function($) {

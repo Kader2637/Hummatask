@@ -58,15 +58,11 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body,
-        {
-        height: 100%;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        position: relative;
-        z-index: 2;
-        /* Tambahkan z-index di sini */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            /* Tambahkan z-index di sini */
         }
 
         * {
@@ -613,7 +609,11 @@
                                 // Menampilkan jumlah saat kursor mengarah ke elemen chart
                                 const amountDescription = label === 'Revisi' ? 'Revisi' : label ===
                                     'Tugas Baru' ? 'Tugas Baru' : 'Selesai';
-                                return Jumlah ${amountDescription}: ${value};
+                                return Jumlah $ {
+                                    amountDescription
+                                }: $ {
+                                    value
+                                };
                             }
                         }
                     }

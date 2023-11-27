@@ -66,15 +66,11 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <style>
-        body,
-        {
-        height: 100%;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        position: relative;
-        z-index: 2;
-        /* Tambahkan z-index di sini */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            /* Tambahkan z-index di sini */
         }
 
         * {
@@ -334,10 +330,10 @@
                                         </div>
                                     </li>
                                     @foreach ($notifikasi as $item)
-                                    <li class="dropdown-notifications-list scrollable-container">
-                                        <ul class="list-group list-group-flush" id="notification-list">
-                                            {{-- <li class="list-group-item" id="notification-list"> --}}
-                                            {{-- <div class="d-flex" id="notifikasi-{{ $item->id }}">
+                                        <li class="dropdown-notifications-list scrollable-container">
+                                            <ul class="list-group list-group-flush" id="notification-list">
+                                                {{-- <li class="list-group-item" id="notification-list"> --}}
+                                                {{-- <div class="d-flex" id="notifikasi-{{ $item->id }}">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
                                                             <img src="" alt class="h-auto rounded-circle">
@@ -359,9 +355,9 @@
                                                                 class="ti ti-x"></span></a>
                                                     </div>
                                                 </div> --}}
-                                            {{-- </li> --}}
-                                        </ul>
-                                    </li>
+                                                {{-- </li> --}}
+                                            </ul>
+                                        </li>
                                     @endforeach
                                     <li class="dropdown-menu-footer border-top">
                                         <a href="javascript:void(0);"

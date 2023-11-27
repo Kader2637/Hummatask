@@ -16,14 +16,21 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\DB;
 
 class tambahUsersController extends Controller
 {
     protected function storeCsv(Request $request)
     {
+        DB::beginTransaction();
+
         try {
             $path = $request->import->getRealPath();
             $data = array_map('str_getcsv', file($path));
+            array_shift($data);
+            $data = array_filter($data, function ($item) {
+                return !empty(trim(implode('', $item)));
+            });
 
             foreach ($data as $row) {
                 $inisial = strtoupper(implode('', array_map(fn ($name) => substr($name, 0, 1), array_slice(explode(' ', $row[0]), 0, 3))));
@@ -43,22 +50,23 @@ class tambahUsersController extends Controller
                     'username' => $row[0],
                     'email' => $row[1],
                     'password' => Hash::make('password'),
-                    'sekolah' => $row[3],
+                    'sekolah' => $row[2],
                     'peran_id' => 1,
                     'deskripsi' => "none",
-                    'tanggal_bergabung' => Carbon::parse($row[4])->toDateString(),
+                    'tanggal_bergabung' => now(),
                 ]);
             }
 
+            DB::commit();
             return redirect()->back()->with('success', 'Data CSV berhasil disimpan!');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'Data CSV gagal disimpan!.');
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Data CSV gagal disimpan, tolong perhatikan format data dalam file!');
         }
     }
 
     protected function store(Request $request)
     {
-
 
         $dates = explode(' to ', $request->masa_magang);
         $tanggalAwal = $dates[0];
@@ -200,16 +208,16 @@ class tambahUsersController extends Controller
         $mentor = User::where('uuid', $uuid)->firstOrFail();
 
         $inisial = strtoupper(implode('', array_map(fn ($name) => substr($name, 0, 1), array_slice(explode(' ', $request->username), 0, 3))));
-            $image = Image::canvas(200, 200, '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT));
-            $image->text($inisial, 100, 100, function ($font) {
-                $font->file(public_path('assets/font/Poppins-Regular.ttf'));
-                $font->size(48);
-                $font->color('#ffffff');
-                $font->align('center');
-                $font->valign('middle');
-            });
-            $nameImage = 'avatars/' . Str::random(20) . '.jpg';
-            Storage::disk('public')->put($nameImage, $image->stream());
+        $image = Image::canvas(200, 200, '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT));
+        $image->text($inisial, 100, 100, function ($font) {
+            $font->file(public_path('assets/font/Poppins-Regular.ttf'));
+            $font->size(48);
+            $font->color('#ffffff');
+            $font->align('center');
+            $font->valign('middle');
+        });
+        $nameImage = 'avatars/' . Str::random(20) . '.jpg';
+        Storage::disk('public')->put($nameImage, $image->stream());
 
         $mentor->update([
             'username' => $validatedData['username'],
@@ -241,7 +249,6 @@ class tambahUsersController extends Controller
                     'masih_menjabat' => true,
                 ]);
             }
-
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Gagal memberikan hak akses!');
         }
@@ -265,8 +272,7 @@ class tambahUsersController extends Controller
     {
         try {
             $user = User::where('uuid', $code)->first();
-            if (Storage::exists($user->avatar))
-            {
+            if (Storage::exists($user->avatar)) {
                 Storage::delete($user->avatar);
             }
             $user->delete();
@@ -280,8 +286,7 @@ class tambahUsersController extends Controller
     {
         try {
             $user = User::where('uuid', $code)->first();
-            if ($user->avatar && Storage::disk('public')->exists($user->avatar))
-            {
+            if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
                 Storage::disk('public')->delete($user->avatar);
             }
             $user->delete();
@@ -292,25 +297,26 @@ class tambahUsersController extends Controller
     }
 
     protected function delete_permisions(string $code)
-{
-    try {
-        $user = User::where('uuid', $code)->first();
+    {
+        try {
+            $user = User::where('uuid', $code)->first();
 
-        if ($user->hasRole('ketua magang')) {
-            PenglolaMagang::where('user_id', $user->id)
-                ->update(['masih_menjabat' => false]);
+            if ($user->hasRole('ketua magang')) {
+                PenglolaMagang::where('user_id', $user->id)
+                    ->update(['masih_menjabat' => false]);
+            }
+
+            $role = $user->getRoleNames()[0];
+            $user->removeRole($role);
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'User berhasil dihapus!');
         }
 
-        $role = $user->getRoleNames()[0];
-        $user->removeRole($role);
-    } catch (\Throwable $th) {
-        return redirect()->back()->with('error', 'User berhasil dihapus!');
+        return redirect()->back()->with('success', 'User berhasil dihapus!');
     }
 
-    return redirect()->back()->with('success', 'User berhasil dihapus!');
-}
-
-    protected function extends(Request $request){
+    protected function extends(Request $request)
+    {
 
         $validate = $request->validate(
             [
@@ -334,5 +340,4 @@ class tambahUsersController extends Controller
         // dd($request);
         return redirect()->back()->with("success", "Sukses memperpanjang masa pkl");
     }
-
 }

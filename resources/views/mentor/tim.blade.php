@@ -50,7 +50,7 @@
                     </form>
                 </div>
             </div>
-            @foreach ($tims as $tim)
+            @forelse ($tims as $tim)
                 <div class="col-md-6 col-lg-3">
                     <div class="card text-center mb-3 tim-item" data-status-tim="{{ $tim->status_tim }}">
                         <div class="card-body">
@@ -98,7 +98,7 @@
                             <h5 class="card-title">{{ $tim->nama }}</h5>
                             <p class="card-text" data-bs-toggle="tooltip" data-popup="tooltip-custom"
                                 data-bs-placement="bottom" title="Deadline Project">
-                                {{ ($tim->project->isNotEmpty() && isset($tim->project[0])) ? \Carbon\Carbon::parse($tim->project[0]->deadline)->translatedFormat('l j F Y') : 'Deadline Belum di tentukan' }}
+                                {{ $tim->project->isNotEmpty() && isset($tim->project[0]) ? \Carbon\Carbon::parse($tim->project[0]->deadline)->translatedFormat('l j F Y') : 'Deadline Belum di tentukan' }}
                             </p>
                             <div class="d-flex justify-content-center">
                                 @if ($tim->status_tim == 'solo')
@@ -125,7 +125,13 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
+            @empty
+                <h6 class="text-center mt-4">Tidak Ada Projek <i class="ti ti-address-book-off"></i></h6>
+                <div class="mt-4 mb-3 d-flex justify-content-evenly">
+                    <img src="{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}"
+                        alt="page-misc-under-maintenance" width="300" class="img-fluid">
+                </div>
+            @endforelse
         </div>
         {{ $tims->links('pagination::bootstrap-5') }}
 
@@ -584,17 +590,16 @@
         });
 
         $("#ketuaKelompok").change(function() {
-    var selectedValue = $(this).val();
+            var selectedValue = $(this).val();
 
-    // Enable all options in #anggota select
-    $("#anggota option").prop('disabled', false);
+            // Enable all options in #anggota select
+            $("#anggota option").prop('disabled', false);
 
-    if (selectedValue) {
-        // Disable the selected option in #anggota
-        $("#anggota option[value='" + selectedValue + "']").prop('disabled', true);
-    }
-});
-
+            if (selectedValue) {
+                // Disable the selected option in #anggota
+                $("#anggota option[value='" + selectedValue + "']").prop('disabled', true);
+            }
+        });
     </script>
     {{-- ajax buat tim --}}
 @endsection
