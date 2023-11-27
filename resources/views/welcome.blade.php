@@ -30,14 +30,14 @@
     <link rel="stylesheet" href="{{ asset('assets/css/demof1ed.css?id=ddd2feb83a604f9e432cdcb29815ed44') }}" />
     <link rel="stylesheet"
         href="{{ asset('assets/vendor/libs/node-waves/node-wavesd178.css?id=aa72fb97dfa8e932ba88c8a3c04641bc') }}" />
-    <link rel="stylesheet"
-        href="{{ asset('assets/vendor/css/pages/front-pagee721.css?id=360d017735733ce726893ee5acf0aa07') }}" />
+    {{-- <link rel="stylesheet" --}}
+    {{-- href="{{ asset('assets/vendor/css/pages/front-pagee721.css?id=360d017735733ce726893ee5acf0aa07') }}" /> --}}
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/nouislider/nouislider.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/swiper/swiper.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/front-page-landing.css') }}" />
 
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
-    <script src="{{ asset('assets/vendor/js/template-customizer.js') }}"></script>
+    {{-- <script src="{{ asset('assets/vendor/js/template-customizer.js') }}"></script> --}}
     <script src="{{ asset('assets/js/front-config.js') }}"></script>
 
     <!-- Vendor Styles -->
@@ -46,7 +46,7 @@
 
     <!-- Page Styles -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/ui-carousel.css') }}" />
-    <script>
+    {{-- <script>
         window.templateCustomizer = new TemplateCustomizer({
             cssPath: '',
             themesPath: '',
@@ -70,7 +70,7 @@
             'controls': ["rtl", "style"],
 
         });
-    </script>
+    </script> --}}
 </head>
 
 <body>
@@ -79,7 +79,7 @@
             style="display: none; visibility: hidden"></iframe></noscript>
     <nav class="layout-navbar shadow-none py-0">
         <div class="">
-            <div class="navbar navbar-expand-lg landing-navbar px-3 mt-0 border-0">
+            <div class="navbar navbar-expand-lg landing-navbar px-3 mt-0 border-0  ">
                 <div class="navbar-brand app-brand demo d-flex py-0 py-lg-2 me-4">
                     <button class="navbar-toggler border-0 px-0 me-2" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -189,12 +189,12 @@
                         <a href="../app/ecommerce/dashboard.html" target="_blank">
                             <div id="heroAnimationImg" class="position-relative hero-dashboard-img">
                                 <img src="{{ asset('assets/img/front-pages/landing-page/hero-dashboard-light.png') }}"
-                                    alt="hero dashboard" class="animation-img"
+                                    alt="" class="animation-img"
                                     data-app-light-img="front-pages/landing-page/hero-dashboard-light.png"
                                     data-app-dark-img="front-pages/landing-page/hero-dashboard-light.png" />
                                 <img src="{{ asset('assets/img/front-pages/landing-page/hero-elements-light.png') }}"
-                                    alt="hero elements"
-                                    class="position-absolute hero-elements-img animation-img top-0 start-0"
+                                    alt=""
+                                    class="position-absolute hero-elements-img animation-img top-0 start-0 price-duration-toggler"
                                     data-app-light-img="front-pages/landing-page/hero-elements-light.png"
                                     data-app-dark-img="front-pages/landing-page/hero-elements-light.png" />
                             </div>
@@ -357,353 +357,279 @@
                         <div class="swiper-reviews-carousel overflow-hidden mb-5 pb-md-2 pb-md-3">
                             <div class="swiper" id="swiper-reviews">
                                 <div class="swiper-wrapper">
+                                    @foreach($logo as $item)
                                     <div class="swiper-slide">
                                         <div class="card h-100">
                                             <div class="card h-100">
                                                 <div
                                                     class="card-body text-body d-flex flex-column justify-content-between">
                                                     <div class="mb-auto mt-auto">
-                                                        <img src="{{ asset('assets/img/front-pages/branding/sekolah.png') }}"
+                                                        <img src="{{ asset('storage/img/'.$item->foto) }}"
                                                             alt="client logo" class="client-logo img-fluid" />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="swiper-slide">
-                                        <div class="card h-100">
-                                            <div
-                                                class="card-body text-body d-flex flex-column justify-content-between">
-                                                <div class="mx-auto my-auto">
-                                                    <img src="{{ asset('assets/img/front-pages/branding/psht.png') }}"
-                                                        alt="client logo" class="client-logo img-fluid" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="swiper-slide">
-                                        <div class="card h-100">
-                                            <div
-                                                class="card-body text-body d-flex flex-column justify-content-between h-100">
-                                                <div class="mb-auto mt-auto">
-                                                    <img src="{{ asset('assets/img/front-pages/branding/contoh.png') }}"
-                                                        alt="client logo" class="client-logo img-fluid" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="card h-100">
-                                            <div
-                                                class="card-body text-body d-flex flex-column justify-content-between h-100">
-                                                <div class="mb-auto mt-auto">
-                                                    <img src="{{ asset('assets/img/front-pages/branding/ikspi.png') }}"
-                                                        alt="client logo" class="client-logo img-fluid" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="card h-100">
-                                            <div
-                                                class="card-body text-body d-flex flex-column justify-content-between h-100">
-                                                <div class="mb-auto mt-auto">
-                                                    <img src="{{ asset('assets/img/front-pages/branding/sekolah.png') }}"
-                                                        alt="client logo" class="client-logo img-fluid" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="card h-100">
-                                            <div
-                                                class="card-body text-body d-flex flex-column justify-content-between h-100">
-                                                <div class="mb-auto mt-auto">
-                                                    <img src="{{ asset('assets/img/front-pages/branding/sekolah.png') }}"
-                                                        alt="client logo" class="client-logo img-fluid" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endforeach
+                                    <div class="swiper-button-next"></div>
+                                    <div class="swiper-button-prev"></div>
                                 </div>
-                                <div class="swiper-button-next"></div>
-                                <div class="swiper-button-prev"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section id="landingPricing" class="section-py">
-            <!-- Gallery effect-->
-            <div class="col-12">
-                <h3 class="text-center mb-1"><span class="section-title">Galeri </span>Siswa</h3>
-                <div id="swiper-gallery">
-                    <div class="swiper gallery-top">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide"
-                                style="background-image:url({{ asset('assets/img/backgrounds/2.jpg') }})">Slide 1
+            <section id="landingPricing" class="section-py">
+                <!-- Gallery effect-->
+                <div class="col-12">
+                    <h3 class="text-center mb-1"><span class="section-title" style="color: blue">Galeri </span>Hummasoft</h3>
+                    <div id="swiper-gallery mt-2">
+                        <div class="swiper gallery-top ">
+                            <div class="swiper-wrapper ">
+                                @foreach($galery as $item)
+                                <div class="swiper-slide rounded "
+                                    style="background-image:url({{ asset('storage/img/'.$item->foto) }});">{{ $item->judul }}
+                                </div>
+                                @endforeach
                             </div>
-                            <div class="swiper-slide"
-                                style="background-image:url({{ asset('assets/img/backgrounds/1.jpg') }})">Slide 2
-                            </div>
-                            <div class="swiper-slide"
-                                style="background-image:url({{ asset('assets/img/backgrounds/3.jpg') }})">Slide 3
-                            </div>
-                            <div class="swiper-slide"
-                                style="background-image:url({{ asset('assets/img/backgrounds/4.jpg') }})">Slide 4
-                            </div>
-                            <div class="swiper-slide"
-                                style="background-image:url({{ asset('assets/img/backgrounds/6.jpg') }})">Slide 5
-                            </div>
+                            <!-- Add Arrows -->
+                            <div class="swiper-button-next "></div>
+                            <div class="swiper-button-prev "></div>
                         </div>
-                        <!-- Add Arrows -->
-                        <div class="swiper-button-next swiper-button-white"></div>
-                        <div class="swiper-button-prev swiper-button-white"></div>
-                    </div>
-                    <div class="swiper gallery-thumbs">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide"
-                                style="background-image:url({{ asset('assets/img/backgrounds/2.jpg') }})">Slide 1
-                            </div>
-                            <div class="swiper-slide"
-                                style="background-image:url({{ asset('assets/img/backgrounds/1.jpg') }})">Slide 2
-                            </div>
-                            <div class="swiper-slide"
-                                style="background-image:url({{ asset('assets/img/backgrounds/3.jpg') }})">Slide 3
-                            </div>
-                            <div class="swiper-slide"
-                                style="background-image:url({{ asset('assets/img/backgrounds/4.jpg') }})">Slide 4
-                            </div>
-                            <div class="swiper-slide"
-                                style="background-image:url({{ asset('assets/img/backgrounds/6.jpg') }})">Slide 5
+                        <div class="swiper gallery-thumbs mt-3 ">
+                            <div class="swiper-wrapper">
+                                @foreach($galery as $item)
+                                <div class="swiper-slide rounded"
+                                    style="background-image:url({{ asset('storage/img/' . $item->foto) }})">{{ $item->judul }}
+                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section id="landingFAQ" class="section-py bg-body landing-faq">
-            <div class="container">
-                <div class="text-center mb-3 pb-1">
-                    <span class="badge bg-label-primary">Pertanyaan</span>
-                </div>
-                <h3 class="text-center mb-1">Beberapa persoalan yang sering <span
-                        class="section-title">ditanyakan</span></h3>
-                <p class="text-center mb-5 pb-3">Jelajahi bagian ini dan hilangkan rasa penasaran yang ada dibenakmu
-                </p>
-                <div class="row gy-5">
-                    <div class="col-lg-5">
-                        <div class="text-center">
-                            <img src="{{ asset('assets/img/front-pages/landing-page/faq-boy-with-logos.png') }}"
-                                alt="faq boy with logos" class="faq-image" />
-                        </div>
+            <section id="landingFAQ" class="section-py bg-body landing-faq">
+                <div class="container">
+                    <div class="text-center mb-3 pb-1">
+                        <span class="badge bg-label-primary">Pertanyaan</span>
                     </div>
-                    <div class="col-lg-7">
-                        <div class="accordion" id="accordionExample">
-                            <div class="card accordion-item active">
-                                <h2 class="accordion-header" id="headingOne">
-                                    <button type="button" class="accordion-button" data-bs-toggle="collapse"
-                                        data-bs-target="#accordionOne" aria-expanded="true"
-                                        aria-controls="accordionOne">
-                                        Web apa ini?
-                                    </button>
-                                </h2>
+                    <h3 class="text-center mb-1">Beberapa persoalan yang sering <span
+                            class="section-title">ditanyakan</span></h3>
+                    <p class="text-center mb-5 pb-3">Jelajahi bagian ini dan hilangkan rasa penasaran yang ada dibenakmu
+                    </p>
+                    <div class="row gy-5">
+                        <div class="col-lg-5">
+                            <div class="text-center">
+                                <img src="{{ asset('assets/img/front-pages/landing-page/faq-boy-with-logos.png') }}"
+                                    alt="faq boy with logos" class="faq-image" />
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="accordion" id="accordionExample">
+                                <div class="card accordion-item active">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button type="button" class="accordion-button" data-bs-toggle="collapse"
+                                            data-bs-target="#accordionOne" aria-expanded="true"
+                                            aria-controls="accordionOne">
+                                            Web apa ini?
+                                        </button>
+                                    </h2>
 
-                                <div id="accordionOne" class="accordion-collapse collapse show"
-                                    data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        Ini adalah sebuah web pengelola tugas anak magang di Hummatech, harapan nya
-                                        dengan ada nya web ini, para siswa magang dapat mengelola pekerjaan mereka
-                                        dengan lebih efisien.
+                                    <div id="accordionOne" class="accordion-collapse collapse show"
+                                        data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            Ini adalah sebuah web pengelola tugas anak magang di Hummatech, harapan nya
+                                            dengan ada nya web ini, para siswa magang dapat mengelola pekerjaan mereka
+                                            dengan lebih efisien.
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card accordion-item">
-                                <h2 class="accordion-header" id="headingTwo">
-                                    <button type="button" class="accordion-button collapsed"
-                                        data-bs-toggle="collapse" data-bs-target="#accordionTwo"
-                                        aria-expanded="false" aria-controls="accordionTwo">
-                                        Apa fitur-fitur nya?
-                                    </button>
-                                </h2>
-                                <div id="accordionTwo" class="accordion-collapse collapse"
-                                    aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        Fitur-fitur yang ada di web ini adalah Board untuk mengelola tugas, Catatan
-                                        untuk catatan tim atau catatan presentasi, Pengajuan dan history presentasi, dan
-                                        ada halaman project untuk melihat statistik project.
+                                <div class="card accordion-item">
+                                    <h2 class="accordion-header" id="headingTwo">
+                                        <button type="button" class="accordion-button collapsed"
+                                            data-bs-toggle="collapse" data-bs-target="#accordionTwo"
+                                            aria-expanded="false" aria-controls="accordionTwo">
+                                            Apa fitur-fitur nya?
+                                        </button>
+                                    </h2>
+                                    <div id="accordionTwo" class="accordion-collapse collapse"
+                                        aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            Fitur-fitur yang ada di web ini adalah Board untuk mengelola tugas, Catatan
+                                            untuk catatan tim atau catatan presentasi, Pengajuan dan history presentasi, dan
+                                            ada halaman project untuk melihat statistik project.
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card accordion-item">
-                                <h2 class="accordion-header" id="headingThree">
-                                    <button type="button" class="accordion-button collapsed"
-                                        data-bs-toggle="collapse" data-bs-target="#accordionThree"
-                                        aria-expanded="false" aria-controls="accordionThree">
-                                        Apakah web ini memerlukan biaya tambahan?
-                                    </button>
-                                </h2>
-                                <div id="accordionThree" class="accordion-collapse collapse"
-                                    aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        Tidak ada, karena web ini di khususkan untuk siswa magang Hummatech dan dapat
-                                        digunakan secara gratis.
+                                <div class="card accordion-item">
+                                    <h2 class="accordion-header" id="headingThree">
+                                        <button type="button" class="accordion-button collapsed"
+                                            data-bs-toggle="collapse" data-bs-target="#accordionThree"
+                                            aria-expanded="false" aria-controls="accordionThree">
+                                            Apakah web ini memerlukan biaya tambahan?
+                                        </button>
+                                    </h2>
+                                    <div id="accordionThree" class="accordion-collapse collapse"
+                                        aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            Tidak ada, karena web ini di khususkan untuk siswa magang Hummatech dan dapat
+                                            digunakan secara gratis.
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card accordion-item">
-                                <h2 class="accordion-header" id="headingFour">
-                                    <button type="button" class="accordion-button collapsed"
-                                        data-bs-toggle="collapse" data-bs-target="#accordionFour"
-                                        aria-expanded="false" aria-controls="accordionFour">
-                                        Web ini dibuat menggunakan bahasa apa?
-                                    </button>
-                                </h2>
-                                <div id="accordionFour" class="accordion-collapse collapse"
-                                    aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        Web ini dibuat menggunakan Laravel, yaitu framework dari bahasa php.
+                                <div class="card accordion-item">
+                                    <h2 class="accordion-header" id="headingFour">
+                                        <button type="button" class="accordion-button collapsed"
+                                            data-bs-toggle="collapse" data-bs-target="#accordionFour"
+                                            aria-expanded="false" aria-controls="accordionFour">
+                                            Web ini dibuat menggunakan bahasa apa?
+                                        </button>
+                                    </h2>
+                                    <div id="accordionFour" class="accordion-collapse collapse"
+                                        aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            Web ini dibuat menggunakan Laravel, yaitu framework dari bahasa php.
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card accordion-item">
-                                <h2 class="accordion-header" id="headingFive">
-                                    <button type="button" class="accordion-button collapsed"
-                                        data-bs-toggle="collapse" data-bs-target="#accordionFive"
-                                        aria-expanded="false" aria-controls="accordionFive">
-                                        Kapan web ini dibuat?
-                                    </button>
-                                </h2>
-                                <div id="accordionFive" class="accordion-collapse collapse"
-                                    aria-labelledby="headingFive" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        Web ini dibuat pada bulan oktober tahun 2023.
+                                <div class="card accordion-item">
+                                    <h2 class="accordion-header" id="headingFive">
+                                        <button type="button" class="accordion-button collapsed"
+                                            data-bs-toggle="collapse" data-bs-target="#accordionFive"
+                                            aria-expanded="false" aria-controls="accordionFive">
+                                            Kapan web ini dibuat?
+                                        </button>
+                                    </h2>
+                                    <div id="accordionFive" class="accordion-collapse collapse"
+                                        aria-labelledby="headingFive" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            Web ini dibuat pada bulan oktober tahun 2023.
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-    </div>
-
-    <footer class="landing-footer bg-body footer-text" id="landingContact">
-        <div class="footer-top">
-            <div class="container">
-                <div class="row gx-0 gy-4 g-md-5">
-                    <div class="col-lg-5">
-                        <a href="landing.html" class="app-brand-link mb-4">
-                            <span class="app-brand-logo demo"><svg width="32" height="20" viewBox="0 0 32 22"
-                                    fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M0.00172773 0V6.85398C0.00172773 6.85398 -0.133178 9.01207 1.98092 10.8388L13.6912 21.9964L19.7809 21.9181L18.8042 9.88248L16.4951 7.17289L9.23799 0H0.00172773Z"
-                                        fill="#7367F0" />
-                                    <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M7.69824 16.4364L12.5199 3.23696L16.5541 7.25596L7.69824 16.4364Z"
-                                        fill="#161616" />
-                                    <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M8.07751 15.9175L13.9419 4.63989L16.5849 7.28475L8.07751 15.9175Z"
-                                        fill="#161616" />
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z"
-                                        fill="#7367F0" />
-                                </svg>
-                            </span>
-                            <span class="app-brand-text demo footer-link fw-bold ms-2 ps-1">HummaTask</span>
-                        </a>
-                        <p class="footer-text footer-logo-description mb-4">
-                            Aplikasi pengelola dan pengingat tugasmu, kami adalah temanmu menjadi produktif
-                        </p>
-                        <form class="footer-form">
-                            <label for="footer-email" class="small">Berlangganan untuk hal terbaru</label>
-                            <div class="d-flex mt-1">
-                                <input type="email"
-                                    class="form-control rounded-0 rounded-start-bottom rounded-start-top"
-                                    id="footer-email" placeholder="Emailmu" />
-                                <button type="submit"
-                                    class="btn btn-primary shadow-none rounded-0 rounded-end-bottom rounded-end-top">
-                                    Berlangganan
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-lg-2 col-md-4 col-sm-6">
-                        <h6 class="footer-title mb-4">Demos</h6>
-                        <ul class="list-unstyled">
-                            <li class="mb-3">
-                                <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1"
-                                    target="_blank" class="footer-link">Vertical Layout</a>
-                            </li>
-                            <li class="mb-3">
-                                <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-5"
-                                    target="_blank" class="footer-link">Horizontal Layout</a>
-                            </li>
-                            <li class="mb-3">
-                                <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-2"
-                                    target="_blank" class="footer-link">Bordered Layout</a>
-                            </li>
-                            <li class="mb-3">
-                                <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-3"
-                                    target="_blank" class="footer-link">Semi Dark Layout</a>
-                            </li>
-                            <li class="mb-3">
-                                <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-4"
-                                    target="_blank" class="footer-link">Dark Layout</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-2 col-md-4 col-sm-6">
-                        <h6 class="footer-title mb-4">Pages</h6>
-                        <ul class="list-unstyled">
-                            <li class="mb-3">
-                                <a href="pricing.html" class="footer-link">Pricing</a>
-                            </li>
-                            <li class="mb-3">
-                                <a href="payment.html" class="footer-link">Payment<span
-                                        class="badge rounded bg-primary ms-2">New</span></a>
-                            </li>
-                            <li class="mb-3">
-                                <a href="checkout.html" class="footer-link">Checkout</a>
-                            </li>
-                            <li class="mb-3">
-                                <a href="help-center.html" class="footer-link">Help Center</a>
-                            </li>
-                            <li class="mb-3">
-                                <a href="../auth/login-cover.html" target="_blank"
-                                    class="footer-link">Login/Register</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-3 col-md-4">
-                        <h6 class="footer-title mb-4">Download our app</h6>
-                        <a href="javascript:void(0);" class="d-block footer-link mb-3 pb-2"><img
-                                src="{{ asset('assets/img/front-pages/landing-page/apple-icon.png') }}"
-                                alt="apple icon" /></a>
-                        <a href="javascript:void(0);" class="d-block footer-link"><img
-                                src="{{ asset('assets/img/front-pages/landing-page/google-play-icon.png') }}"
-                                alt="google play icon" /></a>
-                    </div>
-                </div>
-            </div>
+            </section>
         </div>
-    </footer>
-    <script src="{{ asset('assets/vendor/js/dropdown-hover.js') }}"></script>
-    <script src="{{ asset('assets/vendor/js/mega-dropdown.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/node-waves/node-waves259f.js?id=4fae469a3ded69fb59fce3dcc14cd638') }}">
-    </script>
-    <script src="{{ asset('assets/vendor/libs/popper/popper0a73.js?id=baf82d96b7771efbcc05c3b77135d24c') }}"></script>
-    <script src="{{ asset('assets/vendor/js/bootstraped84.js?id=9a6c701557297a042348b5aea69e9b76') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/nouislider/nouislider.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/swiper/swiper.js') }}"></script>
-    <script src="{{ asset('assets/js/front-main1b3c.js?id=2c2564d4c142df108c8f3152af8e0460') }}"></script>
-    <script src="{{ asset('assets/js/front-page-landing.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/swiper/swiper.js') }}"></script>
-    <script src="{{ asset('assets/js/ui-carousel.js') }}"></script>
-</body>
 
-</html>
+        <footer class="landing-footer bg-body footer-text" id="landingContact">
+            <div class="footer-top">
+                <div class="container">
+                    <div class="row gx-0 gy-4 g-md-5">
+                        <div class="col-lg-5">
+                            <a href="landing.html" class="app-brand-link mb-4">
+                                <span class="app-brand-logo demo"><svg width="32" height="20" viewBox="0 0 32 22"
+                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M0.00172773 0V6.85398C0.00172773 6.85398 -0.133178 9.01207 1.98092 10.8388L13.6912 21.9964L19.7809 21.9181L18.8042 9.88248L16.4951 7.17289L9.23799 0H0.00172773Z"
+                                            fill="#7367F0" />
+                                        <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M7.69824 16.4364L12.5199 3.23696L16.5541 7.25596L7.69824 16.4364Z"
+                                            fill="#161616" />
+                                        <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M8.07751 15.9175L13.9419 4.63989L16.5849 7.28475L8.07751 15.9175Z"
+                                            fill="#161616" />
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z"
+                                            fill="#7367F0" />
+                                    </svg>
+                                </span>
+                                <span class="app-brand-text demo footer-link fw-bold ms-2 ps-1">HummaTask</span>
+                            </a>
+                            <p class="footer-text footer-logo-description mb-4">
+                                Aplikasi pengelola dan pengingat tugasmu, kami adalah temanmu menjadi produktif
+                            </p>
+                            <form class="footer-form">
+                                <label for="footer-email" class="small">Berlangganan untuk hal terbaru</label>
+                                <div class="d-flex mt-1">
+                                    <input type="email"
+                                        class="form-control rounded-0 rounded-start-bottom rounded-start-top"
+                                        id="footer-email" placeholder="Emailmu" />
+                                    <button type="submit"
+                                        class="btn btn-primary shadow-none rounded-0 rounded-end-bottom rounded-end-top">
+                                        Berlangganan
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-6">
+                            <h6 class="footer-title mb-4">Demos</h6>
+                            <ul class="list-unstyled">
+                                <li class="mb-3">
+                                    <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-1"
+                                        target="_blank" class="footer-link">Vertical Layout</a>
+                                </li>
+                                <li class="mb-3">
+                                    <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-5"
+                                        target="_blank" class="footer-link">Horizontal Layout</a>
+                                </li>
+                                <li class="mb-3">
+                                    <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-2"
+                                        target="_blank" class="footer-link">Bordered Layout</a>
+                                </li>
+                                <li class="mb-3">
+                                    <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-3"
+                                        target="_blank" class="footer-link">Semi Dark Layout</a>
+                                </li>
+                                <li class="mb-3">
+                                    <a href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo-4"
+                                        target="_blank" class="footer-link">Dark Layout</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-6">
+                            <h6 class="footer-title mb-4">Pages</h6>
+                            <ul class="list-unstyled">
+                                <li class="mb-3">
+                                    <a href="pricing.html" class="footer-link">Pricing</a>
+                                </li>
+                                <li class="mb-3">
+                                    <a href="payment.html" class="footer-link">Payment<span
+                                            class="badge rounded bg-primary ms-2">New</span></a>
+                                </li>
+                                <li class="mb-3">
+                                    <a href="checkout.html" class="footer-link">Checkout</a>
+                                </li>
+                                <li class="mb-3">
+                                    <a href="help-center.html" class="footer-link">Help Center</a>
+                                </li>
+                                <li class="mb-3">
+                                    <a href="../auth/login-cover.html" target="_blank"
+                                        class="footer-link">Login/Register</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-3 col-md-4">
+                            <h6 class="footer-title mb-4">Download our app</h6>
+                            <a href="javascript:void(0);" class="d-block footer-link mb-3 pb-2"><img
+                                    src="{{ asset('assets/img/front-pages/landing-page/apple-icon.png') }}"
+                                    alt="apple icon" /></a>
+                            <a href="javascript:void(0);" class="d-block footer-link"><img
+                                    src="{{ asset('assets/img/front-pages/landing-page/google-play-icon.png') }}"
+                                    alt="google play icon" /></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <script src="{{ asset('assets/vendor/js/dropdown-hover.js') }}"></script>
+        <script src="{{ asset('assets/vendor/js/mega-dropdown.js') }}"></script>
+        <script src="{{ asset('assets/vendor/libs/node-waves/node-waves259f.js?id=4fae469a3ded69fb59fce3dcc14cd638') }}">
+        </script>
+        <script src="{{ asset('assets/vendor/libs/popper/popper0a73.js?id=baf82d96b7771efbcc05c3b77135d24c') }}"></script>
+        <script src="{{ asset('assets/vendor/js/bootstraped84.js?id=9a6c701557297a042348b5aea69e9b76') }}"></script>
+        <script src="{{ asset('assets/vendor/libs/nouislider/nouislider.js') }}"></script>
+        <script src="{{ asset('assets/vendor/libs/swiper/swiper.js') }}"></script>
+        <script src="{{ asset('assets/js/front-main1b3c.js?id=2c2564d4c142df108c8f3152af8e0460') }}"></script>
+        <script src="{{ asset('assets/js/front-page-landing.js') }}"></script>
+        <script src="{{ asset('assets/vendor/libs/swiper/swiper.js') }}"></script>
+        <script src="{{ asset('assets/js/ui-carousel.js') }}"></script>
+    </body>
+
+    </html>
+                                        </div>

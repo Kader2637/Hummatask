@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RequestCreateGalery;
+use App\Http\Requests\RequestCreateLogo;
+use App\Http\Requests\RequestEditGalery;
+use App\Models\Galery;
 use App\Models\HistoryPresentasi;
 use App\Models\Notifikasi;
 use App\Models\PenglolaMagang;
@@ -17,7 +21,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
-
+use Illuminate\Support\Facades\Storage;
 class mentorController extends Controller
 {
     // Return view dashboard mentor
@@ -323,12 +327,12 @@ class mentorController extends Controller
             ->pluck('user_id');
 
 
-        $ketua = User::where('peran_id', 1)->where('status_kelulusan',0)
+            $ketua = User::where('peran_id', 1)->where('status_kelulusan',0)
             ->whereHas('tim', function ($query) use ($tim) {
                 $query->where('id', $tim);
             })
             ->get();
-        $users = User::where('peran_id', 1)->where('status_kelulusan',0)
+            $users = User::where('peran_id', 1)->where('status_kelulusan',0)
             ->where(function ($query) use ($tim) {
                 $query->whereDoesntHave('tim', function ($subQuery) {
                     $subQuery->where('kadaluwarsa', false);
@@ -473,5 +477,107 @@ class mentorController extends Controller
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
         return response()->view('mentor.laporan-progres', compact('notifikasi'));
+    }
+
+    protected function galery()
+    {
+        $userID = Auth::user()->id;
+        $notifikasi = Notifikasi::where('user_id', $userID)->get();
+        $galery = Galery::where('status','album')->get();
+        $logo = Galery::where('status','logo')->get();
+
+        return response()->view('mentor.galery', compact('notifikasi','galery','logo'));
+    }
+
+    protected function getGalery()
+    {
+        $userID = Auth::user()->id;
+        $notifikasi = Notifikasi::where('user_id', $userID)->get();
+        $galery = Galery::where('status','album')->get();
+        $logo = Galery::where('status','logo')->get();
+
+        return response()->json([ 'notifikasi' => $notifikasi, 'galery' => $galery, 'logo' => $logo  ]);
+    }
+
+    protected function createLogo(RequestCreateLogo $request)
+    {
+        $foto = $request->file('fotoLogo');
+        $img = $foto->hashName();
+        $foto->storeAs('public/img/', $img);
+
+        $logo = new Galery ([
+          'judul' => $request->input('judulLogo'),
+          'foto' => $img,
+          'status' => 'logo'
+        ]);
+
+        $logo->save();
+
+        return response()->json(['logo' => $logo]);
+    }
+
+    protected function createGalery(RequestCreateGalery $request)
+    {
+        $foto = $request->file('foto');
+        $img = $foto->hashName();
+        $foto->storeAs('public/img/', $img);
+
+        $galery = new Galery ([
+            'judul' => $request->input('judul'),
+            'foto' => $img,
+            'status' => 'album'
+        ]);
+
+        $galery->save();
+
+        return response()->json(['galery' => $galery]);
+    }
+
+    protected function updateGalery(RequestEditGalery $request, $id)
+    {
+        $foto = $request->file('foto');
+        $galery = Galery::findOrFail($id);
+
+        if ($foto) {
+            Storage::delete('public/img/'. $galery->foto);
+
+            $img = $foto->hashName();
+            $foto->storeAs('public/img/', $img);
+            $galery->foto = $img;
+        }
+        $galery->judul = $request->input('judul');
+        $galery->status = 'album';
+        $galery->save();
+
+        return response()->json(['galery' => $galery]);
+    }
+
+    protected function updateLogo(RequestEditGalery $request, $id)
+    {
+        $foto = $request->file('foto');
+        $logo = Galery::findOrFail($id);
+
+        if($foto) {
+            Storage::delete('public/img/'. $logo->foto);
+
+            $img = $foto->hashName();
+            $foto->storeAs('public/img/', $img);
+            $logo->foto = $img;
+        }
+        $logo->judul = $request->input('judul');
+        $logo->status = 'logo';
+        $logo->save();
+
+        return response()->json(['logo' => $logo]);
+    }
+
+    protected function deleteGalery($id)
+    {
+        $galery = Galery::findOrFail($id);
+        Storage::delete('public/img/'. $galery->foto);
+        $galery->delete();
+
+        return back();
+
     }
 }

@@ -261,6 +261,12 @@
                             <div>Pengguna</div>
                         </a>
                     </li>
+                         <li class="menu-item {{ request()->routeIs('galery') ? 'active' : '' }}">
+                        <a href="{{ route('galery') }}" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-photo photo-rounded"></i>
+                            <div>Galeri</div>
+                        </a>
+                    </li>
                     <li class="menu-item {{ request()->routeIs('history.mentor') ? 'active' : '' }}">
                         <a href="{{ route('history.mentor') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-history"></i>

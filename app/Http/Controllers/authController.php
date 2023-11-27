@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\peran;
 use App\Models\Presentasi;
 use App\Models\Project;
+use App\Models\Galery;
 use App\Models\Tim;
 use App\Models\Tugas;
 use App\Models\User;
@@ -31,7 +32,10 @@ class authController extends Controller
         $tim = Tim::all()->count();
         $project = Project::all()->count();
         $task = Presentasi::all()->where('status_presentasi', 'selesai')->count();
-        return response()->view('welcome', compact('title', 'user', 'tim', 'project', 'task'));
+        $galery = Galery::where('status','album')->get();
+        $logo = Galery::where('status','logo')->get();
+
+        return response()->view('welcome', compact('title', 'user', 'tim', 'project', 'task', 'galery', 'logo'));
     }
 
     protected function loginPage(Request $request)

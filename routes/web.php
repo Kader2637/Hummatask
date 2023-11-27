@@ -136,6 +136,8 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::get('/tim/cari', [mentorController::class, 'cari'])->name('cari_tim');
     Route::get('laporanProgres', [mentorController::class, 'laporanProgres'])->name('laporan');
     Route::get('pieproject/{timId}', [mentorController::class,'pieproject'])->name('piechart');
+    Route::get('galeri', [mentorController::class, 'galery'])->name('galery');
+    Route::get('get-galeri', [mentorController::class, 'getGalery'])->name('get.galery');
 
     // Process`
     Route::post('tampil-detail-presentasi/{code}', [PresentasiController::class, 'tampilkanDetailPresentasi']);
@@ -150,6 +152,12 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::get('ambil-detail-history-presentasi/{codeHistory}/{codeTim}', [PresentasiController::class, 'ambilDetailHistoryPresentasi']);
     Route::Post('profile-store', [profileController::class, 'update'])->name('profile.mentor.store');
     Route::put('/password.update', [ProfileController::class, 'updatePassword'])->name('password.mentor.updatee');
+    Route::post('galery-store', [mentorController::class, 'createGalery'])->name('galery.create');
+    Route::post('logo-store', [mentorController::class, 'createLogo'])->name('logo.create');
+    Route::put('galery-update/{id}', [mentorController::class, 'updateGalery'])->name('galery.update');
+    Route::put('logo-update/{id}', [mentorController::class, 'updateLogo'])->name('logo.update');
+    Route::delete('galery-delete/{id}', [mentorController::class, 'deleteGalery'])->name('galery.delete');
+
 
     Route::post('pembuatantim', [PengajuanTimController::class, 'pembuatanTimProject'])->name('pembuatan.tim');
     Route::post('/update-tim/{timId}', [PengajuanTimController::class, 'updateTimProject'])->name('tim.update');
