@@ -70,7 +70,11 @@ class Tim extends Model
 
     public function anggota_tim()
     {
-        return Anggota::where('tim_id', $this->id)->whereIn('status', ['active', 'expired'])->get();
+        return Anggota::where('tim_id', $this->id)
+            ->whereIn('status', ['active', 'expired'])
+            ->whereHas('user', function ($query) {
+                $query->where('status_kelulusan', 0);
+            })
+            ->get();
     }
-
 }

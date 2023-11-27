@@ -182,7 +182,19 @@ class PengajuanTimController extends Controller
     {
         $tim = Tim::findOrFail($timId);
         $kadaluwarsa = $request->input('kadaluwarsa');
+        $anggota = $request->input('anggota');
         $tim->kadaluwarsa = $kadaluwarsa;
+
+        if ($request->kadaluwarsa == "0") {
+            $tim->anggota()
+                ->whereIn('user_id', $anggota)
+                ->update(['status' => 'active']);
+        } elseif ($request->kadaluwarsa == "1") {
+            $tim->anggota()
+                ->whereIn('user_id', $anggota)
+                ->update(['status' => 'expired']);
+        }
+
         $tim->save();
 
         return response()->json(['success' => 'Berhasil update tim'], 200);
@@ -192,7 +204,7 @@ class PengajuanTimController extends Controller
     {
         $tim = Tim::findOrFail($timId);
         $date=$request->expired;
-        dd($date);
+        // dd($date);
         $exp = $request->kadaluwarsa;
         $daftarAnggota = $request->anggota;
         $daftarAnggota[] = $request->ketuaKelompok;

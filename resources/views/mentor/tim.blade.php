@@ -106,6 +106,7 @@
                                         <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
                                             data-uri="/mentor/solo/edit/{{ $tim->id }}"
                                             data-kadaluwarsa="{{ $tim->kadaluwarsa }}"
+                                            data-anggota="{{ json_encode($tim->anggota_id()) }}"
                                             @if ($tim->kadaluwarsa == 0) checked @endif>
 
                                         <label class="form-check-label" for="flexSwitchCheckDefault">Kondisi Tim</label>
@@ -307,6 +308,7 @@
             // Ambil nilai dan atribut yang diperlukan saat halaman dimuat
             var uri = $('#flexSwitchCheckDefault').data('uri');
             var kadaluwarsa = $('#flexSwitchCheckDefault').data('kadaluwarsa');
+            var kadaluwarsa = $('#flexSwitchCheckDefault').data('anggota');
             var ikan = $('meta[name="csrf-token"]').attr('content');
 
             // Perbarui nilai checkbox berdasarkan kondisi
@@ -328,6 +330,7 @@
                 var uri = $(this).data('uri');
                 var isChecked = $(this).prop('checked');
                 var kadaluwarsa = $(this).data('kadaluwarsa');
+                var anggota = $(this).data('anggota');
                 var isChecked = $(this).prop('checked');
                 var token = ($('meta[name="csrf-token"]').attr('content'));
 
@@ -344,7 +347,8 @@
                     method: 'POST', // Gantilah dengan metode HTTP yang sesuai
                     data: {
                         _token: token,
-                        kadaluwarsa: isChecked ? 0 : 1
+                        kadaluwarsa: isChecked ? 0 : 1,
+                        anggota: anggota
                     },
                     success: function(data) {
                         $('#saveButton').hide();

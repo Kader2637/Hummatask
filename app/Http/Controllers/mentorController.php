@@ -294,7 +294,7 @@ class mentorController extends Controller
 
     protected function Project()
     {
-        $users = User::where('peran_id', 1)
+        $users = User::where('peran_id', 1)->where('status_kelulusan',0)
             ->where(function ($query) {
                 $query->whereDoesntHave('tim', function ($query) {
                     $query->where('kadaluwarsa', false);
@@ -325,12 +325,12 @@ class mentorController extends Controller
             ->pluck('user_id');
 
 
-        $ketua = User::where('peran_id', 1)
+        $ketua = User::where('peran_id', 1)->where('status_kelulusan',0)
             ->whereHas('tim', function ($query) use ($tim) {
                 $query->where('id', $tim);
             })
             ->get();
-        $users = User::where('peran_id', 1)
+        $users = User::where('peran_id', 1)->where('status_kelulusan',0)
             ->where(function ($query) use ($tim) {
                 $query->whereDoesntHave('tim', function ($subQuery) {
                     $subQuery->where('kadaluwarsa', false);
