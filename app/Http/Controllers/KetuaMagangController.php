@@ -9,6 +9,7 @@ use App\Models\HistoryPresentasi;
 use App\Models\Notifikasi;
 use App\Models\Presentasi;
 use App\Models\StatusTim;
+use App\Models\TidakPresentasiMingguan;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -192,9 +193,10 @@ class KetuaMagangController extends Controller
             ->where('status_tim', '!=', 'solo')
             ->whereHas('project')
             ->get();
+        $tidakPresentasiMingguan = TidakPresentasiMingguan::with('tim.ketuaTim')->get();
 
         $notifikasi = Notifikasi::where('user_id', Auth::user()->id)->get();
 
-        return view('ketuaMagang.history', compact('notifikasi', 'title', 'tims', 'telatDeadline', 'presentasiSelesai', 'timSolo', 'timGroup'));
+        return view('ketuaMagang.history', compact('tidakPresentasiMingguan','notifikasi', 'title', 'tims', 'telatDeadline', 'presentasiSelesai', 'timSolo', 'timGroup'));
     }
 }
