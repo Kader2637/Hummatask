@@ -398,9 +398,6 @@
             </div>
         </div>
     </div>
-    {{-- Modal detail --}}
-
-    </div>
 @endsection
 
 @section('script')

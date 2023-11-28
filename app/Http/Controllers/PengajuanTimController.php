@@ -211,12 +211,15 @@ class PengajuanTimController extends Controller
             array_unshift($uniqueDaftarAnggota, $request->ketuaKelompok);
         }
 
+        $anggota = Anggota::whereIn('user_id', $uniqueDaftarAnggota);
 
-        $existingAnggota = Anggota::whereIn('user_id', $uniqueDaftarAnggota)
-            ->where('tim_id', '<>', $timId->id)
+        $existingAnggota = $anggota
+            ->where('tim_id', '!=', $timId->id)
+            ->where('status', 'active')
             ->first();
+
         if ($existingAnggota) {
-            return back()->with('warning', 'Anggota telah masuk di tim lain.');
+            return response()->json(['errors' => ['Siswa telah masuk di tim lain']], 422);
         }
 
         $timId->status_tim = $request->status_tim;
@@ -247,7 +250,9 @@ class PengajuanTimController extends Controller
                 ->where('user_id', $anggota)
                 ->first();
 
-            if (!$existingAnggota) {
+            if ($existingAnggota->user->status_kelulusan == 1) {
+                return response()->json(['errors' => ['Siswa telah lulus']], 422);
+            } else if (!$existingAnggota) {
                 $newAnggota = new Anggota();
                 $newAnggota->user_id = $anggota;
                 $newAnggota->tim_id = $timId->id;
@@ -260,7 +265,7 @@ class PengajuanTimController extends Controller
 
             $iteration++;
         }
-        
+
         return response()->json(['success' => 'Berhasil update tim'], 200);
     }
 

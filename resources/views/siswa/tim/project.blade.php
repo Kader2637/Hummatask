@@ -252,7 +252,7 @@
 
                                                         $deadline = \Carbon\Carbon::parse($project->deadline)->translatedFormat('Y-m-d');
                                                         $totalDeadline = \Carbon\Carbon::parse($deadline)->diffInDays($tanggalMulai);
-                                                        $dayLeft = \Carbon\Carbon::parse($deadline)->diffInDays(\Carbon\Carbon::now()->startOfDay);
+                                                        $dayLeft = \Carbon\Carbon::parse($deadline)->diffInDays(\Carbon\Carbon::now()->startOfDay());
                                                         $progressPercentage = $totalDeadline > 0 ? 100 - ($dayLeft / $totalDeadline) * 100 : 0;
                                                     @endphp
                                                 @endif

@@ -61,7 +61,7 @@ Route::prefix('tim')->controller(timController::class)->group(function () {
         Route::patch('catatan/update/{code}', [catatanController::class, 'update'])->name('catatan.update');
         Route::delete('catatan/delete/{code}', [catatanController::class, 'delete'])->name('catatan.delete');
     });
-    Route::middleware(['auth', 'siswa','cekanggota'])->group(function () {
+    Route::middleware(['auth', 'siswa', 'cekanggota'])->group(function () {
         Route::get('board/{code}', 'boardPage')->name('tim.board');
         Route::get('kalender/{code}', 'kalenderPage')->name('tim.kalender');
         Route::get('catatan/{code}', 'catatanPage')->name('tim.catatan');
@@ -75,22 +75,21 @@ Route::prefix('tim')->controller(timController::class)->group(function () {
         Route::get('/view-comment', 'viewComments');
         // proses di halaman tim
     });
-    Route::middleware(['auth','siswa'])->group(function(){
+    Route::middleware(['auth', 'siswa'])->group(function () {
         Route::get('tampil-tugas/{code}', [TugasController::class, 'getData'])->name('tim.tampilTugas');
         Route::post('board/tambah-tugas/{code}', [TugasController::class, 'buatTugas']);
         Route::post('ajukan-presentasi/{code}', [PresentasiController::class, 'ajukanPresentasi'])->name('ajukan-presentasi');
         Route::patch('edit-project/{code}', [PengajuanProjekController::class, 'editProject'])->name('tim.editProject');
-        Route::get('board/ambil-data-tugas/{code}',[TugasController::class, 'getData'])->name('tim.proses.ambilTugas');
-        Route::get('board/data-edit-tugas/{codeTugas}',[TugasController::class,'dataEditTugas']);
-        Route::put('board/proses-edit-tugas',[TugasController::class,'prosesEditTugas'])->name('editTugas');
-        Route::delete('board/delete/tugas/{codeTugas}',[TugasController::class,'hapusTugas']);
-        Route::post("board/tambah-komentar",[TugasController::class,'tambahKomentar']);
-        Route::delete('board/hapus-komentar/{tugas_id}',[TugasController::class,'hapusKomentar']);
+        Route::get('board/ambil-data-tugas/{code}', [TugasController::class, 'getData'])->name('tim.proses.ambilTugas');
+        Route::get('board/data-edit-tugas/{codeTugas}', [TugasController::class, 'dataEditTugas']);
+        Route::put('board/proses-edit-tugas', [TugasController::class, 'prosesEditTugas'])->name('editTugas');
+        Route::delete('board/delete/tugas/{codeTugas}', [TugasController::class, 'hapusTugas']);
+        Route::post("board/tambah-komentar", [TugasController::class, 'tambahKomentar']);
+        Route::delete('board/hapus-komentar/{tugas_id}', [TugasController::class, 'hapusKomentar']);
 
-        Route::get('statistik/data-kontribusi/{codeTim}/{uuid}',[StatistikTimController::class,'getDataKontribusi']);
-        Route::get('statistik/data-progres/{codeTim}',[StatistikTimController::class,'getProgres']);
+        Route::get('statistik/data-kontribusi/{codeTim}/{uuid}', [StatistikTimController::class, 'getDataKontribusi']);
+        Route::get('statistik/data-progres/{codeTim}', [StatistikTimController::class, 'getProgres']);
     });
-
 });
 
 // Halaman Ketua Magang
@@ -99,7 +98,6 @@ Route::prefix('ketuaMagang')->middleware(['auth', 'siswa', 'can:kelola siswa'])-
     Route::get('presentasi', 'presentasiPage')->name('ketua.presentasi');
     Route::get('project', 'projectPage')->name('ketua.project');
     Route::get('projek', 'projek')->name('tampilprojek');
-    Route::get('detail_project/{code}', 'detailProject')->name('ketua.detail_project');
     Route::get('history', 'historyPage')->name('ketua.history');
     Route::get('pieprojectKetua/{timId}', 'pieProjectKetua')->name('pie.projectKetua');
     Route::post('pembuatantim', [PengajuanTimController::class, 'pembuatanTimProjectKetua'])->name('pembuatantim.ketua');
@@ -115,7 +113,6 @@ Route::prefix('ketuaMagang')->middleware(['auth', 'siswa', 'can:kelola siswa'])-
     Route::get('ketua/ambil-urutan/{codeHistory}', [PresentasiController::class, 'ambilUrutan']);
     Route::get('ketua/ambil-urutan/{codeHistory}', [PresentasiController::class, 'ambilUrutan']);
     Route::get('ketua/ambil-detail-history-presentasi/{codeHistory}/{codeTim}', [PresentasiController::class, 'ambilDetailHistoryPresentasi']);
-
 });
 
 // Halaman Mentor
@@ -124,18 +121,15 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::get('pengajuan-projek', [mentorController::class, 'pengajuanProjekPage'])->name('pengajuan-projek');
     Route::get('detail-pengajuan-projek/{code}', [mentorController::class, 'detailPengajuan'])->name('detail-pengajuan-projek');
     Route::get('projek', [mentorController::class, 'projekPage'])->name('projek');
-    Route::get('detail-projek/{code}', [mentorController::class, 'detailProjekPage'])->name('detail-projek');
     Route::get('profile-mentor', [mentorController::class, 'profilePage'])->name('profile-mentor');
     Route::get('pengguna', [mentorController::class, 'pengguna'])->name('pengguna.mentor');
     Route::get('history', [mentorController::class, 'history'])->name('history.mentor');
     Route::get('presentasi', [mentorController::class, 'presentasi'])->name('presentasi.mentor');
     Route::get('project', [mentorController::class, 'Project'])->name('Project');
     Route::get('tim', [mentorController::class, 'tim'])->name('tim');
-    Route::get('tim/edit/{tim}', [mentorController:: class, 'timEdit'])->name('tim.edit');
-    Route::get('/tim/filter', [mentorController::class, 'filter'])->name('tim.filter');
-    Route::get('/tim/cari', [mentorController::class, 'cari'])->name('cari_tim');
+    Route::get('tim/edit/{tim}', [mentorController::class, 'timEdit'])->name('tim.edit');
     Route::get('laporanProgres', [mentorController::class, 'laporanProgres'])->name('laporan');
-    Route::get('pieproject/{timId}', [mentorController::class,'pieproject'])->name('piechart');
+    Route::get('pieproject/{timId}', [mentorController::class, 'pieproject'])->name('piechart');
     Route::get('galeri', [mentorController::class, 'galery'])->name('galery');
     Route::get('get-galeri', [mentorController::class, 'getGalery'])->name('get.galery');
 
@@ -161,7 +155,7 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
 
     Route::post('pembuatantim', [PengajuanTimController::class, 'pembuatanTimProject'])->name('pembuatan.tim');
     Route::post('/update-tim/{timId}', [PengajuanTimController::class, 'updateTimProject'])->name('tim.update');
-    Route::post('solo/edit/{timId}', [PengajuanTimController:: class, 'updateSolo'])->name('solo.edit');
+    Route::post('solo/edit/{timId}', [PengajuanTimController::class, 'updateSolo'])->name('solo.edit');
 
 
     Route::get('delete-user/{code}', [tambahUsersController::class, 'delete'])->name('delete.user.pengguna');
@@ -175,7 +169,4 @@ Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
     Route::put('edit-mentor/{uuid}', [tambahUsersController::class, 'edit_mentor'])->name('edit.mentor');
     Route::post('tambah-pengelola', [tambahUsersController::class, 'tambah_pengelola'])->name('tambah.pengelola');
     Route::post('tambah-role', [tambahUsersController::class, 'tambah_role'])->name('tambah.roles');
-
-
 });
-

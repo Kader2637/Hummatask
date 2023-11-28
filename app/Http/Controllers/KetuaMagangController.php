@@ -24,8 +24,8 @@ class KetuaMagangController extends Controller
         $title = "Dashboard Ketua Magang";
         $usercount = User::where('peran_id', 1)->count();
         $timcount = Tim::where(function ($query) {
-           $query->whereIn('status_tim',['pre_mini','mini','big'])
-                 ->where('kadaluwarsa', 0);
+            $query->whereIn('status_tim', ['pre_mini', 'mini', 'big'])
+                ->where('kadaluwarsa', 0);
         })->count();
         $present = Presentasi::where('status_pengajuan', 'disetujui')->whereDate('created_at', now())->count();
         $tims = User::find(Auth::user()->id)->tim()->get();
@@ -38,7 +38,7 @@ class KetuaMagangController extends Controller
             'status_tim',
             DB::raw('count(*) as total')
         )
-            ->whereIn('status_tim', ['mini','pre_mini','big'])
+            ->whereIn('status_tim', ['mini', 'pre_mini', 'big'])
             ->whereYear('created_at', Carbon::now()->year)
             ->groupBy('year', 'month', 'status_tim')
             ->get();
@@ -96,36 +96,43 @@ class KetuaMagangController extends Controller
         $notifikasi = Notifikasi::where('user_id', Auth::user()->id)->get();
         return response()->view('ketuaMagang.presentasi', compact('notifikasi', 'persetujuan_presentasi', 'konfirmasi_presentasi', 'jadwal', 'hari', 'historyPresentasi', 'title', 'tims'));
     }
-    protected function projectPage()
+    protected function projectPage(Request $request)
     {
         $title = "Project Ketua Magang";
         $tims = User::find(Auth::user()->id)
             ->tim()
             ->get();
-        $projects = Project::with('tim.anggota', 'tema')
-            ->where('status_project', 'approved')
-            ->get();
 
-        $projects = $projects->map(function ($project) {
-            if ($project->type_project === 'solo') {
-                $project->type_project = 'Solo Project';
-            } elseif ($project->type_project === 'pre_mini') {
-                $project->type_project = 'Pre Mini Project';
+        $notifikasi = Notifikasi::where('user_id', Auth::user()->id)->get();
+
+        $projectQuery = Project::with('tim.anggota', 'tema', 'tim.tugas')
+            ->where('status_project', 'approved');
+
+        if ($request->has('status_tim')) {
+            if ($request->status_tim != 'all' && $request->status_tim != null) {
+                $projectQuery->where('type_project', $request->status_tim);
             }
+        }
 
-            return $project;
-        });
+        if ($request->has('nama_tim')) {
+            $namaTim = $request->nama_tim;
+            if ($namaTim != null) {
+                $projectQuery->whereHas('tim', function ($query) use ($namaTim) {
+                    $query->where('nama', 'like', "%$namaTim%");
+                });
+            }
+        }
 
-        // dd($projects);
+        $projects = $projectQuery->paginate(12);
+
         $users = User::where('peran_id', 1)
             ->whereDoesntHave('tim', function ($query) {
                 $query->where('kadaluwarsa', true);
             })
             ->get();
-        $status_tim = StatusTim::whereNot('status', 'solo')->get();
-        $notifikasi = Notifikasi::where('user_id', Auth::user()->id)->get();
 
-        return view('ketuaMagang.project', compact('notifikasi', 'title', 'tims', 'users', 'status_tim', 'projects'));
+
+        return view('ketuaMagang.project', compact('notifikasi', 'title', 'tims', 'users', 'projects'));
     }
 
     protected function pieProjectKetua($timId)

@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Storage;
+
 class mentorController extends Controller
 {
     // Return view dashboard mentor
@@ -61,8 +62,6 @@ class mentorController extends Controller
             ->whereYear('created_at', Carbon::now()->year)
             ->groupBy('year', 'month', 'status_tim')
             ->get();
-
-
 
         $processedData = [];
         $currentYear = Carbon::now()->year;
@@ -142,12 +141,10 @@ class mentorController extends Controller
         $roles = Role::all();
         $mentors = User::where('peran_id', 2)->get();
         $users = User::with('peran')->where('peran_id', 1)->get();
-        $userID = Auth::user()->id;
-        $notifikasi = Notifikasi::where('user_id', $userID)->get();
+        $notifikasi = Notifikasi::where('user_id', Auth::user()->id)->get();
         $pengelolaMagang = new Collection();
         $bukanPengelolaMagang = new Collection();
         $magang = PenglolaMagang::all();
-
 
         foreach ($roles as $peran) {
             $penggunaDenganPeran = User::whereHas('roles', function ($query) use ($peran) {
@@ -160,6 +157,7 @@ class mentorController extends Controller
             })->get();
             $bukanPengelolaMagang = $bukanPengelolaMagang->concat($penggunaDenganPeran);
         }
+
         foreach ($users as $user) {
             $penglolaMagang = PenglolaMagang::where('user_id', $user->id)->first();
 
@@ -199,9 +197,6 @@ class mentorController extends Controller
             ->where('status_tim', '!=', 'solo')
             ->whereHas('project')
             ->get();
-
-
-
 
         $tidakPresentasiMingguan = TidakPresentasiMingguan::with('tim.ketuaTim')->get();
 
@@ -248,8 +243,8 @@ class mentorController extends Controller
     // Return view projek mentor
     protected function projekPage(Request $request)
     {
-        $userID = Auth::user()->id;
-        $notifikasi = Notifikasi::where('user_id', $userID)->get();
+        $notifikasi = Notifikasi::where('user_id', Auth::user()->id)->get();
+
         $projectQuery = Project::with('tim.anggota', 'tema', 'tim.tugas')
             ->where('status_project', 'approved');
 
@@ -281,7 +276,6 @@ class mentorController extends Controller
 
     function updateDeadline($id, Request $request)
     {
-        // dd($request);
         $projek = Project::findOrFail($id);
         $deadline = $request->input('xp');
         $projek->deadline = $deadline;
@@ -315,7 +309,7 @@ class mentorController extends Controller
 
     protected function Project()
     {
-        $users = User::where('peran_id', 1)->where('status_kelulusan',0)
+        $users = User::where('peran_id', 1)->where('status_kelulusan', 0)
             ->where(function ($query) {
                 $query->whereDoesntHave('tim', function ($query) {
                     $query->where('kadaluwarsa', false);
@@ -327,13 +321,12 @@ class mentorController extends Controller
             })
             ->get();
 
-
-
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
         return response()->json(['users' => $users, 'status_tim' => $status_tim]);
     }
 
-    protected function timEdit($tim) {
+    protected function timEdit($tim)
+    {
 
         $ketuaId = Tim::where('id', $tim)
             ->with(['anggota' => function ($query) {
@@ -344,12 +337,12 @@ class mentorController extends Controller
             ->pluck('user_id');
 
 
-            $ketua = User::where('peran_id', 1)->where('status_kelulusan',0)
+        $ketua = User::where('peran_id', 1)->where('status_kelulusan', 0)
             ->whereHas('tim', function ($query) use ($tim) {
                 $query->where('id', $tim);
             })
             ->get();
-            $users = User::where('peran_id', 1)->where('status_kelulusan',0)
+        $users = User::where('peran_id', 1)->where('status_kelulusan', 0)
             ->where(function ($query) use ($tim) {
                 $query->whereDoesntHave('tim', function ($subQuery) {
                     $subQuery->where('kadaluwarsa', false);
@@ -365,8 +358,6 @@ class mentorController extends Controller
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
         return response()->json(['users' => $users, 'status_tim' => $status_tim, 'ketua' => $ketua, 'ketua_id' => $ketuaId]);
     }
-
-
 
     protected function tim(Request $request)
     {
@@ -392,80 +383,6 @@ class mentorController extends Controller
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
 
         return response()->view('mentor.tim', compact('tims', 'status_tim', 'notifikasi'));
-    }
-
-    public function filter(Request $request)
-    {
-        $requestData = $request->all();
-        // dd($requestData);
-        $status = $request->input('status_tim');
-        $userID = Auth::user()->id;
-        $notifikasi = Notifikasi::where('user_id', $userID)->get();
-        if ($status === 'all') {
-            $tims = Tim::with('user')->paginate(12);
-        } elseif ($status === 'solo') {
-            $tims = Tim::with('user')->where('status_tim', 'solo')->paginate(12);
-        } elseif ($status === 'pre_mini') {
-            $tims = Tim::with('user')->where('status_tim', 'pre_mini')->paginate(12);
-        } elseif ($status === 'mini') {
-            $tims = Tim::with('user')->where('status_tim', 'mini')->paginate(12);
-        } elseif ($status === 'big') {
-            $tims = Tim::with('user')->where('status_tim', 'big')->paginate(12);
-        } else {
-            $tims = Tim::with('user')->paginate(12);
-        }
-
-        $status_tim = StatusTim::whereNot('status', 'solo')->get();
-
-        return view('mentor.tim', compact('tims', 'status_tim', 'notifikasi'));
-    }
-
-    public function cari(Request $request)
-    {
-        $namaTim = $request->input('nama_tim');
-        $statusTim = $request->input('status_tim');
-        $userID = Auth::user()->id;
-        $notifikasi = Notifikasi::where('user_id', $userID)->get();
-        $query = Tim::query();
-
-        if (!empty($namaTim)) {
-            $query->where('nama', 'like', '%' . $namaTim . '%');
-        }
-
-        if (!empty($statusTim) && $statusTim !== 'all') {
-            $query->where('status_tim', $statusTim);
-        } else {
-            $query->whereIn('status_tim', ['pre_mini', 'big', 'solo', 'mini']);
-        }
-
-        $tims = $query->paginate(99999);
-        $status_tim = StatusTim::whereNot('status', 'solo')->get();
-        // dd($tims);
-        return view('mentor.tim', compact('tims', 'status_tim', 'notifikasi'));
-    }
-
-    protected function detailProjekPage($code)
-    {
-        $tim = Tim::where('code', $code)->firstOrFail();
-        $userID = Auth::user()->id;
-        $notifikasi = Notifikasi::where('user_id', $userID)->get();
-        $anggota = $tim->anggota()->get();
-        $project = $tim->project()->first();
-
-        $selesai = $tim->tugas()->where('status_tugas', 'selesai')->count();
-        $revisi = $tim->tugas()->where('status_tugas', 'revisi')->count();
-        $tugas_baru = $tim->tugas()->where('status_tugas', 'tugas_baru')->count();
-
-        $code = $tim->code;
-
-        $chartData = [
-            ['Status Tugas', 'Jumlah'],
-            ['Selesai', $selesai],
-            ['Revisi', $revisi],
-            ['Tugas Baru', $tugas_baru]
-        ];
-
-        return response()->view('mentor.detail-projek', compact('tim', 'anggota', 'project', 'chartData', 'notifikasi'));
     }
 
     // Return view profile mentor
@@ -500,20 +417,20 @@ class mentorController extends Controller
     {
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
-        $galery = Galery::where('status','album')->get();
-        $logo = Galery::where('status','logo')->get();
+        $galery = Galery::where('status', 'album')->get();
+        $logo = Galery::where('status', 'logo')->get();
 
-        return response()->view('mentor.galery', compact('notifikasi','galery','logo'));
+        return response()->view('mentor.galery', compact('notifikasi', 'galery', 'logo'));
     }
 
     protected function getGalery()
     {
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
-        $galery = Galery::where('status','album')->get();
-        $logo = Galery::where('status','logo')->get();
+        $galery = Galery::where('status', 'album')->get();
+        $logo = Galery::where('status', 'logo')->get();
 
-        return response()->json([ 'notifikasi' => $notifikasi, 'galery' => $galery, 'logo' => $logo  ]);
+        return response()->json(['notifikasi' => $notifikasi, 'galery' => $galery, 'logo' => $logo]);
     }
 
     protected function createLogo(RequestCreateLogo $request)
@@ -522,10 +439,10 @@ class mentorController extends Controller
         $img = $foto->hashName();
         $foto->storeAs('public/img/', $img);
 
-        $logo = new Galery ([
-          'judul' => $request->input('judulLogo'),
-          'foto' => $img,
-          'status' => 'logo'
+        $logo = new Galery([
+            'judul' => $request->input('judulLogo'),
+            'foto' => $img,
+            'status' => 'logo'
         ]);
 
         $logo->save();
@@ -539,7 +456,7 @@ class mentorController extends Controller
         $img = $foto->hashName();
         $foto->storeAs('public/img/', $img);
 
-        $galery = new Galery ([
+        $galery = new Galery([
             'judul' => $request->input('judul'),
             'foto' => $img,
             'status' => 'album'
@@ -556,7 +473,7 @@ class mentorController extends Controller
         $galery = Galery::findOrFail($id);
 
         if ($foto) {
-            Storage::delete('public/img/'. $galery->foto);
+            Storage::delete('public/img/' . $galery->foto);
 
             $img = $foto->hashName();
             $foto->storeAs('public/img/', $img);
@@ -574,8 +491,8 @@ class mentorController extends Controller
         $foto = $request->file('foto');
         $logo = Galery::findOrFail($id);
 
-        if($foto) {
-            Storage::delete('public/img/'. $logo->foto);
+        if ($foto) {
+            Storage::delete('public/img/' . $logo->foto);
 
             $img = $foto->hashName();
             $foto->storeAs('public/img/', $img);
@@ -591,10 +508,9 @@ class mentorController extends Controller
     protected function deleteGalery($id)
     {
         $galery = Galery::findOrFail($id);
-        Storage::delete('public/img/'. $galery->foto);
+        Storage::delete('public/img/' . $galery->foto);
         $galery->delete();
 
         return back();
-
     }
 }

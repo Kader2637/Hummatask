@@ -119,7 +119,6 @@
                                         data-status="{{ $tim->status_tim }}" data-logo="{{ $tim->logo }}"
                                         data-kadaluwarsa="{{ $tim->kadaluwarsa }}">
                                         <span class="text-white">Edit Tim</span>
-
                                     </a>
                                 @endif
                             </div>
@@ -326,8 +325,8 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        $(document).ready(function() {
 
+        $(document).ready(function() {
             $('#flexSwitchCheckDefault').on('change', function() {
                 var uri = $(this).data('uri');
                 var isChecked = $(this).prop('checked');
@@ -414,10 +413,10 @@
 
                         Swal.fire({
                             title: 'Sukses',
-                            text: 'Password berhasil diperbarui.',
+                            text: 'Tim berhasil diperbarui.',
                             icon: 'success',
                             showConfirmButton: false,
-                            timer: 1700,
+                            timer: 2000,
                         }).then(() => {
                             $('#updateTimForm ').modal('hide');
                             $('#saveButton').show();
@@ -441,6 +440,8 @@
                                 icon: 'error',
                                 title: 'Error!',
                                 text: errorMessageText,
+                                showConfirmButton: false,
+                                timer: 2000,
                             });
                         } else {
                             // For other errors, display a generic error message
@@ -448,6 +449,8 @@
                                 icon: 'error',
                                 title: 'Error!',
                                 text: 'Terjadi kesalahan: ' + errors,
+                                showConfirmButton: false,
+                                timer: 2000,
                             });
                         }
                     }
