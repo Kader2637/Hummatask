@@ -250,9 +250,13 @@ class PengajuanTimController extends Controller
                 ->where('user_id', $anggota)
                 ->first();
 
-            if ($existingAnggota->user->status_kelulusan == 1) {
-                return response()->json(['errors' => ['Siswa telah lulus']], 422);
-            } else if (!$existingAnggota) {
+            if (isset($existingAnggota->user)) {
+                if ($existingAnggota->user->status_kelulusan == 1) {
+                    return response()->json(['errors' => ['Siswa telah lulus']], 422);
+                }
+            }
+
+            if (!$existingAnggota) {
                 $newAnggota = new Anggota();
                 $newAnggota->user_id = $anggota;
                 $newAnggota->tim_id = $timId->id;

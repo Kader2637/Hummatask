@@ -281,8 +281,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="mt-4">
-                                                    <div class="mb-3">Status : <span
-                                                            class="badge bg-label-warning">{{ $tim->status_tim }}</span>
+                                                    <div class="mb-3">Status : <span class="badge bg-label-warning">
+                                                            @if ($tim->status_tim == 'solo')
+                                                                Solo Project
+                                                            @elseif ($tim->status_tim == 'pre_mini')
+                                                                Pre-Mini Project
+                                                            @elseif ($tim->status_tim == 'mini')
+                                                                Mini Project
+                                                            @elseif ($tim->status_tim == 'big')
+                                                                Big Project
+                                                            @endif
+                                                        </span>
                                                     </div>
                                                     @if (@isset($project) && $project->deadline)
                                                         <div>Tema : <span
@@ -344,7 +353,7 @@
                                                         <i class="ti ti-bell ti-xs"></i>
                                                     </span>
                                                     Tim ini belum memiliki deskripsi tema, mohon isi agar dapat mengakses
-                                                    fitur lain nya!
+                                                    fitur lain nya! Hanya Ketua tim yang dapat mengajukan tema.
                                                 </div>
                                             @else
                                                 <div class="alert alert-warning d-flex align-items-center mt-4 cursor-pointer"
@@ -354,7 +363,7 @@
                                                     </span>
                                                     Tim ini belum memiliki project, mohon ajukan project agar dapat
                                                     mengakses
-                                                    fitur lain nya!
+                                                    fitur lain nya! Hanya Ketua tim yang dapat mengajukan project.
                                                 </div>
                                             @endif
                                         </div>
