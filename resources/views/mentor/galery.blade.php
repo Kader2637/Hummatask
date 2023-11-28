@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&amp;family=Playball&amp;display=swap"
         rel="stylesheet">
 
-     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
 
@@ -27,7 +27,7 @@
     <script src="{{ asset('assets/lib/counterup/counterup.min.js') }}"></script>
     <script src="{{ asset('assets/lib/lightbox/js/lightbox.min.js') }}"></script>
     <script src="{{ asset('assets/lib/owlcarousel/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('js/main.js') }}"></script>
+    {{-- <script src="{{ asset('js/main.js') }}"></script> --}}
 @endsection
 
 @section('content')
@@ -87,24 +87,21 @@
                                             <div class="row g-4">
                                                 <div class="col-md-6 col-lg-3">
                                                     <div class="event-img position-relative">
-                                                        <img class="img-fluid rounded w-100"
-                                                            src="" alt="">
+                                                        <img class="img-fluid rounded w-100" src="" alt="">
                                                         <div class="event-overlay d-flex flex-column p-4">
                                                             <h4 class="me-auto">Cocktail</h4>
-                                                            <a href=""
-                                                                data-lightbox="event-12" class="my-auto"><i
+                                                            <a href="" data-lightbox="event-12" class="my-auto"><i
                                                                     class="fas fa-search-plus text-dark fa-2x"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 col-lg-3">
                                                     <div class="event-img position-relative">
-                                                        <img class="img-fluid rounded w-100"
-                                                            src="" alt="">
+                                                        <img class="img-fluid rounded w-100" src=""
+                                                            alt="">
                                                         <div class="event-overlay d-flex flex-column p-4">
                                                             <h4 class="me-auto">Cocktail</h4>
-                                                            <a href=""
-                                                                data-lightbox="event-13" class="my-auto"><i
+                                                            <a href="" data-lightbox="event-13" class="my-auto"><i
                                                                     class="fas fa-search-plus text-dark fa-2x"></i></a>
                                                         </div>
                                                     </div>
@@ -148,24 +145,22 @@
                                             <div class="row g-4">
                                                 <div class="col-md-6 col-lg-3">
                                                     <div class="event-img position-relative">
-                                                        <img class="img-fluid rounded w-100"
-                                                            src="" alt="">
+                                                        <img class="img-fluid rounded w-100" src=""
+                                                            alt="">
                                                         <div class="event-overlay d-flex flex-column p-4">
                                                             <h4 class="me-auto">Cocktail</h4>
-                                                            <a href=""
-                                                                data-lightbox="event-12" class="my-auto"><i
+                                                            <a href="" data-lightbox="event-12" class="my-auto"><i
                                                                     class="fas fa-search-plus text-dark fa-2x"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 col-lg-3">
                                                     <div class="event-img position-relative">
-                                                        <img class="img-fluid rounded w-100"
-                                                            src="" alt="">
+                                                        <img class="img-fluid rounded w-100" src=""
+                                                            alt="">
                                                         <div class="event-overlay d-flex flex-column p-4">
                                                             <h4 class="me-auto">Cocktail</h4>
-                                                            <a href=""
-                                                                data-lightbox="event-13" class="my-auto"><i
+                                                            <a href="" data-lightbox="event-13" class="my-auto"><i
                                                                     class="fas fa-search-plus text-dark fa-2x"></i></a>
                                                         </div>
                                                     </div>
@@ -384,6 +379,18 @@
                     isSubmitting = false; // Set flag kembali menjadi false setelah validasi error
                     return;
                 }
+                var file = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+                var fotoExt = foto.substr(foto.lastIndexOf('.'));
+
+                if (!file.exec(fotoExt)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Jenis file yang diizinkan hanya jpg, jpeg, png !',
+                    });
+                    isSubmitting = false; // Set flag kembali menjadi false setelah validasi error
+                    return;
+                }
 
                 var formData = new FormData($(this)[0]);
 
@@ -434,7 +441,7 @@
                     let html = '';
                     data.galery.forEach(function(item) {
                         html += `
-                            <div class="col-md-6 col-lg-3 wow bounceInUp" data-wow-delay="0.1s">
+                            <div class="col-md-6 col-lg-3 wow bounceInUp" data-wow-delay="1s">
                                 <div class="event-img position-relative">
                                     <img class="img-fluid rounded "
                                         src="{{ asset('storage/img/') }}/${item.foto}"
@@ -494,6 +501,18 @@
                         title: 'Oops...',
                         text: 'Pastikan data terisi semua!',
                     });
+                    return;
+                }
+                var file = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+                var fotoExt = foto.substr(foto.lastIndexOf('.'));
+
+                if (!file.exec(fotoExt)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Jenis file yang diizinkan hanya jpg, jpeg, png !',
+                    });
+                    isSubmitting = false; // Set flag kembali menjadi false setelah validasi error
                     return;
                 }
 
@@ -573,6 +592,19 @@
                     });
 
                     Button = false; // Set flag kembali menjadi false setelah validasi error
+                    return;
+                }
+
+                var file = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+                var fotoExt = foto.substr(foto.lastIndexOf('.'));
+
+                if (!file.exec(fotoExt)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Jenis file yang diizinkan hanya jpg, jpeg, png !',
+                    });
+                    isSubmitting = false; // Set flag kembali menjadi false setelah validasi error
                     return;
                 }
 
@@ -691,6 +723,19 @@
                     return;
                 }
 
+                var file = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+                var fotoExt = foto.substr(foto.lastIndexOf('.'));
+
+                if (!file.exec(fotoExt)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Jenis file yang diizinkan hanya jpg, jpeg, png !',
+                    });
+                    isSubmitting = false; // Set flag kembali menjadi false setelah validasi error
+                    return;
+                }
+
                 var formData = new FormData(form[0]);
 
                 var updateLogo = form.attr('action-logo');
@@ -731,8 +776,7 @@
                             text: 'Terjadi kesalahan saat mengubah data.',
                         });
                     },
-                    complete: function(xhr, status) {
-                    }
+                    complete: function(xhr, status) {}
                 });
             });
         });
