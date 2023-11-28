@@ -11,6 +11,7 @@ use App\Models\Presentasi;
 use App\Models\TidakPresentasiMingguan;
 use App\Models\Tim;
 use Carbon\Carbon;
+use Carbon\Exceptions\Exception as ExceptionsException;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,13 +39,13 @@ class PresentasiController extends Controller
             return back()->with('error', 'Deskripsi presentasi tidak boleh melebihi 700 karakter');
         }
 
-        // if (Carbon::now()->isoFormat('HH:m:ss') < "08:00:00") {
-        //     return back()->with('error', 'Pengajuan Presentasi dimulai pukul 08:00');
-        // }
+        if (Carbon::now()->isoFormat('HH:m:ss') < "08:00:00") {
+            return back()->with('error', 'Pengajuan Presentasi dimulai pukul 08:00');
+        }
 
-        // if (Carbon::now()->isoFormat('HH:m:ss') > "14:00:00") {
-        //     return back()->with('error', 'Pengajuan Presentasi tidak boleh lebih dari pukul 14:00');
-        // }
+        if (Carbon::now()->isoFormat('HH:m:ss') > "14:00:00") {
+            return back()->with('error', 'Pengajuan Presentasi tidak boleh lebih dari pukul 14:00');
+        }
 
         if(Carbon::now()->isoFormat("dddd") === "Minggu" || Carbon::now()->isoFormat("dddd") === "Sabtu"){
             return back()->with('error', 'Pengajuan Presentasi hanya bisa dilakuakn dijam kantor');
@@ -59,6 +60,20 @@ class PresentasiController extends Controller
                 return back()->with('error', 'Tim anda sudah kadaluwarsa');
             }
 
+            $validasiPersetujuan  = $tim->presentasi->sortByDesc('created_at')->first();
+            
+
+            if($validasiPersetujuan !== null){
+                if($validasiPersetujuan->status_pengajuan === "menunggu" && $validasiPersetujuan->status_presentasi === "menunggu"){
+                    return back()->with('error', 'Tim anda sudah mengajukan presentasi tunggu disetujui oleh mentor');
+                }
+    
+                if($validasiPersetujuan->status_pengajuan === "disetujui" && $validasiPersetujuan->status_presentasi === "menunggu"){
+                    return back()->with('error', 'Tim anda sudah terjadwal presentasi');
+                }
+            }
+
+
 
 
             if($tim->sudah_presentasi === 0){
@@ -72,10 +87,11 @@ class PresentasiController extends Controller
 
             $validasi = $tim->presentasi->where('jadwal', Carbon::now()->isoFormat('YYYY-M-DD'))->first();
 
-            // if ($validasi != null) {
-            //     return back()->with('error', 'Pengajuan presentasi dalam sehari hanya boleh 1 kali');
-            // }
-        } catch (\Throwable $th) {
+            if ($validasi != null) {
+                return back()->with('error', 'Pengajuan presentasi dalam sehari hanya boleh 1 kali');
+            }
+
+        } catch (ExceptionsException $th) {
             return redirect()->back()->with('error', 'Timmu tidak ditemukan');
         }
 
@@ -114,6 +130,7 @@ class PresentasiController extends Controller
         $presentasi = Presentasi::with('tim.project.tema',)->where('code', $code)->first();
         $presentasi->urutan = $dataPresentasi + 1;
         $presentasi->user_approval_id = Auth::user()->id;
+        $presentasi->jadwal = Carbon::now()->isoFormat("YYYY-MM-DD");
         $presentasi->status_pengajuan = 'disetujui';
         $presentasi->save();
 
@@ -348,7 +365,7 @@ class PresentasiController extends Controller
             $totalRevisiSelesai[] = $data->tim->presentasi->where('status_revisi', 'selesai')->count();
             $totalRevisiTidakSelesai[] = $data->tim->presentasi->where('status_revisi', 'tidak_selesai')->count();
             $totalPresentasiSelesai[] = $data->tim->presentasiSelesai->count();
-            
+
         }
 
         return response()->json([

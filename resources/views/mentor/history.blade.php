@@ -306,10 +306,10 @@
                                                 data-bs-toggle="tooltip" data-popup="tooltip-custom"
                                                 data-bs-placement="top" title="{{ $item->tim->nama }}">
                                         </td>
-                                        @foreach ($item->tim->presentasi as $item)
+                                        
                                             <td>{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('l, j F Y') }}
                                             </td>
-                                        @endforeach
+                                      
                                         <td>{{ $item->tim->status_tim }}</td>
                                         @foreach ($item->tim->project as $item)
                                             <td>{{ $item->tema->nama_tema }}</td>
