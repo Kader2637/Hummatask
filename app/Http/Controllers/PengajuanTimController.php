@@ -200,12 +200,8 @@ class PengajuanTimController extends Controller
         return response()->json(['success' => 'Berhasil update tim'], 200);
     }
 
-    protected function updateTimProject(RequestPembentukanTimProject $request, $timId)
+    protected function updateTimProject(RequestPembentukanTimProject $request, Tim $timId)
     {
-        $tim = Tim::findOrFail($timId);
-        $date=$request->expired;
-        // dd($date);
-        $exp = $request->kadaluwarsa;
         $daftarAnggota = $request->anggota;
         $daftarAnggota[] = $request->ketuaKelompok;
         $uniqueDaftarAnggota = array_values(array_unique($daftarAnggota));
@@ -214,105 +210,60 @@ class PengajuanTimController extends Controller
             unset($uniqueDaftarAnggota[$indexKetuaKelompok]);
             array_unshift($uniqueDaftarAnggota, $request->ketuaKelompok);
         }
-        // $idPertama = isset($uniqueDaftarAnggota[0]) ? $uniqueDaftarAnggota[0] : null;
 
-        // dd($idPertama);
+
         $existingAnggota = Anggota::whereIn('user_id', $uniqueDaftarAnggota)
-            ->where('tim_id', '<>', $tim->id)
+            ->where('tim_id', '<>', $timId->id)
             ->first();
-        // dd($existingAnggota);
         if ($existingAnggota) {
             return back()->with('warning', 'Anggota telah masuk di tim lain.');
         }
-        // dd($uniqueDaftarAnggota);
-        // Update status dan nama tim
-        $tim->status_tim = $request->status_tim;
-        $tim->kadaluwarsa = $exp;
+
+        $timId->status_tim = $request->status_tim;
+        $timId->kadaluwarsa = $request->kadaluwarsa;
 
         if ($request->kadaluwarsa == "0") {
-            $tim->anggota()
+            $timId->anggota()
                 ->whereIn('user_id', $uniqueDaftarAnggota)
                 ->update(['status' => 'active']);
         } elseif ($request->kadaluwarsa == "1") {
-            $tim->anggota()
+            $timId->anggota()
                 ->whereIn('user_id', $uniqueDaftarAnggota)
                 ->update(['status' => 'expired']);
         }
 
-        if ($request->status_tim == "pre_mini") {
-            $tim->nama = 'Pre-Mini Project Team';
-        } elseif ($request->status_tim == "mini") {
-            $tim->nama = 'Mini Project Team';
-        } elseif ($request->status_tim == "big") {
-            $tim->nama = 'Big Project Team';
-        }
+        $timId->save();
 
-        // Generate logo baru
-        $backgroundHexColor = '#' . str_pad(dechex(mt_rand(0xAAAAAA, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
-        $image = ImageManagerStatic::canvas(200, 200, $backgroundHexColor);
-
-        if ($tim->nama == 'Mini Project Team') {
-            $nama = "Mini";
-        } elseif ($tim->nama == 'Pre-Mini Project Team') {
-            $nama = "PreMini";
-        } elseif ($tim->nama == 'Big Project Team') {
-            $nama = "Big";
-        }
-
-        $image->text($nama, 100, 100, function ($font) {
-            $font->file(public_path('assets/font/Poppins-Bold.ttf'));
-            $font->size(36);
-            $font->color('#ffffff');
-            $font->align('center');
-            $font->valign('middle');
-        });
-
-        $nameImage = 'logo/' . Str::random(20) . '.jpg';
-        Storage::disk('public')->put($nameImage, $image->stream());
-
-        // Simpan nama file logo baru ke dalam database
-        $tim->logo = $nameImage;
-
-        $tim->save();
-
-        $tim->anggota()
+        $timId->anggota()
             ->whereNotIn('user_id', $uniqueDaftarAnggota)
             ->update([
                 'status' => 'kicked',
                 'jabatan_id' => 3,
             ]);
 
-
         $iteration = 0;
         foreach ($uniqueDaftarAnggota as $anggota) {
-            $existingAnggota = Anggota::where('tim_id', $tim->id)
+            $existingAnggota = Anggota::where('tim_id', $timId->id)
                 ->where('user_id', $anggota)
                 ->first();
 
-            // Mengubah jabatan_id berdasarkan iterasi perulangan
-            $existingAnggota->jabatan_id = ($iteration === 0) ? 1 : 3;
+            if (!$existingAnggota) {
+                $newAnggota = new Anggota();
+                $newAnggota->user_id = $anggota;
+                $newAnggota->tim_id = $timId->id;
+                $newAnggota->jabatan_id = ($iteration === 0) ? 1 : 3;
+                $newAnggota->save();
+            } else {
+                $existingAnggota->jabatan_id = ($iteration === 0) ? 1 : 3;
+                $existingAnggota->save();
+            }
 
-            $existingAnggota->save();
-
-            // Increment iterasi
             $iteration++;
         }
-
+        
         return response()->json(['success' => 'Berhasil update tim'], 200);
     }
 
-
-    // membuat notif
-    // $notifAnggota = $tim->user;
-    // foreach ($notifAnggota as $user) {
-    //     $notif = new Notifikasi;
-    //     $notif->code = Str::uuid();
-    //     $notif->judul = "Kamu bergabung dengan Tim Baru";
-    //     $notif->body = "Kamu bergabung di Tim dengan status tim " . $tim->status_tim;
-    //     $notif->url = "tim/project/" . $tim->code;
-    //     $notif->user_id = $user->id;
-    //     $notif->save();
-    // }
     protected function pembuatanTimProjectKetua(RequestPembentukanTimProjectKetua $request)
     {
         try {
