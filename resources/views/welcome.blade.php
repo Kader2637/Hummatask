@@ -77,7 +77,7 @@
 
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5J3LMKC" height="0" width="0"
             style="display: none; visibility: hidden"></iframe></noscript>
-    <nav class="layout-navbar shadow-none py-0">
+    <nav class="layout-navbar shadow-none py-0 rounded" style="background-color:rgba(255, 255, 255, 0.937);">
         <div class="">
             <div class="navbar navbar-expand-lg landing-navbar px-3 mt-0 border-0  ">
                 <div class="navbar-brand app-brand demo d-flex py-0 py-lg-2 me-4">
@@ -390,7 +390,7 @@
                             <div class="swiper-wrapper ">
                                 @foreach($galery as $item)
                                 <div class="swiper-slide rounded "
-                                    style="background-image:url({{ asset('storage/img/'.$item->foto) }});">{{ $item->judul }}
+                                    style="background-image:url({{ asset('storage/img/'.$item->foto) }});"><h4 class="fw-lighter fs-4 blur-text" style="color: white ;">{{ $item->judul }}</h4>
                                 </div>
                                 @endforeach
                             </div>
@@ -402,7 +402,7 @@
                             <div class="swiper-wrapper">
                                 @foreach($galery as $item)
                                 <div class="swiper-slide rounded"
-                                    style="background-image:url({{ asset('storage/img/' . $item->foto) }})">{{ $item->judul }}
+                                    style="background-image:url({{ asset('storage/img/' . $item->foto) }})"><h4 class="fw-lighter fs-5 blur-text" style="color: white ;">{{ $item->judul }}</h4>
                                 </div>
                                 @endforeach
                             </div>

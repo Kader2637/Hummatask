@@ -20,15 +20,14 @@
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="{{ asset('assets/lib/wow/wow.min.js') }}"></script>
     <script src="{{ asset('assets/lib/easing/easing.min.js') }}"></script>
     <script src="{{ asset('assets/lib/waypoints/waypoints.min.js') }}"></script>
     <script src="{{ asset('assets/lib/counterup/counterup.min.js') }}"></script>
-    {{-- <script src="{{ asset('assets/lib/lightbox/js/lightbox.min.js') }}"></script> --}}
+    <script src="{{ asset('assets/lib/lightbox/js/lightbox.min.js') }}"></script>
     <script src="{{ asset('assets/lib/owlcarousel/owl.carousel.min.js') }}"></script>
-    {{-- <script src="{{ asset('js/main.js') }}"></script> --}}
+    <script src="{{ asset('js/main.js') }}"></script>
 @endsection
 
 @section('content')
@@ -49,12 +48,12 @@
                     <button class="nav-link active" id="pills-galery-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-galery" type="button" role="tab" aria-controls="pills-galery"
                         aria-selected="true" data-tab="1"><i class="menu-icon ti ti-album album-rounded"></i>
-                        Album</button>
+                        Album Dashboard</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
                         type="button" role="tab" aria-controls="pills-profile" aria-selected="false" data-tab="2">
-                        <i class="menu-icon ti ti-address-book "></i>Logo</button>
+                        <i class="menu-icon ti ti-address-book "></i>Logo Sekolah</button>
                 </li>
             </div>
         </div>
@@ -441,7 +440,7 @@
                                         src="{{ asset('storage/img/') }}/${item.foto}"
                                         alt="" width="300px" height="300px" style="object-fit:cover">
                                     <div class="event-overlay d-flex flex-column p-4">
-                                        <h4 class="me-auto">${item.judul}</h4>
+                                        <h4 class="me-auto fs-5 fw-light" style="color: white;">${item.judul}</h4>
                                         <div class="my-auto">
                                             <a class="btn btn-outline-primary"
                                                 href="{{ asset('storage/img/') }}/${item.foto}"
@@ -632,7 +631,7 @@
                                         src="{{ asset('storage/img/') }}/${itemLogo.foto}"
                                         alt="" width="300px" height="300px" style="object-fit:cover">
                                     <div class="event-overlay d-flex flex-column p-4">
-                                        <h4 class="me-auto">${itemLogo.judul}</h4>
+                                        <h4 class="me-auto fs-5 fw-light" style="color: white;">${itemLogo.judul}</h4>
                                         <div class="my-auto">
                                             <a class="btn btn-outline-primary"
                                                 href="{{ asset('storage/img/') }}/${itemLogo.foto}"
