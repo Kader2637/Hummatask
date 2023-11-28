@@ -246,13 +246,29 @@ class mentorController extends Controller
     }
 
     // Return view projek mentor
-    protected function projekPage()
+    protected function projekPage(Request $request)
     {
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
-        $projects = Project::with('tim.anggota', 'tema', 'tim.tugas')
-            ->where('status_project', 'approved')
-            ->paginate(5);
+        $projectQuery = Project::with('tim.anggota', 'tema', 'tim.tugas')
+            ->where('status_project', 'approved');
+
+        if ($request->has('status_tim')) {
+            if ($request->status_tim != 'all' && $request->status_tim != null) {
+                $projectQuery->where('type_project', $request->status_tim);
+            }
+        }
+
+        if ($request->has('nama_tim')) {
+            $namaTim = $request->nama_tim;
+            if ($namaTim != null) {
+                $projectQuery->whereHas('tim', function ($query) use ($namaTim) {
+                    $query->where('nama', 'like', "%$namaTim%");
+                });
+            }
+        }
+
+        $projects = $projectQuery->paginate(12);
 
         $users = User::where('peran_id', 1)
             ->whereDoesntHave('tim', function ($query) {
@@ -263,7 +279,8 @@ class mentorController extends Controller
         return response()->view('mentor.projek', compact('users', 'projects', 'notifikasi'));
     }
 
-    function updateDeadline($id, Request $request) {
+    function updateDeadline($id, Request $request)
+    {
         // dd($request);
         $projek = Project::findOrFail($id);
         $deadline = $request->input('xp');

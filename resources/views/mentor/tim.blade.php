@@ -118,7 +118,7 @@
                                         data-url="/mentor/tim/edit/{{ $tim->id }}"
                                         data-status="{{ $tim->status_tim }}" data-logo="{{ $tim->logo }}"
                                         data-kadaluwarsa="{{ $tim->kadaluwarsa }}">
-                                        <span class="text-white">Update</span>
+                                        <span class="text-white">Edit Tim</span>
 
                                     </a>
                                 @endif
@@ -134,7 +134,9 @@
                 </div>
             @endforelse
         </div>
-        {{ $tims->links('pagination::bootstrap-5') }}
+        <div>
+            {{ $tims->links('pagination::bootstrap-5') }}
+        </div>
 
         {{-- Modal Buat Tim --}}
         <form action="{{ route('pembuatan.tim') }}" id="createForm" method="post">
@@ -537,24 +539,6 @@
             if (selectedValue) {
                 $("#anggota_kelompok option[value='" + selectedValue + "']").remove();
             }
-        });
-
-
-        $('#updateTimForm').submit(function(event) {
-            var status_tim = $('#status').val();
-            var ketua = $('#ketua').val();
-            var anggota_kelompok = $('#anggota_kelompok').val();
-
-            if (!status_tim || !ketua || !anggota_kelompok.length) {
-                event.preventDefault();
-                swal.fire({
-                    title: 'Peringatan',
-                    text: 'Pastikan semua data terisi!',
-                    icon: 'warning',
-                    showConfirmButton: false,
-                    timer: 2000
-                });
-            };
         });
     </script>
 

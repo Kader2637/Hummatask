@@ -4,8 +4,10 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid mt-4 ">
-        <h5 class="header mt-2">Daftar Pengajuan Projek</h5>
+    <div class="container-fluid mt-5 justify-content-center">
+        <div class="card-header fs-4">
+            Daftar Pengajuan Project
+        </div>
         <div class="row">
             <div class="d-flex justify-content-between mb-4">
                 <div class="filter col-lg-3 col-md-3 col-sm-3">

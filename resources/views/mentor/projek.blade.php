@@ -13,172 +13,196 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid mt-4 justify-content-center">
-        <h5 class="header">Project</h5>
+    <div class="container-fluid mt-5 justify-content-center">
+        <div class="card-header fs-4">
+            Daftar Project
+        </div>
         <div class="col-12">
             <div class="row">
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between mb-4">
                     <div class="filter col-lg-3 col-md-3 col-sm-3">
                         <label for="select2Basic" class="form-label">Filter</label>
-                        <select id="select2Basic" name="temaProjek" class="select2 form-select form-select-lg"
-                            data-allow-clear="true" onchange="filterProjek(this)">
-                            <option value="" disabled selected>Pilih Data</option>
-                            <option value="all">Semua</option>
-                            <option value="solo">Solo Project</option>
-                            <option value="pre_mini">Pre-mini Project</option>
-                            <option value="mini">Mini Project</option>
-                            <option value="big">Big Project</option>
-                        </select>
+                        <form id="filterForm" action="{{ route('projek') }}" method="get">
+                            <select id="select2Basic" name="status_tim" class="form-select select2" data-allow-clear="true"
+                                onchange="filterProjek(this)">
+                                <option value="" disabled selected>Pilih Data</option>
+                                <option value="all" {{ request('status_tim') == 'all' ? 'selected' : '' }}>Semua</option>
+                                <option value="solo" {{ request('status_tim') == 'solo' ? 'selected' : '' }}>Solo Project
+                                </option>
+                                <option value="pre_mini" {{ request('status_tim') == 'pre_mini' ? 'selected' : '' }}>
+                                    Pre-mini
+                                    Project</option>
+                                <option value="mini" {{ request('status_tim') == 'mini' ? 'selected' : '' }}>Mini Project
+                                </option>
+                                <option value="big" {{ request('status_tim') == 'big' ? 'selected' : '' }}>Big Project
+                                </option>
+                            </select>
+                            <input type="hidden" name="nama_tim" value="{{ request('nama_tim') }}">
+                        </form>
+                    </div>
+                    <div class="filter col-lg-3 col-md-3 col-sm-3">
+                        <label for="select2Basic" class="form-label">Cari</label>
+                        <form action="{{ route('projek') }}" method="get">
+                            <div class="flex-grow-1 input-group input-group-merge">
+                                <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-search"></i></span>
+                                <input name="nama_tim" type="text" class="form-control chat-search-input"
+                                    placeholder="Cari nama tim..." aria-label="Cari nama tim..."
+                                    aria-describedby="basic-addon-search31" value="{{ request('nama_tim') }}">
+                            </div>
+                            <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
+                        </form>
                     </div>
                 </div>
-                <div class="row mt-4" id="projectList">
-                    @forelse ($projects as $item)
-                        @php
-                            $anggotaArray = [];
-                            foreach ($item->tim->anggota as $anggota) {
-                                $anggotaArray[] = [
-                                    'name' => $anggota->user->username,
-                                    'avatar' => $anggota->user->avatar,
-                                    'jabatan' => $anggota->jabatan->nama_jabatan,
-                                ];
-                            }
-                            $anggotaJson = json_encode($anggotaArray);
-                            $tanggalMulai = $item->tim->created_at->translatedFormat('Y-m-d');
-                            $totalDeadline = null;
-                            $dayLeft = null;
+                @forelse ($projects as $item)
+                    @php
+                        $anggotaArray = [];
+                        foreach ($item->tim->anggota as $anggota) {
+                            $anggotaArray[] = [
+                                'name' => $anggota->user->username,
+                                'avatar' => $anggota->user->avatar,
+                                'jabatan' => $anggota->jabatan->nama_jabatan,
+                            ];
+                        }
+                        $anggotaJson = json_encode($anggotaArray);
+                        $tanggalMulai = $item->tim->created_at->translatedFormat('Y-m-d');
+                        $totalDeadline = null;
+                        $dayLeft = null;
 
-                            $deadline = \Carbon\Carbon::parse($item->deadline)->translatedFormat('Y-m-d');
-                            $totalDeadline = \Carbon\Carbon::parse($deadline)->diffInDays($tanggalMulai);
-                            $dayLeft = \Carbon\Carbon::parse($deadline)->diffInDays(\Carbon\Carbon::now());
-                            $progressPercentage = 100 - ($dayLeft / $totalDeadline) * 100;
-                        @endphp
-                        <div class="col-md-4 col-lg-4 col-sm-4" id="projectList">
-                            <div class="card text-center mb-3 projek-item" data-status-tim="{{ $item->tim->status_tim }}">
-                                <div class="card-body">
-                                    <div class="d-flex flex-row gap-3">
-                                        <img src="{{ asset('storage/' . $item->tim->logo) }}" alt="foto logo"
-                                            style="width: 100px; height: 100px; object-fit: cover"
-                                            class="rounded-circle mb-3">
-                                        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;"
-                                            class="">
-                                            <span class="text-black fs-6">{{ $item->tim->nama }}</span>
-                                            <div class="d-flex align-items-center">
-                                                <span class="badge bg-label-warning my-1">
-                                                    @if ($item->tim->status_tim == 'solo')
-                                                        Solo Project
-                                                    @elseif ($item->tim->status_tim == 'pre_mini')
-                                                        Pre-Mini Project
-                                                    @elseif ($item->tim->status_tim == 'mini')
-                                                        Mini Project
-                                                    @elseif ($item->tim->status_tim == 'big')
-                                                        Big Project
-                                                    @endif
+                        $deadline = \Carbon\Carbon::parse($item->deadline)->translatedFormat('Y-m-d');
+                        $totalDeadline = \Carbon\Carbon::parse($deadline)->diffInDays($tanggalMulai);
+                        $dayLeft = \Carbon\Carbon::parse($deadline)->diffInDays(\Carbon\Carbon::now()->startOfDay());
+                        $progressPercentage = $totalDeadline > 0 ? 100 - ($dayLeft / $totalDeadline) * 100 : 0;
+                    @endphp
+                    <div class="col-md-4 col-lg-4 col-sm-4" id="projectList">
+                        <div class="card text-center mb-3 projek-item" data-status-tim="{{ $item->tim->status_tim }}">
+                            <div class="card-body">
+                                <div class="d-flex flex-row gap-3">
+                                    <img src="{{ asset('storage/' . $item->tim->logo) }}" alt="foto logo"
+                                        style="width: 100px; height: 100px; object-fit: cover" class="rounded-circle mb-3">
+                                    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;"
+                                        class="">
+                                        <span class="text-black fs-6">{{ $item->tim->nama }}</span>
+                                        <div class="align-items-center">
+                                            <span class="badge bg-label-warning my-1">
+                                                @if ($item->tim->status_tim == 'solo')
+                                                    Solo Project
+                                                @elseif ($item->tim->status_tim == 'pre_mini')
+                                                    Pre-Mini Project
+                                                @elseif ($item->tim->status_tim == 'mini')
+                                                    Mini Project
+                                                @elseif ($item->tim->status_tim == 'big')
+                                                    Big Project
+                                                @endif
+                                            </span>
+                                            @if ($item->tim->kadaluwarsa == 1)
+                                                <span class="ms-1 badge bg-label-danger">
+                                                    Expired Team
                                                 </span>
-                                            </div>
-                                            <div class="d-flex align-items-center justify-content-center">
-                                                <div class="d-flex align-items-center pt-1 mb-3 justify-content-center">
-                                                    <div class="d-flex align-items-center">
-                                                        <ul
-                                                            class="list-unstyled d-flex align-items-center avatar-group mb-0">
-                                                            @foreach ($item->tim->anggota as $anggota)
-                                                                <li data-bs-toggle="tooltip" data-popup="tooltip-custom"
-                                                                    data-bs-placement="top"
-                                                                    title="{{ $anggota->user->username }}"
-                                                                    class="avatar avatar-sm pull-up">
-                                                                    <img class="rounded-circle"
-                                                                        src="{{ $anggota->user->avatar ? Storage::url($anggota->user->avatar) : asset('assets/img/avatars/1.png') }}"
-                                                                        style="object-fit: cover" alt="Avatar">
-                                                                </li>
-                                                            @endforeach
-                                                        </ul>
-                                                    </div>
+                                            @elseif ($item->tim->kadaluwarsa == 0)
+                                                <span class="ms-1 badge bg-label-success">
+                                                    Active Team
+                                                </span>
+                                            @endif
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="d-flex align-items-center pt-1 mb-3 justify-content-center">
+                                                <div class="d-flex align-items-center">
+                                                    <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
+                                                        @foreach ($item->tim->anggota as $anggota)
+                                                            <li data-bs-toggle="tooltip" data-popup="tooltip-custom"
+                                                                data-bs-placement="bottom"
+                                                                title="{{ $anggota->user->username }}"
+                                                                class="avatar avatar-sm pull-up">
+                                                                <img class="rounded-circle"
+                                                                    src="{{ $anggota->user->avatar ? Storage::url($anggota->user->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                                    style="object-fit: cover" alt="Avatar">
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="info" class="my-4">
-                                        <div class="d-flex justify-content-between">
-                                            <span>Mulai : </span>
-                                            <div>{{ $item->created_at->translatedFormat('l, j F Y') }}</div>
-                                        </div>
-                                        <div class="d-flex justify-content-between my-3">
-                                            <span>Deadline : </span>
-                                            <div>
-                                                {{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}
-                                            </div>
-                                        </div>
-                                        <div class="d-flex justify-content-between">
-                                            <span>Tema : </span>
-                                            <div data-bs-placement="top" data-bs-toggle="tooltip"
-                                                data-popup="tooltip-custom" title="{{ $item->tema->nama_tema }}">
-                                                {{ Str::limit($item->tema->nama_tema, $limit = 20, $end = '...') }}</div>
+                                </div>
+                                <div id="info" class="my-4">
+                                    <div class="d-flex justify-content-between">
+                                        <span>Mulai : </span>
+                                        <div>{{ $item->created_at->translatedFormat('l, j F Y') }}</div>
+                                    </div>
+                                    <div class="d-flex justify-content-between my-3">
+                                        <span>Deadline : </span>
+                                        <div>
+                                            {{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}
                                         </div>
                                     </div>
-                                    <div class="d-flex gap-2">
-                                        <a onclick="pieGet('{{ $item->tim->code }}')" data-bs-toggle=""
-                                            data-bs-target="#modalDetailProjek"
-                                            class="w-50 btn btn-primary btn-detail-projek"
-                                            data-logo="{{ asset('storage/' . $item->tim->logo) }}"
-                                            data-namatim="{{ $item->tim->nama }}"
-                                            data-status="@if ($item->tim->status_tim == 'solo') Solo Project
+                                    <div class="d-flex justify-content-between">
+                                        <span>Tema : </span>
+                                        <div data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom"
+                                            title="{{ $item->tema->nama_tema }}">
+                                            {{ Str::limit($item->tema->nama_tema, $limit = 20, $end = '...') }}</div>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <a onclick="pieGet('{{ $item->tim->code }}')" data-bs-toggle=""
+                                        data-bs-target="#modalDetailProjek" class="w-50 btn btn-primary btn-detail-projek"
+                                        data-logo="{{ asset('storage/' . $item->tim->logo) }}"
+                                        data-namatim="{{ $item->tim->nama }}"
+                                        data-status="@if ($item->tim->status_tim == 'solo') Solo Project
                                         @elseif ($item->tim->status_tim == 'pre_mini')
                                             Pre-Mini Project
                                         @elseif ($item->tim->status_tim == 'mini')
                                             Mini Project
                                         @elseif ($item->tim->status_tim == 'big')
                                             Big Project @endif"
-                                            data-tema="{{ $item->tema->nama_tema }}"
-                                            data-tglmulai="{{ $item->created_at->translatedFormat('l, j F Y') }}"
-                                            data-deadline="{{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}"
-                                            data-anggota="{{ $anggotaJson }}" data-deskripsi="{{ $item->deskripsi }}"
-                                            data-dayleft="{{ $dayLeft }}" data-total-deadline="{{ $totalDeadline }}"
-                                            data-progress="{{ $progressPercentage }}"
-                                            data-repo="{{ $item->tim->repository }}"><span class="text-white">Detail</span>
-                                        </a>
-                                        <a data-bs-target="#editModal" data-bs-toggle="modal"
-                                            data-expired="{{ $item->deadline }}"
-                                            data-url="/mentor/update-deadline/{{ $item->id }}"
-                                            class="w-50 btn btn-primary btn-edit"><span class="text-white">Edit</span></a>
-                                    </div>
+                                        data-tema="{{ $item->tema->nama_tema }}"
+                                        data-tglmulai="{{ $item->created_at->translatedFormat('l, j F Y') }}"
+                                        data-deadline="{{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}"
+                                        data-anggota="{{ $anggotaJson }}" data-deskripsi="{{ $item->deskripsi }}"
+                                        data-dayleft="{{ $dayLeft }}" data-total-deadline="{{ $totalDeadline }}"
+                                        data-progress="{{ $progressPercentage }}" data-tenggat="{{ $item->deadline }}"
+                                        data-repo="{{ $item->tim->repository }}"><span class="text-white">Detail</span>
+                                    </a>
+                                    <a data-bs-target="#editModal" data-bs-toggle="modal"
+                                        data-expired="{{ $item->deadline }}"
+                                        data-url="/mentor/update-deadline/{{ $item->id }}"
+                                        data-nama="{{ $item->tim->nama }}" class="w-50 btn btn-primary btn-edit"><span
+                                            class="text-white">Extend</span></a>
                                 </div>
                             </div>
                         </div>
-                    @empty
-                        <h6 class="text-center mt-4">Tidak Ada Projek <i class="ti ti-address-book-off"></i></h6>
-                        <div class="mt-4 mb-3 d-flex justify-content-evenly">
-                            <img src="{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}"
-                                alt="page-misc-under-maintenance" width="300" class="img-fluid">
-                        </div>
-                    @endforelse
-                    <div>
-                        {{ $projects->links('pagination::bootstrap-5') }}
                     </div>
+                @empty
+                    <h6 class="text-center mt-4">Tidak Ada Projek <i class="ti ti-address-book-off"></i></h6>
+                    <div class="mt-4 mb-3 d-flex justify-content-evenly">
+                        <img src="{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}"
+                            alt="page-misc-under-maintenance" width="300" class="img-fluid">
+                    </div>
+                @endforelse
+                <div>
+                    {{ $projects->links('pagination::bootstrap-5') }}
                 </div>
             </div>
         </div>
     </div>
     {{-- modal edit --}}
     <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+        <div class="modal-dialog modal-simple modal-add-new-cc">
             <div class="modal-content p-3 p-md-5">
                 <div class="modal-body">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     <div class="text-center mb-4">
-                        <h3 class="mb-2">Edit deadline</h3>
-                        <p class="text-muted">Ganti deadline projek tim</p>
+                        <h3 class="mb-2">Extend Deadline</h3>
+                        <h5 id="nama-tim-suka-suka">NAMA TIM</h5>
                     </div>
                     <form class="row g-3" id="updateTimForm">
                         <div class="col-12">
                             <label class="form-label w-100" for="modalAddCard">Deadline</label>
-                            <div class="input-group input-group-merge">
-                                <input type="date" name="xp"
-                                    class="form-control dob-picker flatpickr-input active" min="{{ date('Y-m-d') }}">
-                                <span class="input-group-text cursor-pointer p-1" id="modalAddCard2"><span
-                                        class="card-type"></span></span>
+                            <div class="input-group">
+                                <input type="text" name="xp" id="tanggal"
+                                    class="form-control dob-picker flatpickr-input active">
                             </div>
-                            <button type="submit" class="w-100 btn btn-primary btn-edit mt-2">Simpan</button>
+                            <button type="submit" class="w-100 btn btn-primary mt-4">Simpan</button>
                         </div>
-
                     </form>
                 </div>
             </div>
@@ -389,8 +413,31 @@
         $('.btn-edit').on('click', function() {
             var url = $(this).data('url');
             var exp = $(this).data('expired');
+            var nama = $(this).data('nama');
             $('#updateTimForm').attr('action', url);
             $('#deadline').val(exp);
+            $('#nama-tim-suka-suka').text(nama);
+            var tomorrowDate = new Date();
+            tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+            var tomorrow = tomorrowDate.toISOString().slice(0, 10);
+
+            if (exp > tomorrow) {
+                $('#tanggal').flatpickr({
+                    defaultDate: exp,
+                    minDate: tomorrow,
+                    altInput: true,
+                    altFormat: 'F j, Y',
+                    dateFormat: 'Y-m-d',
+                });
+            } else {
+                $('#tanggal').flatpickr({
+                    defaultDate: exp,
+                    minDate: exp,
+                    altInput: true,
+                    altFormat: 'F j, Y',
+                    dateFormat: 'Y-m-d',
+                });
+            };
         });
     </script>
 
@@ -411,7 +458,7 @@
                     success: function(data) {
                         Swal.fire({
                             title: 'Sukses',
-                            text: 'Password berhasil diperbarui.',
+                            text: 'Deadline berhasil diperbarui.',
                             icon: 'success',
                             showConfirmButton: false,
                             timer: 1700,
@@ -452,7 +499,7 @@
         });
     </script>
 
-    {{-- filter projek --}}
+    {{-- pie chart --}}
     <script>
         const cardColor = 'gray';
         const headingColor = '#FDAC34';
@@ -552,22 +599,10 @@
         }
 
         function filterProjek(selectElement) {
-            var code = selectElement.value;
-            var projekElements = document.getElementsByClassName('projek-item');
-
-            for (var i = 0; i < projekElements.length; i++) {
-                var projekElement = projekElements[i];
-                var statusTim = projekElement.getAttribute('data-status-tim');
-
-                if (code === 'all' || code === statusTim) {
-                    projekElement.style.display = 'block';
-                } else {
-                    projekElement.style.display = 'none';
-                }
-            }
+            document.getElementById('filterForm').submit();
         }
     </script>
-    {{-- filter Projek --}}
+    {{-- pie chart --}}
 
     {{-- JS Modal Detail --}}
     <script>
@@ -585,7 +620,10 @@
                 var repo = $(this).data('repo');
                 var total = $(this).data('total-deadline');
                 var progress = $(this).data('progress');
+                var tenggat = $(this).data('tenggat');
                 var progressFormat = Math.round(progress);
+                var now = new Date();
+                var tenggatDate = new Date(tenggat);
 
                 $('#logo-tim').attr('src', logo);
                 $('#logo-tim2').attr('src', logo);
@@ -595,14 +633,28 @@
                 $('#tema').text(tema);
                 $('#tglmulai').text(tglmulai);
                 $('#deadline').text(deadline);
-                $('#dayLeft').text(dayLeft);
-                $('#dayleft').text(dayLeft);
-                $('#total').text(total);
                 $('#text-repo').text(repo);
                 $('#repository').attr('href', repo);
-                $('#textPercent').text(progressFormat);
-                $('.progress-bar').css('width', progressFormat + '%');
-                $('.progress-bar').attr('aria-valuenow', progressFormat);
+
+                if (tenggatDate.getTime() < now.getTime()) {
+                    $('.progres-bar').empty();
+                    var timeDiff = Math.abs(now.getTime() - tenggatDate.getTime());
+                    var dayDiff = Math.ceil(timeDiff / (1000 * 3600 * 24)); // Menghitung selisih dalam hari
+                    var alertMessage = $('<div></div>')
+                        .addClass('alert alert-danger d-flex align-items-center')
+                        .attr('role', 'alert')
+                        .html(
+                            '<span class="alert-icon text-danger me-2"><i class="ti ti-ban ti-xs"></i></span>Project ini telah lewat deadline selama ' +
+                            dayDiff + ' hari, extend untuk perpanjang deadline!');
+                    $('.progres-bar').html(alertMessage);
+                } else {
+                    $('#dayLeft').text(dayLeft);
+                    $('#dayleft').text(dayLeft);
+                    $('#total').text(total);
+                    $('#textPercent').text(progressFormat);
+                    $('.progress-bar').css('width', progressFormat + '%');
+                    $('.progress-bar').attr('aria-valuenow', progressFormat);
+                }
                 if (deskripsi) {
                     $('#deskripsi').text(deskripsi);
                 } else {

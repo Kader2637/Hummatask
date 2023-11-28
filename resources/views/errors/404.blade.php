@@ -21,23 +21,6 @@
         href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/favicon/favicon.ico" />
 
 
-    <script>
-        (function(w, d, s, l, i) {
-            w[l] = w[l] || [];
-            w[l].push({
-                'gtm.start': new Date().getTime(),
-                event: 'gtm.js'
-            });
-            var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s),
-                dl = l != 'dataLayer' ? '&l=' + l : '';
-            j.async = true;
-            j.src =
-                '../../../../www.googletagmanager.com/gtm5445.html?id=' + i + dl;
-            f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-5J3LMKC');
-    </script>
-
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link
@@ -105,10 +88,10 @@
 
     <div class="container-xxl container-p-y">
         <div class="misc-wrapper">
-            <h2 class="mb-1 mt-4">Page Not Found :(</h2>
+            <h2 class="mb-1 mt-4">404 :(</h2>
             <p class="mb-4 mx-2">Oops! 😖 Halaman tidak ditemukan.</p>
             <a onclick="back()"
-                class="btn btn-primary mb-4">Back to home</a>
+                class="btn btn-primary mb-4 text-white">Back to home</a>
             <div class="mt-4">
                 <img src="{{ asset('assets/img/illustrations/page-misc-error.png') }}" alt="page-misc-error" width="225"
                     class="img-fluid">
