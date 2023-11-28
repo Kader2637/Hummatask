@@ -73,7 +73,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="mb-0 d-flex">
+                            <p class="mb-0 d-flex justify-content-center">
                                 <span class="badge bg-label-warning">
                                     @if ($tim->status_tim == 'solo')
                                         Solo Project
