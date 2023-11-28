@@ -324,6 +324,7 @@
                                     <th scope="col">NO</th>
                                     <th scope="col">USER</th>
                                     <th scope="col">EMAIL</th>
+                                    <th scope="col">STATUS KELULUSAN</th>
                                     <th scope="col">ACTION</th>
                                 </tr>
                             </thead>
@@ -347,6 +348,17 @@
                                             </span>
                                         </td>
                                         <td>{{ $item->email }}</td>
+                                        <td>
+                                            @if ($item->status_kelulusan === true || $item->status_kelulusan === 1)
+                                                <span class="badge bg-label-primary">
+                                                    Lulus
+                                                </span>
+                                                @else
+                                                <span class="badge bg-label-warning">
+                                                    Belum Lulus
+                                                </span>
+                                            @endif
+                                        </td>
                                         <td>
                                             <div class="d-flex flex-wrap flex-row">
                                                 <span class="detail-user cursor-pointer" href="javascript:void(0);"

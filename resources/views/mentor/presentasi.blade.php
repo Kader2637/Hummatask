@@ -215,12 +215,12 @@
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="container mt-3">
+                    <div class="container mt-3 p-md-4 p-0">
                         <h5 id="judulModal"></h5>
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
-                                    <div class="card-header">
+                                    <div class="card-header p-md-4 px-0">
                                         <div class="nav-align-top d-flex justify-between">
                                             <div class="nav nav-pills d-flex justify-content-between row" role="tablist">
                                                 <div class="nav-item col-lg-3 col-md-3" role="presentation">
@@ -257,9 +257,9 @@
                             <div class="tab-pane fade active show" id="navs-pills-top-home" role="tabpanel">
                                 <div class="">
                                     <div class="">
-                                        <div class="table-responsive text-nowrap">
+                                        <div class=" text-nowrap">
                                             <div class="container">
-                                                <div class="row">
+                                                <div class="row d-md-block d-none">
                                                     <div class="alert alert-secondary alert-dismissible d-flex align-items-baseline" role="alert">
                                                         <span class="alert-icon alert-icon-lg text-secondary me-2">
                                                           <i class="ti ti-bookmark ti-sm"></i>
@@ -281,7 +281,7 @@
                             </div>
                             <div class="tab-pane fade" id="navs-pills-top-profile" role="tabpanel">
                                 <div class="container">
-                                    <div class="row mb-3">
+                                    <div class="row mb-3 d-md-block d-none">
                                         <div class="alert alert-secondary alert-dismissible d-flex align-items-baseline" role="alert">
                                             <span class="alert-icon alert-icon-lg text-secondary me-2">
                                               <i class="ti ti-bookmark ti-sm"></i>
@@ -299,27 +299,26 @@
 
                                 </div>
                             </div>
-
-
-
-
                             <div class="tab-pane fade" id="navs-pills-top-baru" role="tabpanel">
                                 <div class="container">
-                                    <div class="row mb-3">
+                                    <div class="row mb-3 d-md-block d-none">
                                         <div class="alert alert-secondary alert-dismissible d-flex align-items-baseline" role="alert">
-                                            <span class="alert-icon alert-icon-lg text-secondary me-2">
-                                              <i class="ti ti-bookmark ti-sm"></i>
-                                            </span>
-                                            <div class="d-flex flex-column ps-1">
-                                              <h5 class="alert-heading mb-2">Tab Belum Presentasi</h5>
-                                              <p class="mb-0">Tab Belum presentasi berisi data data tim dalam seminggu yang belum mengajukan presentasi</p>
-                                              </button>
+                                            <div class="col-auto">
+                                                <span class="alert-icon alert-icon-lg text-secondary me-2">
+                                                    <i class="ti ti-bookmark ti-sm"></i>
+                                                </span>
                                             </div>
-                                          </div>
+                                            <div class="col">
+                                                <div class="d-flex flex-column ps-1">
+                                                    <h5 class="alert-heading mb-2">Tab Belum Presentasi</h5>
+                                                    <p class="mb-0">Tab Belum presentasi berisi data data tim dalam seminggu yang belum mengajukan presentasi</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="card">
-                                    <div class="card-header">
+                                <div class="card overflow-auto">
+                                    <div class="card-header ">
                                         <div class="table text-nowrap">
                                             <table id="jstabel3" class="table">
                                                 <div class="">
@@ -377,9 +376,8 @@
                                 <span class="badge bg-label-primary">{{ $month }}</span>
                             </div>
                             <div class="d-flex justify-content-around align-items-center gap-3  mt-3">
-                                <button class="btn btn-danger w-75">Hapus</button>
                                 <button onclick="tampilkanDetail('{{ $history->code }}')" data-bs-toggle="modal"
-                                    data-bs-target="#detailPresentasi" class="btn btn-warning w-75">Detail</button>
+                                    data-bs-target="#detailPresentasi" class="btn btn-primary w-100">Detail</button>
                             </div>
                         </div>
                     </div>
@@ -412,6 +410,7 @@
     <script src="{{ asset('assets/js/forms-tagify.js') }}"></script>
     <script src="{{ asset('assets/js/forms-typeahead.js') }}"></script>
     <script src="{{ asset('utils/Kategory.js') }}" ></script>
+    <script src="{{ asset('utils/handleFormatDate.js') }}"></script>
     <script>
 
 function tampilkanDetail(code)
@@ -450,6 +449,8 @@ function tampilkanDetail(code)
 
                         Object.keys(data1).forEach((key) => {
                         let presentasi = data1[key]
+                        console.log(presentasi.jadwal);
+                        const jadwal = formatDate(presentasi.jadwal)
 
                         let div = document.createElement('div')
                         div.id = "card-persetujuan-" + presentasi.code;
@@ -463,7 +464,7 @@ function tampilkanDetail(code)
                                 <h4 class="card-title text-capitalize">${presentasi.tim.nama}</h4>
                                 <a href="#"><span class="badge bg-label-warning mb-3">${presentasi.tim.status_tim}</span></a>
                             </div>
-                            <p class="card-text">${res.data.judulModal}</p>
+                            <p class="card-text">${jadwal}</p>
 
                             <div class="d-flex justify-content-center gap-2">
                                 <button onclick="tolakPresentasi('${presentasi.code}','${code}')" data-bs-toggle="modal" data-bs-target="#Reject" class="px-3 py-1 btn btn-danger" >Tolak</button>
@@ -631,6 +632,7 @@ function tampilkanDetail(code)
                     });
 
                     $('#jstabel3').DataTable({
+                        responsive:true,
                 "lengthMenu": [
                     [5, 10, 15, -1],
                     [5, 10, 15, "All"]
@@ -708,8 +710,8 @@ function tampilkanDetail(code)
                                         <h5 class="mb-1">${data.judul}</h5>
                                         <small class="text-muted">${waktu} hari lalu</small>
                                     </div>
-                                    <p class="mb-1">${data.deskripsi}</p>
-                                    <small class="text-muted">Donec id elit non mi porta.</small>
+                                    <p class="mb-1 text-white">${data.deskripsi}</p>
+                                   
                                 </a>
                             `;
                         }
