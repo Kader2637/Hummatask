@@ -711,7 +711,7 @@ function tampilkanDetail(code)
                                         <small class="text-muted">${waktu} hari lalu</small>
                                     </div>
                                     <p class="mb-1 text-white">${data.deskripsi}</p>
-                                   
+
                                 </a>
                             `;
                         }
