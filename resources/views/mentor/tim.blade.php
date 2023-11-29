@@ -539,10 +539,22 @@
 
         $("#ketua").change(function() {
             var selectedValue = $(this).val();
+
+            // Enable all options in #anggota select
+            $("#anggota_kelompok option").prop('disabled', false);
+
             if (selectedValue) {
-                $("#anggota_kelompok option[value='" + selectedValue + "']").remove();
+                // Disable the selected option in #anggota
+                $("#anggota_kelompok option[value='" + selectedValue + "']").prop('disabled', true);
             }
         });
+
+        // $("#ketua").change(function() {
+        //     var selectedValue = $(this).val();
+        //     if (selectedValue) {
+        //         $("#anggota_kelompok option[value='" + selectedValue + "']").remove();
+        //     }
+        // });
     </script>
 
     {{-- ajax buat tim --}}

@@ -142,18 +142,22 @@ class PengajuanProjekController extends Controller
             $userId = Auth::id();
             $user = User::find($userId);
 
-            if ($user->status_kelulusan == 1) {
+            if ($user->status_kelulusan == '1') {
                 return redirect()->back()->with('error', 'Kamu sudah lulus tidak bisa edit tim');
             }
 
-            $cheked = $user->anggota;
+
             // dd($cheked);
-                if ($cheked->status == 'kicked') {
-                    return redirect()->back()->with('error', 'Kamu sudah di kick dari tim');
-                }
+            $timDulu = User::find(Auth::user()->id)->anggota()->whereHas('tim', function ($query) use ($code) {
+                $query->where('code', $code);
+            })->first();
 
-
+            if ($timDulu && $timDulu->status == 'kicked') {
+                return redirect()->back()->with('error', 'Kamu sudah di kick dari tim');
+            }
             $tim = Tim::where('code', $code)->firstOrFail();
+
+
             $validated = $request->validated();
 
             if ($request->hasFile('logo')) {

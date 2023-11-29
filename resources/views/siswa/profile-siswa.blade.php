@@ -149,7 +149,7 @@
                         <div class="col-12">
 
                             {{-- card team --}}
-                            <div class="">
+                            <div class="row">
                                 @forelse ($tims as $item)
                                     @php
                                         $anggotaArray = [];
