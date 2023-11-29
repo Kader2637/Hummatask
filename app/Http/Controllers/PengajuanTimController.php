@@ -49,7 +49,7 @@ class PengajuanTimController extends Controller
         }
         // dd($timDulu);
 
-            if ($timDulu === null || $timDulu === 'active') {
+            if ($timDulu === 'active') {
                 return redirect()->back()->with('error', 'Kamu masih memiliki tim yang belum selesai');
             }
 
