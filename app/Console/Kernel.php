@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command(ResetUrutanPresentasi::class)->dailyAt('18:00');
-        $schedule->command(RestSudahPresentasiTim::class)->weeklyOn('');
+        $schedule->command(RestSudahPresentasiTim::class)->weeklyOn(5,"17:00");
         $schedule->command(Notifikasi::class)->daily();
         $schedule->command(NotifikasiSeminggu::class)->weeklyOn(4, '8:00');
         $schedule->command(CheckExpiredTim::class)->dailyAt('18:00');

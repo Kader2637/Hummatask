@@ -61,13 +61,13 @@ class PresentasiController extends Controller
             }
 
             $validasiPersetujuan  = $tim->presentasi->sortByDesc('created_at')->first();
-            
+
 
             if($validasiPersetujuan !== null){
                 if($validasiPersetujuan->status_pengajuan === "menunggu" && $validasiPersetujuan->status_presentasi === "menunggu"){
                     return back()->with('error', 'Tim anda sudah mengajukan presentasi tunggu disetujui oleh mentor');
                 }
-    
+
                 if($validasiPersetujuan->status_pengajuan === "disetujui" && $validasiPersetujuan->status_presentasi === "menunggu"){
                     return back()->with('error', 'Tim anda sudah terjadwal presentasi');
                 }
@@ -106,7 +106,7 @@ class PresentasiController extends Controller
 
 
 
-        if (($history === null) || (Carbon::parse($history->created_at)->isoFormat("W-Y") != Carbon::now()->isoFormat("W-Y"))) {
+        if (($history === null)) {
             $historyBaru = new HistoryPresentasi;
             $historyBaru->code = Str::uuid();
             $historyBaru->save();

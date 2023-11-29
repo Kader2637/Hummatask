@@ -33,6 +33,8 @@ class ResetUrutanPresentasi extends Command
 
             if( Carbon::now()->isoFormat('dddd') === "Jumat" ){
                 $data->jadwal = Carbon::now()->addDays(3);
+                $data->history_presentasi_id = $data->history_presentasi_id + 1;
+
             }else{
                 $data->jadwal = Carbon::tomorrow();
             }

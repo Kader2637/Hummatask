@@ -34,13 +34,14 @@ class PengajuanTimController extends Controller
             return redirect()->back()->with('error', 'input Foto ataupun nama tim tidak boleh kosong');
         }
 
-        // $timDulu = User::find(Auth::user()->id)->tim->first();
+        $timDulu = User::find(Auth::user()->id)->tim->sortByDesc('created_at')->first();
+        // dd($timDulu);
 
-        // if (isset($timDulu)) {
-        //     if ($timDulu->kadaluwarsa === 0) {
-        //         return redirect()->back()->with('error', 'Kamu masih memiliki tim yang belum selesai');
-        //     }
-        // }
+        if (isset($timDulu)) {
+            if ($timDulu->kadaluwarsa === 0) {
+                return redirect()->back()->with('error', 'Kamu masih memiliki tim yang belum selesai');
+            }
+        }
 
         // menyimpan logo
         $logo = $request->logo->store('logo', 'public');

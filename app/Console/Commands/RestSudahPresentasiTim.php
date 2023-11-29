@@ -6,6 +6,7 @@ use App\Models\TidakPresentasiMingguan;
 use App\Models\Tim;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class RestSudahPresentasiTim extends Command
 {
@@ -31,6 +32,9 @@ class RestSudahPresentasiTim extends Command
 
         DB::table('tims')->update(['sudah_presentasi'=>false]);
         $this->handleResetTidakPresentasi();
+        $newHistoryPresentasi = new TidakPresentasiMingguan;
+        $newHistoryPresentasi->code = Str::uuid();
+        $newHistoryPresentasi->save();
 
     }
 
