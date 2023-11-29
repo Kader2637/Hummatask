@@ -11,10 +11,6 @@
 <head>
     <meta charset="utf-8" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-    {!! csrf_field() !!}
-
     <title>
         Dashboard Mentor
     </title>
@@ -25,7 +21,7 @@
     <!-- Canonical SEO -->
     <link rel="canonical" href="https://1.envato.market/vuexy_admin">
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ url('assets/img/icons/icon.svg') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ url('assets/img/logo.png') }}" />
 
     <!-- Include Styles -->
     <!-- $isFront is used to append the front layout styles only on the front layout otherwise the variable will be blank -->
@@ -178,7 +174,7 @@
     <div id="loader">
         <div class="preloader">
             <div class="d-flex justify-content-center custom-margin">
-                <img src="{{ asset('assets/img/icons/icon.svg') }}" width="180" height="160" alt="Loader Image">
+                <img src="{{ asset('assets/img/hummatask.png') }}" width="180" height="160" alt="Loader Image">
             </div>
         </div>
     </div>
@@ -208,13 +204,13 @@
                 <div class="app-brand demo">
                     <a href="{{ route('dashboard.mentor') }}" class="app-brand-link">
                         <span class="app-brand-logo demo d-flex align-items-center">
-                            <img src="{{ url('assets/img/icons/icon.svg') }}" class="d-block" width="50"
+                            <img src="{{ url('assets/img/logo.png') }}" class="d-block" width="50"
                                 alt="" srcset="">
                         </span>
-                        <span class="app-brand-text demo menu-text fw-bold">HummaTask</span>
+                        <span class="app-brand-text demo menu-text fw-bold mt-2" style="color: #7367F0;">Humma<span style="color:rgb(8, 8, 50);">Task</span></span>
                     </a>
 
-                    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+                    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto mt-2">
                         <i class="ti menu-toggle-icon d-none d-xl-block ti-sm align-middle"></i>
                         <i class="ti ti-x d-block d-xl-none ti-sm align-middle"></i>
                     </a>

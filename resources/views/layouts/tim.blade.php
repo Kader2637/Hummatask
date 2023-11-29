@@ -17,7 +17,7 @@
     <meta name="keywords" content="dashboard, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
     <meta name="csrf-token" content="y0lzh53YmoH0xFgY2vFjhD4S1TOiq6lE58zbW7ec">
     <link rel="canonical" href="https://1.envato.market/vuexy_admin">
-    <link rel="icon" type="image/x-icon" href="{{ url('assets/img/icons/icon.svg') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ url('assets/img/logo.png') }}" />
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link
@@ -158,7 +158,7 @@
     <div id="loader">
         <div class="preloader">
             <div class="d-flex justify-content-center custom-margin">
-                <img src="{{ asset('assets/img/icons/icon.svg') }}" width="180" height="160" alt="Loader Image">
+                <img src="{{ asset('assets/img/hummatask.png') }}" width="180" height="160" alt="Loader Image">
             </div>
         </div>
     </div>
@@ -190,13 +190,13 @@
                 <div class="app-brand demo">
                     <a href="{{ route('dashboard.siswa') }}" class="app-brand-link">
                         <span class="app-brand-logo demo">
-                            <img src="{{ url('assets/img/icons/icon.svg') }}" width="50" alt=""
+                            <img src="{{ url('assets/img/logo.png') }}" width="50" alt=""
                                 srcset="">
                         </span>
-                        <span class="app-brand-text demo menu-text fw-bold">HummaTask</span>
+                        <span class="app-brand-text demo menu-text fw-bold mt-2" style="color: #7367F0;">Humma<span style="color:rgb(8, 8, 50);">Task</span></span>
                     </a>
 
-                    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+                    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto mt-2">
                         <i class="ti menu-toggle-icon d-none d-xl-block ti-sm align-middle"></i>
                         <i class="ti ti-x d-block d-xl-none ti-sm align-middle"></i>
                     </a>

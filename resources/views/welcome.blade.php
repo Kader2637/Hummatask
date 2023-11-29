@@ -388,25 +388,31 @@
                     <div id="swiper-gallery mt-2">
                         <div class="swiper gallery-top ">
                             <div class="swiper-wrapper ">
-                                @foreach($galery as $item)
+
+                                @forelse($galery as $item)
                                 <div class="swiper-slide rounded "
                                     style="background-image:url({{ asset('storage/img/'.$item->foto) }});"><h4 class="fw-lighter fs-4 blur-text" style="color: white ;">{{ $item->judul }}</h4>
                                 </div>
-                                @endforeach
+                                @empty
+                                   <h4 class="text-center">Data Kosong !!</h4>
+                                @endforelse
                             </div>
                             <!-- Add Arrows -->
                             <div class="swiper-button-next "></div>
                             <div class="swiper-button-prev "></div>
                         </div>
+                        @forelse($galery as $item)
                         <div class="swiper gallery-thumbs mt-3 ">
                             <div class="swiper-wrapper">
-                                @foreach($galery as $item)
                                 <div class="swiper-slide rounded"
                                     style="background-image:url({{ asset('storage/img/' . $item->foto) }})"><h4 class="fw-lighter fs-5 blur-text" style="color: white ;">{{ $item->judul }}</h4>
                                 </div>
-                                @endforeach
+                                @empty
                             </div>
                         </div>
+                        <img src="{{ asset('assets/img/illustrations/auth-register-illustration-light.png') }}"
+                        alt="page-misc-under-maintenance" width="300" class="img-fluid">
+                        @endforelse
                     </div>
                 </div>
             </section>
@@ -517,7 +523,7 @@
             </section>
         </div>
 
-        <footer class="landing-footer bg-body footer-text" id="landingContact">
+        {{-- <footer class="landing-footer bg-body footer-text" id="landingContact">
             <div class="footer-top">
                 <div class="container">
                     <div class="row gx-0 gy-4 g-md-5">
@@ -616,7 +622,7 @@
                     </div>
                 </div>
             </div>
-        </footer>
+        </footer> --}}
         <script src="{{ asset('assets/vendor/js/dropdown-hover.js') }}"></script>
         <script src="{{ asset('assets/vendor/js/mega-dropdown.js') }}"></script>
         <script src="{{ asset('assets/vendor/libs/node-waves/node-waves259f.js?id=4fae469a3ded69fb59fce3dcc14cd638') }}">
