@@ -650,7 +650,12 @@
 
                 daftarNotifikasi.empty();
 
-                countBadge.text(notifikasi.length);
+                if (notifikasi.length > 0) {
+                    countBadge.text(notifikasi.length);
+                } else {
+                    countBadge
+                .hide();
+                }
 
                 notifikasi.reverse();
 
