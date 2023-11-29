@@ -586,7 +586,7 @@
                         doughnutChart.style.display = 'none';
 
                         const img = document.createElement('img');
-                        img.src = '{{ asset('assets/img/illustrations/stand.png') }}';
+                        img.src = '{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}';
                         img.alt = 'Belum Ada Tugas';
                         img.style.width = '200px';
 
