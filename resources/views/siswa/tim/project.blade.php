@@ -209,25 +209,26 @@
                                 <div class="card">
                                     <h5 class="card-header">Progres Tim</h5>
                                     <div class="card-body">
+                                        <p id="chart-status" class="text-center chart-status"></p>
                                         <canvas id="project" class="chartjs mb-4" data-height="267"
-                                            style="display: block; box-sizing: border-box;  height: 200px; width: 200px;"></canvas>
+                                            style="display: block; box-sizing: border-box; height: 200px; width: 200px;"></canvas>
                                         <ul class="doughnut-legend d-flex justify-content-around ps-0 mb-2 pt-1">
                                             <li class="ct-series-0 d-flex flex-column">
                                                 <h5 class="mb-0">Tugas Baru</h5>
                                                 <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                                    style="background-color: #ff7f00; height:6px;width:30px;"></span>
+                                                    style="background-color: #ff7f00; height: 6px; width: 30px;"></span>
                                                 <div class="text-muted"></div>
                                             </li>
                                             <li class="ct-series-1 d-flex flex-column">
                                                 <h5 class="mb-0">Revisi</h5>
                                                 <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                                    style="background-color: blue; height:6px; width:30px;"></span>
+                                                    style="background-color: blue; height: 6px; width: 30px;"></span>
                                                 <div class="text-muted"></div>
                                             </li>
                                             <li class="ct-series-1 d-flex flex-column">
                                                 <h5 class="mb-0">Selesai</h5>
                                                 <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                                    style="background-color: yellow; height:6px; width: 30px;"></span>
+                                                    style="background-color: yellow; height: 6px; width: 30px;"></span>
                                                 <div class="text-muted"></div>
                                             </li>
                                         </ul>
@@ -746,4 +747,96 @@
         });
     </script>
     {{-- Validasi --}}
+    
+    {{-- pie chart --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cardColor = '#28dac6';
+            const headingColor = '#FDAC34';
+            const black = '#000000';
+
+            const doughnutChart = document.getElementById('project');
+            const chartStatus = document.querySelector('.chart-status');
+
+            if (doughnutChart) {
+                const processedData = <?php echo json_encode($chartData); ?>;
+
+                const labels = processedData.map(data => data[0]);
+                const values = processedData.map(data => data[1]);
+
+                const doughnutChartVar = new Chart(doughnutChart, {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: values,
+                            backgroundColor: [cardColor, 'yellow', 'blue', 'orange'],
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        animation: {
+                            duration: 500
+                        },
+                        cutout: '68%',
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const label = context.label || '';
+                                        const value = context.parsed;
+                                        const output = ' ' + label + ' : ' + value;
+                                        return output;
+                                    }
+                                },
+                                backgroundColor: cardColor,
+                                titleColor: cardColor,
+                                bodyColor: black,
+                                borderWidth: 1,
+                                borderColor: cardColor,
+                                afterLabel: function(context) {
+                                    const datasetIndex = context.datasetIndex;
+                                    const dataIndex = context.dataIndex;
+                                    const data = doughnutChartVar.data.datasets[datasetIndex].data;
+                                    const label = doughnutChartVar.data.labels[dataIndex];
+                                    const value = data[dataIndex];
+
+                                    // Menampilkan jumlah saat kursor mengarah ke elemen chart
+                                    return `Jumlah ${label}: ${value}`;
+                                }
+                            }
+                        }
+                    }
+                });
+
+                if (values.slice(1).every(value => value === false)) {
+
+                    chartStatus.style.display = 'block';
+                    doughnutChart.style.display = 'none';
+                    const img = document.createElement('img');
+                    img.src = '{{ asset('assets/img/illustrations/stand.png') }}';
+                    img.alt = 'Belum Ada Tugas';
+                    img.style.width = '200px';
+
+                    const h6Text = 'Tidak Ada Tugas <i class="ti ti-address-book-off"></i>';
+                    const h6Element = document.createElement('h6');
+                    h6Element.classList.add('text-center', 'mt-4');
+                    h6Element.innerHTML = h6Text;
+
+                    chartStatus.innerHTML = '';
+                    chartStatus.appendChild(h6Element);
+                    chartStatus.appendChild(img);
+                } else {
+                    chartStatus.style.display = 'none';
+                    doughnutChart.style.display = 'block';
+                    chartStatus.textContent = '';
+                }
+            }
+        });
+    </script>
+
 @endsection

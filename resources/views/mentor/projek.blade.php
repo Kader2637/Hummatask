@@ -243,6 +243,7 @@
                                                 <div class="card">
                                                     <h5 class="card-header">Progres Tim</h5>
                                                     <div class="card-body">
+                                                        <p id="" class="text-center chart-status"></p>
                                                         <canvas id="" class="chartjs mb-4 mt-2 piechart-project"
                                                             data-height="267"
                                                             style="display: block; box-sizing: border-box; height: 200px; width: 200px;"></canvas>
@@ -504,95 +505,108 @@
 
         let doughnutChartVar; // Variabel untuk menyimpan instance grafik
 
-        if (true) {
-            function pieGet(code) {
-                var doughnutChart = $(".piechart-project");
+        function pieGet(code) {
+            const doughnutChart = document.querySelector(".piechart-project");
+            const chartStatus = document.querySelector(".chart-status");
 
-                // Menghancurkan grafik yang ada jika ada
-                if (doughnutChartVar) {
-                    doughnutChartVar.destroy();
-                }
+            // Menghancurkan grafik yang ada jika ada
+            if (doughnutChartVar) {
+                doughnutChartVar.destroy();
+            }
 
-                axios
-                    .get("pieproject/" + code)
-                    .then((res) => {
-                        const data = res.data.chartData;
-                        const processedData = res.data.chartData;
+            axios
+                .get("pieproject/" + code)
+                .then((res) => {
+                    const processedData = res.data.chartData;
 
-                        const labels = processedData.map((data) => data[0]);
-                        const values = processedData.map((data) => data[1]);
+                    const labels = processedData.map((data) => data[0]);
+                    const values = processedData.map((data) => data[1]);
 
-                        doughnutChartVar = new Chart(doughnutChart, {
-                            type: "doughnut",
-                            data: {
-                                labels: labels,
-                                datasets: [{
-                                    data: values,
-                                    backgroundColor: [
-                                        cardColor,
-                                        "yellow",
-                                        "blue",
-                                        "#ff7f00"
-                                    ],
-                                    hoverOffset: 4
-                                }]
+                    doughnutChartVar = new Chart(doughnutChart, {
+                        type: "doughnut",
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                data: values,
+                                backgroundColor: [
+                                    cardColor,
+                                    "yellow",
+                                    "blue",
+                                    "#ff7f00"
+                                ],
+                                hoverOffset: 4
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            animation: {
+                                duration: 500
                             },
-                            options: {
-                                responsive: true,
-                                animation: {
-                                    duration: 500
+                            cutout: "68%",
+                            plugins: {
+                                legend: {
+                                    display: false
                                 },
-                                cutout: "68%",
-                                plugins: {
-                                    legend: {
-                                        display: false
-                                    },
-                                    tooltip: {
-                                        callbacks: {
-                                            label: function(context) {
-                                                const label = context.label || "";
-                                                const value = context.parsed;
-                                                const output = " " + label + " : " + value;
-                                                return output;
-                                            }
-                                        },
-                                        backgroundColor: cardColor,
-                                        titleColor: black,
-                                        bodyColor: black,
-                                        borderWidth: 1,
-                                        borderColor: cardColor,
-                                        afterLabel: function(context) {
-                                            const datasetIndex = context.datasetIndex;
-                                            const dataIndex = context.dataIndex;
-                                            const data =
-                                                doughnutChartVar.data.datasets[datasetIndex].data;
-                                            const label =
-                                                doughnutChartVar.data.labels[dataIndex];
-                                            const value = data[dataIndex];
-
-                                            const amountDescription =
-                                                label === "Revisi" ?
-                                                "Revisi" :
-                                                label === "Tugas Baru" ?
-                                                "Tugas Baru" :
-                                                "Selesai";
-                                            return `Jumlah ${amountDescription}: ${value}`;
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            const label = context.label || "";
+                                            const value = context.parsed;
+                                            const output = " " + label + " : " + value;
+                                            return output;
                                         }
+                                    },
+                                    backgroundColor: cardColor,
+                                    titleColor: black,
+                                    bodyColor: black,
+                                    borderWidth: 1,
+                                    borderColor: cardColor,
+                                    afterLabel: function(context) {
+                                        const datasetIndex = context.datasetIndex;
+                                        const dataIndex = context.dataIndex;
+                                        const data = doughnutChartVar.data.datasets[datasetIndex].data;
+                                        const label = doughnutChartVar.data.labels[dataIndex];
+                                        const value = data[dataIndex];
+
+                                        const amountDescription =
+                                            label === "Revisi" ?
+                                            "Revisi" :
+                                            label === "Tugas Baru" ?
+                                            "Tugas Baru" :
+                                            "Selesai";
+                                        return `Jumlah ${amountDescription}: ${value}`;
                                     }
                                 }
                             }
-                        });
-
-                        processedData.forEach(function(data) {
-                            const label = data[0];
-                            const value = data[1];
-                            console.log(label, value);
-                        });
-                    })
-                    .catch((err) => {
-                        console.log(err);
+                        }
                     });
-            }
+
+                    if (values.slice(1).every(value => value === false)) {
+                        chartStatus.style.display = 'block';
+                        doughnutChart.style.display = 'none';
+
+                        const img = document.createElement('img');
+                        img.src = '{{ asset('assets/img/illustrations/stand.png') }}';
+                        img.alt = 'Belum Ada Tugas';
+                        img.style.width = '200px';
+
+                        const h6Text = 'Tidak Ada Tugas <i class="ti ti-address-book-off"></i>';
+                        const h6Element = document.createElement('h6');
+                        h6Element.classList.add('text-center', 'mt-4');
+                        h6Element.innerHTML = h6Text;
+
+                        chartStatus.innerHTML = '';
+                        chartStatus.appendChild(h6Element);
+                        chartStatus.appendChild(img);
+                    } else {
+                        chartStatus.style.display = 'none';
+                        doughnutChart.style.display = 'block';
+                        chartStatus.textContent = '';
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         }
 
         function filterProjek(selectElement) {

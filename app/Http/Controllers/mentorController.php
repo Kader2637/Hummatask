@@ -297,9 +297,9 @@ class mentorController extends Controller
 
         $chartData = [
             ['Status Tugas', 'Jumlah'],
-            ['Selesai', $selesai],
-            ['Revisi', $revisi],
-            ['Tugas Baru', $tugas_baru]
+            ['Selesai', $selesai || 0],
+            ['Revisi', $revisi || 0],
+            ['Tugas Baru', $tugas_baru || 0]
         ];
 
         // dd($chartData);

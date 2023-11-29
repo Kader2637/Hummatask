@@ -38,21 +38,9 @@ class timController extends Controller
         $tugas_dikerjakan = $tim->tugas()->where('status_tugas', 'dikerjakan')->get();
         $tugas_revisi = $tim->tugas()->where('status_tugas', 'revisi')->get();
         $tugas_selesai = $tim->tugas()->where('status_tugas', 'selesai')->get();
-
-        $selesaiCount = $tim->tugas->where('status_tugas', 'selesai')->count();
-        $revisiCount = $tim->tugas->where('status_tugas', 'revisi')->count();
-        $tugasBaruCount = $tim->tugas->where('status_tugas', 'tugas_baru')->count();
-
         $code = $tim->code;
 
-        $chartData = [
-            ['Status Tugas', 'Jumlah'],
-            ['Selesai', $selesaiCount],
-            ['Revisi', $revisiCount],
-            ['Tugas Baru', $tugasBaruCount]
-        ];
-
-        return view('siswa.tim.board', compact('chartData', 'title', 'tim', 'anggota', 'tugas_baru', 'tugas_dikerjakan', 'tugas_revisi', 'tugas_selesai', 'project', 'notifikasi', 'code'));
+        return view('siswa.tim.board', compact('title', 'tim', 'anggota', 'tugas_baru', 'tugas_dikerjakan', 'tugas_revisi', 'tugas_selesai', 'project', 'notifikasi', 'code'));
     }
 
     protected function ubahStatus(Request $request)
@@ -104,18 +92,8 @@ class timController extends Controller
         $project = $tim->project->first();
 
         $hasProjectRelation = $tim->project()->exists();
-        $selesaiCount = $tim->tugas->where('status_tugas', 'selesai')->count();
-        $revisiCount = $tim->tugas->where('status_tugas', 'revisi')->count();
-        $tugasBaruCount = $tim->tugas->where('status_tugas', 'tugas_baru')->count();
 
-        $chartData = [
-            ['Status Tugas', 'Jumlah'],
-            ['Selesai', $selesaiCount],
-            ['Revisi', $revisiCount],
-            ['Tugas Baru', $tugasBaruCount]
-        ];
-
-        return view('siswa.tim.kalender', compact('chartData', 'title', 'tim', 'anggota', 'hasProjectRelation', 'project', 'notifikasi'));
+        return view('siswa.tim.kalender', compact('title', 'tim', 'anggota', 'hasProjectRelation', 'project', 'notifikasi'));
     }
 
     protected function projectPage($code)
@@ -150,9 +128,9 @@ class timController extends Controller
 
         $chartData = [
             ['Status Tugas', 'Jumlah'],
-            ['Selesai', $selesaiCount],
-            ['Revisi', $revisiCount],
-            ['Tugas Baru', $tugasBaruCount]
+            ['Selesai', $selesaiCount || 0  ],
+            ['Revisi', $revisiCount || 0 ],
+            ['Tugas Baru', $tugasBaruCount || 0 ]
         ];
 
         return view('siswa.tim.project', compact('hasProjectRelation', 'days', 'tanggal', 'persentase', 'selesaiCount', 'revisiCount', 'chartData', 'title', 'tim', 'anggota', 'project', 'notifikasi',));
@@ -185,18 +163,8 @@ class timController extends Controller
         $project = $tim->project->first();
 
         $hasProjectRelation = $tim->project()->exists();
-        $selesaiCount = $tim->tugas->where('status_tugas', 'selesai')->count();
-        $revisiCount = $tim->tugas->where('status_tugas', 'revisi')->count();
-        $tugasBaruCount = $tim->tugas->where('status_tugas', 'tugas_baru')->count();
 
-        $chartData = [
-            ['Status Tugas', 'Jumlah'],
-            ['Selesai', $selesaiCount],
-            ['Revisi', $revisiCount],
-            ['Tugas Baru', $tugasBaruCount]
-        ];
-
-        return view('siswa.tim.statistik', compact('jabatan','chartData', 'title', 'tim', 'anggota', 'hasProjectRelation', 'project', 'notifikasi', 'project'));
+        return view('siswa.tim.statistik', compact('jabatan', 'title', 'tim', 'anggota', 'hasProjectRelation', 'project', 'notifikasi', 'project'));
     }
 
     protected function historyPresentasiPage($code)
@@ -221,18 +189,8 @@ class timController extends Controller
         foreach ($presentasi as $data) {
             $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
         }
-        $selesaiCount = $tim->tugas->where('status_tugas', 'selesai')->count();
-        $revisiCount = $tim->tugas->where('status_tugas', 'revisi')->count();
-        $tugasBaruCount = $tim->tugas->where('status_tugas', 'tugas_baru')->count();
 
-        $chartData = [
-            ['Status Tugas', 'Jumlah'],
-            ['Selesai', $selesaiCount],
-            ['Revisi', $revisiCount],
-            ['Tugas Baru', $tugasBaruCount]
-        ];
-
-        return view('siswa.tim.history-presentasi', compact('jabatan','chartData', 'title', 'tim', 'anggota', 'presentasi', 'jadwal', 'hasProjectRelation', 'project', 'notifikasi', 'project'));
+        return view('siswa.tim.history-presentasi', compact('jabatan','title', 'tim', 'anggota', 'presentasi', 'jadwal', 'hasProjectRelation', 'project', 'notifikasi', 'project'));
     }
 
     protected function catatanPage($code)
@@ -252,18 +210,7 @@ class timController extends Controller
 
         $hasProjectRelation = $tim->project()->exists();
 
-        $selesaiCount = $tim->tugas->where('status_tugas', 'selesai')->count();
-        $revisiCount = $tim->tugas->where('status_tugas', 'revisi')->count();
-        $tugasBaruCount = $tim->tugas->where('status_tugas', 'tugas_baru')->count();
-
-        $chartData = [
-            ['Status Tugas', 'Jumlah'],
-            ['Selesai', $selesaiCount],
-            ['Revisi', $revisiCount],
-            ['Tugas Baru', $tugasBaruCount]
-        ];
-
-        return view('siswa.tim.catatan', compact('chartData', 'title', 'anggota', 'tim', 'catatans', 'project', 'notifikasi'));
+        return view('siswa.tim.catatan', compact( 'title', 'anggota', 'tim', 'catatans', 'project', 'notifikasi'));
     }
 
     protected function historyCatatanPage($code)
