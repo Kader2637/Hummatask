@@ -29,19 +29,24 @@ class PengajuanTimController extends Controller
     protected function pengajuanSoloProject(RequestPengajuanSoloProject $request)
     {
 
+        $userId = Auth::id();
+        $user = User::find($userId);
+
+        if ($user->status_kelulusan == 1) {
+            return redirect()->back()->with('error', 'Kamu sudah lulus tidak bisa membuat tim');
+        }
         // Kondisi dimana nama tim kosong atau foto kosong
         if ($request->nama === null || $request->logo === null) {
             return redirect()->back()->with('error', 'input Foto ataupun nama tim tidak boleh kosong');
         }
 
-        $timDulu = User::find(Auth::user()->id)->tim->sortByDesc('created_at')->first();
+        $timDulu = User::find(Auth::user()->id)->anggota()->orderByDesc('created_at')->first();
         // dd($timDulu);
 
-        if (isset($timDulu)) {
-            if ($timDulu->kadaluwarsa === 0) {
+            if ($timDulu->status == 'active') {
                 return redirect()->back()->with('error', 'Kamu masih memiliki tim yang belum selesai');
             }
-        }
+
 
         // menyimpan logo
         $logo = $request->logo->store('logo', 'public');

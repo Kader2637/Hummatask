@@ -139,6 +139,20 @@ class PengajuanProjekController extends Controller
     protected function editProject(editProjectRequest $request, $code)
     {
         try {
+            $userId = Auth::id();
+            $user = User::find($userId);
+
+            if ($user->status_kelulusan == 1) {
+                return redirect()->back()->with('error', 'Kamu sudah lulus tidak bisa edit tim');
+            }
+
+            $cheked = $user->anggota;
+            // dd($cheked);
+                if ($cheked->status == 'kicked') {
+                    return redirect()->back()->with('error', 'Kamu sudah di kick dari tim');
+                }
+
+
             $tim = Tim::where('code', $code)->firstOrFail();
             $validated = $request->validated();
 

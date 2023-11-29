@@ -49,6 +49,7 @@
 
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -424,6 +425,17 @@
                         <i class="ti ti-x ti-sm search-toggler cursor-pointer"></i>
                     </div>
                 </nav>
+                    @if (session('error'))
+                        <script>
+                            // Display SweetAlert with the error message
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: '{{ session('error') }}',
+                            });
+                        </script>
+                    @endif
+
                 @yield('content')
                 {{-- Modal Tambah Tim --}}
                 <div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
@@ -513,7 +525,7 @@
     <script src="{{ asset('assets/vendor/js/menu2dc9.js?id=c6ce30ded4234d0c4ca0fb5f2a2990d8') }}"></script>
     <script src="{{ asset('assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
     <script src="{{ asset('assets/js/mainf696.js?id=8bd0165c1c4340f4d4a66add0761ae8a') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+
     <script src="{{ asset('assets/js/dashboards-crm.js') }}"></script>
 
     {{-- validasi --}}
@@ -768,7 +780,7 @@
     @endif
 
     @yield('script')
-
+    <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 </body>
 
 </html>

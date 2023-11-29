@@ -268,7 +268,7 @@
                                                     data-tema="{{ isset($item->project[0]) && $item->project[0]->tema_id != null ? $item->project[0]->tema->nama_tema : 'belum ada' }}"
                                                     data-tglmulai="{{ $item->created_at->translatedFormat('l, j F Y') }}"
                                                     data-deadline="{{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}"
-                                                    data-anggota="{{ $anggotaJson }}"
+                                                    data-anggota="{{ json_encode($item->anggota_profile()) }}"
                                                     data-deskripsi="{{ $item->deskripsi }}"
                                                     data-dayleft="{{ $dayLeft }}"
                                                     data-total-deadline="{{ $totalDeadline }}"
@@ -597,6 +597,7 @@
                 var tglmulai = $(this).data('tglmulai');
                 var deadline = $(this).data('deadline');
                 var anggota = $(this).data('anggota');
+                // console.log(anggota);
                 var deskripsi = $(this).data('deskripsi');
                 var dayLeft = $(this).data('dayleft');
                 var repo = $(this).data('repo');
@@ -637,7 +638,9 @@
                 anggotaList.empty();
 
                 anggota.forEach(function(anggota, index) {
-                    var avatarSrc = anggota.avatar ? '/storage/' + anggota.avatar :
+                    var jabatanLabel = anggota.status === 'kicked' ? 'Mantan Anggota' : anggota.jabatan.nama_jabatan;
+
+                    var avatarSrc = anggota.user.avatar ? '/storage/' + anggota.user.avatar :
                         '/assets/img/avatars/1.png';
 
                     var anggotaItem = $('<div class="col-lg-12 p-2" style="box-shadow: none">' +
@@ -648,8 +651,8 @@
                         avatarSrc + '" alt="foto user">' +
                         '</div>' +
                         '<div>' +
-                        '<h5 class="mb-0" style="font-size: 15px">' + anggota.name + '</h5>' +
-                        '<span class="badge bg-label-warning">' + anggota.jabatan + '</span>' +
+                        '<h5 class="mb-0" style="font-size: 15px">' + anggota.user.username + '</h5>' +
+                        '<span class="badge bg-label-warning">' + jabatanLabel + '</span>' +
                         '</div>' +
                         '</div>' +
                         '</div>' +

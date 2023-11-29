@@ -27,6 +27,8 @@
     <link rel="stylesheet"
         href="{{ asset('assets/vendor/libs/typeahead-js/typeaheadb5e1.css?id=2603197f6b29a6654cb700bd9367e2a3') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/tagify/tagify.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection
 
 @section('style')
@@ -40,6 +42,16 @@
 @endsection
 
 @section('content')
+    @if (session('error'))
+        <script>
+            // Display SweetAlert with the error message
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '{{ session('error') }}',
+            });
+        </script>
+    @endif
     {{-- Modal Ajukan Project --}}
     <div class="modal fade" id="ajukanModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-simple modal-edit-user">
@@ -392,6 +404,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row mt-2 justify-content-center align-items-center grid">
                             {{-- Anggota --}}
                             @forelse ($anggota as $item)
@@ -407,8 +420,18 @@
                                             <div>
                                                 <h5 class="mb-0" style="font-size: 15px">
                                                     {{ $item->user->username }}</h5>
-                                                <span
-                                                    class="badge bg-label-warning">{{ $item->jabatan->nama_jabatan }}</span>
+                                                <div>
+                                                    @if ($item->status == 'active')
+                                                        <span
+                                                            class="badge bg-label-warning">{{ $item->jabatan->nama_jabatan }}</span>
+                                                    @elseif ($item->status == 'kicked')
+                                                        <span class="badge bg-label-danger">Mantan anggota </span>
+                                                    @endif
+                                                    @if ($item->user->status_kelulusan == '1')
+                                                        <span class="badge bg-label-success">Lulus</span>
+                                                    @endif
+
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -752,6 +775,8 @@
             }
         });
     </script>
+    {{-- <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script> --}}
+
     {{-- Validasi --}}
 
     {{-- pie chart --}}
