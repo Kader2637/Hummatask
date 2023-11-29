@@ -135,7 +135,7 @@ class PresentasiController extends Controller
         $presentasi->save();
 
         // dd($presentasi)
-        $this->sendNotificationToTeamMembers($presentasi->tim->anggota, 'Presentasi Disetujui', 'Presentasi Anda telah disetujui.','alert-info');
+        $this->sendNotificationToTeamMembers($presentasi->tim->anggota, 'Presentasi Disetujui', 'Presentasi Anda telah disetujui.','pemberitahuan');
 
         return response()->json([
             "presentasi" => $presentasi,

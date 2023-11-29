@@ -69,7 +69,7 @@ class Notifikasi extends Command
                 if ($tugas->penugasan()) {
                     $userIds = $tugas->user->pluck('id')->toArray();
                     foreach ($userIds as $userId) {
-                        $this->sendNotification($userId, 'Deadline Tugas', 'Deadline tugas "' . $tugas->nama . '" tinggal 1 hari lagi!', 'deadline');
+                        $this->sendNotification($userId, 'Deadline Tugas', 'Deadline tugas "' . $tugas->nama . '" tinggal 2 hari lagi!', 'deadline');
                     }
                 }
             }
