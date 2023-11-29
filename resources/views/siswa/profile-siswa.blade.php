@@ -149,7 +149,7 @@
                         <div class="col-12">
 
                             {{-- card team --}}
-                            <div class="d-flex flex-wrap">
+                            <div class="">
                                 @forelse ($tims as $item)
                                     @php
                                         $anggotaArray = [];
@@ -271,25 +271,6 @@
                                             <div class="container-fluid">
                                                 <div class="col-12">
                                                     <div class="nav-align-top d-flex justify-between">
-                                                        <div class="nav nav-pills d-flex justify-content-between my-4"
-                                                            role="tablist">
-                                                            <div class="d-flex justify-content-between">
-                                                                <div class="nav-item" role="presentation">
-                                                                    <button type="button"
-                                                                        class="nav-link active button-nav" role="tab"
-                                                                        data-bs-toggle="tab"
-                                                                        data-bs-target="#navs-pills-top-home"
-                                                                        aria-controls="navs-pills-top-home"
-                                                                        aria-selected="true" disabled>Detail
-                                                                        Anggota</button>
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="d-flex justify-content-end">
-                                                                <button class="btn btn-primary" disabled>Detail
-                                                                    Projek</button>
-                                                            </div>
-                                                        </div>
                                                         <div class="tab-content bg-transparent pb-0"
                                                             style="box-shadow: none;">
                                                             <div class="tab-pane fade active show"

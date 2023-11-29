@@ -230,7 +230,7 @@
                         <div class="row">
                             <div class="col mb-3">
                                 <label for="status_tim" class="form-label">Kategori Tim</label>
-                                <select id="tim_status_modal" name="status_tim" class=" form-select form-select"
+                                <select id="tim_status_modal" name="status_tim" class="select2 form-select form-select"
                                     data-allow-clear="true">
                                     <option value="" disabled selected>Pilih Data</option>
                                     <option class="nowStatus" value="pre_mini">Pre mini projek</option>

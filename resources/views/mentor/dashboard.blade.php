@@ -2,13 +2,12 @@
 
 @section('content')
     <div class="container-fluid mt-3">
-        <h5 class="mt-3">Dashboard</h5>
+        <h5 class="mt-3 fs-4">Dashboard Mentor</h5>
         <div class="card">
             <div class="d-flex justify-content-between mx-3 mb-1 mt-4">
-                <h5 class="pb-0">Data Presentasi</h5>
+                <h5 class="pb-0">Data Presentasi hari ini</h5>
                 <a href="{{ route('presentasi.mentor') }}" class="btn btn-primary d-flex justify-content-end">Detail</a>
             </div>
-            <li class="ms-4" style="margin-top:-10px;">Yang Telah Selesai Hari Ini</li>
             <div class="table-responsive text-nowrap card-datatable">
                 <table id="myTable" class="table">
                     <thead>
@@ -50,29 +49,29 @@
                         <canvas id="piechart" class="chartjs mb-4" data-height="350"></canvas>
                         <ul class="doughnut-legend d-flex justify-content-around ps-0 mb-2 pt-1">
                             <li class="ct-series-0 d-flex flex-column">
+                                <h5 class="mb-0">Big</h5>
+                                <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
+                                    style="background-color: #FE7BE5; height:6px;width:30px;"></span>
+                                <div class="text-muted"></div>
+                            </li>
+                            <li class="ct-series-1 d-flex flex-column">
+                                <h5 class="mb-0">Mini</h5>
+                                <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
+                                    style="background-color: #974EC3; height:6px; width: 30px;"></span>
+                                <div class="text-muted"></div>
+                            </li>
+                            <li class="ct-series-1 d-flex flex-column">
+                                <h5 class="mb-0">Pre-mini</h5>
+                                <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
+                                    style="background-color: #504099; height:6px; width:30px;"></span>
+                                <div class="text-muted"></div>
+                            </li>
+                            <li class="ct-series-0 d-flex flex-column">
                                 <h5 class="mb-0">Solo</h5>
                                 <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                    style="background-color: yellow; height:6px;width:30px;"></span>
-                                    <div class="text-muted"></div>
-                                </li>
-                                <li class="ct-series-1 d-flex flex-column">
-                                    <h5 class="mb-0">Premini</h5>
-                                    <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                    style="background-color: #43eb25; height:6px; width:30px;"></span>
-                                    <div class="text-muted"></div>
-                                </li>
-                                <li class="ct-series-1 d-flex flex-column">
-                                    <h5 class="mb-0">Mini</h5>
-                                    <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                    style="background-color: #ff7f00; height:6px; width: 30px;"></span>
-                                    <div class="text-muted"></div>
-                                </li>
-                                <li class="ct-series-0 d-flex flex-column">
-                                    <h5 class="mb-0">Big</h5>
-                                    <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                        style="background-color: blue; height:6px;width:30px;"></span>
-                                    <div class="text-muted"></div>
-                                </li>
+                                    style="background-color: #313866; height:6px;width:30px;"></span>
+                                <div class="text-muted"></div>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -121,12 +120,11 @@
 @endsection
 @section('script')
     <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        const cardColor = '#28dac6';
+        const cardColor = 'grey';
         const headingColor = '#FDAC34';
-        const black = '#000000';
+        const black = '#fff';
 
         const piechart = document.getElementById('piechart');
         const processedData = @json($chart);
@@ -141,7 +139,7 @@
                     labels: pie,
                     datasets: [{
                         data: jumlah,
-                        backgroundColor: [cardColor, 'yellow', '#43eb25', '#ff7f00','blue'],
+                        backgroundColor: [cardColor, '#313866', '#504099', '#974EC3', '#FE7BE5'],
                         hoverOffset: 4
                     }]
                 },
@@ -150,7 +148,6 @@
                     animation: {
                         duration: 500
                     },
-                    cutout: '68%',
                     plugins: {
                         legend: {
                             display: false
@@ -160,12 +157,12 @@
                                 label: function(context) {
                                     const label = context.label || '';
                                     const value = context.parsed;
-                                    const output = ' ' + label + ' : ' + value ;
+                                    const output = ' ' + label + ' : ' + value;
                                     return output;
                                 }
                             },
                             backgroundColor: cardColor,
-                            titleColor: cardColor,
+                            titleColor: black,
                             bodyColor: black,
                             borderWidth: 1,
                             borderColor: cardColor,
