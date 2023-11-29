@@ -40,10 +40,16 @@ class PengajuanTimController extends Controller
             return redirect()->back()->with('error', 'input Foto ataupun nama tim tidak boleh kosong');
         }
 
-        $timDulu = User::find(Auth::user()->id)->anggota()->orderByDesc('created_at')->first();
+
+        try {
+        $timDulu = User::find(Auth::user()->id)->anggota()->orderByDesc('created_at')->first()->status;
+            //code...
+        } catch (\Throwable $th) {
+            $timDulu = null;
+        }
         // dd($timDulu);
 
-            if ($timDulu->status == 'active') {
+            if ($timDulu === null || $timDulu === 'active') {
                 return redirect()->back()->with('error', 'Kamu masih memiliki tim yang belum selesai');
             }
 
