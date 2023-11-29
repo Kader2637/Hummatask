@@ -15,7 +15,7 @@ class CheckKetuaKelompok
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user() && $request->user()->anggota && $request->user()->anggota->jabatan_id === '1') {
+        if ($request->user() && $request->user()->anggota && $request->user()->anggota->jabatan_id == "1") {
             return $next($request);
         }
 

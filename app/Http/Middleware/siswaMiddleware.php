@@ -18,7 +18,7 @@ class siswaMiddleware
     {
         if (!Auth::check() && Auth::logout() && auth()->user()->is_login === false) {
             return back();
-        } else if (Auth::check() && Auth::user()->peran_id === "1") {
+        } else if (Auth::check() && Auth::user()->peran_id == 1) {
             return $next($request);
         }
         return back()->with('unauthorize', 'Anda tidak memiliki izin untuk mengakses halaman ini.');
