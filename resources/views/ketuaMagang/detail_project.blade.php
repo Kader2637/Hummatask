@@ -40,6 +40,7 @@
                                         <div class="d-flex flex-row align-items-center justify-content-between">
                                             <div class="fs-4 text-black">
                                                 Projek
+
                                             </div>
                                             <div
                                                 style="display: flex; flex-direction: column; justify-items: center; align-items: left;">

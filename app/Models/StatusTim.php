@@ -10,3 +10,7 @@ class StatusTim extends Model
     use HasFactory;
     protected $guarded=[];
 }
+
+
+
+
