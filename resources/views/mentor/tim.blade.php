@@ -103,12 +103,12 @@
                             <div class="d-flex justify-content-center">
                                 @if ($tim->status_tim == 'solo')
                                     <div class="form-check form-switch mb-2">
-                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                        <input class="form-check-input flexSwitchCheckDefault" type="checkbox"
+                                            id="flexSwitchCheckDefault{{ $tim->id }}"
                                             data-uri="/mentor/solo/edit/{{ $tim->id }}"
                                             data-kadaluwarsa="{{ $tim->kadaluwarsa }}"
                                             data-anggota="{{ json_encode($tim->anggota_id()) }}"
                                             @if ($tim->kadaluwarsa == 0) checked @endif>
-
                                         <label class="form-check-label" for="flexSwitchCheckDefault">Kondisi Tim</label>
                                     </div>
                                 @else
@@ -305,21 +305,6 @@
 
 @section('script')
     <script>
-        $(document).ready(function() {
-            // Ambil nilai dan atribut yang diperlukan saat halaman dimuat
-            var uri = $('#flexSwitchCheckDefault').data('uri');
-            var kadaluwarsa = $('#flexSwitchCheckDefault').data('kadaluwarsa');
-            var kadaluwarsa = $('#flexSwitchCheckDefault').data('anggota');
-            var ikan = $('meta[name="csrf-token"]').attr('content');
-
-            // Perbarui nilai checkbox berdasarkan kondisi
-            if ($('#flexSwitchCheckDefault').prop('checked') && kadaluwarsa == 1) {
-                $('#flexSwitchCheckDefault').prop('checked', false);
-            } else if (!$('#flexSwitchCheckDefault').prop('checked') && kadaluwarsa == 0) {
-                $('#flexSwitchCheckDefault').prop('checked', true);
-            }
-        });
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -327,7 +312,22 @@
         });
 
         $(document).ready(function() {
-            $('#flexSwitchCheckDefault').on('change', function() {
+            // Ambil nilai dan atribut yang diperlukan saat halaman dimuat
+            var uri = $('.flexSwitchCheckDefault').data('uri');
+            var kadaluwarsa = $('.flexSwitchCheckDefault').data('kadaluwarsa');
+            var kadaluwarsa = $('.flexSwitchCheckDefault').data('anggota');
+            var ikan = $('meta[name="csrf-token"]').attr('content');
+
+            // Perbarui nilai checkbox berdasarkan kondisi
+            if ($('.flexSwitchCheckDefault').prop('checked') && kadaluwarsa == 1) {
+                $('.flexSwitchCheckDefault').prop('checked', false);
+            } else if (!$('.flexSwitchCheckDefault').prop('checked') && kadaluwarsa == 0) {
+                $('.flexSwitchCheckDefault').prop('checked', true);
+            }
+        });
+
+        $(document).ready(function() {
+            $('.flexSwitchCheckDefault').on('change', function() {
                 var uri = $(this).data('uri');
                 var isChecked = $(this).prop('checked');
                 var kadaluwarsa = $(this).data('kadaluwarsa');
