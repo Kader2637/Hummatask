@@ -170,7 +170,7 @@
     <script>
         $(window).load(function() {
 
-            var rnd = Math.random() * (2000 - 2000) + 500;
+            var rnd = Math.random() * (1000 - 500) + 500;
 
             $('.progress').css("animation", "loading " + rnd + "ms linear");
 
@@ -274,7 +274,7 @@
                                             style="width: 30px;height:30px;object-fit: cover"
                                             class="rounded-circle border border-primary"
                                             src="{{ asset('storage/' . $item->logo) }}" alt="">
-                                        <div class="">{{ $item->nama }}</div>
+                                        <div class="">{{ Str::limit($item->nama, 15) }}</div>
                                     </a>
                                 </li>
                             @empty

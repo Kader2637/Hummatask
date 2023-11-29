@@ -96,7 +96,7 @@
                         @csrf
                         @method('PATCH')
                         <div class="row">
-                            <div class="col mb-3">
+                            <div class="col mb-3 text-center">
                                 <label class="form-label text-white" for="image-input">
                                     <img id="preview-image" src="{{ asset('storage/' . $tim->logo) }}"
                                         alt="example placeholder"
@@ -216,19 +216,25 @@
                                             <li class="ct-series-0 d-flex flex-column">
                                                 <h5 class="mb-0">Tugas Baru</h5>
                                                 <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                                    style="background-color: #ff7f00; height: 6px; width: 30px;"></span>
+                                                    style="background-color: #6A2C70; height: 6px; width: 30px;"></span>
+                                                <div class="text-muted"></div>
+                                            </li>
+                                            <li class="ct-series-1 d-flex flex-column">
+                                                <h5 class="mb-0">Dikerjakan</h5>
+                                                <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
+                                                    style="background-color: #B83B5E; height: 6px; width: 30px;"></span>
                                                 <div class="text-muted"></div>
                                             </li>
                                             <li class="ct-series-1 d-flex flex-column">
                                                 <h5 class="mb-0">Revisi</h5>
                                                 <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                                    style="background-color: blue; height: 6px; width: 30px;"></span>
+                                                    style="background-color: #F08A5D; height: 6px; width: 30px;"></span>
                                                 <div class="text-muted"></div>
                                             </li>
                                             <li class="ct-series-1 d-flex flex-column">
                                                 <h5 class="mb-0">Selesai</h5>
                                                 <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                                    style="background-color: yellow; height: 6px; width: 30px;"></span>
+                                                    style="background-color: #F9ED69; height: 6px; width: 30px;"></span>
                                                 <div class="text-muted"></div>
                                             </li>
                                         </ul>
@@ -339,11 +345,11 @@
                                                 @endif
                                             </div>
                                             @if (@isset($project) && $project->deskripsi != null)
-                                                <div class="deskripsi mt-2">
+                                                <div class="deskripsi my-2">
                                                     <div class="title text-dark">
                                                         Deskripsi :
                                                     </div>
-                                                    <div class="isi">
+                                                    <div class="isi mt-2">
                                                         {{ $project->deskripsi }}
                                                     </div>
                                                 </div>
@@ -609,7 +615,7 @@
                         title: 'Peringatan',
                         text: 'File harus berupa gambar (jpg, jpeg, png, gif)',
                         showConfirmButton: false,
-                        timer: 3000
+                        timer: 2000
                     });
                 }
             }
@@ -621,16 +627,16 @@
                     title: 'Peringatan',
                     text: 'Nama tim tidak boleh kosong',
                     showConfirmButton: false,
-                    timer: 3000
+                    timer: 2000
                 });
-            } else if (namaTim.length > 50) {
+            } else if (namaTim.length > 25) {
                 e.preventDefault();
                 Swal.fire({
                     icon: 'warning',
                     title: 'Peringatan',
-                    text: 'Nama tim terlalu panjang',
+                    text: 'Nama tim terlalu panjang, maks 25 char',
                     showConfirmButton: false,
-                    timer: 3000
+                    timer: 2000
                 });
             }
 
@@ -642,7 +648,7 @@
                     title: 'Peringatan',
                     text: 'Nama repo tidak boleh kosong',
                     showConfirmButton: false,
-                    timer: 3000
+                    timer: 2000
                 });
             } else {
                 // Pengecekan apakah repo adalah URL menggunakan regex
@@ -654,7 +660,7 @@
                         title: 'Peringatan',
                         text: 'Nama repo harus berupa URL yang valid',
                         showConfirmButton: false,
-                        timer: 3000
+                        timer: 2000
                     });
                 }
             }
@@ -667,16 +673,16 @@
                     title: 'Peringatan',
                     text: 'Deskripsi tidak boleh kosong',
                     showConfirmButton: false,
-                    timer: 3000
+                    timer: 2000
                 });
             } else if (deskripsi.length > 100) {
                 e.preventDefault();
                 Swal.fire({
                     icon: 'warning',
                     title: 'Peringatan',
-                    text: 'Deskripsi terlalu panjang',
+                    text: 'Deskripsi terlalu panjang, maks 100',
                     showConfirmButton: false,
-                    timer: 3000
+                    timer: 2000
                 });
             }
         });
@@ -751,9 +757,9 @@
     {{-- pie chart --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const cardColor = '#28dac6';
+            const cardColor = 'grey';
             const headingColor = '#FDAC34';
-            const black = '#000000';
+            const black = '#fff';
 
             const doughnutChart = document.getElementById('project');
             const chartStatus = document.querySelector('.chart-status');
@@ -770,7 +776,7 @@
                         labels: labels,
                         datasets: [{
                             data: values,
-                            backgroundColor: [cardColor, 'yellow', 'blue', 'orange'],
+                            backgroundColor: [cardColor, '#F9ED69', '#F08A5D', '#B83B5E', '#6A2C70'],
                             hoverOffset: 4
                         }]
                     },
@@ -779,7 +785,6 @@
                         animation: {
                             duration: 500
                         },
-                        cutout: '68%',
                         plugins: {
                             legend: {
                                 display: false
@@ -794,7 +799,7 @@
                                     }
                                 },
                                 backgroundColor: cardColor,
-                                titleColor: cardColor,
+                                titleColor: black,
                                 bodyColor: black,
                                 borderWidth: 1,
                                 borderColor: cardColor,

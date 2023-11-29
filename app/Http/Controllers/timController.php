@@ -109,6 +109,7 @@ class timController extends Controller
         $selesaiCount = $tim->tugas->where('status_tugas', 'selesai')->count();
         $revisiCount = $tim->tugas->where('status_tugas', 'revisi')->count();
         $tugasBaruCount = $tim->tugas->where('status_tugas', 'tugas_baru')->count();
+        $dikerjakanCount = $tim->tugas->where('status_tugas', 'dikerjakan')->count();
         $totalTugas = $tim->tugas->count();
         $persentase = $totalTugas > 0 ? ($tugasBaruCount / $totalTugas) * 100 : 0;
         $tgl = $tim->project->pluck('created_at')->toArray();
@@ -130,7 +131,8 @@ class timController extends Controller
             ['Status Tugas', 'Jumlah'],
             ['Selesai', $selesaiCount || 0  ],
             ['Revisi', $revisiCount || 0 ],
-            ['Tugas Baru', $tugasBaruCount || 0 ]
+            ['Dikerjakan', $dikerjakanCount || 0 ],
+            ['Tugas Baru', $tugasBaruCount || 0 ],
         ];
 
         return view('siswa.tim.project', compact('hasProjectRelation', 'days', 'tanggal', 'persentase', 'selesaiCount', 'revisiCount', 'chartData', 'title', 'tim', 'anggota', 'project', 'notifikasi',));

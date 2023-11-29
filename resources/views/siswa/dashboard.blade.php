@@ -32,7 +32,7 @@
         <div class="row">
             @if (count($tugasBelum) > 0 || count($tugas) > 0)
                 <div class="col-lg-3">
-                    <div class="kanban-title-board fs-5 fw-bold">Tugas yang belum selesai</div>
+                    <div class="kanban-title-board fs-5">Tugas yang belum selesai</div>
                 </div>
         </div>
         <div class="row mt-4 justify-content-start mb-2" id="navs-tab-sesijalani">
@@ -40,28 +40,29 @@
             @foreach ($tugasBelum as $data)
                 <div class="col-lg-3">
                     <div class="card text-center mb-3">
-                        <div class="kanban-item" data-eid="in-progress-1" data-comments="12" data-badge-text="UX"
+                        <a href="{{route('tim.board', $data->tim_code)}}" class="card-body py-3 px-3" data-eid="in-progress-1" data-comments="12" data-badge-text="UX"
                             data-badge="success" data-due-date="5 April" data-attachments="4" data-assigned="12.png,5.png"
                             data-members="Bruce,Clark">
                             <div class="d-flex justify-content-start flex-wrap align-items-center mb-2 pb-1">
                                 <div class="item-badges">
                                     <div class="badge rounded-pill bg-label-success">{{ $data->prioritas }}</div>
                                 </div>
-                                @php
-                                    $deadline = \Carbon\Carbon::parse($data->deadline);
-                                    $created = \Carbon\Carbon::parse($data->created_at);
-                                    $days = $deadline->diffInDays($created);
-                                @endphp
-                                <div style="font-size: 12px; margin-left: 10px;">
-                                    {{ $days }} hari lagi
-                                </div>
+                                @if ($data->dayleft != 0)
+                                    <div style="font-size:12px; margin-left:10px;" class="text-warning">
+                                        tenggat {{ $data->dayleft }} hari lagi.
+                                    </div>
+                                @else
+                                    <div style="font-size:12px; margin-left:10px;" class="text-warning">
+                                        tenggat hari ini.
+                                    </div>
+                                @endif
                             </div>
                             <span class="kanban-text text-left">{{ $data->nama }}</span>
                             <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
                                 <div class="d-flex">
-                                    {{-- <span class="d-flex align-items-center ms-1">
+                                    <span class="d-flex align-items-center ms-1">
                                         <i class="ti ti-message-dots ti-xs me-1"></i>
-                                        <span> {{ $comment->count() }} </span></span> --}}
+                                        <span> {{ $data->comments_count }} </span></span>
                                 </div>
                                 <div class="avatar-group d-flex align-items-center assigned-avatar">
                                     @foreach ($data->user as $item)
@@ -73,7 +74,7 @@
                                     @endforeach
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
                 @php $count++; @endphp
@@ -84,7 +85,7 @@
         </div>
         <div class="row">
             <div class="col-lg-3">
-                <div class="kanban-title-board fs-5 fw-bold">Tugas terbaru</div>
+                <div class="kanban-title-board fs-5">Tugas terbaru</div>
             </div>
         </div>
         <div class="row mt-4 d-flex justify-content-start" id="navs-tab-sesijalani">
@@ -92,27 +93,32 @@
             @foreach ($tugas as $item)
                 <div class="col-lg-3">
                     <div class="card text-center mb-3">
-                        <div class="kanban-item" data-eid="in-progress-1" data-comments="12" data-badge-text="UX"
+                        <a href="{{route('tim.board', $item->tim_code)}}" class="card-body py-3 px-3" data-eid="in-progress-1" data-comments="12" data-badge-text="UX"
                             data-badge="success" data-due-date="5 April" data-attachments="4" data-assigned="12.png,5.png"
                             data-members="Bruce,Clark">
                             <div class="d-flex justify-content-start flex-wrap align-items-center mb-2 pb-1">
                                 <div class="item-badges">
                                     <div class="badge rounded-pill bg-label-success">{{ $item->prioritas }}</div>
                                 </div>
-                                @php
-                                    $deadline = \Carbon\Carbon::parse($item->deadline);
-                                    $created = \Carbon\Carbon::parse($item->created_at);
-                                    $days = $deadline->diffInDays($created);
-                                @endphp
-                                <div style="font-size:12px; margin-left:10px;">
-                                    {{ $days }} hari lagi
-                                </div>
+                                @if ($item->dayleft != 0)
+                                    <div style="font-size:12px; margin-left:10px;" class="text-warning">
+                                        tenggat {{ $item->dayleft }} hari lagi.
+                                    </div>
+                                @else
+                                    <div style="font-size:12px; margin-left:10px;" class="text-warning">
+                                        tenggat hari ini.
+                                    </div>
+                                @endif
                             </div>
                             <span class="kanban-text text-left">{{ $item->nama }}</span>
                             <div class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
                                 <div class="d-flex">
-                                    {{-- <span class="d-flex align-items-center ms-1"><i
-                                            class="ti ti-message-dots ti-xs me-1"></i><span> {{ $item->comment }} </span></span> --}}
+                                    <span class="d-flex align-items-center ms-1">
+                                        <i class="ti ti-message-dots ti-xs me-1"></i>
+                                        <span>
+                                            {{ $item->comments_count }}
+                                        </span>
+                                    </span>
                                 </div>
                                 <div class="avatar-group d-flex align-items-center assigned-avatar">
                                     @foreach ($item->user as $data)
@@ -125,7 +131,7 @@
                                     @endforeach
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
                 @php $count2++; @endphp

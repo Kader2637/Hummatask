@@ -90,21 +90,21 @@
                                     <div class="col-md-6">
                                         <div class="form-floating my-3">
                                             <input name="username" type="text" class="form-control"
-                                                placeholder="{{ $user->username }}" aria-describedby="floatingInputHelp" />
+                                                placeholder="{{ $user->username ?: 'Isi username anda' }}" aria-describedby="floatingInputHelp" />
                                             <label for="floatingInput">Nama</label>
                                             <span class="text-danger" id="username-error">
                                             </span>
                                         </div>
                                         <div class="form-floating my-3">
                                             <input name="email" type="email" class="form-control"
-                                                placeholder="{{ $user->email }}" aria-describedby="floatingInputHelp" />
+                                                placeholder="{{ $user->email ?: 'Isi email anda' }}" aria-describedby="floatingInputHelp" />
                                             <label for="floatingInput">Email</label>
                                             <span class="text-danger" id="email-error">
                                             </span>
                                         </div>
                                         <div class="form-floating my-3">
                                             <input name="tlp" type="number" class="form-control"
-                                                placeholder="{{ $user->tlp ? $user->tlp : 'Isi nomer telefon anda' }}"
+                                                placeholder="{{ $user->tlp ? $user->tlp : 'Isi nomer telepon anda' }}"
                                                 aria-describedby="floatingInputHelp" />
                                             <label for="floatingInput">Nomor Telpon</label>
                                             <span class="text-danger" id="tlp-error">
@@ -114,7 +114,7 @@
                                     <div class="col-md-6">
                                         <div class="form-floating my-3">
                                             <input name="sekolah" type="text" class="form-control"
-                                                placeholder="{{ $user->sekolah ? $user->sekolah : 'Isi alamat sekolah anda' }}"
+                                                placeholder="{{ $user->sekolah ?: 'Isi alamat sekolah anda' }}"
                                                 aria-describedby="floatingInputHelp" />
                                             <label for="floatingInput">Asal Sekolah</label>
                                             <span class="text-danger" id="alamat-error">
@@ -122,7 +122,7 @@
                                         </div>
                                         <div class="form-floating my-3">
                                             <textarea name="deskripsi" style="resize: none; height: 133.5px;" class="form-control"
-                                                placeholder="{{ $user->deskripsi != 'none' ? $user->deskripsi : 'I am a programmer' }}"
+                                                placeholder="{{ $user->deskripsi != 'none' ?: 'Isi deskripsi anda' }}"
                                                 aria-describedby="floatingInputHelp"></textarea>
                                             <label for="floatingInput">deskripsi</label>
                                             <span class="text-danger" id="deskripsi-error">
@@ -192,8 +192,26 @@
                                                         class="">
                                                         <span class="text-black fs-6">{{ $item->nama }}</span>
                                                         <div class="d-flex align-items-center">
-                                                            <span
-                                                                class="badge bg-label-warning my-1">{{ $item->status_tim }}</span>
+                                                            <span class="badge bg-label-warning my-1">
+                                                                @if ($item->status_tim == 'solo')
+                                                                    Solo Project
+                                                                @elseif ($item->status_tim == 'pre_mini')
+                                                                    Pre-Mini Project
+                                                                @elseif ($item->status_tim == 'mini')
+                                                                    Mini Project
+                                                                @elseif ($item->status_tim == 'big')
+                                                                    Big Project
+                                                                @endif
+                                                            </span>
+                                                            @if ($item->kadaluwarsa == 1)
+                                                                <span class="ms-1 badge bg-label-danger">
+                                                                    Expired Team
+                                                                </span>
+                                                            @elseif ($item->kadaluwarsa == 0)
+                                                                <span class="ms-1 badge bg-label-success">
+                                                                    Active Team
+                                                                </span>
+                                                            @endif
                                                         </div>
                                                         <div class="d-flex align-items-center justify-content-center">
                                                             <div
@@ -225,13 +243,13 @@
                                                         <div>{{ $item->created_at->translatedFormat('l, j F Y') }}
                                                         </div>
                                                     </div>
-
                                                     <div class="d-flex justify-content-between">
-                                                        <span>Tema :@if (isset($item->project[0]) && $item->project[0]->tema_id != null)
-                                                                {{ $item->project[0]->tema->nama_tema }}
-                                                            @else
-                                                                belum ada
-                                                            @endif
+                                                        <span>Tema :</span>
+                                                        @if (isset($item->project[0]) && $item->project[0]->tema_id != null)
+                                                            <span>{{ $item->project[0]->tema->nama_tema }}</span>
+                                                        @else
+                                                            belum ada
+                                                        @endif
                                                         </span>
 
                                                     </div>
@@ -240,7 +258,13 @@
                                                     class="w-100 btn btn-primary btn-detail-projek"
                                                     data-logo="{{ asset('storage/' . $item->logo) }}"
                                                     data-namatim="{{ $item->nama }}"
-                                                    data-status="{{ $item->status_tim }}"
+                                                    data-status="@if ($item->status_tim == 'solo') Solo Project
+                                                    @elseif ($item->status_tim == 'pre_mini')
+                                                        Pre-Mini Project
+                                                    @elseif ($item->status_tim == 'mini')
+                                                        Mini Project
+                                                    @elseif ($item->status_tim == 'big')
+                                                        Big Project @endif"
                                                     data-tema="{{ isset($item->project[0]) && $item->project[0]->tema_id != null ? $item->project[0]->tema->nama_tema : 'belum ada' }}"
                                                     data-tglmulai="{{ $item->created_at->translatedFormat('l, j F Y') }}"
                                                     data-deadline="{{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}"

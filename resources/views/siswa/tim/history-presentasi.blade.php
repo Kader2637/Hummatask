@@ -44,7 +44,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="d-flex flex-row flex-wrap justify-content-between align-content-center px-md-4 px-2 py-3 mb-3">
-                    <span class="card-header card-header-judul fs-4 p-0">Daftar Presentasi</span>
+                    <span class="card-header card-header-judul fs-4 p-0">Ajukan Presentasi</span>
                     @if ($anggota === "active" || $jabatan === 1)
                     <span class="card-header btn-ajukan-presentasi p-0">
                         <button type="button" data-bs-toggle="modal" data-bs-target="#ajukanPresentasi"

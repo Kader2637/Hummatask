@@ -165,7 +165,7 @@
     <script>
         $(window).load(function() {
 
-            var rnd = Math.random() * (2000 - 2000) + 500;
+            var rnd = Math.random() * (1000 - 500) + 500;
 
             $('.progress').css("animation", "loading " + rnd + "ms linear");
 

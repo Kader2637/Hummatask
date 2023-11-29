@@ -295,10 +295,13 @@ class mentorController extends Controller
 
         $tugas_baru = $tim->tugas->where('status_tugas', 'tugas_baru')->count();
 
+        $dikerjakan = $tim->tugas->where('status_tugas', 'dikerjakan')->count();
+
         $chartData = [
             ['Status Tugas', 'Jumlah'],
             ['Selesai', $selesai || 0],
             ['Revisi', $revisi || 0],
+            ['Dikerjakan', $dikerjakan || 0],
             ['Tugas Baru', $tugas_baru || 0]
         ];
 
@@ -376,7 +379,7 @@ class mentorController extends Controller
             }
         }
 
-        $tims = $timQuery->paginate(12);
+        $tims = $timQuery->orderBy('kadaluwarsa')->paginate(12);
 
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
