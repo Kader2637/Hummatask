@@ -105,11 +105,11 @@
                                         <td class="pt-2">
                                             <div class="d-flex justify-content-start align-items-center mt-lg-1">
                                                 <div class="avatar me-3 avatar-sm">
-                                                    <img src="{{ asset('assets/img/avatars/4.png') }}" alt="Avatar"
+                                                    <img src="{{ asset('storage/'. $item->tim->logo) }}" alt="Avatar"
                                                         class="rounded-circle" />
                                                 </div>
                                                 <div class="d-flex flex-column">
-                                                    <h6 class="mb-0">{{ $item->tim->status_tim }}</h6>
+                                                    <h6 class="mb-0">{{ $item->tim->nama }}</h6>
                                         </td>
                     </div>
                 </div>
