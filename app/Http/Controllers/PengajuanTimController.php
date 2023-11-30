@@ -113,10 +113,6 @@ class PengajuanTimController extends Controller
 
         }
 
-
-
-        
-
         return redirect()->back()->with('success', 'Berhasil membuat tim solo project');
     }
 
@@ -178,7 +174,7 @@ class PengajuanTimController extends Controller
             }else{
                 $historyPresentasi = new HistoryPresentasi;
                 $historyPresentasi->code = Str::uuid();
-    
+
                 $historyPresentasi->noMinggu = 1;
                 $historyPresentasi->bulan = Carbon::now()->isoFormat("MMMM");
                 $historyPresentasi->tahun = Carbon::now()->isoFormat("YYYY");
@@ -189,7 +185,7 @@ class PengajuanTimController extends Controller
                     "history_presentasi_id" => $historyPresentasi->id,
                 ]);
             }
-    
+
 
             foreach ($uniqueDaftarAnggota as $anggota) {
                 $anggotaModel = new Anggota;

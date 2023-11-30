@@ -39,7 +39,7 @@ class catatanController extends Controller
             }
 
             $catatan = new catatan();
-            $catatan->code = $user->tim[0]->code;
+            $catatan->code = Str::uuid();
             $catatan->tim_id = $tim;
 
             if ($request->type_note == 'private') {

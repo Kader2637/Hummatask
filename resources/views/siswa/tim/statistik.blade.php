@@ -2,70 +2,74 @@
 
 @section('style')
     <style>
-.user-kontribusi {
-    position: relative;
-    display: flex;
-    align-items: center;
-    margin-bottom: 4px;
-    padding: 12px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    transition: transform 0.3s, box-shadow 0.3s;
-    cursor: pointer;
-}
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
 
-.user-kontribusi:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
+        .user-kontribusi {
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin-bottom: 4px;
+            padding: 12px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
 
-.user-kontribusi img {
-    border-radius: 50%;
-    margin-right: 10px;
-    width: 34px;
-    height: 34px;
-}
+        .user-kontribusi:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
 
-.user-kontribusi h6 {
-    margin-bottom: 0;
-}
+        .user-kontribusi img {
+            border-radius: 50%;
+            margin-right: 10px;
+            width: 34px;
+            height: 34px;
+        }
 
-.user-kontribusi small {
-    color: #777777;
-}
+        .user-kontribusi h6 {
+            margin-bottom: 0;
+        }
 
-.user-kontribusi .user-progress {
-    background-color: #f1f1f1;
-    height: 6px;
-    border-radius: 3px;
-    overflow: hidden;
-}
+        .user-kontribusi small {
+            color: #777777;
+        }
 
-.user-kontribusi .user-progress-bar {
-    height: 100%;
-    background-color: #7385f0;
-    transition: width 0.3s;
-}
+        .user-kontribusi .user-progress {
+            background-color: #f1f1f1;
+            height: 6px;
+            border-radius: 3px;
+            overflow: hidden;
+        }
 
-.user-kontribusi.active {
-    transform: scale(1.01);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-}
+        .user-kontribusi .user-progress-bar {
+            height: 100%;
+            background-color: #7385f0;
+            transition: width 0.3s;
+        }
 
-.user-kontribusi.active .user-progress-bar {
-    width: 100%;
-}
+        .user-kontribusi.active {
+            transform: scale(1.01);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
 
-.user-kontribusi.active h6 {
-    color: #7385f0;
-    font-weight: bold;
-}
+        .user-kontribusi.active .user-progress-bar {
+            width: 100%;
+        }
 
+        .user-kontribusi.active h6 {
+            color: #7385f0;
+            font-weight: bold;
+        }
     </style>
 @endsection
 
 @section('link')
-<link rel="stylesheet" href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/pages/app-logistics-dashboard.css">
+    <link rel="stylesheet"
+        href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/vendor/css/pages/app-logistics-dashboard.css">
 @endsection
 
 @section('content')
@@ -110,26 +114,27 @@
                                     <div class="card-body">
                                         <ul class="p-0 m-0">
                                             @foreach ($anggota as $i => $user)
-                                            <li class="d-flex align-items-center mb-4 user-kontribusi" id="user-kontribusi-{{ $user->uuid }}" onclick="getKontribusi('{{ $user->uuid }}')">
-                                                <img style="object-fit: cover;"
-                                                @if ($user->avatar !== null)
-                                                src="{{ Storage::url($user->avatar) }}"
+                                                <li class="d-flex align-items-center mb-4 user-kontribusi"
+                                                    id="user-kontribusi-{{ $user->uuid }}"
+                                                    onclick="getKontribusi('{{ $user->uuid }}')">
+                                                    <img style="object-fit: cover;"
+                                                        @if ($user->avatar !== null) src="{{ Storage::url($user->avatar) }}"
                                                 @else
-                                                src="{{ asset('assets/img/avatars/1.png') }}"
-                                                @endif
-                                                    alt="User" class="rounded-circle me-3" width="34">
-                                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                                    <div class="me-2">
-                                                        <div class="d-flex align-items-center">
-                                                            <h6 class="mb-0 me-1">{{ $user->username }}</h6>
+                                                src="{{ asset('assets/img/avatars/1.png') }}" @endif
+                                                        alt="User" class="rounded-circle me-3" width="34">
+                                                    <div
+                                                        class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                                        <div class="me-2">
+                                                            <div class="d-flex align-items-center">
+                                                                <h6 class="mb-0 me-1">{{ $user->username }}</h6>
+                                                            </div>
+                                                            <small class="text-muted">{{ $jabatan[$i] }}</small>
                                                         </div>
-                                                        <small class="text-muted">{{ $jabatan[$i] }}</small>
+                                                        <div class="user-progress">
+                                                            <div class="user-progress-bar"></div>
+                                                        </div>
                                                     </div>
-                                                    <div class="user-progress">
-                                                        <div class="user-progress-bar"></div>
-                                                    </div>
-                                                </div>
-                                            </li>
+                                                </li>
                                             @endforeach
                                         </ul>
                                     </div>
@@ -270,8 +275,7 @@
                                                                                     class="apexcharts-radialbar-area apexcharts-radialbar-slice-0"
                                                                                     data:angle="230" data:value="0"
                                                                                     index="0" j="0"
-                                                                                    data:pathOrig="M 83.47585697010521 235.85564722791077 A 108.16036585365855 108.16036585365855 0 1 1 261.16036585365856 153"
-                                                                                    >
+                                                                                    data:pathOrig="M 83.47585697010521 235.85564722791077 A 108.16036585365855 108.16036585365855 0 1 1 261.16036585365856 153">
                                                                                 </path>
                                                                             </g>
                                                                             <circle id="SvgjsCircle1637"
@@ -290,7 +294,9 @@
                                                                                     font-size="13px" font-weight="500"
                                                                                     fill="#a5a3ae"
                                                                                     class="apexcharts-text apexcharts-datalabel-label"
-                                                                                    style="font-family: &quot;Public Sans&quot;;"> Tugas Diselesaikan </text><text id="SvgjsText1640"
+                                                                                    style="font-family: &quot;Public Sans&quot;;">
+                                                                                    Tugas Diselesaikan </text><text
+                                                                                    id="SvgjsText1640"
                                                                                     font-family="Public Sans" x="153"
                                                                                     y="179" text-anchor="middle"
                                                                                     dominant-baseline="auto"
@@ -335,110 +341,207 @@
                         <div class="row">
                             <div class="col-xl-12 mb-4 order-5 order-xxl-0 tab-project">
                                 <div class="card card-project">
-                                  <div class="card-header">
-                                    <div class="card-title mb-0">
-                                      <h5 class="m-0">Progres Pengerjaan Tugas</h5>
+                                    <div class="card-header">
+                                        <div class="card-title mb-0">
+                                            <h5 class="m-0">Progres Pengerjaan Tugas</h5>
+                                        </div>
                                     </div>
-                                  </div>
-                                  <div class="card-body">
-                                    <div class="d-none d-lg-flex vehicles-progress-labels mb-4 ">
-                                      <div style="height:30px;" class="overflow-hidden label-tugas_baru vehicles-progress-label on-the-way-text">
-                                        Tugas Baru
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 14 14"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 1.5H11a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1h1.5"/><rect width="5" height="2.5" x="4.5" y=".5" rx="1"/><path d="M7 6v4m2-2H5"/></g></svg>
-                                    </div>
-                                      <div style="height:30px;" class="overflow-hidden label-tugas_dikerjakan vehicles-progress-label unloading-text">
-                                        Tugas Dikerjakan
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 14 14"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 1.5H11a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1h1.5"/><rect width="5" height="2.5" x="4.5" y=".5" rx="1"/><path d="M4.5 5.5h5M4.5 8h5m-5 2.5h5"/></g></svg>
-                                    </div>
-                                      <div style="height:30px;" class="overflow-hidden label-tugas_selesai vehicles-progress-label loading-text">
-                                        Tugas Selesai
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 14 14"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 1.5H11a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1h1.5"/><rect width="5" height="2.5" x="4.5" y=".5" rx="1"/><path d="m4.5 8.5l2 1.5L9 6"/></g></svg>
-                                    </div>
-                                      <div style="height:30px;" class="overflow-hidden label-tugas_direvisi vehicles-progress-label waiting-text text-nowrap">
-                                        Tugas Direvisi
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 14 14"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 1.5H11a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1h1.5"/><rect width="5" height="2.5" x="4.5" y=".5" rx="1"/><path d="m5.5 6.5l3 3m0-3l-3 3"/></g></svg>
-                                    </div>
-                                    </div>
-                                    <div class="vehicles-overview-progress progress rounded-2 my-4 w-100" style="height: 46px;">
-                                      <div class="bar-tugas_baru progress-bar fw-medium text-start bg-body text-dark px-3 rounded-0" role="progressbar"  aria-valuenow="39.7" aria-valuemin="0" aria-valuemax="100">39.7%</div>
-                                      <div class="bar-tugas_dikerjakan progress-bar fw-medium text-start bg-primary px-3" role="progressbar"  aria-valuenow="28.3" aria-valuemin="0" aria-valuemax="100">28.3%</div>
-                                      <div class="bar-tugas_selesai progress-bar fw-medium text-start text-bg-info px-3" role="progressbar"  aria-valuenow="17.4" aria-valuemin="0" aria-valuemax="100">17.4%</div>
-                                      <div class="bar-tugas_direvisi progress-bar fw-medium text-start bg-gray-900 px-2 rounded-0 px-lg-2 px-xxl-3" role="progressbar"  aria-valuenow="14.6" aria-valuemin="0" aria-valuemax="100">14.6%</div>
-                                    </div>
-                                    <div class="table-responsive">
-                                      <table class="table card-table">
-                                        <tbody class="table-border-bottom-0">
-                                          <tr>
-                                            <td class="w-50 ps-0">
-                                              <div class="d-flex justify-content-start align-items-center">
-                                                <div class="me-2">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 14 14"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 1.5H11a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1h1.5"/><rect width="5" height="2.5" x="4.5" y=".5" rx="1"/><path d="M7 6v4m2-2H5"/></g></svg>
-                                                </div>
-                                                <h6 class="mb-0 fw-normal">Tugas Baru</h6>
-                                              </div>
-                                            </td>
-                                            <td class="text-end pe-0 text-nowrap">
-                                              <h6 class="mb-0 jml_tugas_baru">2 Tugas</h6>
-                                            </td>
-                                            <td class="text-end pe-0">
-                                              <span class="fw-medium persentase_tugas_baru">39.7%</span>
-                                            </td>
-                                          </tr>
-                                          <tr>
-                                            <td class="w-50 ps-0">
-                                              <div class="d-flex justify-content-start align-items-center">
-                                                <div class="me-2">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 14 14"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 1.5H11a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1h1.5"/><rect width="5" height="2.5" x="4.5" y=".5" rx="1"/><path d="M4.5 5.5h5M4.5 8h5m-5 2.5h5"/></g></svg>
-                                                </div>
-                                                <h6 class="mb-0 fw-normal">Tugas Dikerjakan</h6>
-
+                                    <div class="card-body">
+                                        <div class="d-none d-lg-flex vehicles-progress-labels mb-4 ">
+                                            <div style="height:30px;"
+                                                class="overflow-hidden label-tugas_baru vehicles-progress-label on-the-way-text">
+                                                Tugas Baru
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                    viewBox="0 0 14 14">
+                                                    <g fill="none" stroke="currentColor" stroke-linecap="round"
+                                                        stroke-linejoin="round">
+                                                        <path
+                                                            d="M9.5 1.5H11a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1h1.5" />
+                                                        <rect width="5" height="2.5" x="4.5" y=".5"
+                                                            rx="1" />
+                                                        <path d="M7 6v4m2-2H5" />
+                                                    </g>
+                                                </svg>
                                             </div>
-                                            </td>
-                                            <td class="text-end pe-0 text-nowrap">
-                                              <h6 class="mb-0 jml_tugas_dikerjakan">4 Tugas</h6>
-                                            </td>
-                                            <td class="text-end pe-0">
-                                              <span class="fw-medium persentase_tugas_dikerjakan"></span>
-                                            </td>
-                                          </tr>
-                                          <tr>
-                                            <td class="w-50 ps-0">
-                                              <div class="d-flex justify-content-start align-items-center">
-                                                <div class="me-2">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 14 14"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 1.5H11a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1h1.5"/><rect width="5" height="2.5" x="4.5" y=".5" rx="1"/><path d="m4.5 8.5l2 1.5L9 6"/></g></svg>
-                                                </div>
-                                                <h6 class="mb-0 fw-normal">Tugas Selesai</h6>
-                                              </div>
-                                            </td>
-                                            <td class="text-end pe-0 text-nowrap">
-                                              <h6 class="mb-0 jml_tugas_selesai">5 Tugas</h6>
-                                            </td>
-                                            <td class="text-end pe-0">
-                                              <span class="fw-medium persentase_tugas_selesai"></span>
-                                            </td>
-                                          </tr>
-                                          <tr>
-                                            <td class="w-50 ps-0">
-                                              <div class="d-flex justify-content-start align-items-center">
-                                                <div class="me-2">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 14 14"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 1.5H11a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1h1.5"/><rect width="5" height="2.5" x="4.5" y=".5" rx="1"/><path d="m5.5 6.5l3 3m0-3l-3 3"/></g></svg>
-                                                </div>
-                                                <h6 class="mb-0 fw-normal">Tugas Direvisi</h6>
-                                              </div>
-                                            </td>
-                                            <td class="text-end pe-0 text-nowrap">
-                                              <h6 class="mb-0 jml_tugas_direvisi">1 Tugas</h6>
-                                            </td>
-                                            <td class="text-end pe-0">
-                                              <span class="fw-medium persentase_tugas_direvisi"></span>
-                                            </td>
-                                          </tr>
-                                        </tbody>
-                                      </table>
+                                            <div style="height:30px;"
+                                                class="overflow-hidden label-tugas_dikerjakan vehicles-progress-label unloading-text">
+                                                Tugas Dikerjakan
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                    viewBox="0 0 14 14">
+                                                    <g fill="none" stroke="currentColor" stroke-linecap="round"
+                                                        stroke-linejoin="round">
+                                                        <path
+                                                            d="M9.5 1.5H11a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1h1.5" />
+                                                        <rect width="5" height="2.5" x="4.5" y=".5"
+                                                            rx="1" />
+                                                        <path d="M4.5 5.5h5M4.5 8h5m-5 2.5h5" />
+                                                    </g>
+                                                </svg>
+                                            </div>
+                                            <div style="height:30px;"
+                                                class="overflow-hidden label-tugas_selesai vehicles-progress-label loading-text">
+                                                Tugas Selesai
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                    viewBox="0 0 14 14">
+                                                    <g fill="none" stroke="currentColor" stroke-linecap="round"
+                                                        stroke-linejoin="round">
+                                                        <path
+                                                            d="M9.5 1.5H11a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1h1.5" />
+                                                        <rect width="5" height="2.5" x="4.5" y=".5"
+                                                            rx="1" />
+                                                        <path d="m4.5 8.5l2 1.5L9 6" />
+                                                    </g>
+                                                </svg>
+                                            </div>
+                                            <div style="height:30px;"
+                                                class="overflow-hidden label-tugas_direvisi vehicles-progress-label waiting-text text-nowrap">
+                                                Tugas Direvisi
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                    viewBox="0 0 14 14">
+                                                    <g fill="none" stroke="currentColor" stroke-linecap="round"
+                                                        stroke-linejoin="round">
+                                                        <path
+                                                            d="M9.5 1.5H11a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1h1.5" />
+                                                        <rect width="5" height="2.5" x="4.5" y=".5"
+                                                            rx="1" />
+                                                        <path d="m5.5 6.5l3 3m0-3l-3 3" />
+                                                    </g>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="vehicles-overview-progress progress rounded-2 my-4 w-100"
+                                            style="height: 46px;">
+                                            <div class="bar-tugas_baru progress-bar fw-medium text-start bg-body text-dark px-3 rounded-0"
+                                                role="progressbar" aria-valuenow="39.7" aria-valuemin="0"
+                                                aria-valuemax="100">39.7%</div>
+                                            <div class="bar-tugas_dikerjakan progress-bar fw-medium text-start bg-primary px-3"
+                                                role="progressbar" aria-valuenow="28.3" aria-valuemin="0"
+                                                aria-valuemax="100">28.3%</div>
+                                            <div class="bar-tugas_selesai progress-bar fw-medium text-start text-bg-info px-3"
+                                                role="progressbar" aria-valuenow="17.4" aria-valuemin="0"
+                                                aria-valuemax="100">17.4%</div>
+                                            <div class="bar-tugas_direvisi progress-bar fw-medium text-start bg-gray-900 px-2 rounded-0 px-lg-2 px-xxl-3"
+                                                role="progressbar" aria-valuenow="14.6" aria-valuemin="0"
+                                                aria-valuemax="100">14.6%</div>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table card-table">
+                                                <tbody class="table-border-bottom-0">
+                                                    <tr>
+                                                        <td class="w-50 ps-0">
+                                                            <div class="d-flex justify-content-start align-items-center">
+                                                                <div class="me-2">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                                        height="20" viewBox="0 0 14 14">
+                                                                        <g fill="none" stroke="currentColor"
+                                                                            stroke-linecap="round"
+                                                                            stroke-linejoin="round">
+                                                                            <path
+                                                                                d="M9.5 1.5H11a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1h1.5" />
+                                                                            <rect width="5" height="2.5" x="4.5"
+                                                                                y=".5" rx="1" />
+                                                                            <path d="M7 6v4m2-2H5" />
+                                                                        </g>
+                                                                    </svg>
+                                                                </div>
+                                                                <h6 class="mb-0 fw-normal">Tugas Baru</h6>
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-end pe-0 text-nowrap">
+                                                            <h6 class="mb-0 jml_tugas_baru">2 Tugas</h6>
+                                                        </td>
+                                                        <td class="text-end pe-0">
+                                                            <span class="fw-medium persentase_tugas_baru">39.7%</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="w-50 ps-0">
+                                                            <div class="d-flex justify-content-start align-items-center">
+                                                                <div class="me-2">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                                        height="20" viewBox="0 0 14 14">
+                                                                        <g fill="none" stroke="currentColor"
+                                                                            stroke-linecap="round"
+                                                                            stroke-linejoin="round">
+                                                                            <path
+                                                                                d="M9.5 1.5H11a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1h1.5" />
+                                                                            <rect width="5" height="2.5" x="4.5"
+                                                                                y=".5" rx="1" />
+                                                                            <path d="M4.5 5.5h5M4.5 8h5m-5 2.5h5" />
+                                                                        </g>
+                                                                    </svg>
+                                                                </div>
+                                                                <h6 class="mb-0 fw-normal">Tugas Dikerjakan</h6>
+
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-end pe-0 text-nowrap">
+                                                            <h6 class="mb-0 jml_tugas_dikerjakan">4 Tugas</h6>
+                                                        </td>
+                                                        <td class="text-end pe-0">
+                                                            <span class="fw-medium persentase_tugas_dikerjakan"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="w-50 ps-0">
+                                                            <div class="d-flex justify-content-start align-items-center">
+                                                                <div class="me-2">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                                        height="20" viewBox="0 0 14 14">
+                                                                        <g fill="none" stroke="currentColor"
+                                                                            stroke-linecap="round"
+                                                                            stroke-linejoin="round">
+                                                                            <path
+                                                                                d="M9.5 1.5H11a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1h1.5" />
+                                                                            <rect width="5" height="2.5" x="4.5"
+                                                                                y=".5" rx="1" />
+                                                                            <path d="m4.5 8.5l2 1.5L9 6" />
+                                                                        </g>
+                                                                    </svg>
+                                                                </div>
+                                                                <h6 class="mb-0 fw-normal">Tugas Selesai</h6>
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-end pe-0 text-nowrap">
+                                                            <h6 class="mb-0 jml_tugas_selesai">5 Tugas</h6>
+                                                        </td>
+                                                        <td class="text-end pe-0">
+                                                            <span class="fw-medium persentase_tugas_selesai"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="w-50 ps-0">
+                                                            <div class="d-flex justify-content-start align-items-center">
+                                                                <div class="me-2">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                                        height="20" viewBox="0 0 14 14">
+                                                                        <g fill="none" stroke="currentColor"
+                                                                            stroke-linecap="round"
+                                                                            stroke-linejoin="round">
+                                                                            <path
+                                                                                d="M9.5 1.5H11a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1h1.5" />
+                                                                            <rect width="5" height="2.5" x="4.5"
+                                                                                y=".5" rx="1" />
+                                                                            <path d="m5.5 6.5l3 3m0-3l-3 3" />
+                                                                        </g>
+                                                                    </svg>
+                                                                </div>
+                                                                <h6 class="mb-0 fw-normal">Tugas Direvisi</h6>
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-end pe-0 text-nowrap">
+                                                            <h6 class="mb-0 jml_tugas_direvisi">1 Tugas</h6>
+                                                        </td>
+                                                        <td class="text-end pe-0">
+                                                            <span class="fw-medium persentase_tugas_direvisi"></span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                  </div>
                                 </div>
-                              </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -448,109 +551,107 @@
 @endsection
 
 @section('script')
-<script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/js/app-logistics-dashboard.js"></script>
+    <script src="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/js/app-logistics-dashboard.js">
+    </script>
     <script>
-
-
-
         getKontribusi("{{ $tim->user[0]->uuid }}")
 
-        function getKontribusi(uuid){
+        function getKontribusi(uuid) {
 
 
-            const code =  "{{ $tim->code }}";
+            const code = "{{ $tim->code }}";
             console.log(uuid);
             $(".user-kontribusi").removeClass("active");
-            $("#user-kontribusi-"+uuid).addClass('active');
+            $("#user-kontribusi-" + uuid).addClass('active');
 
             axios.get(`data-kontribusi/${code}/${uuid}`)
-            .then((res) => {
+                .then((res) => {
 
-                const data = res.data;
-                const tugasTerkontribusi = data.tugasTerkontribusi.length;
-                const tugasMendesak = data.tugasMendesak;
-                const tugasPenting = data.tugasPenting;
-                const tugasBiasa = data.tugasBiasa;
-                const persentase = data.presentaseTugasSelesai;
+                    const data = res.data;
+                    const tugasTerkontribusi = data.tugasTerkontribusi.length;
+                    const tugasMendesak = data.tugasMendesak;
+                    const tugasPenting = data.tugasPenting;
+                    const tugasBiasa = data.tugasBiasa;
+                    const persentase = data.presentaseTugasSelesai;
 
-                console.log(data);
+                    console.log(data);
 
-                $("#totalKontribusiTugas").html(tugasTerkontribusi);
-                $("#tugasMendesak").html(tugasMendesak);
-                $("#tugasPenting").html(tugasPenting);
-                $("#tugasBiasa").html(tugasBiasa);
-                $("#SvgjsText1640").html(`${persentase.toFixed(2)}%`)
+                    $("#totalKontribusiTugas").html(tugasTerkontribusi);
+                    $("#tugasMendesak").html(tugasMendesak);
+                    $("#tugasPenting").html(tugasPenting);
+                    $("#tugasBiasa").html(tugasBiasa);
+                    $("#SvgjsText1640").html(`${persentase.toFixed(2)}%`)
 
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
         }
 
         getProgress("{{ $tim->code }}")
-        function getProgress(codeTim){
-            axios.get("data-progres/"+codeTim)
-            .then((res) => {
-                const data = res.data;
-                console.log(data);
 
-                if(data.tugas_baru === 0 && data.tugas_dikerjakan === 0 && data.tugas_selesai === 0 && data.tugas_direvisi ===0){
-                    $(".card-project")
-                    .addClass("d-flex justify-content-center align-items-center")
-                    .html(
-                        `
+        function getProgress(codeTim) {
+            axios.get("data-progres/" + codeTim)
+                .then((res) => {
+                    const data = res.data;
+                    console.log(data);
+
+                    if (data.tugas_baru === 0 && data.tugas_dikerjakan === 0 && data.tugas_selesai === 0 && data
+                        .tugas_direvisi === 0) {
+                        $(".card-project")
+                            .addClass("d-flex justify-content-center align-items-center")
+                            .html(
+                                `
                         <img width="30%" class="mb-0" src="{{ asset('assets/img/no-data.png') }}" />
                         <h4 style="margin-top:-3%" class="mb-5" >Timmu belum pernah memiliki tugas</h4>
                         `
-                    );
-                }
+                            );
+                    }
 
-                if(data.tugas_baru === 0){
-                    $(".bar-tugas_baru").addClass("d-none");
-                }
-                if (data.tugas_dikerjakan === 0) {
-                    $(".bar-tugas_dikerjakan").addClass("d-none");
-                }
-                if (data.tugas_selesai === 0 ) {
-                    $(".bar-tugas_selesai").addClass("d-none");
-                }
-                if (data.tugas_direvisi === 0) {
-                    $(".bar-tugas_direvisi").addClass("d-none");
-                }
+                    if (data.tugas_baru === 0) {
+                        $(".bar-tugas_baru").addClass("d-none");
+                    }
+                    if (data.tugas_dikerjakan === 0) {
+                        $(".bar-tugas_dikerjakan").addClass("d-none");
+                    }
+                    if (data.tugas_selesai === 0) {
+                        $(".bar-tugas_selesai").addClass("d-none");
+                    }
+                    if (data.tugas_direvisi === 0) {
+                        $(".bar-tugas_direvisi").addClass("d-none");
+                    }
 
 
 
-                $(".jml_tugas_baru").html(`${data.tugas_baru} tugas`)
-                $(".jml_tugas_dikerjakan").html(`${data.tugas_dikerjakan} tugas`)
-                $(".jml_tugas_selesai").html(`${data.tugas_selesai} tugas`)
-                $(".jml_tugas_direvisi").html(`${data.tugas_direvisi} tugas`)
+                    $(".jml_tugas_baru").html(`${data.tugas_baru} tugas`)
+                    $(".jml_tugas_dikerjakan").html(`${data.tugas_dikerjakan} tugas`)
+                    $(".jml_tugas_selesai").html(`${data.tugas_selesai} tugas`)
+                    $(".jml_tugas_direvisi").html(`${data.tugas_direvisi} tugas`)
 
-                $(".persentase_tugas_baru").html(data.persentase_tugas_baru.toFixed(1)+"%")
-                $(".persentase_tugas_dikerjakan").html(data.persentase_tugas_dikerjakan.toFixed(1)+"%")
-                $(".persentase_tugas_selesai").html(data.persentase_tugas_selesai.toFixed(1)+"%")
-                $(".persentase_tugas_direvisi").html(data.persentase_tugas_direvisi.toFixed(1)+"%")
+                    $(".persentase_tugas_baru").html(data.persentase_tugas_baru.toFixed(1) + "%")
+                    $(".persentase_tugas_dikerjakan").html(data.persentase_tugas_dikerjakan.toFixed(1) + "%")
+                    $(".persentase_tugas_selesai").html(data.persentase_tugas_selesai.toFixed(1) + "%")
+                    $(".persentase_tugas_direvisi").html(data.persentase_tugas_direvisi.toFixed(1) + "%")
 
-                $(".bar-tugas_baru").css("width",`${data.persentase_tugas_baru.toFixed(1)}%`);
-                $(".bar-tugas_dikerjakan").css("width",`${data.persentase_tugas_dikerjakan.toFixed(1)}%`);
-                $(".bar-tugas_selesai").css("width",`${data.persentase_tugas_selesai.toFixed(1)}%`);
-                $(".bar-tugas_direvisi").css("width",`${data.persentase_tugas_direvisi.toFixed(1)}%`);
+                    $(".bar-tugas_baru").css("width", `${data.persentase_tugas_baru.toFixed(1)}%`);
+                    $(".bar-tugas_dikerjakan").css("width", `${data.persentase_tugas_dikerjakan.toFixed(1)}%`);
+                    $(".bar-tugas_selesai").css("width", `${data.persentase_tugas_selesai.toFixed(1)}%`);
+                    $(".bar-tugas_direvisi").css("width", `${data.persentase_tugas_direvisi.toFixed(1)}%`);
 
-                $(".bar-tugas_baru").html(`${data.persentase_tugas_baru.toFixed(1)}%`);
-                $(".bar-tugas_dikerjakan").html(`${data.persentase_tugas_dikerjakan.toFixed(1)}%`);
-                $(".bar-tugas_selesai").html(`${data.persentase_tugas_selesai.toFixed(1)}%`);
-                $(".bar-tugas_direvisi").html(`${data.persentase_tugas_direvisi.toFixed(1)}%`);
+                    $(".bar-tugas_baru").html(`${data.persentase_tugas_baru.toFixed(1)}%`);
+                    $(".bar-tugas_dikerjakan").html(`${data.persentase_tugas_dikerjakan.toFixed(1)}%`);
+                    $(".bar-tugas_selesai").html(`${data.persentase_tugas_selesai.toFixed(1)}%`);
+                    $(".bar-tugas_direvisi").html(`${data.persentase_tugas_direvisi.toFixed(1)}%`);
 
-                $(".label-tugas_baru").css("width",`${data.persentase_tugas_baru.toFixed(1)}%`);
-                $(".label-tugas_dikerjakan").css("width",`${data.persentase_tugas_dikerjakan.toFixed(1)}%`);
-                $(".label-tugas_selesai").css("width",`${data.persentase_tugas_selesai.toFixed(1)}%`);
-                $(".label-tugas_direvisi").css("width",`${data.persentase_tugas_direvisi.toFixed(1)}%`);
+                    $(".label-tugas_baru").css("width", `${data.persentase_tugas_baru.toFixed(1)}%`);
+                    $(".label-tugas_dikerjakan").css("width", `${data.persentase_tugas_dikerjakan.toFixed(1)}%`);
+                    $(".label-tugas_selesai").css("width", `${data.persentase_tugas_selesai.toFixed(1)}%`);
+                    $(".label-tugas_direvisi").css("width", `${data.persentase_tugas_direvisi.toFixed(1)}%`);
 
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
         }
-
     </script>
 @endsection
-

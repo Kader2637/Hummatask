@@ -68,7 +68,6 @@
         * {
             margin: 0;
             padding: 0;
-            font-family: 'Poppins', sans-serif;
         }
 
         .hidden {
@@ -146,6 +145,12 @@
                 transform: translateY(15px);
             }
         }
+
+        @media (max-width: 767px) {
+            #login-sebagai {
+                display: none !important;
+            }
+        }
     </style>
     @yield('link')
 </head>
@@ -179,9 +184,6 @@
         });
     </script>
 
-
-
-
     {{-- End OffCanvas --}}
 
     <div class="layout-wrapper layout-content-navbar ">
@@ -195,7 +197,6 @@
                         </span>
                         <span class="app-brand-text demo menu-text fw-bold mt-2" style="color: #7367F0;">Humma<span style="color:rgb(8, 8, 50);">Task</span></span>
                     </a>
-
                     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto mt-2">
                         <i class="ti menu-toggle-icon d-none d-xl-block ti-sm align-middle"></i>
                         <i class="ti ti-x d-block d-xl-none ti-sm align-middle"></i>
@@ -265,11 +266,11 @@
                         </a>
                     </div>
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-                        <div class="d-flex align-items-center justify-content-center gap-2 ">
+                        <div class="d-flex align-items-center justify-content-center gap-2" id="login-sebagai">
                             Login sebagai :
                             @if (auth()->check() &&
                                     auth()->user()->can('kelola siswa'))
-                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Ketua
+                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Pengelola
                                     Magang</span>
                             @else
                                 <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Siswa</span>
@@ -355,7 +356,7 @@
                                                     </span>
                                                     @if (auth()->check() &&
                                                             auth()->user()->can('kelola siswa'))
-                                                        <small class="text-muted">Ketua Magang</small>
+                                                        <small class="text-muted">Pengelola Magang</small>
                                                     @else
                                                         <small class="text-muted">Siswa Magang</small>
                                                     @endif

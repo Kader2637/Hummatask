@@ -166,6 +166,12 @@
             transform: translateY(15px);
         }
     }
+
+    @media (max-width: 767px) {
+        #login-sebagai {
+            display: none !important;
+        }
+    }
 </style>
 
 <body class="overflow-hidden">
@@ -204,10 +210,11 @@
                 <div class="app-brand demo">
                     <a href="{{ route('dashboard.mentor') }}" class="app-brand-link">
                         <span class="app-brand-logo demo d-flex align-items-center">
-                            <img src="{{ url('assets/img/logo.png') }}" class="d-block" width="50"
-                                alt="" srcset="">
+                            <img src="{{ url('assets/img/logo.png') }}" class="d-block" width="50" alt=""
+                                srcset="">
                         </span>
-                        <span class="app-brand-text demo menu-text fw-bold mt-2" style="color: #7367F0;">Humma<span style="color:rgb(8, 8, 50);">Task</span></span>
+                        <span class="app-brand-text demo menu-text fw-bold mt-2" style="color: #7367F0;">Humma<span
+                                style="color:rgb(8, 8, 50);">Task</span></span>
                     </a>
 
                     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto mt-2">
@@ -257,7 +264,7 @@
                             <div>Pengguna</div>
                         </a>
                     </li>
-                         <li class="menu-item {{ request()->routeIs('galery') ? 'active' : '' }}">
+                    <li class="menu-item {{ request()->routeIs('galery') ? 'active' : '' }}">
                         <a href="{{ route('galery') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-photo photo-rounded"></i>
                             <div>Galeri</div>
@@ -290,7 +297,7 @@
                     </div>
 
                     <div class="navbar-nav-right d-flex align-items-center" id="navbarcollapse">
-                        <div class="d-flex align-items-center justify-content-center gap-2 ">
+                        <div class="d-flex align-items-center justify-content-center gap-2" id="login-sebagai">
                             Login sebagai :
                             <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Mentor</span>
                         </div>
@@ -486,83 +493,84 @@
                 });
         }
     </script>
-  <script>
-    $(document).ready(function() {
-        function ambilNotifikasi() {
-            $.ajax({
-                url: '/ambil-notifikasi',
-                method: 'GET',
-                success: function(response) {
-                    tampilkanNotifikasi(response.notifikasi);
-                },
-                error: function(error) {
-                    console.log('Error mengambil notifikasi:', error);
-                }
-            });
-        }
-
-        function tampilkanNotifikasi(notifikasi) {
-            var daftarNotifikasi = $('#notification-list');
-            var countBadge = $('#notification-count');
-
-            daftarNotifikasi.empty();
-
-            if (notifikasi.length > 0) {
-                    countBadge.text(notifikasi.length);
-                } else {
-                    countBadge
-                .hide();
-                }if (notifikasi.length > 0) {
-                    countBadge.text(notifikasi.length);
-                } else {
-                    countBadge
-                .hide();
-                }
-
-            notifikasi.reverse();
-
-            notifikasi.forEach(function(item) {
-                var waktuNotifikasi = new Date(item.created_at);
-                var waktuSekarang = new Date();
-                var perbedaanWaktu = Math.floor((waktuSekarang - waktuNotifikasi) /
-                    1000);
-
-                function formatWaktu(detik) {
-                    if (detik < 60) {
-                        return detik + ' detik yang lalu';
-                    } else if (detik < 3600) {
-                        return Math.floor(detik / 60) + ' menit yang lalu';
-                    } else if (detik < 86400) {
-                        return Math.floor(detik / 3600) + ' jam yang lalu';
-                    } else {
-                        return Math.floor(detik / 86400) + ' hari yang lalu';
+    <script>
+        $(document).ready(function() {
+            function ambilNotifikasi() {
+                $.ajax({
+                    url: '/ambil-notifikasi',
+                    method: 'GET',
+                    success: function(response) {
+                        tampilkanNotifikasi(response.notifikasi);
+                    },
+                    error: function(error) {
+                        console.log('Error mengambil notifikasi:', error);
                     }
+                });
+            }
+
+            function tampilkanNotifikasi(notifikasi) {
+                var daftarNotifikasi = $('#notification-list');
+                var countBadge = $('#notification-count');
+
+                daftarNotifikasi.empty();
+
+                if (notifikasi.length > 0) {
+                    countBadge.text(notifikasi.length);
+                } else {
+                    countBadge
+                        .hide();
+                }
+                if (notifikasi.length > 0) {
+                    countBadge.text(notifikasi.length);
+                } else {
+                    countBadge
+                        .hide();
                 }
 
-                var jenisClass, icon, textClass;
+                notifikasi.reverse();
 
-                switch (item.jenis_notifikasi) {
-                    case 'info':
-                        jenisClass = 'alert-info';
-                        textClass = 'text-info';
-                        icon = '<i class="ti ti-info-circle ti-xs"></i>';
-                        break;
-                    case 'deadline':
-                        jenisClass = 'alert-warning';
-                        textClass = 'text-warning';
-                        icon = '<i class="ti ti-clock ti-xs"></i>';
-                        break;
-                    case 'pemberitahuan':
-                        jenisClass = 'alert-success';
-                        textClass = 'text-success';
-                        icon = '<i class="ti ti-check ti-xs"></i>';
-                        break;
-                    default:
-                        jenisClass = 'bg-secondary';
-                        icon = '<i class="ti ti-alert ti-xs"></i>';
-                }
+                notifikasi.forEach(function(item) {
+                    var waktuNotifikasi = new Date(item.created_at);
+                    var waktuSekarang = new Date();
+                    var perbedaanWaktu = Math.floor((waktuSekarang - waktuNotifikasi) /
+                        1000);
 
-                var notifikasiBaru = `
+                    function formatWaktu(detik) {
+                        if (detik < 60) {
+                            return detik + ' detik yang lalu';
+                        } else if (detik < 3600) {
+                            return Math.floor(detik / 60) + ' menit yang lalu';
+                        } else if (detik < 86400) {
+                            return Math.floor(detik / 3600) + ' jam yang lalu';
+                        } else {
+                            return Math.floor(detik / 86400) + ' hari yang lalu';
+                        }
+                    }
+
+                    var jenisClass, icon, textClass;
+
+                    switch (item.jenis_notifikasi) {
+                        case 'info':
+                            jenisClass = 'alert-info';
+                            textClass = 'text-info';
+                            icon = '<i class="ti ti-info-circle ti-xs"></i>';
+                            break;
+                        case 'deadline':
+                            jenisClass = 'alert-warning';
+                            textClass = 'text-warning';
+                            icon = '<i class="ti ti-clock ti-xs"></i>';
+                            break;
+                        case 'pemberitahuan':
+                            jenisClass = 'alert-success';
+                            textClass = 'text-success';
+                            icon = '<i class="ti ti-check ti-xs"></i>';
+                            break;
+                        default:
+                            jenisClass = 'bg-secondary';
+                            icon = '<i class="ti ti-alert ti-xs"></i>';
+                    }
+
+                    var notifikasiBaru = `
         <li class="list-group-item" id="notification-list-${item.id}">
             <div class="d-flex mt-2 mb-2 pl-5">
                 <div class="flex-grow-1">
@@ -585,17 +593,17 @@
         </li>
     `;
 
-                daftarNotifikasi.append(notifikasiBaru);
-            });
-        }
+                    daftarNotifikasi.append(notifikasiBaru);
+                });
+            }
 
-        ambilNotifikasi();
-
-        setInterval(function() {
             ambilNotifikasi();
-        }, 5000);
-    });
-</script>
+
+            setInterval(function() {
+                ambilNotifikasi();
+            }, 5000);
+        });
+    </script>
     @yield('script')
 
     @if (session()->has('unauthorize'))
