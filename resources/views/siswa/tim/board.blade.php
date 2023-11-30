@@ -20,6 +20,10 @@
 
                     @section('style')
                         <style>
+                            * {
+                                font-family: 'Poppins', sans-serif;
+                            }
+
                             .form-komentar {
                                 position: absolute;
                                 bottom: 0px;

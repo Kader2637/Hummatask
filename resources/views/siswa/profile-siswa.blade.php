@@ -5,6 +5,31 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/page-profile.css') }}" />
+
+    <style>
+        @media (min-width: 500px) and (max-width: 768px) {
+            .navbar-ul li {
+                font-size: 14px;
+                display: 'flex';
+                justify-content: 'center';
+                align-content: 'center';
+            }
+        }
+
+        @media (min-width: 320px) and (max-width: 499px) {
+            .navbar-ul {
+                flex-direction: column;
+                width: 100%;
+                padding-left: 0px;
+            }
+
+            .navbar-ul li {
+                display: 'flex';
+                justify-content: 'center';
+                align-content: 'center';
+            }
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -90,14 +115,16 @@
                                     <div class="col-md-6">
                                         <div class="form-floating my-3">
                                             <input name="username" type="text" class="form-control"
-                                                placeholder="{{ $user->username ?: 'Isi username anda' }}" aria-describedby="floatingInputHelp" />
+                                                placeholder="{{ $user->username ?: 'Isi username anda' }}"
+                                                aria-describedby="floatingInputHelp" />
                                             <label for="floatingInput">Nama</label>
                                             <span class="text-danger" id="username-error">
                                             </span>
                                         </div>
                                         <div class="form-floating my-3">
                                             <input name="email" type="email" class="form-control"
-                                                placeholder="{{ $user->email ?: 'Isi email anda' }}" aria-describedby="floatingInputHelp" />
+                                                placeholder="{{ $user->email ?: 'Isi email anda' }}"
+                                                aria-describedby="floatingInputHelp" />
                                             <label for="floatingInput">Email</label>
                                             <span class="text-danger" id="email-error">
                                             </span>
@@ -122,8 +149,7 @@
                                         </div>
                                         <div class="form-floating my-3">
                                             <textarea name="deskripsi" style="resize: none; height: 133.5px;" class="form-control"
-                                                placeholder="{{ $user->deskripsi != 'none' ?: 'Isi deskripsi anda' }}"
-                                                aria-describedby="floatingInputHelp"></textarea>
+                                                placeholder="{{ $user->deskripsi != 'none' ?: 'Isi deskripsi anda' }}" aria-describedby="floatingInputHelp"></textarea>
                                             <label for="floatingInput">deskripsi</label>
                                             <span class="text-danger" id="deskripsi-error">
                                             </span>
@@ -179,19 +205,18 @@
                                         }
                                     @endphp
 
-                                    <div class="col-md-4 col-lg-4 col-sm-4 mb-3 " id="projectList">
-
-                                        <div class="card text-center mb-3 me-3 projek-item"
+                                    <div class="col-md-5 col-lg-4 col-sm-4 mb-3" id="projectList">
+                                        <div class="card text-center projek-item"
                                             data-status-tim="{{ $item->status_tim }}">
                                             <div class="card-body">
-                                                <div class="d-flex flex-row gap-3">
+                                                <div class="d-flex flex-row gap-3 justify-content-evenly">
                                                     <img src="{{ asset('storage/' . $item->logo) }}" alt="foto logo"
                                                         style="width: 100px; height: 100px; object-fit: cover"
                                                         class="rounded-circle mb-3">
                                                     <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;"
                                                         class="">
                                                         <span class="text-black fs-6">{{ $item->nama }}</span>
-                                                        <div class="d-flex align-items-center">
+                                                        <div class="d-flex justify-content-center align-items-center flex-column">
                                                             <span class="badge bg-label-warning my-1">
                                                                 @if ($item->status_tim == 'solo')
                                                                     Solo Project
@@ -638,7 +663,8 @@
                 anggotaList.empty();
 
                 anggota.forEach(function(anggota, index) {
-                    var jabatanLabel = anggota.status === 'kicked' ? 'Mantan Anggota' : anggota.jabatan.nama_jabatan;
+                    var jabatanLabel = anggota.status === 'kicked' ? 'Mantan Anggota' : anggota
+                        .jabatan.nama_jabatan;
 
                     var avatarSrc = anggota.user.avatar ? '/storage/' + anggota.user.avatar :
                         '/assets/img/avatars/1.png';
@@ -651,7 +677,8 @@
                         avatarSrc + '" alt="foto user">' +
                         '</div>' +
                         '<div>' +
-                        '<h5 class="mb-0" style="font-size: 15px">' + anggota.user.username + '</h5>' +
+                        '<h5 class="mb-0" style="font-size: 15px">' + anggota.user.username +
+                        '</h5>' +
                         '<span class="badge bg-label-warning">' + jabatanLabel + '</span>' +
                         '</div>' +
                         '</div>' +

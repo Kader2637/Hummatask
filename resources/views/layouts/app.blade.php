@@ -152,6 +152,12 @@
                 transform: translateY(15px);
             }
         }
+
+        @media (max-width: 767px) {
+            #login-sebagai {
+                display: none !important;
+            }
+        }
     </style>
     @yield('link')
 </head>
@@ -192,10 +198,10 @@
                 <div class="app-brand demo">
                     <a href="{{ route('dashboard.siswa') }}" class="app-brand-link">
                         <span class="app-brand-logo demo">
-                            <img src="{{ url('assets/img/logo.png') }}" width="50" alt=""
-                                srcset="">
+                            <img src="{{ url('assets/img/logo.png') }}" width="50" alt="" srcset="">
                         </span>
-                        <span class="app-brand-text demo menu-text fw-bold mt-2" style="color: #7367F0;">Humma<span style="color:rgb(8, 8, 50);">Task</span></span>
+                        <span class="app-brand-text demo menu-text fw-bold mt-2" style="color: #7367F0;">Humma<span
+                                style="color:rgb(8, 8, 50);">Task</span></span>
                     </a>
 
                     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto mt-2">
@@ -298,14 +304,14 @@
                     </div>
 
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-                        <div class="d-flex align-items-center justify-content-center gap-2 ">
+                        <div class="d-flex align-items-center justify-content-center gap-2" id="login-sebagai">
                             Login sebagai :
                             @if (auth()->check() &&
                                     auth()->user()->can('kelola siswa'))
-                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Ketua
+                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full text-sm">Pengelola
                                     Magang</span>
                             @else
-                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Siswa
+                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full text-sm">Siswa
                                     Magang</span>
                             @endif
                         </div>
@@ -389,7 +395,7 @@
                                                     </span>
                                                     @if (auth()->check() &&
                                                             auth()->user()->can('kelola siswa'))
-                                                        <small class="text-muted">Ketua Magang</small>
+                                                        <small class="text-muted">Pengelola Magang</small>
                                                     @else
                                                         <small class="text-muted">Siswa Magang</small>
                                                     @endif
@@ -425,30 +431,33 @@
                         <i class="ti ti-x ti-sm search-toggler cursor-pointer"></i>
                     </div>
                 </nav>
-                    @if (session('error'))
-                        <script>
-                            // Display SweetAlert with the error message
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: '{{ session('error') }}',
-                            });
-                        </script>
-                    @endif
+                @if (session('error'))
+                    <script>
+                        // Display SweetAlert with the error message
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: '{{ session('error') }}',
+                        });
+                    </script>
+                @endif
 
                 @yield('content')
                 {{-- Modal Tambah Tim --}}
                 <div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg modal-simple modal-edit-user">
+                    <div class="modal-dialog modal-dialog-centered modal-md modal-simple modal-edit-user">
                         <div class="modal-content p-2">
                             <div class="modal-body">
+                                <div class="text-center mb-4">
+                                    <h3 class="mb-2">Buat Tim Solo Project</h3>
+                                </div>
                                 <button type="button" class="btn-close position-absolute top-0 " style="right: 0px"
                                     data-bs-dismiss="modal" aria-label="Close"></button>
                                 <form id="editUserForm" action="{{ route('buat_tim_solo') }}" method="POST"
                                     enctype="multipart/form-data" class="row g-2 p-0 m-0">
                                     @csrf
                                     <div class="col-12 gap-3 align-items-center">
-                                        <div class="col-12 col-md-3 align-items-center">
+                                        <div class="col-12 align-items-center text-center">
                                             <label class="form-label text-white" for="image-input1">
                                                 <img id="preview-image1"
                                                     src="{{ asset('assets/img/avatars/pen.png') }}"
@@ -666,7 +675,7 @@
                     countBadge.text(notifikasi.length);
                 } else {
                     countBadge
-                .hide();
+                        .hide();
                 }
 
                 notifikasi.reverse();

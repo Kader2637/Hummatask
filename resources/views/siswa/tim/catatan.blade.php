@@ -188,7 +188,7 @@
                                     <form action="" id="edit-form" class="row g-2 p-0 m-0" method="POST">
                                         @csrf
                                         @method('PATCH')
-                                        <div class="container">
+                                        <div class="container p-0">
                                             <div class="card d-flex">
                                                 <div class="card-body">
                                                     <span class="mb-3">

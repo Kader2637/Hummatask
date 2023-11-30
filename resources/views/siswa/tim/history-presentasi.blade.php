@@ -12,32 +12,34 @@
 
 @section('style')
     <style>
-        @media ( max-width:425px ){
+        * {
+            font-family: 'Poppins', sans-serif;
         }
+
+        @media (max-width:425px) {}
     </style>
 @endsection
 
 @section('content')
+    <div class="modal fade" id="feedbackModal" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel3">Feedback</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="text-feedback" class="row mb-3">
 
-
-<div class="modal fade" id="feedbackModal" tabindex="-1" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel3">Feedback</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <div id="text-feedback" class="row mb-3">
-
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-label-secondary waves-effect"
+                        data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-label-secondary waves-effect" data-bs-dismiss="modal">Close</button>
-        </div>
-      </div>
     </div>
-  </div>
 
 
     <div class="container-fluid d-flex mt-5 justify-content-center">
@@ -45,11 +47,11 @@
             <div class="card">
                 <div class="d-flex flex-row flex-wrap justify-content-between align-content-center px-md-4 px-2 py-3 mb-3">
                     <span class="card-header card-header-judul fs-4 p-0">Ajukan Presentasi</span>
-                    @if ($anggota === "active" || $jabatan === 1)
-                    <span class="card-header btn-ajukan-presentasi p-0">
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#ajukanPresentasi"
-                            class="btn btn-primary mx-2 ">Presentasi</button>
-                    </span>
+                    @if ($anggota === 'active' || $jabatan === 1)
+                        <span class="card-header btn-ajukan-presentasi p-0">
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#ajukanPresentasi"
+                                class="btn btn-primary mx-2 ">Presentasi</button>
+                        </span>
                     @endif
                 </div>
                 {{-- Modal Ajukan presentasi --}}
@@ -75,7 +77,8 @@
                                     <div class="row">
                                         <div class="col">
                                             <label for="deskripsi" class="form-label">Deskripsi Presentasi</label>
-                                            <textarea name="deskripsi" id="deskripsi" cols="20" rows="10" class="form-control" style="resize: none" placeholder="Isi deskripsi pengajuan anda"></textarea>
+                                            <textarea name="deskripsi" id="deskripsi" cols="20" rows="10" class="form-control" style="resize: none"
+                                                placeholder="Isi deskripsi pengajuan anda"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -143,17 +146,21 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                        @if($data->feedback !== null || $data->status_presentasi === "ditolak")
-                                            <button class=" border-0 text-secondary bg-transparent btn-feedback-modal" data-bs-toggle="modal" data-bs-target="#feedbackModal" data-feedback="{{ $data->feedback }}">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z"/></svg>
+                                        @if ($data->feedback !== null || $data->status_presentasi === 'ditolak')
+                                            <button class=" border-0 text-secondary bg-transparent btn-feedback-modal"
+                                                data-bs-toggle="modal" data-bs-target="#feedbackModal"
+                                                data-feedback="{{ $data->feedback }}">
+                                                <i class="ti ti-eye me-1 text-warning"></i>
                                             </button>
-                                        @elseIf(($data->status_pengajuan === "menunggu" || $data->status_presentasi === "menunggu") && $data->feedback === null)
-                                            <button onclick="handleBelumDisetujuiFeedback()" class=" border-0 text-secondary bg-transparent btn-feedback-modal" >
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z"/></svg>
+                                        @elseIf(($data->status_pengajuan === 'menunggu' || $data->status_presentasi === 'menunggu') && $data->feedback === null)
+                                            <button onclick="handleBelumDisetujuiFeedback()"
+                                                class=" border-0 text-secondary bg-transparent btn-feedback-modal">
+                                                <i class="ti ti-eye me-1 text-warning"></i>
                                             </button>
-                                            @elseIf(($data->status_pengajuan === "disetujui" || $data->status_presentasi === "selesaiw") && $data->feedback === null)
-                                            <button onclick="handleDitolakFeedback()" class=" border-0 text-secondary bg-transparent btn-feedback-modal" >
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z"/></svg>
+                                        @elseIf(($data->status_pengajuan === 'disetujui' || $data->status_presentasi === 'selesaiw') && $data->feedback === null)
+                                            <button onclick="handleDitolakFeedback()"
+                                                class=" border-0 text-secondary bg-transparent btn-feedback-modal">
+                                                <i class="ti ti-eye me-1 text-warning"></i>
                                             </button>
                                         @endif
                                     </td>
@@ -175,40 +182,37 @@
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <script src="{{ asset('assets/js/forms-editors.js') }}"></script>
     <script>
-
-
-
-        function handleNullFeedback(){
+        function handleNullFeedback() {
             Swal.fire({
                 icon: 'warning',
-                title : 'Warning!',
-                text  : ' Mentor Belum atau tidak Memberikan feedback ',
-                showConfirmButton : false,
-                timer : 2000
+                title: 'Warning!',
+                text: ' Mentor Belum atau tidak Memberikan feedback ',
+                showConfirmButton: false,
+                timer: 2000
             })
         }
 
-        function handleBelumDisetujuiFeedback(){
+        function handleBelumDisetujuiFeedback() {
             Swal.fire({
                 icon: 'warning',
-                title : 'Warning!',
-                text  : 'Kamu Belum Presentasi',
-                showConfirmButton : false,
-                timer : 2000
+                title: 'Warning!',
+                text: 'Kamu Belum Presentasi',
+                showConfirmButton: false,
+                timer: 2000
             })
         }
 
-        function handleDitolakFeedback(){
+        function handleDitolakFeedback() {
             Swal.fire({
                 icon: 'warning',
-                title : 'Warning!',
-                text  : 'Mentor tidak memberikan feedback',
-                showConfirmButton : false,
-                timer : 2000
+                title: 'Warning!',
+                text: 'Mentor tidak memberikan feedback',
+                showConfirmButton: false,
+                timer: 2000
             })
         }
 
-        $(".btn-feedback-modal").click(function(){
+        $(".btn-feedback-modal").click(function() {
             const feedback = $(this).data("feedback");
             console.log(feedback);
             const text = $("#text-feedback").html(
@@ -223,13 +227,31 @@
             var deskripsi = $('#deskripsi').val();
 
             if (judul.length === 0 || deskripsi.length === 0) {
-                swal.fire('Peringatan', 'Mohon lengkapi semua data', 'warning');
+                swal.fire({
+                    title: 'Peringatan',
+                    text: 'Mohon lengkapi semua data',
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
                 event.preventDefault();
-            } else if (judul.length > 50) {
-                swal.fire('Peringatan', 'Judul terlalu panjang', 'warning');
+            } else if (judul.length > 25) {
+                swal.fire({
+                    title: 'Peringatan',
+                    text: 'Judul terlalu panjang, maks 25',
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
                 event.preventDefault();
-            } else if (deskripsi.length > 250) {
-                swal.fire('Peringatan', 'Deskripsi terlalu panjang', 'warning');
+            } else if (deskripsi.length > 50) {
+                swal.fire({
+                    title: 'Peringatan',
+                    text: 'Deskripsi terlalu panjang, maks 50',
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
                 event.preventDefault();
             }
         })

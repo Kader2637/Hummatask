@@ -33,11 +33,22 @@
 
 @section('style')
     <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
         @media (max-width: 425px) {
             .button-nav {
                 font-size: 13px;
             }
         }
+
+        @media (max-width: 767px) {
+            #tenggat {
+                font-size: 13px;
+            }
+        }
+
     </style>
 @endsection
 
@@ -226,25 +237,25 @@
                                             style="display: block; box-sizing: border-box; height: 200px; width: 200px;"></canvas>
                                         <ul class="doughnut-legend d-flex justify-content-around ps-0 mb-2 pt-1">
                                             <li class="ct-series-0 d-flex flex-column">
-                                                <h5 class="mb-0">Tugas Baru</h5>
+                                                <h5 class="mb-0" style="font-size: 13px">Tugas Baru</h5>
                                                 <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
                                                     style="background-color: #6A2C70; height: 6px; width: 30px;"></span>
                                                 <div class="text-muted"></div>
                                             </li>
                                             <li class="ct-series-1 d-flex flex-column">
-                                                <h5 class="mb-0">Dikerjakan</h5>
+                                                <h5 class="mb-0" style="font-size: 13px">Dikerjakan</h5>
                                                 <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
                                                     style="background-color: #B83B5E; height: 6px; width: 30px;"></span>
                                                 <div class="text-muted"></div>
                                             </li>
                                             <li class="ct-series-1 d-flex flex-column">
-                                                <h5 class="mb-0">Revisi</h5>
+                                                <h5 class="mb-0" style="font-size: 13px">Revisi</h5>
                                                 <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
                                                     style="background-color: #F08A5D; height: 6px; width: 30px;"></span>
                                                 <div class="text-muted"></div>
                                             </li>
                                             <li class="ct-series-1 d-flex flex-column">
-                                                <h5 class="mb-0">Selesai</h5>
+                                                <h5 class="mb-0" style="font-size: 13px">Selesai</h5>
                                                 <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
                                                     style="background-color: #F9ED69; height: 6px; width: 30px;"></span>
                                                 <div class="text-muted"></div>
@@ -257,11 +268,11 @@
                                 {{-- card projects --}}
                                 <div class="card">
                                     <div class="card-header">
-                                        <div class="d-flex flex-row align-items-center justify-content-between">
+                                        <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-2">
                                             <div class="fs-4 text-black">
                                                 Project
                                             </div>
-                                            <div
+                                            <div id="tenggat"
                                                 style="display: flex; flex-direction: column; justify-items: center; align-items: left;">
                                                 @if (@isset($project) && $project->deadline)
                                                     @php
@@ -408,7 +419,7 @@
                         <div class="row mt-2 justify-content-center align-items-center grid">
                             {{-- Anggota --}}
                             @forelse ($anggota as $item)
-                                <div class="col-lg-4 p-2" style="box-shadow: none">
+                                <div class="col-lg-4" style="box-shadow: none">
                                     <div class="card">
                                         <div class="card-body d-flex gap-3 align-items-center">
                                             <div>
@@ -801,7 +812,8 @@
                         labels: labels,
                         datasets: [{
                             data: values,
-                            backgroundColor: [cardColor, '#F9ED69', '#F08A5D', '#B83B5E', '#6A2C70'],
+                            backgroundColor: [cardColor, '#F9ED69', '#F08A5D', '#B83B5E',
+                                '#6A2C70'],
                             hoverOffset: 4
                         }]
                     },
@@ -868,5 +880,4 @@
             }
         });
     </script>
-
 @endsection
