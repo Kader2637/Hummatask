@@ -9,6 +9,31 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/typography.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/katex.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/editor.css') }}" />
+
+    <style>
+        @media (min-width: 500px) and (max-width: 768px) {
+            .navbar-ul li {
+                font-size: 14px;
+                display: 'flex';
+                justify-content: 'center';
+                align-content: 'center';
+            }
+        }
+
+        @media (min-width: 320px) and (max-width: 499px) {
+            .navbar-ul {
+                flex-direction: column;
+                width: 100%;
+                padding-left: 0px;
+            }
+
+            .navbar-ul li {
+                display: 'flex';
+                justify-content: 'center';
+                align-content: 'center';
+            }
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -23,7 +48,7 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
                         type="button" role="tab" aria-controls="pills-profile" aria-selected="false" data-tab="2"><i
-                            class="ti ti-clipboard-check me-1"></i>History Catatan</button>
+                            class="ti ti-clipboard-check me-1"></i>Histori Catatan</button>
                 </li>
             </div>
         </div>
@@ -59,8 +84,7 @@
                                                     <input name="type_note" class="form-check-input" type="radio"
                                                         value="private" id="customRadioTemp1" checked />
                                                     <span class="custom-option-header">
-                                                        <span class="h6 mb-0">Catatan Tim <span
-                                                                class="text-warning">(Bisa
+                                                        <span class="h6 mb-0">Catatan Tim <span class="text-warning">(Bisa
                                                                 kamu edit sesuka hati)</span></span>
                                                     </span>
                                                 </label>
@@ -104,7 +128,7 @@
                     <div class="d-flex justify-content-center">
                         <div class="col-12">
                             <div class="card">
-                                <h5 class="card-header">Histori Catatan</h5>
+                                <div class="card-header fs-4">Histori Catatan</div>
                                 <div class="container card-datatable table-responsive">
                                     <table id="jstabel" class="table">
                                         <thead class="bg-primary">
@@ -188,7 +212,7 @@
                                     <form action="" id="edit-form" class="row g-2 p-0 m-0" method="POST">
                                         @csrf
                                         @method('PATCH')
-                                        <div class="container">
+                                        <div class="container p-0">
                                             <div class="card d-flex">
                                                 <div class="card-body">
                                                     <span class="mb-3">
@@ -253,7 +277,8 @@
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <script src="{{ asset('assets/js/forms-editors.js') }}"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-\    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    \
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     {{-- Script Append Item to Show Modal && Edit Modal --}}
     <script>
@@ -368,27 +393,30 @@
             });
 
             $('#jstabel').DataTable({
-                "paging": true, // Aktifkan penomoran halaman
+                "paging": true,
                 "lengthMenu": [
                     [5, 10, 15, -1],
                     [5, 10, 15, "All"]
                 ],
-                "pageLength": 5, // Aktifkan opsi untuk mengubah jumlah entri per halaman
-                "searching": true, // Aktifkan fitur pencarian
-                "ordering": true, // Aktifkan pengurutan kolom
-                "info": true, // Tampilkan informasi halaman saat ini dan total entri
-                "autoWidth": false, // Nonaktifkan penyesuaian lebar otomatis
-                // Menyesuaikan teks pada tombol filter
+                "pageLength": 5,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
                 "language": {
                     "search": "Cari:",
                     "lengthMenu": "Tampilkan _MENU_ entri per halaman",
-                    "info": "Menampilkan halaman _PAGE_ dari _PAGES_",
+                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri (difilter dari _MAX_ total entri)",
                     "paginate": {
                         "first": "Pertama",
                         "last": "Terakhir",
                         "next": "Selanjutnya",
                         "previous": "Sebelumnya"
-                    }
+                    },
+                    "emptyTable": "Tidak ada data yang ditemukan",
+                    "zeroRecords": "Tidak ada hasil yang ditemukan",
+                    "infoEmpty": "Menampilkan 0 hingga 0 dari 0 entri",
+                    "infoFiltered": "(difilter dari _MAX_ total entri)"
                 }
             });
         });

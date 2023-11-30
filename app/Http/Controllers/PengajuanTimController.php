@@ -113,10 +113,6 @@ class PengajuanTimController extends Controller
 
         }
 
-
-
-
-
         return redirect()->back()->with('success', 'Berhasil membuat tim solo project');
     }
 

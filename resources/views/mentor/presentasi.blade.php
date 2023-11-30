@@ -3,8 +3,6 @@
 @section('style')
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/flatpickr/flatpickr.css') }}" />
-
-
     <style>
         @media screen and (max-width:768px){
             .nav-item{
@@ -797,12 +795,6 @@ function tampilkanDetail(code)
                             text: res.data.error
                         })
                     }
-
-
-
-
-
-
                 })
 
                 .catch((err) => {

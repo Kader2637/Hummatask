@@ -229,16 +229,16 @@
         <div class="tab-content px-0 mt-2" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
                 tabindex="0">
-                <div class="alert alert-danger alert-dismissible d-flex align-items-baseline mt-4" role="alert">
-                    <span class="alert-icon alert-icon-lg text-danger me-2">
-                        <i class="ti ti-bookmark ti-sm"></i>
-                    </span>
-                    <div class="d-flex flex-column ps-1">
-                        <h5 class="alert-heading mb-2">Tab Telat Deadline</h5>
-                        <p class="mb-0">Tab telat deadline berisi data data tim yang sudah melewati batas waktu pengerjaan projek yang telah diberikan</p>
-                        </button>
+                    <div class="alert alert-danger alert-dismissible d-flex align-items-baseline" role="alert">
+                        <span class="alert-icon alert-icon-lg text-danger me-2">
+                            <i class="ti ti-bookmark ti-sm"></i>
+                        </span>
+                        <div class="d-flex flex-column ps-1">
+                            <h5 class="alert-heading mb-2">Tab Telat Deadline</h5>
+                            <p class="mb-0">Tab telat deadline berisi data data tim yang sudah melewati batas waktu pengerjaan projek yang telah diberikan</p>
+                            </button>
+                        </div>
                     </div>
-                </div>
                 <div class="card">
                     <div class="card-datatable table-responsive">
                         <table id="jstabel1" class="dt-responsive table">
@@ -274,16 +274,16 @@
             </div>
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
                 tabindex="0">
-                <div class="alert alert-primary alert-dismissible d-flex align-items-baseline mt-4" role="alert">
-                    <span class="alert-icon alert-icon-lg text-primary me-2">
-                        <i class="ti ti-bookmark ti-sm"></i>
-                    </span>
-                    <div class="d-flex flex-column ps-1">
-                        <h5 class="alert-heading mb-2">Tab Selesai Presentasi</h5>
-                        <p class="mb-0">Tab Selesai Presentasi berisi data data tim yang sudah selesai presentasi mingguan</p>
-                        </button>
+                    <div class="alert alert-primary alert-dismissible d-flex align-items-baseline" role="alert">
+                        <span class="alert-icon alert-icon-lg text-primary me-2">
+                            <i class="ti ti-bookmark ti-sm"></i>
+                        </span>
+                        <div class="d-flex flex-column ps-1">
+                            <h5 class="alert-heading mb-2">Tab Selesai Presentasi</h5>
+                            <p class="mb-0">Tab Selesai Presentasi berisi data data tim yang sudah selesai presentasi mingguan</p>
+                            </button>
+                        </div>
                     </div>
-                </div>
                 <div class="card">
                     <div class="card-datatable table-responsive">
                         <table id="jstabel2" class="dt-responsive table">
@@ -291,7 +291,7 @@
                                 <tr>
                                     <th scope="col">NO</th>
                                     <th scope="col">TEAM</th>
-                                    <th scope="col">TANGGAL</th>
+                                    <th scope="col">TANGGAl</th>
                                     <th scope="col">PROJECT</th>
                                     <th scope="col">TEMA</th>
                                 </tr>
@@ -303,13 +303,13 @@
                                         <td>
                                             <img src="{{ Storage::url($item->tim->logo) }}" alt=""
                                                 style="width:30px;height:30px;border-radius:50%;cursor: pointer;"
-                                                data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                                title="{{ $item->tim->nama }}">
+                                                data-bs-toggle="tooltip" data-popup="tooltip-custom"
+                                                data-bs-placement="top" title="{{ $item->tim->nama }}">
                                         </td>
-                                        @foreach ($item->tim->presentasi as $item)
+                                        
                                             <td>{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('l, j F Y') }}
                                             </td>
-                                        @endforeach
+                                      
                                         <td>{{ $item->tim->status_tim }}</td>
                                         @foreach ($item->tim->project as $item)
                                             <td>{{ $item->tema->nama_tema }}</td>
@@ -324,16 +324,16 @@
             </div>
             <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"
                 tabindex="0">
-                <div class="alert alert-success alert-dismissible d-flex align-items-baseline mt-4" role="alert">
-                    <span class="alert-icon alert-icon-lg text-success me-2">
-                        <i class="ti ti-bookmark ti-sm"></i>
-                    </span>
-                    <div class="d-flex flex-column ps-1">
-                        <h5 class="alert-heading mb-2">Tab Solo</h5>
-                        <p class="mb-0">Tab Solo berisi data data anak magang yang mengerjakan projeknya secara individu</p>
-                        </button>
+                    <div class="alert alert-success alert-dismissible d-flex align-items-baseline" role="alert">
+                        <span class="alert-icon alert-icon-lg text-success me-2">
+                            <i class="ti ti-bookmark ti-sm"></i>
+                        </span>
+                        <div class="d-flex flex-column ps-1">
+                            <h5 class="alert-heading mb-2">Tab Solo</h5>
+                            <p class="mb-0">Tab Solo berisi data data anak magang yang mengerjakan projeknya secara individu</p>
+                            </button>
+                        </div>
                     </div>
-                </div>
                 <div class="card">
                     <div class="card-datatable table-responsive">
                         <table id="jstabel3" class="dt-responsive table">
@@ -371,16 +371,16 @@
             </div>
             <div class="tab-pane fade" id="pills-team" role="tabpanel" aria-labelledby="pills-disabled-tab"
                 tabindex="0">
-                <div class="alert alert-success alert-dismissible d-flex align-items-baseline mt-4" role="alert">
-                    <span class="alert-icon alert-icon-lg text-success me-2">
-                        <i class="ti ti-bookmark ti-sm"></i>
-                    </span>
-                    <div class="d-flex flex-column ps-1">
-                        <h5 class="alert-heading mb-2">Tab Team</h5>
-                        <p class="mb-0">Tab Team berisi data data siswa magang yang mengerjakan projeknya secara berkelompok atau berteam</p>
-                        </button>
+                    <div class="alert alert-success alert-dismissible d-flex align-items-baseline" role="alert">
+                        <span class="alert-icon alert-icon-lg text-success me-2">
+                            <i class="ti ti-bookmark ti-sm"></i>
+                        </span>
+                        <div class="d-flex flex-column ps-1">
+                            <h5 class="alert-heading mb-2">Tab Team</h5>
+                            <p class="mb-0">Tab Team berisi data data siswa magang yang mengerjakan projeknya secara berkelompok atau berteam</p>
+                            </button>
+                        </div>
                     </div>
-                </div>
                 <div class="card">
                     <div class="card-datatable table-responsive">
                         <table id="jstabel4" class="dt-responsive table">
@@ -461,61 +461,62 @@
                     </div>
                 </div>
             </div>
-           <div class="tab-pane fade" id="pills-tidak-presentasi" role="tabpanel" aria-labelledby="pills-disabled-tab"
-            tabindex="0">
-            <div class="alert alert-warning alert-dismissible d-flex align-items-baseline" role="alert">
-                <span class="alert-icon alert-icon-lg text-warning me-2">
-                    <i class="ti ti-bookmark ti-sm"></i>
-                </span>
-                <div class="d-flex flex-column ps-1">
-                    <h5 class="alert-heading mb-2">Tab Tidak Presentasi Mingguan</h5>
-                    <p class="mb-0">Tab Tidak Presentasi Mingguan berisi data data siswa magang yang masih belum presentasi setiap minggunya</p>
-                    </button>
+            <div class="tab-pane fade" id="pills-tidak-presentasi" role="tabpanel" aria-labelledby="pills-disabled-tab"
+                tabindex="0">
+                <div class="alert alert-warning alert-dismissible d-flex align-items-baseline" role="alert">
+                    <span class="alert-icon alert-icon-lg text-warning me-2">
+                        <i class="ti ti-bookmark ti-sm"></i>
+                    </span>
+                    <div class="d-flex flex-column ps-1">
+                        <h5 class="alert-heading mb-2">Tab Tidak Presentasi Mingguan</h5>
+                        <p class="mb-0">Tab Tidak Presentasi Mingguan berisi data data siswa magang yang masih belum presentasi setiap minggunya</p>
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div class="card">
-                <div class="card-datatable table-responsive">
-                    <table id="jstabel5" class="dt-responsive table">
-                        <thead>
-                            <tr>
-                                <th scope="col">NO</th>
-                                <th scope="col">NAMA</th>
-                                <th scope="col">STATUS TIM</th>
-                                <th scope="col">TANGGAL</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($tidakPresentasiMingguan as $i => $item)
+                <div class="card">
+                    <div class="card-datatable table-responsive">
+                        <table id="jstabel5" class="dt-responsive table">
+                            <thead>
                                 <tr>
-                                    <td>{{ ++$i }}</td>
-                                    @if ($item->status_tim === "solo")
-                                        <td>{{ $item->tim->ketuaTim->username }}</td>
-                                    @else
-                                        <td>{{ $item->tim->nama }}</td>
-                                    @endif
-                                    <td>
-                                        @if ($item->tim->status_tim === "solo")
-                                            <span class="badge bg-label-danger">Solo Project</span>
-                                            @elseif ($item->tim->status_tim === "pre_mini")
-                                            <span class="badge bg-label-warning">Pre Mini Project</span>
-                                            @elseif ($item->tim->status_tim === "mini")
-                                            <span class="badge bg-label-success">Mini Project</span>
-                                            @else
-                                            <span class="badge bg-label-primary">Big Project</span>
-
-                                        @endif
-
-                                    </td>
-                                    <td>{{ \Carbon\Carbon::parse($item->created_at)->isoFormat('dddd MMMM YYYY') }}</td>
+                                    <th scope="col">NO</th>
+                                    <th scope="col">NAMA</th>
+                                    <th scope="col">STATUS TIM</th>
+                                    <th scope="col">MINGGU/BULAN/TAHUN</th>
                                 </tr>
-                            @empty
-                            @endforelse
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @forelse ($tidakPresentasiMingguan as $i => $item)
+                                    <tr>
+                                        <td>{{ ++$i }}</td>
+                                        @if ($item->status_tim === "solo")
+                                            <td>{{ $item->tim->ketuaTim->username }}</td>
+                                        @else
+                                            <td>{{ $item->tim->nama }}</td>
+                                        @endif
+                                        <td>
+                                            @if ($item->tim->status_tim === "solo")
+                                                <span class="badge bg-label-danger">Solo Project</span>
+                                                @elseif ($item->tim->status_tim === "pre_mini")
+                                                <span class="badge bg-label-warning">Pre Mini Project</span>
+                                                @elseif ($item->tim->status_tim === "mini")
+                                                <span class="badge bg-label-success">Mini Project</span>
+                                                @else
+                                                <span class="badge bg-label-primary">Big Project</span>
+
+                                            @endif
+
+                                        </td>
+                                        {{-- @dd($item) --}}
+                                        <td>{{ $item->historyPresentasi->noMinggu }}/{{ $item->historyPresentasi->bulan }}/{{ $item->historyPresentasi->tahun }}</td>
+                                   
+                                    </tr>
+                                @empty
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-          </div>
         </div>
 
         {{-- modal detail --}}
@@ -777,6 +778,7 @@
                 }
             });
         });
+
         jQuery(document).ready(function($) {
             $('#jstabel4').DataTable({
                 "lengthMenu": [
@@ -916,13 +918,13 @@
             });
 
             $('[data-tab]').click(function() {
-                var historyKetuaMagangTab = $(this).attr('data-tab');
-                sessionStorage.setItem('historyKetuaMagangTab', historyKetuaMagangTab);
+                var historyMentorTab = $(this).attr('data-tab');
+                sessionStorage.setItem('historyMentorTab', historyMentorTab);
             });
 
-            var historyKetuaMagangTab = sessionStorage.getItem('historyKetuaMagangTab');
-            if (historyKetuaMagangTab) {
-                var tabToActivate = document.querySelector('[data-tab="' + historyKetuaMagangTab + '"]');
+            var historyMentorTab = sessionStorage.getItem('historyMentorTab');
+            if (historyMentorTab) {
+                var tabToActivate = document.querySelector('[data-tab="' + historyMentorTab + '"]');
                 if (tabToActivate) {
                     tabToActivate.click();
                 }
