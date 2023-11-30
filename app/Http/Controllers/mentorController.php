@@ -404,8 +404,9 @@ class mentorController extends Controller
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
 
 
-        $historyPresentasi = HistoryPresentasi::whereMonth('created_at', Carbon::now()->month)->get();
-
+        $historyPresentasi = HistoryPresentasi::where('bulan', Carbon::now()->isoFormat('MMMM'))->get();
+        
+        // dd($historyPresentasi[0]);
         return response()->view('mentor.presentasi', compact('historyPresentasi', 'notifikasi'));
     }
 

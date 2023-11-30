@@ -363,17 +363,11 @@
                     <div class="card">
                         <div class="card-body text-black">
 
-                            @php
-                                $date = \Carbon\Carbon::parse($history->created_at);
-                                $month = $date->isoFormat('MMMM');
-                                $weekOfMonth = ceil($date->day / 7);
-                            @endphp
-
                             <img width="300" height="auto" class="img-fluid"
                                 src="{{ asset('assets/img/presentasi.png') }}" alt="">
                             <div class="d-flex justify-content-around align-items-center">
-                                <span class="badge bg-label-info">Minggu ke-{{ $weekOfMonth }}</span>
-                                <span class="badge bg-label-primary">{{ $month }}</span>
+                                <span class="badge bg-label-info">Minggu ke-{{ $history->noMinggu }}</span>
+                                <span class="badge bg-label-primary">{{ $history->bulan }}</span>
                             </div>
                             <div class="d-flex justify-content-around align-items-center gap-3  mt-3">
                                 <button onclick="tampilkanDetail('{{ $history->code }}')" data-bs-toggle="modal"
@@ -608,11 +602,11 @@ function tampilkanDetail(code)
                         cell5.innerHTML = `<span class="badge bg-label-warning">Belum Presentasi</span>`;
 
 
-                        let defaultImg = "img/avatars/1.png";
-
+                        let defaultImg = "assets/img/avatars/1.png";
+                        let avatarUser =  (presentasi.user[0].avatar === null)  ?   defaultImg : "storage/"+presentasi.user[0].avatar
                         if (presentasi.status_tim === "solo") {
                             let cell2 = document.createElement('td');
-                            cell2.innerHTML = `<img src="{{ asset('storage/${presentasi.user[0].avatar || defaultImg }') }}" alt=""
+                            cell2.innerHTML = `<img src="{{ asset('${ avatarUser }') }}" alt=""
                           style="border-radius: 50%; width:40px; height:40px;object-fit:cover;"> ${presentasi.user[0].username}`;
                             tr.appendChild(cell1);
                             tr.appendChild(cell2);

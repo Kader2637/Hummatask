@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('history_presentasis', function (Blueprint $table) {
             $table->id();
             $table->string('code');
+            $table->integer('noMinggu');
+            $table->string('bulan');
+            $table->integer('tahun');
             $table->timestamps();
         });
     }

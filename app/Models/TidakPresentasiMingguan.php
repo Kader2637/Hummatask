@@ -19,4 +19,9 @@ class TidakPresentasiMingguan extends Model
         return $this->belongsTo(Tim::class);
     }
 
+    public function historyPresentasi()
+    {
+        return $this->belongsTo(HistoryPresentasi::class);
+    }
+
 }

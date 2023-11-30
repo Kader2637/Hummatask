@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Models\HistoryPresentasi;
 use App\Models\TidakPresentasiMingguan;
 use App\Models\Tim;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -31,25 +33,43 @@ class RestSudahPresentasiTim extends Command
     {
 
         DB::table('tims')->update(['sudah_presentasi'=>false]);
-        $this->handleResetTidakPresentasi();
-        $newHistoryPresentasi = new TidakPresentasiMingguan;
+
+        $newHistoryPresentasi = new HistoryPresentasi;
         $newHistoryPresentasi->code = Str::uuid();
+
+        // mengecek senen depan bulan apa
+        $seninDepan = Carbon::now()->addDays(3)->isoFormat("MMMM");
+
+        if(Carbon::now()->isoFormat('MMMM') !== $seninDepan ){
+            $newHistoryPresentasi->noMinggu = 1;
+            $newHistoryPresentasi->bulan = Carbon::now()->addDays(3)->isoFormat('MMMM');
+            $newHistoryPresentasi->tahun = Carbon::now()->addDays(3)->isoFormat('YYYY');
+        }else{
+            $oldHistory = HistoryPresentasi::all()->sortByDesc('created_at')->first();
+            $newHistoryPresentasi->noMinggu = $oldHistory->noMinggu + 1;
+            $newHistoryPresentasi->bulan = $oldHistory->bulan;
+            $newHistoryPresentasi->tahun = $oldHistory->tahun;
+        }
+
         $newHistoryPresentasi->save();
+        $this->handleResetTidakPresentasi($newHistoryPresentasi->id);
 
     }
 
-    protected function handleResetTidakPresentasi()
+    protected function handleResetTidakPresentasi($id)
     {
         $tim = tim::all();
         foreach ($tim as $key => $data) {
-            $this->createTidakPresentasi($data->id);
+            $this->createTidakPresentasi($data->id,$id);
         }
     }
 
-    protected function createTidakPresentasi($timId)
+    protected function createTidakPresentasi($timId,$id)
     {
         TidakPresentasiMingguan::create([
-            "tim_id" => $timId
+            "tim_id" => $timId,
+            "history_presentasi_id"=>$id,
+
         ]);
     }
 }

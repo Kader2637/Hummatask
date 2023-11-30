@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('tidak_presentasi_mingguans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tim_id')->constrained();
+            $table->foreignId('history_presentasi_id')->references('id')->on('history_presentasis');
             $table->timestamps();
         });
     }

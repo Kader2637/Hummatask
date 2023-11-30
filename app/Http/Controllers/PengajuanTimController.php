@@ -7,6 +7,7 @@ use App\Http\Requests\RequestPembentukanTimProject;
 use App\Http\Requests\RequestPembentukanTimProjectKetua;
 use App\Http\Requests\RequestPengajuanSoloProject;
 use App\Models\Anggota;
+use App\Models\HistoryPresentasi;
 use App\Models\Notifikasi;
 use App\Models\Project;
 use App\Models\Tema;
@@ -32,26 +33,26 @@ class PengajuanTimController extends Controller
         $userId = Auth::id();
         $user = User::find($userId);
 
-        if ($user->status_kelulusan == 1) {
-            return redirect()->back()->with('error', 'Kamu sudah lulus tidak bisa membuat tim');
-        }
-        // Kondisi dimana nama tim kosong atau foto kosong
-        if ($request->nama === null || $request->logo === null) {
-            return redirect()->back()->with('error', 'input Foto ataupun nama tim tidak boleh kosong');
-        }
+        // if ($user->status_kelulusan == 1) {
+        //     return redirect()->back()->with('error', 'Kamu sudah lulus tidak bisa membuat tim');
+        // }
+        // // Kondisi dimana nama tim kosong atau foto kosong
+        // if ($request->nama === null || $request->logo === null) {
+        //     return redirect()->back()->with('error', 'input Foto ataupun nama tim tidak boleh kosong');
+        // }
 
 
-        try {
-        $timDulu = User::find(Auth::user()->id)->anggota()->orderByDesc('created_at')->first()->status;
-            //code...
-        } catch (\Throwable $th) {
-            $timDulu = null;
-        }
-        // dd($timDulu);
+        // try {
+        // $timDulu = User::find(Auth::user()->id)->anggota()->orderByDesc('created_at')->first()->status;
+        //     //code...
+        // } catch (\Throwable $th) {
+        //     $timDulu = null;
+        // }
+        // // dd($timDulu);
 
-            if ($timDulu === 'active') {
-                return redirect()->back()->with('error', 'Kamu masih memiliki tim yang belum selesai');
-            }
+        //     if ($timDulu === 'active') {
+        //         return redirect()->back()->with('error', 'Kamu masih memiliki tim yang belum selesai');
+        //     }
 
 
         // menyimpan logo
@@ -90,9 +91,31 @@ class PengajuanTimController extends Controller
             'type_project' => 'solo'
         ]);
 
-        TidakPresentasiMingguan::create([
-            'tim_id' => $tim->id,
-        ]);
+        $historyPresentasi = HistoryPresentasi::all()->sortByDesc('created_at')->first();
+        if($historyPresentasi){
+            TidakPresentasiMingguan::create([
+                'tim_id' => $tim->id,
+                "history_presentasi_id" => $historyPresentasi->id,
+            ]);
+        }else{
+            $historyPresentasi = new HistoryPresentasi;
+            $historyPresentasi->code = Str::uuid();
+
+            $historyPresentasi->noMinggu = 1;
+            $historyPresentasi->bulan = Carbon::now()->isoFormat("MMMM");
+            $historyPresentasi->tahun = Carbon::now()->isoFormat("YYYY");
+            $historyPresentasi->save();
+
+            TidakPresentasiMingguan::create([
+                'tim_id' => $tim->id,
+                "history_presentasi_id" => $historyPresentasi->id,
+            ]);
+
+        }
+
+
+
+        
 
         return redirect()->back()->with('success', 'Berhasil membuat tim solo project');
     }
@@ -146,9 +169,27 @@ class PengajuanTimController extends Controller
             $tim->kadaluwarsa = false;
             $tim->save();
 
-            TidakPresentasiMingguan::create([
-                'tim_id' => $tim->id,
-            ]);
+            $historyPresentasi = HistoryPresentasi::all()->sortByDesc('created_at')->first();
+            if($historyPresentasi){
+                TidakPresentasiMingguan::create([
+                    'tim_id' => $tim->id,
+                    "history_presentasi_id" => $historyPresentasi->id,
+                ]);
+            }else{
+                $historyPresentasi = new HistoryPresentasi;
+                $historyPresentasi->code = Str::uuid();
+    
+                $historyPresentasi->noMinggu = 1;
+                $historyPresentasi->bulan = Carbon::now()->isoFormat("MMMM");
+                $historyPresentasi->tahun = Carbon::now()->isoFormat("YYYY");
+                $historyPresentasi->save();
+
+                TidakPresentasiMingguan::create([
+                    'tim_id' => $tim->id,
+                    "history_presentasi_id" => $historyPresentasi->id,
+                ]);
+            }
+    
 
             foreach ($uniqueDaftarAnggota as $anggota) {
                 $anggotaModel = new Anggota;

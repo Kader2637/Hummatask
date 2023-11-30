@@ -39,9 +39,9 @@ class PresentasiController extends Controller
             return back()->with('error', 'Deskripsi presentasi tidak boleh melebihi 700 karakter');
         }
 
-        if (Carbon::now()->isoFormat('HH:m:ss') < "08:00:00") {
-            return back()->with('error', 'Pengajuan Presentasi dimulai pukul 08:00');
-        }
+        // if (Carbon::now()->isoFormat('HH:m:ss') < "08:00:00") {
+        //     return back()->with('error', 'Pengajuan Presentasi dimulai pukul 08:00');
+        // }
 
         if (Carbon::now()->isoFormat('HH:m:ss') > "14:00:00") {
             return back()->with('error', 'Pengajuan Presentasi tidak boleh lebih dari pukul 14:00');
@@ -252,9 +252,10 @@ class PresentasiController extends Controller
         }
 
         // dd(Carbon::parse($history->created_at)->weekOfYear);
-        $tim_belum_presentasi = TidakPresentasiMingguan::with('tim.project.tema','tim.user')
-         ->whereRaw('WEEK(created_at) = ?', [Carbon::parse($history->created_at)->weekOfYear])
-        ->whereYear('created_at',Carbon::parse($history->created_at)->year)->get();
+
+        $tim_belum_presentasi = TidakPresentasiMingguan::with('tim.project.tema','tim.user')->where('history_presentasi_id',$history->id)->get();
+
+
         // dd($tim_belum_presentasi);
 
 

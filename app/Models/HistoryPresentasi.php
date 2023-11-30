@@ -22,6 +22,12 @@ class HistoryPresentasi extends Model
     {
         return $this->hasManyThrough(Tim::class,Presentasi::class);
     }
+
+    public function tidakPresentasiMingguan()
+    {
+        return $this->hasMany(TidakPresentasiMingguan::class);
+    }
+    
 }
 
 

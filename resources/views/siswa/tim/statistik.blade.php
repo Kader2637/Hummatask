@@ -342,10 +342,22 @@
                                   </div>
                                   <div class="card-body">
                                     <div class="d-none d-lg-flex vehicles-progress-labels mb-4 ">
-                                      <div class=" overflow-hidden label-tugas_baru vehicles-progress-label on-the-way-text">Tugas Baru</div>
-                                      <div class=" overflow-hidden label-tugas_dikerjakan vehicles-progress-label unloading-text">Tugas Dikerjakan</div>
-                                      <div class=" overflow-hidden label-tugas_selesai vehicles-progress-label loading-text">Tugas Selesai</div>
-                                      <div class=" overflow-hidden label-tugas_direvisi vehicles-progress-label waiting-text text-nowrap">Tugas Direvisi</div>
+                                      <div style="height:30px;" class="overflow-hidden label-tugas_baru vehicles-progress-label on-the-way-text">
+                                        Tugas Baru
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 14 14"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 1.5H11a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1h1.5"/><rect width="5" height="2.5" x="4.5" y=".5" rx="1"/><path d="M7 6v4m2-2H5"/></g></svg>
+                                    </div>
+                                      <div style="height:30px;" class="overflow-hidden label-tugas_dikerjakan vehicles-progress-label unloading-text">
+                                        Tugas Dikerjakan
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 14 14"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 1.5H11a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1h1.5"/><rect width="5" height="2.5" x="4.5" y=".5" rx="1"/><path d="M4.5 5.5h5M4.5 8h5m-5 2.5h5"/></g></svg>
+                                    </div>
+                                      <div style="height:30px;" class="overflow-hidden label-tugas_selesai vehicles-progress-label loading-text">
+                                        Tugas Selesai
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 14 14"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 1.5H11a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1h1.5"/><rect width="5" height="2.5" x="4.5" y=".5" rx="1"/><path d="m4.5 8.5l2 1.5L9 6"/></g></svg>
+                                    </div>
+                                      <div style="height:30px;" class="overflow-hidden label-tugas_direvisi vehicles-progress-label waiting-text text-nowrap">
+                                        Tugas Direvisi
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 14 14"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 1.5H11a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1h1.5"/><rect width="5" height="2.5" x="4.5" y=".5" rx="1"/><path d="m5.5 6.5l3 3m0-3l-3 3"/></g></svg>
+                                    </div>
                                     </div>
                                     <div class="vehicles-overview-progress progress rounded-2 my-4 w-100" style="height: 46px;">
                                       <div class="bar-tugas_baru progress-bar fw-medium text-start bg-body text-dark px-3 rounded-0" role="progressbar"  aria-valuenow="39.7" aria-valuemin="0" aria-valuemax="100">39.7%</div>
@@ -379,7 +391,8 @@
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 14 14"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 1.5H11a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1h1.5"/><rect width="5" height="2.5" x="4.5" y=".5" rx="1"/><path d="M4.5 5.5h5M4.5 8h5m-5 2.5h5"/></g></svg>
                                                 </div>
                                                 <h6 class="mb-0 fw-normal">Tugas Dikerjakan</h6>
-                                              </div>
+
+                                            </div>
                                             </td>
                                             <td class="text-end pe-0 text-nowrap">
                                               <h6 class="mb-0 jml_tugas_dikerjakan">4 Tugas</h6>
@@ -490,6 +503,19 @@
                         <h4 style="margin-top:-3%" class="mb-5" >Timmu belum pernah memiliki tugas</h4>
                         `
                     );
+                }
+
+                if(data.tugas_baru === 0){
+                    $(".bar-tugas_baru").addClass("d-none");
+                }
+                if (data.tugas_dikerjakan === 0) {
+                    $(".bar-tugas_dikerjakan").addClass("d-none");
+                }
+                if (data.tugas_selesai === 0 ) {
+                    $(".bar-tugas_selesai").addClass("d-none");
+                }
+                if (data.tugas_direvisi === 0) {
+                    $(".bar-tugas_direvisi").addClass("d-none");
                 }
 
 
