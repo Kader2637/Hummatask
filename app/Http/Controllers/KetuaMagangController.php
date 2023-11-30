@@ -83,7 +83,7 @@ class KetuaMagangController extends Controller
     {
         $title = "Presentasi Ketua Magang";
         $presentasi = Presentasi::all();
-        
+
 
         $historyPresentasi = HistoryPresentasi::all()->sortByDesc('created_at')->take(5);
 
@@ -149,14 +149,17 @@ class KetuaMagangController extends Controller
 
         $tugas_baru = $tim->tugas->where('status_tugas', 'tugas_baru')->count();
 
+        $dikerjakan = $tim->tugas->where('status_tugas','dikerjakan')->count();
+
         $chartData = [
             ['Status Tugas', 'Jumlah'],
             ['Selesai', $selesai || 0],
             ['Revisi', $revisi || 0],
+            ['Dikerjakan', $dikerjakan || 0],
             ['Tugas Baru', $tugas_baru || 0]
         ];
 
-        return response()->json(['selesai' => $selesai, 'revisi' => $revisi, 'tugas_baru' => $tugas_baru, 'chartData' => $chartData]);
+        return response()->json(['chartData' => $chartData]);
     }
 
     protected function projek()
