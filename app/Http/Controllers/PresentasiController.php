@@ -382,7 +382,13 @@ class PresentasiController extends Controller
     {
         $history = HistoryPresentasi::where('code', $codeHistory)->first();
         $tim = Tim::with('ketuaTim')->where('code', $codeTim)->first();
-        $presentaseRevisi = ($tim->presentasi->where('status_revisi', 'selesai')->count() / $tim->presentasi->where("status_presentasi",'selesai')->count()) * 100;
+        try {
+            //code...
+            $presentaseRevisi = ($tim->presentasi->where('status_revisi', 'selesai')->count() / $tim->presentasi->where("status_presentasi",'selesai')->count()) * 100;
+        } catch (\Throwable $th) {
+            $presentaseRevisi = 0;
+            //throw $th;
+        }
         $waktu = [];
 
         foreach ($tim->presentasi as $data) {

@@ -95,8 +95,8 @@
                                     <div class="card h-100">
                                       <div class="card-body d-flex justify-content-between align-items-center">
                                         <div class="row">
-                                            <div class="col-4">
-                                                <img class="rounded-circle" style="width:50px; height:50px;" src="{{ asset('assets/img/avatars/10.png') }}" alt="">
+                                            <div class="col-4 foto-ketua-tim">
+                                                <img class="rounded-circle foto-ketua-tim" style="width:50px; height:50px;" src="{{ asset('assets/img/avatars/10.png') }}" alt="">
                                             </div>
                                             <div class="col-8">
                                                 <p class="m-0 text-secondary" id="history-ketua-tim"></p>
@@ -525,6 +525,8 @@ function tampilkanDetail(code)
                         div.id = "card-konfirmasi-" + presentasi.code;
                         div.className = "col-md-6 col-lg-3";
 
+
+
                         let childrend =
                             `
                     <div class="card text-center mb-3">
@@ -544,7 +546,7 @@ function tampilkanDetail(code)
                                             <i class="fas fa-chalkboard"></i>
                                             ${totalPresentasi}
                                         </span>
-                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data pengajuan presentasi yang ditolak"    class="badge bg-label-danger">
+                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-danger" data-bs-placement="top" title="Data pengajuan presentasi yang ditolak"    class="badge bg-label-danger">
                                             <i class="fas fa-chalkboard"></i>
                                             ${presentasiDitolak}
                                         </span>
@@ -552,7 +554,7 @@ function tampilkanDetail(code)
                                             <i class="fas fa-exclamation-triangle"></i>
                                             ${revisiSelesai}
                                         </span>
-                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data Revisi yang tidak selesai"   class="badge bg-label-danger ">
+                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-danger" data-bs-placement="top" title="Data Revisi yang tidak selesai"   class="badge bg-label-danger ">
                                             <i class="fas fa-exclamation-triangle"></i>
                                             ${revisiTidakSelesai}
                                         </span>
@@ -573,6 +575,9 @@ function tampilkanDetail(code)
                     </div>
                     `
 
+                    $(document).ready(function() {
+  $(document).find('[data-bs-toggle="tooltip"]').tooltip();
+});
                         div.innerHTML = childrend
                         document.getElementById('row-konfirmasi').appendChild(div)
                     })
@@ -675,6 +680,14 @@ function tampilkanDetail(code)
                 $('#historyTotalPresentasi').text(`${presentasi[0].length}`)
                 $('#history-ketua-tim').text(`${tim.ketua_tim[0].username}`)
 
+               let ppKetua = (tim.ketua_tim[0].username == null) ? 'assets/img/avatar/1.png' : 'storage/'+tim.ketua_tim[0].avatar
+
+                $('.foto-ketua-tim').html(
+                    `
+                    <img class="rounded-circle foto-ketua-tim" style="width:50px; height:50px;" src="{{ asset('${ppKetua}') }}" alt="">
+                    `
+                )
+
                 const kosong = (presentasi[0].length === 0 ? true : false);
                 console.log(kosong);
                 presentasi[0].forEach((data,i) => {
@@ -696,6 +709,7 @@ function tampilkanDetail(code)
                                     ? '<a href="javascript:void(0);" class="list-group-item list-group-item-action flex-column align-items-start active">'
                                     : ''
                                 )}
+
                                 <a class="list-group-item list-group-item-action flex-column align-items-start ${(data === presentasi[0][0] ? 'active' : '' )}">
                                     <div class="d-flex justify-content-between w-100">
                                         <h5 class="mb-1">${data.judul}</h5>

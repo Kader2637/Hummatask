@@ -83,7 +83,10 @@ class KetuaMagangController extends Controller
     {
         $title = "Presentasi Ketua Magang";
         $presentasi = Presentasi::all();
-        $historyPresentasi = HistoryPresentasi::all();
+        
+
+        $historyPresentasi = HistoryPresentasi::all()->sortByDesc('created_at')->take(5);
+
         $persetujuan_presentasi = $presentasi->where('status_pengajuan', 'menunggu');
         $konfirmasi_presentasi = $presentasi->where('status_pengajuan', 'disetujui')->where('status_presentasi', 'menunggu');
         $jadwal = [];
