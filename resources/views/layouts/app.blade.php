@@ -118,7 +118,7 @@
         }
 
         .custom-margin {
-            margin-top: -65px;
+            margin-top: -95px;
         }
 
         @keyframes loading {
@@ -164,7 +164,7 @@
     <div id="loader">
         <div class="preloader">
             <div class="d-flex justify-content-center custom-margin">
-                <img src="{{ asset('assets/img/hummatask.png') }}" width="180" height="160" alt="Loader Image">
+                <img src="{{ asset('assets/img/hummatask.png') }}" width="240" height="220" alt="Loader Image">
             </div>
         </div>
     </div>

@@ -17,7 +17,7 @@
     <meta name="csrf-token" content="y0lzh53YmoH0xFgY2vFjhD4S1TOiq6lE58zbW7ec">
     <link rel="canonical" href="https://1.envato.market/vuexy_admin">
     <link rel="icon" type="image/x-icon"
-        href="https://demos.pixinvent.com/vuexy-html-laravel-admin-template/demo/assets/img/favicon/favicon.ico" />
+        href="{{ asset('assets/img/logo.png') }}" />
 
     <script>
         (function(w, d, s, l, i) {

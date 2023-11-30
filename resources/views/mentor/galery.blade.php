@@ -27,7 +27,7 @@
     <script src="{{ asset('assets/lib/counterup/counterup.min.js') }}"></script>
     <script src="{{ asset('assets/lib/lightbox/js/lightbox.min.js') }}"></script>
     <script src="{{ asset('assets/lib/owlcarousel/owl.carousel.min.js') }}"></script>
-    {{-- <script src="{{ asset('js/main.js') }}"></script> --}}
+    <script src="{{ asset('js/main.js') }}"></script>
 @endsection
 
 @section('content')
@@ -433,54 +433,56 @@
         });
 
         function loadGalery() {
-            $.ajax({
-                type: "GET",
-                url: "{{ route('get.galery') }}", // Gantilah dengan endpoint API yang sesuai
-                success: function(data) {
-                    // Ganti HTML sesuai data yang diterima dari server
-                    let html = '';
-                    data.galery.forEach(function(item) {
-                        html += `
-                            <div class="col-md-6 col-lg-3 wow bounceInUp" data-wow-delay="1s">
-                                <div class="event-img position-relative">
-                                    <img class="img-fluid rounded "
-                                        src="{{ asset('storage/img/') }}/${item.foto}"
-                                        alt="" width="300px" height="300px" style="object-fit:cover">
-                                    <div class="event-overlay d-flex flex-column p-4">
-                                        <h4 class="me-auto fs-5 fw-light" style="color: white;">${item.judul}</h4>
-                                        <div class="my-auto">
-                                            <a class="btn btn-outline-primary"
-                                                href="{{ asset('storage/img/') }}/${item.foto}"
-                                                data-lightbox="event-5"><i class="bi bi-eye"></i></a>
-                                            <button type="button"
-                                                class="btn btn-outline-success " data-id=""
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#updateGalery${item.id}"><i
-                                                class="bi bi-pencil-square"></i></button>
-                                            <form action="{{ route('galery.delete', ['']) }}/${item.id}" method="post" id="deleteForm${item.id}">
-                                                    @method('DELETE')
-                                                    @csrf
-                                                <button type="button" class="btn btn-outline-danger delete-icon" data-id="${item.id}">
-                                                    <i class="bi bi-trash"></i>
-                                                </button>
-                                            </form>
-                                        </div>
+    $.ajax({
+        type: "GET",
+        url: "{{ route('get.galery') }}", // Gantilah dengan endpoint API yang sesuai
+        success: function(data) {
+            if (data.galery.length > 0) {
+                let html = '';
+                data.galery.forEach(function(item) {
+                    html += `
+                        <div class="col-md-6 col-lg-3 wow bounceInUp" data-wow-delay="0.1s">
+                            <div class="event-img position-relative">
+                                <img class="img-fluid rounded"
+                                    src="{{ asset('storage/img/') }}/${item.foto}"
+                                    alt="" width="300px" height="300px" style="object-fit:cover">
+                                <div class="event-overlay d-flex flex-column p-4">
+                                    <h4 class="me-auto fs-5 fw-light" style="color: white;">${item.judul}</h4>
+                                    <div class="my-auto">
+                                        <a class="btn btn-outline-primary"
+                                            href="{{ asset('storage/img/') }}/${item.foto}"
+                                            data-lightbox="event-5"><i class="bi bi-eye"></i></a>
+                                        <button type="button"
+                                            class="btn btn-outline-success " data-id=""
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#updateGalery${item.id}"><i
+                                            class="bi bi-pencil-square"></i></button>
+                                        <form action="{{ route('galery.delete', ['']) }}/${item.id}" method="post" id="deleteForm${item.id}">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button type="button" class="btn btn-outline-danger delete-icon" data-id="${item.id}">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
-                            </div>`;
-                    });
-
-                    // Set HTML di elemen #galery
-                    $('#galery').html(html);
-                },
-                error: function(error) {
-                    $('#galery').html('<p>Error: Ada kesalahan</p>');
-                }
-            });
+                            </div>
+                        </div>`;
+                });
+                $('#galery').html(html);
+            } else {
+                $('#galery').html('<div class="justify-content-center" style="display: flex;"><img src="{{ asset('assets/img/illustrations/noData.png') }}" alt="page-misc-under-maintenance" width="500"></div>');
+            }
+        },
+        error: function(error) {
+            $('#galery').html('<p>Error: Ada kesalahan</p>');
         }
-        $(document).ready(function() {
-            loadGalery();
-        })
+    });
+}
+
+$(document).ready(function() {
+    loadGalery();
+});
     </script>
     {{-- js galery --}}
 
@@ -596,7 +598,7 @@
                 }
 
                 var file = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-                var fotoExt = foto.substr(foto.lastIndexOf('.'));
+                var fotoExt = fotoLogo.substr(fotoLogo.lastIndexOf('.'));
 
                 if (!file.exec(fotoExt)) {
                     Swal.fire({
@@ -654,6 +656,7 @@
                 url: "{{ route('get.galery') }}", // Gantilah dengan endpoint API yang sesuai
                 success: function(data) {
                     // Ganti HTML sesuai data yang diterima dari server
+                    if (data.logo.length > 0) {
                     let html = '';
                     data.logo.forEach(function(itemLogo) {
                         html += `
@@ -688,9 +691,11 @@
                                 </div>
                             </div>`;
                     });
-
-                    // Set HTML di elemen #galery
                     $('#logo').html(html);
+                }else{
+                    $('#logo').html('<div class="justify-content-center" style="display: flex;"><img src="{{ asset('assets/img/illustrations/noData.png') }}" alt="page-misc-under-maintenance" width="500"></div>');
+                }
+                    // Set HTML di elemen #galery
                 },
                 error: function(error) {
                     $('#logo').html('<p>Error: Ada kesalahan</p>');
