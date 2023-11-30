@@ -37,6 +37,8 @@ class siswaController extends Controller
             return $item;
         })->loadCount('comments');
 
+        $tugas = $tugas->take(3);
+
         $tugasBelum = User::find(Auth::user()->id)->tugas()->where(function ($query) {
             $query->where('status_tugas', 'revisi')
                 ->OrWhere('status_tugas', 'dikerjakan');
@@ -54,6 +56,8 @@ class siswaController extends Controller
             $item->tim_code = $item->tim->code;
             return $item;
         })->loadCount('comments');
+
+        $tugasBelum = $tugasBelum->take(3);
 
         return response()->view('siswa.dashboard', compact('title', 'tims', 'tugas', 'tugasBelum', 'notifikasi'));
     }

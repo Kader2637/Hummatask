@@ -31,14 +31,14 @@
         </div>
         <div class="row">
             @if (count($tugasBelum) > 0 || count($tugas) > 0)
-                <div class="col-lg-3">
+                <div class="col-lg-5">
                     <div class="kanban-title-board fs-5">Tugas yang belum selesai</div>
                 </div>
         </div>
         <div class="row mt-4 justify-content-start mb-2" id="navs-tab-sesijalani">
             @php $count = 0; @endphp
             @foreach ($tugasBelum as $data)
-                <div class="col-lg-3">
+                <div class="col-4">
                     <div class="card text-center mb-3">
                         <a href="{{route('tim.board', $data->tim_code)}}" class="card-body py-3 px-3" data-eid="in-progress-1" data-comments="12" data-badge-text="UX"
                             data-badge="success" data-due-date="5 April" data-attachments="4" data-assigned="12.png,5.png"
@@ -91,7 +91,7 @@
         <div class="row mt-4 d-flex justify-content-start" id="navs-tab-sesijalani">
             @php $count2 = 0; @endphp
             @foreach ($tugas as $item)
-                <div class="col-lg-3">
+                <div class="col-4">
                     <div class="card text-center mb-3">
                         <a href="{{route('tim.board', $item->tim_code)}}" class="card-body py-3 px-3" data-eid="in-progress-1" data-comments="12" data-badge-text="UX"
                             data-badge="success" data-due-date="5 April" data-attachments="4" data-assigned="12.png,5.png"
