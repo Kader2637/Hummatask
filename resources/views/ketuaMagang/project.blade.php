@@ -460,7 +460,6 @@
                                 animation: {
                                     duration: 500
                                 },
-                                cutout: "68%",
                                 plugins: {
                                     legend: {
                                         display: false
