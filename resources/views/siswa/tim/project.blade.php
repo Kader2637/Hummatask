@@ -48,7 +48,6 @@
                 font-size: 13px;
             }
         }
-
     </style>
 @endsection
 
@@ -222,8 +221,6 @@
                             @endif
                         @endauth
                     </div>
-
-
                 </div>
                 <div class="tab-content bg-transparent pb-0" style="box-shadow: none;">
                     <div class="tab-pane fade active show" id="navs-pills-top-home" role="tabpanel">

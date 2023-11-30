@@ -33,26 +33,26 @@ class PengajuanTimController extends Controller
         $userId = Auth::id();
         $user = User::find($userId);
 
-        // if ($user->status_kelulusan == 1) {
-        //     return redirect()->back()->with('error', 'Kamu sudah lulus tidak bisa membuat tim');
-        // }
-        // // Kondisi dimana nama tim kosong atau foto kosong
-        // if ($request->nama === null || $request->logo === null) {
-        //     return redirect()->back()->with('error', 'input Foto ataupun nama tim tidak boleh kosong');
-        // }
+        if ($user->status_kelulusan == 1) {
+            return redirect()->back()->with('error', 'Kamu sudah lulus tidak bisa membuat tim');
+        }
+        // Kondisi dimana nama tim kosong atau foto kosong
+        if ($request->nama === null || $request->logo === null) {
+            return redirect()->back()->with('error', 'input Foto ataupun nama tim tidak boleh kosong');
+        }
 
 
-        // try {
-        // $timDulu = User::find(Auth::user()->id)->anggota()->orderByDesc('created_at')->first()->status;
-        //     //code...
-        // } catch (\Throwable $th) {
-        //     $timDulu = null;
-        // }
-        // // dd($timDulu);
+        try {
+        $timDulu = User::find(Auth::user()->id)->anggota()->orderByDesc('created_at')->first()->status;
+            //code...
+        } catch (\Throwable $th) {
+            $timDulu = null;
+        }
+        // dd($timDulu);
 
-        //     if ($timDulu === 'active') {
-        //         return redirect()->back()->with('error', 'Kamu masih memiliki tim yang belum selesai');
-        //     }
+            if ($timDulu === 'active') {
+                return redirect()->back()->with('error', 'Kamu masih memiliki tim yang belum selesai');
+            }
 
 
         // menyimpan logo
