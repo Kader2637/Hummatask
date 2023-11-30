@@ -198,7 +198,7 @@ class mentorController extends Controller
             ->whereHas('project')
             ->get();
 
-        $tidakPresentasiMingguan = TidakPresentasiMingguan::with('tim.ketuaTim')->get();
+        $tidakPresentasiMingguan = TidakPresentasiMingguan::with('tim.ketuaTim','historyPresentasi')->get();
 
         return response()->view('mentor.history', compact('tidakPresentasiMingguan', 'telatDeadline', 'presentasiSelesai', 'timSolo', 'timGroup', 'notifikasi'));
     }

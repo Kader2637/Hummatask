@@ -481,8 +481,7 @@
                                     <th scope="col">NO</th>
                                     <th scope="col">NAMA</th>
                                     <th scope="col">STATUS TIM</th>
-                                    <th scope="col">TANGGAL</th>
-
+                                    <th scope="col">MINGGU/BULAN/TAHUN</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -507,7 +506,9 @@
                                             @endif
 
                                         </td>
-                                        <td>{{ \Carbon\Carbon::parse($item->created_at)->isoFormat('dddd MMMM YYYY') }}</td>
+                                        {{-- @dd($item) --}}
+                                        <td>{{ $item->historyPresentasi->noMinggu }}/{{ $item->historyPresentasi->bulan }}/{{ $item->historyPresentasi->tahun }}</td>
+                                   
                                     </tr>
                                 @empty
                                 @endforelse
