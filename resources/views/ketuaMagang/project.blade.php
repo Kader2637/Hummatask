@@ -245,24 +245,34 @@
                                                             <ul
                                                                 class="doughnut-legend d-flex justify-content-around ps-0 mb-2 pt-1">
                                                                 <li class="ct-series-0 d-flex flex-column">
-                                                                    <h5 class="mb-0">Tugas Baru</h5>
+                                                                    <h5 class="mb-0" style="font-size: 13px">Tugas Baru
+                                                                    </h5>
                                                                     <span
                                                                         class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                                                        style="background-color: #ff7f00; height:6px;width:30px;"></span>
+                                                                        style="background-color: #6A2C70; height: 6px; width: 30px;"></span>
                                                                     <div class="text-muted"></div>
                                                                 </li>
                                                                 <li class="ct-series-1 d-flex flex-column">
-                                                                    <h5 class="mb-0">Revisi</h5>
+                                                                    <h5 class="mb-0" style="font-size: 13px">Dikerjakan
+                                                                    </h5>
                                                                     <span
                                                                         class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                                                        style="background-color: blue; height:6px; width:30px;"></span>
+                                                                        style="background-color: #B83B5E; height: 6px; width: 30px;"></span>
                                                                     <div class="text-muted"></div>
                                                                 </li>
                                                                 <li class="ct-series-1 d-flex flex-column">
-                                                                    <h5 class="mb-0">Selesai</h5>
+                                                                    <h5 class="mb-0" style="font-size: 13px">Revisi</h5>
                                                                     <span
                                                                         class="badge badge-dot my-2 cursor-pointer rounded-pill"
-                                                                        style="background-color: yellow; height:6px; width: 30px;"></span>
+                                                                        style="background-color: #F08A5D; height: 6px; width: 30px;"></span>
+                                                                    <div class="text-muted"></div>
+                                                                </li>
+                                                                <li class="ct-series-1 d-flex flex-column">
+                                                                    <h5 class="mb-0" style="font-size: 13px">Selesai
+                                                                    </h5>
+                                                                    <span
+                                                                        class="badge badge-dot my-2 cursor-pointer rounded-pill"
+                                                                        style="background-color: #F9ED69; height: 6px; width: 30px;"></span>
                                                                     <div class="text-muted"></div>
                                                                 </li>
                                                             </ul>
@@ -437,9 +447,10 @@
                                     data: values,
                                     backgroundColor: [
                                         cardColor,
-                                        "yellow",
-                                        "blue",
-                                        "#ff7f00"
+                                        "#F9ED69",
+                                        "#F08A5D",
+                                        "#B83B5E",
+                                        "#6A2C70",
                                     ],
                                     hoverOffset: 4
                                 }]
@@ -449,7 +460,6 @@
                                 animation: {
                                     duration: 500
                                 },
-                                cutout: "68%",
                                 plugins: {
                                     legend: {
                                         display: false
