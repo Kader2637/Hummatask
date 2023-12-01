@@ -422,7 +422,7 @@
                                             <div>
                                                 <img width="30px" height="30px" class="rounded-circle"
                                                     style="object-fit: cover"
-                                                    src="{{ $item->user->avatar ? Storage::url($item->user->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                    src="{{ $item->user->avatar ? asset('storage/'.$item->user->avatar) : asset('assets/img/avatars/1.png') }}"
                                                     alt="foto user">
                                             </div>
                                             <div>
@@ -660,12 +660,12 @@
                     showConfirmButton: false,
                     timer: 2000
                 });
-            } else if (namaTim.length > 25) {
+            } else if (namaTim.length > 50) {
                 e.preventDefault();
                 Swal.fire({
                     icon: 'warning',
                     title: 'Peringatan',
-                    text: 'Nama tim terlalu panjang, maks 25 char',
+                    text: 'Nama tim terlalu panjang, maks 50 char',
                     showConfirmButton: false,
                     timer: 2000
                 });
@@ -706,12 +706,12 @@
                     showConfirmButton: false,
                     timer: 2000
                 });
-            } else if (deskripsi.length > 100) {
+            } else if (deskripsi.length > 500) {
                 e.preventDefault();
                 Swal.fire({
                     icon: 'warning',
                     title: 'Peringatan',
-                    text: 'Deskripsi terlalu panjang, maks 100',
+                    text: 'Deskripsi terlalu panjang, maks 500',
                     showConfirmButton: false,
                     timer: 2000
                 });

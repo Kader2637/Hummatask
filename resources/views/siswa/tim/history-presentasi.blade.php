@@ -140,7 +140,7 @@
                                                 data-bs-placement="top" title="{{ $data->user_approval->username }}"
                                                 class="avatar avatar-sm pull-up">
                                                 <img class="rounded-circle"
-                                                    src="{{ $data->user_approval->avatar ? Storage::url($data->user_approval->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                    src="{{ $data->user_approval->avatar ? asset('storage' . $data->user_approval->avatar) : asset('assets/img/avatars/1.png') }}"
                                                     alt="Avatar">
                                             </div>
                                         @endif

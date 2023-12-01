@@ -40,8 +40,9 @@
             @foreach ($tugasBelum as $data)
                 <div class="col-4">
                     <div class="card text-center mb-3">
-                        <a href="{{route('tim.board', $data->tim_code)}}" class="card-body py-3 px-3" data-eid="in-progress-1" data-comments="12" data-badge-text="UX"
-                            data-badge="success" data-due-date="5 April" data-attachments="4" data-assigned="12.png,5.png"
+                        <a href="{{ route('tim.board', $data->tim_code) }}" class="card-body py-3 px-3"
+                            data-eid="in-progress-1" data-comments="12" data-badge-text="UX" data-badge="success"
+                            data-due-date="5 April" data-attachments="4" data-assigned="12.png,5.png"
                             data-members="Bruce,Clark">
                             <div class="d-flex justify-content-start flex-wrap align-items-center mb-2 pb-1">
                                 <div class="item-badges">
@@ -93,8 +94,9 @@
             @foreach ($tugas as $item)
                 <div class="col-4">
                     <div class="card text-center mb-3">
-                        <a href="{{route('tim.board', $item->tim_code)}}" class="card-body py-3 px-3" data-eid="in-progress-1" data-comments="12" data-badge-text="UX"
-                            data-badge="success" data-due-date="5 April" data-attachments="4" data-assigned="12.png,5.png"
+                        <a href="{{ route('tim.board', $item->tim_code) }}" class="card-body py-3 px-3"
+                            data-eid="in-progress-1" data-comments="12" data-badge-text="UX" data-badge="success"
+                            data-due-date="5 April" data-attachments="4" data-assigned="12.png,5.png"
                             data-members="Bruce,Clark">
                             <div class="d-flex justify-content-start flex-wrap align-items-center mb-2 pb-1">
                                 <div class="item-badges">

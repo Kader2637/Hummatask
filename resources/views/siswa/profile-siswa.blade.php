@@ -23,7 +23,7 @@
                             <div class="flex-shrink-0 mt-n2 mx-sm-0 mx-auto">
                                 <label class="form-label text-white" for="image-input3">
                                     <img id="preview-image3"
-                                        src="{{ $user->avatar ? Storage::url($user->avatar) : asset('assets/img/avatars/pen.png') }}"
+                                        src="{{ $user->avatar ? asset('storage' . $user->avatar) : asset('assets/img/avatars/pen.png') }}"
                                         alt="example placeholder"
                                         style="width: 150px; height: 150px; border-radius: 10px; cursor: pointer; object-fit:cover;"
                                         class="d-block ms-0 ms-sm-4 rounded user-profile-img" />
@@ -184,7 +184,7 @@
                                         <div class="card text-center mb-3 tim-item"
                                             data-status-tim="{{ $item->status_tim }}">
                                             <div class="card-body">
-                                                <img src="{{ Storage::url($item->logo) }}" alt="logo tim"
+                                                <img src="{{ asset('storage' . $item->logo) }}" alt="logo tim"
                                                     class="rounded-circle mb-3"
                                                     style="width: 100px; height: 100px; object-fit: cover">
                                                 <div class="d-flex align-items-center justify-content-center">
@@ -200,7 +200,7 @@
                                                                         title="{{ $anggota->user->username }}"
                                                                         class="avatar avatar-sm pull-up">
                                                                         <img class="rounded-circle"
-                                                                            src="{{ $anggota->user->avatar ? Storage::url($anggota->user->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                                            src="{{ $anggota->user->avatar ? asset('storage' . $anggota->user->avatar) : asset('assets/img/avatars/1.png') }}"
                                                                             alt="Avatar" style="object-fit: cover">
                                                                     </li>
                                                                 @endforeach
@@ -231,7 +231,7 @@
                                                     @endif
                                                 </p>
                                                 <h5 class="card-title">{{ $item->nama }}</h5>
-                                                    <div id="info" class="my-4">
+                                                <div id="info" class="my-4">
                                                     <div class="d-flex justify-content-between">
                                                         <span>Mulai : </span>
                                                         <div>{{ $item->created_at->translatedFormat('l, j F Y') }}
@@ -248,32 +248,31 @@
 
                                                     </div>
                                                 </div>
-                                                <p class="card-text"
-                                                    data-bs-placement="bottom" title="Deadline Project">
+                                                <p class="card-text" data-bs-placement="bottom" title="Deadline Project">
                                                     {{ $item->project->isNotEmpty() && isset($item->project[0]) ? \Carbon\Carbon::parse($item->project[0]->deadline)->translatedFormat('l j F Y') : 'Tim ini belum memiliki project' }}
                                                 </p>
                                                 <a data-bs-toggle="" data-bs-target="#modalDetailProjek"
-                                                class="w-100 btn btn-primary btn-detail-projek"
-                                                data-logo="{{ asset('storage/' . $item->logo) }}"
-                                                data-namatim="{{ $item->nama }}"
-                                                data-status="@if ($item->status_tim == 'solo') Solo Project
+                                                    class="w-100 btn btn-primary btn-detail-projek"
+                                                    data-logo="{{ asset('storage/' . $item->logo) }}"
+                                                    data-namatim="{{ $item->nama }}"
+                                                    data-status="@if ($item->status_tim == 'solo') Solo Project
                                                 @elseif ($item->status_tim == 'pre_mini')
                                                     Pre-Mini Project
                                                 @elseif ($item->status_tim == 'mini')
                                                     Mini Project
                                                 @elseif ($item->status_tim == 'big')
                                                     Big Project @endif"
-                                                data-tema="{{ isset($item->project[0]) && $item->project[0]->tema_id != null ? $item->project[0]->tema->nama_tema : 'belum ada' }}"
-                                                data-tglmulai="{{ $item->created_at->translatedFormat('l, j F Y') }}"
-                                                data-deadline="{{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}"
-                                                data-anggota="{{ json_encode($item->anggota_profile()) }}"
-                                                data-deskripsi="{{ $item->deskripsi }}"
-                                                data-dayleft="{{ $dayLeft }}"
-                                                data-total-deadline="{{ $totalDeadline }}"
-                                                data-progress="{{ $progressPercentage }}"
-                                                data-repo="{{ $item->repository }}"><span
-                                                    class="text-white">Detail</span>
-                                            </a>
+                                                    data-tema="{{ isset($item->project[0]) && $item->project[0]->tema_id != null ? $item->project[0]->tema->nama_tema : 'belum ada' }}"
+                                                    data-tglmulai="{{ $item->created_at->translatedFormat('l, j F Y') }}"
+                                                    data-deadline="{{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}"
+                                                    data-anggota="{{ json_encode($item->anggota_profile()) }}"
+                                                    data-deskripsi="{{ $item->deskripsi }}"
+                                                    data-dayleft="{{ $dayLeft }}"
+                                                    data-total-deadline="{{ $totalDeadline }}"
+                                                    data-progress="{{ $progressPercentage }}"
+                                                    data-repo="{{ $item->repository }}"><span
+                                                        class="text-white">Detail</span>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
