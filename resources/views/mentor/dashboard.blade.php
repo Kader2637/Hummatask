@@ -27,7 +27,8 @@
                         @foreach ($presentasi as $i => $item)
                             <tr>
                                 <td>{{ $no++ }}</td>
-                                <td class=""><img src="{{ Storage::url($item->tim->logo) }}" alt=""
+                                <td class=""><img src="{{ asset('storage/' . $item->tim->logo) }}"
+                                    alt=""
                                         style="width: 40px; height: 40px; ;border-radius:50%; margin-right:5px;">
                                     {{ $item->tim->nama }}
                                 </td>

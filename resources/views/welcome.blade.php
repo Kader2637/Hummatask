@@ -325,7 +325,7 @@
                                                     <div class="card h-100">
                                                         <div class="card-body text-body d-flex flex-column justify-content-between">
                                                             <div class="mb-auto mt-auto">
-                                                                <img src="{{ asset('storage/img/' . $item->foto) }}"
+                                                                <img src="{{ rage/img/' . $item->foto) }}"
                                                                     alt="client logo" class="client-logo img-fluid"
                                                                     style="max-width: 95%;" />
                                                             </div>

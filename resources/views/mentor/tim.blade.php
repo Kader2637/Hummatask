@@ -54,7 +54,7 @@
                 <div class="col-md-6 col-lg-3">
                     <div class="card text-center mb-3 tim-item" data-status-tim="{{ $tim->status_tim }}">
                         <div class="card-body">
-                            <img src="{{ Storage::url($tim->logo) }}" alt="logo tim" class="rounded-circle mb-3"
+                            <img src="{{ asset('storage/' . $tim->logo) }}" alt="logo tim" class="rounded-circle mb-3"
                                 style="width: 100px; height: 100px; object-fit: cover">
                             <div class="d-flex align-items-center justify-content-center">
                                 <div class="d-flex align-items-center pt-1 mb-3 justify-content-center">
@@ -65,7 +65,7 @@
                                                     data-bs-placement="bottom" title="{{ $anggota->user->username }}"
                                                     class="avatar avatar-sm pull-up">
                                                     <img class="rounded-circle"
-                                                        src="{{ $anggota->user->avatar ? Storage::url($anggota->user->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                        src="{{ $anggota->user->avatar ? asset('storage/' . $anggota->user->avatar) : asset('assets/img/avatars/1.png') }}"
                                                         alt="Avatar" style="object-fit: cover">
                                                 </li>
                                             @endforeach
