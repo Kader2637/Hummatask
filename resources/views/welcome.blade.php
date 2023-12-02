@@ -42,6 +42,7 @@
     <!-- Page Styles -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/ui-carousel.css') }}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
@@ -59,7 +60,7 @@
                     </button>
                     <a href="" class="app-brand-link">
                         <span class="app-brand-logo demo">
-                            <img src="{{ asset('assets/img/hummatask.png') }}" width="50" height="40"
+                            <img src="{{ asset('assets/img/hummatask.jpeg') }}" width="50" height="40"
                                 alt="Loader Image">
                         </span>
                         <span class="app-brand-text demo menu-text fw-bold ms-2 ps-1" style="color:#7367F0;">Humma<span
@@ -69,7 +70,7 @@
                 <div class="collapse navbar-collapse landing-nav-menu" id="navbarSupportedContent">
                     <button class="navbar-toggler border-0 text-heading position-absolute end-0 top-0 scaleX-n1-rtl"
                         type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-  label="Toggle navigation">
                         <i class="ti ti-x ti-sm"></i>
                     </button>
                     <ul class="navbar-nav me-auto">
@@ -120,7 +121,7 @@
                     </li>
                     <li style="color:#7367F0;">
                         <a href="{{ route('login') }}" class="btn btn-primary"><span
-                                class="tf-icons ti ti-login scaleX-n1-rtl me-md-1"></span><span
+                                class="tf-icons fa-solid fa-right-to-bracket scaleX-n1-rtl me-md-1"></span><span
                                 class="d-none d-md-block">Login</span></a>
                     </li>
                 </ul>
@@ -325,7 +326,7 @@
                                                     <div class="card h-100">
                                                         <div class="card-body text-body d-flex flex-column justify-content-between">
                                                             <div class="mb-auto mt-auto">
-                                                                <img src="{{ rage/img/' . $item->foto) }}"
+                                                                <img src="{{ asset('storage/img/' . $item->foto) }}"
                                                                     alt="client logo" class="client-logo img-fluid"
                                                                     style="max-width: 95%;" />
                                                             </div>
@@ -349,45 +350,47 @@
 
         <section id="landingPricing" class="section-py">
             <!-- Gallery effect-->
-            <div class="col-12">
-                <h3 class="text-center mb-1"><span class="section-title" style="color: blue">Galeri </span>Hummasoft</h3>
-                <div id="swiper-gallery mt-2">
-                    @if ($galery->isEmpty())
-                        <div class="justify-content-center" style="display: flex;">
-                            <img src="{{ asset('assets/img/illustrations/noData.png') }}"
-                                alt="page-misc-under-maintenance" width="500">
-                        </div>
-                    @else
-                        <div class="swiper gallery-top">
-                            <div class="swiper-wrapper mt-3">
-                                @forelse($galery as $item)
-                                    <div class="swiper-slide rounded"
-                                        style="background-image:url({{ asset('storage/img/' . $item->foto) }});">
-                                        <h4 class="fw-lighter fs-4 blur-text" style="color: white ;">{{ $item->judul }}
-                                        </h4>
-                                    </div>
-                                @empty
-                                    <!-- Tidak ada data -->
-                                @endforelse
+            <div class="container-fluid">
+                <div class="col-12">
+                    <h3 class="text-center mb-1"><span class="section-title" style="color: blue">Galeri </span>Hummasoft</h3>
+                    <div id="swiper-gallery mt-2">
+                        @if ($galery->isEmpty())
+                            <div class="justify-content-center" style="display: flex;">
+                                <img src="{{ asset('assets/img/illustrations/noData.png') }}"
+                                    alt="page-misc-under-maintenance" width="500">
                             </div>
-                            <!-- Add Arrows -->
-                            <div class="swiper-button-next"></div>
-                            <div class="swiper-button-prev"></div>
-                        </div>
-                        <div class="swiper gallery-thumbs mt-3">
-                            <div class="swiper-wrapper">
-                                @forelse($galery as $item)
-                                    <div class="swiper-slide rounded"
-                                        style="background-image:url({{ asset('storage/img/' . $item->foto) }})">
-                                        <h4 class="fw-lighter fs-5 blur-text" style="color: white ;">{{ $item->judul }}
-                                        </h4>
-                                    </div>
-                                @empty
-                                    <!-- Tidak ada data -->
-                                @endforelse
+                        @else
+                            <div class="swiper gallery-top">
+                                <div class="swiper-wrapper mt-3">
+                                    @forelse($galery as $item)
+                                        <div class="swiper-slide rounded"
+                                            style="background-image:url({{ asset('storage/img/' . $item->foto) }});">
+                                            <h4 class="fw-lighter fs-4 blur-text" style="color: white ;">{{ $item->judul }}
+                                            </h4>
+                                        </div>
+                                    @empty
+                                        <!-- Tidak ada data -->
+                                    @endforelse
+                                </div>
+                                <!-- Add Arrows -->
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
                             </div>
-                        </div>
-                    @endif
+                            <div class="swiper gallery-thumbs mt-3">
+                                <div class="swiper-wrapper">
+                                    @forelse($galery as $item)
+                                        <div class="swiper-slide rounded"
+                                            style="background-image:url({{ asset('storage/img/' . $item->foto) }})">
+                                            <h4 class="fw-lighter fs-5 blur-text" style="color: white ;">{{ $item->judul }}
+                                            </h4>
+                                        </div>
+                                    @empty
+                                        <!-- Tidak ada data -->
+                                    @endforelse
+                                </div>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
         </section>
