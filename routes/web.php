@@ -3,7 +3,8 @@
         use App\Http\Controllers\authController;
         use App\Http\Controllers\catatanController;
         use App\Http\Controllers\KetuaMagangController;
-        use App\Http\Controllers\mentorController;
+use App\Http\Controllers\LabelController;
+use App\Http\Controllers\mentorController;
         use App\Http\Controllers\NotifikasiController;
         use App\Http\Controllers\PengajuanProjekController;
         use App\Http\Controllers\PengajuanTimController;
@@ -89,6 +90,13 @@
 
                 Route::get('statistik/data-kontribusi/{codeTim}/{uuid}', [StatistikTimController::class, 'getDataKontribusi']);
                 Route::get('statistik/data-progres/{codeTim}', [StatistikTimController::class, 'getProgres']);
+
+                // label tugas
+                Route::post('tambah-label',[LabelController::class,'createLabel'])->name('label.create');
+                Route::get('board/ambil-labels/{tim_id}',[LabelController::class,'getLabels']);
+                Route::delete('board/delete-label/{label_id}',[LabelController::class,'deleteLabel']);
+                Route::put("board/edit-label",[LabelController::class,"editLabel"])->name("label.edit");
+
             });
         });
 

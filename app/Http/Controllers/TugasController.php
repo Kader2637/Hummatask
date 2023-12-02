@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comments;
+use App\Models\Label;
+use App\Models\LabelTugas;
 use App\Models\Notifikasi;
 use App\Models\Penugasan;
 use App\Models\Tim;
@@ -43,13 +45,15 @@ class TugasController extends Controller
             return response()->json(['error' => 'Tim tidak dapat ditemukan']);
         }
 
-        $tugas = $tim->tugas()->with('comments.user', 'user')->get();
+        $tugas = $tim->tugas()->with('comments.user', 'user','label')->get();
         $dataTugas = [
             "tugas_baru" =>  $tugas->where('status_tugas', 'tugas_baru'),
             "tugas_dikerjakan" => $tugas->where('status_tugas', 'dikerjakan'),
             "tugas_direvisi" => $tugas->where('status_tugas', 'direvisi'),
             "tugas_selesai" => $tugas->where('status_tugas', 'selesai'),
         ];
+
+        // dd($tugas);
 
         return response()->json([
             "tugas" => $tugas,
@@ -137,7 +141,7 @@ class TugasController extends Controller
 
 
         try {
-            $tugass = Tugas::with(['comments.user', 'user', 'tim.user'=> function($query){
+            $tugass = Tugas::with(['comments.user','label', 'user', 'tim.user'=> function($query){
                 $query->wherePivot('status','active');
             }])->where('code', $codeTugas)->first();
 
@@ -152,10 +156,15 @@ class TugasController extends Controller
                 }
             }
 
+            $label = Label::where('tim_id',$tugass->tim_id)->get();
+
             $tugas = [
                 "tugas" => $tugass,
-                "komentarTerbuat" => $jadwal
+                "komentarTerbuat" => $jadwal,
+                "labels" => $label,
             ];
+
+            // dd($label);
 
             return response()->json(
                 $tugas
@@ -169,6 +178,7 @@ class TugasController extends Controller
     {
         $tugas = Tugas::where('code', $request->codeTugas)->first();
 
+        // dd($request->labels);
 
 
         $tim = $tugas->tim;
@@ -219,6 +229,8 @@ class TugasController extends Controller
             }
         }
 
+
+
         if ($tugas->tim->status_tim !== "solo") {
             $penugasan = $request->penugasan;
             $currentPenugasan = $tugas->user->pluck('uuid')->toArray();
@@ -257,11 +269,40 @@ class TugasController extends Controller
                     $penugasanTb = Penugasan::where('tugas_id', $tugas->id)->where('user_id', $user->id)->delete();
                 }
             }
+
+
+
+
+
+
         }
 
 
 
         $tugas->save();
+
+
+        $labels = $request->labels;
+        $currentLabels = $tugas->label->pluck('id')->toArray();
+
+        $labelToAdd = array_diff($labels, $currentLabels);
+        $labelToRemove = array_diff($currentLabels, $labels);
+
+        foreach ($labelToRemove as $data) {
+           LabelTugas::where('tugas_id', $tugas->id)->where('label_id', $data)->delete();
+        }
+
+        foreach($labelToAdd as $data )
+        {
+            $label = new LabelTugas;
+            $label->tugas_id = $tugas->id;
+            $label->label_id = $data;
+            $label->save();
+        }
+
+
+
+
         return response()->json("sukses");
     }
 

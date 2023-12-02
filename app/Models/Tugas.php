@@ -36,4 +36,9 @@ class Tugas extends Model
         return $this->belongsTo(Penugasan::class);
     }
 
+    public function label():BelongsToMany
+    {
+        return $this->belongsToMany(Label::class,'label_tugas');
+    }
+
 }

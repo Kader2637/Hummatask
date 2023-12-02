@@ -24,6 +24,10 @@
                                 font-family: 'Poppins', sans-serif;
                             }
 
+                            .hide-sroll *::-webkit-scrollbar {
+                                display: none;
+                            }
+
                             .form-komentar {
                                 position: absolute;
                                 bottom: 0px;
@@ -33,109 +37,254 @@
 
                             @media screen and (max-width: 460px){
                                 .card-status-tugas{
-                                    width: 50vw !important;
+                                    width: 100% !important;
                                 }
 
                                 #tugas_baru .card{
-                                    width: 50vw !important;
+                                    width: 100% !important;
                                 }
                                 #dikerjakan .card{
-                                    width: 50vw !important;
+                                    width: 100% !important;
                                 }
                                 #revisi .card{
-                                    width: 50vw !important;
+                                    width: 100% !important;
                                 }
                                 #selesai .card{
-                                    width: 50vw !important;
+                                    width: 100% !important;
                                 }
+                            }
+
+
+                            .btn-tambah-labels  {
+                                height: 40px;
+                                width: 40px;
+                                border-radius: 100%;
                             }
 
                         </style>
                     @endsection
 
                     @section('content')
-                        <div style="height: 80vh" class="container-fluid mt-2">
-                            <div class="d-flex mt-3 mb-0 overflow-auto " style="gap:50px; height: 83vh">
-                                <div style="width:50vw" class="">
-                                    <div style="width:25vw" class="card card-status-tugas">
-                                        <div class="card-body p-2 py-2 row">
-                                            <div class="col-8 d-flex align-items-center">
-                                                <span style="font-size: 15px" class="">Tugas Baru</span>
-                                            </div>
-                                            <div class="col-4 d-flex justify-content-end cursor-pointer">
-                                                <svg onclick="showForm('tambahTugas')" xmlns="http://www.w3.org/2000/svg"
-                                                    width="20" height="20" viewBox="0 0 1024 1024">
-                                                    <path fill="currentColor"
-                                                        d="M352 480h320a32 32 0 1 1 0 64H352a32 32 0 0 1 0-64z" />
-                                                    <path fill="currentColor"
-                                                        d="M480 672V352a32 32 0 1 1 64 0v320a32 32 0 0 1-64 0z" />
-                                                    <path fill="currentColor"
-                                                        d="M512 896a384 384 0 1 0 0-768a384 384 0 0 0 0 768zm0 64a448 448 0 1 1 0-896a448 448 0 0 1 0 896z" />
-                                                </svg>
+
+
+                    <div class="modal fade" id="modalEditLabel" tabindex="-1" style="display: none;" aria-hidden="true">
+                        <div class="modal-dialog modal-md" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel2ty">Edit Labels</h5>
+                              <button type="button" onclick="closeModalEditLabel()" class="btn-close" ></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="col-12">
+                                    <div class="d-flex" style="margin-top: 10px;background-color: gray;width: 100%;height: 60px;border-radius: 10px;margin-bottom: 10px;">
+                                        <span class="badge m-auto" id="edit-preview-label">
+                                            Label
+                                        </span>
+                                    </div>
+                                    <form id="formEditLabel" method="post">
+                                        @csrf
+
+                                        <div class="row">
+                                            <div class="col mb-3">
+                                            <label for="Text" class="form-label">Text</label>
+                                            <input type="text" id="editText" class="form-control" value="Label" placeholder="Enter text">
                                             </div>
                                         </div>
-                                        <div class="row p-3 d-none" id="tambahTugas">
-                                            <div class="col-12">
-                                                <form id="formTambahTugas" method="post">
-                                                    @csrf
-                                                    <label for="tugas">Nama Tugas</label>
-                                                    <input type="text" class="form-control" id="tugas"
-                                                        name="tugas">
-                                                    <div class="d-flex justify-content-end mt-3">
-                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <div class="row g-2">
+                                            <div class="mb-3 col-6">
+                                            <label for="background-color-input" class="col-md-2 col-form-label">Background</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" type="color" value="#666EE8" id="edit-background-color-input">
+                                            </div>
+                                            </div>
+                                            <div class="mb-3 col">
+                                            <label for="text-color-input" class="col-md-2 col-form-label">Text</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" type="color" value="#FFFFFF" id="edit-text-color-input">
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-edit-submit-tambah-label btn-primary waves-effect waves-light w-100">Save changes</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                          </div>
+                        </div>
+                    </div>
+
+
+                    <div class="modal fade" id="tambahLabel" tabindex="-1" style="display: none;" aria-hidden="true">
+                        <div class="modal-dialog modal-md" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel2">Labels</h5>
+                              <button type="button" onclick="bukaCanvasEditTugas()" class="btn-close" ></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="col-12">
+                                    <div class="nav-align-top nav-tabs-shadow mb-4">
+                                      <ul class="nav nav-tabs nav-fill" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                          <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-justified-home" aria-controls="navs-justified-home" aria-selected="true">Tambah</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                          <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-justified-profile" aria-controls="navs-justified-profile" aria-selected="false" tabindex="-1">Daftar</button>
+                                        </li>
+                                      </ul>
+                                      <div class="tab-content" style="box-shadow: 0px 0px 0px">
+                                        <div class="tab-pane fade active show" id="navs-justified-home" role="tabpanel">
+                                            <div class="d-flex" style="margin-top: 10px;background-color: gray;width: 100%;height: 60px;border-radius: 10px;margin-bottom: 10px;">
+                                                <span class="badge m-auto" id="preview-label">
+                                                    Label
+                                                </span>
+                                            </div>
+                                            <form id="formTambahLabel" method="post">
+                                                @csrf
+                                                <div class="row">
+                                                    <div class="col mb-3">
+                                                    <label for="Text" class="form-label">Text</label>
+                                                    <input type="text" id="Text" class="form-control" value="Label" placeholder="Enter text">
                                                     </div>
-                                                </form>
+                                                </div>
+                                                <div class="row g-2">
+                                                    <div class="mb-3 col-6">
+                                                    <label for="background-color-input" class="col-md-2 col-form-label">Background</label>
+                                                    <div class="col-md-10">
+                                                        <input class="form-control" type="color" value="#666EE8" id="background-color-input">
+                                                    </div>
+                                                    </div>
+                                                    <div class="mb-3 col">
+                                                    <label for="text-color-input" class="col-md-2 col-form-label">Text</label>
+                                                    <div class="col-md-10">
+                                                        <input class="form-control" type="color" value="#FFFFFF" id="text-color-input">
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="btn btn-submit-tambah-label btn-primary waves-effect waves-light w-100">Save changes</button>
+                                            </form>
+                                        </div>
+                                        <div class="tab-pane fade" id="navs-justified-profile" role="tabpanel">
+                                            <div class="card">
+                                                <div class="card-datatable table-responsive p-4">
+                                                    <table id="daftarLabels" class="dt-responsive table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">NO</th>
+                                                                <th scope="col">LABEL</th>
+                                                                <th scope="col">AKSI</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
+                                      </div>
                                     </div>
-                                    <div class="col-12 d-flex justify-content-center">
-                                        <div class="row d-flex flex-column justify-content-center align-items-center w-100"
-                                            id="tugas_baru">
+                                  </div>
+                            </div>
 
+                          </div>
+                        </div>
+                    </div>
+
+
+
+
+                        <div style="height: 80vh" class="container-fluid mt-2">
+                            <div class="d-flex mt-3 mb-0  row hide-sroll" style="height: 83vh">
+                                <div style="" class="col-lg-3 col-md-6 col-12 py-2   ">
+                                    <div style="max-height: 80vh; overflow:auto; overflow-x:hidden" class="bg-secondary p-2  rounded">
+                                        <div style="width:100%" class="card card-status-tugas">
+                                            <div class="card-body p-2 py-2 row justify-content-between">
+                                                <span class="col-8">Tugas baru</span>
+                                                <div class="col-4 d-flex justify-content-end cursor-pointer">
+                                                    <svg onclick="showForm('tambahTugas')" xmlns="http://www.w3.org/2000/svg"
+                                                        width="20" height="20" viewBox="0 0 1024 1024">
+                                                        <path fill="currentColor"
+                                                            d="M352 480h320a32 32 0 1 1 0 64H352a32 32 0 0 1 0-64z" />
+                                                        <path fill="currentColor"
+                                                            d="M480 672V352a32 32 0 1 1 64 0v320a32 32 0 0 1-64 0z" />
+                                                        <path fill="currentColor"
+                                                            d="M512 896a384 384 0 1 0 0-768a384 384 0 0 0 0 768zm0 64a448 448 0 1 1 0-896a448 448 0 0 1 0 896z" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <div class="row p-3 d-none" id="tambahTugas">
+                                                <div class="col-12">
+                                                    <form id="formTambahTugas" method="post">
+                                                        @csrf
+                                                        <label for="tugas">Nama Tugas</label>
+                                                        <input type="text" class="form-control" id="tugas"
+                                                            name="tugas">
+                                                        <div class="d-flex justify-content-end mt-3">
+                                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-12 d-flex justify-content-center">
+                                            <div class="row d-flex flex-column justify-content-center align-items-center w-100"
+                                                id="tugas_baru">
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div style="width:50vw" class="  ">
-                                    <div style="width:25vw" class="card card-status-tugas">
-                                        <div class="card-body p-2 py-2 row">
-                                            <div class="col-8 d-flex align-items-center">
-                                                <span style="font-size: 15px" class="">Dikerjakan</span>
+                                <div style="" class="col-lg-3 col-md-6 col-12 py-2">
+                                    <div style="max-height: 80vh; overflow:auto; overflow-x:hidden" class="bg-secondary p-2  rounded">
+                                        <div style="width:100%" class="card card-status-tugas">
+                                            <div class="card-body p-2 py-2 row">
+                                                <div class="col-8 d-flex align-items-center position-sticky top-0">
+                                                    <span style="font-size: 15px" class="">Dikerjakan</span>
+                                                </div>
                                             </div>
+
                                         </div>
-                                    </div>
-                                    <div class="col-12 d-flex justify-content-center">
-                                        <div class="row row d-flex flex-column justify-content-center align-items-center w-100"
-                                            id="dikerjakan">
+                                        <div class="col-12 d-flex justify-content-center">
+                                            <div class="row row d-flex flex-column justify-content-center align-items-center w-100"
+                                                id="dikerjakan">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div style="width:50vw" class=" ">
-                                    <div style="width:25vw" class="card card-status-tugas">
-                                        <div class="card-body p-2 py-2 row">
-                                            <div class="col-8 d-flex align-items-center">
-                                                <span style="font-size: 15px" class="">Direvisi</span>
+                                <div style="" class="col-lg-3 col-md-6 col-12 py-2">
+                                    <div style="max-height: 80vh; overflow:auto; overflow-x:hidden" class="bg-secondary p-2  rounded">
+                                        <div style="width:100%" class="card card-status-tugas">
+
+                                            <div class="card-body p-2 py-2 row">
+                                                <div class="col-8 d-flex align-items-center position-sticky top-0">
+                                                    <span style="font-size: 15px" class="">Direvisi</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-12 d-flex justify-content-center">
-                                        <div class="w-100 row d-flex flex-column justify-content-center align-items-center"
-                                            id="revisi">
+                                        <div class="col-12 d-flex justify-content-center">
+                                            <div class="w-100 row d-flex flex-column justify-content-center align-items-center"
+                                                id="revisi">
 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div style="width:50vw" class=" ">
-                                    <div style="width:25vw" class="card card-status-tugas">
-                                        <div class="card-body p-2 py-2 row">
-                                            <div class="col-8 d-flex align-items-center">
-                                                <span style="font-size: 15px" class="">Selesai</span>
+                                <div style="" class="col-lg-3 col-md-6 col-12 py-2    ">
+                                    <div style="max-height: 80vh; overflow:auto; overflow-x:hidden" class="bg-secondary p-2  rounded">
+                                        <div style="width:100%" class="card card-status-tugas">
+                                            <div class="card-body p-2 py-2 row">
+                                                <div class="col-8 d-flex align-items-center position-sticky top-0">
+                                                    <span style="font-size: 15px" class="">Selesai</span>
+                                                </div>
                                             </div>
+
                                         </div>
-                                    </div>
-                                    <div class="col-12 d-flex justify-content-center">
-                                        <div class="row d-flex flex-column justify-content-center align-items-center w-100"
-                                            id="selesai">
+                                        <div class="col-12 d-flex justify-content-center">
+                                            <div class="row d-flex flex-column justify-content-center align-items-center w-100"
+                                                id="selesai">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -148,7 +297,7 @@
                         <div class="offcanvas offcanvas-end kanban-update-item-sidebar" id="editTugasBar">
                             <div class="offcanvas-header border-bottom">
                                 <h5 class="offcanvas-title">Edit Task</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                <button onclick="closeCanvasEditTugas()" type="button" class="btn-close" data-bs-dismiss="offcanvas"
                                     aria-label="Close"></button>
                             </div>
                             <div class="offcanvas-body">
@@ -210,6 +359,24 @@
                                                 </select>
                                             </div>
                                             <div class="mb-3">
+                                                <label class a="form-label" for="labels">Labels</label>
+                                                <div class="d-flex justify-content-between align-items-center w-100 gap-2">
+                                                    <div class="select2-primary w-100" data-select2-id="92">
+                                                        <div class="position-relative" data-select2-id="91">
+                                                        </div>
+                                                        <select name="labels[]" id="labels"
+                                                            class="select2 form-select select2-hidden-accessible"
+                                                            multiple="" data-select2-id="labels"
+                                                            tabindex="-1" aria-hidden="true">
+
+                                                        </select>
+                                                    </div>
+                                                    <button data-bs-toggle="modal" data-bs-target="#tambahLabel" type="button" class="btn-tambah-labels btn btn-primary text-white d-flex justify-content-center align-items-center rounded-circle bg-primary">
+                                                        +
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
                                                 @if ($tim->status_tim !== 'solo')
                                                     <div class="col-md-12 mb-4" data-select2-id="93">
                                                         <label for="select2Primary" class="form-label">Tugas untuk</label>
@@ -225,8 +392,8 @@
                                                             </select>
                                                         </div>
                                                     </div>
+                                                @endif
                                             </div>
-                                            @endif
                                             <div class="d-flex flex-wrap" style="z-index: 1000000;">
                                                 <button type="submit" class="btn btn-primary me-3"
                                                     data-bs-dismiss="offcanvas">
@@ -331,9 +498,330 @@
                         <script src="{{ asset('assets/js/extended-ui-perfect-scrollbar.js') }}"></script>
                         <script src="{{ asset('assets/js/ui-popover.js') }}"></script>
                         <script src="{{ asset('utils/handleSuccessResponse.js') }}"></script>
+                        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+                        <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+                        <script src="{{ asset('utils/hadleLabel.js') }}"></script>
 
                         <script>
                             // let dataEmpty
+
+                            var editPreviewLabel = $('#edit-preview-label');
+                            var editInputText = $('#editText');
+                            var editBackgroundColorInput = $('#edit-background-color-input');
+                            var editTextColorInput = $('#edit-text-color-input');
+
+
+                            $(".btn-submit-tambah-label").click(function () {
+                                var text = $('#Text').val();
+                                var warna_bg = $('#background-color-input').val();
+                                var warna_text = $('#text-color-input').val();
+                                const tim_id = "{{ $tim->id }}";
+
+                                axios.post("{{ route('label.create') }}",{text,warna_bg,warna_text,tim_id})
+                                .then((res) => {
+                                    getLabels()
+                                    var text = $('#Text').val("Label");
+                                    var warna_bg = $('#background-color-input').val("#666EE8");
+                                    var warna_text = $('#text-color-input').val("#FFFFFF");
+                                    updatePreview()
+                                    Swal.fire({
+                                        icon: "success",
+                                        title : "Berhasil!",
+                                        text: res.data.success,
+                                        showConfirmButton : false,
+                                        timer : 2500,
+                                    })
+                                })
+                                .catch((err) => {
+                                    console.log(err);
+                                    Swal.fire({
+                                        icon: "error",
+                                        title : "Error!",
+                                        text: ( typeof err.response.data.message === "undefined" ) ? err : err.response.data.message,
+                                        showConfirmButton : false,
+                                        timer : 2500,
+                                    })
+                                })
+                             })
+
+                             $(".btn-edit-submit-tambah-label").click(function () {
+                                var text = $('#editText').val();
+                                var warna_bg = $('#edit-background-color-input').val();
+                                var warna_text = $('#edit-text-color-input').val();
+                                let label_id;
+
+                                label_id = $(this).attr("data-label_id");
+                                console.log(label_id);
+                                axios.put("{{ route('label.edit') }}",{text,warna_bg,warna_text,label_id})
+                                .then((res) => {
+                                    getLabels()
+                                    var text = $('#Text').val("Label");
+                                    var warna_bg = $('#background-color-input').val("#666EE8");
+                                    var warna_text = $('#text-color-input').val("#FFFFFF");
+                                    editUpdatePreview()
+                                    Swal.fire({
+                                        icon: "success",
+                                        title : "Berhasil!",
+                                        text: res.data.success,
+                                        showConfirmButton : false,
+                                        timer : 2500,
+                                    })
+                                     label_id = 0;
+
+                                     $("#modalEditLabel").hide();
+                                     $("#tambahLabel").show();
+                                     $(".modal-backdrop").empty()
+
+                                     $(this).removeAttr("data-label_id")
+                                })
+                                .catch((err) => {
+                                    console.log(err);
+                                    Swal.fire({
+                                        icon: "error",
+                                        title : "Error!",
+                                        text: ( typeof err.response.data.message === "undefined" ) ? err : err.response.data.message,
+                                        showConfirmButton : false,
+                                        timer : 2500,
+                                    })
+                                })
+                             })
+
+
+
+                            // Fungsi untuk mengupdate tampilan preview
+                            function editUpdatePreview() {
+                            let text = editInputText.val();
+                            let backgroundColor = editBackgroundColorInput.val();
+                            let textColor = editTextColorInput.val();
+
+                            editPreviewLabel.text(text);
+                            editPreviewLabel.css('background-color', backgroundColor);
+                            editPreviewLabel.css('color', textColor);
+                            }
+
+                            $('#editText, #edit-background-color-input, #edit-text-color-input').on('input', function() {
+                            let text = $('#editText').val();
+                            let backgroundColor = $('#edit-background-color-input').val();
+                            let textColor = $('#edit-text-color-input').val();
+
+                            // Mengupdate teks, warna latar belakang, dan warna teks pada live preview
+                            $('#edit-preview-label').text(text);
+                            $('#edit-preview-label').css('background-color', backgroundColor);
+                            $('#edit-preview-label').css('color', textColor);
+                            });
+
+
+                            function editLabel(label_id,label_text,warna_bg,warna_text){
+                             console.log(label_id);
+                             $(".btn-edit-submit-tambah-label").removeAttr('data-label_id');
+                                $("#tambahLabel").hide()
+                                $("#editTugasBar").hide()
+                                $("#modalEditLabel").addClass("show").css("display","block")
+
+                                $("#editText").val(label_text);
+                                $("#edit-background-color-input").val(warna_bg);
+                                $("#edit-text-color-input").val(warna_text);
+
+                                $(".btn-edit-submit-tambah-label").attr('data-label_id',label_id);
+                                editUpdatePreview()
+                            }
+
+                            function closeModalEditLabel()
+                            {
+                                $("#tambahLabel").show()
+                                // $("#editTugasBar").hide()
+                                $("#modalEditLabel").removeClass("show").css("display","none")
+
+                            }
+
+
+
+
+
+
+                            function deleteLabel(label_id){
+                                Swal.fire({
+                                    title: "Kamu Yakin?",
+                                    text: "Data yang kamu hapus tidak bisa dikembalikan",
+                                    icon: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#3085d6",
+                                    cancelButtonColor: "#d33",
+                                    confirmButtonText: "Hapus!"
+                                    }).then((result) => {
+
+
+                                    if (result.isConfirmed) {
+
+
+                                        axios.delete("delete-label/"+label_id)
+                                .then((res) => {
+                                    getLabels()
+                                    $(".tr-label-"+label_id).addClass("d-none");
+                                })
+                                .catch((err) => {
+                                    console.log(err);
+                                })
+
+                                        Swal.fire({
+                                        title: "Deleted!",
+                                        text: "Datamu berhasil dihapus",
+                                        icon: "success"
+                                        });
+                                    }
+
+                                    });
+                            }
+
+
+
+                            function getLabels(){
+
+                                const tim_id = "{{ $tim->id }}";
+axios.get("ambil-labels/"+tim_id)
+.then((res) => {
+
+    // if ($.fn.DataTable.isDataTable('#daftarLabels')) {
+        // $("#daftarLabels").destroy();
+    // }
+
+    const data = res.data;
+    // $('#daftarLabels').DataTable().clear();
+    $.each(data,(index,item)=>{
+
+        let label = `<span class="badge" style="background-color: ${item.warna_bg}; color: ${item.warna_text}">${item.text}</span>`;
+
+        let row =
+        `
+        <tr class="tr-label-${item.id}">
+            <td>${index+1}</td>
+            <td>
+                ${label}
+            </td>
+            <td>
+                <button onclick="deleteLabel('${item.id}')" class="btn border-none btn-delete-label bg-transparent">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/></svg>
+                </button>
+                <button onclick="editLabel('${item.id}','${item.text}','${item.warna_bg}','${item.warna_text}')" class="btn border-none btn-delete-label bg-transparent">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M10 14v-2.615l8.944-8.945q.166-.165.348-.228q.183-.064.385-.064q.188 0 .368.064q.18.063.326.21L21.483 3.5q.16.165.242.364q.083.2.083.401t-.06.382q-.061.18-.227.345L12.52 14H10Zm9.465-8.354l1.348-1.361l-1.111-1.17l-1.387 1.381l1.15 1.15ZM5.615 20q-.69 0-1.152-.462Q4 19.075 4 18.385V5.615q0-.69.463-1.152Q4.925 4 5.615 4h8.387l-6.387 6.387v5.998h5.897L20 9.896v8.489q0 .69-.462 1.152q-.463.463-1.153.463H5.615Z"/></svg>
+                </button>
+            </td>
+        </tr>
+        `
+        $("#daftarLabels tbody").append(row)
+        // $("#daftarLabels").DataTable().row.add($(row)).draw();
+    })
+
+    // Initialize DataTable only if it hasn't been initialized before
+
+    if (!$.fn.DataTable.isDataTable('#daftarLabels')) {
+        $('#daftarLabels').DataTable({
+            "lengthMenu": [
+                [5, 10, 15, -1],
+                [5, 10, 15, "All"]
+            ],
+            "pageLength": 5,
+            "order": [],
+            "ordering": false,
+            pagingType: "simple_numbers",
+            "language": {
+                "sProcessing": "Sedang memproses...",
+                "sLengthMenu": "Tampilkan _MENU_ data",
+                "sZeroRecords": "Tidak ditemukan Data",
+                "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                "sInfoEmpty": " 0 sampai 0 dari 0 data",
+                "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
+                "sInfoPostFix": "",
+                "sSearch": "Cari :",
+                "sUrl": "",
+                "oPaginate": {
+                    "sFirst": "Pertama",
+                    "sPrevious": "&#8592;",
+                    "sNext": "&#8594;",
+                    "sLast": "Terakhir"
+                }
+            },
+
+            dom: 'lrtip',
+        });
+    }
+})
+.catch((err) => {
+    console.log(err);
+});
+
+                            }
+
+
+
+
+
+                            $(".btn-submit-tambah-label").click(function () {
+                                var text = $('#Text').val();
+                                var warna_bg = $('#background-color-input').val();
+                                var warna_text = $('#text-color-input').val();
+                                const tim_id = "{{ $tim->id }}";
+
+                                axios.post("{{ route('label.create') }}",{text,warna_bg,warna_text,tim_id})
+                                .then((res) => {
+                                    var text = $('#Text').val("Label");
+                                    var warna_bg = $('#background-color-input').val("#666EE8");
+                                    var warna_text = $('#text-color-input').val("#FFFFFF");
+                                    updatePreview()
+                                    Swal.fire({
+                                        icon: "success",
+                                        title : "Berhasil!",
+                                        text: res.data.success,
+                                        showConfirmButton : false,
+                                        timer : 2500,
+                                    })
+                                    getLabels()
+                                })
+                                .catch((err) => {
+                                    console.log(err);
+                                    Swal.fire({
+                                        icon: "error",
+                                        title : "Error!",
+                                        text: ( typeof err.response.data.message === "undefined" ) ? err : err.response.data.message,
+                                        showConfirmButton : false,
+                                        timer : 2500,
+                                    })
+                                })
+                             })
+
+
+
+                            var previewLabel = $('#preview-label');
+                            var inputText = $('#Text');
+                            var backgroundColorInput = $('#background-color-input');
+                            var textColorInput = $('#text-color-input');
+
+                            // Fungsi untuk mengupdate tampilan preview
+                            function updatePreview() {
+                            var text = inputText.val();
+                            var backgroundColor = backgroundColorInput.val();
+                            var textColor = textColorInput.val();
+
+                            previewLabel.text(text);
+                            previewLabel.css('background-color', backgroundColor);
+                            previewLabel.css('color', textColor);
+                            }
+
+
+                            $(document).ready(function() {
+                            // Mengupdate live preview saat input berubah
+                            $('#Text, #background-color-input, #text-color-input').on('input', function() {
+                            var text = $('#Text').val();
+                            var backgroundColor = $('#background-color-input').val();
+                            var textColor = $('#text-color-input').val();
+
+                            // Mengupdate teks, warna latar belakang, dan warna teks pada live preview
+                            $('#preview-label').text(text);
+                            $('#preview-label').css('background-color', backgroundColor);
+                            $('#preview-label').css('color', textColor);
+                            });
+                        });
+
 
                             function bukaKomentar(){
                                 $(".form-komentar").removeClass("d-none")
@@ -369,6 +857,7 @@
                                         $('#dikerjakan').empty()
                                         $('#revisi').empty()
                                         $('#selesai').empty()
+
                                         // TugasBaru
                                         dataTugas.forEach((data, index) => {
                                             const tugas = data;
@@ -393,9 +882,6 @@
                                                     </div>
                                                     `;
                                                 }
-
-
-
                                             });
 
                                             let deadline;
@@ -431,7 +917,7 @@
                                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="kanban-tasks-item-dropdown" style="">
                                                         <button onclick="editTugas('${tugas.code}')" type="button" class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#editTugasBar">Edit</button>
                                                         <button onclick="deleteTugas('${tugas.code}')" class="dropdown-item" href="javascript:void(0)">Delete</button>
-                                                      </div>
+                                                    </div>
                                             </div>
 
                                             `
@@ -440,11 +926,17 @@
                                                 dropdownTugas = ''
                                             }
 
+                                            let labels = ""
+                                            $.each(tugas.label,(index,label)=>{
 
+                                                labels += handleLabel(label.text,label.warna_text,label.warna_bg);
+                                            })
+
+                                            console.log(labels);
 
                                             const element = $(`<div>`)
                                                 .attr("id", "board-" + tugas.code)
-                                                .css("width","25vw")
+                                                .css("width","100%")
                                                 .addClass('col-12 p-2 mt-3 card')
                                                 .html(
                                                     `
@@ -471,6 +963,9 @@
                                                     <div class="avatar-group d-flex align-items-center assigned-avatar">
                                                         ${tugaskan}
                                                     </div>
+                                                </div>
+                                                <div class="d-flex flex-wrap gap-1">
+                                                    ${labels}
                                                 </div>
                                             </div>
                         `
@@ -505,21 +1000,74 @@
             });
 
 
+            function openModal(){
+                $("#tambahLabel").show()
+                $("#editTugasBar").hide()
+                // $("#tambahLabel").css("display","block");
+                $("#tambahLabel").addClass("show");
+
+                updatePreview()
+                getLabels()
+            }
+
+            const modal = $(".modal")
+
+                            $(".btn-tambah-labels").on('click', openModal)
+                              function closeCanvasEditTugas(){
+                                $("#editTugasBar").hide()
+                                $(".modal-backdrop").addClass("d-none");
+                              }
+
+
+                            function bukaCanvasEditTugas(){
+                                $("#tambahLabel").hide()
+                                $(".modal-backdrop").removeClass(".modal-backdrop")
+                                $("#editTugasBar").show();
+                            }
+
                             function editTugas(codeTugas) {
+                                bukaCanvasEditTugas()
                                 console.log(codeTugas);
                                 $("#select2Primary").empty();
                                 $("#formEditTugas").attr("data-codetugas", codeTugas);
                                 $("#tambahKomentar").attr("data-codetugas", codeTugas);
+
+                                $("#labels").empty();
 
                                 axios.get("data-edit-tugas/" + codeTugas)
                                     .then((res) => {
 
                                         console.log("klik edit code " + codeTugas);
                                         const data = res.data;
-                                        console.log(data);
+                                        // console.log(data);
                                         const user = data.tugas.tim.user;
                                         const userSelected = data.tugas.user;
+                                        const labelSelected = data.tugas.label;
                                         const comments = data.tugas.comments;
+
+                                        // label
+
+                                        const label = data.labels;
+
+
+                                        Object.keys(label).forEach(key => {
+                                                const labelOption = label[key];
+
+                                                const option = document.createElement('option')
+                                                option.value = labelOption.id;
+                                                option.textContent = labelOption.text;
+
+                                                labelSelected.forEach(data => {
+                                                    if (data.id === labelOption.id) {
+                                                        option.setAttribute("selected", true);
+                                                    }
+                                                });
+                                                $("#labels").append(option);
+                                            });
+
+                                        console.log(label);
+
+
 
 
                                         const optStatusTugas = document.querySelector("#status");
@@ -568,6 +1116,7 @@
                                         $(".list-komentar").empty();
 
                                         console.log(comments);
+                                      if(comments.length !== 0){
                                         Object.keys(comments).forEach((keys, i) => {
                                             const jadwal = res.data.komentarTerbuat[i];
 
@@ -626,9 +1175,18 @@
                         </div>
                     `;
 
-                                            div.innerHTML = elementComments;
+                                            div.innerHTML =  elementComments;
                                             $(".list-komentar").append(div);
                                         });
+                                    }else{
+                                        const div =
+                                        `
+                                        <img class="w-50 d-block mx-auto" src="{{ asset('assets/img/no-data.png') }}" />
+                                        <h5 class="text-center">Belum ada komentar</h5>
+                                        `
+                                          $(".list-komentar").append(div);
+
+                                      }
 
                                     });
                             }
@@ -641,6 +1199,7 @@
                                 const status_tugas = $("#status").val();
                                 const prioritas = $("#newPriority").val();
                                 const penugasan = $("#select2Primary").val()
+                                const labels = $("#labels").val()
                                 let codeTugas = $(this).data('codetugas');
                                 console.log("edit tugas code " + codeTugas);
 
@@ -650,7 +1209,8 @@
                                         deadline,
                                         status_tugas,
                                         penugasan,
-                                        prioritas
+                                        prioritas,
+                                        labels,
                                     })
                                     .then((res) => {
                                         console.log(res.data);
@@ -882,5 +1442,7 @@
                                     }
                                 });
                             }
+
+
                         </script>
                     @endsection

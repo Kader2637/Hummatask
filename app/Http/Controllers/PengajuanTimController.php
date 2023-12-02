@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use illuminate\Support\Str;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic;
 
@@ -110,8 +111,34 @@ class PengajuanTimController extends Controller
                 'tim_id' => $tim->id,
                 "history_presentasi_id" => $historyPresentasi->id,
             ]);
-
         }
+
+        DB::table('labels')->insert([
+            [
+                'text' => 'Frontend',
+                "tim_id" => $tim->id,
+                "warna_bg"=> "#DF826C",
+                "warna_text"=> "#FFFFFF"
+            ],
+            [
+                'text' => 'Backend',
+                "tim_id" => $tim->id,
+                "warna_bg" => "#31304D",
+                "warna_text"=> "#FFFFFF"
+            ],
+            [
+                'text' => 'UI',
+                "tim_id" => $tim->id,
+                "warna_bg" => "#6B240C",
+                "warna_text"=> "#FFFFFF"
+            ],
+            [
+                'text' => 'UX',
+                "tim_id" => $tim->id,
+                "warna_bg" => "#860A35",
+                "warna_text"=> "#FFFFFF"
+                ]
+        ]);
 
         return redirect()->back()->with('success', 'Berhasil membuat tim solo project');
     }
@@ -164,6 +191,33 @@ class PengajuanTimController extends Controller
             $tim->logo = $nameImage;
             $tim->kadaluwarsa = false;
             $tim->save();
+
+            DB::table('labels')->insert([
+                [
+                    'text' => 'Frontend',
+                    "tim_id" => $tim->id,
+                    "warna_bg"=> "#DF826C",
+                    "warna_text"=> "#FFFFFF"
+                ],
+                [
+                    'text' => 'Backend',
+                    "tim_id" => $tim->id,
+                    "warna_bg" => "#31304D",
+                    "warna_text"=> "#FFFFFF"
+                ],
+                [
+                    'text' => 'UI',
+                    "tim_id" => $tim->id,
+                    "warna_bg" => "#6B240C",
+                    "warna_text"=> "#FFFFFF"
+                ],
+                [
+                    'text' => 'UX',
+                    "tim_id" => $tim->id,
+                    "warna_bg" => "#860A35",
+                    "warna_text"=> "#FFFFFF"
+                    ]
+            ]);
 
             $historyPresentasi = HistoryPresentasi::all()->sortByDesc('created_at')->first();
             if($historyPresentasi){

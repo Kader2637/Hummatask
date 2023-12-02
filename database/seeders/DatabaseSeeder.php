@@ -40,6 +40,8 @@ class DatabaseSeeder extends Seeder
             ]
         ]);
 
+        
+
         DB::table('users')->insert([
             [
                 'uuid' => Str::uuid(),
@@ -84,5 +86,7 @@ class DatabaseSeeder extends Seeder
                 'nama_jabatan' => 'Anggota'
             ],
         ]);
+
+
     }
 }
