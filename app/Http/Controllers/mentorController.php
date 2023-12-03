@@ -462,6 +462,7 @@ class mentorController extends Controller
 
         $galery = new Galery([
             'judul' => $request->input('judul'),
+            'keterangan' => $request->input('keterangan'),
             'foto' => $img,
             'status' => 'album'
         ]);
@@ -484,6 +485,7 @@ class mentorController extends Controller
             $galery->foto = $img;
         }
         $galery->judul = $request->input('judul');
+        $galery->keterangan = $request->input('keterangan');
         $galery->status = 'album';
         $galery->save();
 

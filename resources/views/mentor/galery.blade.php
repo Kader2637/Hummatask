@@ -233,11 +233,15 @@
                     <div class="modal-body">
                         <div id="img" class="mb-3" style="width: 200px;"></div>
                         <div class="mb-3">
-                            <label for="recipient-name" class="control-label">Judul :</label>
+                            <label for="" class="control-label">Judul :</label>
                             <input type="text" class="form-control" name="judul">
                         </div>
                         <div class="mb-3">
-                            <label for="message-text" class="control-label">Foto :</label>
+                            <label for="" class="control-label">Keterangan :</label>
+                            <textarea name="keterangan" class="form-control" cols="5" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="control-label">Foto :</label>
                             <input type="file" class="form-control" name="foto" id="img">
                         </div>
                     </div>
@@ -278,11 +282,15 @@
                             <img src="{{ asset('storage/img/' . $item->foto) }}" alt=""
                                 style="width: 100px; margin-bottom: 10px; border-radius: 5px;">
                             <div class="mb-3">
-                                <label for="recipient-name" class="control-label">Judul :</label>
+                                <label for="" class="control-label">Judul :</label>
                                 <input type="text" class="form-control" name="judul" value="{{ $item->judul }}">
                             </div>
                             <div class="mb-3">
-                                <label for="message-text" class="control-label">Foto :</label>
+                                <label for="" class="control-label">Keterangan :</label>
+                                <textarea name="keterangan" class="form-control" cols="5" rows="3" value="{{ $item->keterangan }}">{{ $item->keterangan }}</textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="control-label">Foto :</label>
                                 <input type="file" class="form-control" name="foto"
                                     id="previewImage{{ $item->id }}" value="{{ $item->foto }}">
                             </div>
@@ -367,9 +375,10 @@
                     true; // Set flag menjadi true untuk menandakan sedang melakukan pengiriman data
 
                 var judul = $('input[name="judul"]').val();
+                var keterangan = $('textarea[name="keterangan"]').val();
                 var foto = $('input[name="foto"]').val();
 
-                if (!judul || !foto) {
+                if (!judul || !foto || !keterangan) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
@@ -379,6 +388,29 @@
                     isSubmitting = false; // Set flag kembali menjadi false setelah validasi error
                     return;
                 }
+
+                if (judul.length > 20){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'judul maksimal 100 karakter!',
+                    });
+
+                    isSubmitting = false;
+                    return;
+                }
+
+                if (keterangan.length > 250){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'judul maksimal 250 karakter!',
+                    });
+
+                    isSubmitting = false;
+                    return;
+                }
+
                 var file = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
                 var fotoExt = foto.substr(foto.lastIndexOf('.'));
 
@@ -433,19 +465,19 @@
         });
 
         function loadGalery() {
-    $.ajax({
-        type: "GET",
-        url: "{{ route('get.galery') }}", // Gantilah dengan endpoint API yang sesuai
-        success: function(data) {
-            if (data.galery.length > 0) {
-                let html = '';
-                data.galery.forEach(function(item) {
-                    html += `
+            $.ajax({
+                type: "GET",
+                url: "{{ route('get.galery') }}", // Gantilah dengan endpoint API yang sesuai
+                success: function(data) {
+                    if (data.galery.length > 0) {
+                        let html = '';
+                        data.galery.forEach(function(item) {
+                            html += `
                         <div class="col-md-6 col-lg-3 wow bounceInUp" data-wow-delay="0.1s">
-                            <div class="event-img position-relative">
+                            <div class="event-img position-relative" style="width:100% !important; height: 206px !important; overflow: hidden !important;">
                                 <img class="img-fluid rounded"
                                     src="{{ asset('storage/img/') }}/${item.foto}"
-                                    alt="" width="300px" height="300px" style="object-fit:cover">
+                                    alt="" style="object-fit: cover !important; width: 100% !important; height: 100% !important">
                                 <div class="event-overlay d-flex flex-column p-4">
                                     <h4 class="me-auto fs-5 fw-light" style="color: white;">${item.judul}</h4>
                                     <div class="my-auto">
@@ -468,21 +500,23 @@
                                 </div>
                             </div>
                         </div>`;
-                });
-                $('#galery').html(html);
-            } else {
-                $('#galery').html('<div class="justify-content-center" style="display: flex;"><img src="{{ asset('assets/img/illustrations/noData.png') }}" alt="page-misc-under-maintenance" width="500"></div>');
-            }
-        },
-        error: function(error) {
-            $('#galery').html('<p>Error: Ada kesalahan</p>');
+                        });
+                        $('#galery').html(html);
+                    } else {
+                        $('#galery').html(
+                            '<div class="justify-content-center" style="display: flex;"><img src="{{ asset('assets/img/illustrations/noData.png') }}" alt="page-misc-under-maintenance" width="500"></div>'
+                            );
+                    }
+                },
+                error: function(error) {
+                    $('#galery').html('<p>Error: Ada kesalahan</p>');
+                }
+            });
         }
-    });
-}
 
-$(document).ready(function() {
-    loadGalery();
-});
+        $(document).ready(function() {
+            loadGalery();
+        });
     </script>
     {{-- js galery --}}
 
@@ -495,6 +529,7 @@ $(document).ready(function() {
                 var form = $(this); // Simpan referensi form yang sedang di-submit
 
                 var judul = form.find('input[name="judul"]').val();
+                var keterangan = form.find('textarea[name="keterangan"]').val();
                 var foto = form.find('input[name="foto"]').val();
 
                 if (!judul.trim() || !foto) {
@@ -505,6 +540,27 @@ $(document).ready(function() {
                     });
                     return;
                 }
+
+                if (judul.length > 20) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Judul maksimal 20 karakter!',
+                    });
+                    isSubmitting = false;
+                    return;
+                }
+
+                if (keterangan.length > 250) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Judul maksimal 250 karakter!',
+                    });
+                    isSubmitting = false;
+                    return;
+                }
+
                 var file = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
                 var fotoExt = foto.substr(foto.lastIndexOf('.'));
 
@@ -657,9 +713,9 @@ $(document).ready(function() {
                 success: function(data) {
                     // Ganti HTML sesuai data yang diterima dari server
                     if (data.logo.length > 0) {
-                    let html = '';
-                    data.logo.forEach(function(itemLogo) {
-                        html += `
+                        let html = '';
+                        data.logo.forEach(function(itemLogo) {
+                            html += `
                             <div class="col-md-6 col-lg-3 wow bounceInUp" data-wow-delay="0.1s">
                                 <div class="event-img position-relative">
                                     <img class="img-fluid rounded "
@@ -690,11 +746,13 @@ $(document).ready(function() {
                                     </div>
                                 </div>
                             </div>`;
-                    });
-                    $('#logo').html(html);
-                }else{
-                    $('#logo').html('<div class="justify-content-center" style="display: flex;"><img src="{{ asset('assets/img/illustrations/noData.png') }}" alt="page-misc-under-maintenance" width="500"></div>');
-                }
+                        });
+                        $('#logo').html(html);
+                    } else {
+                        $('#logo').html(
+                            '<div class="justify-content-center" style="display: flex;"><img src="{{ asset('assets/img/illustrations/noData.png') }}" alt="page-misc-under-maintenance" width="500"></div>'
+                            );
+                    }
                     // Set HTML di elemen #galery
                 },
                 error: function(error) {

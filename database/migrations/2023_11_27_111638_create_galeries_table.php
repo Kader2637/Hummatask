@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('galeries', function (Blueprint $table) {
             $table->id();
             $table->string('judul');
+            $table->string('keterangan')->nullable();
             $table->string('foto');
             $table->enum('status',['album','logo']);
             $table->timestamps();
