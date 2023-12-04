@@ -119,7 +119,7 @@
                           <div class="modal-content">
                             <div class="modal-header">
                               <h5 class="modal-title" id="exampleModalLabel2">Labels</h5>
-                              <button type="button" onclick="bukaCanvasEditTugas()" class="btn-close" ></button>
+                              <button type="button" class="btn-close tutup-label" ></button>
                             </div>
                             <div class="modal-body">
                                 <div class="col-12">
@@ -294,7 +294,7 @@
                         <div class="kanban-wrapper"></div>
 
 
-                        <div class="offcanvas offcanvas-end kanban-update-item-sidebar" id="editTugasBar">
+                        <div class="offcanvas offcanvas-end modal fade position-fixed top-0 end-0" id="editTugasBar">
                             <div class="offcanvas-header border-bottom">
                                 <h5 class="offcanvas-title">Edit Task</h5>
                                 <button onclick="closeCanvasEditTugas()" type="button" class="btn-close" data-bs-dismiss="offcanvas"
@@ -524,7 +524,7 @@
                             const handleAktifitas = (aktifitas, pelaku, status) => {
     console.log(aktifitas);
     const jadwal = formatDate(aktifitas.deadline)
-    
+
 
 
     const avatar = aktifitas.user.avatar === null ? "assets/img/avatars/1.png" : "storage/" + aktifitas.user.avatar;
@@ -550,7 +550,7 @@
             <img style="object-fit: cover;" src="{{ asset('${avatar}') }}" alt="Avatar" class="rounded-circle pull-up">
         </div>
 
-        ` 
+        `
 
         $(`.avatar-aktifitas-${index}`).tooltip();
     })
@@ -634,11 +634,11 @@ if (minutesAgo < 60) {
      </div>
         `;
 
-        
+
     }
 };
 
-    
+
 
                             var editPreviewLabel = $('#edit-preview-label');
                             var editInputText = $('#editText');
@@ -1159,6 +1159,12 @@ axios.get("ambil-labels/"+tim_id)
                                 $(".modal-backdrop").removeClass(".modal-backdrop")
                                 $("#editTugasBar").show();
                             }
+
+                            $('.tutup-label').on('click', function() {
+                                $("#tambahLabel").hide()
+                                // $(".modal-backdrop").removeClass(".modal-backdrop")
+                                $("#editTugasBar").show();
+                                });
 
                             function editTugas(codeTugas) {
                                 bukaCanvasEditTugas()
