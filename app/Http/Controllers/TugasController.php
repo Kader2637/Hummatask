@@ -323,19 +323,31 @@ class TugasController extends Controller
     }
 
     protected function hapusTugas($codeTugas)
-    {
-        $tugas = Tugas::where('code', $codeTugas)->first();
-        $tim = $tugas->tim;
-        $checkResult = $this->checkTeam($tim);
+{
+    $tugas = Tugas::where('code', $codeTugas)->first();
 
-        if ($checkResult) {
-            return $checkResult;
-        }
+    $tim = $tugas->tim;
+    $checkResult = $this->checkTeam($tim);
 
-        $tugas->delete();
-
-        return response()->json(["success" => "Berhasil menghapus tugas"]);
+    if ($checkResult) {
+        return $checkResult;
     }
+
+    $judulTugas = $tugas->nama;
+    $jenisNotifikasi = 'info';
+    $penggunaPenghapus = Auth::user();
+
+    $teamMembers = $tugas->tim->user;
+
+    $tugas->delete();
+
+    foreach ($teamMembers as $member) {
+        $pesanNotifikasi = "Tugas '{$judulTugas}' telah dihapus oleh {$penggunaPenghapus->username}.";
+        $this->sendNotificationToUser($member, 'Tugas Dihapus', $pesanNotifikasi, $jenisNotifikasi);
+    }
+
+    return response()->json(["success" => "Berhasil menghapus tugas"]);
+}
 
     protected function tambahKomentar(Request $request)
     {
