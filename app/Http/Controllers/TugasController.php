@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Aktifitas;
+use App\Models\AktifitasData;
 use App\Models\Comments;
 use App\Models\Label;
 use App\Models\LabelTugas;
@@ -107,6 +109,17 @@ class TugasController extends Controller
         $tugas->code = Str::uuid();
         $tugas->nama = $request->nama;
         $tugas->save();
+
+
+        Aktifitas::create([
+            "tugas_id"=>$tugas->id,
+            "pelaku_id" => Auth::user()->id,
+            "judul" => $tugas->nama,
+            "status_tugas" => "tugas_baru",
+            "prioritas"=> "biasa",
+            "status" => "create",
+        ]);
+
         $this->sendNotificationToTeamMembers($tim->anggota, 'Tugas Baru', 'Anggota tim telah membuat tugas baru : ' . $tugas->nama , 'info');
 
         if ($tim->status_tim === "solo") {
@@ -115,6 +128,8 @@ class TugasController extends Controller
             $penugasan->user_id = Auth::user()->id;
             $penugasan->save();
         }
+
+
 
         return response()->json($tugas->with(['user', 'comments'])->latest()->first());
     }
@@ -141,9 +156,10 @@ class TugasController extends Controller
 
 
         try {
-            $tugass = Tugas::with(['comments.user','label', 'user', 'tim.user'=> function($query){
+            $tugass = Tugas::with(['comments.user','label', 'user','aktifitas.aktifitasDataUser.user','aktifitas.aktifitasDataLabel.label','aktifitas.user', 'tim.user'=> function($query){
                 $query->wherePivot('status','active');
             }])->where('code', $codeTugas)->first();
+
 
             $jadwal = [];
             foreach ($tugass->comments as $data) {
@@ -157,6 +173,7 @@ class TugasController extends Controller
             }
 
             $label = Label::where('tim_id',$tugass->tim_id)->get();
+
 
             $tugas = [
                 "tugas" => $tugass,
@@ -231,13 +248,40 @@ class TugasController extends Controller
 
 
 
+       
         if ($tugas->tim->status_tim !== "solo") {
+
+
+            $aktifitas = new Aktifitas;
+            $aktifitas->tugas_id=$tugas->id;
+            $aktifitas->pelaku_id = Auth::user()->id;
+            $aktifitas->judul = $tugas->nama;
+            $aktifitas->status_tugas = $tugas->status_tugas;
+            $aktifitas->prioritas = $tugas->prioritas;
+            $aktifitas->deadline = $tugas->deadline;
+            $aktifitas->status = "update";
+            $aktifitas->save();
+
+
             $penugasan = $request->penugasan;
             $currentPenugasan = $tugas->user->pluck('uuid')->toArray();
 
             $userToAdd = array_diff($penugasan, $currentPenugasan);
             $userToRemove = array_diff($currentPenugasan, $penugasan);
 
+            $userPenugasan = [...$userToAdd,...$currentPenugasan];
+            $semuaAnggotaPenugasan = array_diff($userPenugasan,$userToRemove);
+
+            foreach ($semuaAnggotaPenugasan as $i => $data) {
+
+                $user = User::where('uuid',$data)->first();
+
+                $aktifitas_data_penugasan = new AktifitasData;
+                $aktifitas_data_penugasan->aktifitas_id = $aktifitas->id;
+                $aktifitas_data_penugasan->user_id = $user->id;
+                $aktifitas_data_penugasan->status = "penugasan";
+                $aktifitas_data_penugasan->save();
+            }
 
 
             foreach ($userToAdd as $i => $data) {
@@ -252,11 +296,18 @@ class TugasController extends Controller
                     return response()->json(["errors" => ["User yang ditambahkan sudah bukan anggota tim"]], 422);
                 }
 
+
+
+                
+
+
                 if ($user) {
                     $penugasan = new Penugasan;
                     $penugasan->tugas_id = $tugas->id;
                     $penugasan->user_id = $user->id;
                     $penugasan->save();
+
+
 
                     $this->sendNotificationToUser($user, 'Anda Diberi Tugas Baru', 'Anda telah diberi tugas baru "' . $tugas->nama . '" dengan prioritas ' . $tugas->prioritas, 'info');
                 }
@@ -269,24 +320,47 @@ class TugasController extends Controller
                     $penugasanTb = Penugasan::where('tugas_id', $tugas->id)->where('user_id', $user->id)->delete();
                 }
             }
+        }else{
+            $aktifitas = new Aktifitas;
+            $aktifitas->tugas_id=$tugas->id;
+            $aktifitas->pelaku_id = Auth::user()->id;
+            $aktifitas->judul = $tugas->nama;
+            $aktifitas->status_tugas = $tugas->status_tugas;
+            $aktifitas->prioritas = $tugas->prioritas;
+            $aktifitas->deadline = $tugas->deadline;
+            $aktifitas->status = "update";
+            $aktifitas->save();
 
-
-
-
-
+            $aktifitas_data_penugasan = new AktifitasData;
+            $aktifitas_data_penugasan->aktifitas_id = $aktifitas->id;
+            $aktifitas_data_penugasan->user_id = Auth::user()->id;
+            $aktifitas_data_penugasan->status = "penugasan";
+            $aktifitas_data_penugasan->save();
 
         }
+
 
 
 
         $tugas->save();
 
 
+
+
+
+
         $labels = $request->labels;
         $currentLabels = $tugas->label->pluck('id')->toArray();
 
+        
         $labelToAdd = array_diff($labels, $currentLabels);
         $labelToRemove = array_diff($currentLabels, $labels);
+
+        $semuaLabel = [...$labelToAdd,...$currentLabels];
+
+        
+        $benerBenerSemualabel = array_diff($semuaLabel,$labelToRemove);
+        // dd($benerBenerSemualabel);
 
         foreach ($labelToRemove as $data) {
            LabelTugas::where('tugas_id', $tugas->id)->where('label_id', $data)->delete();
@@ -300,6 +374,15 @@ class TugasController extends Controller
             $label->save();
         }
 
+
+        foreach ($benerBenerSemualabel as $i => $data) {
+
+            $aktifitas_data_penugasan = new AktifitasData;
+            $aktifitas_data_penugasan->aktifitas_id = $aktifitas->id;
+            $aktifitas_data_penugasan->label_id = $data;
+            $aktifitas_data_penugasan->status = "label";
+            $aktifitas_data_penugasan->save();
+        }
 
 
 

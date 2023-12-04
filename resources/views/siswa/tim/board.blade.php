@@ -302,16 +302,22 @@
                             </div>
                             <div class="offcanvas-body">
                                 <ul class="nav nav-tabs tabs-line">
-                                    <li class="nav-item">
+                                    <li class="nav-item col-4">
                                         <button onclick="tutupKomentar()" class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-update">
                                             <i class="ti ti-edit me-2"></i>
                                             <span class="align-middle">Edit</span>
                                         </button>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item col-4">
                                         <button onclick="bukaKomentar()" class="nav-link" data-bs-toggle="tab" data-bs-target="#komentar">
                                             <i class="ti ti-message-dots ti-xs me-1"></i>
                                             <span class="align-middle">Komentar</span>
+                                        </button>
+                                    </li>
+                                    <li class="nav-item col-4">
+                                        <button onclick="tutupKomentar()" class="nav-link" data-bs-toggle="tab" data-bs-target="#aktifitas">
+                                            <i class="ti ti-message-dots ti-xs me-1"></i>
+                                            <span class="align-middle">Aktifitas</span>
                                         </button>
                                     </li>
                                 </ul>
@@ -406,9 +412,6 @@
                                             </div>
                                         </form>
                                     </div>
-                                </div>
-                                <!-- Activities -->
-
                                 <div class="tab-pane fade" id="komentar" role="tabpanel">
 
                                     <div class="list-komentar mt-3" style="margin-bottom: 80px">
@@ -452,6 +455,18 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="tab-pane fade" id="aktifitas" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-12 tab-aktifitas mb-3">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <!-- Activities -->
+
                             </div>
                         </div>
                         </div>
@@ -501,9 +516,129 @@
                         <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
                         <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
                         <script src="{{ asset('utils/hadleLabel.js') }}"></script>
+                        <script src="{{ asset('utils/handleFormatDate.js') }}"></script>
 
                         <script>
                             // let dataEmpty
+
+                            const handleAktifitas = (aktifitas, pelaku, status) => {
+    console.log(aktifitas);
+    const jadwal = formatDate(aktifitas.deadline)
+    
+
+
+    const avatar = aktifitas.user.avatar === null ? "assets/img/avatars/1.png" : "storage/" + aktifitas.user.avatar;
+
+
+
+    const labels = aktifitas.aktifitas_data_label;
+    let elementLabel = " "
+
+    $.each(labels , (index,data)=>{
+        let dataLabel = data.label;
+        elementLabel += handleLabel(dataLabel.text,dataLabel.warna_text,dataLabel.warna_bg)
+    })
+
+    let tugaskan = ""
+    const ditugaskan = aktifitas.aktifitas_data_user;
+    $.each(ditugaskan,(index,data)=>{
+        const dataUser = data.user;
+        const avatar = dataUser.avatar === null ? "assets/img/avatars/1.png" : "storage/" + dataUser.avatar;
+        tugaskan +=
+        `
+        <div class="avatar avatar-xs avatar-aktifitas-${index}" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="${dataUser.username}" data-bs-original-title="${dataUser.username}">
+            <img style="object-fit: cover;" src="{{ asset('${avatar}') }}" alt="Avatar" class="rounded-circle pull-up">
+        </div>
+
+        ` 
+
+        $(`.avatar-aktifitas-${index}`).tooltip();
+    })
+
+    const elementPrioritas = prioritas(aktifitas.prioritas)
+
+
+    let updatedTimestamp = new Date(aktifitas.created_at);
+
+let currentTimestamp = new Date();
+
+let timeDifference = currentTimestamp - updatedTimestamp;
+
+let minutesAgo = Math.floor(timeDifference / (1000 * 60));
+let hoursAgo = Math.floor(timeDifference / (1000 * 60 * 60));
+let daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+let waktu;
+
+if (minutesAgo < 60) {
+   waktu = `${minutesAgo} menit yang lalu`;
+} else if (hoursAgo < 24) {
+   waktu = `${hoursAgo} jam yang lalu`;
+} else {
+   waktu = `${daysAgo} hari yang lalu`;
+}
+
+    // console.log(tug);
+    if (status === "create") {
+        return `
+            <div class="media d-flex align-items-start my-5">
+                <div class="avatar me-2 flex-shrink-0 mt-1">
+                    <img style="object-fit: cover" src="{{ asset('${avatar}') }}" alt="Avatar" class="rounded-circle">
+                </div>
+                <div class="media-body">
+                    <p class="mb-0">
+                        <span class="fw-medium">${aktifitas.user.username}</span> membuat tugas ${aktifitas.judul}
+                    </p>
+                    <small class="text-muted">${waktu}</small>
+                </div>
+            </div>
+        `;
+    } else {
+        return `
+        <div class="media mt-3 d-flex align-items-start">
+                                                <div class="avatar me-2 flex-shrink-0 mt-1">
+                                                <img src="{{ asset('${avatar}') }}" alt="Avatar" class="rounded-circle">
+                                                </div>
+                                                <div class="media-body">
+                                                <p class="mb-0">
+                                                    <span class="fw-medium">${aktifitas.user.username}</span> mengupdate tugas ${aktifitas.judul}
+                                                    <table class="table">
+                                                        <tr>
+                                                            <td>Judul</td>
+                                                            <td>${aktifitas.judul}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Deadline</td>
+                                                            <td>${jadwal}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Status Tugas</td>
+                                                            <td>${aktifitas.status_tugas}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Label</td>
+                                                            <td class="d-flex flex-wrap gap-1">${elementLabel}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Prioritas</td>
+                                                            <td>${elementPrioritas}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Ditugaskan :</td>
+                                                            <td class="d-flex tugaskan-aktifitas">${tugaskan}</td>
+                                                        </tr>
+                                                    </table>
+                                                </p>
+                                                <small class="text-muted">${waktu}</small>
+                                                </div>
+     </div>
+        `;
+
+        
+    }
+};
+
+    
 
                             var editPreviewLabel = $('#edit-preview-label');
                             var editInputText = $('#editText');
@@ -631,8 +766,8 @@
                                 $("#tambahLabel").show()
                                 // $("#editTugasBar").hide()
                                 $("#modalEditLabel").removeClass("show").css("display","none")
-
                             }
+
 
 
 
@@ -1044,6 +1179,17 @@ axios.get("ambil-labels/"+tim_id)
                                         const userSelected = data.tugas.user;
                                         const labelSelected = data.tugas.label;
                                         const comments = data.tugas.comments;
+                                        const aktifitas = data.tugas.aktifitas;
+
+
+
+                                        $(".tab-aktifitas").empty()
+                                        $.each(aktifitas,(index,data)=>{
+
+                                            console.log(data.tugas);
+                                            const elements = handleAktifitas(data,data.aktifitas_data_user,data.status);
+                                            $(".tab-aktifitas").append(elements)
+                                        })
 
                                         // label
 
@@ -1181,7 +1327,7 @@ axios.get("ambil-labels/"+tim_id)
                                     }else{
                                         const div =
                                         `
-                                        <img class="w-50 d-block mx-auto" src="{{ asset('assets/img/no-data.png') }}" />
+                                        <img class="w-50 block mx-auto" src="{{ asset('assets/img/no-data.png') }}" />
                                         <h5 class="text-center">Belum ada komentar</h5>
                                         `
                                           $(".list-komentar").append(div);

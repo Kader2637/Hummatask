@@ -41,4 +41,9 @@ class Tugas extends Model
         return $this->belongsToMany(Label::class,'label_tugas');
     }
 
+    public function aktifitas()
+    {
+        return $this->hasMany(Aktifitas::class);
+    }
+
 }

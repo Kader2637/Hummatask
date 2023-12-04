@@ -15,7 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('tugas_id')->references('id')->on('tugas')->onDelete('cascade');
             $table->foreignId('pelaku_id')->references('id')->on('users');
-            $table->enum('status', ['create','update','delete']);
+            $table->string('judul');
+            $table->string('status_tugas');
+            $table->string('prioritas');
+            $table->date('deadline')->nullable();
+            $table->enum('status', ['create','update']);
             $table->timestamps();
         });
     }
