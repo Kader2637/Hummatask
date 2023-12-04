@@ -76,6 +76,7 @@ use App\Http\Controllers\mentorController;
                 Route::get('/view-comment', 'viewComments');
                 // proses di halaman tim
             });
+
             Route::middleware(['auth', 'siswa'])->group(function () {
                 Route::get('tampil-tugas/{code}', [TugasController::class, 'getData'])->name('tim.tampilTugas');
                 Route::post('board/tambah-tugas/{code}', [TugasController::class, 'buatTugas']);
@@ -92,7 +93,7 @@ use App\Http\Controllers\mentorController;
                 Route::get('statistik/data-progres/{codeTim}', [StatistikTimController::class, 'getProgres']);
 
                 // label tugas
-                Route::post('tambah-label',[LabelController::class,'createLabel'])->name('label.create');
+                Route::post('board/tambah-label',[LabelController::class,'createLabel'])->name('label.create');
                 Route::get('board/ambil-labels/{tim_id}',[LabelController::class,'getLabels']);
                 Route::delete('board/delete-label/{label_id}',[LabelController::class,'deleteLabel']);
                 Route::put("board/edit-label",[LabelController::class,"editLabel"])->name("label.edit");

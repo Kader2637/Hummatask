@@ -34,11 +34,11 @@ class LabelController extends Controller
 
         $label = Label::where("id",$request->label_id)->first();
         $label->text = $request->text;
-        $label->warna_bg = $request->warna_bg;   
-        $label->warna_text = $request->warna_text; 
+        $label->warna_bg = $request->warna_bg;
+        $label->warna_text = $request->warna_text;
         $label->save();
 
-        return response()->json();  
+        return response()->json();
     }
 
     protected function createLabel(Request $request)
@@ -60,7 +60,7 @@ class LabelController extends Controller
         $label->warna_bg = $request->warna_bg;
         $label->warna_text = $request->warna_text;
         $label->tim_id = $request->tim_id;
-        $label->save();   
+        $label->save();
 
         return response()->json(["success"=>"Berhasil membuat label"]);
     }

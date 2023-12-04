@@ -119,7 +119,7 @@
                           <div class="modal-content">
                             <div class="modal-header">
                               <h5 class="modal-title" id="exampleModalLabel2">Labels</h5>
-                              <button type="button" class="btn-close tutup-label" ></button>
+                              <button type="button" class="btn-close tutup-label" data-bs-dismiss="tambahLabel"></button>
                             </div>
                             <div class="modal-body">
                                 <div class="col-12">
@@ -294,7 +294,7 @@
                         <div class="kanban-wrapper"></div>
 
 
-                        <div class="offcanvas offcanvas-end modal fade position-fixed top-0 end-0" id="editTugasBar">
+                        <div class="offcanvas offcanvas-start modal fade position-fixed top-0 start-0" id="editTugasBar">
                             <div class="offcanvas-header border-bottom">
                                 <h5 class="offcanvas-title">Edit Task</h5>
                                 <button onclick="closeCanvasEditTugas()" type="button" class="btn-close" data-bs-dismiss="offcanvas"
@@ -679,21 +679,22 @@ if (minutesAgo < 60) {
                                 })
                              })
 
-                             $(".btn-edit-submit-tambah-label").click(function () {
-                                var text = $('#editText').val();
-                                var warna_bg = $('#edit-background-color-input').val();
-                                var warna_text = $('#edit-text-color-input').val();
-                                let label_id;
+                            //  editlabel
 
-                                label_id = $(this).attr("data-label_id");
-                                console.log(label_id);
-                                axios.put("{{ route('label.edit') }}",{text,warna_bg,warna_text,label_id})
+                            $(".btn-edit-submit-tambah-label").click(function () {
+                                let text = $('#editText').val();
+                                let warna_bg = $('#edit-background-color-input').val();
+                                let warna_text = $('#edit-text-color-input').val();
+                                const tim_id = "{{ $tim->id }}";
+
+                                axios.post("{{ route('label.create') }}",{text,warna_bg,warna_text,tim_id})
                                 .then((res) => {
                                     getLabels()
                                     var text = $('#Text').val("Label");
                                     var warna_bg = $('#background-color-input').val("#666EE8");
                                     var warna_text = $('#text-color-input').val("#FFFFFF");
-                                    editUpdatePreview()
+                                    updatePreview()
+                                    closeModalEditLabel()
                                     Swal.fire({
                                         icon: "success",
                                         title : "Berhasil!",
@@ -701,13 +702,6 @@ if (minutesAgo < 60) {
                                         showConfirmButton : false,
                                         timer : 2500,
                                     })
-                                     label_id = 0;
-
-                                     $("#modalEditLabel").hide();
-                                     $("#tambahLabel").show();
-                                     $(".modal-backdrop").empty()
-
-                                     $(this).removeAttr("data-label_id")
                                 })
                                 .catch((err) => {
                                     console.log(err);
@@ -720,7 +714,6 @@ if (minutesAgo < 60) {
                                     })
                                 })
                              })
-
 
 
                             // Fungsi untuk mengupdate tampilan preview
@@ -769,11 +762,6 @@ if (minutesAgo < 60) {
                             }
 
 
-
-
-
-
-
                             function deleteLabel(label_id){
                                 Swal.fire({
                                     title: "Kamu Yakin?",
@@ -810,26 +798,22 @@ if (minutesAgo < 60) {
 
 
 
-                            function getLabels(){
+                            function getLabels() {
+  const tim_id = "{{ $tim->id }}";
+  axios
+    .get("ambil-labels/" + tim_id)
+    .then((res) => {
+      // Menghapus isi tabel sebelum menambahkan data baru
+      $("#daftarLabels").DataTable().clear().destroy();
+      $("#daftarLabels tbody").empty();
 
-                                const tim_id = "{{ $tim->id }}";
-axios.get("ambil-labels/"+tim_id)
-.then((res) => {
-
-    // if ($.fn.DataTable.isDataTable('#daftarLabels')) {
-        // $("#daftarLabels").destroy();
-    // }
-
-    const data = res.data;
-    // $('#daftarLabels').DataTable().clear();
-    $.each(data,(index,item)=>{
-
+      const data = res.data;
+      $.each(data, (index, item) => {
         let label = `<span class="badge" style="background-color: ${item.warna_bg}; color: ${item.warna_text}">${item.text}</span>`;
 
-        let row =
-        `
+        let row = `
         <tr class="tr-label-${item.id}">
-            <td>${index+1}</td>
+            <td>${index + 1}</td>
             <td>
                 ${label}
             </td>
@@ -837,92 +821,88 @@ axios.get("ambil-labels/"+tim_id)
                 <button onclick="deleteLabel('${item.id}')" class="btn border-none btn-delete-label bg-transparent">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/></svg>
                 </button>
-                <button onclick="editLabel('${item.id}','${item.text}','${item.warna_bg}','${item.warna_text}')" class="btn border-none btn-delete-label bg-transparent">
+                <button onclick="editLabel('${item.id}', '${item.text}', '${item.warna_bg}', '${item.warna_text}')" class="btn border-none btn-delete-label bg-transparent">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M10 14v-2.615l8.944-8.945q.166-.165.348-.228q.183-.064.385-.064q.188 0 .368.064q.18.063.326.21L21.483 3.5q.16.165.242.364q.083.2.083.401t-.06.382q-.061.18-.227.345L12.52 14H10Zm9.465-8.354l1.348-1.361l-1.111-1.17l-1.387 1.381l1.15 1.15ZM5.615 20q-.69 0-1.152-.462Q4 19.075 4 18.385V5.615q0-.69.463-1.152Q4.925 4 5.615 4h8.387l-6.387 6.387v5.998h5.897L20 9.896v8.489q0 .69-.462 1.152q-.463.463-1.153.463H5.615Z"/></svg>
                 </button>
             </td>
         </tr>
-        `
-        $("#daftarLabels tbody").append(row)
-        // $("#daftarLabels").DataTable().row.add($(row)).draw();
+        `;
+        $("#daftarLabels tbody").append(row);
+      });
+
+      // Inisialisasi DataTable
+      $("#daftarLabels").DataTable({
+        lengthMenu: [
+          [5, 10, 15, -1],
+          [5, 10, 15, "All"],
+        ],
+        pageLength: 5,
+        order: [],
+        ordering: false,
+        pagingType: "simple_numbers",
+        language: {
+          sProcessing: "Sedang memproses...",
+          sLengthMenu: "Tampilkan _MENU_ data",
+          sZeroRecords: "Tidak ditemukan Data",
+          sInfo: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+          sInfoEmpty: " 0 sampai 0 dari 0 data",
+          sInfoFiltered: "(disaring dari _MAX_ data keseluruhan)",
+          sInfoPostFix: "",
+          sSearch: "Cari :",
+          sUrl: "",
+          oPaginate: {
+            sFirst: "Pertama",
+            sPrevious: "&#8592;",
+            sNext: "&#8594;",
+            sLast: "Terakhir",
+          },
+        },
+        dom: "lrtip",
+      });
     })
-
-    // Initialize DataTable only if it hasn't been initialized before
-
-    if (!$.fn.DataTable.isDataTable('#daftarLabels')) {
-        $('#daftarLabels').DataTable({
-            "lengthMenu": [
-                [5, 10, 15, -1],
-                [5, 10, 15, "All"]
-            ],
-            "pageLength": 5,
-            "order": [],
-            "ordering": false,
-            pagingType: "simple_numbers",
-            "language": {
-                "sProcessing": "Sedang memproses...",
-                "sLengthMenu": "Tampilkan _MENU_ data",
-                "sZeroRecords": "Tidak ditemukan Data",
-                "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-                "sInfoEmpty": " 0 sampai 0 dari 0 data",
-                "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
-                "sInfoPostFix": "",
-                "sSearch": "Cari :",
-                "sUrl": "",
-                "oPaginate": {
-                    "sFirst": "Pertama",
-                    "sPrevious": "&#8592;",
-                    "sNext": "&#8594;",
-                    "sLast": "Terakhir"
-                }
-            },
-
-            dom: 'lrtip',
-        });
-    }
-})
-.catch((err) => {
+    .catch((err) => {
     console.log(err);
-});
-
-                            }
-
+  });
+}
 
 
 
 
-                            $(".btn-submit-tambah-label").click(function () {
-                                var text = $('#Text').val();
-                                var warna_bg = $('#background-color-input').val();
-                                var warna_text = $('#text-color-input').val();
-                                const tim_id = "{{ $tim->id }}";
 
-                                axios.post("{{ route('label.create') }}",{text,warna_bg,warna_text,tim_id})
-                                .then((res) => {
-                                    var text = $('#Text').val("Label");
-                                    var warna_bg = $('#background-color-input').val("#666EE8");
-                                    var warna_text = $('#text-color-input').val("#FFFFFF");
-                                    updatePreview()
-                                    Swal.fire({
-                                        icon: "success",
-                                        title : "Berhasil!",
-                                        text: res.data.success,
-                                        showConfirmButton : false,
-                                        timer : 2500,
-                                    })
-                                    getLabels()
-                                })
-                                .catch((err) => {
-                                    console.log(err);
-                                    Swal.fire({
-                                        icon: "error",
-                                        title : "Error!",
-                                        text: ( typeof err.response.data.message === "undefined" ) ? err : err.response.data.message,
-                                        showConfirmButton : false,
-                                        timer : 2500,
-                                    })
-                                })
-                             })
+
+
+                            // $(".btn-submit-tambah-label").click(function () {
+                            //     var text = $('#Text').val();
+                            //     var warna_bg = $('#background-color-input').val();
+                            //     var warna_text = $('#text-color-input').val();
+                            //     const tim_id = "{{ $tim->id }}";
+
+                            //     axios.post("tambah-label/",{text,warna_bg,warna_text,tim_id})
+                            //     .then((res) => {
+                            //         var text = $('#Text').val("Label");
+                            //         var warna_bg = $('#background-color-input').val("#666EE8");
+                            //         var warna_text = $('#text-color-input').val("#FFFFFF");
+                            //         updatePreview()
+                            //         Swal.fire({
+                            //             icon: "success",
+                            //             title : "Berhasil!",
+                            //             text: res.data.success,
+                            //             showConfirmButton : false,
+                            //             timer : 2500,
+                            //         })
+                            //         getLabels()
+                            //     })
+                            //     .catch((err) => {
+                            //         console.log(err);
+                            //         Swal.fire({
+                            //             icon: "error",
+                            //             title : "Error!",
+                            //             text: ( typeof err.response.data.message === "undefined" ) ? err : err.response.data.message,
+                            //             showConfirmButton : false,
+                            //             timer : 2500,
+                            //         })
+                            //     })
+                            //  })
 
 
 
@@ -1188,7 +1168,6 @@ axios.get("ambil-labels/"+tim_id)
                                         const aktifitas = data.tugas.aktifitas;
 
 
-
                                         $(".tab-aktifitas").empty()
                                         $.each(aktifitas,(index,data)=>{
 
@@ -1333,7 +1312,7 @@ axios.get("ambil-labels/"+tim_id)
                                     }else{
                                         const div =
                                         `
-                                        <img class="w-50 block mx-auto" src="{{ asset('assets/img/no-data.png') }}" />
+                                        <img class="w-50 d-block mx-auto" src="{{ asset('assets/img/no-data.png') }}" />
                                         <h5 class="text-center">Belum ada komentar</h5>
                                         `
                                           $(".list-komentar").append(div);
