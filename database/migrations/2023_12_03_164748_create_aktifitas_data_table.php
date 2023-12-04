@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('aktifitas_data', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('aktifitas_id')->references('id')->on('aktifitas');
-            $table->foreignId('user_id')->nullable()->references('id')->on('users');
-            $table->foreignId('label_id')->nullable()->references('id')->on('labels');
+            $table->foreignId('aktifitas_id')->references('id')->on('aktifitas')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('label_id')->nullable()->references('id')->on('labels')->onDelete('cascade');
             $table->enum("status",['penugasan','label']);
             $table->timestamps();
         });

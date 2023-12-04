@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('label_tugas', function (Blueprint $table) {
-            $table->foreignId('tugas_id')->references('id')->on('tugas');
-            $table->foreignId('label_id')->references('id')->on('labels');
+            $table->foreignId('tugas_id')->references('id')->on('tugas')->onDelete('cascade');
+            $table->foreignId('label_id')->references('id')->on('labels')->onDelete('cascade');
             $table->timestamps();
         });
     }
