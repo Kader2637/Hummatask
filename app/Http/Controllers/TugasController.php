@@ -292,7 +292,7 @@ class TugasController extends Controller
 
 
                 $user = User::where('uuid', $data)->first();
-                if ($tugas->tim->user->where('uuid',$data)->first()->anggota->status !== "active") {
+                if ($tugas->tim->user->where('uuid',$data)->first()->anggotaReal->where('tim_id',$tugas->tim->id)->sortByDesc('created_at')->first()->status !== "active") {
                     return response()->json(["errors" => ["User yang ditambahkan sudah bukan anggota tim"]], 422);
                 }
 

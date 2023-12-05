@@ -83,7 +83,7 @@
                                     </div>
                                     <form id="formEditLabel" method="post">
                                         @csrf
-
+                                        @method("PUT")
                                         <div class="row">
                                             <div class="col mb-3">
                                             <label for="Text" class="form-label">Text</label>
@@ -686,8 +686,9 @@ if (minutesAgo < 60) {
                                 let warna_bg = $('#edit-background-color-input').val();
                                 let warna_text = $('#edit-text-color-input').val();
                                 const tim_id = "{{ $tim->id }}";
+                                const label_id = $(this).data('label_id')
 
-                                axios.post("{{ route('label.create') }}",{text,warna_bg,warna_text,tim_id})
+                                axios.put("{{ route('label.edit') }}",{text,warna_bg,warna_text,tim_id,label_id})
                                 .then((res) => {
                                     getLabels()
                                     var text = $('#Text').val("Label");
