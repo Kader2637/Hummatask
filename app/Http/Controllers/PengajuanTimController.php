@@ -44,16 +44,16 @@ class PengajuanTimController extends Controller
 
 
         try {
-        $timDulu = User::find(Auth::user()->id)->anggota()->orderByDesc('created_at')->first()->status;
+            $timDulu = User::find(Auth::user()->id)->anggota()->orderByDesc('created_at')->first()->status;
             //code...
         } catch (\Throwable $th) {
             $timDulu = null;
         }
         // dd($timDulu);
 
-            if ($timDulu === 'active') {
-                return redirect()->back()->with('error', 'Kamu masih memiliki tim yang belum selesai');
-            }
+        if ($timDulu === 'active') {
+            return redirect()->back()->with('error', 'Kamu masih memiliki tim yang belum selesai');
+        }
 
 
         // menyimpan logo
@@ -93,12 +93,12 @@ class PengajuanTimController extends Controller
         ]);
 
         $historyPresentasi = HistoryPresentasi::all()->sortByDesc('created_at')->first();
-        if($historyPresentasi){
+        if ($historyPresentasi) {
             TidakPresentasiMingguan::create([
                 'tim_id' => $tim->id,
                 "history_presentasi_id" => $historyPresentasi->id,
             ]);
-        }else{
+        } else {
             $historyPresentasi = new HistoryPresentasi;
             $historyPresentasi->code = Str::uuid();
 
@@ -117,27 +117,27 @@ class PengajuanTimController extends Controller
             [
                 'text' => 'Frontend',
                 "tim_id" => $tim->id,
-                "warna_bg"=> "#DF826C",
-                "warna_text"=> "#FFFFFF"
+                "warna_bg" => "#DF826C",
+                "warna_text" => "#FFFFFF"
             ],
             [
                 'text' => 'Backend',
                 "tim_id" => $tim->id,
                 "warna_bg" => "#31304D",
-                "warna_text"=> "#FFFFFF"
+                "warna_text" => "#FFFFFF"
             ],
             [
                 'text' => 'UI',
                 "tim_id" => $tim->id,
                 "warna_bg" => "#6B240C",
-                "warna_text"=> "#FFFFFF"
+                "warna_text" => "#FFFFFF"
             ],
             [
                 'text' => 'UX',
                 "tim_id" => $tim->id,
                 "warna_bg" => "#860A35",
-                "warna_text"=> "#FFFFFF"
-                ]
+                "warna_text" => "#FFFFFF"
+            ]
         ]);
 
         return redirect()->back()->with('success', 'Berhasil membuat tim solo project');
@@ -196,36 +196,36 @@ class PengajuanTimController extends Controller
                 [
                     'text' => 'Frontend',
                     "tim_id" => $tim->id,
-                    "warna_bg"=> "#DF826C",
-                    "warna_text"=> "#FFFFFF"
+                    "warna_bg" => "#DF826C",
+                    "warna_text" => "#FFFFFF"
                 ],
                 [
                     'text' => 'Backend',
                     "tim_id" => $tim->id,
                     "warna_bg" => "#31304D",
-                    "warna_text"=> "#FFFFFF"
+                    "warna_text" => "#FFFFFF"
                 ],
                 [
                     'text' => 'UI',
                     "tim_id" => $tim->id,
                     "warna_bg" => "#6B240C",
-                    "warna_text"=> "#FFFFFF"
+                    "warna_text" => "#FFFFFF"
                 ],
                 [
                     'text' => 'UX',
                     "tim_id" => $tim->id,
                     "warna_bg" => "#860A35",
-                    "warna_text"=> "#FFFFFF"
-                    ]
+                    "warna_text" => "#FFFFFF"
+                ]
             ]);
 
             $historyPresentasi = HistoryPresentasi::all()->sortByDesc('created_at')->first();
-            if($historyPresentasi){
+            if ($historyPresentasi) {
                 TidakPresentasiMingguan::create([
                     'tim_id' => $tim->id,
                     "history_presentasi_id" => $historyPresentasi->id,
                 ]);
-            }else{
+            } else {
                 $historyPresentasi = new HistoryPresentasi;
                 $historyPresentasi->code = Str::uuid();
 
@@ -340,6 +340,8 @@ class PengajuanTimController extends Controller
 
         $timId->save();
 
+        $oldKickedAnggota = $timId->anggota()->where('status', 'kicked')->pluck('user_id')->toArray();
+
         $timId->anggota()
             ->whereNotIn('user_id', $uniqueDaftarAnggota)
             ->update([
@@ -347,14 +349,11 @@ class PengajuanTimController extends Controller
                 'jabatan_id' => 3,
             ]);
 
-            $kickedAnggota = $timId->anggota->whereNotIn('user_id', $uniqueDaftarAnggota);
-            // dd($uniqueDaftarAnggota, $kickedAnggota);
-            foreach ($kickedAnggota as $anggota) {
-                $this->sendNotificationToMentor($anggota->user_id, 'Anda telah di-kick dari tim', 'Anda tidak lagi menjadi anggota tim.', 'deadline');
-            }
-
-
-
+        $kickedAnggota = $timId->anggota->whereNotIn('user_id', array_merge($uniqueDaftarAnggota, $oldKickedAnggota));
+        
+        foreach ($kickedAnggota as $anggota) {
+            $this->sendNotificationToMentor($anggota->user_id, 'Anda telah di-kick dari tim', 'Anda tidak lagi menjadi anggota tim.', 'deadline');
+        }
 
         $iteration = 0;
         foreach ($uniqueDaftarAnggota as $anggota) {
