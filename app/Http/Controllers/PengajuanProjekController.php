@@ -72,6 +72,14 @@ class PengajuanProjekController extends Controller
 
     protected function persetujuanProject(Request $request, $code)
     {
+        if ($request->deadlineInput) {
+            if ($request->deadlineInput < now()) {
+                return back()->with('warning', 'Deadline tidak valid');
+            } else {
+                $deadline = $request->deadlineInput;
+            }
+        }
+
         $project = Project::where('code', $code)->firstOrFail();
         $project->tema_id = $request->temaInput;
         $project->status_project = 'approved';
@@ -98,14 +106,6 @@ class PengajuanProjekController extends Controller
             default:
                 $deadline->addWeek(8);
                 break;
-        }
-
-        if ($request->deadlineInput) {
-            if ($request->deadlineInput < $deadline) {
-                return back()->with('warning', 'Deadline tidak valid');
-            } else {
-                $deadline = $request->deadlineInput;
-            }
         }
 
         $project->deadline = $deadline;
