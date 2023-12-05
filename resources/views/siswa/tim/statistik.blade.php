@@ -118,7 +118,7 @@
                                                     id="user-kontribusi-{{ $user->uuid }}"
                                                     onclick="getKontribusi('{{ $user->uuid }}')">
                                                     <img style="object-fit: cover;"
-                                                        @if ($user->avatar !== null) src="{{ asset('storage' . $user->avatar) }}"
+                                                        @if ($user->avatar !== null) src="{{ asset('storage/' . $user->avatar) }}"
                                                 @else
                                                 src="{{ asset('assets/img/avatars/1.png') }}" @endif
                                                         alt="User" class="rounded-circle me-3" width="34">
