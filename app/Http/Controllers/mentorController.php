@@ -8,6 +8,7 @@ use App\Http\Requests\RequestEditGalery;
 use App\Models\Galery;
 use App\Models\HistoryPresentasi;
 use App\Models\Notifikasi;
+use App\Models\Anggota;
 use App\Models\PenglolaMagang;
 use App\Models\Presentasi;
 use App\Models\Project;
@@ -345,34 +346,46 @@ class mentorController extends Controller
                 $query->where('id', $tim);
             })
             ->get();
+        // $users = User::where('peran_id', 1)->where('status_kelulusan', 0)
+        // ->where(function ($query) use ($tim) {
+        //     $query->whereDoesntHave('tim', function ($subQuery) {
+        //         $subQuery->where('kadaluwarsa', false);
+        //     })
+        //         ->orWhere(function ($subQuery) use ($tim) {
+        //             $subQuery->whereHas('tim', function ($innerSubQuery) use ($tim) {
+        //                 $innerSubQuery->where('id', $tim);
+        //             });
+        //         });
+        // })
+        // ->get();
+        // dd($tim);
+        $users = Anggota::whereIn('status', ['kicked','expired'])
+            ->where('tim_id', '!=', $tim)
+            ->orWhere(function ($query) use ($tim) {
+                $query->where('tim_id', $tim)
+                    ->where('status', 'active');
+            })
+            ->get();
+        $usersArray = $users->pluck('user_id')->toArray();
+        $uniqueUsersArray = array_unique($usersArray);
 
-            $users = User::where('peran_id', 1)
+        $usersArray = $users->pluck('user_id')->toArray();
+        $uniqueUsersArray = array_unique($usersArray);
+
+        $users1 = User::whereIn('id', $uniqueUsersArray)->get();
+
+        $users2 = User::where('peran_id', 1)
             ->where('status_kelulusan', 0)
             ->where(function ($query) use ($tim) {
-                $query->where(function ($subQuery) {
-                    $subQuery->doesntHave('tim', 'or', function ($innerSubQuery) {
-                        $innerSubQuery->where('kadaluwarsa', false);
-                    });
-                })
-                ->orWhere(function ($subQuery) use ($tim) {
-                    $subQuery->whereHas('anggota', function ($innerSubQuery) use ($tim) {
-                        $innerSubQuery->where('id', $tim)->orWhere('status', 'active');
-                    });
-                });
-            })
-            ->where(function ($query) use ($tim) {
-                $query->where(function ($subQuery) {
-                    $subQuery->doesntHave('anggota', 'or', function ($innerSubQuery) {
-                        $innerSubQuery->where('status', 'active');
-                    });
-                })
-                ->orWhere(function ($subQuery) use ($tim) {
-                    $subQuery->whereHas('anggota', function ($innerSubQuery) use ($tim) {
-                        $innerSubQuery->where('status', 'active')->where('tim_id', $tim);
-                    });
+                $query->whereDoesntHave('tim', function ($subQuery) {
+                    $subQuery->where('kadaluwarsa', false);
                 });
             })
             ->get();
+
+        $users = $users1->concat($users2);
+        // dd($combinedUsers);
+
 
 
 
@@ -433,7 +446,6 @@ class mentorController extends Controller
     {
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
-
         return response()->view('mentor.laporan-progres', compact('notifikasi'));
     }
 
@@ -441,8 +453,10 @@ class mentorController extends Controller
     {
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
+        $galery = Galery::where('status', 'album')->get();
+        $logo = Galery::where('status', 'logo')->get();
 
-        return response()->view('mentor.galery', compact('notifikasi'));
+        return response()->view('mentor.galery', compact('notifikasi', 'galery', 'logo'));
     }
 
     protected function getGalery()
@@ -512,9 +526,9 @@ class mentorController extends Controller
 
     protected function updateLogo(RequestEditGalery $request, $id)
     {
+        $foto = $request->file('foto');
         $logo = Galery::findOrFail($id);
 
-        $foto = $request->file('foto');
         if ($foto) {
             Storage::delete('public/img/' . $logo->foto);
 
@@ -522,23 +536,19 @@ class mentorController extends Controller
             $foto->storeAs('public/img/', $img);
             $logo->foto = $img;
         }
-
-        $judul = $request->input('judul');
-        if ($judul !== null) {
-            $logo->judul = $judul;
-        }
-
+        $logo->judul = $request->input('judul');
         $logo->status = 'logo';
         $logo->save();
 
         return response()->json(['logo' => $logo]);
     }
+
     protected function deleteGalery($id)
     {
         $galery = Galery::findOrFail($id);
         Storage::delete('public/img/' . $galery->foto);
         $galery->delete();
 
-        return response()->json(['galery' => $galery]);
+        return back();
     }
 }
