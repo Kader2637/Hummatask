@@ -345,18 +345,37 @@ class mentorController extends Controller
                 $query->where('id', $tim);
             })
             ->get();
-        $users = User::where('peran_id', 1)->where('status_kelulusan', 0)
+
+            $users = User::where('peran_id', 1)
+            ->where('status_kelulusan', 0)
             ->where(function ($query) use ($tim) {
-                $query->whereDoesntHave('tim', function ($subQuery) {
-                    $subQuery->where('kadaluwarsa', false);
-                })
-                    ->orWhere(function ($subQuery) use ($tim) {
-                        $subQuery->whereHas('tim', function ($innerSubQuery) use ($tim) {
-                            $innerSubQuery->where('id', $tim);
-                        });
+                $query->where(function ($subQuery) {
+                    $subQuery->doesntHave('tim', 'or', function ($innerSubQuery) {
+                        $innerSubQuery->where('kadaluwarsa', false);
                     });
+                })
+                ->orWhere(function ($subQuery) use ($tim) {
+                    $subQuery->whereHas('anggota', function ($innerSubQuery) use ($tim) {
+                        $innerSubQuery->where('id', $tim)->orWhere('status', 'active');
+                    });
+                });
+            })
+            ->where(function ($query) use ($tim) {
+                $query->where(function ($subQuery) {
+                    $subQuery->doesntHave('anggota', 'or', function ($innerSubQuery) {
+                        $innerSubQuery->where('status', 'active');
+                    });
+                })
+                ->orWhere(function ($subQuery) use ($tim) {
+                    $subQuery->whereHas('anggota', function ($innerSubQuery) use ($tim) {
+                        $innerSubQuery->where('status', 'active')->where('tim_id', $tim);
+                    });
+                });
             })
             ->get();
+
+
+
 
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
         return response()->json(['users' => $users, 'status_tim' => $status_tim, 'ketua' => $ketua, 'ketua_id' => $ketuaId]);
