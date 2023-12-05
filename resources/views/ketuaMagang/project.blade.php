@@ -82,7 +82,7 @@
                                                             data-bs-placement="top" title="{{ $anggota->user->username }}"
                                                             class="avatar avatar-sm pull-up">
                                                             <img class="rounded-circle"
-                                                                src="{{ $anggota->user->avatar ? Storage::url($anggota->user->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                                src="{{ $anggota->user->avatar ? asset('storage/' . $anggota->user->avatar) : asset('assets/img/avatars/1.png') }}"
                                                                 alt="Avatar">
                                                         </li>
                                                     @endforeach
@@ -121,8 +121,15 @@
                     </div>
                 </div>
             @empty
-                <p>Tidak ada data project</p>
+                <h6 class="text-center mt-4">Tidak Ada Projek <i class="ti ti-address-book-off"></i></h6>
+                <div class="mt-4 mb-3 d-flex justify-content-evenly">
+                    <img src="{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}"
+                        alt="page-misc-under-maintenance" width="300" class="img-fluid">
+                </div>
             @endforelse
+            <div>
+                {{ $projects->links('pagination::bootstrap-5') }}
+            </div>
         </div>
         {{-- Card --}}
         {{-- Script detail modal --}}
@@ -575,40 +582,6 @@
                 }
             }
         </script>
-
-        {{-- pagination --}}
-        <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-end">
-                <li class="page-item first">
-                    <a class="page-link" href="javascript:void(0);"><i class="ti ti-chevrons-left ti-xs"></i></a>
-                </li>
-                <li class="page-item prev">
-                    <a class="page-link" href="javascript:void(0);"><i class="ti ti-chevron-left ti-xs"></i></a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="javascript:void(0);">1</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="javascript:void(0);">2</a>
-                </li>
-                <li class="page-item active">
-                    <a class="page-link" href="javascript:void(0);">3</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="javascript:void(0);">4</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="javascript:void(0);">5</a>
-                </li>
-                <li class="page-item next">
-                    <a class="page-link" href="javascript:void(0);"><i class="ti ti-chevron-right ti-xs"></i></a>
-                </li>
-                <li class="page-item last">
-                    <a class="page-link" href="javascript:void(0);"><i class="ti ti-chevrons-right ti-xs"></i></a>
-                </li>
-            </ul>
-        </nav>
-        {{-- pagination --}}
 
     </div>
 @endsection
