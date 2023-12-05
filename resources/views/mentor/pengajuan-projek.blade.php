@@ -78,7 +78,7 @@
                                             <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
                                                 title="{{ $anggota->user->username }}" class="avatar avatar-sm pull-up">
                                                 <img class="rounded-circle"
-                                                    src="{{ $anggota->user->avatar ? Storage::url($anggota->user->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                    src="{{ $anggota->user->avatar ? asset('storage/' . $anggota->user->avatar) : asset('assets/img/avatars/1.png') }}"
                                                     alt="Avatar">
                                             </li>
                                         @endforeach
@@ -107,7 +107,7 @@
                                 Mini Project
                             @elseif ($item->tim->status_tim == 'big')
                                 Big Project @endif"
-                                data-logo="{{ Storage::url($item->tim->logo) }}"
+                                data-logo="{{ asset('storage/' . $item->tim->logo) }}"
                                 data-created-at="{{ $item->created_at->translatedFormat('l, j F Y') }}"
                                 data-anggota="{{ $anggotaJson }}" data-tema="{{ $temaJson }}"
                                 class="btn btn-primary btn-detail w-100"><span class="text-white">Detail</span></a>

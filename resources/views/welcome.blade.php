@@ -49,6 +49,18 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script src="{{ asset('assets/css/galery.css') }}"></script>
+    <style>
+        .responsive-img{
+            width: 100%;
+            height: auto;
+        }
+        @media (max-width: 768px){
+        .responsive-img {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+    </style>
 </head>
 
 <body>
@@ -322,7 +334,7 @@
                                 @if ($logo->isEmpty())
                                     <div class="justify-content-center" style="display: flex;">
                                         <img src="{{ asset('assets/img/illustrations/noData2.png') }}"
-                                            alt="page-misc-under-maintenance" width="500">
+                                            alt="page-misc-under-maintenance" class="responsive-img">
                                     </div>
                                 @else
                                     <div class="swiper-wrapper">
@@ -361,7 +373,7 @@
                 <!-- For Demo Purpose -->
                 <header class="text-center">
                     <h3 class="display-4 font-weight-bold"><span style="color:#7367F0;">Galery </span> Hummasoft</h3>
-                    <p class="font-italic text-muted mb-0">galery kegiatan anak magang di hummasoft</p>
+                    <p class="font-italic text-muted mb-0">Galery kegiatan anak magang di hummasoft</p>
                     <p class="font-italic">Humma<a href="https://bootstrapious.com" class="text-muted">
                             <u>soft</u></a>
                     </p>
@@ -371,7 +383,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div id="news-slider" class="owl-carousel">
-                            @foreach ($galery as $item)
+                            @forelse ($galery as $item)
                                 <div class="post-slide">
                                     <div class="hover hover-4 text-white rounded ">
                                         <img src="{{ asset('storage/img/' . $item->foto) }}" alt="">
@@ -385,7 +397,11 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
+                                @empty
+                                <div class="justify-content-center" style="display: flex;">
+                                    <img src="{{ asset('assets/img/illustrations/noData.png') }}" alt="">
+                                </div>
+                            @endforelse
                         </div>
                     </div>
                 </div>

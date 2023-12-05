@@ -114,7 +114,7 @@
                                                                 title="{{ $anggota->user->username }}"
                                                                 class="avatar avatar-sm pull-up">
                                                                 <img class="rounded-circle"
-                                                                    src="{{ $anggota->user->avatar ? Storage::url($anggota->user->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                                    src="{{ $anggota->user->avatar ? asset('storage/' . $anggota->user->avatar) : asset('assets/img/avatars/1.png') }}"
                                                                     style="object-fit: cover" alt="Avatar">
                                                             </li>
                                                         @endforeach
