@@ -114,7 +114,7 @@ h4, h5, h6, .h4, .h5, .h6 {
     height: 100%;
     top: 0;
     left: 0;
-    background: rgba(0, 13, 255, 0.348);
+    background: rgba(36, 36, 42, 0.348);
     border-radius: 8px;
     transition: 0.5s;
     opacity: 0;

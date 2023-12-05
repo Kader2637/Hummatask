@@ -22,9 +22,9 @@ class RequestEditGalery extends FormRequest
     public function rules(): array
     {
         return [
-           'judul' => 'required|max:20',
-           'keterangan' => 'required|max:255',
-           'foto' => 'required|mimes:png,jpg,jpeg,gif'
+        //    'judul' => 'required|max:20',
+        //    'keterangan' => 'required|max:255',
+        //    'foto' => 'mimes:png,jpg,jpeg,gif'
         ];
     }
 }

@@ -15,7 +15,8 @@ use App\Http\Controllers\mentorController;
         use App\Http\Controllers\tambahUsersController;
         use App\Http\Controllers\timController;
         use App\Http\Controllers\TugasController;
-        use Illuminate\Support\Facades\Route;
+use App\Models\Galery;
+use Illuminate\Support\Facades\Route;
 
         Route::middleware('guest')->controller(authController::class)->group(function () {
             Route::get('/', 'welcomePage');
@@ -178,4 +179,10 @@ use App\Http\Controllers\mentorController;
             Route::put('edit-mentor/{uuid}', [tambahUsersController::class, 'edit_mentor'])->name('edit.mentor');
             Route::post('tambah-pengelola', [tambahUsersController::class, 'tambah_pengelola'])->name('tambah.pengelola');
             Route::post('tambah-role', [tambahUsersController::class, 'tambah_role'])->name('tambah.roles');
+        });
+
+        Route::get('coba', function () {
+            $galery = Galery::where('status','album')->get();
+
+            return view('coba',compact('galery'));
         });

@@ -260,104 +260,87 @@
     </div>
     {{-- modal create galery --}}
 
-    {{-- modal updata galery --}}
-    @foreach ($galery as $item)
-        <div class="modal fade" id="updateGalery{{ $item->id }}" tabindex="-1"
-            aria-labelledby="exampleModalLabel{{ $item->id }}">
-            <form class="updateGaleryModal" action="{{ route('galery.update', ['id' => $item->id]) }}" method="post"
-                enctype="multipart/form-data">
-                @method('PUT')
-                @csrf
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header d-flex align-items-center">
-                            <h4 class="modal-title" id="exampleModalLabel{{ $item->id }}">
-                                Galery
-                            </h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+    {{-- modal edit galery --}}
+    <div class="modal fade" id="modal-edit-galery" tabindex="-1" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form id="form-update-galery" method="put" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-header d-flex align-items-center">
+                        <h4 class="modal-title" id="exampleModalLabel">
+                            Galery
+                        </h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="" class="mb-3" style="width: 200px;"></div>
+                        <img id="logogalery" src="" alt=""
+                            style="width: 100px; margin-bottom: 10px; border-radius: 5px;">
+                        <div class="mb-3">
+                            <label for="" class="control-label">Judul :</label>
+                            <input type="text" class="form-control" name="judul" value="" id="judulgalery">
                         </div>
-                        <div class="modal-body">
-                            <div id="previewImage{{ $item->id }}" class="mb-3" style="width: 200px;"></div>
-                            <img src="{{ asset('storage/img/' . $item->foto) }}" alt=""
-                                style="width: 100px; margin-bottom: 10px; border-radius: 5px;">
-                            <div class="mb-3">
-                                <label for="" class="control-label">Judul :</label>
-                                <input type="text" class="form-control" name="judul" value="{{ $item->judul }}">
-                            </div>
-                            <div class="mb-3">
-                                <label for="" class="control-label">Keterangan :</label>
-                                <textarea name="keterangan" class="form-control" cols="5" rows="3" value="{{ $item->keterangan }}">{{ $item->keterangan }}</textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="" class="control-label">Foto :</label>
-                                <input type="file" class="form-control" name="foto"
-                                    id="previewImage{{ $item->id }}" value="{{ $item->foto }}">
-                            </div>
+                        <div class="mb-3">
+                            <label for="" class="control-label">Keterangan :</label>
+                            <textarea name="keterangan" class="form-control" cols="5" rows="3" value=""></textarea>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-light-danger text-danger font-medium"
-                                data-bs-dismiss="modal">
-                                Close
-                            </button>
-                            <button type="submit" class="btn btn-success">
-                                Save
-                            </button>
+                        <div class="mb-3">
+                            <label for="" class="control-label">Foto :</label>
+                            <input type="file" class="form-control" name="foto" id="logogalery" value="">
                         </div>
                     </div>
-                </div>
-            </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-danger text-danger font-medium"
+                            data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-success">
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-    @endforeach
-    {{-- modal updata galery --}}
+    </div>
+    {{-- modal edit galery --}}
 
-    {{-- modal update logo --}}
-    @foreach ($logo as $item)
-        <div class="modal fade" id="updateLogo{{ $item->id }}" tabindex="-1"
-            aria-labelledby="exampleModalLabel{{ $item->id }}">
-            <form class="updateLogoModal" action-logo="{{ route('logo.update', ['id' => $item->id]) }}" method="post"
-                enctype="multipart/form-data">
-                @method('PUT')
-                @csrf
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header d-flex align-items-center">
-                            <h4 class="modal-title" id="exampleModalLabel{{ $item->id }}">
-                                Logo
-                            </h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+    {{-- modal edit logo --}}
+    <div class="modal fade" id="modal-edit" tabindex="-1" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form id="form-update" method="put" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-header d-flex align-items-center">
+                        <h4 class="modal-title" id="exampleModalLabel">
+                            Logo
+                        </h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img id="logos" src="" alt=""
+                            style="width: 100px; margin-bottom: 10px; border-radius: 5px;">
+                        <div class="mb-3">
+                            <label for="recipient-name" class="control-label">Judul :</label>
+                            <input type="text" class="form-control" name="judul" id="judulLogo">
                         </div>
-                        <div class="modal-body">
-                            <div id="previewImage{{ $item->id }}" class="mb-3" style="width: 200px;"></div>
-                            <img src="{{ asset('storage/img/' . $item->foto) }}" alt=""
-                                style="width: 100px; margin-bottom: 10px; border-radius: 5px;">
-                            <div class="mb-3">
-                                <label for="recipient-name" class="control-label">Judul :</label>
-                                <input type="text" class="form-control" name="judul" value="{{ $item->judul }}">
-                            </div>
-                            <div class="mb-3">
-                                <label for="message-text" class="control-label">Foto :</label>
-                                <input type="file" class="form-control" name="foto"
-                                    id="previewImage{{ $item->id }}" value="{{ $item->foto }}">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-light-danger text-danger font-medium"
-                                data-bs-dismiss="modal">
-                                Close
-                            </button>
-                            <button type="submit" class="btn btn-success">
-                                Save
-                            </button>
+                        <div class="mb-3">
+                            <label for="message-text" class="control-label">Foto :</label>
+                            <input type="file" class="form-control" name="foto" id="logos">
                         </div>
                     </div>
-                </div>
-            </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-danger text-danger font-medium"
+                            data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-success" id="submit-btn">
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-    @endforeach
-    {{-- modal update logo --}}
-
+    </div>
 
     {{-- js galery --}}
     <script>
@@ -389,7 +372,7 @@
                     return;
                 }
 
-                if (judul.length > 20){
+                if (judul.length > 20) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
@@ -400,7 +383,7 @@
                     return;
                 }
 
-                if (keterangan.length > 250){
+                if (keterangan.length > 250) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
@@ -435,26 +418,32 @@
                     processData: false,
                     contentType: false,
                     success: function(data) {
+                        $('#createGalery').modal('hide');
                         Swal.fire({
                             icon: 'success',
                             title: 'Success',
                             text: 'Berhasil menambahkan data',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                // Tutup modal setelah SweetAlert ditutup
-                                $('#createGalery').modal('hide');
+                        })
 
+                        .then((result) => {
+                            if (result.isConfirmed) {
+                                loadGalery();
+                                $('#createGaleryForm')[0].reset();
                                 // Hapus class overlay yang menutupi halaman
                                 $('body').removeClass('modal-open');
                                 $('.modal-backdrop').remove();
-                                window.location.reload();
-
-                                loadGalery();
                             }
                         });
                     },
                     error: function(error) {
-                        // console.error('Error:', error);
+                        var errorData = response.responseJSON;
+                        Swal.fire({
+                            title: 'error',
+                            icon: 'Error',
+                            text: 'Terjadi kesalahan ' + error,
+                            showConfirmButton: true,
+                            timer: 2000
+                        });
                     },
                     complete: function() {
                         isSubmitting =
@@ -481,18 +470,21 @@
                                 <div class="event-overlay d-flex flex-column p-4">
                                     <h4 class="me-auto fs-5 fw-light" style="color: white;">${item.judul}</h4>
                                     <div class="my-auto">
-                                        <a class="btn btn-outline-primary"
+                                        <a class="btn btn-primary"
                                             href="{{ asset('storage/img/') }}/${item.foto}"
                                             data-lightbox="event-5"><i class="bi bi-eye"></i></a>
                                         <button type="button"
-                                            class="btn btn-outline-success " data-id=""
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#updateGalery${item.id}"><i
+                                            class="btn btn-success button-edit-galery" data-id=""
+                                            id="${item.id}"
+                                            data-idgalery="${item.id}"
+                                            data-judulgalery="${item.judul}"
+                                            data-keterangan="${item.keterangan}"
+                                            data-fotogalery="${item.foto}"><i
                                             class="bi bi-pencil-square"></i></button>
                                         <form action="{{ route('galery.delete', ['']) }}/${item.id}" method="post" id="deleteForm${item.id}">
                                             @method('DELETE')
                                             @csrf
-                                            <button type="button" class="btn btn-outline-danger delete-icon" data-id="${item.id}">
+                                            <button type="button" class="btn btn-danger delete-icon" data-id="${item.id}">
                                                 <i class="bi bi-trash"></i>
                                             </button>
                                         </form>
@@ -502,10 +494,38 @@
                         </div>`;
                         });
                         $('#galery').html(html);
+                        $('.button-edit-galery').click(function() {
+                            var id = $(this).data('idgalery');
+                            var judulgalery = $(this).data('judulgalery');
+                            var keterangan = $(this).data('keterangan');
+                            var fotogalery = $(this).data('fotogalery');
+
+                            $('#judulgalery').val(judulgalery);
+                            $('#keterangan').val(keterangan);
+                            $('#fotogalery').attr('src', fotogalery);
+                            $('#logogalery').attr('src', '{{ asset('storage/img/') }}/' + fotogalery)
+                                .attr('alt', 'Logo')
+                                .css({
+                                    'width': '100px',
+                                    'margin-bottom': '10px',
+                                    'border-radius': '5px'
+                                });
+
+                            var formData = {
+                                id: id,
+                                judulgalery: judulgalery,
+                                keterangan: keterangan,
+                                fotogalery: fotogalery
+                            };
+
+                            setFormValues('form-update-galery', formData);
+                            $('#form-update-galery').data('id', id);
+                            $('#modal-edit-galery').modal('show');
+                        });
                     } else {
                         $('#galery').html(
                             '<div class="justify-content-center" style="display: flex;"><img src="{{ asset('assets/img/illustrations/noData.png') }}" alt="page-misc-under-maintenance" width="500"></div>'
-                            );
+                        );
                     }
                 },
                 error: function(error) {
@@ -520,109 +540,56 @@
     </script>
     {{-- js galery --}}
 
-    {{-- edit galery --}}
+    {{-- script edit galery --}}
     <script>
         $(document).ready(function() {
-            $('.updateGaleryModal').submit(function(e) {
+            function emptyForm(formId) {
+                $('#' + formId)[0].reset();
+            }
+
+            $('#form-update-galery').on('submit', function(e) {
                 e.preventDefault();
+                const id = $(this).data('id');
+                var formData = new FormData(this);
 
-                var form = $(this); // Simpan referensi form yang sedang di-submit
-
-                var judul = form.find('input[name="judul"]').val();
-                var keterangan = form.find('textarea[name="keterangan"]').val();
-                var foto = form.find('input[name="foto"]').val();
-
-                if (!judul.trim() || !foto) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Pastikan data terisi semua!',
-                    });
-                    return;
-                }
-
-                if (judul.length > 20) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Judul maksimal 20 karakter!',
-                    });
-                    isSubmitting = false;
-                    return;
-                }
-
-                if (keterangan.length > 250) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Judul maksimal 250 karakter!',
-                    });
-                    isSubmitting = false;
-                    return;
-                }
-
-                var file = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-                var fotoExt = foto.substr(foto.lastIndexOf('.'));
-
-                if (!file.exec(fotoExt)) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Jenis file yang diizinkan hanya jpg, jpeg, png !',
-                    });
-                    isSubmitting = false; // Set flag kembali menjadi false setelah validasi error
-                    return;
-                }
-
-                var formData = new FormData(form[0]);
-
-                var updateGalery = form.attr('action');
-                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                formData.append('_method', 'PUT');
 
                 $.ajax({
+                    url: "galery-update/" + id,
                     type: "POST",
-                    url: updateGalery,
+                    dataType: "JSON",
                     data: formData,
                     processData: false,
                     contentType: false,
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken
-                    },
-                    success: function(data) {
+                    success: function(response) {
                         Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: 'Berhasil Mengubah Data',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                var modalId = form.closest('.modal').attr('id');
-                                $('#' + modalId).modal('hide');
-
-                                $('body').removeClass('modal-open');
-                                $('.modal-backdrop').remove();
-                                window.location.reload();
-
-                                loadGalery();
-                            }
+                            title: "Berhasil",
+                            icon: "success",
+                            text: "Berhasil mengubah data!",
+                            showConfirmButton: false,
+                            timer: 2000
                         });
+
+                        loadGalery()
+                        $('#modal-edit-galery').modal('hide');
+                        emptyForm('form-update-galery');
+                        console.log(response);
                     },
-                    error: function(xhr, status, error) {
-                        // console.error('Error', error);
+                    error: function(response) {
+                        var errorData = response.responseJSON;
                         Swal.fire({
                             icon: 'error',
-                            title: 'Oops...',
-                            text: 'Terjadi kesalahan saat mengubah data.',
+                            title: 'Error',
+                            text: 'Terjadi kesalahan' + error,
+                            showConfirmButton: true,
+                            timer: 2000
                         });
-                    },
-                    complete: function(xhr, status) {
-                        // console.log(xhr);
-                        // console.log(status);
                     }
                 });
             });
         });
     </script>
-    {{-- edit galery --}}
+    {{-- script edit galery --}}
 
     {{-- js logo --}}
     <script>
@@ -677,26 +644,30 @@
                     processData: false,
                     contentType: false,
                     success: function(data) {
+                        $('#createLogo').modal('hide');
                         Swal.fire({
                             icon: 'success',
                             title: 'Success',
-                            text: 'Berhasil menambahkan data',
+                            text: 'Berhasil menambahkan data'
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                // Tutup modal setelah SweetAlert ditutup
-                                $('#createLogo').modal('hide');
-
+                                loadLogo()
+                                $('#createLogoForm')[0].reset();
                                 // Hapus class overlay yang menutupi halaman
                                 $('body').removeClass('modal-open');
                                 $('.modal-backdrop').remove();
-                                window.location.reload();
-
-                                loadLogo();
                             }
                         });
                     },
                     error: function(error) {
-                        // console.error('Error:', error);
+                        var errorData = response.responseJSON;
+                        Swal.fire({
+                            title: 'error',
+                            icon: 'Error',
+                            text: 'Terjadi kesalahan ' + error,
+                            showConfirmButton: true,
+                            timer: 2000
+                        });
                     },
                     complete: function() {
                         Button =
@@ -705,6 +676,33 @@
                 });
             });
         });
+        loadLogo()
+
+        function getDataAttributes(element) {
+            var attributes = {};
+            $(element).each(function() {
+                $.each(this.attributes, function() {
+                    if (this.specified && this.name.startsWith('data-')) {
+                        var key = this.name.substr(5); // Menghapus "data-" dari awal nama atribut
+                        attributes[key] = this.value;
+                    }
+                });
+            });
+            return attributes;
+        }
+
+        function setFormValues(formId, formData) {
+            // Mengisi nilai-nilai input dalam formulir dengan data yang diberikan
+            var form = document.getElementById(formId);
+            for (var key in formData) {
+                if (formData.hasOwnProperty(key)) {
+                    var input = form.querySelector('[name="' + key + '"]');
+                    if (input) {
+                        input.value = formData[key];
+                    }
+                }
+            }
+        }
 
         function loadLogo() {
             $.ajax({
@@ -717,30 +715,32 @@
                         data.logo.forEach(function(itemLogo) {
                             html += `
                             <div class="col-md-6 col-lg-3 wow bounceInUp" data-wow-delay="0.1s">
-                                <div class="event-img position-relative">
+                                <div class="event-img position-relative" style="width:100% !important; height: 206px !important; overflow: hidden !important;">
                                     <img class="img-fluid rounded "
                                         src="{{ asset('storage/img/') }}/${itemLogo.foto}"
-                                        alt="" width="300px" height="300px" style="object-fit:cover">
+                                        alt="" style="object-fit: cover !important; width: 100% !important; height: 100% !important">
                                     <div class="event-overlay d-flex flex-column p-4">
                                         <h4 class="me-auto fs-5 fw-light" style="color: white;">${itemLogo.judul}</h4>
                                         <div class="my-auto">
-                                            <a class="btn btn-outline-primary"
+                                            <a class="btn btn-primary"
                                                 href="{{ asset('storage/img/') }}/${itemLogo.foto}"
                                                 data-lightbox="event-5"><i class="bi bi-eye"></i></a>
-                                            <button type="button"
-                                                class="btn btn-outline-success " data-id=""
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#updateLogo${itemLogo.id}"><i
-                                                    class="bi bi-pencil-square"></i></button>
-                                            <form
-                                                action="{{ route('galery.delete', ['']) }}/${itemLogo.id}"
-                                                method="post" id="deleteForm${itemLogo.id}">
+                                                <button type="button"
+                                                class="btn btn-success button-edit"
+                                                id="${itemLogo.id}"
+                                                data-id="${itemLogo.id}"
+                                                data-judullogo="${itemLogo.judul}"
+                                                data-fotologo="${itemLogo.foto}">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+                                            <form action="{{ route('galery.delete', ['']) }}/${itemLogo.id}" method="post" id="deleteForm${itemLogo.id}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="button"
-                                                    class="btn btn-outline-danger delete-icon"
+                                                    class="btn btn-danger delete-icon"
                                                     data-id="${itemLogo.id}"><i
-                                                        class="bi bi-trash"></i></button>
+                                                        class="bi bi-trash"></i>
+                                                </button>
                                             </form>
                                         </div>
                                     </div>
@@ -748,10 +748,35 @@
                             </div>`;
                         });
                         $('#logo').html(html);
+                        $('.button-edit').click(function() {
+                            var id = $(this).data('id');
+                            var judullogo = $(this).data('judullogo');
+                            var fotologo = $(this).data('fotologo');
+
+                            $('#judulLogo').val(judullogo);
+                            $('#fotoLogo').attr('src', fotologo);
+                            $('#logos').attr('src', '{{ asset('storage/img/') }}/' + fotologo)
+                                .attr('alt', 'Logo')
+                                .css({
+                                    'width': '100px',
+                                    'margin-bottom': '10px',
+                                    'border-radius': '5px'
+                                });
+
+                            var formData = {
+                                id: id,
+                                judullogo: judullogo,
+                                fotologo: fotologo
+                            };
+
+                            setFormValues('form-update', formData);
+                            $('#form-update').data('id', id);
+                            $('#modal-edit').modal('show');
+                        });
                     } else {
                         $('#logo').html(
                             '<div class="justify-content-center" style="display: flex;"><img src="{{ asset('assets/img/illustrations/noData.png') }}" alt="page-misc-under-maintenance" width="500"></div>'
-                            );
+                        );
                     }
                     // Set HTML di elemen #galery
                 },
@@ -766,85 +791,54 @@
     </script>
     {{-- js logo --}}
 
-    {{-- edit logo --}}
+    {{-- script edit logo --}}
     <script>
         $(document).ready(function() {
-            $('.updateLogoModal').submit(function(e) {
+          function emptyForm(id) {
+            $('#' + id)[0].reset();
+          }
+            $('#form-update').on('submit', function(e) {
                 e.preventDefault();
-
-                var form = $(this); // Simpan referensi form yang sedang di-submit
-
-                var judul = form.find('input[name="judul"]').val();
-                var foto = form.find('input[name="foto"]').val();
-
-                if (!judul.trim() || !foto) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Pastikan data terisi semua!',
-                    });
-                    return;
-                }
-
-                var file = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-                var fotoExt = foto.substr(foto.lastIndexOf('.'));
-
-                if (!file.exec(fotoExt)) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Jenis file yang diizinkan hanya jpg, jpeg, png !',
-                    });
-                    isSubmitting = false; // Set flag kembali menjadi false setelah validasi error
-                    return;
-                }
-
-                var formData = new FormData(form[0]);
-
-                var updateLogo = form.attr('action-logo');
-                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                const id = $(this).data('id');
+                var formData = new FormData(this);
+                formData.append('_method', 'PUT');
 
                 $.ajax({
+                    url: "logo-update/" + id,
                     type: "POST",
-                    url: updateLogo,
+                    dataType: "JSON",
                     data: formData,
                     processData: false,
                     contentType: false,
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken
-                    },
-                    success: function(data) {
+                    success: function(response) {
                         Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: 'Berhasil Mengubah Data',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                var modalId = form.closest('.modal').attr('id');
-                                $('#' + modalId).modal('hide');
-
-                                $('body').removeClass('modal-open');
-                                $('.modal-backdrop').remove();
-                                window.location.reload();
-
-                                loadLogo();
-                            }
+                            title: "Berhasil",
+                            icon: "success",
+                            text: "Berhasil mengubah data!",
+                            showConfirmButton: false,
+                            timer: 2000
                         });
+
+                        loadLogo()
+                        $('#modal-edit').modal('hide');
+                        emptyForm('form-update');
+                        console.log(response);
                     },
-                    error: function(xhr, status, error) {
-                        // console.error('Error', error);
+                    error: function(response) {
+                        var errorData = response.responseJSON;
                         Swal.fire({
                             icon: 'error',
-                            title: 'Oops...',
-                            text: 'Terjadi kesalahan saat mengubah data.',
+                            title: 'Error',
+                            text: 'Terjadi kesalahan' + error,
+                            showConfirmButton: true,
+                            timer: 2000
                         });
-                    },
-                    complete: function(xhr, status) {}
+                    }
                 });
             });
         });
     </script>
-    {{-- edit logo --}}
+    {{-- script edit logo --}}
 
     {{-- swicth alert delete --}}
     <script>
@@ -866,15 +860,34 @@
                         confirmButton: 'btn btn-danger me-3',
                     },
                     buttonsStyling: false,
+
                 }).then(function(confirmDelete) {
                     if (confirmDelete.isConfirmed) {
-                        deleteForm.submit();
-
-                        Swal.fire({
-                            title: 'Success',
-                            text: 'Berhasil menghapus data',
-                            icon: 'success'
+                        $.ajax({
+                            type: "DELETE",
+                            url: "galery-delete/" + formId,
+                            data: $(deleteForm).serialize(),
+                            dataType: "JSON",
+                            success: function(response) {
+                                Swal.fire({
+                                    title: 'Success',
+                                    text: 'Berhasil menghapus data',
+                                    icon: 'success',
+                                    timer: 2000
+                                }).then(function() {
+                                    loadLogo(),
+                                        loadGalery()
+                                });
+                            },
+                            error: function(xhr, status, error) {
+                                Swal.fire({
+                                    title: 'error',
+                                    icon: 'Error',
+                                    text: 'Terjadi kesalahan'
+                                });
+                            }
                         });
+
                     }
                 });
             });

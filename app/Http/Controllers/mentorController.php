@@ -198,7 +198,7 @@ class mentorController extends Controller
             ->whereHas('project')
             ->get();
 
-        $tidakPresentasiMingguan = TidakPresentasiMingguan::with('tim.ketuaTim','historyPresentasi')->get();
+        $tidakPresentasiMingguan = TidakPresentasiMingguan::with('tim.ketuaTim', 'historyPresentasi')->get();
 
         return response()->view('mentor.history', compact('tidakPresentasiMingguan', 'telatDeadline', 'presentasiSelesai', 'timSolo', 'timGroup', 'notifikasi'));
     }
@@ -414,6 +414,7 @@ class mentorController extends Controller
     {
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
+
         return response()->view('mentor.laporan-progres', compact('notifikasi'));
     }
 
@@ -421,10 +422,8 @@ class mentorController extends Controller
     {
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
-        $galery = Galery::where('status', 'album')->get();
-        $logo = Galery::where('status', 'logo')->get();
 
-        return response()->view('mentor.galery', compact('notifikasi', 'galery', 'logo'));
+        return response()->view('mentor.galery', compact('notifikasi'));
     }
 
     protected function getGalery()
@@ -494,9 +493,9 @@ class mentorController extends Controller
 
     protected function updateLogo(RequestEditGalery $request, $id)
     {
-        $foto = $request->file('foto');
         $logo = Galery::findOrFail($id);
 
+        $foto = $request->file('foto');
         if ($foto) {
             Storage::delete('public/img/' . $logo->foto);
 
@@ -504,19 +503,23 @@ class mentorController extends Controller
             $foto->storeAs('public/img/', $img);
             $logo->foto = $img;
         }
-        $logo->judul = $request->input('judul');
+
+        $judul = $request->input('judul');
+        if ($judul !== null) {
+            $logo->judul = $judul;
+        }
+
         $logo->status = 'logo';
         $logo->save();
 
         return response()->json(['logo' => $logo]);
     }
-
     protected function deleteGalery($id)
     {
         $galery = Galery::findOrFail($id);
         Storage::delete('public/img/' . $galery->foto);
         $galery->delete();
 
-        return back();
+        return response()->json(['galery' => $galery]);
     }
 }
