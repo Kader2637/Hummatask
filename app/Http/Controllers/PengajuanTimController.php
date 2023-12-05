@@ -347,6 +347,15 @@ class PengajuanTimController extends Controller
                 'jabatan_id' => 3,
             ]);
 
+            $kickedAnggota = $timId->anggota->whereNotIn('user_id', $uniqueDaftarAnggota);
+            // dd($uniqueDaftarAnggota, $kickedAnggota);
+            foreach ($kickedAnggota as $anggota) {
+                $this->sendNotificationToMentor($anggota->user_id, 'Anda telah di-kick dari tim', 'Anda tidak lagi menjadi anggota tim.', 'deadline');
+            }
+
+
+
+
         $iteration = 0;
         foreach ($uniqueDaftarAnggota as $anggota) {
             $existingAnggota = Anggota::where('tim_id', $timId->id)
@@ -374,6 +383,17 @@ class PengajuanTimController extends Controller
         }
 
         return response()->json(['success' => 'Berhasil update tim'], 200);
+    }
+
+    protected function sendNotificationToMentor($mentorId, $title, $message, $jenisNotifikasi)
+    {
+        Notifikasi::create([
+            'user_id' => $mentorId,
+            'judul' => $title,
+            'body' => $message,
+            'status' => 'belum_dibaca',
+            'jenis_notifikasi' => $jenisNotifikasi,
+        ]);
     }
 
     protected function pembuatanTimProjectKetua(RequestPembentukanTimProjectKetua $request)
