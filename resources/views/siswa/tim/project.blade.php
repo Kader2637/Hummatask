@@ -162,11 +162,29 @@
                         @if (@isset($project) && $project->status_project === 'approved')
                             <div class="row">
                                 <div class="col mb-3">
-                                    <label for="nameWithTitle" class="form-label">Deskripsi</label>
+                                    <label for="nameWithTitle" class="form-label">Deskripsi <span id="deskripsi-length"
+                                            class="text-warning">Panjang deskripsi anda karakter, maks 500
+                                            karakter</span></label>
                                     <textarea style="height: 150px; resize: none;" name="deskripsiInput" id="deskripsiEdit" class="form-control"
                                         placeholder="Masukkan deskripsi project anda">{{ $project->deskripsi ?? '' }}</textarea>
                                 </div>
                             </div>
+                            <script>
+                                $(document).ready(function() {
+                                    var initialText = $('#deskripsiEdit').val();
+                                    var initialCharCount = initialText.length;
+                                    $('#deskripsi-length').text('Panjang deskripsi anda ' + initialCharCount +
+                                        ' karakter, maks 500 karakter');
+
+                                    $('#deskripsiEdit').on('input', function() {
+                                        var text = $(this).val();
+                                        var totalCharCount = text.length;
+
+                                        $('#deskripsi-length').text('Panjang deskripsi anda ' + totalCharCount +
+                                            ' karakter, maks 500 karakter');
+                                    });
+                                });
+                            </script>
                         @else
                             <label for="nameWithTitle" class="form-label">Deskripsi</label>
                             <div class="alert alert-warning d-flex align-items-center mt-4 cursor-pointer" role="alert">
@@ -265,7 +283,8 @@
                                 {{-- card projects --}}
                                 <div class="card">
                                     <div class="card-header">
-                                        <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-2">
+                                        <div
+                                            class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-2">
                                             <div class="fs-4 text-black">
                                                 Project
                                             </div>
@@ -375,7 +394,8 @@
                                                 </div>
                                             @elseif (@isset($project) && $project->deskripsi == null)
                                                 <div class="alert alert-warning d-flex align-items-center mt-4 cursor-pointer"
-                                                    role="alert" data-bs-toggle="modal" data-bs-target="#editProject">
+                                                    role="alert" data-bs-toggle="modal" data-bs-target="#editProject"
+                                                    style="font-size: 12px">
                                                     <span class="alert-icon text-warning me-2">
                                                         <i class="ti ti-bell ti-xs"></i>
                                                     </span>
@@ -384,7 +404,8 @@
                                                 </div>
                                             @else
                                                 <div class="alert alert-warning d-flex align-items-center mt-4 cursor-pointer"
-                                                    role="alert" data-bs-toggle="modal" data-bs-target="#editProject">
+                                                    role="alert" data-bs-toggle="modal" data-bs-target="#editProject"
+                                                    style="font-size: 12px">
                                                     <span class="alert-icon text-warning me-2">
                                                         <i class="ti ti-bell ti-xs"></i>
                                                     </span>
@@ -416,18 +437,19 @@
                         <div class="row mt-2 justify-content-center align-items-center grid">
                             {{-- Anggota --}}
                             @forelse ($anggota as $item)
-                                <div class="col-lg-4" style="box-shadow: none">
+                                <div class="col-lg-4 my-1 px-1" style="box-shadow: none">
                                     <div class="card">
                                         <div class="card-body d-flex gap-3 align-items-center">
                                             <div>
                                                 <img width="30px" height="30px" class="rounded-circle"
                                                     style="object-fit: cover"
-                                                    src="{{ $item->user->avatar ? asset('storage/'.$item->user->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                    src="{{ $item->user->avatar ? asset('storage/' . $item->user->avatar) : asset('assets/img/avatars/1.png') }}"
                                                     alt="foto user">
                                             </div>
                                             <div>
-                                                <h5 class="mb-0" style="font-size: 15px">
-                                                    {{ $item->user->username }}</h5>
+                                                <h5 class="mb-0" style="font-size: 15px" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" title="{{ $item->user->username }}">
+                                                    {{ Str::limit($item->user->username, 18) }}</h5>
                                                 <div>
                                                     @if ($item->status == 'active')
                                                         <span
@@ -810,7 +832,8 @@
                         datasets: [{
                             data: values,
                             backgroundColor: [cardColor, '#F9ED69', '#F08A5D', '#B83B5E',
-                                '#6A2C70'],
+                                '#6A2C70'
+                            ],
                             hoverOffset: 4
                         }]
                     },

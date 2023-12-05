@@ -65,7 +65,7 @@
                     }
                     $temaJson = json_encode($temaArray);
                 @endphp
-                <div class="col-md-6 col-lg-3">
+                <div class="col-md-6 col-lg-4">
                     <div class="card text-center mb-3">
                         <div class="card-body">
                             <img src="{{ asset('storage/' . $item->tim->logo) }}" alt="logo tim"

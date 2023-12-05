@@ -23,7 +23,7 @@
                             <div class="flex-shrink-0 mt-n2 mx-sm-0 mx-auto">
                                 <label class="form-label text-white" for="image-input3">
                                     <img id="preview-image3"
-                                        src="{{ $user->avatar ? asset('storage' . $user->avatar) : asset('assets/img/avatars/pen.png') }}"
+                                        src="{{ $user->avatar ? asset('storage/' . $user->avatar) : asset('assets/img/avatars/pen.png') }}"
                                         alt="example placeholder"
                                         style="width: 150px; height: 150px; border-radius: 10px; cursor: pointer; object-fit:cover;"
                                         class="d-block ms-0 ms-sm-4 rounded user-profile-img" />

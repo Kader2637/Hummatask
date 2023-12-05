@@ -51,7 +51,7 @@
                 </div>
             </div>
             @forelse ($tims as $tim)
-                <div class="col-md-6 col-lg-3">
+                <div class="col-md-6 col-lg-4">
                     <div class="card text-center mb-3 tim-item" data-status-tim="{{ $tim->status_tim }}">
                         <div class="card-body">
                             <img src="{{ asset('storage/' . $tim->logo) }}" alt="logo tim" class="rounded-circle mb-3"
