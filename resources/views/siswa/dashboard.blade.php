@@ -127,8 +127,9 @@
                                         <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
                                             aria-label="{{ $data->username }}"
                                             data-bs-original-title="{{ $data->username }}">
-                                            <img src="{{ asset('storage/' . $data->avatar) }}" alt="Avatar"
-                                                class="rounded-circle pull-up">
+                                            <img class="rounded-circle"
+                                            src="{{ $data->avatar ? asset('storage/' . $data->avatar) : asset('assets/img/avatars/1.png') }}"
+                                            alt="Avatar" style="object-fit: cover">
                                         </div>
                                     @endforeach
                                 </div>
