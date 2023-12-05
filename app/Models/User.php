@@ -102,4 +102,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Anggota::class,'id','user_id');
     }
+
+    public function anggotaReal():HasMany
+    {
+        return $this->hasMany(Anggota::class);
+    }
 }

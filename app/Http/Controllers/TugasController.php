@@ -59,7 +59,7 @@ class TugasController extends Controller
 
         return response()->json([
             "tugas" => $tugas,
-            "status_keanggotaan" => $user->anggota->status,
+            "status_keanggotaan" => $user->anggotaReal->where('tim_id',$tim->id)->sortByDesc('created_at')->first()->status,
         ]);
     }
 
@@ -68,9 +68,9 @@ class TugasController extends Controller
 
 
         $tim = Tim::where('code', $request->tim_id)->first();
-        $user = $tim->user->where('id',Auth::user()->id)->first();
+        $user = User::where('id',Auth::user()->id)->first();
 
-        if ($user->anggota->status !== "active") {
+        if ($user->anggotaReal->where('tim_id', $tim->id)->sortByDesc('created_at')->first()->status !== "active") {
             return response()->json([
                 "errors" => ["Anda sudah bukan menjadi bagian dari tim"]
             ],422);
@@ -248,7 +248,7 @@ class TugasController extends Controller
 
 
 
-       
+
         if ($tugas->tim->status_tim !== "solo") {
 
 
@@ -298,7 +298,7 @@ class TugasController extends Controller
 
 
 
-                
+
 
 
                 if ($user) {
@@ -352,13 +352,13 @@ class TugasController extends Controller
         $labels = $request->labels;
         $currentLabels = $tugas->label->pluck('id')->toArray();
 
-        
+
         $labelToAdd = array_diff($labels, $currentLabels);
         $labelToRemove = array_diff($currentLabels, $labels);
 
         $semuaLabel = [...$labelToAdd,...$currentLabels];
 
-        
+
         $benerBenerSemualabel = array_diff($semuaLabel,$labelToRemove);
         // dd($benerBenerSemualabel);
 
