@@ -306,10 +306,10 @@
                                                 data-bs-toggle="tooltip" data-popup="tooltip-custom"
                                                 data-bs-placement="top" title="{{ $item->tim->nama }}">
                                         </td>
-                                        
+
                                             <td>{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('l, j F Y') }}
                                             </td>
-                                      
+
                                         <td>{{ $item->tim->status_tim }}</td>
                                         @foreach ($item->tim->project as $item)
                                             <td>{{ $item->tema->nama_tema }}</td>
@@ -408,17 +408,16 @@
                                         }
                                         $anggotaJson = json_encode($anggotaArray);
                                         $tanggalMulai = $item->project[0]->created_at->translatedFormat('Y-m-d');
-                                        $totalDeadline = null;
-                                        $dayLeft = null;
+                                        $tema = isset($item->project[0]->tema) ? $item->project[0]->tema->nama_tema : '';
                                         $deadline = \Carbon\Carbon::parse($item->project[0]->deadline)->translatedFormat('Y-m-d');
                                         $totalDeadline = \Carbon\Carbon::parse($deadline)->diffInDays($tanggalMulai);
                                         $dayLeft = \Carbon\Carbon::parse($deadline)->diffInDays(\Carbon\Carbon::now());
-                                        $progressPercentage = 100 - ($dayLeft / $totalDeadline) * 100;
+                                        $progressPercentage = $totalDeadline != 0 ? 100 - ($dayLeft / $totalDeadline) * 100 : 0;
                                     @endphp
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
-                                            <img src="{{ Storage::url($item->logo) }}" alt=""
+                                            <img src="{{ asset('storage/' . $item->logo) }}" alt=""
                                                 style="width:30px;height:30px;border-radius:50%; cursor: pointer"
                                                 data-bs-toggle="tooltip" data-popup="tooltip-custom"
                                                 data-bs-placement="top" title="{{ $item->nama }}">
@@ -430,7 +429,7 @@
                                                     <div class="avatar pull-up" data-bs-toggle="tooltip"
                                                         data-popup="tooltip-custom" data-bs-placement="top"
                                                         title="{{ $itemAnggota->username }}">
-                                                        <img src="{{ $itemAnggota->avatar ? Storage::url($itemAnggota->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                        <img src="{{ $itemAnggota->avatar ? asset('storage/' . $itemAnggota->avatar) : asset('assets/img/avatars/1.png') }}"
                                                             alt="Avatar" class="rounded-circle">
                                                     </div>
                                                 @endforeach
@@ -442,7 +441,7 @@
                                                 data-bs-toggle="modal" data-bs-target="#modalCenter"
                                                 data-logo="{{ asset('storage/' . $item->logo) }}"
                                                 data-namatim="{{ $item->nama }}" data-status="{{ $item->status_tim }}"
-                                                data-tema="{{ $item->project[0]->tema->nama_tema }}"
+                                                data-tema="{{ $tema }}"
                                                 data-tglmulai="{{ $item->created_at->translatedFormat('l, j F Y') }}"
                                                 data-deadline="{{ \Carbon\Carbon::parse($item->project[0]->deadline)->translatedFormat('l, j F Y') }}"
                                                 data-anggota="{{ $anggotaJson }}"
@@ -508,7 +507,7 @@
                                         </td>
                                         {{-- @dd($item) --}}
                                         <td>{{ $item->historyPresentasi->noMinggu }}/{{ $item->historyPresentasi->bulan }}/{{ $item->historyPresentasi->tahun }}</td>
-                                   
+
                                     </tr>
                                 @empty
                                 @endforelse
