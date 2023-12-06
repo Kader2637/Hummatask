@@ -42,7 +42,7 @@ class siswaController extends Controller
 
         $tugas = $tugas->take(3);
 
-        $tugasBelum = User::find(Auth::user()->id)->tugas()->where(function ($query) {
+        $tugasBelum = User::find(Auth::user()->id)->tugas()->where('tim_id',$timTerbaru->id)->where(function ($query) {
             $query->where('status_tugas', 'revisi')
                 ->OrWhere('status_tugas', 'dikerjakan');
         })->with('user')->get()
