@@ -317,13 +317,14 @@ class PengajuanTimController extends Controller
         $anggota = Anggota::whereIn('user_id', $uniqueDaftarAnggota);
 
         $existingAnggota = $anggota
-            ->where('tim_id', '!=', $timId->id)
-            ->where('status', 'active')
-            ->first();
+        ->where('tim_id', '!=', $timId->id)
+        ->where('status', 'active')
+        ->first();
 
-        if ($existingAnggota) {
-            return response()->json(['errors' => ['Siswa telah masuk di tim lain']], 422);
-        }
+    if ($existingAnggota) {
+        return response()->json(['errors' => ["Siswa {$existingAnggota->user->username} telah masuk di tim {$existingAnggota->tim->nama}"]], 422);
+    }
+
 
         $timId->status_tim = $request->status_tim;
         $timId->kadaluwarsa = $request->kadaluwarsa;
@@ -350,7 +351,7 @@ class PengajuanTimController extends Controller
             ]);
 
         $kickedAnggota = $timId->anggota->whereNotIn('user_id', array_merge($uniqueDaftarAnggota, $oldKickedAnggota));
-        
+
         foreach ($kickedAnggota as $anggota) {
             $this->sendNotificationToMentor($anggota->user_id, 'Anda telah di-kick dari tim', 'Anda tidak lagi menjadi anggota tim.', 'deadline');
         }

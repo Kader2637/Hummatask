@@ -359,16 +359,19 @@ class mentorController extends Controller
         // })
         // ->get();
         // dd($tim);
-        $users = Anggota::whereIn('status', ['kicked','expired'])
-            ->where('tim_id', '!=', $tim)
-            ->orWhere(function ($query) use ($tim) {
-                $query->where('tim_id', $tim)
-                    ->where('status', 'active');
-            })
-            ->get();
-        $usersArray = $users->pluck('user_id')->toArray();
-        $uniqueUsersArray = array_unique($usersArray);
+        $users = Anggota::where('tim_id', '!=', $tim)
+        ->orWhere(function ($query) use ($tim) {
+            $query->whereIn('status', ['kicked', 'expired']);
+        })
+        ->orWhere(function ($query) use ($tim) {
+            $query->where('tim_id', $tim)
+                  ->where('status', 'active');
+        })
+        ->get();
 
+
+
+        // dd($users);
         $usersArray = $users->pluck('user_id')->toArray();
         $uniqueUsersArray = array_unique($usersArray);
 
@@ -384,7 +387,7 @@ class mentorController extends Controller
             ->get();
 
         $users = $users1->concat($users2);
-        // dd($combinedUsers);
+        // dd($users);
 
 
 

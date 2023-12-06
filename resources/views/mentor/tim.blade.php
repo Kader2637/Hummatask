@@ -440,8 +440,8 @@
                                 icon: 'error',
                                 title: 'Error!',
                                 text: errorMessageText,
-                                showConfirmButton: false,
-                                timer: 2000,
+                                showConfirmButton: true,
+
                             });
                         } else {
                             // For other errors, display a generic error message
