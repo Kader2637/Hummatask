@@ -22,7 +22,10 @@ class siswaController extends Controller
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
 
-        $tugas = User::find(Auth::user()->id)->tugas()->where('status_tugas', 'tugas_baru')->with('user', 'comments')->get()
+        // dd($tims->sortByDesc('created_at'));
+        $timTerbaru = $tims->sortByDesc('created_at')->first();
+
+        $tugas = User::find(Auth::user()->id)->tugas()->where('tim_id',$timTerbaru->id)->where('status_tugas', 'tugas_baru')->with('user', 'comments')->get()
             ->sortBy(function ($item) {
                 $deadline = \Carbon\Carbon::parse($item->deadline);
                 $created = \Carbon\Carbon::parse($item->created_at);
