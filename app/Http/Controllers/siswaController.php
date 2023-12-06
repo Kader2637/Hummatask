@@ -23,9 +23,9 @@ class siswaController extends Controller
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
 
         // dd($tims->sortByDesc('created_at'));
-        $timTerbaru = $tims->sortByDesc('created_at')->first();
+        $timbaru = $tims->sortByDesc('created_at')->first();
 
-        $tugas = User::find(Auth::user()->id)->tugas()->where('tim_id',$timTerbaru->id)->where('status_tugas', 'tugas_baru')->with('user', 'comments')->get()
+        $tugas = User::find(Auth::user()->id)->tugas()->where('status_tugas', 'tugas_baru')->with('user', 'comments')->get()
             ->sortBy(function ($item) {
                 $deadline = \Carbon\Carbon::parse($item->deadline);
                 $created = \Carbon\Carbon::parse($item->created_at);
@@ -42,15 +42,19 @@ class siswaController extends Controller
 
         $tugas = $tugas->take(3);
 
-        $tugasBelum = User::find(Auth::user()->id)->tugas()->where('tim_id',$timTerbaru->id)->where(function ($query) {
+        $tugasBelum = User::find(Auth::user()->id)->tugas()->where(function ($query) use ($timbaru) {
             $query->where('status_tugas', 'revisi')
-                ->OrWhere('status_tugas', 'dikerjakan');
+                ->orWhere('status_tugas', 'dikerjakan');
+
+            if ($timbaru) {
+                $query->where('tim_id', $timbaru->id);
+            }
         })->with('user')->get()
             ->sortBy(function ($item) {
                 $deadline = \Carbon\Carbon::parse($item->deadline);
                 $created = \Carbon\Carbon::parse($item->created_at);
                 return $deadline->diffInDays($created);
-            });
+        });
 
         $tugasBelum = $tugasBelum->map(function ($item) {
             $deadline = \Carbon\Carbon::parse($item->deadline)->startOfDay();
