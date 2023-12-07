@@ -365,6 +365,7 @@
 
                 var judul = $('input[name="judul"]').val();
                 var foto = $('input[name="foto"]').val();
+                var keterangan = $('textarea[name="keterangan"]').val();
 
                 if (!judul || !foto ) {
                     Swal.fire({
