@@ -27,8 +27,7 @@
                         @foreach ($presentasi as $i => $item)
                             <tr>
                                 <td>{{ $no++ }}</td>
-                                <td class=""><img src="{{ asset('storage/' . $item->tim->logo) }}"
-                                    alt=""
+                                <td class=""><img src="{{ asset('storage/' . $item->tim->logo) }}" alt=""
                                         style="width: 40px; height: 40px; ;border-radius:50%; margin-right:5px;">
                                     {{ $item->tim->nama }}
                                 </td>
@@ -85,7 +84,7 @@
                     <div class="card-header header-elements">
                         <h5 class="card-title mb-0">Data Anak Magang</h5>
                         <div class="card-action-element ms-auto py-0">
-                            <div class="dropdown">
+                            {{-- <div class="dropdown">
                                 <button type="button" class="btn dropdown-toggle px-0" data-bs-toggle="dropdown"
                                     aria-expanded="false"><i class="ti ti-calendar"></i></button>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -107,6 +106,32 @@
                                             Month</a></li>
                                     <li><a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">Last
                                             Month</a></li>
+                                </ul>
+                            </div> --}}
+                            <div class="dropdown">
+                                <button type="button" class="btn dropdown-toggle px-0" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <i class="ti ti-calendar"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <form method="get">
+                                            <input type="hidden" value="{{ $currentYear }}">
+                                            <button type="submit" class="dropdown-item d-flex align-items-center justify-content-between">Now <i class="ti ti-calendar-event"></i></button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <form method="get">
+                                            <input type="hidden" name="year" value="{{ $year - 1 }}">
+                                            <button type="submit" class="dropdown-item d-flex align-items-center justify-content-between">Last <i class="ti ti-calendar-minus"></i></button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <form method="get">
+                                            <input type="hidden" name="year" value="{{ $year + 1 }}">
+                                            <button type="submit" class="dropdown-item d-flex align-items-center justify-content-between">Next <i class="ti ti-calendar-plus"></i></button>
+                                        </form>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -186,6 +211,8 @@
         }
 
         let barCardColor, barHeadingColor, barLabelColor, barBorderColor, barLegendColor;
+        let year = @json($year);
+        let currentYear = @json($currentYear);
         var chartData = @json($chartData);
 
         if (chartData) {

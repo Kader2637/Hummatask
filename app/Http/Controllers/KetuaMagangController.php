@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\DB;
 class KetuaMagangController extends Controller
 {
 
-    protected function dashboardPage()
+    protected function dashboardPage(Request $request)
     {
         $title = "Dashboard Ketua Magang";
         $usercount = User::where('peran_id', 1)->count();
@@ -32,6 +32,11 @@ class KetuaMagangController extends Controller
 
         $presentasi = Presentasi::with('tim')->where('status_pengajuan', 'disetujui')->whereDate('created_at', now())->latest('created_at')->take(5)->get()->reverse();
 
+        $currentYear = Carbon::now()->year;
+        $currentMonth = Carbon::now()->month;
+
+        $year = $request->input('year', $currentYear);
+
         $data = Tim::select(
             DB::raw('MONTH(created_at) as month'),
             DB::raw('YEAR(created_at) as year'),
@@ -39,7 +44,7 @@ class KetuaMagangController extends Controller
             DB::raw('count(*) as total')
         )
             ->whereIn('status_tim', ['mini', 'pre_mini', 'big'])
-            ->whereYear('created_at', Carbon::now()->year)
+            ->whereYear('created_at', $year)
             ->groupBy('year', 'month', 'status_tim')
             ->get();
 
@@ -48,12 +53,12 @@ class KetuaMagangController extends Controller
         $currentMonth = Carbon::now()->month;
 
         for ($month = 1; $month <= 12; $month++) {
-            $date = Carbon::createFromDate($currentYear, $month, 1);
+            $date = Carbon::createFromDate($year, $month, 1);
             $yearMonth = $date->isoFormat('MMMM');
 
-            $color = ($month == $currentMonth) ? 'blue' : 'green';
-            $colorwait = ($month == $currentMonth) ? 'grey' : 'green';
-            $colors = ($month == $currentMonth) ? 'orange' : 'green';
+            $color = ($year == $currentYear && $month == $currentMonth) ? 'blue' : 'blue';
+            $colorwait = ($year == $currentYear && $month == $currentMonth) ? 'grey' : 'grey';
+            $colors = ($year == $currentYear && $month == $currentMonth) ? 'orange' : 'orange';
 
             $processedData[$yearMonth] = [
                 'month' => $yearMonth,
@@ -77,7 +82,7 @@ class KetuaMagangController extends Controller
 
         $chartData = array_values($processedData);
         $notifikasi = Notifikasi::where('user_id', Auth::user()->id)->get();
-        return view('ketuaMagang.dashboard', compact('title', 'tims', 'usercount', 'timcount', 'chartData', 'presentasi', 'present', 'notifikasi'));
+        return view('ketuaMagang.dashboard', compact('currentYear','year','title', 'tims', 'usercount', 'timcount', 'chartData', 'presentasi', 'present', 'notifikasi'));
     }
     protected function presentasiPage()
     {

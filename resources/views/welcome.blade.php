@@ -345,7 +345,7 @@
                                                         <div
                                                             class="card-body text-body d-flex flex-column justify-content-between">
                                                             <div class="mb-auto mt-auto">
-                                                                <img src="{{ asset('storage/img/' . $item->foto) }}"
+                                                                <img src="{{ asset('storage/public/img/' . $item->foto) }}"
                                                                     alt="client logo" class="client-logo img-fluid"
                                                                     style="max-width: 95%;" />
                                                             </div>
@@ -386,7 +386,7 @@
                             @forelse ($galery as $item)
                                 <div class="post-slide">
                                     <div class="hover hover-4 text-white rounded ">
-                                        <img src="{{ asset('storage/img/' . $item->foto) }}" alt="">
+                                        <img src="{{ asset('storage/public/img/' . $item->foto) }}" alt="">
                                         <div class="hover-overlay"></div>
                                         <div class="hover-4-content">
                                             <h3 class="hover-4-title text-uppercase font-weight-bold mb-0" style="color:#7367F0;"><span

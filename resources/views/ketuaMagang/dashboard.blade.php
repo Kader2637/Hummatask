@@ -65,21 +65,27 @@
                                 <button type="button" class="btn dropdown-toggle px-0" data-bs-toggle="dropdown"
                                     aria-expanded="false"><i class="ti ti-calendar"></i></button>
                                 <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a href="javascript:void(0);"
-                                            class="dropdown-item d-flex align-items-center">Today</a></li>
-                                    <li><a href="javascript:void(0);"
-                                            class="dropdown-item d-flex align-items-center">Yesterday</a></li>
-                                    <li><a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">Last 7
-                                            Days</a></li>
-                                    <li><a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">Last
-                                            30 Days</a></li>
                                     <li>
-                                        <hr class="dropdown-divider">
+                                        <form method="get">
+                                            <input type="hidden" value="{{ $currentYear }}">
+                                            <button type="submit"
+                                                class="dropdown-item d-flex align-items-center justify-content-between">Now <i class="ti ti-calendar-event"></i></button>
+                                        </form>
                                     </li>
-                                    <li><a href="javascript:void(0);"
-                                            class="dropdown-item d-flex align-items-center">Current Month</a></li>
-                                    <li><a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">Last
-                                            Month</a></li>
+                                    <li>
+                                        <form method="get">
+                                            <input type="hidden" name="year" value="{{ $year - 1 }}">
+                                            <button type="submit"
+                                                class="dropdown-item d-flex align-items-center justify-content-between">Last <i class="ti ti-calendar-minus"></i></button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <form method="get">
+                                            <input type="hidden" name="year" value="{{ $year + 1 }}">
+                                            <button type="submit"
+                                                class="dropdown-item d-flex align-items-center justify-content-between">Next <i class="ti ti-calendar-plus"></i></button>
+                                        </form>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -105,7 +111,7 @@
                                         <td class="pt-2">
                                             <div class="d-flex justify-content-start align-items-center mt-lg-1">
                                                 <div class="avatar me-3 avatar-sm">
-                                                    <img src="{{ asset('storage/'. $item->tim->logo) }}" alt="Avatar"
+                                                    <img src="{{ asset('storage/' . $item->tim->logo) }}" alt="Avatar"
                                                         class="rounded-circle" />
                                                 </div>
                                                 <div class="d-flex flex-column">
@@ -164,6 +170,8 @@
 
     </div>
     <script>
+        let year = @json($year);
+        let currentYear = @json($currentYear);
         var chartData = @json($chartData);
         const cyanColor = '#28dac6',
             orangeLightColor = '#FDAC34';

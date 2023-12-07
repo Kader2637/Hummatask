@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Storage;
 class mentorController extends Controller
 {
     // Return view dashboard mentor
-    protected function dashboard()
+    protected function dashboard(Request $request)
     {
 
         $jadwal = [];
@@ -42,6 +42,12 @@ class mentorController extends Controller
         $jadwal = array_reverse($jadwal);
         $hari = array_reverse($hari);
 
+        $currentYear = Carbon::now()->year;
+        $currentMonth = Carbon::now()->month;
+
+        $year = $request->input('year', $currentYear);
+        $month = $request->input('month', $currentMonth);
+
         $users = User::select(
             DB::raw('MONTH(created_at) as month'),
             DB::raw('YEAR(created_at) as year'),
@@ -49,7 +55,7 @@ class mentorController extends Controller
             DB::raw('count(*) as total')
         )
             ->whereIn('peran_id', ['1'])
-            ->whereYear('created_at', Carbon::now()->year)
+            ->whereYear('created_at', $year)
             ->groupBy('year', 'month', 'peran_id')
             ->get();
 
@@ -60,22 +66,19 @@ class mentorController extends Controller
             DB::raw('count(*) as total')
         )
             ->whereIn('status_tim', ['mini', 'pre_mini', 'big'])
-            ->whereYear('created_at', Carbon::now()->year)
+            ->whereYear('created_at', $year)
             ->groupBy('year', 'month', 'status_tim')
             ->get();
 
         $processedData = [];
-        $currentYear = Carbon::now()->year;
-        $currentMonth = Carbon::now()->month;
-
-        for ($month = 1; $month <= 12; $month++) {
-            $date = Carbon::createFromDate($currentYear, $month, 1);
+        for ($m = 1; $m <= 12; $m++) {
+            $date = Carbon::createFromDate($year, $m, 1);
             $yearMonth = $date->isoFormat('MMMM');
 
-            $color = ($month == $currentMonth) ? 'blue' : 'yellow';
-            $colorwait = ($month == $currentMonth) ? 'grey' : 'pink';
-            $colors = ($month == $currentMonth) ? 'red' : 'green';
-            $piecolor = ($month == $currentMonth) ? 'orange' : 'yellow';
+            $color = ($year == $currentYear && $m == $month) ? 'blue' : 'blue';
+            $colorwait = ($year == $currentYear && $m == $month) ? 'grey' : 'grey';
+            $colors = ($year == $currentYear && $m == $month) ? 'red' : 'red';
+            $piecolor = ($year == $currentYear && $m == $month) ? 'orange' : 'orange';
 
             $processedData[$yearMonth] = [
                 'month' => $yearMonth,
@@ -98,6 +101,7 @@ class mentorController extends Controller
                 $processedData[$yearMonth]['1'] = $user->total;
             }
         }
+
         foreach ($tim as $tims) {
             $yearMonth = Carbon::createFromDate($tims->year, $tims->month, 1)->isoFormat('MMMM');
 
@@ -108,6 +112,7 @@ class mentorController extends Controller
         }
 
         $chartData = array_values($processedData);
+
 
         $solo = Tim::where(function ($query) {
             $query->whereIn('status_tim', ['solo'])
@@ -133,10 +138,8 @@ class mentorController extends Controller
             ['Jumlah Tim Mini Projek', $mini],
             ['Jumlah Tim Big Projek', $big]
         ];
-        return response()->view('mentor.dashboard', compact('presentasi', 'chartData', 'jadwal', 'hari', 'chart', 'notifikasi'));
+        return response()->view('mentor.dashboard', compact('year', 'currentYear', 'processedData', 'presentasi', 'chartData', 'jadwal', 'hari', 'chart', 'notifikasi'));
     }
-
-    // Return view pengguna mentor
     protected function pengguna()
     {
         $roles = Role::all();
