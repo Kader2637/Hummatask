@@ -82,6 +82,7 @@ class Tim extends Model
         return Anggota::where('tim_id', $this->id)
         ->whereIn('status', ['active', 'expired', 'kicked'])
         ->with(['user','jabatan']) // Memuat relasi 'user'
+        ->orderByRaw("jabatan_id = 1 DESC")
         ->get();
     }
 }

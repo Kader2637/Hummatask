@@ -27,4 +27,21 @@ class Project extends Model
     {
         return $this->belongsTo(Tema::class);
     }
+    public function anggota_tim()
+    {
+        return Anggota::where('tim_id', $this->id)
+            ->whereIn('status', ['active', 'expired'])
+            ->whereHas('user', function ($query) {
+                $query->where('status_kelulusan', 0);
+            })
+            ->get();
+    }
+    public function anggota_profile()
+    {
+        return Anggota::where('tim_id', $this->id)
+        ->whereIn('status', ['active', 'expired', 'kicked'])
+        ->with(['user','jabatan']) // Memuat relasi 'user
+        ->orderByRaw("jabatan_id = 1 DESC")
+        ->get();
+    }
 }
