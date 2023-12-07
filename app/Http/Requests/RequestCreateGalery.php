@@ -23,7 +23,7 @@ class RequestCreateGalery extends FormRequest
     {
         return [
            'judul' => 'required|max:20',
-           'keterangan' => 'required|max:255',
+           'keterangan' => 'max:255',
            'foto' => 'required|mimes:png,jpg,jpeg,gif'
         ];
     }

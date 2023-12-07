@@ -359,15 +359,15 @@ class mentorController extends Controller
         // })
         // ->get();
         // dd($tim);
-        $users = Anggota::where('tim_id', '!=', $tim)
-        ->orWhere(function ($query) use ($tim) {
-            $query->whereIn('status', ['kicked', 'expired']);
-        })
-        ->orWhere(function ($query) use ($tim) {
-            $query->where('tim_id', $tim)
-                  ->where('status', 'active');
-        })
-        ->get();
+        $users = Anggota::whereIn('status', ['kicked', 'expired'])
+            ->where('tim_id', '!=', $tim)
+            ->orWhere(function ($query) use ($tim) {
+                $query->where('tim_id', $tim)
+                    ->where('status', 'active');
+            })
+            ->get();
+        $usersArray = $users->pluck('user_id')->toArray();
+        $uniqueUsersArray = array_unique($usersArray);
 
 
 
@@ -456,18 +456,16 @@ class mentorController extends Controller
     {
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
-        $galery = Galery::where('status', 'album')->get();
-        $logo = Galery::where('status', 'logo')->get();
 
-        return response()->view('mentor.galery', compact('notifikasi', 'galery', 'logo'));
+        return response()->view('mentor.galery', compact('notifikasi'));
     }
 
     protected function getGalery()
     {
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
-        $galery = Galery::where('status', 'album')->get();
-        $logo = Galery::where('status', 'logo')->get();
+        $galery = Galery::where('status', 'album')->paginate(8);
+        $logo = Galery::where('status', 'logo')->paginate(8);
 
         return response()->json(['notifikasi' => $notifikasi, 'galery' => $galery, 'logo' => $logo]);
     }
@@ -552,6 +550,6 @@ class mentorController extends Controller
         Storage::delete('public/img/' . $galery->foto);
         $galery->delete();
 
-        return back();
+        return response()->json(['galery' => $galery]);
     }
 }

@@ -31,6 +31,7 @@
 @endsection
 
 @section('content')
+    {{-- tampilan album & logo --}}
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="alert alert-info alert-dismissible d-flex align-items-baseline mt-2" role="alert">
             <span class="alert-icon alert-icon-lg text-info me-2">
@@ -78,6 +79,7 @@
                                         <div class="col-lg-12">
                                             <div class="row g-4" id="galery">
                                             </div>
+                                            <ul class="pagination mt-3 d-flex justify-content-center" id="pagination"></ul>
                                         </div>
                                     </div>
                                 </div>
@@ -136,6 +138,8 @@
                                         <div class="col-lg-12">
                                             <div class="row g-4" id="logo">
                                             </div>
+                                            <ul class="pagination mt-3 d-flex justify-content-center" id="paginationLogo">
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -177,8 +181,9 @@
             </div>
         </div>
     </div>
+    {{-- tampilan album & logo --}}
 
-    {{-- modal logo --}}
+    {{-- modal create logo --}}
     <div class="modal fade" id="createLogo" tabindex="-1" aria-labelledby="exampleModalLabel1">
         <form id="createLogoForm" data-create-logo="{{ route('logo.create') }}" method="post"
             enctype="multipart/form-data">
@@ -207,7 +212,7 @@
                             data-bs-dismiss="modal">
                             Close
                         </button>
-                        <button type="submit" class="btn btn-success">
+                        <button type="submit" class="btn btn-primary">
                             Save
                         </button>
                     </div>
@@ -215,7 +220,7 @@
             </div>
         </form>
     </div>
-    {{-- modal logo --}}
+    {{-- modal create logo --}}
 
     {{-- modal create galery --}}
     <div class="modal fade" id="createGalery" tabindex="-1" aria-labelledby="exampleModalLabel2">
@@ -250,7 +255,7 @@
                             data-bs-dismiss="modal">
                             Close
                         </button>
-                        <button type="submit" class="btn btn-success">
+                        <button type="submit" class="btn btn-primary">
                             Save
                         </button>
                     </div>
@@ -294,7 +299,7 @@
                             data-bs-dismiss="modal">
                             Close
                         </button>
-                        <button type="submit" class="btn btn-success">
+                        <button type="submit" class="btn btn-primary">
                             Save
                         </button>
                     </div>
@@ -333,7 +338,7 @@
                             data-bs-dismiss="modal">
                             Close
                         </button>
-                        <button type="submit" class="btn btn-success" id="submit-btn">
+                        <button type="submit" class="btn btn-primary" id="submit-btn">
                             Save
                         </button>
                     </div>
@@ -341,8 +346,9 @@
             </div>
         </div>
     </div>
+    {{-- modal edit logo --}}
 
-    {{-- js galery --}}
+    {{-- js get & create galery --}}
     <script>
         $(document).ready(function() {
             var isSubmitting = false; // Flag untuk menandakan apakah sedang melakukan pengiriman data
@@ -358,10 +364,9 @@
                     true; // Set flag menjadi true untuk menandakan sedang melakukan pengiriman data
 
                 var judul = $('input[name="judul"]').val();
-                var keterangan = $('textarea[name="keterangan"]').val();
                 var foto = $('input[name="foto"]').val();
 
-                if (!judul || !foto || !keterangan) {
+                if (!judul || !foto ) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
@@ -372,11 +377,11 @@
                     return;
                 }
 
-                if (judul.length > 20) {
+                if (judul.length > 30) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
-                        text: 'judul maksimal 100 karakter!',
+                        text: 'judul maksimal 30 karakter!',
                     });
 
                     isSubmitting = false;
@@ -420,20 +425,20 @@
                     success: function(data) {
                         $('#createGalery').modal('hide');
                         Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: 'Berhasil menambahkan data',
-                        })
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Berhasil menambahkan data',
+                            })
 
-                        .then((result) => {
-                            if (result.isConfirmed) {
-                                loadGalery();
-                                $('#createGaleryForm')[0].reset();
-                                // Hapus class overlay yang menutupi halaman
-                                $('body').removeClass('modal-open');
-                                $('.modal-backdrop').remove();
-                            }
-                        });
+                            .then((result) => {
+                                if (result.isConfirmed) {
+                                    loadGalery();
+                                    $('#createGaleryForm')[0].reset();
+                                    // Hapus class overlay yang menutupi halaman
+                                    $('body').removeClass('modal-open');
+                                    $('.modal-backdrop').remove();
+                                }
+                            });
                     },
                     error: function(error) {
                         var errorData = response.responseJSON;
@@ -453,44 +458,45 @@
             });
         });
 
-        function loadGalery() {
+        function loadGalery(page = 1) {
             $.ajax({
                 type: "GET",
-                url: "{{ route('get.galery') }}", // Gantilah dengan endpoint API yang sesuai
+                url: "{{ route('get.galery') }}",
+                data: {
+                    page: page
+                },
                 success: function(data) {
-                    if (data.galery.length > 0) {
+                    if (data.galery.data.length > 0) {
                         let html = '';
-                        data.galery.forEach(function(item) {
+                        data.galery.data.forEach(function(item) {
                             html += `
                         <div class="col-md-6 col-lg-3 wow bounceInUp" data-wow-delay="0.1s">
-                            <div class="event-img position-relative" style="width:100% !important; height: 206px !important; overflow: hidden !important;">
-                                <img class="img-fluid rounded"
-                                    src="{{ asset('storage/public/img/') }}/${item.foto}"
-                                    alt="" style="object-fit: cover !important; width: 100% !important; height: 100% !important">
-                                <div class="event-overlay d-flex flex-column p-4">
-                                    <h4 class="me-auto fs-5 fw-light" style="color: white;">${item.judul}</h4>
-                                    <div class="my-auto">
-                                        <a class="btn btn-primary"
-                                            href="{{ asset('storage/public/img/') }}/${item.foto}"
-                                            data-lightbox="event-5"><i class="bi bi-eye"></i></a>
-                                        <button type="button"
-                                            class="btn btn-success button-edit-galery" data-id=""
-                                            id="${item.id}"
-                                            data-idgalery="${item.id}"
-                                            data-judulgalery="${item.judul}"
-                                            data-keterangan="${item.keterangan}"
-                                            data-fotogalery="${item.foto}"><i
-                                            class="bi bi-pencil-square"></i></button>
-                                        <form action="{{ route('galery.delete', ['']) }}/${item.id}" method="post" id="deleteForm${item.id}">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button type="button" class="btn btn-danger delete-icon" data-id="${item.id}">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </form>
+                                <div class="event-img position-relative" style="width:100% !important; height: 206px !important; overflow: hidden !important;">
+                                    <img class="img-fluid rounded"
+                                        src="{{ asset('storage/public/img/') }}/${item.foto}"
+                                        alt="" style="object-fit: cover !important; width: 100% !important; height: 100% !important">
+                                    <div class="event-overlay d-flex flex-column p-4">
+                                        <h4 class="me-auto fs-5 fw-light" style="color: white;">${item.judul}</h4>
+                                        <div class="my-auto">
+                                            <a class="btn btn-primary"
+                                                href="{{ asset('storage/public/img/') }}/${item.foto}"
+                                                data-lightbox="event-5"><i class="bi bi-eye"></i></a>
+                                            <button type="button"
+                                                class="btn btn-success button-edit-galery" data-idgalery="${item.id}"
+                                                data-judulgalery="${item.judul}"
+                                                data-keterangan="${item.keterangan}"
+                                                data-fotogalery="${item.foto}"><i
+                                                class="bi bi-pencil-square"></i></button>
+                                            <form action="{{ route('galery.delete', ['']) }}/${item.id}" method="post" id="deleteForm${item.id}">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="button" class="btn btn-danger delete-icon" data-id="${item.id}">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                         </div>`;
                         });
                         $('#galery').html(html);
@@ -503,7 +509,8 @@
                             $('#judulgalery').val(judulgalery);
                             $('#keterangan').val(keterangan);
                             $('#fotogalery').attr('src', fotogalery);
-                            $('#logogalery').attr('src', '{{ asset('storage/public/img/') }}/' + fotogalery)
+                            $('#logogalery').attr('src', '{{ asset('storage/public/img/') }}/' +
+                                    fotogalery)
                                 .attr('alt', 'Logo')
                                 .css({
                                     'width': '100px',
@@ -522,6 +529,24 @@
                             $('#form-update-galery').data('id', id);
                             $('#modal-edit-galery').modal('show');
                         });
+
+                        let paginationHtml = '<nav><ul class="pagination">';
+
+                        paginationHtml +=
+                            `<li class="page-item ${data.galery.current_page === 1 ? 'disabled' : ''}"><a class="page-link" href="javascript:void(0)" onclick="loadGalery(${data.galery.current_page - 1})">Previous</a></li>`;
+
+                        for (let i = 1; i <= data.galery.last_page; i++) {
+                            paginationHtml +=
+                                `<li class="page-item ${i === data.galery.current_page ? 'active' : ''}"><a class="page-link" href="javascript:void(0)" onclick="loadGalery(${i})">${i}</a></li>`;
+                        }
+
+                        paginationHtml +=
+                            `<li class="page-item ${data.galery.current_page === data.galery.last_page ? 'disabled' : ''}"><a class="page-link" href="javascript:void(0)" onclick="loadGalery(${data.galery.current_page + 1})">Next</a></li>`;
+
+                        paginationHtml += '</ul></nav>';
+
+                        // Ubah bagian ini sesuai dengan elemen HTML yang dituju untuk menampilkan paginasi
+                        document.getElementById('pagination').innerHTML = paginationHtml;
                     } else {
                         $('#galery').html(
                             '<div class="justify-content-center" style="display: flex;"><img src="{{ asset('assets/img/illustrations/noData.png') }}" alt="page-misc-under-maintenance" width="500"></div>'
@@ -538,7 +563,7 @@
             loadGalery();
         });
     </script>
-    {{-- js galery --}}
+    {{-- js get & create galery --}}
 
     {{-- script edit galery --}}
     <script>
@@ -591,7 +616,7 @@
     </script>
     {{-- script edit galery --}}
 
-    {{-- js logo --}}
+    {{-- js get & create logo --}}
     <script>
         $(document).ready(function() {
             var Button = false; // Flag untuk menandakan apakah sedang melakukan pengiriman data
@@ -704,15 +729,18 @@
             }
         }
 
-        function loadLogo() {
+        function loadLogo(page = 1) {
             $.ajax({
                 type: "GET",
-                url: "{{ route('get.galery') }}", // Gantilah dengan endpoint API yang sesuai
+                url: "{{ route('get.galery') }}",
+                data: {
+                    page: page
+                },
                 success: function(data) {
                     // Ganti HTML sesuai data yang diterima dari server
-                    if (data.logo.length > 0) {
+                    if (data.logo.data.length > 0) {
                         let html = '';
-                        data.logo.forEach(function(itemLogo) {
+                        data.logo.data.forEach(function(itemLogo) {
                             html += `
                             <div class="col-md-6 col-lg-3 wow bounceInUp" data-wow-delay="0.1s">
                                 <div class="event-img position-relative" style="width:100% !important; height: 206px !important; overflow: hidden !important;">
@@ -733,7 +761,7 @@
                                                 data-fotologo="${itemLogo.foto}">
                                                 <i class="bi bi-pencil-square"></i>
                                             </button>
-                                            <form action="{{ route('galery.delete', ['']) }}/${itemLogo.id}" method="post" id="deleteForm${itemLogo.id}">
+                                            <form action="{{ route('galery.delete', '') }}/${itemLogo.id}" method="post" id="deleteForm${itemLogo.id}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="button"
@@ -773,6 +801,25 @@
                             $('#form-update').data('id', id);
                             $('#modal-edit').modal('show');
                         });
+
+                        let paginate = '<nav><ul class="pagination">';
+
+                        paginate +=
+                            `<li class="page-item ${data.logo.current_page === 1 ? 'disabled' : ''}"><a class="page-link" href="javascript:void(0)" onclick="loadLogo(${data.logo.current_page - 1})">Previous</a></li>`;
+
+                        for (let B = 1; B <= data.logo.last_page; B++) {
+                            paginate +=
+                                `<li class="page-item ${B === data.logo.current_page ? 'active' : ''}"><a class="page-link" href="javascript:void(0)" onclick="loadLogo(${B})">${B}</a></li>`;
+                        }
+
+                        paginate +=
+                            `<li class="page-item ${data.logo.current_page === data.logo.last_page ? 'disabled' : ''}"><a class="page-link" href="javascript:void(0)" onclick="loadLogo(${data.logo.current_page + 1})">Next</a></li>`;
+
+                        paginate += '</ul></nav>';
+
+                        // Ubah bagian ini sesuai dengan elemen HTML yang dituju untuk menampilkan paginasi
+                        document.getElementById('paginationLogo').innerHTML = paginate;
+
                     } else {
                         $('#logo').html(
                             '<div class="justify-content-center" style="display: flex;"><img src="{{ asset('assets/img/illustrations/noData.png') }}" alt="page-misc-under-maintenance" width="500"></div>'
@@ -789,14 +836,14 @@
             loadLogo();
         })
     </script>
-    {{-- js logo --}}
+    {{-- js get & create logo --}}
 
     {{-- script edit logo --}}
     <script>
         $(document).ready(function() {
-          function emptyForm(id) {
-            $('#' + id)[0].reset();
-          }
+            function emptyForm(id) {
+                $('#' + id)[0].reset();
+            }
             $('#form-update').on('submit', function(e) {
                 e.preventDefault();
                 const id = $(this).data('id');
@@ -865,7 +912,7 @@
                     if (confirmDelete.isConfirmed) {
                         $.ajax({
                             type: "DELETE",
-                            url: "galery-delete/" + formId,
+                            url: "{{ route('galery.delete', '') }}/" + formId,
                             data: $(deleteForm).serialize(),
                             dataType: "JSON",
                             success: function(response) {
@@ -881,8 +928,8 @@
                             },
                             error: function(xhr, status, error) {
                                 Swal.fire({
-                                    title: 'error',
-                                    icon: 'Error',
+                                    title: 'Error',
+                                    icon: 'error',
                                     text: 'Terjadi kesalahan'
                                 });
                             }
