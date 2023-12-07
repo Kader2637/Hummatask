@@ -108,16 +108,15 @@
                                             <div class="d-flex align-items-center pt-1 mb-3 justify-content-center">
                                                 <div class="d-flex align-items-center">
                                                     <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
-                                                        @foreach ($item->tim->anggota as $anggota)
-                                                            <li data-bs-toggle="tooltip" data-popup="tooltip-custom"
-                                                                data-bs-placement="bottom"
-                                                                title="{{ $anggota->user->username }}"
-                                                                class="avatar avatar-sm pull-up">
-                                                                <img class="rounded-circle"
-                                                                    src="{{ $anggota->user->avatar ? asset('storage/' . $anggota->user->avatar) : asset('assets/img/avatars/1.png') }}"
-                                                                    style="object-fit: cover" alt="Avatar">
-                                                            </li>
-                                                        @endforeach
+                                                        @foreach ($item->anggota_tim() as $anggota)
+                                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom"
+                                                            data-bs-placement="bottom" title="{{ $anggota->user->username }}"
+                                                            class="avatar avatar-sm pull-up">
+                                                            <img class="rounded-circle"
+                                                                src="{{ $anggota->user->avatar ? asset('storage/' . $anggota->user->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                                alt="Avatar" style="object-fit: cover">
+                                                        </li>
+                                                    @endforeach
                                                     </ul>
                                                 </div>
                                             </div>
@@ -157,7 +156,7 @@
                                         data-tema="{{ $item->tema->nama_tema }}"
                                         data-tglmulai="{{ $item->created_at->translatedFormat('l, j F Y') }}"
                                         data-deadline="{{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}"
-                                        data-anggota="{{ $anggotaJson }}" data-deskripsi="{{ $item->deskripsi }}"
+                                        data-anggota="{{ json_encode($item->anggota_profile()) }}"data-deskripsi="{{ $item->deskripsi }}"
                                         data-dayleft="{{ $dayLeft }}" data-total-deadline="{{ $totalDeadline }}"
                                         data-progress="{{ $progressPercentage }}" data-tenggat="{{ $item->deadline }}"
                                         data-repo="{{ $item->tim->repository }}"><span class="text-white">Detail</span>
@@ -690,8 +689,38 @@
                 anggotaList.empty();
 
                 anggota.forEach(function(anggota, index) {
-                    var avatarSrc = anggota.avatar ? '/storage/' + anggota.avatar :
+
+
+                    // var jabatanLabel = anggota.status === 'kicked' ? 'Mantan Anggota' : anggota
+                    //     .jabatan.nama_jabatan;
+
+                    // var avatarSrc = anggota.user.avatar ? '/storage/' + anggota.user.avatar :
+                    //     '/assets/img/avatars/1.png';
+
+                    // var anggotaItem = $('<div class="col-lg-12 p-2" style="box-shadow: none">' +
+                    //     '<div class="card">' +
+                    //     '<div class="card-body d-flex gap-3 align-items-center">' +
+                    //     '<div>' +
+                    //     '<img width="30px" height="30px" class="rounded-circle object-cover" src="' +
+                    //     avatarSrc + '" alt="foto user">' +
+                    //     '</div>' +
+                    //     '<div>' +
+                    //     '<h5 class="mb-0" style="font-size: 15px">' + anggota.user.username +
+                    //     '</h5>' +
+                    //     '<span class="badge bg-label-warning">' + jabatanLabel + '</span>' +
+                    //     '</div>' +
+                    //     '</div>' +
+                    //     '</div>' +
+                    //     '</div>');
+                    // anggotaList.append(anggotaItem);
+
+                    var avatarSrc = anggota.user.avatar ? '/storage/' + anggota.user.avatar :
                         '/assets/img/avatars/1.png';
+
+                    var jabatanLabel = anggota.status === 'kicked' ? 'Mantan Anggota' : anggota
+                        .jabatan.nama_jabatan;
+
+                    var lulus = anggota.user.status_kelulusan == '1'
 
                     var anggotaItem = $('<div class="col-lg-4 p-2" style="box-shadow: none">' +
                         '<div class="card">' +
@@ -701,8 +730,12 @@
                         avatarSrc + '" alt="foto user">' +
                         '</div>' +
                         '<div>' +
-                        '<h5 class="mb-0" style="font-size: 15px">' + anggota.name + '</h5>' +
-                        '<span class="badge bg-label-warning">' + anggota.jabatan + '</span>' +
+                        '<h5 class="mb-0" style="font-size: 15px">' + anggota.user.username +
+                        '</h5>' +
+                        (lulus ? '<span class="badge bg-label-success me-2">Lulus</span>' : '') +
+                        (jabatanLabel ? '<span class="badge bg-label-warning">' + jabatanLabel +
+                            '</span>' : '') +
+                        '</div>' +
                         '</div>' +
                         '</div>' +
                         '</div>' +

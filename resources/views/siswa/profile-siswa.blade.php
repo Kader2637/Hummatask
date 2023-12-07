@@ -184,7 +184,7 @@
                                         <div class="card text-center mb-3 tim-item"
                                             data-status-tim="{{ $item->status_tim }}">
                                             <div class="card-body">
-                                                <img src="{{ asset('storage' . $item->logo) }}" alt="logo tim"
+                                                <img src="{{ asset('storage/    ' . $item->logo) }}" alt="logo tim"
                                                     class="rounded-circle mb-3"
                                                     style="width: 100px; height: 100px; object-fit: cover">
                                                 <div class="d-flex align-items-center justify-content-center">
@@ -200,7 +200,7 @@
                                                                         title="{{ $anggota->user->username }}"
                                                                         class="avatar avatar-sm pull-up">
                                                                         <img class="rounded-circle"
-                                                                            src="{{ $anggota->user->avatar ? asset('storage' . $anggota->user->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                                            src="{{ $anggota->user->avatar ? asset('storage/' . $anggota->user->avatar) : asset('assets/img/avatars/1.png') }}"
                                                                             alt="Avatar" style="object-fit: cover">
                                                                     </li>
                                                                 @endforeach
@@ -741,6 +741,9 @@
                     var avatarSrc = anggota.user.avatar ? '/storage/' + anggota.user.avatar :
                         '/assets/img/avatars/1.png';
 
+                        var lulus = anggota.user.status_kelulusan == '1'
+
+
                     var anggotaItem = $('<div class="col-lg-12 p-2" style="box-shadow: none">' +
                         '<div class="card">' +
                         '<div class="card-body d-flex gap-3 align-items-center">' +
@@ -751,7 +754,9 @@
                         '<div>' +
                         '<h5 class="mb-0" style="font-size: 15px">' + anggota.user.username +
                         '</h5>' +
-                        '<span class="badge bg-label-warning">' + jabatanLabel + '</span>' +
+                        (lulus ? '<span class="badge bg-label-success me-2">Lulus</span>' : '') +
+                        (jabatanLabel ? '<span class="badge bg-label-warning">' + jabatanLabel +
+                            '</span>' : '') +
                         '</div>' +
                         '</div>' +
                         '</div>' +
