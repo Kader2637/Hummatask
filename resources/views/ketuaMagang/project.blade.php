@@ -23,18 +23,38 @@
     <div class="container-fluid mt-4">
         <h5 class="header">List Project</h5>
         {{-- Header --}}
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between mb-4">
             <div class="filter col-lg-3 col-md-3 col-sm-3">
                 <label for="select2Basic" class="form-label">Filter</label>
-                <select id="select2Basic" name="temaProjek" class="select2 form-select form-select-lg" data-allow-clear="true"
-                    onchange="filterProjek(this)">
-                    <option value="" disabled selected>Pilih Data</option>
-                    <option value="all">Semua</option>
-                    <option value="solo">Solo Project</option>
-                    <option value="pre_mini">Pre-mini Project</option>
-                    <option value="mini">Mini Project</option>
-                    <option value="big">Big Project</option>
-                </select>
+                <form id="filterForm" action="{{ route('ketua.project') }}" method="get">
+                    <select id="select2Basic" name="status_tim" class="form-select select2" data-allow-clear="true"
+                        onchange="filterProjek(this)">
+                        <option value="" disabled selected>Pilih Data</option>
+                        <option value="all" {{ request('status_tim') == 'all' ? 'selected' : '' }}>Semua</option>
+                        <option value="solo" {{ request('status_tim') == 'solo' ? 'selected' : '' }}>Solo Project
+                        </option>
+                        <option value="pre_mini" {{ request('status_tim') == 'pre_mini' ? 'selected' : '' }}>
+                            Pre-mini
+                            Project</option>
+                        <option value="mini" {{ request('status_tim') == 'mini' ? 'selected' : '' }}>Mini Project
+                        </option>
+                        <option value="big" {{ request('status_tim') == 'big' ? 'selected' : '' }}>Big Project
+                        </option>
+                    </select>
+                    <input type="hidden" name="nama_tim" value="{{ request('nama_tim') }}">
+                </form>
+            </div>
+            <div class="filter col-lg-3 col-md-3 col-sm-3">
+                <label for="select2Basic" class="form-label">Cari</label>
+                <form action="{{ route('ketua.project') }}" method="get">
+                    <div class="flex-grow-1 input-group input-group-merge">
+                        <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-search"></i></span>
+                        <input name="nama_tim" type="text" class="form-control chat-search-input"
+                            placeholder="Cari nama tim..." aria-label="Cari nama tim..."
+                            aria-describedby="basic-addon-search31" value="{{ request('nama_tim') }}">
+                    </div>
+                    <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
+                </form>
             </div>
         </div>
         {{-- Header --}}
@@ -408,19 +428,7 @@
 
         <script>
             function filterProjek(selectElement) {
-                var code = selectElement.value;
-                var projekElements = document.getElementsByClassName('projek-item');
-
-                for (var i = 0; i < projekElements.length; i++) {
-                    var projekElement = projekElements[i];
-                    var statusTim = projekElement.getAttribute('data-status-tim');
-
-                    if (code === 'all' || code === statusTim) {
-                        projekElement.style.display = 'block';
-                    } else {
-                        projekElement.style.display = 'none';
-                    }
-                }
+                document.getElementById('filterForm').submit();
             }
 
             const cardColor = '#28dac6';
@@ -567,19 +575,6 @@
                         console.error("Terjasi kesalahan : " + error);
                     }
                 });
-            }
-        </script>
-
-        <script>
-            function run() {
-                const status = document.getElementById('status_tim').value;
-                let project_ketua = document.getElementById('project_ketua');
-
-                if (status == 2) {
-                    project_ketua.style = 'display: none';
-                } else {
-                    project_ketua.style = 'display: block';
-                }
             }
         </script>
 
