@@ -82,41 +82,44 @@
                                     <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;"
                                         class="">
                                         <span class="text-black fs-6">{{ $item->tim->nama }}</span>
-                                        <div class="align-items-center">
-                                            <span class="badge bg-label-warning my-1">
-                                                @if ($item->tim->status_tim == 'solo')
-                                                    Solo Project
-                                                @elseif ($item->tim->status_tim == 'pre_mini')
-                                                    Pre-Mini Project
-                                                @elseif ($item->tim->status_tim == 'mini')
-                                                    Mini Project
-                                                @elseif ($item->tim->status_tim == 'big')
-                                                    Big Project
+                                        <div class="d-flex align-items-center">
+                                            <div class="align-items-center">
+                                                <span class="badge bg-label-warning my-1">
+                                                    @if ($item->tim->status_tim == 'solo')
+                                                        Solo Project
+                                                    @elseif ($item->tim->status_tim == 'pre_mini')
+                                                        Pre-Mini Project
+                                                    @elseif ($item->tim->status_tim == 'mini')
+                                                        Mini Project
+                                                    @elseif ($item->tim->status_tim == 'big')
+                                                        Big Project
+                                                    @endif
+                                                </span>
+                                                @if ($item->tim->kadaluwarsa == 1)
+                                                    <span class="ms-1 badge bg-label-danger">
+                                                        Expired Team
+                                                    </span>
+                                                @elseif ($item->tim->kadaluwarsa == 0)
+                                                    <span class="ms-1 badge bg-label-success">
+                                                        Active Team
+                                                    </span>
                                                 @endif
-                                            </span>
-                                            @if ($item->tim->kadaluwarsa == 1)
-                                                <span class="ms-1 badge bg-label-danger">
-                                                    Expired Team
-                                                </span>
-                                            @elseif ($item->tim->kadaluwarsa == 0)
-                                                <span class="ms-1 badge bg-label-success">
-                                                    Active Team
-                                                </span>
-                                            @endif
+                                            </div>
                                         </div>
                                         <div class="d-flex align-items-center justify-content-center">
                                             <div class="d-flex align-items-center pt-1 mb-3 justify-content-center">
                                                 <div class="d-flex align-items-center">
                                                     <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
                                                         @foreach ($item->anggota_tim() as $anggota)
-                                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom"
-                                                            data-bs-placement="bottom" title="{{ $anggota->user->username }}"
-                                                            class="avatar avatar-sm pull-up">
-                                                            <img class="rounded-circle"
-                                                                src="{{ $anggota->user->avatar ? asset('storage/' . $anggota->user->avatar) : asset('assets/img/avatars/1.png') }}"
-                                                                alt="Avatar" style="object-fit: cover">
-                                                        </li>
-                                                    @endforeach
+                                                            <li data-bs-toggle="tooltip" data-popup="tooltip-custom"
+                                                                data-bs-placement="bottom"
+                                                                title="{{ $anggota->user->username }}"
+                                                                class="avatar avatar-sm pull-up">
+                                                                <img class="rounded-circle"
+                                                                    src="{{ $anggota->user->avatar ? asset('storage/' . $anggota->user->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                                    alt="Avatar" style="object-fit: cover">
+                                                            </li>
+                                                        @endforeach
                                                     </ul>
                                                 </div>
                                             </div>
@@ -732,7 +735,8 @@
                         '<div>' +
                         '<h5 class="mb-0" style="font-size: 15px">' + anggota.user.username +
                         '</h5>' +
-                        (lulus ? '<span class="badge bg-label-success me-2">Lulus</span>' : '') +
+                        (lulus ? '<span class="badge bg-label-success me-2">Lulus</span>' :
+                            '') +
                         (jabatanLabel ? '<span class="badge bg-label-warning">' + jabatanLabel +
                             '</span>' : '') +
                         '</div>' +
