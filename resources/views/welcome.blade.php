@@ -802,9 +802,9 @@
                                     style="color:#7367F0;">Humma</span>task</span>
                         </a>
                         <p class="footer-text footer-logo-description mb-4">
-                            Aplikasi pengelola dan pengingat tugasmu, kami adalah temanmu menjadi produktif
+                            Aplikasi HummaTask membantu Anda mengelola dan mengingat tugas-tugas Anda, menjadi teman produktivitas Anda.
                         </p>
-                        <form class="footer-form">
+                        {{-- <form class="footer-form">
                             <label for="footer-email" class="small">Berlangganan untuk hal terbaru</label>
                             <div class="d-flex mt-1">
                                 <input type="email"
@@ -815,7 +815,7 @@
                                     Berlangganan
                                 </button>
                             </div>
-                        </form>
+                        </form> --}}
                     </div>
                     <div class="col-lg-2 col-md-4 col-sm-6">
                         <h5 class="footer-title mb-4">Alamat Kantor</h5>
