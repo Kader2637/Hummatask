@@ -13,7 +13,7 @@ class Tugas extends Model
 
     protected $guarded=[
     ];
-// sesuai yang ada didala array
+// sesuai yang ada didala array 
     protected $fillable=['status_tugas','nama','prioritas'];
 
     public function tim():BelongsTo
