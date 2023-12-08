@@ -615,17 +615,8 @@
                     return;
                 }
 
-                if (!foto) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Foto wajib di isi',
-                    });
-                    isSubmitting = false;
-                    return;
-                }
-
-                var file = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+                if (foto) {
+                    var file = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
                 var fotoExt = foto.substr(foto.lastIndexOf('.'));
 
                 if (!file.exec(fotoExt)) {
@@ -637,6 +628,9 @@
                     isSubmitting = false; // Set flag kembali menjadi false setelah validasi error
                     return;
                 }
+
+                }
+
 
 
                 $.ajax({
@@ -938,29 +932,22 @@
                     return;
                 }
 
-                if (!fotoLogo) {
-                    Swal.fire({
-                        title: 'Oops...',
-                        icon: 'error',
-                        text: 'Foto wajib di isi',
-                    });
+                if (fotoLogo) {
+                    var fileLogo = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+                    var Logo = fotoLogo.substr(fotoLogo.lastIndexOf('.'));
+                    if (!fileLogo.exec(Logo)) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Jenis file yang diizinkan hanya jpg, jpeg, png !',
+                        });
+                        isSubmitting = false; // Set flag kembali menjadi false setelah validasi error
+                        return;
+                    }
 
-                    isSubmitting = false;
-                    return;
                 }
 
-                var fileLogo = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-                var Logo = fotoLogo.substr(fotoLogo.lastIndexOf('.'));
 
-                if (!fileLogo.exec(Logo)) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Jenis file yang diizinkan hanya jpg, jpeg, png !',
-                    });
-                    isSubmitting = false; // Set flag kembali menjadi false setelah validasi error
-                    return;
-                }
 
                 $.ajax({
                     url: "logo-update/" + id,

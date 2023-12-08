@@ -24,7 +24,7 @@ class RequestEditGalery extends FormRequest
         return [
            'judul' => 'max:30',
            'keterangan' => 'max:100',
-           'foto' => 'required:mimes:png,jpg,jpeg,gif'
+           'foto' => 'nullable|image'
         ];
     }
 }
