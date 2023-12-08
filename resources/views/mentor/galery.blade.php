@@ -283,15 +283,15 @@
                             style="width: 100px; margin-bottom: 10px; border-radius: 5px;">
                         <div class="mb-3">
                             <label for="" class="control-label">Judul :</label>
-                            <input type="text" class="form-control" name="judul" value="" id="judulgalery">
+                            <input type="text" class="form-control" name="judul" value="judul" id="judulgalery">
                         </div>
                         <div class="mb-3">
                             <label for="" class="control-label">Keterangan :</label>
-                            <textarea name="keterangan" class="form-control" cols="5" rows="3" value=""></textarea>
+                            <textarea name="keterangan" class="form-control" cols="5" rows="3" value="keterangan"></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="" class="control-label">Foto :</label>
-                            <input type="file" class="form-control" name="foto" id="logogalery" value="">
+                            <input type="file" class="form-control" name="foto" id="logogalery" value="foto">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -326,11 +326,11 @@
                             style="width: 100px; margin-bottom: 10px; border-radius: 5px;">
                         <div class="mb-3">
                             <label for="recipient-name" class="control-label">Judul :</label>
-                            <input type="text" class="form-control" name="judul" id="judulLogo">
+                            <input type="text" class="form-control" name="judul" id="judulLogo" value="judulLogo">
                         </div>
                         <div class="mb-3">
                             <label for="message-text" class="control-label">Foto :</label>
-                            <input type="file" class="form-control" name="foto" id="logos">
+                            <input type="file" class="form-control" name="foto" id="logos" value="fotoLogo">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -367,7 +367,7 @@
                 var foto = $('input[name="foto"]').val();
                 var keterangan = $('textarea[name="keterangan"]').val();
 
-                if (!judul || !foto ) {
+                if (!judul || !foto) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
@@ -569,6 +569,8 @@
     {{-- script edit galery --}}
     <script>
         $(document).ready(function() {
+            var isSubmitting = false;
+
             function emptyForm(formId) {
                 $('#' + formId)[0].reset();
             }
@@ -579,6 +581,63 @@
                 var formData = new FormData(this);
 
                 formData.append('_method', 'PUT');
+
+                if (isSubmitting) {
+                    return; // Jika sedang melakukan pengiriman data, hentikan eksekusi lebih lanjut
+                }
+
+                isSubmitting =
+                    true; // Set flag menjadi true untuk menandakan sedang melakukan pengiriman data
+
+                var judul = $('input[value="judul"]').val();
+                var keterangan = $('textarea[value="keterangan"]').val();
+                var foto = $('input[value="foto"]').val();
+
+                if (judul.length > 30) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'judul maksimal 30 karakter!',
+                    });
+
+                    isSubmitting = false;
+                    return;
+                }
+
+                if (keterangan.length > 100) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'judul maksimal 100 karakter!',
+                    });
+
+                    isSubmitting = false;
+                    return;
+                }
+
+                if (!foto) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Foto wajib di isi',
+                    });
+                    isSubmitting = false;
+                    return;
+                }
+
+                var file = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+                var fotoExt = foto.substr(foto.lastIndexOf('.'));
+
+                if (!file.exec(fotoExt)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Jenis file yang diizinkan hanya jpg, jpeg, png !',
+                    });
+                    isSubmitting = false; // Set flag kembali menjadi false setelah validasi error
+                    return;
+                }
+
 
                 $.ajax({
                     url: "galery-update/" + id,
@@ -606,10 +665,14 @@
                         Swal.fire({
                             icon: 'error',
                             title: 'Error',
-                            text: 'Terjadi kesalahan' + error,
+                            text: 'Terjadi kesalahan' + errorData,
                             showConfirmButton: true,
                             timer: 2000
                         });
+                    },
+                    complete: function() {
+                        isSubmitting =
+                            false;
                     }
                 });
             });
@@ -842,6 +905,8 @@
     {{-- script edit logo --}}
     <script>
         $(document).ready(function() {
+            var isSubmitting = false;
+
             function emptyForm(id) {
                 $('#' + id)[0].reset();
             }
@@ -849,7 +914,53 @@
                 e.preventDefault();
                 const id = $(this).data('id');
                 var formData = new FormData(this);
+
                 formData.append('_method', 'PUT');
+
+                if (isSubmitting) {
+                    return; // Jika sedang melakukan pengiriman data, hentikan eksekusi lebih lanjut
+                }
+
+                isSubmitting =
+                    true; // Set flag menjadi true untuk menandakan sedang melakukan pengiriman data
+
+                var judulLogo = $('input[value="judulLogo"]').val();
+                var fotoLogo = $('input[value="fotoLogo"]').val();
+
+                if (judulLogo.length > 40) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'judul maksimal 40 karakter!',
+                    });
+
+                    isSubmitting = false;
+                    return;
+                }
+
+                if (!fotoLogo) {
+                    Swal.fire({
+                        title: 'Oops...',
+                        icon: 'error',
+                        text: 'Foto wajib di isi',
+                    });
+
+                    isSubmitting = false;
+                    return;
+                }
+
+                var fileLogo = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+                var Logo = fotoLogo.substr(fotoLogo.lastIndexOf('.'));
+
+                if (!fileLogo.exec(Logo)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Jenis file yang diizinkan hanya jpg, jpeg, png !',
+                    });
+                    isSubmitting = false; // Set flag kembali menjadi false setelah validasi error
+                    return;
+                }
 
                 $.ajax({
                     url: "logo-update/" + id,
@@ -877,10 +988,14 @@
                         Swal.fire({
                             icon: 'error',
                             title: 'Error',
-                            text: 'Terjadi kesalahan' + error,
+                            text: 'Terjadi kesalahan' + errorData,
                             showConfirmButton: true,
                             timer: 2000
                         });
+                    },
+                    complete: function() {
+                        isSubmitting =
+                            false;
                     }
                 });
             });

@@ -22,7 +22,7 @@ class RequestCreateLogo extends FormRequest
     public function rules(): array
     {
         return [
-            'judulLogo' => 'required',
+            'judulLogo' => 'required|max:40',
             'fotoLogo' => 'required|mimes:png,jpg,jpeg,gif'
         ];
     }

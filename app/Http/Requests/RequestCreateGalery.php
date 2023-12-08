@@ -22,7 +22,7 @@ class RequestCreateGalery extends FormRequest
     public function rules(): array
     {
         return [
-           'judul' => 'required|max:20',
+           'judul' => 'required|max:30',
            'keterangan' => 'max:255',
            'foto' => 'required|mimes:png,jpg,jpeg,gif'
         ];
