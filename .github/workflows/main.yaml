@@ -28,7 +28,7 @@ jobs:
         # ftp password
         password: hummatask1234
         # Server port to connect to (read your web hosts docs)
-        port: hummatask1234
+        port: 21
         # protocol to deploy with - ftp, ftps, or ftps-legacy
         protocol: ftp
         # An array of glob patterns, these files will not be included in the publish/delete process
