@@ -119,7 +119,7 @@
                           <div class="modal-content">
                             <div class="modal-header">
                               <h5 class="modal-title" id="exampleModalLabel2">Labels</h5>
-                              <button type="button" class="btn-close tutup-label" data-bs-dismiss="tambahLabel"></button>
+                              <button type="button" class="btn-close  tutup-label" data-bs-dismiss="tambahLabel"></button>
                             </div>
                             <div class="modal-body">
                                 <div class="col-12">
