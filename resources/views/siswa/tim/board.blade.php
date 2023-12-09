@@ -668,11 +668,18 @@ if (minutesAgo < 60) {
                                     })
                                 })
                                 .catch((err) => {
-                                    console.log(err);
+                                    let data = err.response.data.errors;
+                                            let message = "";
+
+                                            // Menggabungkan pesan-pesan validasi menjadi satu pesan
+                                            $.each(data, function(key, value) {
+                                                message += value + "\n";
+                                            });
+
                                     Swal.fire({
                                         icon: "error",
                                         title : "Error!",
-                                        text: ( typeof err.response.data.message === "undefined" ) ? err : err.response.data.message,
+                                        text: ( typeof err.response.data.message === "undefined" ) ? err : message,
                                         showConfirmButton : false,
                                         timer : 2500,
                                     })
@@ -843,9 +850,9 @@ if (minutesAgo < 60) {
         pagingType: "simple_numbers",
         language: {
           sProcessing: "Sedang memproses...",
-          sLengthMenu: "Tampilkan _MENU_ data",
+          sLengthMenu: "Tampilkan data _MENU_",
           sZeroRecords: "Tidak ditemukan Data",
-          sInfo: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+          sInfo: "Tampil _START_ sampai _END_ dari _TOTAL_ data",
           sInfoEmpty: " 0 sampai 0 dari 0 data",
           sInfoFiltered: "(disaring dari _MAX_ data keseluruhan)",
           sInfoPostFix: "",
@@ -1526,34 +1533,22 @@ if (minutesAgo < 60) {
                             });
 
                             function deleteTugas(codetugas) {
-                                const swalWithBootstrapButtons = Swal.mixin({
-                                    customClass: {
-                                        confirmButton: "btn btn-success",
-                                        cancelButton: "btn btn-danger"
-                                    },
-                                    buttonsStyling: false
-                                });
-                                swalWithBootstrapButtons.fire({
-                                    title: "Apakah Kamu Yakin?",
-                                    text: "Data yang kamu hapus tidak bisa dipulihkan",
-                                    icon: "warning",
-                                    showCancelButton: true,
-                                    confirmButtonText: "Iya",
-                                    cancelButtonText: "Tidak",
-                                    reverseButtons: true
+                                Swal.fire({
+                                title: "Are you sure?",
+                                text: "You won't be able to revert this!",
+                                icon: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: "#3085d6",
+                                cancelButtonColor: "#d33",
+                                confirmButtonText: "Yes, delete it!"
                                 }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        axios.delete("delete/tugas/" + codetugas)
+                                if (result.isConfirmed) {
+
+                                    axios.delete("delete/tugas/" + codetugas)
                                             .then((res) => {
                                                 const data = res.data;
                                                 $("#board-" + codetugas).addClass("d-none")
                                                 console.log(data);
-
-                                                swalWithBootstrapButtons.fire({
-                                                    title: "Terhapus!",
-                                                    text: "Datamu berhasil terhapus.",
-                                                    icon: "success"
-                                                });
 
                                             })
                                             .catch((err) => {
@@ -1561,17 +1556,15 @@ if (minutesAgo < 60) {
                                                 alertError(err);
                                             })
 
-                                    } else if (
-                                        /* Read more about handling dismissals below */
-                                        result.dismiss === Swal.DismissReason.cancel
-                                    ) {
-                                        swalWithBootstrapButtons.fire({
-                                            title: "Batal!",
-                                            text: "Datamu batal dihapus",
-                                            icon: "error"
-                                        });
-                                    }
+
+                                    Swal.fire({
+                                    title: "Deleted!",
+                                    text: "Your file has been deleted.",
+                                    icon: "success"
+                                    });
+                                }
                                 });
+
                             }
 
 
