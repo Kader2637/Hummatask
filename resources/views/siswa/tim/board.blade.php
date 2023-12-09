@@ -1104,17 +1104,16 @@ if (minutesAgo < 60) {
                                     .catch((err) => {
                                         console.log(err);
                                     });
-
                             }
 
-                            const oneWeekFromToday = new Date();
+                            const today = new Date();
+                            const tommorow = new Date(today)
+                            tommorow.setDate(today.getDate() + 1);
 
-
-            flatpickr("#due-date", {
-                minDate: oneWeekFromToday,
-                dateFormat: "Y-m-d",
-            });
-
+                flatpickr("#due-date", {
+                    minDate: today,
+                    dateFormat: "Y-m-d",
+                });
 
             function openModal(){
                 $("#tambahLabel").show()

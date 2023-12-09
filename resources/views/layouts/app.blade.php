@@ -308,10 +308,10 @@
                             Login sebagai :
                             @if (auth()->check() &&
                                     auth()->user()->can('kelola siswa'))
-                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full text-sm">Pengelola
+                                <span class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full text-sm">Pengelola
                                     Magang</span>
                             @else
-                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full text-sm">Siswa
+                                <span class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full text-sm">Siswa
                                     Magang</span>
                             @endif
                         </div>
