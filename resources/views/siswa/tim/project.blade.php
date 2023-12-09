@@ -370,7 +370,7 @@
                                                     </div>
                                                     @if (@isset($project) && $project->deadline)
                                                         <div>Tema : <span
-                                                                class="badge bg-label-warning">{{ $project->tema->nama_tema }}</span>
+                                                                class="badge bg-label-warning">{{ Str::limit($project->tema->nama_tema, 20) }}</span>
                                                         @else
                                                             <div>Tema : <span class="badge bg-label-warning">Pending</span>
                                                     @endif
