@@ -42,7 +42,7 @@
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-lg-4 col-12 mb-4">
+            <div class="col-12 col-lg-4 col-xxl-4 mb-4">
                 <div class="card">
                     <h5 class="card-header">Jumlah Tim Saat Ini</h5>
                     <div class="card-body">
@@ -79,7 +79,7 @@
             <!-- /Doughnut Chart -->
 
             <!-- Scatter Chart -->
-            <div class="col-lg-8 col-12 mb  -4">
+            <div class="col-lg-8 col-12 col-xxl-4 mb-4">
                 <div class="card">
                     <div class="card-header header-elements">
                         <h5 class="card-title mb-0">Data Anak Magang</h5>
