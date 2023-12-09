@@ -26,7 +26,7 @@ jobs:
         # ftp username
         username: hummatask@hummatask.dcode.my.id
         # ftp password
-        password: hummatask1234
+        password: -%Ql5,}-^8]N
         # Server port to connect to (read your web hosts docs)
         port: 21
         # protocol to deploy with - ftp, ftps, or ftps-legacy
