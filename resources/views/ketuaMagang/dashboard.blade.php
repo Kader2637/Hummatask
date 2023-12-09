@@ -131,11 +131,14 @@
                     </div>
                 </td>
                 </tr>
-                @endforeach
-                </tbody>
-                </table>
-                <a href="{{ route('ketua.presentasi') }}" class="btn btn-primary d-flex flex-wrap flex-col">Lihat Lebih
-                    Banyak</a>
+            </tbody>
+        </table>
+        @if($item == null)
+        @else
+        <a href="{{ route('ketua.presentasi') }}" class="btn btn-primary d-flex flex-wrap flex-col">Lihat Lebih
+            Banyak</a>
+            @endif
+            @endforeach
                 <div class="mt-3 mx-3">
                     <div class="text-center fw-bold"><span>Keterangan</span></div>
                     <td class="text-end">

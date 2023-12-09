@@ -26,7 +26,7 @@
                 <div class="row">
                     <div class=" jumbotron col-12 d-flex flex-column align-items-center justify-content-center">
                         <p class="fs-5">{{ \Carbon\Carbon::now()->translatedFormat('l, j F Y') }}</p>
-                        <p class="fs-3">Selamat datang, {{ Auth::user()->username }}</p>
+                        <p class="fs-3 text-center">Selamat datang, {{ Auth::user()->username }}</p>
                     </div>
                 </div>
                 <div class="row">
@@ -38,7 +38,7 @@
                 <div class="row mt-4 justify-content-start mb-2" id="navs-tab-sesijalani">
                     @php $count = 0; @endphp
                     @foreach ($tugasBelum as $data)
-                        <div class="col-4">
+                        <div class="col-12 col-xxl-4 col-lg-4">
                             <div class="card text-center mb-3">
                                 <a href="{{ route('tim.board', $data->tim_code) }}" class="card-body py-3 px-3"
                                     data-eid="in-progress-1" data-comments="12" data-badge-text="UX" data-badge="success"
@@ -92,7 +92,7 @@
                 <div class="row mt-4 d-flex justify-content-start" id="navs-tab-sesijalani">
                     @php $count2 = 0; @endphp
                     @foreach ($tugas as $item)
-                        <div class="col-4">
+                        <div class="col-12 col-xxl-4 col-lg-4">
                             <div class="card text-center mb-3">
                                 <a href="{{ route('tim.board', $item->tim_code) }}" class="card-body py-3 px-3"
                                     data-eid="in-progress-1" data-comments="12" data-badge-text="UX" data-badge="success"

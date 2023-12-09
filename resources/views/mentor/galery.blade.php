@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="d-flex card flex-md-row align-items-center justify-content-between">
-            <div class=" nav nav-pills mb-3 mt-3 d-flex flex-wrap navbar-ul px-3" id="pills-tab" role="tablist">
+            <div class=" nav nav-pills mb-3 mt-3 d-flex justify-content-center flex-wrap navbar-ul px-3" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="pills-galery-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-galery" type="button" role="tab" aria-controls="pills-galery"
@@ -474,13 +474,13 @@
                         <div class="col-md-6 col-lg-3 wow bounceInUp" data-wow-delay="0.1s">
                                 <div class="event-img position-relative" style="width:100% !important; height: 206px !important; overflow: hidden !important;">
                                     <img class="img-fluid rounded"
-                                        src="{{ asset('storage/public/img/') }}/${item.foto}"
+                                        src="{{ asset('storage/public/img') }}/${item.foto}"
                                         alt="" style="object-fit: cover !important; width: 100% !important; height: 100% !important">
                                     <div class="event-overlay d-flex flex-column p-4">
                                         <h4 class="me-auto fs-5 fw-light" style="color: white;">${item.judul}</h4>
                                         <div class="my-auto">
                                             <a class="btn btn-primary"
-                                                href="{{ asset('storage/public/img/') }}/${item.foto}"
+                                                href="{{ asset('storage/public/img') }}/${item.foto}"
                                                 data-lightbox="event-5"><i class="bi bi-eye"></i></a>
                                             <button type="button"
                                                 class="btn btn-success button-edit-galery" data-idgalery="${item.id}"
@@ -803,13 +803,13 @@
                             <div class="col-md-6 col-lg-3 wow bounceInUp" data-wow-delay="0.1s">
                                 <div class="event-img position-relative" style="width:100% !important; height: 206px !important; overflow: hidden !important;">
                                     <img class="img-fluid rounded "
-                                        src="{{ asset('storage/public/img/') }}/${itemLogo.foto}"
+                                        src="{{ asset('storage/public/img') }}/${itemLogo.foto}"
                                         alt="" style="object-fit: cover !important; width: 100% !important; height: 100% !important">
                                     <div class="event-overlay d-flex flex-column p-4">
                                         <h4 class="me-auto fs-5 fw-light" style="color: white;">${itemLogo.judul}</h4>
                                         <div class="my-auto">
                                             <a class="btn btn-primary"
-                                                href="{{ asset('storage/public/img/') }}/${itemLogo.foto}"
+                                                href="{{ asset('storage/public/img') }}/${itemLogo.foto}"
                                                 data-lightbox="event-5"><i class="bi bi-eye"></i></a>
                                                 <button type="button"
                                                 class="btn btn-success button-edit"
@@ -944,7 +944,6 @@
                         isSubmitting = false; // Set flag kembali menjadi false setelah validasi error
                         return;
                     }
-
                 }
 
 

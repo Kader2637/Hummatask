@@ -212,7 +212,7 @@
                 <div class="menu-inner-shadow"></div>
 
                 <ul class="menu-inner py-1">
-                    <li class="menu-item">
+                    <li class="menu-item {{ request()->routeIs('dashboard.siswa') ? 'active' : '' }}">
                         <a href="{{ route('dashboard.siswa') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-category"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Dashboard</div>
