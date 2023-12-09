@@ -48,6 +48,35 @@
                 font-size: 13px;
             }
         }
+
+        @media (max-width: 576px) {
+            .modal-dialog {
+                max-width: 100%;
+                margin: 0;
+            }
+
+            .modal-edit-user .modal-content {
+                padding: 10px;
+            }
+
+            .modal-edit-user .modal-body {
+                overflow-y: auto;
+            }
+
+            .modal-edit-user .form-label {
+                font-size: 14px;
+            }
+
+            .modal-edit-user .form-control {
+                font-size: 14px;
+            }
+
+            .modal-edit-user .btn-primary,
+            .modal-edit-user .btn-danger {
+                font-size: 14px;
+                padding: 5px 10px;
+            }
+        }
     </style>
 @endsection
 
