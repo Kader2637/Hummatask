@@ -792,7 +792,7 @@
         <div class="footer-top">
             <div class="container">
                 <div class="row gx-0 gy-4 g-md-5">
-                    <div class="col-lg-5">
+                    <div class="col-lg-4">
                         <a href="" class="app-brand-link mb-4">
                             <span class="app-brand-logo demo mb-1">
                                 <img src="{{ asset('assets/img/taskhumma.png') }}" width="60" height="50"
@@ -804,21 +804,26 @@
                         <p class="footer-text footer-logo-description mb-4">
                             Aplikasi HummaTask membantu Anda mengelola dan mengingat tugas-tugas Anda, menjadi teman produktivitas Anda.
                         </p>
-                        {{-- <form class="footer-form">
-                            <label for="footer-email" class="small">Berlangganan untuk hal terbaru</label>
+                        <form class="footer-form">
                             <div class="d-flex mt-1">
-                                <input type="email"
+                                {{-- <input type="email"
                                     class="form-control rounded-0 rounded-start-bottom rounded-start-top"
                                     id="footer-email" placeholder="Emailmu" />
                                 <button type="submit"
                                     class="btn btn-primary shadow-none rounded-0 rounded-end-bottom rounded-end-top">
                                     Berlangganan
-                                </button>
+                                </button> --}}
+                                <div class="footer-social-icon">
+                                    <span class="fw-bold">Follow us : </span>
+                                    <a href="https://www.facebook.com/hummatech"><i class="ti ti-brand-facebook"></i></a>
+                                    <a href="https://www.instagram.com/hummatech"><i class="ti ti-brand-instagram"></i></a>
+                                    <a href="https://twitter.com/hummasoft"><i class="ti ti-brand-tiktok"></i></a>
+                                </div>
                             </div>
-                        </form> --}}
+                        </form>
                     </div>
                     <div class="col-lg-2 col-md-4 col-sm-6">
-                        <h5 class="footer-title mb-4">Alamat Kantor</h5>
+                        <h5 class="footer-title mb-4"><i class="ti ti-brand-google-maps" style="color: #1376c5; margin-bottom: 5px;"></i> Alamat </h5>
                         <ul class="list-unstyled">
                             <li class="mb-3">
                                 <a href="" target="_blank" class="footer-link">Perum permata regency 1 blok 10
@@ -827,8 +832,8 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-lg-2 col-md-4 col-sm-6">
-                        <h5 class="footer-title mb-4">Tentang Perusahaan</h5>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <h5 class="footer-title mb-4"><i class="ti ti-building-skyscraper" style="color: #1376c5; margin-bottom: 5px;"></i> Tentang Perusahaan</h5>
                         <ul class="list-unstyled">
                             <li class="mb-3">
                                 <a href="" class="footer-link">Hummasoft
@@ -839,10 +844,10 @@
                         </ul>
                     </div>
                     <div class="col-lg-3 col-md-4">
-                        <h5 class="footer-title mb-4">Pesan</h5>
+                        <h5 class="footer-title mb-4"><i class="ti ti-message-2-cog" style="color: #1376c5; margin-bottom: 5px;"></i> Pesan</h5>
                         <ul class="list-unstyled">
-                            <li class="mb-3">
-                                <a href="" class="footer-link">Sempurnakan Tugas Keseharianmu dengan Hummatech
+                            <li class="mb-3 ">
+                                <a href="" class="footer-link"> Hummatech
                                     Task Management: Mencatat, Menyimpan, dan Mengingatkan dengan Lebih Efisien!</a>
                             </li>
                         </ul>
