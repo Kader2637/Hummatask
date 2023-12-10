@@ -1027,8 +1027,11 @@ if (minutesAgo < 60) {
 
                                                 wordDeadline = '-'
 
+                                            }else if(deadline == 0){
+                                                wordDeadline = `hari ini`;
                                             }else{
                                                 wordDeadline = `${deadline} hari lagi`
+
                                             }
 
                                             let elementPrioritas = prioritas(tugas.prioritas)
