@@ -11,6 +11,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta charset="utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
     <title>
         Dashboard Mentor
     </title>
@@ -299,7 +302,7 @@
                     <div class="navbar-nav-right d-flex align-items-center" id="navbarcollapse">
                         <div class="d-flex align-items-center justify-content-center gap-2" id="login-sebagai">
                             Login sebagai :
-                            <span class="py-2 px-3 bg-primary text-white rounded rounded-full">Mentor</span>
+                            <span class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full">Mentor</span>
                         </div>
                         <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
@@ -472,15 +475,11 @@
 
     <script>
         function deletenotifikasi(id) {
-            console.log('notifikasiId:', id);
             axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute(
                 'content');
-            console.log('Request URL:', `http://127.0.0.1:8000/tim/notifikasi/${id}`);
-            axios.delete(`http://127.0.0.1:8000/tim/notifikasi/${id}`)
+            axios.delete(`/tim/notifikasi/${id}`)
                 .then(response => {
-                    console.log('Axios Response:', response);
                     const notifikasiElement = document.getElementById(`notification-list-${id}`);
-                    console.log('notifikasiElement:', notifikasiElement);
                     if (notifikasiElement) {
                         notifikasiElement.remove();
                     }

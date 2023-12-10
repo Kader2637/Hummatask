@@ -48,6 +48,35 @@
                 font-size: 13px;
             }
         }
+
+        @media (max-width: 576px) {
+            .modal-dialog {
+                max-width: 100%;
+                margin: 0;
+            }
+
+            .modal-edit-user .modal-content {
+                padding: 10px;
+            }
+
+            .modal-edit-user .modal-body {
+                overflow-y: auto;
+            }
+
+            .modal-edit-user .form-label {
+                font-size: 14px;
+            }
+
+            .modal-edit-user .form-control {
+                font-size: 14px;
+            }
+
+            .modal-edit-user .btn-primary,
+            .modal-edit-user .btn-danger {
+                font-size: 14px;
+                padding: 5px 10px;
+            }
+        }
     </style>
 @endsection
 
@@ -341,7 +370,7 @@
                                                     </div>
                                                     @if (@isset($project) && $project->deadline)
                                                         <div>Tema : <span
-                                                                class="badge bg-label-warning">{{ $project->tema->nama_tema }}</span>
+                                                                class="badge bg-label-warning">{{ Str::limit($project->tema->nama_tema, 20) }}</span>
                                                         @else
                                                             <div>Tema : <span class="badge bg-label-warning">Pending</span>
                                                     @endif

@@ -308,10 +308,10 @@
                             Login sebagai :
                             @if (auth()->check() &&
                                     auth()->user()->can('kelola siswa'))
-                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full text-sm">Pengelola
+                                <span class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full text-sm">Pengelola
                                     Magang</span>
                             @else
-                                <span class="py-2 px-3 bg-primary text-white rounded rounded-full text-sm">Siswa
+                                <span class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full text-sm">Siswa
                                     Magang</span>
                             @endif
                         </div>
@@ -628,15 +628,11 @@
 
     <script>
         function deletenotifikasi(id) {
-            console.log('notifikasiId:', id);
             axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute(
                 'content');
-            console.log('Request URL:', `http://127.0.0.1:8000/tim/notifikasi/${id}`);
-            axios.delete(`http://127.0.0.1:8000/tim/notifikasi/${id}`)
+            axios.delete(`/tim/notifikasi/${id}`)
                 .then(response => {
-                    console.log('Axios Response:', response);
                     const notifikasiElement = document.getElementById(`notification-list-${id}`);
-                    console.log('notifikasiElement:', notifikasiElement);
                     if (notifikasiElement) {
                         notifikasiElement.remove();
                     }
