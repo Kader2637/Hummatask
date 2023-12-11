@@ -435,7 +435,7 @@
                         <div class="row" style="height:50vh;">
                             <div class ="col-12 d-flex flex-column justify-content-center align-items-center ">
                                 <img src="{{ asset('assets/img/illustrations/noData.png') }}" width="200" />
-                                <h3>Sedang Tidak ada Pengajuan</h3>
+                                <p class="fs-5 mb-0 text-center">Sedang Tidak ada Pengajuan</p>
                             </div>
                         </div>
                         `
