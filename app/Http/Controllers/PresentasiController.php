@@ -10,6 +10,7 @@ use App\Models\Notifikasi;
 use App\Models\Presentasi;
 use App\Models\TidakPresentasiMingguan;
 use App\Models\Tim;
+use App\Models\User;
 use Carbon\Carbon;
 use Carbon\Exceptions\Exception as ExceptionsException;
 use Exception;
@@ -119,10 +120,24 @@ class PresentasiController extends Controller
         $presentasi->status_presentasi_mingguan = true;
         $presentasi->save();
 
+        $mentorId = User::where('peran_id', 2)->pluck('id')->first();
+        if ($mentorId) {
+            $this->sendNotificationToMentor($mentorId, 'Pengajuan Project!', 'Ada anggota tim yang mengajukan presentasi.', 'pemberitahuan');
+        }
 
         return redirect()->back()->with('success', 'Berhasil mengajukan presentasi');
     }
 
+    protected function sendNotificationToMentor($mentorId, $title, $message, $jenisNotifikasi)
+    {
+        Notifikasi::create([
+            'user_id' => $mentorId,
+            'judul' => $title,
+            'body' => $message,
+            'status' => 'belum_dibaca',
+            'jenis_notifikasi' => $jenisNotifikasi,
+        ]);
+    }
 
     protected function persetujuanPresentasi(RequestPersetujuanPresentasi $request, $code)
     {
@@ -171,7 +186,6 @@ class PresentasiController extends Controller
         if ($request->alasan === null) {
             return  response()->json(["error" => "Alasan penolakan tidak boleh kosong"]);
         }
-
 
         $presentasi = Presentasi::where('code', $code)->first();
         $presentasi->status_pengajuan = 'ditolak';

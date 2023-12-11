@@ -513,6 +513,11 @@
                             textClass = 'text-success';
                             icon = '<i class="ti ti-check ti-xs"></i>';
                             break;
+                        case 'danger':
+                            jenisClass = 'alert-danger';
+                            textClass = 'text-danger';
+                            icon = '<i class="ti ti-ban ti-xsti ti-ban ti-xs"></i>';
+                            break;
                         default:
                             jenisClass = 'bg-secondary';
                             icon = '<i class="ti ti-alert ti-xs"></i>';
