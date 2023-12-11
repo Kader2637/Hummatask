@@ -44,7 +44,8 @@
             </div>
         </div>
         <div class="d-flex card flex-md-row align-items-center justify-content-between">
-            <div class=" nav nav-pills mb-3 mt-3 d-flex flex-wrap navbar-ul px-3" id="pills-tab" role="tablist">
+            <div class="nav nav-pills mb-3 mt-3 d-flex justify-content-center flex-wrap navbar-ul px-3" id="pills-tab"
+                role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="pills-galery-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-galery" type="button" role="tab" aria-controls="pills-galery"
@@ -185,11 +186,11 @@
 
     {{-- modal create logo --}}
     <div class="modal fade" id="createLogo" tabindex="-1" aria-labelledby="exampleModalLabel1">
-        <form id="createLogoForm" data-create-logo="{{ route('logo.create') }}" method="post"
-            enctype="multipart/form-data">
-            @csrf
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form id="createLogoForm" data-create-logo="{{ route('logo.create') }}" method="post"
+                    enctype="multipart/form-data">
+                    @csrf
                     <div class="modal-header d-flex align-items-center">
                         <h4 class="modal-title" id="exampleModalLabel1">
                             Logo
@@ -216,19 +217,19 @@
                             Save
                         </button>
                     </div>
-                </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
     {{-- modal create logo --}}
 
     {{-- modal create galery --}}
     <div class="modal fade" id="createGalery" tabindex="-1" aria-labelledby="exampleModalLabel2">
-        <form id="createGaleryForm" data-create-route="{{ route('galery.create') }}" method="post"
-            enctype="multipart/form-data">
-            @csrf
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form id="createGaleryForm" data-create-route="{{ route('galery.create') }}" method="post"
+                    enctype="multipart/form-data">
+                    @csrf
                     <div class="modal-header d-flex align-items-center">
                         <h4 class="modal-title" id="exampleModalLabel2">
                             Galery
@@ -259,15 +260,15 @@
                             Save
                         </button>
                     </div>
-                </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
     {{-- modal create galery --}}
 
     {{-- modal edit galery --}}
     <div class="modal fade" id="modal-edit-galery" tabindex="-1" aria-labelledby="exampleModalLabel">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form id="form-update-galery" method="put" enctype="multipart/form-data">
                     @csrf
@@ -311,7 +312,7 @@
 
     {{-- modal edit logo --}}
     <div class="modal fade" id="modal-edit" tabindex="-1" aria-labelledby="exampleModalLabel">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form id="form-update" method="put" enctype="multipart/form-data">
                     @csrf
@@ -474,13 +475,13 @@
                         <div class="col-md-6 col-lg-3 wow bounceInUp" data-wow-delay="0.1s">
                                 <div class="event-img position-relative" style="width:100% !important; height: 206px !important; overflow: hidden !important;">
                                     <img class="img-fluid rounded"
-                                        src="{{ asset('storage/public/img/') }}/${item.foto}"
+                                        src="{{ asset('storage/img/${item.foto}') }}"
                                         alt="" style="object-fit: cover !important; width: 100% !important; height: 100% !important">
                                     <div class="event-overlay d-flex flex-column p-4">
                                         <h4 class="me-auto fs-5 fw-light" style="color: white;">${item.judul}</h4>
                                         <div class="my-auto">
                                             <a class="btn btn-primary"
-                                                href="{{ asset('storage/public/img/') }}/${item.foto}"
+                                                href="{{ asset('storage/img/${item.foto}') }}"
                                                 data-lightbox="event-5"><i class="bi bi-eye"></i></a>
                                             <button type="button"
                                                 class="btn btn-success button-edit-galery" data-idgalery="${item.id}"
@@ -510,7 +511,7 @@
                             $('#judulgalery').val(judulgalery);
                             $('#keterangan').val(keterangan);
                             $('#fotogalery').attr('src', fotogalery);
-                            $('#logogalery').attr('src', '{{ asset('storage/public/img/') }}/' +
+                            $('#logogalery').attr('src', '{{ asset('storage/img/') }}/' +
                                     fotogalery)
                                 .attr('alt', 'Logo')
                                 .css({
@@ -617,17 +618,17 @@
 
                 if (foto) {
                     var file = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-                var fotoExt = foto.substr(foto.lastIndexOf('.'));
+                    var fotoExt = foto.substr(foto.lastIndexOf('.'));
 
-                if (!file.exec(fotoExt)) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Jenis file yang diizinkan hanya jpg, jpeg, png !',
-                    });
-                    isSubmitting = false; // Set flag kembali menjadi false setelah validasi error
-                    return;
-                }
+                    if (!file.exec(fotoExt)) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Jenis file yang diizinkan hanya jpg, jpeg, png !',
+                        });
+                        isSubmitting = false; // Set flag kembali menjadi false setelah validasi error
+                        return;
+                    }
 
                 }
 
@@ -803,13 +804,13 @@
                             <div class="col-md-6 col-lg-3 wow bounceInUp" data-wow-delay="0.1s">
                                 <div class="event-img position-relative" style="width:100% !important; height: 206px !important; overflow: hidden !important;">
                                     <img class="img-fluid rounded "
-                                        src="{{ asset('storage/public/img/') }}/${itemLogo.foto}"
+                                        src="{{ asset('storage/img/${itemLogo.foto}') }}"
                                         alt="" style="object-fit: cover !important; width: 100% !important; height: 100% !important">
                                     <div class="event-overlay d-flex flex-column p-4">
                                         <h4 class="me-auto fs-5 fw-light" style="color: white;">${itemLogo.judul}</h4>
                                         <div class="my-auto">
                                             <a class="btn btn-primary"
-                                                href="{{ asset('storage/public/img/') }}/${itemLogo.foto}"
+                                                href="{{ asset('storage/img/${itemLogo.foto}') }}"
                                                 data-lightbox="event-5"><i class="bi bi-eye"></i></a>
                                                 <button type="button"
                                                 class="btn btn-success button-edit"
@@ -841,7 +842,7 @@
 
                             $('#judulLogo').val(judullogo);
                             $('#fotoLogo').attr('src', fotologo);
-                            $('#logos').attr('src', '{{ asset('storage/public/img/') }}/' + fotologo)
+                            $('#logos').attr('src', '{{ asset('storage/img/') }}/' + fotologo)
                                 .attr('alt', 'Logo')
                                 .css({
                                     'width': '100px',

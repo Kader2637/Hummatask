@@ -9,6 +9,10 @@
                 <a href="{{ route('presentasi.mentor') }}" class="btn btn-primary d-flex justify-content-end">Detail</a>
             </div>
             <div class="table-responsive text-nowrap card-datatable">
+                @php
+                    $no = 1;
+                @endphp
+                @forelse ($presentasi as $i => $item)
                 <table id="myTable" class="table">
                     <thead>
                         <tr>
@@ -21,22 +25,24 @@
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        @php
-                            $no = 1;
-                        @endphp
-                        @foreach ($presentasi as $i => $item)
-                            <tr>
-                                <td>{{ $no++ }}</td>
-                                <td class=""><img src="{{ asset('storage/' . $item->tim->logo) }}" alt=""
-                                        style="width: 40px; height: 40px; ;border-radius:50%; margin-right:5px;">
-                                    {{ $item->tim->nama }}
-                                </td>
-                                <td>{{ $jadwal[$i] }}</td>
-                                <td>{{ $hari[$i] }}</td>
-                                <td>{{ $item->tim->status_tim }}</td>
-                                <td><span class="badge bg-label-success me-1">{{ $item->status_presentasi }}</span></td>
-                            </tr>
-                        @endforeach
+                        <tr>
+                            <td>{{ $no++ }}</td>
+                            <td class=""><img src="{{ asset('storage/' . $item->tim->logo) }}" alt=""
+                                    style="width: 40px; height: 40px; ;border-radius:50%; margin-right:5px;">
+                                {{ $item->tim->nama }}
+                            </td>
+                            <td>{{ $jadwal[$i] }}</td>
+                            <td>{{ $hari[$i] }}</td>
+                            <td>{{ $item->tim->status_tim }}</td>
+                            <td><span class="badge bg-label-success me-1">{{ $item->status_presentasi }}</span></td>
+                        </tr>
+                    @empty
+                       <p class="text-center mb-0 mt-2">Data tidak tersedia <i class="ti ti-address-book-off"></i></p>
+                       <div class="d-flex justify-content-evenly">
+                        <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt="" class="mb-0"
+                            style="width: 250px;">
+                        </div>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -46,8 +52,9 @@
                 <div class="card">
                     <h5 class="card-header">Jumlah Tim Saat Ini</h5>
                     <div class="card-body">
-                        <canvas id="piechart" class="chartjs mb-4" data-height="350"></canvas>
-                        <ul class="doughnut-legend d-flex justify-content-around ps-0 mb-2 pt-1">
+                        <p id="statusPie" class="text-center statusPie"></p>
+                        <canvas id="piechart" class="chartjs mb-4 piechart mt-2" data-height="350"></canvas>
+                        <ul class="doughnut-legend d-flex justify-content-around ps-0 mb-2 pt-1 mt-4">
                             <li class="ct-series-0 d-flex flex-column">
                                 <h5 class="mb-0">Big</h5>
                                 <span class="badge badge-dot my-2 cursor-pointer rounded-pill"
@@ -79,7 +86,7 @@
             <!-- /Doughnut Chart -->
 
             <!-- Scatter Chart -->
-            <div class="col-lg-8 col-12 mb  -4">
+            <div class="col-lg-8 col-12 col-xxl-8 mb-4">
                 <div class="card">
                     <div class="card-header header-elements">
                         <h5 class="card-title mb-0">Data Anak Magang</h5>
@@ -117,19 +124,25 @@
                                     <li>
                                         <form method="get">
                                             <input type="hidden" value="{{ $currentYear }}">
-                                            <button type="submit" class="dropdown-item d-flex align-items-center justify-content-between">Now <i class="ti ti-calendar-event"></i></button>
+                                            <button type="submit"
+                                                class="dropdown-item d-flex align-items-center justify-content-between">Now
+                                                <i class="ti ti-calendar-event"></i></button>
                                         </form>
                                     </li>
                                     <li>
                                         <form method="get">
                                             <input type="hidden" name="year" value="{{ $year - 1 }}">
-                                            <button type="submit" class="dropdown-item d-flex align-items-center justify-content-between">Last <i class="ti ti-calendar-minus"></i></button>
+                                            <button type="submit"
+                                                class="dropdown-item d-flex align-items-center justify-content-between">Last
+                                                <i class="ti ti-calendar-minus"></i></button>
                                         </form>
                                     </li>
                                     <li>
                                         <form method="get">
                                             <input type="hidden" name="year" value="{{ $year + 1 }}">
-                                            <button type="submit" class="dropdown-item d-flex align-items-center justify-content-between">Next <i class="ti ti-calendar-plus"></i></button>
+                                            <button type="submit"
+                                                class="dropdown-item d-flex align-items-center justify-content-between">Next
+                                                <i class="ti ti-calendar-plus"></i></button>
                                         </form>
                                     </li>
                                 </ul>
@@ -137,7 +150,7 @@
                         </div>
                     </div>
                     <div class="card-body d-flex pt-2">
-                        <canvas id="barChart" class="chartjs" data-height="480" style="height: 346px;"></canvas>
+                        <canvas id="barChart" class="chartjs" data-height="480" style="height: 330px;"></canvas>
                     </div>
                 </div>
             </div>
@@ -153,6 +166,7 @@
         const black = '#fff';
 
         const piechart = document.getElementById('piechart');
+        const statusPie = document.getElementById('statusPie');
         const processedData = @json($chart);
 
         if (piechart) {
@@ -208,6 +222,29 @@
                     }
                 }
             });
+
+            if (jumlah.slice(1).every(value => value === 0)) {
+               statusPie.style.display = 'block';
+               piechart.style.display = 'none';
+
+               const img = document.createElement('img');
+               img.src = '{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}';
+               img.alt = 'Belum Ada Tim';
+               img.style.width = '200px';
+
+               const h6Text = 'Tidak Ada Tim <i class="ti ti-address-book-off"></i>';
+               const h6Element = document.createElement('h6');
+               h6Element.classList.add('text-center','mt-4');
+               h6Element.innerHTML = h6Text;
+
+               statusPie.innerHTML = '' ;
+               statusPie.appendChild(h6Element);
+               statusPie.appendChild(img);
+            } else {
+               statusPie.style.display = 'none';
+               piechart.style.display = 'block';
+               statusPie.textContent = '' ;
+            }
         }
 
         let barCardColor, barHeadingColor, barLabelColor, barBorderColor, barLegendColor;
