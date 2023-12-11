@@ -522,7 +522,7 @@
 
                     var customStatus = [{
                             value: 'pre_mini',
-                            text: 'Pre Mini'
+                            text: 'Pre-mini Project'
                         },
                         {
                             value: 'mini',

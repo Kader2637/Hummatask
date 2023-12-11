@@ -4,6 +4,7 @@
     <script src="assets/plugins/global/plugins.bundle.js"></script>
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
 
+
     @if ($errors->any())
         <script>
             @foreach ($errors->all() as $error)
@@ -222,7 +223,7 @@
 
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="card">
-            <div class="d-flex flex-wrap flex-row justify-content-between">
+            <div class="refleksi d-flex flex-wrap flex-row justify-content-between">
                 <div>
                     <ul class="nav nav-pills mb-3 mt-3 saputra" style="padding-left: 20px" id="pills-tab" role="tablist">
                         <li class="nav-item" role="presentation">
@@ -267,17 +268,18 @@
                 <div id="pengelola-content" class="row g-3">
                     <div class="d-flex flex-row gap-2 justify-content-end py-3 px-4">
                         <div class="d-flex">
-                            <div class="col d-flex flex-wrap gap-1">
-                                <button id="add-btn" class="btn btn-primary" style="font-size: 13px"
-                                    data-bs-toggle="modal" data-bs-target="#add-role"><i
-                                        class="fa-solid fa-plus icon-text"></i>Tambah
-                                    Role</button>
-                            </div>
-                            <div class="col d-flex flex-wrap gap-1">
-                                <button id="add-btn" class="btn btn-primary" style="font-size: 13px"
-                                    data-bs-toggle="modal" data-bs-target="#add-pengelola"><i
-                                        class="fa-solid fa-plus icon-text"></i>Tambah
-                                    Pengelola</button>
+                            <div class="col d-flex gap-1">
+                                <div>
+
+                                    <button id="add-btn" class="btn btn-primary" style="font-size: 13px"
+                                        data-bs-toggle="modal" data-bs-target="#add-role"><i
+                                            class="fa-solid fa-plus icon-text"></i>Tambah Role</button>
+                                </div>
+                                <div>
+                                    <button id="add-btn" class="btn btn-primary" style="font-size: 13px"
+                                        data-bs-toggle="modal" data-bs-target="#add-pengelola"><i
+                                            class="fa-solid fa-plus icon-text"></i>Tambah Pengelola</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -305,9 +307,11 @@
                                         });
                                     </script>
                                 </div>
-                                <button id="add-btn" class="btn btn-primary" style="font-size: 13px"
-                                    data-bs-toggle="modal" data-bs-target="#add-data"><i
-                                        class="fa-solid fa-plus icon-text"></i>Tambah</button>
+                                <div>
+                                    <button id="add-btn" class="btn btn-primary" style="font-size: 13px"
+                                        data-bs-toggle="modal" data-bs-target="#add-data"><i
+                                            class="fa-solid fa-plus icon-text"></i>Tambah</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -353,7 +357,7 @@
                                                 <span class="badge bg-label-primary">
                                                     Lulus
                                                 </span>
-                                                @else
+                                            @else
                                                 <span class="badge bg-label-warning">
                                                     Belum Lulus
                                                 </span>
@@ -1034,6 +1038,27 @@
     <script src="node_modules/axios/dist/axios.min.js"></script>
     <script src="{{ asset('utils/handleSuccessResponse.js') }}"></script>
     <script src="{{ asset('utils/handleErrorResponse.js') }}"></script>
+
+    <script>
+        // Fungsi untuk mengubah justify-content
+        function updateJustifyContent() {
+            var screenWidth = window.innerWidth;
+            var dFlexElement = document.querySelector('.refleksi');
+
+            // Ubah justify-content berdasarkan lebar layar
+            if (screenWidth <= 590) {
+                dFlexElement.classList.remove('justify-content-between');
+                dFlexElement.classList.add('justify-content-center');
+            } else {
+                dFlexElement.classList.remove('justify-content-center');
+                dFlexElement.classList.add('justify-content-between');
+            }
+        }
+
+        // Panggil fungsi saat halaman dimuat dan diubah ukurannya
+        window.addEventListener('load', updateJustifyContent);
+        window.addEventListener('resize', updateJustifyContent);
+    </script>
 
     <script>
         $("#masa_magang").flatpickr({
