@@ -37,11 +37,16 @@
                                 <div
                                     class="d-flex align-items-md-end align-items-sm-start align-items-center justify-content-md-between justify-content-start mx-4 flex-md-row flex-column gap-4">
                                     <div class="user-profile-info">
-                                        <h4>{{ $user->username }}</h4>
+                                        <h4 class="text-capitalize">{{ $user->username }}</h4>
                                         <ul
                                             class="list-inline mb-0 d-flex align-items-center flex-wrap justify-content-sm-start justify-content-center gap-2">
                                             <li class="list-inline-item d-flex gap-1">
-                                                <i class='ti ti-color-swatch'></i> {{ $user->peran->peran }}
+                                                <i class='ti ti-color-swatch'></i>
+                                                @if ($user->peran_id == 1)
+                                                    Siswa
+                                                @else
+                                                    Mentor
+                                                @endif
                                             </li>
                                             @if ($user->sekolah)
                                                 <li class="list-inline-item d-flex gap-1">
@@ -50,7 +55,7 @@
                                             @endif
                                             <li class="list-inline-item d-flex gap-1">
                                                 <i class='ti ti-calendar'></i> Bergabung pada
-                                                {{ \Carbon\Carbon::parse($user->created_at)->isoFormat('MMMM YYYY') }}
+                                                {{ \Carbon\Carbon::parse($user->created_at)->translatedFormat('l, j F Y') }}
                                             </li>
                                         </ul>
                                     </div>
@@ -90,7 +95,7 @@
                                     <div class="col-md-6">
                                         <div class="form-floating my-3">
                                             <input name="username" type="text" class="form-control"
-                                                placeholder="{{ $user->username ?: 'Isi username anda' }}"
+                                                value="{{ $user->username }}" placeholder="Isi username anda"
                                                 aria-describedby="floatingInputHelp" />
                                             <label for="floatingInput">Nama</label>
                                             <span class="text-danger" id="username-error">
@@ -98,35 +103,28 @@
                                         </div>
                                         <div class="form-floating my-3">
                                             <input name="email" type="email" class="form-control"
-                                                placeholder="{{ $user->email ?: 'Isi email anda' }}"
+                                                value="{{ $user->email }}" placeholder="Isi email anda"
                                                 aria-describedby="floatingInputHelp" />
                                             <label for="floatingInput">Email</label>
                                             <span class="text-danger" id="email-error">
-                                            </span>
-                                        </div>
-                                        <div class="form-floating my-3">
-                                            <input name="tlp" type="number" class="form-control"
-                                                placeholder="{{ $user->tlp ? $user->tlp : 'Isi nomer telepon anda' }}"
-                                                aria-describedby="floatingInputHelp" />
-                                            <label for="floatingInput">Nomor Telpon</label>
-                                            <span class="text-danger" id="tlp-error">
                                             </span>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating my-3">
                                             <input name="sekolah" type="text" class="form-control"
-                                                placeholder="{{ $user->sekolah ?: 'Isi alamat sekolah anda' }}"
+                                                value="{{ $user->sekolah }}" placeholder="Isi alamat sekolah anda"
                                                 aria-describedby="floatingInputHelp" />
                                             <label for="floatingInput">Asal Sekolah</label>
                                             <span class="text-danger" id="alamat-error">
                                             </span>
                                         </div>
                                         <div class="form-floating my-3">
-                                            <textarea name="deskripsi" style="resize: none; height: 133.5px;" class="form-control"
-                                                placeholder="{{ $user->deskripsi != 'none' ?: 'Isi deskripsi anda' }}" aria-describedby="floatingInputHelp"></textarea>
-                                            <label for="floatingInput">deskripsi</label>
-                                            <span class="text-danger" id="deskripsi-error">
+                                            <input name="tlp" type="number" class="form-control"
+                                                value="{{ $user->tlp }}" placeholder="Isi nomer telepon anda"
+                                                aria-describedby="floatingInputHelp" />
+                                            <label for="floatingInput">Nomor Telpon</label>
+                                            <span class="text-danger" id="tlp-error">
                                             </span>
                                         </div>
                                     </div>
@@ -184,7 +182,7 @@
                                         <div class="card text-center mb-3 tim-item"
                                             data-status-tim="{{ $item->status_tim }}">
                                             <div class="card-body">
-                                                <img src="{{ asset('storage/    ' . $item->logo) }}" alt="logo tim"
+                                                <img src="{{ asset('storage/' . $item->logo) }}" alt="logo tim"
                                                     class="rounded-circle mb-3"
                                                     style="width: 100px; height: 100px; object-fit: cover">
                                                 <div class="d-flex align-items-center justify-content-center">
@@ -741,7 +739,7 @@
                     var avatarSrc = anggota.user.avatar ? '/storage/' + anggota.user.avatar :
                         '/assets/img/avatars/1.png';
 
-                        var lulus = anggota.user.status_kelulusan == '1'
+                    var lulus = anggota.user.status_kelulusan == '1'
 
 
                     var anggotaItem = $('<div class="col-lg-12 p-2" style="box-shadow: none">' +
@@ -754,7 +752,8 @@
                         '<div>' +
                         '<h5 class="mb-0" style="font-size: 15px">' + anggota.user.username +
                         '</h5>' +
-                        (lulus ? '<span class="badge bg-label-success me-2">Lulus</span>' : '') +
+                        (lulus ? '<span class="badge bg-label-success me-2">Lulus</span>' :
+                            '') +
                         (jabatanLabel ? '<span class="badge bg-label-warning">' + jabatanLabel +
                             '</span>' : '') +
                         '</div>' +
