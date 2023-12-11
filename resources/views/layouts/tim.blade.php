@@ -289,7 +289,7 @@
                                 <ul class="dropdown-menu dropdown-menu-end py-0" id="notification-dropdown">
                                     <li class="dropdown-menu-header border-bottom">
                                         <div class="dropdown-header d-flex align-items-center py-3">
-                                            <h5 class="text-body mb-0 me-auto">Notification</h5>
+                                            <h5 class="text-body mb-0 me-auto">Notifikasi</h5>
                                         </div>
                                     </li>
                                     @foreach ($notifikasi as $item)
