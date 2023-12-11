@@ -93,13 +93,16 @@
     @endif
     {{-- Modal Ajukan Project --}}
     <div class="modal fade" id="ajukanModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-simple modal-edit-user">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-body">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <form id="editUserForm" class="row g-2 p-0 m-0" action="{{ route('tim.ajukanProject', $tim->code) }}"
-                        method="POST">
-                        @csrf
+                <form id="editUserForm" class="" action="{{ route('tim.ajukanProject', $tim->code) }}"
+                    method="POST">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalCenterTitle">Ajukan Project</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
                         <div class="col-12 col-md-12 d-flex flex-row gap-3 align-items-center">
                             <div class="col-12 col-md-12 d-flex flex-wrap flex-col align-items-center">
                                 <label class="form-label m-0 p-0 mt-2" for="modalEditUserLastName">Link Repository
@@ -112,23 +115,21 @@
                                 @enderror
                             </div>
                         </div>
-
                         <div class="col-12 justify-content-center">
-                            <label for="TagifyBasic" class="form-label">Tema <span class="text-warning">(Inputkan 10 tema,
-                                    tekan enter di setiap tema)</span></label>
+                            <label for="TagifyBasic" class="form-label">Tema <span class="text-warning">(Mohon inputkan tema yang valid, karena setelah diajukan tidak bisa di edit!)</span></label>
                             <input id="TagifyBasic" class="form-control @error('temaInput') is-invalid @enderror"
                                 name="temaInput" placeholder="Masukkan 10 tema pilihan anda" />
                             @error('temaInput')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-12 d-flex flex-row flex-wrap justify-content-end">
-                            <button type="submit" class="btn btn-primary me-sm-3 me-1">Unggah</button>
-                            <button type="reset" class="btn btn-danger" data-bs-dismiss="modal"
-                                aria-label="Close">Batal</button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary me-sm-3 me-1">Ajukan</button>
+                        <button type="reset" class="btn btn-danger" data-bs-dismiss="modal"
+                            aria-label="Close">Batal</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

@@ -19,7 +19,7 @@
         </div>
         <div class="col-12">
             <div class="row">
-                <div class="d-flex justify-content-between mb-4">
+                <div class="d-flex justify-content-between mb-4 gap-2">
                     <div class="filter col-lg-3 col-md-3 col-sm-3">
                         <label for="select2Basic" class="form-label">Filter</label>
                         <form id="filterForm" action="{{ route('projek') }}" method="get">

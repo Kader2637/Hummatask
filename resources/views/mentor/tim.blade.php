@@ -140,7 +140,6 @@
         {{-- Modal Buat Tim --}}
         <form action="{{ route('pembuatan.tim') }}" id="createForm" method="post">
             @csrf
-
             <div class="modal fade" id="modalBuatTim" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
