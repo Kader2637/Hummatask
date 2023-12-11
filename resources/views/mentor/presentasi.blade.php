@@ -253,29 +253,23 @@
                         </div>
                         <div class="tab-content mt-3">
                             <div class="tab-pane fade active show" id="navs-pills-top-home" role="tabpanel">
-                                <div class="">
-                                    <div class="">
-                                        <div class=" text-nowrap">
-                                            <div class="container">
-                                                <div class="row d-md-block d-none">
-                                                    <div class="alert alert-secondary alert-dismissible d-flex align-items-baseline"
-                                                        role="alert">
-                                                        <span class="alert-icon alert-icon-lg text-secondary me-2">
-                                                            <i class="ti ti-bookmark ti-sm"></i>
-                                                        </span>
-                                                        <div class="d-flex flex-column ps-1">
-                                                            <h5 class="alert-heading mb-2">Tab Pengajuan Presentasi</h5>
-                                                            <p class="mb-0">Tab pengajuan presentasi berisi data data
-                                                                pengajuan presentasi dari siswa magang</p>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row" id="row-persetujuan">
-
-                                                </div>
+                                <div class="container">
+                                    <div class="row d-md-block d-none">
+                                        <div class="alert alert-secondary alert-dismissible d-flex align-items-baseline"
+                                            role="alert">
+                                            <span class="alert-icon alert-icon-lg text-secondary me-2">
+                                                <i class="ti ti-bookmark ti-sm"></i>
+                                            </span>
+                                            <div class="d-flex flex-column ps-1">
+                                                <h5 class="alert-heading mb-2">Tab Pengajuan Presentasi</h5>
+                                                <p class="mb-0">Tab pengajuan presentasi berisi data data
+                                                    pengajuan presentasi dari siswa magang</p>
+                                                </button>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row" id="row-persetujuan">
+
                                     </div>
                                 </div>
                             </div>
@@ -490,7 +484,7 @@
                         <div class="row" style="height:50vh;">
                             <div class ="col-12 d-flex flex-column justify-content-center align-items-center ">
                                 <img src="{{ asset('assets/img/illustrations/noData2.png') }}" width="200" />
-                                <h3>Sedang Tidak ada presentasi</h3>
+                                <p class="fs-5 mb-0 text-center">Sedang Tidak ada presentasi</p>
                             </div>
                         </div>
                         `
@@ -712,17 +706,17 @@
                         // Timestamp dari data.updated_at
                         let updatedTimestamp = new Date(data.updated_at);
 
-                         let currentTimestamp = new Date();
+                        let currentTimestamp = new Date();
 
-                         let timeDifference = currentTimestamp - updatedTimestamp;
+                        let timeDifference = currentTimestamp - updatedTimestamp;
 
-                         let minutesAgo = Math.floor(timeDifference / (1000 * 60));
+                        let minutesAgo = Math.floor(timeDifference / (1000 * 60));
                         let hoursAgo = Math.floor(timeDifference / (1000 * 60 * 60));
                         let daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
                         let waktu;
 
-                         if (minutesAgo < 60) {
+                        if (minutesAgo < 60) {
                             waktu = `${minutesAgo} menit yang lalu`;
                         } else if (hoursAgo < 24) {
                             waktu = `${hoursAgo} jam yang lalu`;
