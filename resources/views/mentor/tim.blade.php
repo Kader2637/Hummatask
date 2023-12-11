@@ -140,7 +140,6 @@
         {{-- Modal Buat Tim --}}
         <form action="{{ route('pembuatan.tim') }}" id="createForm" method="post">
             @csrf
-
             <div class="modal fade" id="modalBuatTim" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -520,6 +519,39 @@
                         }
                         $("#ketua").append(option);
                     });
+
+                    var customStatus = [{
+                            value: 'pre_mini',
+                            text: 'Pre-mini Project'
+                        },
+                        {
+                            value: 'mini',
+                            text: 'Mini Project'
+                        },
+                        {
+                            value: 'big',
+                            text: 'Big Project'
+                        }
+                    ];
+
+                    // Temukan elemen dropdown status
+                    var statusDropdown = $("#tim_status_modal");
+
+                    // Hapus opsi yang ada (kecuali opsi pertama "Pilih Data")
+                    statusDropdown.find('option:not(:first)').remove();
+
+                    // Tambahkan opsi dinamis dari data
+                    $.each(customStatus, function(index, status) {
+                        var option = new Option(status.text, status.value, false, false);
+                        statusDropdown.append(option);
+                    });
+
+                    var nilai_default = status;
+                    statusDropdown.val(nilai_default).trigger('change');
+
+
+
+
                 },
                 error: function(xhr, status, error) {
                     console.error("Terjadi kesalahan: " + error);

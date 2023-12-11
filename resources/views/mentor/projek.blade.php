@@ -19,7 +19,7 @@
         </div>
         <div class="col-12">
             <div class="row">
-                <div class="d-flex justify-content-between mb-4">
+                <div class="d-flex justify-content-between mb-4 gap-2">
                     <div class="filter col-lg-3 col-md-3 col-sm-3">
                         <label for="select2Basic" class="form-label">Filter</label>
                         <form id="filterForm" action="{{ route('projek') }}" method="get">
@@ -67,7 +67,6 @@
                         $tanggalMulai = $item->tim->created_at->translatedFormat('Y-m-d');
                         $totalDeadline = null;
                         $dayLeft = null;
-
                         $deadline = \Carbon\Carbon::parse($item->deadline)->translatedFormat('Y-m-d');
                         $totalDeadline = \Carbon\Carbon::parse($deadline)->diffInDays($tanggalMulai);
                         $dayLeft = \Carbon\Carbon::parse($deadline)->diffInDays(\Carbon\Carbon::now()->startOfDay());
@@ -179,10 +178,10 @@
                         <img src="{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}"
                             alt="page-misc-under-maintenance" width="300" class="img-fluid">
                     </div>
-                @endforelse
-                <div>
-                    {{ $projects->links('pagination::bootstrap-5') }}
-                </div>
+                    @endforelse
+                    <div>
+                        {{ $projects->links('pagination::bootstrap-5') }}
+                    </div>
             </div>
         </div>
     </div>
@@ -250,7 +249,7 @@
                                                             data-height="267"
                                                             style="display: block; box-sizing: border-box; height: 200px; width: 200px;"></canvas>
                                                         <ul
-                                                            class="doughnut-legend d-flex justify-content-around ps-0 mb-2 pt-1">
+                                                            class="doughnut-legend d-flex justify-content-evenly ps-0 mb-2 pt-1">
                                                             <li class="ct-series-0 d-flex flex-column">
                                                                 <h5 class="mb-0" style="font-size: 13px">Tugas Baru</h5>
                                                                 <span
@@ -287,18 +286,13 @@
                                                 {{-- card projects --}}
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <div
-                                                            class="d-flex flex-row align-items-center justify-content-between">
+                                                        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between">
                                                             <div class="fs-4 text-black">
                                                                 Projek
                                                             </div>
-                                                            <div
-                                                                style="display: flex; flex-direction: column; justify-items: center; align-items: left;">
-
-                                                                <span>Tanggal Mulai : <span id="tglmulai"></span>
-                                                                </span>
-
-                                                                <span>Tenggat : <span id="deadline"></span></span>
+                                                            <div class="d-flex flex-column mt-1">
+                                                                <span>Tanggal Mulai: <span id="tglmulai"></span></span>
+                                                                <span>Tenggat: <span id="deadline"></span></span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -306,14 +300,12 @@
                                                     <div class="card-body">
                                                         <div class="row">
                                                             <div class="col-lg-6">
-                                                                <div class="d-flex flex-row gap-3">
-                                                                    <img id="logo-tim" src="" alt='logo tim'
-                                                                        class="rounded-circle"
-                                                                        style="width: 90px; height: 90px">
-                                                                    <div
-                                                                        style="display: flex; flex-direction: column; justify-content: center; align-items: center">
-                                                                        <span class="d-block text-black fs-5"
-                                                                            id="nama-tim">nama tim</span>
+                                                                <div class="d-flex flex-column flex-md-row gap-3">
+                                                                    <div class="text-center">
+                                                                        <img id="logo-tim" src="" alt='logo tim' class="rounded-circle" style="width: 90px; height: 90px">
+                                                                    </div>
+                                                                    <div class="d-flex flex-column justify-content-center align-items-center">
+                                                                        <span class="d-block text-black fs-5" id="nama-tim">nama tim</span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="mt-4">

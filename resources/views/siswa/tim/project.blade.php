@@ -93,13 +93,16 @@
     @endif
     {{-- Modal Ajukan Project --}}
     <div class="modal fade" id="ajukanModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-simple modal-edit-user">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-body">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <form id="editUserForm" class="row g-2 p-0 m-0" action="{{ route('tim.ajukanProject', $tim->code) }}"
-                        method="POST">
-                        @csrf
+                <form id="editUserForm" class="" action="{{ route('tim.ajukanProject', $tim->code) }}"
+                    method="POST">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalCenterTitle">Ajukan Project</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
                         <div class="col-12 col-md-12 d-flex flex-row gap-3 align-items-center">
                             <div class="col-12 col-md-12 d-flex flex-wrap flex-col align-items-center">
                                 <label class="form-label m-0 p-0 mt-2" for="modalEditUserLastName">Link Repository
@@ -112,23 +115,22 @@
                                 @enderror
                             </div>
                         </div>
-
                         <div class="col-12 justify-content-center">
-                            <label for="TagifyBasic" class="form-label">Tema <span class="text-warning">(Inputkan 10 tema,
-                                    tekan enter di setiap tema)</span></label>
+                            <label for="TagifyBasic" class="form-label">Tema <span class="text-warning">(Mohon inputkan tema
+                                    yang valid, karena setelah diajukan tidak bisa di edit!)</span></label>
                             <input id="TagifyBasic" class="form-control @error('temaInput') is-invalid @enderror"
                                 name="temaInput" placeholder="Masukkan 10 tema pilihan anda" />
                             @error('temaInput')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-12 d-flex flex-row flex-wrap justify-content-end">
-                            <button type="submit" class="btn btn-primary me-sm-3 me-1">Unggah</button>
-                            <button type="reset" class="btn btn-danger" data-bs-dismiss="modal"
-                                aria-label="Close">Batal</button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary me-sm-3 me-1">Ajukan</button>
+                        <button type="reset" class="btn btn-danger" data-bs-dismiss="modal"
+                            aria-label="Close">Batal</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -252,21 +254,25 @@
 
                     </div>
                     <div class="" role="presentation">
-                        @auth
-                            @if (auth()->user()->anggota->jabatan_id == '1')
-                                @if (!$project)
-                                    <button class="btn btn-primary button-nav waves-effect waves-light" data-bs-toggle="modal"
-                                        data-bs-target="#ajukanModal">
-                                        Ajukan Project
-                                    </button>
-                                @else
-                                    <button class="btn btn-primary button-nav waves-effect waves-light" data-bs-toggle="modal"
-                                        data-bs-target="#editProject">
-                                        Edit Project
-                                    </button>
+                        @if ($tim->kadaluwarsa == '0')
+                            @auth
+                                @if (auth()->user()->anggota->jabatan_id == '1')
+                                    @if (!$project)
+                                        <button class="btn btn-primary button-nav waves-effect waves-light"
+                                            data-bs-toggle="modal" data-bs-target="#ajukanModal">
+                                            Ajukan Project
+                                        </button>
+                                    @else
+                                        <button class="btn btn-primary button-nav waves-effect waves-light"
+                                            data-bs-toggle="modal" data-bs-target="#editProject">
+                                            Edit Project
+                                        </button>
+                                    @endif
                                 @endif
-                            @endif
-                        @endauth
+                            @endauth
+                        @elseif ($tim->kadaluwarsa == '1')
+                        @endif
+
                     </div>
                 </div>
                 <div class="tab-content bg-transparent pb-0" style="box-shadow: none;">
@@ -356,7 +362,20 @@
                                                     </div>
                                                 </div>
                                                 <div class="mt-4">
-                                                    <div class="mb-3">Status : <span class="badge bg-label-warning">
+
+                                                    @if ($tim->kadaluwarsa == '0')
+                                                        <div class="mb-3">Status : <span class="badge bg-label-success">
+                                                                Aktif
+                                                            </span>
+                                                        </div>
+                                                    @elseif ($tim->kadaluwarsa == '1')
+                                                        <div class="mb-3">Jenis : <span class="badge bg-label-danger">
+                                                                Kadaluwarsa
+                                                            </span>
+                                                        </div>
+                                                    @endif
+
+                                                    <div class="mb-3">Jenis : <span class="badge bg-label-warning">
                                                             @if ($tim->status_tim == 'solo')
                                                                 Solo Project
                                                             @elseif ($tim->status_tim == 'pre_mini')
@@ -432,16 +451,26 @@
                                                     fitur lain nya! Hanya Ketua tim yang dapat mengajukan tema.
                                                 </div>
                                             @else
-                                                <div class="alert alert-warning d-flex align-items-center mt-4 cursor-pointer"
-                                                    role="alert" data-bs-toggle="modal" data-bs-target="#editProject"
-                                                    style="font-size: 12px">
-                                                    <span class="alert-icon text-warning me-2">
-                                                        <i class="ti ti-bell ti-xs"></i>
-                                                    </span>
-                                                    Tim ini belum memiliki project, mohon ajukan project agar dapat
-                                                    mengakses
-                                                    fitur lain nya! Hanya Ketua tim yang dapat mengajukan project.
-                                                </div>
+                                                @if ($tim->kadaluwarsa == '0')
+                                                    <div class="alert alert-warning d-flex align-items-center mt-4 cursor-pointer"
+                                                        role="alert" data-bs-toggle="modal"
+                                                        data-bs-target="#editProject" style="font-size: 12px">
+                                                        <span class="alert-icon text-warning me-2">
+                                                            <i class="ti ti-bell ti-xs"></i>
+                                                        </span>
+                                                        Tim ini belum memiliki project, mohon ajukan project agar dapat
+                                                        mengakses
+                                                        fitur lain nya! Hanya Ketua tim yang dapat mengajukan project.
+                                                    </div>
+                                                @elseif ($tim->kadaluwarsa == '1')
+                                                    <div class="alert alert-danger d-flex align-items-center mt-4 cursor-pointer"
+                                                        role="alert" style="font-size: 12px">
+                                                        <span class="alert-icon text-danger me-2">
+                                                            <i class="ti ti-bell ti-xs"></i>
+                                                        </span>
+                                                        Tim ini sudah kadaluwarsa
+                                                    </div>
+                                                @endif
                                             @endif
                                         </div>
                                     </div>

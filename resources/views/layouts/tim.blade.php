@@ -248,13 +248,12 @@
                         </a>
                     </li>
                     <li class="menu-item active mt-5">
-                        <a href="{{ route('dashboard.siswa', $tim->code) }}"
+                        <a href="{{ route('dashboard.siswa') }}"
                             class="menu-link d-flex align-items-center gap-2">
                             <i class="menu-icon tf-icons ti ti-arrow-back"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Kembali</div>
                         </a>
                     </li>
-
                 </ul>
             </aside>
             <div class="layout-page">

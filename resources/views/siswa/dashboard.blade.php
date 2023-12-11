@@ -146,7 +146,7 @@
                 </div>
             @else
                 <div class="row">
-                    <p class="text-center fw-classic fs-5">Data masih kosong</p>
+                    <p class="text-center fw-classic fs-5">Data masih kosong <i class="ti ti-address-book-off"></i></p>
                     <div class="col-lg-12 d-flex justify-content-center">
                         <img src="{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}"
                             alt="page-misc-under-maintenance" width="300" class="img-fluid">

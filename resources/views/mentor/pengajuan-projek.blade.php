@@ -1,6 +1,72 @@
 @extends('layoutsMentor.app')
 
 @section('style')
+    <style>
+        #logo-tim {
+            width: 100px;
+            height: 100px;
+        }
+
+        @media (max-width: 767px) {
+
+            /* Mengatur lebar gambar logo tim */
+            #logo-tim {
+                width: 60px;
+                height: 60px;
+            }
+
+            /* Mengatur font size pada nama tim */
+            #nama-tim {
+                font-size: 1.2rem;
+            }
+
+            /* Mengatur font size pada tanggal pengajuan */
+            #created-at {
+                font-size: 11px;
+            }
+
+            /* Mengatur font size pada anggota tim */
+            .text-black.fs-5 {
+                font-size: 1rem;
+            }
+
+            /* Mengatur lebar tombol Terima */
+            #btn-terima {
+                width: 100%;
+            }
+
+            /* Mengatur lebar konten anggota tim */
+            .content-1 {
+                flex-basis: 100%;
+            }
+
+            .content-profile {
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .content-profile .d-flex.flex-row.gap-3 {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .content-profile .d-flex.flex-row.gap-3 img {
+                width: 80px;
+                height: 80px;
+            }
+
+            .content-profile .d-flex.flex-row.gap-3 div {
+                margin-top: 10px;
+            }
+
+            .content-profile .d-flex.flex-wrap {
+                padding: 15px 5px;
+                text-align: center;
+            }
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -9,7 +75,7 @@
             Daftar Pengajuan Project
         </div>
         <div class="row">
-            <div class="d-flex justify-content-between mb-4">
+            <div class="d-flex justify-content-between mb-4 gap-2">
                 <div class="filter col-lg-3 col-md-3 col-sm-3">
                     <label for="select2Basic" class="form-label">Filter</label>
                     <form id="filterForm" action="{{ route('pengajuan-projek') }}" method="get">
@@ -164,12 +230,12 @@
                                         name="deadlineInput" id="deadline" />
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-label-secondary" data-bs-toggle="modal"
-                                    data-bs-target="#modalDetail">Kembali</button>
-                                <button type="submit" class="btn btn-primary" id="btn-save">Simpan</button>
-                            </div>
                         </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-label-secondary" data-bs-toggle="modal"
+                            data-bs-target="#modalDetail">Kembali</button>
+                        <button type="submit" class="btn btn-primary" id="btn-save">Simpan</button>
                     </div>
                 </div>
             </div>
@@ -190,8 +256,7 @@
                                 <div class="card-body">
                                     <div class="content-profile d-flex flex-wrap flex-row justify-content-between">
                                         <div class="d-flex flex-row gap-3 justify-content-center">
-                                            <img src="" id="logo-tim" alt="logo tim"
-                                                style="width: 100px; height: 100px" class="rounded-circle mb-3">
+                                            <img src="" id="logo-tim" alt="logo" class="rounded-circle mb-3">
                                             <div
                                                 style="display: flex; flex-direction: column; justify-content: center; align-items: center">
                                                 <span class="d-block text-black fs-4 mb-2" id="nama-tim"></span>
@@ -204,11 +269,11 @@
                                             <span class="d-block" style="font-size: 13px" id="created-at"></span>
                                         </div>
                                     </div>
-                                    <div class="d-flex justify-content-between">
+                                    <div class="d-flex justify-content-between align-items-center">
                                         <div style="display: flex; align-content: center; align-items: center;">
                                             <span class="text-black fs-5">Anggota Tim : </span>
                                         </div>
-                                        <div>
+                                        <div class="align-items-center">
                                             <button type="button" id="btn-terima" data-bs-toggle="modal"
                                                 data-bs-target="#modalTerima" class="btn btn-success"
                                                 data-tema="">Terima</button>
