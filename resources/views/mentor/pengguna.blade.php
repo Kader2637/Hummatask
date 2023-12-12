@@ -355,7 +355,7 @@
                                                     data-avatar="{{ $item->avatar }}" data-tlp="{{ $item->tlp }}"
                                                     data-peran="{{ $item->peran->peran }}"
                                                     data-sekolah="{{ $item->sekolah }}" data-email="{{ $item->email }}"
-                                                    data-masa-magang="{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('l, j F Y') }}">
+                                                    data-masa-magang="{{ \Carbon\Carbon::parse($item->tanggal_bergabung)->translatedFormat('l, j F Y') }} sampai {{ \Carbon\Carbon::parse($item->tanggal_lulus)->translatedFormat('l, j F Y') }}">
                                                     <i class="ti ti-eye me-1"></i></span>
 
                                                 <span data-tanggal-lulus="{{ $item->tanggal_lulus }}"
@@ -451,7 +451,7 @@
                                                         data-peran="{{ $item->user->peran->peran }}"
                                                         data-sekolah="{{ $item->user->sekolah }}"
                                                         data-email="{{ $item->user->email }}"
-                                                        data-masa-magang="{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('l, j F Y') }}">
+                                                        data-masa-magang="{{ \Carbon\Carbon::parse($item->tanggal_bergabung)->translatedFormat('l, j F Y') }} sampai {{ \Carbon\Carbon::parse($item->tanggal_lulus)->translatedFormat('l, j F Y') }}">
                                                         <i class="ti ti-eye me-1"></i></span>
                                                     <span class="cursor-pointer"
                                                         id="delete-button-permisions-{{ $item->user->uuid }}"
@@ -531,9 +531,9 @@
                             </thead>
                             <tbody>
                                 @foreach ($magang as $item)
-                                    @if ($item->masih_menjabat === 0)
+                                    @if ($item->masih_menjabat == 0)
                                         <tr>
-                                            <th scope="row">{{ $loop->iteration }}</th>  
+                                            <th scope="row">{{ $loop->iteration }}</th>
                                             <td class="nama">
                                                 @if ($item->user->avatar)
                                                     <img src="{{ asset('storage/' . $item->user->avatar) }}"
@@ -1102,7 +1102,7 @@
             $('#tlp-siswa').text(tlp);
             $('#peran-siswa').text(peran);
             $('#sekolah-siswa').text(sekolah);
-            $('#masaMagang').text(`Bergabung pada: ${bergabung}`);
+            $('#masaMagang').text(`Masa magang : ${bergabung}`);
 
             $('#detail').modal('show');
         });
