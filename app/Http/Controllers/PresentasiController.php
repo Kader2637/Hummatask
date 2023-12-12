@@ -23,11 +23,11 @@ class PresentasiController extends Controller
 {
     protected function ajukanPresentasi(RequestPengajuanPresentasi $request, $code)
     {
-        if ($request->judul === null) {
+        if ($request->judul == null) {
             return back()->with('error', 'Judul presentasi tidak boleh kosong');
         }
 
-        if ($request->deskripsi === null) {
+        if ($request->deskripsi == null) {
             return back()->with('error', 'Deskripsi presentasi tidak boleh kosong');
         }
 
@@ -40,9 +40,9 @@ class PresentasiController extends Controller
             return back()->with('error', 'Deskripsi presentasi tidak boleh melebihi 700 karakter');
         }
 
-        // if (Carbon::now()->isoFormat('HH:m:ss') < "08:00:00") {
-        //     return back()->with('error', 'Pengajuan Presentasi dimulai pukul 08:00');
-        // }
+        if (Carbon::now()->isoFormat('HH:m:ss') < "08:00:00") {
+            return back()->with('error', 'Pengajuan Presentasi dimulai pukul 08:00');
+        }
 
         if (Carbon::now()->isoFormat('HH:m:ss') > "14:00:00") {
             return back()->with('error', 'Pengajuan Presentasi tidak boleh lebih dari pukul 14:00');
@@ -74,10 +74,7 @@ class PresentasiController extends Controller
                 }
             }
 
-
-
-
-            if($tim->sudah_presentasi === 0){
+            if($tim->sudah_presentasi == 0){
                 $tidakPresentasiMingguan = TidakPresentasiMingguan::where('tim_id',$tim->id)->latest()->first();
                 // dd($tidakPresentasiMingguan);
                 $tidakPresentasiMingguan->delete();
