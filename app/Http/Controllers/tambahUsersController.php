@@ -196,7 +196,7 @@ class tambahUsersController extends Controller
             $inisial = strtoupper(implode('', array_map(fn ($name) => substr($name, 0, 1), array_slice(explode(' ', $request->username), 0, 3))));
             $image = Image::canvas(200, 200, '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT));
             $image->text($inisial, 100, 100, function ($font) {
-                $font->file(public_path('assets/font/Poppins-Regular.ttf'));
+                $font->file(public_path('assets/font/Poppins-Bold.ttf'));
                 $font->size(48);
                 $font->color('#ffffff');
                 $font->align('center');
@@ -212,7 +212,6 @@ class tambahUsersController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make('password'),
                 'peran_id' => 2,
-                'deskripsi' => "none"
             ]);
             return redirect()->back()->with('success', 'User berhasil disimpan!');
         } catch (\Throwable $th) {
@@ -222,29 +221,16 @@ class tambahUsersController extends Controller
 
     protected function edit_mentor(Request $request, $uuid)
     {
-        $validatedData = $request->validate([
-            'username' => 'required|string',
-            'email' => 'required|email',
-        ]);
-
         $mentor = User::where('uuid', $uuid)->firstOrFail();
 
-        $inisial = strtoupper(implode('', array_map(fn ($name) => substr($name, 0, 1), array_slice(explode(' ', $request->username), 0, 3))));
-        $image = Image::canvas(200, 200, '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT));
-        $image->text($inisial, 100, 100, function ($font) {
-            $font->file(public_path('assets/font/Poppins-Regular.ttf'));
-            $font->size(48);
-            $font->color('#ffffff');
-            $font->align('center');
-            $font->valign('middle');
-        });
-        $nameImage = 'avatars/' . Str::random(20) . '.jpg';
-        Storage::disk('public')->put($nameImage, $image->stream());
+        $validatedData = $request->validate([
+            'username' => 'required|string',
+            'email' => 'required|email|unique:users,email,' . $mentor->id,
+        ]);
 
         $mentor->update([
             'username' => $validatedData['username'],
             'email' => $validatedData['email'],
-            'avatar' => $nameImage,
         ]);
 
         return redirect()->back()->with('success', 'Mentor berhasil diupdate');
@@ -253,25 +239,22 @@ class tambahUsersController extends Controller
     protected function tambah_pengelola(Request $request)
     {
         try {
-            $role = Role::find($request->role);
+            $role = 1;
             $user = User::find($request->user);
 
             $user->assignRole($role);
+            $awal_menjabat = Carbon::now();
+            $akhir_menjabat = Carbon::now()->addMonth();
 
-            if ($role->name == 'ketua magang') {
-                $awal_menjabat = Carbon::now();
-                $akhir_menjabat = Carbon::now()->addMonth();
+            PenglolaMagang::create([
+                'user_id' => $user->id,
+                'role_id' => $role,
+                'awal_menjabat' => $awal_menjabat,
+                'akhir_menjabat' => $akhir_menjabat,
+                'masih_menjabat' => true,
+            ]);
 
-
-                PenglolaMagang::create([
-                    'user_id' => $user->id,
-                    'role_id' => $role->id,
-                    'awal_menjabat' => $awal_menjabat,
-                    'akhir_menjabat' => $akhir_menjabat,
-                    'masih_menjabat' => true,
-                ]);
-                $this->sendNotification($user->id, 'Selamat anda terpilih', 'Anda sekarang adalah ketua magang', 'info');
-            }
+            $this->sendNotification($user->id, 'Selamat anda terpilih', 'Anda sekarang adalah ketua magang', 'info');
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Gagal memberikan hak akses!');
         }

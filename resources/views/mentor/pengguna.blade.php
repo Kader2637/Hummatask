@@ -180,23 +180,34 @@
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        function toggleContent(tabId) {
-            $('#siswa-content').hide();
-            $('#pengelola-content').hide();
-            $('#mentor-content').hide();
+        $(document).ready(function() {
+            function toggleContent(tabId) {
+                if (tabId === 'pills-home-tab') {
+                    $('#siswa-content').show();
+                } else {
+                    $('#siswa-content').hide();
+                }
 
-            if (tabId === 'pills-home-tab') {
-                $('#siswa-content').show();
+                if (tabId === 'pills-profile-tab') {
+                    $('#pengelola-content').show();
+                } else {
+                    $('#pengelola-content').hide();
+                }
+
+                if (tabId === 'pills-contact-tab') {
+                    $('#mentor-content').show();
+                } else {
+                    $('#mentor-content').hide();
+                }
             }
 
-            if (tabId === 'pills-profile-tab') {
-                $('#pengelola-content').show();
-            }
+            toggleContent('pills-home-tab');
 
-            if (tabId === 'pills-contact-tab') {
-                $('#mentor-content').show();
-            }
-        }
+            $('.nav-link').click(function() {
+                const tabId = $(this).attr('aria-controls');
+                toggleContent(tabId);
+            });
+        });
     </script>
 
 
@@ -248,12 +259,6 @@
                     <div class="d-flex flex-row gap-2 justify-content-end py-3 px-4">
                         <div class="d-flex">
                             <div class="col d-flex gap-1">
-                                <div>
-
-                                    <button id="add-btn" class="btn btn-primary" style="font-size: 13px"
-                                        data-bs-toggle="modal" data-bs-target="#add-role"><i
-                                            class="fa-solid fa-plus icon-text"></i>Tambah Role</button>
-                                </div>
                                 <div>
                                     <button id="add-btn" class="btn btn-primary" style="font-size: 13px"
                                         data-bs-toggle="modal" data-bs-target="#add-pengelola"><i
@@ -350,8 +355,8 @@
                                                     data-avatar="{{ $item->avatar }}" data-tlp="{{ $item->tlp }}"
                                                     data-peran="{{ $item->peran->peran }}"
                                                     data-sekolah="{{ $item->sekolah }}" data-email="{{ $item->email }}"
-                                                    data-masa-magang="{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('l, j F Y') }}"><i
-                                                        class="ti ti-eye me-1"></i></span>
+                                                    data-masa-magang="{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('l, j F Y') }}">
+                                                    <i class="ti ti-eye me-1"></i></span>
 
                                                 <span data-tanggal-lulus="{{ $item->tanggal_lulus }}"
                                                     data-id="{{ $item->id }}" class="cursor-pointer extends"
@@ -445,12 +450,9 @@
                                                         data-tlp="{{ $item->user->tlp }}"
                                                         data-peran="{{ $item->user->peran->peran }}"
                                                         data-sekolah="{{ $item->user->sekolah }}"
-                                                        data-email="{{ $item->user->email }}"><i
-                                                            class="ti ti-eye me-1"></i></span>
-                                                    <span class="cursor-pointer" href="javascript:void(0);"
-                                                        data-bs-toggle="modal" data-bs-target="#edit-data-permisions"><i
-                                                            class="ti ti-pencil me-1"></i></span>
-
+                                                        data-email="{{ $item->user->email }}"
+                                                        data-masa-magang="{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('l, j F Y') }}">
+                                                        <i class="ti ti-eye me-1"></i></span>
                                                     <span class="cursor-pointer"
                                                         id="delete-button-permisions-{{ $item->user->uuid }}"
                                                         href="javascript:void(0);"><i class="ti ti-trash me-1"></i></span>

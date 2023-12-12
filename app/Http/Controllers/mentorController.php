@@ -150,17 +150,12 @@ class mentorController extends Controller
         $bukanPengelolaMagang = new Collection();
         $magang = PenglolaMagang::all();
 
-        foreach ($roles as $peran) {
-            $penggunaDenganPeran = User::whereHas('roles', function ($query) use ($peran) {
-                $query->where('name', $peran->name);
-            })->get();
-            $pengelolaMagang = $pengelolaMagang->concat($penggunaDenganPeran);
-
-            $bukanPengelolaMagang = User::whereDoesntHave('permissions', function ($query) use ($peran) {
-                $query->where('name', $peran);
-            })->get();
-            $bukanPengelolaMagang = $bukanPengelolaMagang->concat($penggunaDenganPeran);
-        }
+        $bukanPengelolaMagang = User::whereDoesntHave('roles')
+            ->whereDoesntHave('permissions')
+            ->whereDoesntHave('roles', function ($query) {
+                $query->where('id', 1);
+            })->where('peran_id', 1)->where('status_kelulusan', false)
+            ->get();
 
         foreach ($users as $user) {
             $penglolaMagang = PenglolaMagang::where('user_id', $user->id)->first();
