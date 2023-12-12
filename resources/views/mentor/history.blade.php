@@ -256,7 +256,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}.</td>
                                         <td>
-                                            <img src="{{ Storage::url($item->tim->logo) }}" alt=""
+                                            <img src="{{asset('storage/'.$item->tim->logo)}}" alt=""
                                                 style="width:30px;height:30px;border-radius:50%;cursor: pointer;"
                                                 data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
                                                 title="{{ $item->tim->nama }}">
@@ -301,7 +301,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}.</td>
                                         <td>
-                                            <img src="{{ Storage::url($item->tim->logo) }}" alt=""
+                                            <img src="{{asset('storage/'.$item->tim->logo)}}" alt=""
                                                 style="width:30px;height:30px;border-radius:50%;cursor: pointer;"
                                                 data-bs-toggle="tooltip" data-popup="tooltip-custom"
                                                 data-bs-placement="top" title="{{ $item->tim->nama }}">
@@ -352,7 +352,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
-                                            <img src="{{ Storage::url($item->logo) }}" alt=""
+                                            <img src="{{asset('storage/'.$item->logo)}}" alt=""
                                                 style="width:30px;height:30px;border-radius:50%; cursor: pointer"
                                                 data-bs-toggle="tooltip" data-bs-placement="top"
                                                 data-popup="tooltip-custom" title="{{ $item->nama }}">
