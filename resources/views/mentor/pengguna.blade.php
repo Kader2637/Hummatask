@@ -533,7 +533,7 @@
                                 @foreach ($magang as $item)
                                     @if ($item->masih_menjabat === 0)
                                         <tr>
-                                            <th scope="row">1</th>
+                                            <th scope="row">{{ $loop->iteration }}</th>  
                                             <td class="nama">
                                                 @if ($item->user->avatar)
                                                     <img src="{{ asset('storage/' . $item->user->avatar) }}"
