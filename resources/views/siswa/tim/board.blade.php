@@ -197,7 +197,7 @@
                         <div style="height: 80vh" class="container-fluid mt-2">
                             <div class="d-flex mt-3 mb-0  row hide-sroll" style="height: 83vh">
                                 <div style="" class="col-lg-3 col-md-6 col-12 py-2   ">
-                                    <div style="max-height: 80vh; overflow:auto; overflow-x:hidden" class="bg-secondary p-2  rounded">
+                                    <div style="max-height: 80vh; overflow:auto; overflow-x:hidden;background-color: #edeaea" class="p-2  rounded">
                                         <div style="width:100%" class="card card-status-tugas">
                                             <div class="card-body p-2 py-2 row justify-content-between">
                                                 <span class="col-8">Tugas baru</span>
@@ -237,7 +237,7 @@
                                     </div>
                                 </div>
                                 <div style="" class="col-lg-3 col-md-6 col-12 py-2">
-                                    <div style="max-height: 80vh; overflow:auto; overflow-x:hidden" class="bg-secondary p-2  rounded">
+                                    <div style="max-height: 80vh; overflow:auto; overflow-x:hidden;background-color: #edeaea" class="p-2  rounded">
                                         <div style="width:100%" class="card card-status-tugas">
                                             <div class="card-body p-2 py-2 row">
                                                 <div class="col-8 d-flex align-items-center position-sticky top-0">
@@ -254,7 +254,7 @@
                                     </div>
                                 </div>
                                 <div style="" class="col-lg-3 col-md-6 col-12 py-2">
-                                    <div style="max-height: 80vh; overflow:auto; overflow-x:hidden" class="bg-secondary p-2  rounded">
+                                    <div style="max-height: 80vh; overflow:auto; overflow-x:hidden;background-color: #edeaea" class="p-2  rounded">
                                         <div style="width:100%" class="card card-status-tugas">
 
                                             <div class="card-body p-2 py-2 row">
@@ -272,7 +272,7 @@
                                     </div>
                                 </div>
                                 <div style="" class="col-lg-3 col-md-6 col-12 py-2    ">
-                                    <div style="max-height: 80vh; overflow:auto; overflow-x:hidden" class="bg-secondary p-2  rounded">
+                                    <div style="max-height: 80vh; overflow:auto; overflow-x:hidden;background-color: #edeaea" class="p-2  rounded">
                                         <div style="width:100%" class="card card-status-tugas">
                                             <div class="card-body p-2 py-2 row">
                                                 <div class="col-8 d-flex align-items-center position-sticky top-0">

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class profileController extends Controller
 {
@@ -17,13 +18,16 @@ class profileController extends Controller
             $request->all(),
             [
                 'username' => 'nullable|string|max:50',
-                'email' => 'nullable|email|unique:users,email',
+                'email' => [
+                    'nullable',
+                    'email',
+                    Rule::unique('users', 'email')->ignore(auth()->user()->id),
+                ],
                 'tlp' => 'nullable|regex:/^\d+$/|min:10|max:13',
                 'sekolah' => 'nullable|string|max:50',
                 'photo' => 'nullable|image',
             ],
             [
-                'email.email' => 'Email harus dalam format yang benar.',
                 'tlp.regex' => 'Nomor telepon harus berisi hanya angka.',
                 'photo' => 'Avatar harus diunggah.',
                 'photo.image' => 'Avatar harus berupa gambar.',

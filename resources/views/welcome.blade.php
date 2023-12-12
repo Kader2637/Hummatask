@@ -50,16 +50,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script src="{{ asset('assets/css/galery.css') }}"></script>
     <style>
-        .responsive-img{
+        .responsive-img {
             width: 100%;
             height: auto;
         }
-        @media (max-width: 768px){
-        .responsive-img {
-            max-width: 100%;
-            height: auto;
+
+        @media (max-width: 768px) {
+            .responsive-img {
+                max-width: 100%;
+                height: auto;
+            }
         }
-    }
     </style>
 </head>
 
@@ -389,15 +390,19 @@
                                         <img src="{{ asset('storage/img/' . $item->foto) }}" alt="">
                                         <div class="hover-overlay"></div>
                                         <div class="hover-4-content">
-                                            <h3 class="hover-4-title text-uppercase font-weight-bold mb-0" style="color:#7367F0;"><span
-                                                    class="font-weight-light fw-lighter">{{ $item->judul }}</span></h3>
-                                            <p class="hover-4-description text-uppercase mb-0 small ">
+                                            <p class="hover-4-description text-uppercase mb-0 fs-6">
                                                 {{ $item->keterangan }}
                                             </p>
+                                            <div class="mt-5">
+                                                <h3 class="hover-4-title text-uppercase font-weight-bold mb-0">
+                                                    <span class="font-weight-light fw-lighter"
+                                                        style="color:#b5b5b5;">{{ $item->judul }}</span>
+                                                </h3>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                @empty
+                            @empty
                                 <div class="justify-content-center" style="display: flex;">
                                     <img src="{{ asset('assets/img/illustrations/noData.png') }}" alt="">
                                 </div>
@@ -518,7 +523,6 @@
     </div>
 
     <style>
-
         .hover {
             overflow: hidden;
             position: relative;
@@ -774,15 +778,19 @@
     <script>
         $(document).ready(function() {
             $("#news-slider").owlCarousel({
-                items: 2,
-                itemsDesktop: [1199, 3],
-                itemsDesktopSmall: [980, 2],
-                itemsMobile: [600, 1],
+                items: 1,
                 loop: true,
                 autoplay: true,
                 autoplayTimeout: 3000,
-                autoplayHoverPause: true
-
+                autoplayHoverPause: true,
+                responsive: {
+                    0: {
+                        items: 1 // Tampilan mobile, satu item
+                    },
+                    768: {
+                        items: 2 // Tampilan tablet dan desktop, dua item
+                    }
+                }
             });
         });
     </script>
@@ -802,7 +810,8 @@
                                     style="color:#7367F0;">Humma</span>task</span>
                         </a>
                         <p class="footer-text footer-logo-description mb-4">
-                            Aplikasi HummaTask membantu Anda mengelola dan mengingat tugas-tugas Anda, menjadi teman produktivitas Anda.
+                            Aplikasi HummaTask membantu Anda mengelola dan mengingat tugas-tugas Anda, menjadi teman
+                            produktivitas Anda.
                         </p>
                         <form class="footer-form">
                             <div class="d-flex mt-1">
@@ -815,15 +824,18 @@
                                 </button> --}}
                                 <div class="footer-social-icon">
                                     <span class="fw-bold">Follow us : </span>
-                                    <a href="https://www.facebook.com/hummatech"><i class="ti ti-brand-facebook"></i></a>
-                                    <a href="https://www.instagram.com/hummatech"><i class="ti ti-brand-instagram"></i></a>
+                                    <a href="https://www.facebook.com/hummatech"><i
+                                            class="ti ti-brand-facebook"></i></a>
+                                    <a href="https://www.instagram.com/hummatech"><i
+                                            class="ti ti-brand-instagram"></i></a>
                                     <a href="https://twitter.com/hummasoft"><i class="ti ti-brand-tiktok"></i></a>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="col-lg-2 col-md-4 col-sm-6">
-                        <h5 class="footer-title mb-4"><i class="ti ti-brand-google-maps" style="color: #1376c5; margin-bottom: 5px;"></i> Alamat </h5>
+                        <h5 class="footer-title mb-4"><i class="ti ti-brand-google-maps"
+                                style="color: #1376c5; margin-bottom: 5px;"></i> Alamat </h5>
                         <ul class="list-unstyled">
                             <li class="mb-3">
                                 <a href="" target="_blank" class="footer-link">Perum permata regency 1 blok 10
@@ -833,7 +845,8 @@
                         </ul>
                     </div>
                     <div class="col-lg-3 col-md-4 col-sm-6">
-                        <h5 class="footer-title mb-4"><i class="ti ti-building-skyscraper" style="color: #1376c5; margin-bottom: 5px;"></i> Tentang Perusahaan</h5>
+                        <h5 class="footer-title mb-4"><i class="ti ti-building-skyscraper"
+                                style="color: #1376c5; margin-bottom: 5px;"></i> Tentang Perusahaan</h5>
                         <ul class="list-unstyled">
                             <li class="mb-3">
                                 <a href="" class="footer-link">Hummasoft
@@ -844,7 +857,8 @@
                         </ul>
                     </div>
                     <div class="col-lg-3 col-md-4">
-                        <h5 class="footer-title mb-4"><i class="ti ti-message-2-cog" style="color: #1376c5; margin-bottom: 5px;"></i> Pesan</h5>
+                        <h5 class="footer-title mb-4"><i class="ti ti-message-2-cog"
+                                style="color: #1376c5; margin-bottom: 5px;"></i> Pesan</h5>
                         <ul class="list-unstyled">
                             <li class="mb-3 ">
                                 <a href="" class="footer-link"> Hummatech

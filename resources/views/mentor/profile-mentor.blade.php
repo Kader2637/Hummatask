@@ -37,11 +37,16 @@
                                 <div
                                     class="d-flex align-items-md-end align-items-sm-start align-items-center justify-content-md-between justify-content-start mx-4 flex-md-row flex-column gap-4">
                                     <div class="user-profile-info">
-                                        <h4>{{ $user->username }}</h4>
+                                        <h4 class="text-capitalize">{{ $user->username }}</h4>
                                         <ul
                                             class="list-inline mb-0 d-flex align-items-center flex-wrap justify-content-sm-start justify-content-center gap-2">
                                             <li class="list-inline-item d-flex gap-1">
-                                                <i class='ti ti-color-swatch'></i> {{ $user->peran->peran }}
+                                                <i class='ti ti-color-swatch'></i>
+                                                @if ($user->peran_id == 1)
+                                                    Siswa
+                                                @else
+                                                    Mentor
+                                                @endif
                                             </li>
                                             @if ($user->sekolah)
                                                 <li class="list-inline-item d-flex gap-1">
@@ -50,7 +55,7 @@
                                             @endif
                                             <li class="list-inline-item d-flex gap-1">
                                                 <i class='ti ti-calendar'></i> Bergabung pada
-                                                {{ \Carbon\Carbon::parse($user->created_at)->isoFormat('MMMM YYYY') }}
+                                                {{ \Carbon\Carbon::parse($user->created_at)->translatedFormat('l, j F Y') }}
                                             </li>
                                         </ul>
                                     </div>
@@ -85,42 +90,36 @@
                                     <div class="col-md-6">
                                         <div class="form-floating my-3">
                                             <input name="username" type="text" class="form-control"
-                                                placeholder="{{ $user->username }}" aria-describedby="floatingInputHelp" />
+                                                value="{{ $user->username }}" placeholder="Isi username anda"
+                                                aria-describedby="floatingInputHelp" />
                                             <label for="floatingInput">Nama</label>
                                             <span class="text-danger" id="username-error">
                                             </span>
                                         </div>
                                         <div class="form-floating my-3">
                                             <input name="email" type="email" class="form-control"
-                                                placeholder="{{ $user->email }}" aria-describedby="floatingInputHelp" />
+                                                value="{{ $user->email }}" placeholder="Isi email anda"
+                                                aria-describedby="floatingInputHelp" />
                                             <label for="floatingInput">Email</label>
                                             <span class="text-danger" id="email-error">
-                                            </span>
-                                        </div>
-                                        <div class="form-floating my-3">
-                                            <input name="tlp" type="number" class="form-control"
-                                                placeholder="{{ $user->tlp ? $user->tlp : 'Isi nomer telefon anda' }}"
-                                                aria-describedby="floatingInputHelp" />
-                                            <label for="floatingInput">Nomor Telpon</label>
-                                            <span class="text-danger" id="tlp-error">
                                             </span>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating my-3">
                                             <input name="sekolah" type="text" class="form-control"
-                                                placeholder="{{ $user->sekolah ? $user->sekolah : 'Isi alamat sekolah anda' }}"
+                                                value="{{ $user->sekolah }}" placeholder="Isi alamat sekolah anda"
                                                 aria-describedby="floatingInputHelp" />
                                             <label for="floatingInput">Asal Sekolah</label>
                                             <span class="text-danger" id="alamat-error">
                                             </span>
                                         </div>
                                         <div class="form-floating my-3">
-                                            <textarea name="deskripsi" style="resize: none; height: 133.5px;" class="form-control"
-                                                placeholder="{{ $user->deskripsi != 'none' ? $user->deskripsi : 'I am a programmer' }}"
-                                                aria-describedby="floatingInputHelp"></textarea>
-                                            <label for="floatingInput">deskripsi</label>
-                                            <span class="text-danger" id="deskripsi-error">
+                                            <input name="tlp" type="number" class="form-control"
+                                                value="{{ $user->tlp }}" placeholder="Isi nomer telepon anda"
+                                                aria-describedby="floatingInputHelp" />
+                                            <label for="floatingInput">Nomor Telpon</label>
+                                            <span class="text-danger" id="tlp-error">
                                             </span>
                                         </div>
                                     </div>
@@ -246,129 +245,129 @@
             }
         }
     </script>
-        <script>
-            $('#update-password-form').submit(function(e) {
-                e.preventDefault();
+    <script>
+        $('#update-password-form').submit(function(e) {
+            e.preventDefault();
 
-                var formData = new FormData(this);
+            var formData = new FormData(this);
 
-                $.ajax({
-                    type: 'POST',
-                    url: $(this).attr('action'),
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        if (response.success) {
-                            // Sembunyikan tombol
-                            $('#saveButton').hide();
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    if (response.success) {
+                        // Sembunyikan tombol
+                        $('#saveButton').hide();
 
-                            // Tampilkan SweetAlert
-                            Swal.fire({
-                                title: 'Sukses',
-                                text: 'Password berhasil diperbarui.',
-                                icon: 'success',
-                                showConfirmButton: false,
-                                timer: 1700,
-                            }).then(() => {
-                                $('#saveButton').show();
+                        // Tampilkan SweetAlert
+                        Swal.fire({
+                            title: 'Sukses',
+                            text: 'Password berhasil diperbarui.',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 1700,
+                        }).then(() => {
+                            $('#saveButton').show();
 
-                                window.location.reload();
-                            });
-                        }
-                    },
-
-                    error: function(xhr, status, error) {
-                        if (xhr.status === 422) {
-                            var errors = xhr.responseJSON.errors;
-
-                            console.log(errors); // Add this line for debugging
-
-                            $('.text-danger').text('');
-
-                            $.each(errors, function(field, messages) {
-                                console.log(field);
-                                var errorMessage = messages[0];
-                                $('#' + field + '-error').text(errorMessage);
-                            });
-
-
-
-                        } else {
-                            toastr.error('Terjadi kesalahan: ' + error, 'Kesalahan');
-
-                        }
+                            window.location.reload();
+                        });
                     }
-                });
-            });
+                },
 
-            $('#update-profile-form').submit(function(e) {
-                e.preventDefault();
+                error: function(xhr, status, error) {
+                    if (xhr.status === 422) {
+                        var errors = xhr.responseJSON.errors;
 
+                        console.log(errors); // Add this line for debugging
 
-                var formData = new FormData(this);
+                        $('.text-danger').text('');
 
-                $.ajax({
-                    type: 'POST',
-                    url: $(this).attr('action'),
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        if (response.success) {
-                            // Sembunyikan tombol
-                            $('#saveButton').hide();
-
-                            // Tampilkan SweetAlert
-                            Swal.fire({
-                                title: 'Sukses',
-                                text: 'Profile berhasil diperbarui.',
-                                icon: 'success',
-                                showConfirmButton: false,
-                                timer: 1700,
-                            }).then(() => {
-                                $('#saveButton').show();
-
-                                window.location.reload();
-                            });
-                        }
-                    },
-
-                    error: function(xhr, status, error) {
-                        if (xhr.status === 422) {
-                            var errors = xhr.responseJSON.errors;
-
-                            console.log(errors); // Add this line for debugging
-
-                            $('.text-danger').text('');
-
-                            $.each(errors, function(field, messages) {
-                                var errorMessage = messages[0];
-                                $('#' + field + '-error').text(errorMessage);
-                            });
+                        $.each(errors, function(field, messages) {
+                            console.log(field);
+                            var errorMessage = messages[0];
+                            $('#' + field + '-error').text(errorMessage);
+                        });
 
 
 
-                        } else {
-                            toastr.error('Terjadi kesalahan: ' + error, 'Kesalahan');
+                    } else {
+                        toastr.error('Terjadi kesalahan: ' + error, 'Kesalahan');
 
-                        }
-                    },
-                });
-            });
-        </script>
-        <script>
-            $(document).ready(function() {
-                $('[data-tab]').click(function() {
-                    var tabProfile = $(this).attr('data-tab');
-                    sessionStorage.setItem('tabProfile', tabProfile);
-                });
-
-                var tabProfile = sessionStorage.getItem('tabProfile');
-                if (tabProfile) {
-                    $('[data-tab="' + tabProfile + '"]').tab('show');
+                    }
                 }
-
             });
-        </script>
+        });
+
+        $('#update-profile-form').submit(function(e) {
+            e.preventDefault();
+
+
+            var formData = new FormData(this);
+
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    if (response.success) {
+                        // Sembunyikan tombol
+                        $('#saveButton').hide();
+
+                        // Tampilkan SweetAlert
+                        Swal.fire({
+                            title: 'Sukses',
+                            text: 'Profile berhasil diperbarui.',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 1700,
+                        }).then(() => {
+                            $('#saveButton').show();
+
+                            window.location.reload();
+                        });
+                    }
+                },
+
+                error: function(xhr, status, error) {
+                    if (xhr.status === 422) {
+                        var errors = xhr.responseJSON.errors;
+
+                        console.log(errors); // Add this line for debugging
+
+                        $('.text-danger').text('');
+
+                        $.each(errors, function(field, messages) {
+                            var errorMessage = messages[0];
+                            $('#' + field + '-error').text(errorMessage);
+                        });
+
+
+
+                    } else {
+                        toastr.error('Terjadi kesalahan: ' + error, 'Kesalahan');
+
+                    }
+                },
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('[data-tab]').click(function() {
+                var tabProfile = $(this).attr('data-tab');
+                sessionStorage.setItem('tabProfile', tabProfile);
+            });
+
+            var tabProfile = sessionStorage.getItem('tabProfile');
+            if (tabProfile) {
+                $('[data-tab="' + tabProfile + '"]').tab('show');
+            }
+
+        });
+    </script>
 @endsection

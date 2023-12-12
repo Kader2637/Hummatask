@@ -21,7 +21,6 @@ return new class extends Migration
             $table->boolean('status')->default(true);
             $table->string('tlp')->nullable();
             $table->string('sekolah')->nullable();
-            $table->text('deskripsi');
             $table->date('tanggal_bergabung')->nullable();
             $table->date('tanggal_lulus')->nullable();
             $table->boolean('status_kelulusan')->default(false);

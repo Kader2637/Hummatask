@@ -201,10 +201,10 @@
                         <button type="button" class="btn-close" data-bs-toggle="modal" data-bs-target="#modalDetail"
                             aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <form action="" method="POST" id="terima-project">
-                            @csrf
-                            @method('PATCH')
+                    <form action="" method="POST" id="terima-project">
+                        @csrf
+                        @method('PATCH')
+                        <div class="modal-body">
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="tema" class="form-label">Tema Projek</label>
@@ -230,13 +230,13 @@
                                         name="deadlineInput" id="deadline" />
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-label-secondary" data-bs-toggle="modal"
-                            data-bs-target="#modalDetail">Kembali</button>
-                        <button type="submit" class="btn btn-primary" id="btn-save">Simpan</button>
-                    </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-label-secondary" data-bs-toggle="modal"
+                                data-bs-target="#modalDetail">Kembali</button>
+                            <button type="submit" class="btn btn-primary" id="btn-save">Simpan</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -256,7 +256,8 @@
                                 <div class="card-body">
                                     <div class="content-profile d-flex flex-wrap flex-row justify-content-between">
                                         <div class="d-flex flex-row gap-3 justify-content-center">
-                                            <img src="" id="logo-tim" alt="logo" class="rounded-circle mb-3">
+                                            <img src="" id="logo-tim" alt="logo"
+                                                class="rounded-circle mb-3">
                                             <div
                                                 style="display: flex; flex-direction: column; justify-content: center; align-items: center">
                                                 <span class="d-block text-black fs-4 mb-2" id="nama-tim"></span>
@@ -353,16 +354,19 @@
                     var avatarSrc = anggota.avatar ? '/storage/' + anggota.avatar :
                         '/assets/img/avatars/1.png';
 
+                    var truncatedUsername = anggota.username.length > 20 ? anggota.username
+                        .substring(0, 15) + '...' : anggota.username;
+
                     var anggotaItem = $(
                         '<tr>' +
                         '<td>' +
                         '<div class="d-flex align-items-center mt-lg-3">' +
                         '<div class="avatar me-3 avatar-sm">' +
                         '<img src="' + avatarSrc +
-                        '" alt="Avatar" class="h-auto rounded-circle" />' +
+                        '" alt="Avatar" class="rounded-circle" style="object-fit: cover;" />' +
                         '</div>' +
                         '<div class="d-flex flex-column">' +
-                        '<h6 class="mb-0">' + anggota.username + '</h6>' +
+                        '<h6 class="mb-0">' + truncatedUsername + '</h6>' +
                         '<small class="text-truncate text-muted">' + anggota.jabatan +
                         '</small>' +
                         '</div>' +
@@ -370,7 +374,6 @@
                         '</td>' +
                         '</tr>'
                     );
-
                     anggotaList.append(anggotaItem);
                 });
 

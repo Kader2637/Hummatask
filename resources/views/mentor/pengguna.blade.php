@@ -342,10 +342,10 @@
                                         <td class="nama">
                                             @if ($item->avatar)
                                                 <img src="{{ asset('storage/' . $item->avatar) }}" alt=""
-                                                    style="width:30px;height:30px;border-radius:50%">
+                                                    style="width:30px;height:30px;border-radius:50%; object-fit: cover">
                                             @else
                                                 <img src="{{ asset('assets/img/avatars/1.png') }}" alt=""
-                                                    style="width:30px;height:30px;border-radius:50%">
+                                                    style="width:30px;height:30px;border-radius:50%; object-fit: cover">
                                             @endif
                                             <span class="ml-3">
                                                 {{ $item->username }}
@@ -447,11 +447,12 @@
                                             <td class="nama">
                                                 @if ($item->user->avatar)
                                                     <img src="{{ asset('storage/' . $item->user->avatar) }}"
-                                                        alt="" style="width:30px;height:30px;border-radius:50%">
+                                                        alt=""
+                                                        style="width:30px;height:30px;border-radius:50%; object-fit: cover">
                                                     {{ $item->user->username }}
                                                 @else
                                                     <img src="{{ asset('assets/img/avatars/1.png') }}" alt=""
-                                                        style="width:30px;height:30px;border-radius:50%">
+                                                        style="width:30px;height:30px;border-radius:50%; object-fit: cover">
                                                     {{ $item->user->username }}
                                                 @endif
                                             </td>
@@ -507,10 +508,10 @@
                                         <td class="nama">
                                             @if ($item->avatar)
                                                 <img src="{{ asset('storage/' . $item->avatar) }}" alt=""
-                                                    style="width:30px;height:30px;border-radius:50%">
+                                                    style="width:30px;height:30px;border-radius:50%; object-fit: cover">
                                             @else
                                                 <img src="{{ asset('assets/img/avatars/1.png') }}" alt=""
-                                                    style="width:30px;height:30px;border-radius:50%">
+                                                    style="width:30px;height:30px;border-radius:50%; object-fit: cover">
                                             @endif
                                             {{ $item->username }}
                                         </td>
@@ -555,11 +556,12 @@
                                             <td class="nama">
                                                 @if ($item->user->avatar)
                                                     <img src="{{ asset('storage/' . $item->user->avatar) }}"
-                                                        alt="" style="width:30px;height:30px;border-radius:50%">
+                                                        alt=""
+                                                        style="width:30px;height:30px;border-radius:50%; object-fit: cover">
                                                     {{ $item->user->username }}
                                                 @else
                                                     <img src="{{ asset('assets/img/avatars/1.png') }}" alt=""
-                                                        style="width:30px;height:30px;border-radius:50%">
+                                                        style="width:30px;height:30px;border-radius:50%; object-fit: cover">
                                                     {{ $item->user->username }}
                                                 @endif
                                             </td>
@@ -866,7 +868,7 @@
                                 <label for="emailWithTitle" class="form-label">TEAM</label>
                                 <div class="col mb-3">
                                     <img src="{{ asset('assets/img/avatars/10.png') }}" alt=""
-                                        style="width: 80%;height:80%;border-radius:20%">
+                                        style="width: 80%;height:80%;border-radius:20%; object-fit: cover">
                                     <span>Hummatech</span>
                                 </div>
                                 <div class="col mb-0">
@@ -874,18 +876,22 @@
                                     <div class="avatar-container">
                                         <div class="d-flex">
                                             <img src="{{ asset('assets/img/avatars/5.png') }}" alt="Avatar"
-                                                style="width:30px;height:30px;border-radius:50%" class="avatar">
+                                                style="width:30px;height:30px;border-radius:50%; object-fit: cover"
+                                                class="avatar">
                                             <span>saputra</span>
                                         </div>
                                         <div class="d-flex">
                                             <img src="{{ asset('assets/img/avatars/12.png') }}" alt="Avatar"
-                                                style="width:30px;height:30px;border-radius:50%" class="avatar">
+                                                style="width:30px;height:30px;border-radius:50%; object-fit: cover"
+                                                class="avatar">
                                             <span>saputra</span>
                                         </div>
                                         <img src="{{ asset('assets/img/avatars/9.png') }}" alt="Avatar"
-                                            style="width:30px;height:30px;border-radius:50%" class="avatar">
+                                            style="width:30px;height:30px;border-radius:50%; object-fit: cover"
+                                            class="avatar">
                                         <img src="{{ asset('assets/img/avatars/6.png') }}" alt="Avatar"
-                                            style="width:30px;height:30px;border-radius:50%" class="avatar">
+                                            style="width:30px;height:30px;border-radius:50%; object-fit: cover"
+                                            class="avatar">
                                     </div>
                                 </div>
                             </div>
@@ -1050,7 +1056,6 @@
                 dFlexElement.classList.remove('justify-content-between');
                 dFlexElement.classList.add('justify-content-center');
             } else {
-
                 dFlexElement.classList.remove('justify-content-center');
                 dFlexElement.classList.add('justify-content-between');
             }
