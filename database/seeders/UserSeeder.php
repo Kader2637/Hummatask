@@ -24,7 +24,6 @@ class UserSeeder extends Seeder
                     'email' => fake()->email(),
                     'password' => Hash::make('password'),
                     'peran_id' => 1,
-                    'deskripsi' => fake()->text(),
                 ]
             ]);
 

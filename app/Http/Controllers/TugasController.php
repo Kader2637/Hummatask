@@ -154,7 +154,6 @@ class TugasController extends Controller
     protected function dataEditTugas($codeTugas)
     {
 
-
         try {
             $tugass = Tugas::with(['comments.user','label', 'user','aktifitas.aktifitasDataUser.user','aktifitas.aktifitasDataLabel.label','aktifitas.user', 'tim.user'=> function($query){
                 $query->wherePivot('status','active');
@@ -194,9 +193,6 @@ class TugasController extends Controller
     protected function prosesEditTugas(Request $request)
     {
         $tugas = Tugas::where('code', $request->codeTugas)->first();
-
-        // dd($request->labels);
-
 
         $tim = $tugas->tim;
         $checkResult = $this->checkTeam($tim);

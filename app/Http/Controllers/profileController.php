@@ -20,7 +20,6 @@ class profileController extends Controller
                 'email' => 'nullable|email|unique:users,email',
                 'tlp' => 'nullable|regex:/^\d+$/|min:10|max:13',
                 'sekolah' => 'nullable|string|max:50',
-                'deskripsi' => 'nullable|string|max:100',
                 'photo' => 'nullable|image',
             ],
             [
@@ -53,7 +52,6 @@ class profileController extends Controller
                 'email' => $request->email ?: $user->email,
                 'tlp' => $request->tlp ?: $user->tlp,
                 'sekolah' => $request->sekolah ?: $user->sekolah,
-                'deskripsi' => $request->deskripsi ?: $user->deskripsi
             ]);
 
             return response()->json(['success' => 'Berhasil Update Profile']);

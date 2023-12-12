@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
             ]
         ]);
 
-        
+
 
         DB::table('users')->insert([
             [
@@ -49,7 +49,6 @@ class DatabaseSeeder extends Seeder
                 'email' => 'mentor@gmail.com',
                 'password' => Hash::make('password'),
                 'peran_id' => 2,
-                'deskripsi' => 'none',
             ]
         ]);
 
@@ -66,9 +65,8 @@ class DatabaseSeeder extends Seeder
                 'email' => 'kurniawan@gmail.com',
                 'password' => Hash::make('password'),
                 'peran_id' => 1,
-                'tlp' => "845889288",
+                'tlp' => "0845889288",
                 'sekolah' => "SMKN 1 Banyuwangi",
-                'deskripsi' => 'none',
             ]
         )->assignRole($role);
 
