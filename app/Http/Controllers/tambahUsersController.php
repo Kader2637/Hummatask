@@ -71,6 +71,13 @@ class tambahUsersController extends Controller
     {
 
         $dates = explode(' to ', $request->masa_magang);
+
+        if (count($dates) != 2) {
+            return redirect()->back()
+                ->with('error', 'Format Masa Magang harus berupa rentang dua tanggal (tanggal awal dan tanggal akhir)')
+                ->withInput();
+        }
+
         $tanggalAwal = $dates[0];
         $tanggalAkhir = $dates[1];
 
@@ -93,29 +100,43 @@ class tambahUsersController extends Controller
             ],
 
             [
-                'username.required' => 'Kolom Nama harus diisi.',
-                'username.string' => 'Kolom Nama harus berupa teks.',
-                'username.max' => 'Kolom Nama tidak boleh lebih dari :max karakter.',
-                'email.required' => 'Kolom Email harus diisi.',
-                'email.email' => 'Email harus berupa alamat email yang valid.',
-                'email.unique' => 'Email sudah digunakan.',
-                'sekolah.required' => 'Kolom Sekolah harus diisi.',
-                'sekolah.string' => 'Kolom Sekolah harus berupa teks.',
-                'sekolah.max' => 'Kolom Sekolah tidak boleh lebih dari :max karakter.',
-                'masa_magang_awal.required' => 'Kolom Masa Magang Awal harus diisi.',
-                'masa_magang_awal.date' => 'Format Masa Magang Awal harus tanggal yang valid.',
-                'masa_magang_awal.after_or_equal' => 'Masa Magang Awal harus setelah atau sama dengan hari ini.',
-                'masa_magang_akhir.required' => 'Kolom Masa Magang Akhir harus diisi.',
-                'masa_magang_akhir.date' => 'Format Masa Magang Akhir harus tanggal yang valid.',
-                'masa_magang_akhir.after_or_equal' => 'Masa Magang Akhir harus setelah atau sama dengan Masa Magang Awal.',
+                'username.required' => 'Kolom Nama harus diisi',
+                'username.string' => 'Kolom Nama harus berupa teks',
+                'username.max' => 'Kolom Nama tidak boleh lebih dari :max karakter',
+                'email.required' => 'Kolom Email harus diisi',
+                'email.email' => 'Email harus berupa alamat email yang valid',
+                'email.unique' => 'Email sudah digunakan',
+                'sekolah.required' => 'Kolom Sekolah harus diisi',
+                'sekolah.string' => 'Kolom Sekolah harus berupa teks',
+                'sekolah.max' => 'Kolom Sekolah tidak boleh lebih dari :max karakter',
+                'masa_magang_awal.required' => 'Kolom Masa Magang Awal harus diisi',
+                'masa_magang_awal.date' => 'Format Masa Magang Awal harus tanggal yang valid',
+                'masa_magang_awal.after_or_equal' => 'Masa Magang Awal harus setelah atau sama dengan hari ini',
+                'masa_magang_akhir.required' => 'Kolom Masa Magang Akhir harus diisi',
+                'masa_magang_akhir.date' => 'Format Masa Magang Akhir harus tanggal yang valid',
+                'masa_magang_akhir.after_or_equal' => 'Masa Magang Akhir harus setelah atau sama dengan Masa Magang Awal',
             ]
         );
 
         if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
+            $errors = $validator->errors()->all();
+
+            if (count($errors) > 1) {
+                // If there are more than one error, display all errors in SweetAlert separated by commas
+                $errorMessage = implode(', ', $errors);
+
+                return redirect()->back()
+                    ->with('error', $errorMessage)
+                    ->withInput();
+            } else {
+                // If there is only one error, display it in SweetAlert
+                return redirect()->back()
+                    ->with('error', $errors[0])
+                    ->withInput();
+            }
         }
+
+
 
         try {
             $inisial = strtoupper(implode('', array_map(fn ($name) => substr($name, 0, 1), array_slice(explode(' ', $request->username), 0, 3))));

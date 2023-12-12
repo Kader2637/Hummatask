@@ -1050,6 +1050,7 @@
                 dFlexElement.classList.remove('justify-content-between');
                 dFlexElement.classList.add('justify-content-center');
             } else {
+
                 dFlexElement.classList.remove('justify-content-center');
                 dFlexElement.classList.add('justify-content-between');
             }
@@ -1119,6 +1120,16 @@
 
             $('#detail').modal('show');
         });
+    </script>
+
+    <script>
+        @if (session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Validation Error',
+                html: '{!! session('error') !!}',
+            });
+        @endif
     </script>
 
     <script>
