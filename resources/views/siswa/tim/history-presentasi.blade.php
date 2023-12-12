@@ -140,7 +140,7 @@
                                                 data-bs-placement="top" title="{{ $data->user_approval->username }}"
                                                 class="avatar avatar-sm pull-up">
                                                 <img class="rounded-circle"
-                                                    src="{{ $data->user_approval->avatar ? asset('storage' . $data->user_approval->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                    src="{{ $data->user_approval->avatar ? asset('storage/' . $data->user_approval->avatar) : asset('assets/img/avatars/1.png') }}"
                                                     alt="Avatar">
                                             </div>
                                         @endif
@@ -157,7 +157,7 @@
                                                 class=" border-0 text-secondary bg-transparent btn-feedback-modal">
                                                 <i class="ti ti-eye me-1 text-warning"></i>
                                             </button>
-                                        @elseIf(($data->status_pengajuan === 'disetujui' || $data->status_presentasi === 'selesaiw') && $data->feedback === null)
+                                        @elseIf(($data->status_pengajuan === 'disetujui' || $data->status_presentasi === 'selesai') && $data->feedback === null)
                                             <button onclick="handleDitolakFeedback()"
                                                 class=" border-0 text-secondary bg-transparent btn-feedback-modal">
                                                 <i class="ti ti-eye me-1 text-warning"></i>

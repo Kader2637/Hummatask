@@ -86,7 +86,7 @@
             <!-- /Doughnut Chart -->
 
             <!-- Scatter Chart -->
-            <div class="col-lg-8 col-12 col-xxl-4 mb-4">
+            <div class="col-lg-8 col-12 col-xxl-8 mb-4">
                 <div class="card">
                     <div class="card-header header-elements">
                         <h5 class="card-title mb-0">Data Anak Magang</h5>
