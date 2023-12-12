@@ -1056,6 +1056,7 @@
                 dFlexElement.classList.remove('justify-content-between');
                 dFlexElement.classList.add('justify-content-center');
             } else {
+            
                 dFlexElement.classList.remove('justify-content-center');
                 dFlexElement.classList.add('justify-content-between');
             }
