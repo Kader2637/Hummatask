@@ -471,12 +471,14 @@ class mentorController extends Controller
     protected function createLogo(RequestCreateLogo $request)
     {
         $foto = $request->file('fotoLogo');
-        $img = $foto->hashName();
-        $foto->storeAs('img/', $img);
+        $nameImage = $foto->hashName();
+
+        // Ganti cara penyimpanan file
+        Storage::disk('public')->put('img/' . $nameImage, $foto->stream());
 
         $logo = new Galery([
             'judul' => $request->input('judulLogo'),
-            'foto' => $img,
+            'foto' => $nameImage,
             'status' => 'logo'
         ]);
 
@@ -488,20 +490,23 @@ class mentorController extends Controller
     protected function createGalery(RequestCreateGalery $request)
     {
         $foto = $request->file('foto');
-        $img = $foto->hashName();
-        $foto->storeAs('img/', $img);
-
+        $nameImage = $foto->hashName();
+        
+        // Ganti cara penyimpanan file
+        $foto->storeAs('public/img/', $nameImage);
+    
         $galery = new Galery([
             'judul' => $request->input('judul'),
             'keterangan' => $request->input('keterangan'),
-            'foto' => $img,
+            'foto' => $nameImage,
             'status' => 'album'
         ]);
-
+    
         $galery->save();
-
+    
         return response()->json(['galery' => $galery]);
     }
+    
 
     protected function updateGalery(RequestEditGalery $request, $id)
     {
@@ -512,7 +517,7 @@ class mentorController extends Controller
             Storage::delete('img/' . $galery->foto);
 
             $img = $foto->hashName();
-            $foto->storeAs('img/', $img);
+            $foto->storeAs('public/img/', $img);
             $galery->foto = $img;
         }
         $galery->judul = $request->input('judul');
