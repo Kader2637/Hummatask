@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Excel;
 use Intervention\Image\ImageManagerStatic as Image;
 use App\Imports\CsvImport;
+use App\Models\Anggota;
+use App\Models\Notifikasi;
 use App\Models\PenglolaMagang;
 use App\Models\Tim;
 use App\Models\User;
@@ -268,12 +270,28 @@ class tambahUsersController extends Controller
                     'akhir_menjabat' => $akhir_menjabat,
                     'masih_menjabat' => true,
                 ]);
+                $this->sendNotification($user->id, 'Selamat anda terpilih', 'Anda sekarang adalah ketua magang', 'info');
             }
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Gagal memberikan hak akses!');
         }
 
         return redirect()->back()->with('success', 'Berhasil memberikan hak akses!');
+    }
+
+    protected function sendNotification($userId, $title, $message, $jenisNotifikasi)
+    {
+        $statusAnggota = Anggota::where('user_id', $userId)->value('status');
+
+        if ($statusAnggota !== 'kicked') {
+            Notifikasi::create([
+                'user_id' => $userId,
+                'judul' => $title,
+                'body' => $message,
+                'status' => 'belum_dibaca',
+                'jenis_notifikasi' => $jenisNotifikasi,
+            ]);
+        }
     }
 
     protected function tambah_role(Request $request)
