@@ -320,11 +320,15 @@ class tambahUsersController extends Controller
     protected function delete_permisions(string $code)
     {
         try {
+
             $user = User::where('uuid', $code)->first();
 
             if ($user->hasRole('ketua magang')) {
                 PenglolaMagang::where('user_id', $user->id)
-                    ->update(['masih_menjabat' => false]);
+                    ->update([
+                        'masih_menjabat' => false,
+                        'akhir_menjabat' => now()
+                    ]);
             }
 
             $role = $user->getRoleNames()[0];

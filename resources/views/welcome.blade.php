@@ -787,7 +787,7 @@
                     0: {
                         items: 1 // Tampilan mobile, satu item
                     },
-                    768: {
+                    780: {
                         items: 2 // Tampilan tablet dan desktop, dua item
                     }
                 }
