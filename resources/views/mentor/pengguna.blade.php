@@ -180,44 +180,23 @@
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function() {
-            function toggleContent(tabId) {
-                if (tabId === 'pills-home-tab') {
-                    $('#siswa-content').show();
-                } else {
-                    $('#siswa-content').hide();
-                }
+        function toggleContent(tabId) {
+            $('#siswa-content').hide();
+            $('#pengelola-content').hide();
+            $('#mentor-content').hide();
 
-                if (tabId === 'pills-profile-tab') {
-                    $('#pengelola-content').show();
-                } else {
-                    $('#pengelola-content').hide();
-                }
-
-                if (tabId === 'pills-contact-tab') {
-                    $('#mentor-content').show();
-                } else {
-                    $('#mentor-content').hide();
-                }
+            if (tabId === 'pills-home-tab') {
+                $('#siswa-content').show();
             }
 
-            toggleContent('pills-home-tab');
-
-            $('.nav-link').click(function() {
-                const tabId = $(this).attr('aria-controls');
-                toggleContent(tabId);
-            });
-
-            $('[data-tab]').click(function() {
-                var penggunaMentorTab = $(this).attr('data-tab');
-                sessionStorage.setItem('penggunaMentorTab', penggunaMentorTab);
-            });
-
-            var penggunaMentorTab = sessionStorage.getItem('penggunaMentorTab');
-            if (penggunaMentorTab) {
-                $('[data-tab="' + penggunaMentorTab + '"]').tab('show');
+            if (tabId === 'pills-profile-tab') {
+                $('#pengelola-content').show();
             }
-        });
+
+            if (tabId === 'pills-contact-tab') {
+                $('#mentor-content').show();
+            }
+        }
     </script>
 
 
