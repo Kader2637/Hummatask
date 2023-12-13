@@ -112,14 +112,14 @@
                                         <label class="form-check-label" for="flexSwitchCheckDefault">Kondisi Tim</label>
                                     </div>
                                 @else
+
                                     <a data-bs-toggle="modal" data-bs-target="#edit"
                                         class="w-100 btn btn-primary btn-detail-projek edit-tim btn-edit"
                                         data-anggota="{{ json_encode($tim->anggota_id()) }}" data-id="{{ $tim->id }}"
                                         data-url="/mentor/tim/edit/{{ $tim->id }}"
                                         data-status="{{ $tim->status_tim }}" data-logo="{{ $tim->logo }}"
-                                        data-tema=" {{ $tim->project->isNotEmpty() && isset($tim->project[0]) ? $tim->project[0]->tema->nama_tema : '0' }}"
+                                        data-tema=" {{ $tim->project[0]->tema->nama_tema ?? '' }}"
                                         data-kadaluwarsa="{{ $tim->kadaluwarsa }}">
-
                                         <span class="text-white">Edit Tim</span>
                                     </a>
                                 @endif
@@ -231,7 +231,7 @@
                         <div class="row">
                             <div class="temas col mb-3">
                                 <label for="status_tim" class="form-label">Tema Tim</label>
-                                <input name="tema" id="tema" required type="text" class="form-control">
+                                <input name="tema" id="tema" required type="text" class="form-control" readonly>
                             </div>
                         </div>
                         <div class="row">
@@ -470,10 +470,6 @@
         }
     </script>
 
-
-    <script></script>
-
-
     <script>
         $('.btn-edit').on('click', function() {
             var exp = $(this).data('kadaluwarsa');
@@ -497,12 +493,6 @@
             $('#logoInput').val(logo);
             $('#nowStatus').text(status);
             $('#tema').val(tema);
-            if (tema == 0) {
-                $('.temas').addClass('d-none');
-            } else {
-                $('.temas').removeClass('d-none');
-                // $('.temas').removeClass('d-none');
-            }
             $('#updateTimForm').attr('action', '/mentor/update-tim/' + dataId);
 
             $(".nowStatus").each(function() {
