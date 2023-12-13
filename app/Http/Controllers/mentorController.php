@@ -48,6 +48,7 @@ class mentorController extends Controller
         $year = $request->input('year', $currentYear);
         $month = $request->input('month', $currentMonth);
 
+        // grafik
         $users = User::select(
             DB::raw('MONTH(created_at) as month'),
             DB::raw('YEAR(created_at) as year'),
@@ -112,6 +113,7 @@ class mentorController extends Controller
         }
 
         $chartData = array_values($processedData);
+
 
 
         $solo = Tim::where(function ($query) {
@@ -472,7 +474,7 @@ class mentorController extends Controller
     {
         $foto = $request->file('fotoLogo');
         $img = $foto->hashName();
-        $foto->storeAs('public/img/', $img);
+        $foto->storeAs('public/album/', $img);
 
         $logo = new Galery([
             'judul' => $request->input('judulLogo'),
@@ -490,20 +492,20 @@ class mentorController extends Controller
         $foto = $request->file('foto');
         $img = $foto->hashName();
         // Ganti cara penyimpanan file
-        $foto->storeAs('public/img/', $img);
-    
+        $foto->storeAs('public/album/', $img);
+
         $galery = new Galery([
             'judul' => $request->input('judul'),
             'keterangan' => $request->input('keterangan'),
             'foto' => $img,
             'status' => 'album'
         ]);
-    
+
         $galery->save();
-    
+
         return response()->json(['galery' => $galery]);
     }
-    
+
 
     protected function updateGalery(RequestEditGalery $request, $id)
     {
@@ -511,10 +513,10 @@ class mentorController extends Controller
         $galery = Galery::findOrFail($id);
 
         if ($foto) {
-            Storage::delete('public/img/' . $galery->foto);
+            Storage::delete('public/album/' . $galery->foto);
 
             $img = $foto->hashName();
-            $foto->storeAs('public/img/', $img);
+            $foto->storeAs('public/album/', $img);
             $galery->foto = $img;
         }
         $galery->judul = $request->input('judul');
@@ -531,10 +533,10 @@ class mentorController extends Controller
         $logo = Galery::findOrFail($id);
 
         if ($foto) {
-            Storage::delete('public/img/' . $logo->foto);
+            Storage::delete('public/album/' . $logo->foto);
 
             $img = $foto->hashName();
-            $foto->storeAs('public/img/', $img);
+            $foto->storeAs('public/album/', $img);
             $logo->foto = $img;
         }
         $logo->judul = $request->input('judul');
@@ -547,7 +549,7 @@ class mentorController extends Controller
     protected function deleteGalery($id)
     {
         $galery = Galery::findOrFail($id);
-        Storage::delete('public/img/' . $galery->foto);
+        Storage::delete('public/album/' . $galery->foto);
         $galery->delete();
 
         return response()->json(['galery' => $galery]);
