@@ -507,6 +507,7 @@ class mentorController extends Controller
     }
 
 
+    
     protected function updateGalery(RequestEditGalery $request, $id)
     {
         $foto = $request->file('foto');
