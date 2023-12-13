@@ -212,7 +212,7 @@
     {{-- modal edit end --}}
     {{-- Modal detail --}}
     <div class="modal fade" id="modalDetailProjek" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-fullscreen modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalCenterTitle">Detail tim</h5>
@@ -407,27 +407,6 @@
     <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}"></script>
-    <script>
-        function adjustModalClass() {
-            var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-
-            var modalDialog = document.querySelector('.modal-dialog.modal-xl.modal-dialog-centered');
-
-            if (screenWidth < 580) {
-                modalDialog.classList.remove('modal-xl');
-                modalDialog.classList.add('modal-fullscreen');
-            } else {
-                modalDialog.classList.remove('modal-fullscreen');
-                modalDialog.classList.add('modal-xl');
-            }
-        }
-
-        adjustModalClass();
-
-        window.addEventListener('load', adjustModalClass);
-        window.addEventListener('resize', adjustModalClass);
-    </script>
-
     <script>
         $('.btn-edit').on('click', function() {
             var url = $(this).data('url');
