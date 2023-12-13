@@ -226,7 +226,7 @@
                             <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-profile" type="button" role="tab"
                                 aria-controls="pills-profile-tab" aria-selected="false" data-tab="2"><i
-                                    class="fa-solid fa-user-group icon-text"></i>Pengelola Magang</button>
+                                    class="fa-solid fa-user-group icon-text"></i>Ketua Magang</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
