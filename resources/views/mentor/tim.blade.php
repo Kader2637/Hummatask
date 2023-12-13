@@ -231,7 +231,7 @@
                         <div class="row">
                             <div class="temas col mb-3">
                                 <label for="status_tim" class="form-label">Tema Tim</label>
-                                <input name="tema" id="tema" required type="text" class="form-control" readonly>
+                                <input name="tema" id="tema" required type="text" class="form-control">
                             </div>
                         </div>
                         <div class="row">
@@ -493,6 +493,11 @@
             $('#logoInput').val(logo);
             $('#nowStatus').text(status);
             $('#tema').val(tema);
+            if (tema == 0) {
+                $('.temas').addClass('d-none');
+            }else{
+                $('.temas').removeClass('d-none');
+            }
             $('#updateTimForm').attr('action', '/mentor/update-tim/' + dataId);
 
             $(".nowStatus").each(function() {
