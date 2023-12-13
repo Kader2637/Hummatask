@@ -500,7 +500,7 @@
             if (tema == 0) {
                 $('.temas').addClass('d-none');
             } else {
-                // $('.temas').removeClass('d-none');
+                $('.temas').removeClass('d-none');
                 // $('.temas').removeClass('d-none');
             }
             $('#updateTimForm').attr('action', '/mentor/update-tim/' + dataId);
