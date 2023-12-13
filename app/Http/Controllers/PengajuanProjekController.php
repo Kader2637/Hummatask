@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class PengajuanProjekController extends Controller
 {
@@ -146,8 +147,6 @@ class PengajuanProjekController extends Controller
                 return redirect()->back()->with('error', 'Kamu sudah lulus tidak bisa edit tim');
             }
 
-
-            // dd($cheked);
             $timDulu = User::find(Auth::user()->id)->anggota()->whereHas('tim', function ($query) use ($code) {
                 $query->where('code', $code);
             })->first();
@@ -161,8 +160,23 @@ class PengajuanProjekController extends Controller
             $validated = $request->validated();
 
             if ($request->hasFile('logo')) {
-                Storage::disk('public')->delete($tim->logo);
-                $tim->update(['logo' => $validated['logo']->store('logo', 'public')]);
+                $logo = $request->file('logo');
+                $logoPath = 'logo/' . time() . '.' . $logo->getClientOriginalExtension();
+
+                // Mengubah ukuran logo menjadi persegi dengan rasio 1:1
+                $img = Image::make($logo)->fit(500, 500, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+
+                // Simpan logo yang telah diubah ukurannya
+                Storage::disk('public')->put($logoPath, $img->stream());
+
+                // Hapus logo lama jika ada
+                if ($tim->logo && Storage::disk('public')->exists($tim->logo)) {
+                    Storage::disk('public')->delete($tim->logo);
+                }
+
+                $tim->update(['logo' => $logoPath]);
             }
             if ($request->deskripsiInput != null) {
                 Project::where('tim_id', $tim->id)->update(['deskripsi' => $validated['deskripsiInput']]);

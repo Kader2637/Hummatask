@@ -415,7 +415,7 @@ class mentorController extends Controller
         }
 
         $tims = $timQuery->orderBy('kadaluwarsa')->paginate(12);
-        
+
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
@@ -474,7 +474,7 @@ class mentorController extends Controller
     {
         $foto = $request->file('fotoLogo');
         $img = $foto->hashName();
-        $foto->storeAs('public/album/', $img);
+        $foto->storeAs('public/logo/', $img);
 
         $logo = new Galery([
             'judul' => $request->input('judulLogo'),
@@ -492,7 +492,7 @@ class mentorController extends Controller
         $foto = $request->file('foto');
         $img = $foto->hashName();
         // Ganti cara penyimpanan file
-        $foto->storeAs('public/album/', $img);
+        $foto->storeAs('public/logo/', $img);
 
         $galery = new Galery([
             'judul' => $request->input('judul'),
@@ -513,10 +513,10 @@ class mentorController extends Controller
         $galery = Galery::findOrFail($id);
 
         if ($foto) {
-            Storage::delete('public/album/' . $galery->foto);
+            Storage::delete('public/logo/' . $galery->foto);
 
             $img = $foto->hashName();
-            $foto->storeAs('public/album/', $img);
+            $foto->storeAs('public/logo/', $img);
             $galery->foto = $img;
         }
         $galery->judul = $request->input('judul');
@@ -533,10 +533,10 @@ class mentorController extends Controller
         $logo = Galery::findOrFail($id);
 
         if ($foto) {
-            Storage::delete('public/album/' . $logo->foto);
+            Storage::delete('public/logo/' . $logo->foto);
 
             $img = $foto->hashName();
-            $foto->storeAs('public/album/', $img);
+            $foto->storeAs('public/logo/', $img);
             $logo->foto = $img;
         }
         $logo->judul = $request->input('judul');
@@ -549,7 +549,7 @@ class mentorController extends Controller
     protected function deleteGalery($id)
     {
         $galery = Galery::findOrFail($id);
-        Storage::delete('public/album/' . $galery->foto);
+        Storage::delete('public/logo/' . $galery->foto);
         $galery->delete();
 
         return response()->json(['galery' => $galery]);
