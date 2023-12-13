@@ -454,7 +454,7 @@
                                                 @if ($tim->kadaluwarsa == '0')
                                                     <div class="alert alert-warning d-flex align-items-center mt-4 cursor-pointer"
                                                         role="alert" data-bs-toggle="modal"
-                                                        data-bs-target="#editProject" style="font-size: 12px">
+                                                        data-bs-target="#ajukanModal" style="font-size: 12px">
                                                         <span class="alert-icon text-warning me-2">
                                                             <i class="ti ti-bell ti-xs"></i>
                                                         </span>
