@@ -332,16 +332,13 @@
                                                     <div class="card">
                                                         <div class="card-header">
                                                             <div
-                                                                class="d-flex flex-row align-items-center justify-content-between">
+                                                                class="d-flex flex-column flex-md-row align-items-md-center justify-content-between">
                                                                 <div class="fs-4 text-black">
                                                                     Projek
                                                                 </div>
-                                                                <div
-                                                                    style="display: flex; flex-direction: column; justify-items: center; align-items: left;">
-
+                                                                <div class="d-flex flex-column mt-1">
                                                                     <span>Tanggal Mulai : <span id="tglmulai"></span>
                                                                     </span>
-
                                                                     <span>Tenggat : <span id="deadline"></span></span>
                                                                 </div>
                                                             </div>
