@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Intervention\Image\Facades\Image;
 
 class profileController extends Controller
 {
@@ -47,7 +48,15 @@ class profileController extends Controller
                     Storage::disk('public')->delete($user->avatar);
                 }
 
-                $nameImage = $request->photo->store('avatars', 'public');
+                $image = $request->file('photo');
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $nameImage = 'avatars/' . $imageName;
+
+                $img = Image::make($image->getRealPath());
+                $img->fit(500, 500); // Sesuaikan ukuran sesuai kebutuhan, misalnya 400x400
+
+                // Simpan gambar yang telah dimanipulasi
+                Storage::disk('public')->put($nameImage, (string)$img->encode());
             }
 
             $user->update([
