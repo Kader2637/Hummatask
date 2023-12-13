@@ -34,7 +34,10 @@ class tambahUsersController extends Controller
                 return !empty(trim(implode('', $item)));
             });
 
+
+            // dd($data);
             foreach ($data as $row) {
+
                 $inisial = strtoupper(implode('', array_map(fn ($name) => substr($name, 0, 1), array_slice(explode(' ', $row[0]), 0, 3))));
                 $image = Image::canvas(200, 200, '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT));
                 $image->text($inisial, 100, 100, function ($font) {
@@ -46,6 +49,10 @@ class tambahUsersController extends Controller
                 });
                 $nameImage = 'avatars/' . Str::random(20) . '.jpg';
                 Storage::disk('public')->put($nameImage, $image->stream());
+
+                //     $user->tanggal_bergabung = date_format($date1, "Y-m-d");
+                //     $user->tanggal_lulus = date_format($date2, "Y-m-d");
+
                 User::create([
                     'uuid' => Str::uuid(),
                     'avatar' => $nameImage,
@@ -54,8 +61,8 @@ class tambahUsersController extends Controller
                     'password' => Hash::make('password'),
                     'sekolah' => $row[2],
                     'peran_id' => 1,
-                    'tanggal_bergabung' => date('Y-m-d', strtotime($row[3])),
-                    'tanggal_lulus' => date('Y-m-d', strtotime($row[4])),
+                    'tanggal_bergabung' => date_format(date_create_from_format("d/m/Y", $row[3]),'Y-m-d'),
+                    'tanggal_lulus' => date_format(date_create_from_format("d/m/Y",$row[4]),'Y-m-d'),
                 ]);
             }
 
