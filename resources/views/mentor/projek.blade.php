@@ -72,10 +72,10 @@
                         $dayLeft = \Carbon\Carbon::parse($deadline)->diffInDays(\Carbon\Carbon::now()->startOfDay());
                         $progressPercentage = $totalDeadline > 0 ? 100 - ($dayLeft / $totalDeadline) * 100 : 0;
                     @endphp
-                    <div class="col-md-4 col-lg-4 col-sm-4" id="projectList">
+                    <div class="col-md-6 col-lg-5" id="projectList">
                         <div class="card text-center mb-3 projek-item" data-status-tim="{{ $item->tim->status_tim }}">
                             <div class="card-body">
-                                <div class="d-flex flex-row gap-3">
+                                <div class="d-flex flex-row gap-3 justify-content-between">
                                     <img src="{{ asset('storage/' . $item->tim->logo) }}" alt="foto logo"
                                         style="width: 100px; height: 100px; object-fit: cover" class="rounded-circle mb-3">
                                     <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;"
@@ -410,7 +410,7 @@
     <script>
         function adjustModalClass() {
             var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-    
+
             var modalDialog = document.querySelector('.modal-dialog.modal-xl.modal-dialog-centered');
 
             if (screenWidth < 580) {
@@ -421,9 +421,9 @@
                 modalDialog.classList.add('modal-xl');
             }
         }
-    
+
         adjustModalClass();
-        
+
         window.addEventListener('load', adjustModalClass);
         window.addEventListener('resize', adjustModalClass);
     </script>

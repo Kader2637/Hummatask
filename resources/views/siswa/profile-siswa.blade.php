@@ -28,7 +28,7 @@
                                         style="width: 150px; height: 150px; border-radius: 10px; cursor: pointer; object-fit:cover;"
                                         class="d-block ms-0 ms-sm-4 rounded user-profile-img" />
 
-                                    <input type="file" class="d-none" id="image-input3" name='photo'
+                                    <input type="file" accept="image/*" class="d-none" id="image-input3" name='photo'
                                         onchange="previewImage()" />
 
                                 </label>
