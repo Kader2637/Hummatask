@@ -331,6 +331,25 @@
 @section('script')
     {{-- script modal detail --}}
     <script>
+        function adjustModalClass() {
+            var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    
+            var modalDialog = document.querySelector('.modal-dialog.modal-xl.modal-dialog-centered');
+
+            if (screenWidth < 580) {
+                modalDialog.classList.remove('modal-xl');
+                modalDialog.classList.add('modal-fullscreen');
+            } else {
+                modalDialog.classList.remove('modal-fullscreen');
+                modalDialog.classList.add('modal-xl');
+            }
+        }
+    
+        adjustModalClass();
+
+        window.addEventListener('resize', adjustModalClass);
+    </script>
+    <script>
         $(document).ready(function() {
             $('.btn-detail').click(function() {
                 var namaTim = $(this).data('nama-tim');
