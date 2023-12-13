@@ -328,6 +328,13 @@ class PengajuanTimController extends Controller
 
         $timId->status_tim = $request->status_tim;
         $timId->kadaluwarsa = $request->kadaluwarsa;
+        $tema = $request->input('tema');
+        Tema::where('tim_id', $timId->id)
+        ->where('nama_tema', '<>', null)
+        ->update(['nama_tema' => $tema]);
+
+        // $tema->nama_tema = $request->tema;
+
 
         if ($request->kadaluwarsa == "0") {
             $timId->anggota()

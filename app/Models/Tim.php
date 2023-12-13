@@ -48,6 +48,11 @@ class Tim extends Model
         return $this->hasMany(Tema::class);
     }
 
+    // public function tema_id()
+    // {
+    //     return Tema::where('tim_id', $this->id)->get();
+    // }
+
     public function anggota(): HasMany
     {
         return $this->hasMany(Anggota::class);
@@ -57,6 +62,8 @@ class Tim extends Model
     {
         return $this->hasMany(Project::class);
     }
+
+    
 
     public function tidakPresentasiMingguan(): HasMany
     {

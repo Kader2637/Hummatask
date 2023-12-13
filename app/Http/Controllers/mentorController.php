@@ -413,7 +413,7 @@ class mentorController extends Controller
         }
 
         $tims = $timQuery->orderBy('kadaluwarsa')->paginate(12);
-
+        
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
