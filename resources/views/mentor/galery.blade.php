@@ -475,13 +475,13 @@
                         <div class="col-md-6 col-lg-3 wow bounceInUp" data-wow-delay="0.1s">
                                 <div class="event-img position-relative" style="width:100% !important; height: 206px !important; overflow: hidden !important;">
                                     <img class="img-fluid rounded"
-                                        src="{{ asset('storage/public/logo/${item.foto}') }}"
+                                        src="{{ asset('storage/logo/${item.foto}') }}"
                                         alt="" style="object-fit: cover !important; width: 100% !important; height: 100% !important">
                                     <div class="event-overlay d-flex flex-column p-4">
                                         <h4 class="me-auto fs-5 fw-light" style="color: white;">${item.judul}</h4>
                                         <div class="my-auto">
                                             <a class="btn btn-primary"
-                                                href="{{ asset('storage/public/logo/${item.foto}') }}"
+                                                href="{{ asset('storage/logo/${item.foto}') }}"
                                                 data-lightbox="event-5"><i class="bi bi-eye"></i></a>
                                             <button type="button"
                                                 class="btn btn-success button-edit-galery" data-idgalery="${item.id}"
@@ -814,13 +814,13 @@
                             <div class="col-md-6 col-lg-3 wow bounceInUp" data-wow-delay="0.1s">
                                 <div class="event-img position-relative" style="width:100% !important; height: 206px !important; overflow: hidden !important;">
                                     <img class="img-fluid rounded "
-                                        src="{{ asset('storage/public/logo/${itemLogo.foto}') }}"
+                                        src="{{ asset('storage/logo/${itemLogo.foto}') }}"
                                         alt="" style="object-fit: cover !important; width: 100% !important; height: 100% !important">
                                     <div class="event-overlay d-flex flex-column p-4">
                                         <h4 class="me-auto fs-5 fw-light" style="color: white;">${itemLogo.judul}</h4>
                                         <div class="my-auto">
                                             <a class="btn btn-primary"
-                                                href="{{ asset('storage/public/logo/${itemLogo.foto}') }}"
+                                                href="{{ asset('storage/logo/${itemLogo.foto}') }}"
                                                 data-lightbox="event-5"><i class="bi bi-eye"></i></a>
                                                 <button type="button"
                                                 class="btn btn-success button-edit"
