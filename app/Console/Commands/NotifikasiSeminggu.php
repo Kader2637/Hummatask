@@ -44,19 +44,18 @@ class NotifikasiSeminggu extends Command
         }
     }
 
-protected function sendNotification($userId, $title, $message, $jenisNotifikasi)
+    protected function sendNotification($userId, $title, $message, $jenisNotifikasi)
     {
         $statusAnggota = Anggota::where('user_id', $userId)->value('status');
 
-    if ($statusAnggota !== 'kicked') {
-        Notifikasi::create([
-            'user_id' => $userId,
-            'judul' => $title,
-            'body' => $message,
-            'status' => 'belum_dibaca',
-            'jenis_notifikasi' => $jenisNotifikasi,
-        ]);
-    }
-
+        if ($statusAnggota !== 'kicked') {
+            Notifikasi::create([
+                'user_id' => $userId,
+                'judul' => $title,
+                'body' => $message,
+                'status' => 'belum_dibaca',
+                'jenis_notifikasi' => $jenisNotifikasi,
+            ]);
+        }
     }
 }
