@@ -828,7 +828,7 @@
                                             class="ti ti-brand-facebook"></i></a>
                                     <a href="https://www.instagram.com/hummatech"><i
                                             class="ti ti-brand-instagram"></i></a>
-                                    <a href="https://twitter.com/hummasoft"><i class="ti ti-brand-tiktok"></i></a>
+                                    <a href="https://twitter.com/hummasoft"><i class="ti ti-brand-twitter"></i></a>
                                 </div>
                             </div>
                         </form>
