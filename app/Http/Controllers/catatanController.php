@@ -35,7 +35,7 @@ class catatanController extends Controller
             }
 
             $statusAnggota = $tims->anggota->first()->status;
-            if ($statusAnggota === 'kicked') {
+            if ($statusAnggota == 'kicked') {
                 return redirect()->back()->with('error', 'Anda tidak dapat membuat catatan karena Anda telah di-kick dari tim!');
             }
 
@@ -81,11 +81,11 @@ class catatanController extends Controller
                 return $checkResult;
             }
 
-            if ($catatan->type_note === 'revisi') {
+            if ($catatan->type_note == 'revisi') {
                 return back()->with('warning', 'Jenis catatan ini tidak bisa di edit');
             }
 
-            if ($request->contentEdit === null || $request->contentEdit === '<p><br></p>' && $request->title === null) {
+            if ($request->contentEdit == null || $request->contentEdit == '<p><br></p>' && $request->title === null) {
                 $catatan->update([
                     'title' => $catatan->title,
                     'content' => $catatan->content,
@@ -114,7 +114,7 @@ class catatanController extends Controller
                 return $checkResult;
             }
 
-            if ($catatan->type_note === 'revisi') {
+            if ($catatan->type_note == 'revisi') {
                 return back()->with('error', 'Jenis catatan ini tidak bisa di hapus');
             } else {
                 $catatan->delete();
