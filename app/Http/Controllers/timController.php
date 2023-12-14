@@ -155,7 +155,7 @@ class timController extends Controller
 
         foreach ($anggota as $data) {
             // dd($data->anggota[0]->jabatan);
-            if($data->anggota->status !== "active"){
+            if($data->anggotaReal->sortByDesc('created_at')->first()->status !== "active"){
                 $jabatan[] = "Mantan Anggota";
             }else{
                 $jabatan[] = $data->anggota->jabatan->nama_jabatan;
