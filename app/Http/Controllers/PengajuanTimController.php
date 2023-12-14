@@ -240,7 +240,6 @@ class PengajuanTimController extends Controller
                 ]);
             }
 
-
             foreach ($uniqueDaftarAnggota as $anggota) {
                 $anggotaModel = new Anggota;
                 $anggotaModel->tim_id = $tim->id;
@@ -334,7 +333,29 @@ class PengajuanTimController extends Controller
         ->update(['nama_tema' => $tema]);
 
         // $tema->nama_tema = $request->tema;
+        $name = $timId->nama;
+        if ($name == 'Pre-Mini Project Team') {
+            $name = 'PreMini';
+        } else if ($name == 'Mini Project Team') {
+            $name = 'Mini';
+        } else if ($name == 'Big Project Team') {
+            $name = 'Big';
+        }
+        $backgroundHexColor = '#' . str_pad(dechex(mt_rand(0xAAAAAA, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
+            $image = ImageManagerStatic::canvas(200, 200, $backgroundHexColor);
 
+            $image->text($name, 100, 100, function ($font) {
+                $font->file(public_path('assets/font/Poppins-Bold.ttf'));
+                $font->size(36);
+                $font->color('#ffffff');
+                $font->align('center');
+                $font->valign('middle');
+            });
+            
+            $nameImage = 'logo/' . Str::random(20) . '.jpg';
+            Storage::disk('public')->put($nameImage, $image->stream());
+
+            $timId->logo = $nameImage;
 
         if ($request->kadaluwarsa == "0") {
             $timId->anggota()
