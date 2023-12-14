@@ -58,7 +58,7 @@
                 <div class="">
                     <div class="d-flex justify-content-center">
                         <div class="col-12">
-                            <form class="card" id="catatanPost" action="{{ route('catatan.store') }}" method="POST"
+                            <form class="card" id="catatanPost" action="{{ route('catatan.store',['tim_id'=>$tim->id]) }}" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
                                 @method('POST')

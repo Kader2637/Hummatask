@@ -25,16 +25,15 @@ class catatanController extends Controller
                 return redirect()->back()->with('error', 'Isilah catatan terlebih dahulu!');
             }
 
-            $user = User::find(auth()->id());
-            $tim = $user->tim()->latest()->first()->id;
-            $tims = Tim::where('id', $tim)->first();
+            $tims = Tim::findOrfail($request->tim_id);
+            $tim = $tims->id;
 
             $checkResult = $this->checkTeam($tims);
             if ($checkResult) {
                 return $checkResult;
             }
 
-            $statusAnggota = $tims->anggota->first()->status;
+            $statusAnggota = $tims->anggota->where('user_id', auth()->id())->first()->status;
             if ($statusAnggota == 'kicked') {
                 return redirect()->back()->with('error', 'Anda tidak dapat membuat catatan karena Anda telah di-kick dari tim!');
             }

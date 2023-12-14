@@ -369,7 +369,7 @@
                                                             </span>
                                                         </div>
                                                     @elseif ($tim->kadaluwarsa == '1')
-                                                        <div class="mb-3">Jenis : <span class="badge bg-label-danger">
+                                                        <div class="mb-3">Status : <span class="badge bg-label-danger">
                                                                 Kadaluwarsa
                                                             </span>
                                                         </div>
