@@ -163,16 +163,15 @@ class TugasController extends Controller
             $jadwal = [];
             foreach ($tugass->comments as $data) {
                 if (Carbon::parse($data->created_at)->isoFormat("Y-M-DD") === Carbon::now()->isoFormat("Y-M-DD")) {
-                    $jadwal[] = "Today " . Carbon::parse($data->created_at)->format("h:i A");
+                    $jadwal[] = "Hari Ini " . Carbon::parse($data->created_at)->format("H:i");
                 } else {
                     $tanggal1 = Carbon::parse($data->created_at);
                     $tanggal2 = Carbon::now();
-                    $jadwal[] = $tanggal2->diffInDays($tanggal1);
+                    $jadwal[] = "Dalam " . $tanggal2->diffInDays($tanggal1)+1 . " hari";
                 }
             }
 
-            $label = Label::where('tim_id',$tugass->tim_id)->get();
-
+            $label = Label::where('tim_id', $tugass->tim_id)->get();
 
             $tugas = [
                 "tugas" => $tugass,
