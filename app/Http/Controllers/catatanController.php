@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\catatan;
 use App\Models\Tim;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -24,9 +25,9 @@ class catatanController extends Controller
                 return redirect()->back()->with('error', 'Isilah catatan terlebih dahulu!');
             }
 
-            $user = Auth::user();
-            $tim = $user->tim[0]->id;
-            $tims = Tim::where('id', $user->tim[0]->id)->first();
+            $user = User::find(auth()->id());
+            $tim = $user->tim()->latest()->first()->id;
+            $tims = Tim::where('id', $tim)->first();
 
             $checkResult = $this->checkTeam($tims);
             if ($checkResult) {
