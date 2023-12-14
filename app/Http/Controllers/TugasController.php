@@ -162,17 +162,17 @@ class TugasController extends Controller
 
             $jadwal = [];
             foreach ($tugass->comments as $data) {
-                $createdTime = Carbon::parse($data->created_at);
-                $currentTime = Carbon::now();
-
-                if ($createdTime->isToday()) {
-                    $jadwal[] = "Hari ini " . $createdTime->format("h:i A");
+                if (Carbon::parse($data->created_at)->isoFormat("Y-M-DD") === Carbon::now()->isoFormat("Y-M-DD")) {
+                    $jadwal[] = "Today " . Carbon::parse($data->created_at)->format("h:i A");
                 } else {
-                    $jadwal[] = $createdTime->format("Y-M-DD h:i A");
+                    $tanggal1 = Carbon::parse($data->created_at);
+                    $tanggal2 = Carbon::now();
+                    $jadwal[] = $tanggal2->diffInDays($tanggal1);
                 }
             }
 
-            $label = Label::where('tim_id', $tugass->tim_id)->get();
+            $label = Label::where('tim_id',$tugass->tim_id)->get();
+
 
             $tugas = [
                 "tugas" => $tugass,

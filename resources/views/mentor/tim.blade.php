@@ -112,7 +112,6 @@
                                         <label class="form-check-label" for="flexSwitchCheckDefault">Kondisi Tim</label>
                                     </div>
                                 @else
-
                                     <a data-bs-toggle="modal" data-bs-target="#edit"
                                         class="w-100 btn btn-primary btn-detail-projek edit-tim btn-edit"
                                         data-anggota="{{ json_encode($tim->anggota_id()) }}" data-id="{{ $tim->id }}"
