@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\catatan;
 use App\Models\Tim;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -24,9 +25,9 @@ class catatanController extends Controller
                 return redirect()->back()->with('error', 'Isilah catatan terlebih dahulu!');
             }
 
-            $user = Auth::user();
-            $tim = $user->tim[0]->id;
-            $tims = Tim::where('id', $user->tim[0]->id)->first();
+            $user = User::find(auth()->id());
+            $tim = $user->tim()->latest()->first()->id;
+            $tims = Tim::where('id', $tim)->first();
 
             $checkResult = $this->checkTeam($tims);
             if ($checkResult) {
@@ -34,7 +35,7 @@ class catatanController extends Controller
             }
 
             $statusAnggota = $tims->anggota->first()->status;
-            if ($statusAnggota === 'kicked') {
+            if ($statusAnggota == 'kicked') {
                 return redirect()->back()->with('error', 'Anda tidak dapat membuat catatan karena Anda telah di-kick dari tim!');
             }
 
@@ -80,11 +81,11 @@ class catatanController extends Controller
                 return $checkResult;
             }
 
-            if ($catatan->type_note === 'revisi') {
+            if ($catatan->type_note == 'revisi') {
                 return back()->with('warning', 'Jenis catatan ini tidak bisa di edit');
             }
 
-            if ($request->contentEdit === null || $request->contentEdit === '<p><br></p>' && $request->title === null) {
+            if ($request->contentEdit == null || $request->contentEdit == '<p><br></p>' && $request->title === null) {
                 $catatan->update([
                     'title' => $catatan->title,
                     'content' => $catatan->content,
@@ -113,7 +114,7 @@ class catatanController extends Controller
                 return $checkResult;
             }
 
-            if ($catatan->type_note === 'revisi') {
+            if ($catatan->type_note == 'revisi') {
                 return back()->with('error', 'Jenis catatan ini tidak bisa di hapus');
             } else {
                 $catatan->delete();
