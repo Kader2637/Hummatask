@@ -126,7 +126,7 @@ class Notifikasi extends Command
 {
     $statusAnggota = Anggota::where('user_id', $userId)->value('status');
 
-    if ($statusAnggota !== 'kicked') {
+    if ($statusAnggota != ['kicked','expired']) {
         ModelsNotifikasi::create([
             'user_id' => $userId,
             'judul' => $title,

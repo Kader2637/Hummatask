@@ -271,7 +271,7 @@ class tambahUsersController extends Controller
     {
         $statusAnggota = Anggota::where('user_id', $userId)->value('status');
 
-        if ($statusAnggota !== 'kicked') {
+        if ($statusAnggota != ['kicked','expired']) {
             Notifikasi::create([
                 'user_id' => $userId,
                 'judul' => $title,

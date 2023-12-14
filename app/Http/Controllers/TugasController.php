@@ -139,7 +139,7 @@ class TugasController extends Controller
         foreach ($teamMembers as $member) {
             $statusAnggota = $member->status;
 
-            if ($statusAnggota !== 'kicked') {
+            if ($statusAnggota != ['kicked','expired']) {
                 Notifikasi::create([
                     'user_id' => $member->user_id,
                     'judul' => $title,
@@ -390,7 +390,7 @@ class TugasController extends Controller
         $statusAnggota = $user->anggota->status;
 
 
-        if ($statusAnggota !== 'kicked') {
+        if ($statusAnggota != ['kicked','expired']) {
             Notifikasi::create([
                 'user_id' => $user->id,
                 'judul' => $title,

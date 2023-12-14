@@ -164,7 +164,7 @@ class PresentasiController extends Controller
         foreach ($teamMembers as $member) {
             $statusAnggota = $member->status;
 
-            if ($statusAnggota !== 'kicked') {
+            if ($statusAnggota != ['kicked','expired']) {
                 Notifikasi::create([
                     'user_id' => $member->user_id,
                     'judul' => $title,
