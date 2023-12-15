@@ -145,7 +145,7 @@
                     @endforeach
                 </div>
             @else
-                <div class="row">
+                <div class="col">
                     <p class="text-center fw-classic fs-5">Data masih kosong <i class="ti ti-address-book-off"></i></p>
                     <div class="col-lg-12 d-flex justify-content-center">
                         <img src="{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}"
