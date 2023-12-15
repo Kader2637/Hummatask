@@ -77,8 +77,6 @@ class Notifikasi extends Command
     }
 }
 
-
-
     protected function checkDeadlines()
 {
     $projects = Project::all();
@@ -103,7 +101,7 @@ class Notifikasi extends Command
 
 
 
-    
+
 
     // protected function checkTeamMembership()
     // {

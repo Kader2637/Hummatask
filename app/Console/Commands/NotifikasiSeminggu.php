@@ -44,7 +44,7 @@ class NotifikasiSeminggu extends Command
         }
     }
 
-protected function sendNotification($userId, $title, $message, $jenisNotifikasi)
+    protected function sendNotification($userId, $title, $message, $jenisNotifikasi)
     {
         $statusAnggota = Anggota::where('user_id', $userId)->value('status');
 

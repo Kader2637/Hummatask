@@ -154,11 +154,11 @@ class timController extends Controller
         $jabatan=[];
 
         foreach ($anggota as $data) {
-            // dd($data->anggota[0]->jabatan);
-            if($data->anggota->status !== "active"){
+            // dd($anggota[0]->anggotaReal->where('tim_id',$tim->id)->sortByDesc('created_at')->first()->status,$anggota[1]->anggotaReal->where('tim_id',$tim->id)->sortByDesc('created_at')->first()->status);
+            if($data->anggotaReal->where('tim_id',$tim->id)->sortByDesc('created_at')->first()->status !== "active"){
                 $jabatan[] = "Mantan Anggota";
             }else{
-                $jabatan[] = $data->anggota->jabatan->nama_jabatan;
+                $jabatan[] = $data->anggotaReal->where("tim_id",$tim->id)->sortByDesc("created_at")->first()->jabatan->nama_jabatan;
             }
         }
 

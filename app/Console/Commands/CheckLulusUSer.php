@@ -27,9 +27,9 @@ class CheckLulusUser extends Command
      */
     public function handle()
     {
-        $user = User::where('status_kelulusan',0)->get();
+        $user = User::where('status_kelulusan', 0)->get();
         foreach ($user as $data) {
-            if($data->tanggal_lulus === Carbon::now()->isoFormat('YYYY-MM-DD')){
+            if ($data->tanggal_lulus === Carbon::now()->isoFormat('YYYY-MM-DD')) {
                 $data->status_kelulusan = 1;
                 $data->save();
             }

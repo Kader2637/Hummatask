@@ -27,21 +27,18 @@ class ResetUrutanPresentasi extends Command
      */
     public function handle()
     {
-        $presentasi = Presentasi::where('jadwal',Carbon::now()->isoFormat('Y-M-DD'))->where('status_presentasi','menunggu')->where('status_pengajuan','disetujui')->orderBy('urutan','asc')->get();
+        $presentasi = Presentasi::where('jadwal', Carbon::now()->isoFormat('Y-M-DD'))->where('status_presentasi', 'menunggu')->where('status_pengajuan', 'disetujui')->orderBy('urutan', 'asc')->get();
 
         foreach ($presentasi as $i => $data) {
 
-            if( Carbon::now()->isoFormat('dddd') === "Jumat" ){
+            if (Carbon::now()->isoFormat('dddd') === "Jumat") {
                 $data->jadwal = Carbon::now()->addDays(3);
                 $data->history_presentasi_id = $data->history_presentasi_id + 1;
-
-            }else{
+            } else {
                 $data->jadwal = Carbon::tomorrow();
             }
-            $data->urutan = $i+1;
+            $data->urutan = $i + 1;
             $data->save();
         }
-
-
     }
 }
