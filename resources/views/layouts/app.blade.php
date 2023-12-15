@@ -361,11 +361,6 @@
                                             </ul>
                                         </li>
                                     @endforeach
-                                    <li class="dropdown-menu-footer border-top">
-                                        <a href="javascript:void(0);"
-                                            class="dropdown-item d-flex justify-content-center text-primary p-2 h-px-40 mb-1 align-items-center">
-                                        </a>
-                                    </li>
                                 </ul>
                             </li>
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">

@@ -302,7 +302,8 @@
                     <div class="navbar-nav-right d-flex align-items-center" id="navbarcollapse">
                         <div class="d-flex align-items-center justify-content-center gap-2" id="login-sebagai">
                             Login sebagai :
-                            <span class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full">Mentor</span>
+                            <span
+                                class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full">Mentor</span>
                         </div>
                         <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
@@ -345,12 +346,6 @@
                                                 </div>
                                             </div> --}}
                                         @endforeach
-                                    </li>
-                                    <li class="dropdown-menu-footer border-top">
-                                        <a href="javascript:void(0);"
-                                            class="dropdown-item d-flex justify-content-center text-primary p-2 h-px-40 mb-1 align-items-center">
-
-                                        </a>
                                     </li>
                                 </ul>
                             </li>

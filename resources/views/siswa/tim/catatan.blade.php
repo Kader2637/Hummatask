@@ -163,7 +163,7 @@
                                                         @endif
                                                     </td>
                                                     @if ($item->type_note === 'private')
-                                                        <td class="d-flex flex-wrap flex-row">
+                                                        <td class="d-flex flex-wrap flex-row gap-1">
                                                             <a class="d-block cursor-pointer btn-show" id="show-button"
                                                                 data-bs-toggle="modal" data-bs-target="#modal-show"
                                                                 data-content="{{ $item->content }}"
