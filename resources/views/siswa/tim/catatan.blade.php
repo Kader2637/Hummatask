@@ -58,17 +58,21 @@
                 <div class="">
                     <div class="d-flex justify-content-center">
                         <div class="col-12">
-                            <form class="card" id="catatanPost" action="{{ route('catatan.store',['tim_id'=>$tim->id]) }}" method="POST"
+                            <form class="card" id="catatanPost"
+                                action="{{ route('catatan.store', ['tim_id' => $tim->id]) }}" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
                                 @method('POST')
-                                <div class="d-flex flex-row flex-wrap justify-content-between p-0 m-0">
-                                    <span class="card-header fs-4">Catatan</span>
-                                    <span class="card-header">
-                                        <button type="button" class="btn btn-label-danger mx-2">Reset</button>
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
-                                    </span>
+                                <div class="card-header">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="fs-4 m-0">Catatan</h5>
+                                        <div>
+                                            <button type="button" class="btn btn-label-danger mx-2">Reset</button>
+                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                        </div>
+                                    </div>
                                 </div>
+
                                 <div class="container mb-3">
                                     <div class="mb-3">
                                         <label for="defaultInput" class="form-label">Judul Catatan</label>
@@ -204,40 +208,40 @@
 
                     {{-- Modal Edit --}}
                     <div class="modal fade" id="edit-catatan" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-xl modal-simple modal-edit-user">
+                        <div class="modal-dialog modal-dialog-centered modal-xl modal-edit-user">
                             <div class="modal-content">
-                                <div class="modal-body p-0 m-0">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Edit Catatan</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
-                                    <form action="" id="edit-form" class="row g-2 p-0 m-0" method="POST">
-                                        @csrf
-                                        @method('PATCH')
+                                </div>
+                                <form action="" id="edit-form" class="row g-2 p-0 m-0" method="POST">
+                                    @csrf
+                                    @method('PATCH')
+                                    <div class="modal-body">
                                         <div class="container p-0">
                                             <div class="card d-flex">
                                                 <div class="card-body">
                                                     <span class="mb-3">
-                                                        <label for="" class="form-label">Judul</label>
+                                                        <label for="titleEdit" class="form-label">Judul</label>
                                                         <input type="text" class="form-control mb-3" name="titleEdit"
                                                             id="titleEdit" value=""
                                                             placeholder="Isi judul catatan anda">
                                                     </span>
                                                     <div id="editorEdit">
-                                                        <div>
-                                                        </div>
+                                                        <div></div>
                                                     </div>
                                                     <textarea name="contentEdit" id="contentEdit" cols="30" rows="10" class="d-none"></textarea>
-                                                    <div class="d-flex flex-row flex-wrap justify-content-end p-0 m-0">
-                                                        <span class="card-footer">
-                                                            <button type="button" class="btn btn-label-danger mx-2"
-                                                                id="resetEdit" data-reset="">Reset</button>
-                                                            <button type="submit" class="btn btn-primary">Simpan</button>
-                                                        </span>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
-                                </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-label-danger mx-2" id="resetEdit"
+                                            data-reset="">Reset</button>
+                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -245,23 +249,31 @@
 
                     {{-- Modal Show --}}
                     <div class="modal fade" id="modal-show" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-xl modal-simple modal-edit-user">
+                        <div class="modal-dialog modal-dialog-centered modal-xl modal-edit-user">
                             <div class="modal-content">
                                 <form method="POST" action="">
-                                    <div class="modal-body p-0 m-0">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Detail Catatan</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
-                                        <div class="card d-flex gap-0 m-0 p-0">
-                                            <div class="d-flex flex-row flex-wrap justify-content-between p-0 m-0">
-                                                <span class="card-header fs-4" id="titleShow">Catatan</span>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5 class="fs-4" id="titleShow">Catatan</h5>
                                             </div>
-                                            <div class="card-body p-0 px-4 pb-4 m-0">
+                                            <div class="card-body px-4 pb-4">
                                                 <div id="show-data-content" style="height: 400px">
                                                     {{-- isi data show --}}
                                                 </div>
                                             </div>
                                             <textarea name="content" id="content" cols="30" rows="10" class="d-none"></textarea>
                                         </div>
+                                    </div>
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <!-- Jika ada yang ingin ditambahkan di footer -->
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -380,7 +392,7 @@
             $('.btn-delete').click(function() {
                 swal.fire({
                     title: 'Konfirmasi',
-                    text: 'Apakah Anda yakin ingin menghapus data ini?',
+                    text: 'Apakah Anda yakin ingin menghapus catatan ini?',
                     icon: 'question',
                     showCancelButton: true,
                     confirmButtonText: 'Ya, hapus',
