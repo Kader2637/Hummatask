@@ -21,7 +21,14 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::check()) {
-                return back();
+                $peranId = Auth::user()->peran_id;
+            
+                if ($peranId == 1) {
+                    return redirect()->route('dashboard.mentor');
+                } elseif ($peranId == 3) {
+                    return redirect()->route('dashboard.siswa');
+                }
+            
             } else if (Auth::guard($guard)->check()) {
                 return Auth::user()->peran_id == "1" ? redirect()->intended(route('dashboard.mentor')) : redirect()->intended(route('dashboard.siswa'));
             }
