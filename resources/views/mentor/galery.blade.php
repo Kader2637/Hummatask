@@ -511,7 +511,7 @@
                             $('#judulgalery').val(judulgalery);
                             $('#keterangan').val(keterangan);
                             $('#fotogalery').attr('src', fotogalery);
-                            $('#logogalery').attr('src', '{{ asset('storage/public/logo/') }}/' +
+                            $('#logogalery').attr('src', '{{ asset('storage/logo/') }}/' +
                                     fotogalery)
                                 .attr('alt', 'Logo')
                                 .css({
@@ -852,7 +852,7 @@
 
                             $('#judulLogo').val(judullogo);
                             $('#fotoLogo').attr('src', fotologo);
-                            $('#logos').attr('src', '{{ asset('storage/public/logo/') }}/' + fotologo)
+                            $('#logos').attr('src', '{{ asset('storage/logo/') }}/' + fotologo)
                                 .attr('alt', 'Logo')
                                 .css({
                                     'width': '100px',
