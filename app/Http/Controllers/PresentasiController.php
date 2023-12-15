@@ -26,6 +26,13 @@ class PresentasiController extends Controller
         if ($request->judul == null) {
             return back()->with('error', 'Judul presentasi tidak boleh kosong');
         }
+        $tim = Tim::where('code', $code)->firstOrFail();
+        $anggota = $tim->anggota()->where('user_id', Auth::user()->id)->first();
+
+        if ($anggota->jabatan_id != 1) {
+            return back()->with('error', 'Yang mengajukan tim hanya ketua kelompok');
+        }
+
 
         if ($request->deskripsi == null) {
             return back()->with('error', 'Deskripsi presentasi tidak boleh kosong');
