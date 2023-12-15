@@ -172,18 +172,20 @@ class timController extends Controller
     protected function historyPresentasiPage($code)
     {
         $title = "Tim/presentasi";
-        $tim = Tim::where('code', $code)->firstOrFail();
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
+        $tim = Tim::where('code', $code)->firstOrFail();
+        $tim_id = $tim->id;
+
 
         $project = $tim->project->first();
         if ($project->deskripsi === null) {
             return back()->with('tolak', 'Tolong lengkapi deskripsi proyek terlebih dahulu');
         }
-        $anggota = $tim->user()->where('id',$userID)->first()->anggota->status;
+        // $anggota = $tim->user()->where('id',$userID)->first()->anggota->status;
+        $anggota = Anggota::where('tim_id', $tim_id)->where('user_id', $userID)->first()->status;
         $jabatan = $tim->user()->where('id',$userID)->first()->anggota->jabatan_id;
         $presentasi = $tim->presentasi()->orderBy('created_at', 'desc')->get();
-        // dd($anggota,$jabatan);
         $project = $tim->project->first();
 
         $hasProjectRelation = $tim->project()->exists();
