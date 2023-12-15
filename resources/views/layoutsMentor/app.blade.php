@@ -562,27 +562,27 @@
                     }
 
                     var notifikasiBaru = `
-        <li class="list-group-item" id="notification-list-${item.id}">
-            <div class="d-flex mt-2 mb-2 pl-5">
-                <div class="flex-grow-1">
-                    <div class="alert ${jenisClass} d-flex align-items-center" role="alert">
-                        <span class="alert-icon ${textClass} me-2">
-                            ${icon}
-                        </span>
-                        ${item.judul}
-                    </div>
-                    <p class="mb-0">${item.body}</p>
-                    <small class="text-muted">${formatWaktu(perbedaanWaktu)}</small>
-                </div>
-                <div class="flex-shrink-0 dropdown-notifications-actions ">
-                        <a href="javascript:void(0)" class="dropdown-notifications-read"><span
-                                class="badge badge-dot"></span></a>
-                        <a href="javascript:void(0)" class="dropdown-notifications-archive mr-2"
-                            onclick="deletenotifikasi(${item.id})"><span class="ti ti-x"></span></a>
-                    </div>
-            </div>
-        </li>
-    `;
+                    <li class="list-group-item" id="notification-list-${item.id}">
+                        <div class="d-flex mt-2 mb-2 pl-5">
+                            <div class="flex-grow-1">
+                                <div class="alert ${jenisClass} d-flex align-items-center justify-content-between" role="alert">
+                                    <div>
+                                        <span class="alert-icon ${textClass} me-2">
+                                            ${icon}
+                                        </span>
+                                        ${item.judul}
+                                    </div>
+                                    <a href="javascript:void(0)" class="dropdown-notifications-archive ml-auto ${jenisClass}"
+                                        onclick="deletenotifikasi(${item.id})">
+                                        <span class="ti ti-x"></span>
+                                    </a>
+                                </div>
+                                <p class="mb-0">${item.body}</p>
+                                <small class="text-muted">${formatWaktu(perbedaanWaktu)}</small>
+                            </div>
+                        </div>
+                    </li>
+                `;
 
                     daftarNotifikasi.append(notifikasiBaru);
                 });

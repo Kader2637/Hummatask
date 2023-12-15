@@ -308,10 +308,12 @@
                             Login sebagai :
                             @if (auth()->check() &&
                                     auth()->user()->can('kelola siswa'))
-                                <span class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full text-sm">Ketua
+                                <span
+                                    class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full text-sm">Ketua
                                     Magang</span>
                             @else
-                                <span class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full text-sm">Siswa
+                                <span
+                                    class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full text-sm">Siswa
                                     Magang</span>
                             @endif
                         </div>
@@ -367,7 +369,7 @@
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
                                     data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="{{ Auth::user()->avatar ? asset('storage/'.Auth::user()->avatar) : asset('assets/img/avatars/1.png') }}"
+                                        <img src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : asset('assets/img/avatars/1.png') }}"
                                             alt class="rounded-circle" style="object-fit: cover">
                                     </div>
                                 </a>
@@ -377,7 +379,7 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
-                                                        <img src="{{ Auth::user()->avatar ? asset('storage/'.Auth::user()->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                        <img src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : asset('assets/img/avatars/1.png') }}"
                                                             class="rounded-circle" style="object-fit: cover">
                                                     </div>
                                                 </div>
@@ -710,28 +712,27 @@
                     }
 
                     var notifikasiBaru = `
-            <li class="list-group-item" id="notification-list-${item.id}">
-                <div class="d-flex mt-2 mb-2 pl-5">
-                    <div class="flex-grow-1">
-                        <div class="alert ${jenisClass} d-flex align-items-center" role="alert">
-                            <span class="alert-icon ${textClass} me-2">
-                                ${icon}
-                            </span>
-                            ${item.judul}
+                    <li class="list-group-item" id="notification-list-${item.id}">
+                        <div class="d-flex mt-2 mb-2 pl-5">
+                            <div class="flex-grow-1">
+                                <div class="alert ${jenisClass} d-flex align-items-center justify-content-between" role="alert">
+                                    <div>
+                                        <span class="alert-icon ${textClass} me-2">
+                                            ${icon}
+                                        </span>
+                                        ${item.judul}
+                                    </div>
+                                    <a href="javascript:void(0)" class="dropdown-notifications-archive ml-auto ${jenisClass}"
+                                        onclick="deletenotifikasi(${item.id})">
+                                        <span class="ti ti-x"></span>
+                                    </a>
+                                </div>
+                                <p class="mb-0">${item.body}</p>
+                                <small class="text-muted">${formatWaktu(perbedaanWaktu)}</small>
+                            </div>
                         </div>
-                        <p class="mb-0">${item.body}</p>
-                        <small class="text-muted">${formatWaktu(perbedaanWaktu)}</small>
-                    </div>
-                    <div class="flex-shrink-0 dropdown-notifications-actions ">
-                            <a href="javascript:void(0)" class="dropdown-notifications-read"><span
-                                    class="badge badge-dot"></span></a>
-                            <a href="javascript:void(0)" class="dropdown-notifications-archive mr-2"
-                                onclick="deletenotifikasi(${item.id})"><span class="ti ti-x"></span></a>
-                        </div>
-                </div>
-            </li>
-        `;
-
+                    </li>
+                `;
                     daftarNotifikasi.append(notifikasiBaru);
                 });
             }
