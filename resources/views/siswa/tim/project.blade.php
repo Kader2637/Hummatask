@@ -362,7 +362,6 @@
                                                     </div>
                                                 </div>
                                                 <div class="mt-4">
-
                                                     @if ($tim->kadaluwarsa == '0')
                                                         <div class="mb-3">Status : <span class="badge bg-label-success">
                                                                 Aktif
@@ -389,7 +388,7 @@
                                                     </div>
                                                     @if (@isset($project) && $project->deadline)
                                                         <div>Tema : <span
-                                                                class="badge bg-label-warning">{{ Str::limit($project->tema->nama_tema, 20) }}</span>
+                                                                class="badge bg-label-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$project->tema->nama_tema}}">{{ Str::limit($project->tema->nama_tema, 20) }}</span>
                                                         @else
                                                             <div>Tema : <span class="badge bg-label-warning">Pending</span>
                                                     @endif

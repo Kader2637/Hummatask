@@ -14,24 +14,18 @@ class RedirectIfAuthenticated
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, ...$guards): Response
+    public function handle(Request $request, Closure $next, string ...$guards): Response
     {
+
         $guards = empty($guards) ? [null] : $guards;
-    
+
         foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
-                if (Auth::user()->peran_id == "1") {
-                    return redirect()->intended(route('dashboard.mentor'));
-                } else {
-                    return redirect()->intended(route('dashboard.siswa'));
-                }
+            if (Auth::check()) {
+                return back();
+            } else if (Auth::guard($guard)->check()) {
+                return Auth::user()->peran_id == "1" ? redirect()->intended(route('dashboard.mentor')) : redirect()->intended(route('dashboard.siswa'));
             }
         }
-    
-        if (Auth::check()) {
-            return back();
-        }
-    
         return $next($request);
     }
 }
