@@ -162,15 +162,8 @@
                     <div id="heroDashboardAnimation" class="hero-animation-img">
                         <a href="" target="_blank">
                             <div id="heroAnimationImg" class="position-relative hero-dashboard-img">
-                                <img src="{{ asset('assets/img/front-pages/landing-page/hero-dashboard-light.png') }}"
-                                    alt="" class="animation-img"
-                                    data-app-light-img="front-pages/landing-page/hero-dashboard-light.png"
-                                    data-app-dark-img="front-pages/landing-page/hero-dashboard-light.png" />
-                                <img src="{{ asset('assets/img/front-pages/landing-page/hero-elements-light.png') }}"
-                                    alt=""
-                                    class="position-absolute hero-elements-img animation-img top-0 start-0 price-duration-toggler"
-                                    data-app-light-img="front-pages/landing-page/hero-elements-light.png"
-                                    data-app-dark-img="front-pages/landing-page/hero-elements-light.png" />
+                                <img src="{{ asset('assets/img/Statistic2.jpeg') }}"
+                                    alt="" class="animation-img rounded" style="object-fit: cover;"/>
                             </div>
                         </a>
                     </div>
