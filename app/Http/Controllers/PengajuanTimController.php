@@ -99,14 +99,28 @@ class PengajuanTimController extends Controller
                 "history_presentasi_id" => $historyPresentasi->id,
             ]);
         } else {
-            $historyPresentasi = new HistoryPresentasi;
-            $historyPresentasi->code = Str::uuid();
+          
+// Mendapatkan tanggal hari ini
+$today = Carbon::now();
 
-            $historyPresentasi->noMinggu = 1;
-            $historyPresentasi->bulan = Carbon::now()->isoFormat("MMMM");
-            $historyPresentasi->tahun = Carbon::now()->isoFormat("YYYY");
-            $historyPresentasi->save();
+// Mengatur hari ini ke hari Senin
+$today->startOfWeek();
 
+// Menghitung minggu keberapa dalam bulan ini
+$mingguKeberapa = $today->weekOfMonth;
+
+// Membuat objek HistoryPresentasi dan mengatur nilai-noMinggu
+$historyPresentasi = new HistoryPresentasi;
+$historyPresentasi->code = Str::uuid();
+
+// Mengatur minggu keberapa pada objek HistoryPresentasi
+$historyPresentasi->noMinggu = $mingguKeberapa;
+
+$historyPresentasi->bulan = $today->isoFormat("MMMM");
+$historyPresentasi->tahun = $today->isoFormat("YYYY");
+
+// Menyimpan objek HistoryPresentasi
+$historyPresentasi->save();
             TidakPresentasiMingguan::create([
                 'tim_id' => $tim->id,
                 "history_presentasi_id" => $historyPresentasi->id,
