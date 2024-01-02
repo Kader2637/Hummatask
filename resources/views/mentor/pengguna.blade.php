@@ -322,7 +322,7 @@
                                 @endphp
                                 @foreach ($users as $item)
                                     <tr>
-                                        <th scope="row">{{ $no_user++ }}</th>
+                                        <th scope="row">{{ $no_user++ }}.</th>
                                         <td class="nama">
                                             @if ($item->avatar)
                                                 <img src="{{ asset('storage/' . $item->avatar) }}" alt=""
@@ -356,16 +356,16 @@
                                                     data-peran="{{ $item->peran->peran }}"
                                                     data-sekolah="{{ $item->sekolah }}" data-email="{{ $item->email }}"
                                                     data-masa-magang="{{ \Carbon\Carbon::parse($item->tanggal_bergabung)->translatedFormat('l, j F Y') }} sampai {{ \Carbon\Carbon::parse($item->tanggal_lulus)->translatedFormat('l, j F Y') }}">
-                                                    <i class="ti ti-eye me-1"></i></span>
-
+                                                    <i class="ti ti-eye me-1"></i>
+                                                </span>
                                                 <span data-tanggal-lulus="{{ $item->tanggal_lulus }}"
                                                     data-id="{{ $item->id }}" class="cursor-pointer extends"
                                                     data-bs-toggle="modal" data-bs-target="#extends"> <i
-                                                        class="ti ti-calendar me-1"></i> </span>
-
-
+                                                        class="ti ti-calendar me-1"></i>
+                                                </span>
                                                 <span class="cursor-pointer" id="delete-button-{{ $item->uuid }}"
-                                                    href="javascript:void(0);"><i class="ti ti-trash me-1"></i></span>
+                                                    href="javascript:void(0);"><i class="ti ti-trash me-1"></i>
+                                                </span>
                                             </div>
                                         </td>
                                     </tr>
@@ -427,7 +427,7 @@
                                 @foreach ($magang as $item)
                                     @if ($item->masih_menjabat)
                                         <tr>
-                                            <th scope="row">{{ $no_manage++ }}</th>
+                                            <th scope="row">{{ $no_manage++ }}.</th>
                                             <td class="nama">
                                                 @if ($item->user->avatar)
                                                     <img src="{{ asset('storage/' . $item->user->avatar) }}"
@@ -485,7 +485,7 @@
                                 @endphp
                                 @foreach ($mentors as $item)
                                     <tr>
-                                        <th scope="row">{{ $no_mentor++ }}</th>
+                                        <th scope="row">{{ $no_mentor++ }}.</th>
                                         <td class="nama">
                                             @if ($item->avatar)
                                                 <img src="{{ asset('storage/' . $item->avatar) }}" alt=""
@@ -533,7 +533,7 @@
                                 @foreach ($magang as $item)
                                     @if ($item->masih_menjabat == 0)
                                         <tr>
-                                            <th scope="row">{{ $loop->iteration }}</th>
+                                            <th scope="row">{{ $loop->iteration }}.</th>
                                             <td class="nama">
                                                 @if ($item->user->avatar)
                                                     <img src="{{ asset('storage/' . $item->user->avatar) }}"
@@ -953,7 +953,6 @@
                                         </ul>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -1008,7 +1007,6 @@
                                         </ul>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -1059,29 +1057,31 @@
             minDate: new Date(),
             defaultDate: '2020-01-11',
             dateFormat: "Y-m-d",
-        })
+        });
 
+        $('.extends').on('click', function(e) {
+            var tanggal = $(this).data('tanggal-lulus');
+            var user_id = $(this).data('id');
+            $('#tanggal').val(tanggal);
 
-        $("#extends").submit(function(e) {
-            e.preventDefault();
-            const tanggal_lulus = $("#tanggal").val()
-            const user_id = $(".extends").data('id');
-
-            axios.post("{{ route('extends.users') }}", {
-                    user_id,
-                    tanggal_lulus
-                })
-                .then(res => {
-                    $("#extends").modal('hide')
-                    console.log(res)
-                    successRes("Berhasil memperpanjang masa pkl")
-                    $("#form-extends").trigger("reset")
-                })
-                .catch(err => {
-                    console.error(err);
-                    alertError(err)
-                })
-        })
+            $("#extends").submit(function(e) {
+                e.preventDefault();
+                const tanggal_lulus = $("#tanggal").val();
+                axios.post("{{ route('extends.users') }}", {
+                        user_id,
+                        tanggal_lulus
+                    })
+                    .then(res => {
+                        $("#extends").modal('hide')
+                        successRes("Berhasil memperpanjang masa pkl")
+                        $("#form-extends").trigger("reset")
+                        window.location.reload()
+                    })
+                    .catch(err => {
+                        alertError(err)
+                    })
+            });
+        });
     </script>
 
     <script>

@@ -128,17 +128,17 @@
                                 <div id="info" class="my-4">
                                     <div class="d-flex justify-content-between">
                                         <span>Mulai : </span>
-                                        <div>{{ $item->created_at->translatedFormat('l, j F Y') }}</div>
+                                        <div>{{ $item->created_at->translatedFormat('l, j M Y') }}</div>
                                     </div>
                                     <div class="d-flex justify-content-between my-3">
                                         <span>Deadline : </span>
                                         <div>
-                                            {{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j F Y') }}
+                                            {{ \Carbon\Carbon::parse($item->deadline)->translatedFormat('l, j M Y') }}
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <span>Tema : </span>
-                                        <div data-bs-placement="top" data-bs-toggle="tooltip" data-popup="tooltip-custom"
+                                        <div data-bs-placement="bottom" data-bs-toggle="tooltip" data-popup="tooltip-custom"
                                             title="{{ $item->tema->nama_tema }}">
                                             {{ Str::limit($item->tema->nama_tema, $limit = 20, $end = '...') }}</div>
                                     </div>

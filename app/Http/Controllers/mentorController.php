@@ -360,28 +360,28 @@ class mentorController extends Controller
         // ->get();
         // dd($tim);
         $users = Anggota::whereIn('status', ['kicked', 'expired'])
-        ->where('tim_id', '!=', $tim)
-        ->orWhere(function ($query) use ($tim) {
-            $query->where('tim_id', $tim)
-                ->where('status', 'active');
-        })
-        ->get();
-    
-    $usersArray = $users->pluck('user_id')->toArray();
-    $uniqueUsersArray = array_unique($usersArray);
-    
-    $users1 = User::whereIn('id', $uniqueUsersArray)->get();
-    
-    $users2 = User::where('peran_id', 1)
-        ->where('status_kelulusan', 0)
-        ->where(function ($query) use ($tim) {
-            $query->whereDoesntHave('tim', function ($subQuery) {
-                $subQuery->where('kadaluwarsa', false);
-            });
-        })
-        ->get();
-    
-    $users = $users1->merge($users2);
+            ->where('tim_id', '!=', $tim)
+            ->orWhere(function ($query) use ($tim) {
+                $query->where('tim_id', $tim)
+                    ->where('status', 'active');
+            })
+            ->get();
+
+        $usersArray = $users->pluck('user_id')->toArray();
+        $uniqueUsersArray = array_unique($usersArray);
+
+        $users1 = User::whereIn('id', $uniqueUsersArray)->get();
+
+        $users2 = User::where('peran_id', 1)
+            ->where('status_kelulusan', 0)
+            ->where(function ($query) use ($tim) {
+                $query->whereDoesntHave('tim', function ($subQuery) {
+                    $subQuery->where('kadaluwarsa', false);
+                });
+            })
+            ->get();
+
+        $users = $users1->merge($users2);
         // dd($users);
 
 
@@ -432,8 +432,6 @@ class mentorController extends Controller
     {
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
-
-
         $historyPresentasi = HistoryPresentasi::all()->sortByDesc('created_at')->take(5);
 
         // dd($historyPresentasi);
@@ -502,7 +500,7 @@ class mentorController extends Controller
     }
 
 
-    
+
     protected function updateGalery(RequestEditGalery $request, $id)
     {
         $foto = $request->file('foto');

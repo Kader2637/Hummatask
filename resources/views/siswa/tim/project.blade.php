@@ -236,7 +236,7 @@
     </div>
     {{-- Modal Edit Project --}}
 
-    <div class="container-fluid mt-5">
+    <div class="container-fluid">
         <div class="col-12">
             <div class="nav-align-top d-flex justify-between">
                 <div class="nav nav-pills d-flex justify-content-between my-4" role="tablist">

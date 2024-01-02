@@ -126,7 +126,7 @@ use Illuminate\Support\Facades\Route;
         });
 
         // Halaman Mentor
-        Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () { 
+        Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
             Route::get('dashboard', [mentorController::class, 'dashboard'])->name('dashboard.mentor');
             Route::get('pengajuan-projek', [mentorController::class, 'pengajuanProjekPage'])->name('pengajuan-projek');
             Route::get('detail-pengajuan-projek/{code}', [mentorController::class, 'detailPengajuan'])->name('detail-pengajuan-projek');

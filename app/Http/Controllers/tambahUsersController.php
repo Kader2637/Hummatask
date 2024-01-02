@@ -347,7 +347,6 @@ class tambahUsersController extends Controller
 
     protected function extends(Request $request)
     {
-
         $validate = $request->validate(
             [
                 "tanggal_lulus" => "required|date|after_or_equal:today"
