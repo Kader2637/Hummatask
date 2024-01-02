@@ -276,14 +276,20 @@ class mentorController extends Controller
     }
 
     function updateDeadline($id, Request $request)
-    {
-        $projek = Project::findOrFail($id);
-        $deadline = $request->input('xp');
-        $projek->deadline = $deadline;
-        $projek->save();
+{
+    $projek = Project::findOrFail($id);
+    $tglawal = $projek->created_at;
+    $deadline = $request->input('xp');
 
-        return response()->json(['success' => 'Berhasil update tim'], 200);
+    if (Carbon::parse($deadline)->lt($tglawal)) {
+        return response()->json(['error' => 'Deadline harus setelah tanggal awal proyek'], 422);
     }
+
+    $projek->deadline = $deadline;
+    $projek->save();
+
+    return response()->json(['success' => 'Berhasil update tim'], 200);
+}
 
     protected function pieproject($timId)
     {

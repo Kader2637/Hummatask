@@ -471,24 +471,11 @@
                         console.log('Response:', xhr.responseText);
 
                         if (xhr.status === 422) {
-                            var errorMessages = xhr.responseJSON.errors;
-
-                            var errorMessageText = 'Terjadi kesalahan:';
-                            for (var key in errorMessages) {
-                                errorMessageText += '\n' + errorMessages[key];
-                            }
-
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error!',
-                                text: errorMessageText,
-                            });
-                        } else {
                             // For other errors, display a generic error message
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Error!',
-                                text: 'Terjadi kesalahan: ' + errors,
+                                text: 'Deadline harus setelah tanggal awal proyek',
                             });
                         }
                     }
