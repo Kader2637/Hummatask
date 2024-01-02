@@ -9,6 +9,7 @@ use App\Models\Penugasan;
 use App\Models\User;
 use App\Models\Tim;
 use App\Models\Tugas;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -55,6 +56,15 @@ class siswaController extends Controller
                 $created = \Carbon\Carbon::parse($item->created_at);
                 return $deadline->diffInDays($created);
         });
+
+        $user = User::where('status_kelulusan', 0)->get();
+
+        foreach ($user as $data) {
+            if ($data->tanggal_lulus <= Carbon::now()->isoFormat('YYYY-MM-DD')) {
+                $data->status_kelulusan = 1;
+                $data->save();
+            }
+        }
 
         $tugasBelum = $tugasBelum->map(function ($item) {
             $deadline = \Carbon\Carbon::parse($item->deadline)->startOfDay();

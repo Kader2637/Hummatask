@@ -29,7 +29,6 @@ class mentorController extends Controller
     // Return view dashboard mentor
     protected function dashboard(Request $request)
     {
-
         $jadwal = [];
         $hari = [];
         $userID = Auth::user()->id;
@@ -41,6 +40,15 @@ class mentorController extends Controller
         }
         $jadwal = array_reverse($jadwal);
         $hari = array_reverse($hari);
+
+        $user = User::where('status_kelulusan', 0)->get();
+
+        foreach ($user as $data) {
+            if ($data->tanggal_lulus <= Carbon::now()->isoFormat('YYYY-MM-DD')) {
+                $data->status_kelulusan = 1;
+                $data->save();
+            }
+        }
 
         $currentYear = Carbon::now()->year;
         $currentMonth = Carbon::now()->month;
