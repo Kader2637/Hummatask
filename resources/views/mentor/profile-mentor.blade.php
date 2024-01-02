@@ -85,7 +85,7 @@
                     <div class="d-flex justify-content-center">
                         <div class="col-12">
                             <div class="card mb-4">
-                                <h5 class="card-header">Edit Profil</h5>
+                                <h5 class="card-header">Edit Profile</h5>
                                 <div class="card-body row">
                                     <div class="col-md-6">
                                         <div class="form-floating my-3">
@@ -202,18 +202,15 @@
                                                             </div>
                                                             <span id="new_password-error" class="text-danger"></span>
                                                         </div>
-
-                                                        <div class="form-floating my-2 form-password-toggle mt-3">
-                                                            <div class="button my-auto">
-                                                                <button type="submit"
-                                                                    class="btn btn-outline-primary mt-4">Simpan</button>
-                                                            </div>
+                                                    </div>
+                                                    <div class="d-flex my-2">
+                                                        <div class="button ms-auto">
+                                                            <button type="submit"
+                                                                class="btn btn-outline-primary mt-4">Simpan</button>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="d-flex my-2">
-
-                                                </div>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -223,7 +220,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection
 

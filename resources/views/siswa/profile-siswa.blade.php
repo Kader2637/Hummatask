@@ -90,7 +90,7 @@
                     <div class="d-flex justify-content-center">
                         <div class="col-12">
                             <div class="card mb-4">
-                                <h5 class="card-header">Edit Profil</h5>
+                                <h5 class="card-header">Edit Profile</h5>
                                 <div class="card-body row">
                                     <div class="col-md-6">
                                         <div class="form-floating my-3">
@@ -520,7 +520,6 @@
 
                                                             </div>
                                                         </div>
-
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label class="form-label fs-6" for="password">Password
@@ -538,12 +537,11 @@
                                                             </div>
                                                             <span id="new_password-error" class="text-danger"></span>
                                                         </div>
-
-                                                        <div class="form-floating my-2 form-password-toggle mt-3">
-                                                            <div class="button my-auto">
-                                                                <button type="submit"
-                                                                    class="btn btn-outline-primary mt-4">Simpan</button>
-                                                            </div>
+                                                    </div>
+                                                    <div class="d-flex my-2">
+                                                        <div class="button ms-auto">
+                                                            <button type="submit"
+                                                                class="btn btn-outline-primary mt-4">Simpan</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -557,7 +555,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection
 
@@ -692,7 +689,6 @@
                 var tglmulai = $(this).data('tglmulai');
                 var deadline = $(this).data('deadline');
                 var anggota = $(this).data('anggota');
-                // console.log(anggota);
                 var deskripsi = $(this).data('deskripsi');
                 var dayLeft = $(this).data('dayleft');
                 var repo = $(this).data('repo');
