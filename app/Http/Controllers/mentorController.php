@@ -273,6 +273,7 @@ class mentorController extends Controller
         }
 
         $projects = $projectQuery->paginate(12);
+        dd($projects);
 
         $users = User::where('peran_id', 1)
             ->whereDoesntHave('tim', function ($query) {

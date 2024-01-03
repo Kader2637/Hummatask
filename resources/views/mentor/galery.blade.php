@@ -957,8 +957,6 @@
                     }
                 }
 
-
-
                 $.ajax({
                     url: "logo-update/" + id,
                     type: "POST",

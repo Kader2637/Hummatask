@@ -3,8 +3,8 @@
         use App\Http\Controllers\authController;
         use App\Http\Controllers\catatanController;
         use App\Http\Controllers\KetuaMagangController;
-use App\Http\Controllers\LabelController;
-use App\Http\Controllers\mentorController;
+        use App\Http\Controllers\LabelController;
+        use App\Http\Controllers\mentorController;
         use App\Http\Controllers\NotifikasiController;
         use App\Http\Controllers\PengajuanProjekController;
         use App\Http\Controllers\PengajuanTimController;
@@ -15,8 +15,8 @@ use App\Http\Controllers\mentorController;
         use App\Http\Controllers\tambahUsersController;
         use App\Http\Controllers\timController;
         use App\Http\Controllers\TugasController;
-use App\Models\Galery;
-use Illuminate\Support\Facades\Route;
+        use App\Models\Galery;
+        use Illuminate\Support\Facades\Route;
 
         Route::middleware('guest')->controller(authController::class)->group(function () {
             Route::get('/', 'welcomePage');
@@ -94,11 +94,10 @@ use Illuminate\Support\Facades\Route;
                 Route::get('statistik/data-progres/{codeTim}', [StatistikTimController::class, 'getProgres']);
 
                 // label tugas
-                Route::post('board/tambah-label',[LabelController::class,'createLabel'])->name('label.create');
-                Route::get('board/ambil-labels/{tim_id}',[LabelController::class,'getLabels']);
-                Route::delete('board/delete-label/{label_id}',[LabelController::class,'deleteLabel']);
-                Route::put("board/edit-label",[LabelController::class,"editLabel"])->name("label.edit");
-
+                Route::post('board/tambah-label', [LabelController::class, 'createLabel'])->name('label.create');
+                Route::get('board/ambil-labels/{tim_id}', [LabelController::class, 'getLabels']);
+                Route::delete('board/delete-label/{label_id}', [LabelController::class, 'deleteLabel']);
+                Route::put("board/edit-label", [LabelController::class, "editLabel"])->name("label.edit");
             });
         });
 
@@ -182,7 +181,7 @@ use Illuminate\Support\Facades\Route;
         });
 
         Route::get('coba', function () {
-            $galery = Galery::where('status','album')->get();
+            $galery = Galery::where('status', 'album')->get();
 
-            return view('coba',compact('galery'));
+            return view('coba', compact('galery'));
         });
