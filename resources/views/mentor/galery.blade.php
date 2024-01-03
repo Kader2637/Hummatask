@@ -26,6 +26,7 @@
     <script src="{{ asset('assets/lib/waypoints/waypoints.min.js') }}"></script>
     <script src="{{ asset('assets/lib/counterup/counterup.min.js') }}"></script>
     <script src="{{ asset('assets/lib/lightbox/js/lightbox.min.js') }}"></script>
+    <script src="{{ asset('assets/lib/lightbox/js/galery.min.js') }}"></script>
     <script src="{{ asset('assets/lib/owlcarousel/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
 @endsection
@@ -482,7 +483,7 @@
                                         <div class="my-auto">
                                             <a class="btn btn-primary"
                                                 href="{{ asset('storage/logo/${item.foto}') }}"
-                                                data-lightbox="event-5"><i class="bi bi-eye"></i></a>
+                                                data-gallery="event-5"><i class="bi bi-eye"></i></a>
                                             <button type="button"
                                                 class="btn btn-success button-edit-galery" data-idgalery="${item.id}"
                                                 data-judulgalery="${item.judul}"
@@ -806,13 +807,12 @@
                     page: page
                 },
                 success: function(data) {
-                    // Ganti HTML sesuai data yang diterima dari server
                     if (data.logo.data.length > 0) {
                         let html = '';
                         data.logo.data.forEach(function(itemLogo) {
                             html += `
                             <div class="col-md-6 col-lg-3 wow bounceInUp" data-wow-delay="0.1s">
-                                <div class="event-img position-relative" style="width:100% !important; height: 206px !important; overflow: hidden !important;">
+                                <div class="event-img position-relative" style="width:100% !important; overflow: hidden !important;">
                                     <img class="img-fluid rounded "
                                         src="{{ asset('storage/logo/${itemLogo.foto}') }}"
                                         alt="" style="object-fit: cover !important; width: 100% !important; height: 100% !important">
