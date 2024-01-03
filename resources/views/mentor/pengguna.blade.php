@@ -1124,14 +1124,14 @@
         jQuery(document).ready(function($) {
             $('#jstabel1').DataTable({
                 "lengthMenu": [
-                    [5, 10, 15, -1],
-                    [5, 10, 15, "All"]
+                    [10, 20, 50, -1],
+                    [10, 20, 50, "All"]
                 ],
-                "pageLength": 5,
+                "pageLength": 10,
 
                 "order": [],
 
-                "ordering": false,
+                "ordering": true,
 
                 "language": {
                     "sProcessing": "Sedang memproses...",
@@ -1155,14 +1155,14 @@
         jQuery(document).ready(function($) {
             $('#jstabel2').DataTable({
                 "lengthMenu": [
-                    [5, 10, 15, -1],
-                    [5, 10, 15, "All"]
+                    [10, 20, 50, -1],
+                    [10, 20, 50, "All"]
                 ],
-                "pageLength": 5,
+                "pageLength": 10,
 
                 "order": [],
 
-                "ordering": false,
+                "ordering": true,
 
                 "language": {
                     "sProcessing": "Sedang memproses...",
@@ -1186,14 +1186,14 @@
         jQuery(document).ready(function($) {
             $('#jstabel3').DataTable({
                 "lengthMenu": [
-                    [5, 10, 15, -1],
-                    [5, 10, 15, "All"]
+                    [10, 20, 50, -1],
+                    [10, 20, 50, "All"]
                 ],
-                "pageLength": 5,
+                "pageLength": 10,
 
                 "order": [],
 
-                "ordering": false,
+                "ordering": true,
 
                 "language": {
                     "sProcessing": "Sedang memproses...",
@@ -1217,14 +1217,14 @@
         jQuery(document).ready(function($) {
             $('#jstabel4').DataTable({
                 "lengthMenu": [
-                    [5, 10, 15, -1],
-                    [5, 10, 15, "All"]
+                    [10, 20, 50, -1],
+                    [10, 20, 50, "All"]
                 ],
-                "pageLength": 5,
+                "pageLength": 10,
 
                 "order": [],
 
-                "ordering": false,
+                "ordering": true,
 
                 "language": {
                     "sProcessing": "Sedang memproses...",
