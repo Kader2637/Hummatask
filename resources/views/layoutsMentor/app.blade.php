@@ -321,32 +321,36 @@
                                             <h5 class="text-body mb-0 me-auto">Notifikasi</h5>
                                         </div>
                                     </li>
-                                    <li class="list-group list-group-flush" id="notification-list">
-                                        @foreach ($notifikasi as $item)
-                                            {{-- <div class="d-flex" id="notifikasi-{{ $item->id }}">
-                                                <div class="flex-shrink-0 me-3">
-                                                    <div class="avatar">
-                                                        <img src="" alt class="h-auto rounded-circle">
+                                    @foreach ($notifikasi as $item)
+                                        <li class="dropdown-notifications-list scrollable-container">
+                                            <ul class="list-group list-group-flush" id="notification-list">
+                                                {{-- <li class="list-group-item" id="notification-list"> --}}
+                                                {{-- <div class="d-flex" id="notifikasi-{{ $item->id }}">
+                                                    <div class="flex-shrink-0 me-3">
+                                                        <div class="avatar">
+                                                            <img src="" alt class="h-auto rounded-circle">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <h6 class="mb-1">{{ $item->judul }}</h6>
-                                                    <p class="mb-0">{{ $item->body }}</p>
-                                                    <small
-                                                        class="text-muted">{{ $item->created_at->diffForHumans() }}</small>
-                                                </div>
-                                                <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                    <a href="javascript:void(0)"
-                                                        class="dropdown-notifications-read"><span
-                                                            class="badge badge-dot"></span></a>
-                                                    <a href="javascript:void(0)"
-                                                        class="dropdown-notifications-archive"
-                                                        onclick="deletenotifikasi({{ $item->id }})"><span
-                                                            class="ti ti-x"></span></a>
-                                                </div>
-                                            </div> --}}
-                                        @endforeach
-                                    </li>
+                                                    <div class="flex-grow-1">
+                                                        <h6 class="mb-1">{{ $item->judul }}</h6>
+                                                        <p class="mb-0">{{ $item->body }}</p>
+                                                        <small
+                                                            class="text-muted">{{ $item->created_at->diffForHumans() }}</small>
+                                                    </div>
+                                                    <div class="flex-shrink-0 dropdown-notifications-actions">
+                                                        <a href="javascript:void(0)"
+                                                            class="dropdown-notifications-read"><span
+                                                                class="badge badge-dot"></span></a>
+                                                        <a href="javascript:void(0)"
+                                                            class="dropdown-notifications-archive"
+                                                            onclick="deletenotifikasi({{ $item->id }})"><span
+                                                                class="ti ti-x"></span></a>
+                                                    </div>
+                                                </div> --}}
+                                                {{-- </li> --}}
+                                            </ul>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </li>
 

@@ -3,8 +3,8 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&amp;family=Playball&amp;display=swap"
-        rel="stylesheet">
+    {{-- <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&amp;family=Playball&amp;display=swap"
+        rel="stylesheet"> --}}
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
@@ -249,7 +249,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="" class="control-label">Foto :</label>
-                            <input type="file" class="form-control" name="foto" id="img">
+                            <input type="file" class="form-control" accept="image/*" name="foto" id="img">
                         </div>
                     </div>
                     <div class="modal-footer">
