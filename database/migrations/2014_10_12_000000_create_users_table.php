@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('username');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('division');
+            $table->foreignId('divisi_id')->nullable()->references('id')->on('divisis')->onDelete('set null')->onUpdate('set null');
             $table->boolean('status')->default(true);
             $table->string('tlp')->nullable();
             $table->string('sekolah')->nullable();

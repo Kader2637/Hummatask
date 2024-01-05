@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class PresentasiDivisi extends Model
@@ -12,7 +13,17 @@ class PresentasiDivisi extends Model
 
     protected $table = 'presentasi_divisis';
     protected $guarded = [];
-    protected $fillable = ['id', 'day', 'divisi'];
+    protected $fillable = ['id', 'day', 'divisi_id'];
+
+    /**
+     * divisi
+     *
+     * @return BelongsTo
+     */
+    public function divisi(): BelongsTo
+    {
+        return $this->belongsTo(Divisi::class, 'divisi_id');
+    }
 
     /**
      * limitPresentasiDivisis

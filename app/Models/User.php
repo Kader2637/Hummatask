@@ -37,7 +37,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
-        'division',
+        'divisi_id',
         'status',
         'sekolah',
         'peran_id',
@@ -107,5 +107,15 @@ class User extends Authenticatable
     public function anggotaReal():HasMany
     {
         return $this->hasMany(Anggota::class);
+    }
+
+    /**
+     * divisi
+     *
+     * @return BelongsTo
+     */
+    public function divisi(): BelongsTo
+    {
+        return $this->belongsTo(Divisi::class, 'divisi_id');
     }
 }
