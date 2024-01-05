@@ -259,11 +259,11 @@
                     {{-- Navigasi ketua magang --}}
 
                     <li class="menu-item open">
-                        <a href="#" class="menu-link d-flex active-open">
+                        <a href="" data-bs-toggle="modal" data-bs-target="#editUser" class="menu-link d-flex active-open">
                             <i class="menu-icon tf-icons ti ti-users-group"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">
                                 Tim
-                                <svg class="me-2" data-bs-toggle="modal" data-bs-target="#editUser"
+                                <svg class="me-2"  
                                     style="position: relative; right: -10px; cursor: pointer"
                                     xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                     viewBox="0 0 1024 1024">
