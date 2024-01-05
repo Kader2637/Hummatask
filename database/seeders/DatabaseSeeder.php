@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -69,6 +70,8 @@ class DatabaseSeeder extends Seeder
                 'peran_id' => 1,
                 'tlp' => "0845889288",
                 'sekolah' => "SMKN 1 Banyuwangi",
+                "tanggal_bergabung" => Carbon::now(),
+                "tanggal_lulus" => Carbon::now()->addDays(100)
             ]
         )->assignRole($role);
 
