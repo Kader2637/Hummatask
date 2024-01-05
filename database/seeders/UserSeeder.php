@@ -22,6 +22,7 @@ class UserSeeder extends Seeder
                     'uuid' => Str::uuid(),
                     'username' => fake()->name(),
                     'email' => fake()->email(),
+                    'division' => 'mobile',
                     'password' => Hash::make('password'),
                     'peran_id' => 1,
                 ]

@@ -47,6 +47,7 @@ class DatabaseSeeder extends Seeder
                 'uuid' => Str::uuid(),
                 'username' => 'mentor',
                 'email' => 'mentor@gmail.com',
+                'division' => 'mobile',
                 'password' => Hash::make('password'),
                 'peran_id' => 2,
             ]
@@ -63,6 +64,7 @@ class DatabaseSeeder extends Seeder
                 'uuid' => Str::uuid(),
                 'username' => 'Adi Kurniawan',
                 'email' => 'kurniawan@gmail.com',
+                'division' => 'mobile',
                 'password' => Hash::make('password'),
                 'peran_id' => 1,
                 'tlp' => "0845889288",

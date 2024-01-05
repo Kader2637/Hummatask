@@ -37,6 +37,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'division',
         'status',
         'sekolah',
         'peran_id',
