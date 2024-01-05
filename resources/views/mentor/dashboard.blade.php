@@ -126,7 +126,7 @@
                                         <form method="get">
                                             <input type="hidden" value="{{ $currentYear }}">
                                             <button type="submit"
-                                                class="dropdown-item d-flex align-items-center justify-content-between">Now
+                                                class="dropdown-item d-flex align-items-center justify-content-between">Tahun Sekarang
                                                 <i class="ti ti-calendar-event"></i></button>
                                         </form>
                                     </li>
@@ -134,7 +134,7 @@
                                         <form method="get">
                                             <input type="hidden" name="year" value="{{ $year - 1 }}">
                                             <button type="submit"
-                                                class="dropdown-item d-flex align-items-center justify-content-between">Last
+                                                class="dropdown-item d-flex align-items-center justify-content-between">Tahun Sebelumnya
                                                 <i class="ti ti-calendar-minus"></i></button>
                                         </form>
                                     </li>
@@ -142,7 +142,7 @@
                                         <form method="get">
                                             <input type="hidden" name="year" value="{{ $year + 1 }}">
                                             <button type="submit"
-                                                class="dropdown-item d-flex align-items-center justify-content-between">Next
+                                                class="dropdown-item d-flex align-items-center justify-content-between">Tahun Selanjutnya
                                                 <i class="ti ti-calendar-plus"></i></button>
                                         </form>
                                     </li>
