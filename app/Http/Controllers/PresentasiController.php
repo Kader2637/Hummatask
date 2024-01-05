@@ -33,11 +33,9 @@ class PresentasiController extends Controller
             return back()->with('error', 'Yang mengajukan tim hanya ketua kelompok');
         }
 
-
         if ($request->deskripsi == null) {
             return back()->with('error', 'Deskripsi presentasi tidak boleh kosong');
         }
-
 
         if (Str::length($request->judul) > 50) {
             return back()->with('error', 'Judul presentasi tidak boleh melebihi 50 karakter');

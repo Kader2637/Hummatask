@@ -205,139 +205,141 @@
             </div>
         </div>
     </div>
-
     {{-- Modal Tolak Presentasi --}}
 
 
     <div class="modal fade" id="detailPresentasi" tabindex="-1" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
-                <div class="modal-body">
-                    <div class="container mt-3 p-md-4 p-0">
-                        <h5 id="judulModal"></h5>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-header p-md-4 px-0">
-                                        <div class="nav-align-top d-flex justify-between">
-                                            <div class="nav nav-pills d-flex justify-content-between row" role="tablist">
-                                                <div class="nav-item col-lg-3 col-md-3" role="presentation">
-                                                    <button type="button" class="nav-link active" role="tab"
-                                                        data-bs-toggle="tab" data-bs-target="#navs-pills-top-home"
-                                                        aria-controls="navs-pills-top-home" data-bs-toggle="popover"
-                                                        data-bs-placement="top" data-bs-original-title="Tooltip Text"
-                                                        aria-selected="true"><i
-                                                            class="ti ti-news me-2"></i>Pengajuan</button>
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-body">
+                        <div class="container mt-3 p-md-4 p-0">
+                            <h5 id="judulModal"></h5>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header p-md-4 px-0">
+                                            <div class="nav-align-top d-flex justify-between">
+                                                <div class="nav nav-pills d-flex justify-content-between row"
+                                                    role="tablist">
+                                                    <div class="nav-item col-lg-3 col-md-3" role="presentation">
+                                                        <button type="button" class="nav-link active" role="tab"
+                                                            data-bs-toggle="tab" data-bs-target="#navs-pills-top-home"
+                                                            aria-controls="navs-pills-top-home" data-bs-toggle="popover"
+                                                            data-bs-placement="top" data-bs-original-title="Tooltip Text"
+                                                            aria-selected="true"><i
+                                                                class="ti ti-news me-2"></i>Pengajuan</button>
+                                                    </div>
+                                                    <div class="nav-item col-lg-3 col-md-3" role="presentation">
+                                                        <button type="button" class="nav-link" role="tab"
+                                                            data-bs-toggle="tab" data-bs-target="#navs-pills-top-profile"
+                                                            aria-controls="navs-pills-top-profile" aria-selected="false"
+                                                            tabindex="-1"><i
+                                                                class="ti ti-presentation-analytics me-2"></i>Presentasi</button>
+                                                    </div>
+                                                    <div class="nav-item col-lg-3 col-md-3" role="presentation">
+                                                        <button type="button" class="nav-link" role="tab"
+                                                            data-bs-toggle="tab" data-bs-target="#navs-pills-top-baru"
+                                                            aria-controls="navs-pills-top-profile" aria-selected="false"
+                                                            tabindex="-1"><i
+                                                                class="ti ti-adjustments-horizontal me-2"></i>Belum
+                                                            Presentasi</button>
+                                                    </div>
                                                 </div>
-                                                <div class="nav-item col-lg-3 col-md-3" role="presentation">
-                                                    <button type="button" class="nav-link" role="tab"
-                                                        data-bs-toggle="tab" data-bs-target="#navs-pills-top-profile"
-                                                        aria-controls="navs-pills-top-profile" aria-selected="false"
-                                                        tabindex="-1"><i
-                                                            class="ti ti-presentation-analytics me-2"></i>Presentasi</button>
-                                                </div>
-                                                <div class="nav-item col-lg-3 col-md-3" role="presentation">
-                                                    <button type="button" class="nav-link" role="tab"
-                                                        data-bs-toggle="tab" data-bs-target="#navs-pills-top-baru"
-                                                        aria-controls="navs-pills-top-profile" aria-selected="false"
-                                                        tabindex="-1"><i
-                                                            class="ti ti-adjustments-horizontal me-2"></i>Belum
-                                                        Presentasi</button>
-                                                </div>
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="tab-content mt-3">
-                            <div class="tab-pane fade active show" id="navs-pills-top-home" role="tabpanel">
-                                <div class="container">
-                                    <div class="row d-md-block d-none">
-                                        <div class="alert alert-secondary alert-dismissible d-flex align-items-baseline"
-                                            role="alert">
-                                            <span class="alert-icon alert-icon-lg text-secondary me-2">
-                                                <i class="ti ti-bookmark ti-sm"></i>
-                                            </span>
-                                            <div class="d-flex flex-column ps-1">
-                                                <h5 class="alert-heading mb-2">Tab Pengajuan Presentasi</h5>
-                                                <p class="mb-0">Tab pengajuan presentasi berisi data data
-                                                    pengajuan presentasi dari siswa magang</p>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row" id="row-persetujuan">
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="navs-pills-top-profile" role="tabpanel">
-                                <div class="container">
-                                    <div class="row mb-3 d-md-block d-none">
-                                        <div class="alert alert-secondary alert-dismissible d-flex align-items-baseline"
-                                            role="alert">
-                                            <span class="alert-icon alert-icon-lg text-secondary me-2">
-                                                <i class="ti ti-bookmark ti-sm"></i>
-                                            </span>
-                                            <div class="d-flex flex-column ps-1">
-                                                <h5 class="alert-heading mb-2">Tab Presentasi</h5>
-                                                <p class="mb-0">Tab presentasi berisi data data presentasi yang sudah
-                                                    dikonfirmasi. Tab presentasi juga berisi data data tentang tim yang
-                                                    mengajukan presentasi, kamu dapat menghover kearah icon untuk mengetahui
-                                                    penjelasan data tersebut</p>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row" id="row-konfirmasi">
-
-
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="navs-pills-top-baru" role="tabpanel">
-                                <div class="container">
-                                    <div class="row mb-3 d-md-block d-none">
-                                        <div class="alert alert-secondary alert-dismissible d-flex align-items-baseline"
-                                            role="alert">
-                                            <div class="col-auto">
+                            <div class="tab-content mt-3">
+                                <div class="tab-pane fade active show" id="navs-pills-top-home" role="tabpanel">
+                                    <div class="container">
+                                        <div class="row d-md-block d-none">
+                                            <div class="alert alert-secondary alert-dismissible d-flex align-items-baseline"
+                                                role="alert">
                                                 <span class="alert-icon alert-icon-lg text-secondary me-2">
                                                     <i class="ti ti-bookmark ti-sm"></i>
                                                 </span>
-                                            </div>
-                                            <div class="col">
                                                 <div class="d-flex flex-column ps-1">
-                                                    <h5 class="alert-heading mb-2">Tab Belum Presentasi</h5>
-                                                    <p class="mb-0">Tab Belum presentasi berisi data data tim dalam
-                                                        seminggu yang belum mengajukan presentasi</p>
+                                                    <h5 class="alert-heading mb-2">Tab Pengajuan Presentasi</h5>
+                                                    <p class="mb-0">Tab pengajuan presentasi berisi data data
+                                                        pengajuan presentasi dari siswa magang</p>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" id="row-persetujuan">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="navs-pills-top-profile" role="tabpanel">
+                                    <div class="container">
+                                        <div class="row mb-3 d-md-block d-none">
+                                            <div class="alert alert-secondary alert-dismissible d-flex align-items-baseline"
+                                                role="alert">
+                                                <span class="alert-icon alert-icon-lg text-secondary me-2">
+                                                    <i class="ti ti-bookmark ti-sm"></i>
+                                                </span>
+                                                <div class="d-flex flex-column ps-1">
+                                                    <h5 class="alert-heading mb-2">Tab Presentasi</h5>
+                                                    <p class="mb-0">Tab presentasi berisi data data presentasi yang sudah
+                                                        dikonfirmasi. Tab presentasi juga berisi data data tentang tim yang
+                                                        mengajukan presentasi, kamu dapat menghover kearah icon untuk
+                                                        mengetahui
+                                                        penjelasan data tersebut</p>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="card overflow-auto">
-                                    <div class="card-header ">
-                                        <div class="table text-nowrap">
-                                            <table id="jstabel3" class="table">
-                                                <div class="">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>No</th>
-                                                            <th>Nama</th>
-                                                            <th>Kategori Project</th>
-                                                            <th>Status</th>
-                                                        </tr>
-                                                    </thead>
-                                                    @php
-                                                        $no = 1;
-                                                    @endphp
-                                                    <tbody id="tr-belum-presentasi">
+                                    <div class="row" id="row-konfirmasi">
 
-                                                    </tbody>
+
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="navs-pills-top-baru" role="tabpanel">
+                                    <div class="container">
+                                        <div class="row mb-3 d-md-block d-none">
+                                            <div class="alert alert-secondary alert-dismissible d-flex align-items-baseline"
+                                                role="alert">
+                                                <div class="col-auto">
+                                                    <span class="alert-icon alert-icon-lg text-secondary me-2">
+                                                        <i class="ti ti-bookmark ti-sm"></i>
+                                                    </span>
                                                 </div>
-                                            </table>
+                                                <div class="col">
+                                                    <div class="d-flex flex-column ps-1">
+                                                        <h5 class="alert-heading mb-2">Tab Belum Presentasi</h5>
+                                                        <p class="mb-0">Tab Belum presentasi berisi data data tim dalam
+                                                            seminggu yang belum mengajukan presentasi</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card overflow-auto">
+                                        <div class="card-header ">
+                                            <div class="table text-nowrap">
+                                                <table id="jstabel3" class="table">
+                                                    <div class="">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>No</th>
+                                                                <th>Nama</th>
+                                                                <th>Kategori Project</th>
+                                                                <th>Status</th>
+                                                            </tr>
+                                                        </thead>
+                                                        @php
+                                                            $no = 1;
+                                                        @endphp
+                                                        <tbody id="tr-belum-presentasi">
+
+                                                        </tbody>
+                                                    </div>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -345,11 +347,6 @@
                         </div>
                     </div>
                 </div>
-
-                <button type="button" data-bs-dismiss="modal"
-                    class="btn btn-danger waves-effect position-absolute rounded-circle"
-                    style="top: -10px; right: -10px; width:40px; height:40px;">X</button>
-
             </div>
         </div>
     </div>
@@ -492,10 +489,7 @@
 
                         document.getElementById('row-konfirmasi').appendChild(div);
 
-
                     } else {
-
-
 
                         document.getElementById('row-konfirmasi').innerHTML = "";
                         Object.keys(data2[0]).forEach((key) => {
@@ -526,8 +520,6 @@
                             div.id = "card-konfirmasi-" + presentasi.code;
                             div.className = "col-md-12 col-lg-4";
 
-
-
                             let childrend =
                                 `
                     <div class="card text-center mb-3">
@@ -537,7 +529,7 @@
                                 </div>
                                 <img src="{{ asset('storage/${presentasi.tim.logo}') }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 100px; height: 100px; object-fit: cover; ">
                                 <div class="d-flex justify-content-center align-items-center gap-2 flex-column flex-wrap">
-                                    <h4 class="card-title text-capitalize text-secondary mb-0">${presentasi.tim.nama}</h4>
+                                    <h4 class="card-title text-capitalize text-dark mb-0">${presentasi.tim.nama}</h4>
                                     <div class="d-flex flex-column gap-2">
                                     <span class="badge bg-label-warning d-flex align-items-center justify-content-center flex-column" style="" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Status Tim"    >${kategoryTim}</span>
 
@@ -588,8 +580,6 @@
                             document.getElementById('row-konfirmasi').appendChild(div)
                         })
                     }
-
-
 
                     if ($.fn.DataTable.isDataTable('#jstabel3')) {
                         $("#jstabel3").DataTable().destroy();
@@ -665,9 +655,6 @@
                             }
                         }
                     });
-
-
-
 
                 })
                 .catch((err) => {
@@ -746,7 +733,7 @@
                                 <a class="list-group-item list-group-item-action flex-column align-items-start ${(data === presentasi[0][0] ? 'active' : '' )}">
                                     <div class="d-flex justify-content-between w-100">
                                         <h5 class="mb-1">${data.judul}</h5>
-                                        <small class="text-muted">${waktu}</small>
+                                        <small class="text-white">${waktu}</small>
                                     </div>
                                     <p class="mb-1 text-white">${data.deskripsi}</p>
 
@@ -754,17 +741,10 @@
                             `;
                         }
 
-
-
                         div.innerHTML = children
                         document.getElementById('list-group').appendChild(div);
 
                     });
-
-
-
-
-
                 })
                 .catch((err) => {
                     console.log(err);
@@ -801,10 +781,6 @@
                     });
                     console.log(err);
                 })
-
-
-
-
         }
 
         const kirimProsesGantiUrutan = () => {
@@ -862,8 +838,6 @@
                 })
         }
 
-
-
         const tolakPresentasi = (code, codeHistory) => {
             const form = document.getElementById("tolakPresentasiForm")
             form.addEventListener("submit", function(e) {
@@ -902,7 +876,6 @@
             })
         }
 
-
         const setujuiPresentasi = (code, codeHistory) => {
             axios.put('persetujuan-presentasi/' + code)
                 .then((res) => {
@@ -917,8 +890,6 @@
                     const kategoryTim = handleKategory(presentasi.tim.status_tim)
 
                     tampilkanDetail(codeHistory);
-
-
 
                     Swal.fire({
                         icon: 'success',
@@ -988,15 +959,8 @@
                             text: 'Status revisi tidak boleh kosong'
                         })
                     }, 400);
-
                 }
-
-
-
-
             })
-
-
         };
     </script>
 @endsection
