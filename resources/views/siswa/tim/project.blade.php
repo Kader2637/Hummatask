@@ -153,7 +153,8 @@
                                 <label class="form-label text-white" for="image-input">
                                     <img id="preview-image" src="{{ asset('storage/' . $tim->logo) }}"
                                         alt="example placeholder"
-                                        style="width: 150px; height: 150px; border-radius: 10px; cursor: pointer; object-fit: cover" />
+                                        style="width: 150px; height: 150px; border-radius: 10px; cursor: pointer; object-fit: cover"
+                                        class="rounded-circle" />
                                     <input type="file" class="form-control d-none" id="image-input" name="logo" />
                                     @error('logo')
                                         <p class="text-danger">
@@ -387,8 +388,9 @@
                                                         </span>
                                                     </div>
                                                     @if (@isset($project) && $project->deadline)
-                                                        <div>Tema : <span
-                                                                class="badge bg-label-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$project->tema->nama_tema}}">{{ Str::limit($project->tema->nama_tema, 20) }}</span>
+                                                        <div>Tema : <span class="badge bg-label-warning"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="{{ $project->tema->nama_tema }}">{{ Str::limit($project->tema->nama_tema, 20) }}</span>
                                                         @else
                                                             <div>Tema : <span class="badge bg-label-warning">Pending</span>
                                                     @endif

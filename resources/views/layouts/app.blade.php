@@ -153,9 +153,9 @@
             }
         }
 
-        @media (max-width: 767px) {
-            #login-sebagai {
-                display: none !important;
+        @media (max-width: 576px) {
+            #login-pkl-btn {
+                font-size: 12px;
             }
         }
     </style>
@@ -259,12 +259,12 @@
                     {{-- Navigasi ketua magang --}}
 
                     <li class="menu-item open">
-                        <a href="" data-bs-toggle="modal" data-bs-target="#editUser" class="menu-link d-flex active-open">
+                        <a href="" data-bs-toggle="modal" data-bs-target="#editUser"
+                            class="menu-link d-flex active-open">
                             <i class="menu-icon tf-icons ti ti-users-group"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">
                                 Tim
-                                <svg class="me-2"  
-                                    style="position: relative; right: -10px; cursor: pointer"
+                                <svg class="me-2" style="position: relative; right: -10px; cursor: pointer"
                                     xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                     viewBox="0 0 1024 1024">
                                     <path fill="#888888"
@@ -304,25 +304,11 @@
                     </div>
 
                     <div class="navbar-nav-right d-flex align-items-center gap-3" id="navbar-collapse">
-                        <div class="d-flex align-items-center justify-content-center gap-2" id="login-sebagai">
-                            Login sebagai :
-                            @if (auth()->check() &&
-                                    auth()->user()->can('kelola siswa'))
-                                <span
-                                    class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full text-sm">Ketua
-                                    Magang</span>
-                            @else
-                                <span
-                                    class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full text-sm">Siswa
-                                    Magang</span>
-                            @endif
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center gap-2 ml-3">
-                            Devisi : 
-                            <div class="badge-devisi">
-                            </div>
-                        </div>
                         <ul class="navbar-nav flex-row align-items-center ms-auto gap-1">
+                            <li class="navbar-item">
+                                <button class="btn btn-label-primary btn-md" id="login-pkl-btn">Login
+                                    pkl.hummatech</button>
+                            </li>
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                             </li>
                             <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
@@ -394,9 +380,19 @@
                                                     </span>
                                                     @if (auth()->check() &&
                                                             auth()->user()->can('kelola siswa'))
-                                                        <small class="text-muted">Ketua Magang</small>
+                                                        <small class="text-muted">Ketua Magang
+                                                            <span
+                                                                class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full text-sm">
+                                                                Mobile
+                                                            </span>
+                                                        </small>
                                                     @else
-                                                        <small class="text-muted">Siswa Magang</small>
+                                                        <small class="text-muted">Siswa Magang
+                                                            <span
+                                                                class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full text-sm">
+                                                                Mobile
+                                                            </span>
+                                                        </small>
                                                     @endif
                                                 </div>
                                             </div>
@@ -444,24 +440,25 @@
                 @yield('content')
                 {{-- Modal Tambah Tim --}}
                 <div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-md modal-simple modal-edit-user">
-                        <div class="modal-content p-2">
-                            <div class="modal-body">
-                                <div class="text-center mb-4">
-                                    <h3 class="mb-2">Buat Tim Solo Project</h3>
-                                </div>
-                                <button type="button" class="btn-close position-absolute top-0 " style="right: 0px"
-                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                <form id="editUserForm" action="{{ route('buat_tim_solo') }}" method="POST"
-                                    enctype="multipart/form-data" class="row g-2 p-0 m-0">
-                                    @csrf
+                    <div class="modal-dialog modal-dialog-centered modal-md">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center" id="exampleModalLabel3">Buat Tim Solo Project</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <form id="editUserForm" action="{{ route('buat_tim_solo') }}" method="POST"
+                                enctype="multipart/form-data" class="row g-2 p-0 m-0">
+                                @csrf
+                                <div class="modal-body">
                                     <div class="col-12 gap-3 align-items-center">
                                         <div class="col-12 align-items-center text-center">
                                             <label class="form-label text-white" for="image-input1">
                                                 <img id="preview-image1"
                                                     src="{{ asset('assets/img/avatars/pen.png') }}"
                                                     alt="example placeholder"
-                                                    style="width: 150px; height: 150px; border-radius: 10px; cursor: pointer;object-fit: cover" />
+                                                    style="width: 150px; height: 150px; border-radius: 10px; cursor: pointer;object-fit: cover"
+                                                    class="rounded-circle" />
                                                 <input type="file" class="form-control d-none" id="image-input1"
                                                     name="logo" />
                                                 @error('logo')
@@ -502,13 +499,13 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-12 d-flex flex-row flex-wrap justify-content-end modal-footer">
-                                        <button type="submit" class="btn btn-primary me-sm-3 me-1">Unggah</button>
-                                        <button type="reset" class="btn btn-danger" data-bs-dismiss="modal"
-                                            aria-label="Close">Batal</button>
-                                    </div>
-                                </form>
-                            </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="reset" class="btn btn-label-secondary waves-effect" data-bs-dismiss="modal"
+                                        aria-label="Close">Batal</button>
+                                    <button type="submit" class="btn btn-primary me-sm-3 me-1">Buat</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -533,14 +530,13 @@
     <script src="{{ asset('assets/vendor/js/menu2dc9.js?id=c6ce30ded4234d0c4ca0fb5f2a2990d8') }}"></script>
     <script src="{{ asset('assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
     <script src="{{ asset('assets/js/mainf696.js?id=8bd0165c1c4340f4d4a66add0761ae8a') }}"></script>
-    <script src="{{asset('utils/handleDivision.js')}}"></script>
+    <script src="{{ asset('utils/handleDivision.js') }}"></script>
 
     <script src="{{ asset('assets/js/dashboards-crm.js') }}"></script>
 
     {{-- validasi --}}
     <script>
-    
-    $(".badge-devisi").append(handleDivision('{{Auth::user()->division}}'))
+        $(".badge-devisi").append(handleDivision('{{ Auth::user()->division }}'))
 
         $(document).ready(function() {
             // Ketika input file berubah

@@ -37,10 +37,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-bs-toggle="modal" data-bs-target="#detailPresentasi"
-                        class="btn btn-label-secondary waves-effect" data-bs-dismiss="modal">Close</button>
+                        class="btn btn-label-secondary waves-effect" data-bs-dismiss="modal">Kembali</button>
                     <button type="button" onclick="kirimProsesGantiUrutan()" data-bs-toggle="modal"
-                        data-bs-target="#detailPresentasi" class="btn btn-primary waves-effect waves-light">Save
-                        changes</button>
+                        data-bs-target="#detailPresentasi" class="btn btn-primary waves-effect waves-light">Atur Urutan</button>
                 </div>
             </div>
         </div>
@@ -123,7 +122,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-label-secondary waves-effect" data-bs-toggle="modal"
-                        data-bs-target="#detailPresentasi">Close</button>
+                        data-bs-target="#detailPresentasi">Kembali</button>
                 </div>
             </div>
         </div>
@@ -149,9 +148,9 @@
 
                             <div class="col">
                                 <span>Status Revisi</span> <br><br>
-                                <input type="radio" value="selesai" name="status_revisi" id="selesai">
+                                <input type="radio" value="selesai" name="status_revisi" class="form-check-input" id="selesai">
                                 <label for="selesai">Selesai</label>
-                                <input type="radio" value="tidak_selesai" name="status_revisi" id="tidak">
+                                <input type="radio" value="tidak_selesai" name="status_revisi" class="form-check-input" id="tidak">
                                 <label for="tidak">Tidak selesai</label>
 
                                 <br>
@@ -159,7 +158,7 @@
                                 <br>
 
                                 <label for="feedback" class="mb-3">Feedback <span
-                                        class="badge bg-label-warning">opsional</span> </label>
+                                        class="badge bg-label-warning">Opsional</span> </label>
                                 <textarea type="text" class="form-control" id="feedback" placeholder="Beri Feedback Presentasi"
                                     style="height: 150px; resize: none"></textarea>
                             </div>
@@ -197,7 +196,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                            data-bs-target="#detailPresentasi">Close</button>
+                            data-bs-target="#detailPresentasi">Kembali</button>
                         <button type="setuju" class="btn btn-success" data-bs-toggle="modal"
                             data-bs-target="#detailPresentasi">Setuju</button>
                     </div>
@@ -531,23 +530,23 @@
                                 <div class="d-flex justify-content-center align-items-center gap-2 flex-column flex-wrap">
                                     <h4 class="card-title text-capitalize text-dark mb-0">${presentasi.tim.nama}</h4>
                                     <div class="d-flex flex-column gap-2">
-                                    <span class="badge bg-label-warning d-flex align-items-center justify-content-center flex-column" style="" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Status Tim"    >${kategoryTim}</span>
+                                    <span class="badge bg-label-warning d-flex align-items-center justify-content-center flex-column cursor-pointer" style="" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Status Tim"    >${kategoryTim}</span>
 
                                     </div>
                                     <div class="d-flex justify-content-around align-items-center w-100 mb-2 gap-2">
-                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data pengajuan presentasi yang selesai"    class="badge bg-label-success">
+                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Data Pengajuan Presentasi yang selesai"    class="badge cursor-pointer bg-label-success">
                                             <i class="fas fa-chalkboard"></i>
                                             ${totalPresentasi}
                                         </span>
-                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-danger" data-bs-placement="top" title="Data pengajuan presentasi yang ditolak"    class="badge bg-label-danger">
+                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Data Pengajuan Presentasi yang ditolak"    class="badge cursor-pointer bg-label-danger">
                                             <i class="fas fa-chalkboard"></i>
                                             ${presentasiDitolak}
                                         </span>
-                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-success" data-bs-placement="top" title="Data Revisi yang selesai"      class="badge bg-label-success">
+                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Data Revisi yang selesai"      class="badge cursor-pointer bg-label-success">
                                             <i class="fas fa-exclamation-triangle"></i>
                                             ${revisiSelesai}
                                         </span>
-                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-danger" data-bs-placement="top" title="Data Revisi yang tidak selesai"   class="badge bg-label-danger ">
+                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Data Revisi yang tidak selesai"   class="badge cursor-pointer bg-label-danger ">
                                             <i class="fas fa-exclamation-triangle"></i>
                                             ${revisiTidakSelesai}
                                         </span>
