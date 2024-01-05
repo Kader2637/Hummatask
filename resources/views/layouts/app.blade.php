@@ -303,7 +303,7 @@
                         </a>
                     </div>
 
-                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                    <div class="navbar-nav-right d-flex align-items-center gap-3" id="navbar-collapse">
                         <div class="d-flex align-items-center justify-content-center gap-2" id="login-sebagai">
                             Login sebagai :
                             @if (auth()->check() &&
@@ -316,6 +316,11 @@
                                     class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full text-sm">Siswa
                                     Magang</span>
                             @endif
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center gap-2 ml-3">
+                            Devisi : 
+                            <div class="badge-devisi">
+                            </div>
                         </div>
                         <ul class="navbar-nav flex-row align-items-center ms-auto gap-1">
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
@@ -528,11 +533,15 @@
     <script src="{{ asset('assets/vendor/js/menu2dc9.js?id=c6ce30ded4234d0c4ca0fb5f2a2990d8') }}"></script>
     <script src="{{ asset('assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
     <script src="{{ asset('assets/js/mainf696.js?id=8bd0165c1c4340f4d4a66add0761ae8a') }}"></script>
+    <script src="{{asset('utils/handleDivision.js')}}"></script>
 
     <script src="{{ asset('assets/js/dashboards-crm.js') }}"></script>
 
     {{-- validasi --}}
     <script>
+    
+    $(".badge-devisi").append(handleDivision('{{Auth::user()->division}}'))
+
         $(document).ready(function() {
             // Ketika input file berubah
             $('#image-input1').on('change', function(e) {

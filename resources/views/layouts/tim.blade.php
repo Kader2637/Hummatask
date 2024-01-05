@@ -264,7 +264,7 @@
                             <i class="ti ti-menu-2 ti-sm"></i>
                         </a>
                     </div>
-                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                    <div class="navbar-nav-right d-flex align-items-center gap-3" id="navbar-collapse">
                         <div class="d-flex align-items-center justify-content-center gap-2" id="login-sebagai">
                             Login sebagai :
                             @if (auth()->check() &&
@@ -274,6 +274,11 @@
                             @else
                                 <span class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full">Siswa</span>
                             @endif
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center gap-2 ml-3">
+                        Devisi : 
+                        <div class="badge-devisi">
+                        </div>
                         </div>
                         <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
@@ -416,6 +421,7 @@
     <script src="{{ asset('assets/vendor/libs/moment/moment.js') }}"></script>
     {{-- <script src="{{ asset('assets/js/extended-ui-sweetalert2.js') }}"></script> --}}
     <script src="{{ asset('assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
+    <script src="{{asset('utils/handleDivision.js')}}"></script>
 
     <!-- BEGIN: Page JS-->
     <script src="{{ asset('assets/js/app-calendar-events.js') }}"></script>
@@ -423,7 +429,10 @@
     <!-- END: Page JS-->
 
     @yield('script')
+
+    
     <script>
+        $(".badge-devisi").append(handleDivision('{{Auth::user()->division}}'))
         function deletenotifikasi(id) {
             axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute(
                 'content');
