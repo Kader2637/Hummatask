@@ -3,6 +3,279 @@
 @section('content')
     <div class="container-fluid mt-3">
         <h5 class="mt-3 fs-4">Dashboard Mentor</h5>
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="pb-0">Atur Jadwal Presentasi</h5>
+                <ul class="nav nav-pills bg-light rounded" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#senin" role="tab">Senin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#selasa" role="tab">Selasa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#rabu" role="tab">Rabu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#kamis" role="tab">Kamis</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#jumat" role="tab">Jumat</a>
+                    </li>
+                </ul>
+                <div class="tab-content mt-4">
+                    <div class="tab-pane active" id="senin" role="tabpanel">
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#limit">
+                                Setting Limit
+                            </button>
+                        </div>
+                        <div class="table-responsive" data-simplebar style="max-height: 330px;">
+                            <div class="d-flex justify-content-evenly mb-0">
+                                <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt="" class="mb-0"
+                                style="width: 250px;">
+                            </div>
+                            <p class="text-center mb-0 mt-1">Atur Limit presentasi terlebih dahulu <i class="ti ti-address-book-off"></i></p>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="selasa" role="tabpanel">
+                        <div class="table-responsive" data-simplebar style="max-height: 330px;">
+                            <table class="table align-middle table-nowrap">
+                                <tbody>
+                                    <tr>
+                                        <td style="width: 50px;">
+                                            <div class="font-size-22 text-primary">
+                                                <i class="bx bx-time-five"></i>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div>
+                                                <h6 class="pb-0">Jadwal 1</h6>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <h5 class="font-size-14 mb-1">:</h5>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="">
+                                                <input type="time" name="checkin_starts" class="form-control"
+                                                    placeholder="Sampai" >
+                                                    
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-center">
+                                                -
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="">
+                                                <input type="time" name="checkin_ends" class="form-control"
+                                                    placeholder="Sampai" >
+                                                    
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 50px;">
+                                            <div class="font-size-22 text-primary">
+                                                <i class="bx bx-time-five"></i>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div>
+                                                <h6 class="pb-0">Jadwal 2</h6>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <h5 class="font-size-14 mb-1">:</h5>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="">
+                                                <input type="time" name="break_starts" class="form-control"
+                                                    placeholder="Sampai">
+                                                    
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-center">
+                                                -
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="">
+                                                <input type="time" name="break_ends" class="form-control"
+                                                    placeholder="Sampai" >
+                                                   
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 50px;">
+                                            <div class="font-size-22 text-primary">
+                                                <i class="bx bx-time-five"></i>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div>
+                                                <h6 class="pb-0">Jadwal 3</h6>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <h5 class="font-size-14 mb-1">:</h5>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="">
+                                                <input type="time" name="return_starts" class="form-control"
+                                                    placeholder="Sampai" >
+                                                    
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-center">
+                                                -
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="">
+                                                <input type="time" name="return_ends" class="form-control"
+                                                    placeholder="Sampai" >
+                                                    
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 50px;">
+                                            <div class="font-size-22 text-primary">
+                                                <i class="bx bx-time-five"></i>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <h6 class="pb-0">Jadwal 4</h6>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <h5 class="font-size-14 mb-1">:</h5>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="">
+                                                <input type="time" name="checkout_starts" class="form-control"
+                                                    placeholder="Sampai" >
+                                                    
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-center">
+                                                -
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="">
+                                                <input type="time" name="checkout_ends" class="form-control"
+                                                    placeholder="Sampai" >
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-end mt-2">
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="rabu" role="tabpanel">
+                        <div class="table-responsive" data-simplebar style="max-height: 330px;">
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-primary">
+                                    Setting Limit
+                                </button>
+                            </div>
+                            <div class="table-responsive" data-simplebar style="max-height: 330px;">
+                                <div class="d-flex justify-content-evenly mb-0">
+                                    <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt="" class="mb-0"
+                                    style="width: 250px;">
+                                </div>
+                                <p class="text-center mb-0 mt-1">Atur Limit presentasi terlebih dahulu <i class="ti ti-address-book-off"></i></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="kamis" role="tabpanel">
+                        <div class="table-responsive" data-simplebar style="max-height: 330px;">
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-primary">
+                                    Setting Limit
+                                </button>
+                            </div>
+                            <div class="table-responsive" data-simplebar style="max-height: 330px;">
+                                <div class="d-flex justify-content-evenly mb-0">
+                                    <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt="" class="mb-0"
+                                    style="width: 250px;">
+                                </div>
+                                <p class="text-center mb-0 mt-1">Atur Limit presentasi terlebih dahulu <i class="ti ti-address-book-off"></i></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="jumat" role="tabpanel">
+                        <div class="table-responsive" data-simplebar style="max-height: 330px;">
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-primary">
+                                    Setting Limit
+                                </button>
+                            </div>
+                            <div class="table-responsive" data-simplebar style="max-height: 330px;">
+                                <div class="d-flex justify-content-evenly mb-0">
+                                    <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt="" class="mb-0"
+                                    style="width: 250px;">
+                                </div>
+                                <p class="text-center mb-0 mt-1">Atur Limit presentasi terlebih dahulu <i class="ti ti-address-book-off"></i></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- modal create limit senin  --}}
+        <div class="modal fade" id="limit" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalCenterTitle">Atur Limit hari senin</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="anggota" class="form-label">Limit</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-label-secondary"
+                            data-bs-dismiss="modal">Kembali</button>
+                        <button type="submit" class="btn btn-primary" id="createButton">Simpan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- end modal  --}}
         <div class="card">
             <div class="d-flex justify-content-between mx-3 mb-1 mt-4">
                 <h5 class="pb-0">Data Presentasi hari ini</h5>
@@ -38,11 +311,15 @@
                             <td><span class="badge bg-label-success me-1">{{ $item->status_presentasi }}</span></td>
                         </tr>
                     @empty
-                       <p class="text-center mb-0 mt-2">Data tidak tersedia <i class="ti ti-address-book-off"></i></p>
-                       <div class="d-flex justify-content-evenly">
-                        <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt="" class="mb-0"
-                            style="width: 250px;">
-                        </div>
+                        <tr>
+                            <td colspan="8">
+                                <div class="d-flex justify-content-evenly">
+                                    <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt="" class="mb-0"
+                                    style="width: 250px;">
+                                </div>
+                                <p class="text-center mb-0 mt-2">Data tidak tersedia <i class="ti ti-address-book-off"></i></p>
+                            </td>
+                        </tr>
                         @endforelse
                     </tbody>
                 </table>
