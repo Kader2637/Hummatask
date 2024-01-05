@@ -12,7 +12,6 @@
                 @php
                     $no = 1;
                 @endphp
-                @forelse ($presentasi as $i => $item)
                 <table id="myTable" class="table">
                     <thead>
                         <tr>
@@ -25,6 +24,8 @@
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
+                @forelse ($presentasi as $i => $item)
+
                         <tr>
                             <td>{{ $no++ }}</td>
                             <td class=""><img src="{{ asset('storage/' . $item->tim->logo) }}" alt=""
@@ -47,13 +48,13 @@
                 </table>
             </div>
         </div>
-        <div class="row mt-3">
+        <div class="row mt-3 mb-5 gy-2">
             <div class="col-12 col-lg-4 col-xxl-4 mb-4">
-                <div class="card">
+                <div class="card" style="height: 100%">
                     <h5 class="card-header">Jumlah Tim Saat Ini</h5>
                     <div class="card-body">
                         <p id="statusPie" class="text-center statusPie"></p>
-                        <canvas id="piechart" class="chartjs mb-4 piechart mt-2" data-height="350"></canvas>
+                        <canvas id="piechart" class="chartjs mb-4 piechart mt-2" data-height="" style="height: 10px;"></canvas>
                         <ul class="doughnut-legend d-flex justify-content-around ps-0 mb-2 pt-1 mt-4">
                             <li class="ct-series-0 d-flex flex-column">
                                 <h5 class="mb-0">Big</h5>
@@ -86,8 +87,8 @@
             <!-- /Doughnut Chart -->
 
             <!-- Scatter Chart -->
-            <div class="col-lg-8 col-12 col-xxl-8 mb-4">
-                <div class="card">
+            <div class="col-lg-8 col-md-8 col-12 col-xxl-8 mb-4">
+                <div class="card" style="height: 100%; width: 100%">
                     <div class="card-header header-elements">
                         <h5 class="card-title mb-0">Data Anak Magang</h5>
                         <div class="card-action-element ms-auto py-0">
@@ -150,7 +151,7 @@
                         </div>
                     </div>
                     <div class="card-body d-flex pt-2">
-                        <canvas id="barChart" class="chartjs" data-height="480" style="height: 330px;"></canvas>
+                        <canvas id="barChart" class="chartjs" data-height="480" style="height: 400px;"></canvas>
                     </div>
                 </div>
             </div>
