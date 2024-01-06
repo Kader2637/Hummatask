@@ -26,34 +26,22 @@
               </li>
             </ul>
             <div class="tab-content mt-3">
+              @if ($errors->any())
+                <div class="alert alert-danger">
+                  <ul>
+                    @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                    @endforeach
+                  </ul>
+                </div>
+              @endif
               <div class="tab-pane active" id="senin" role="tabpanel">
-                <form action="{{ route('presentasi-divisi.store') }}" method="POST">
+                <form id="form-senin" action="{{ route('presentasi-divisi.store') }}" method="POST">
                   @csrf
                   <div id="form-repeater">
-                    <div class="row form-column">
-                      <input name="day" type="hidden" value="monday">
-                      <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
-                        <p class="text-dark fs-6 mt-3" style="font-weight: 550">
-                          Jadwal Ke 1
-                        </p>
-                      </div>
-                      <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                        <input type="time" name="mulai[]" id="form-repeater-1-1" class="form-control" />
-                      </div>
-                      <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
-                        -
-                      </div>
-                      <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                        <input type="time" name="akhir[]" id="form-repeater-1-2" class="form-control" />
-                      </div>
-                      <div class="mb-3 col-lg-12 col-xl-2 col-12 mb-0">
-                        <button class="btn btn-label-danger" id="delete-column">
-                          <i class="ti ti-x ti-xs me-1"></i>
-                          <span class="align-middle">Delete</span>
-                        </button>
-                      </div>
-                      <hr>
-                    </div>
+                    <p id="belum-ada-jadwal" class="text-dark fs-6 mt-3 text-center" style="font-weight: 550;">
+                      Jadwal Presentasi Belum Ada
+                    </p>
                   </div>
                   <div class="mb-0">
                     <button class="btn btn-primary me-2" id="add-form">Add</button>
@@ -62,33 +50,12 @@
                 </form>
               </div>
               <div class="tab-pane" id="selasa" role="tabpanel">
-                <form action="{{ route('presentasi-divisi.store') }}" method="POST">
+                <form id="form-selasa" action="{{ route('presentasi-divisi.store') }}" method="POST">
                   @csrf
                   <div id="form-repeater-selasa">
-                    <div class="row form-column align-items-center">
-                      <input name="day" type="hidden" value="tuesday">
-                      <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
-                        <p class="text-dark fs-6 mt-3" style="font-weight: 550">
-                          Jadwal Ke 1
-                        </p>
-                      </div>
-                      <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                        <input type="time" name="mulai[]" id="form-repeater-1-1" class="form-control" />
-                      </div>
-                      <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
-                        -
-                      </div>
-                      <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                        <input type="time" name="akhir[]" id="form-repeater-1-2" class="form-control" />
-                      </div>
-                      <div class="mb-3 col-lg-12 col-xl-2 col-12 mb-0">
-                        <button class="btn btn-label-danger" id="delete-column-selasa">
-                          <i class="ti ti-x ti-xs me-1"></i>
-                          <span class="align-middle">Delete</span>
-                        </button>
-                      </div>
-                      <hr>
-                    </div>
+                    <p id="belum-ada-jadwal-selasa" class="text-dark fs-6 mt-3 text-center" style="font-weight: 550;">
+                      Jadwal Presentasi Belum Ada
+                    </p>
                   </div>
                   <div class="mb-0">
                     <button class="btn btn-primary me-2" id="add-form-selasa">Add</button>
@@ -96,34 +63,13 @@
                   </div>
                 </form>
               </div>
-              <div class="tab-pane " id="rabu" role="tabpanel">
-                <form action="{{ route('presentasi-divisi.store') }}" method="POST">
+              <div class="tab-pane" id="rabu" role="tabpanel">
+                <form id="form-rabu" action="{{ route('presentasi-divisi.store') }}" method="POST">
                   @csrf
                   <div id="form-repeater-rabu">
-                    <div class="row form-column">
-                      <input name="day" type="hidden" value="wednesday">
-                      <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
-                        <p class="text-dark fs-6 mt-3" style="font-weight: 550">
-                          Jadwal Ke 1
-                        </p>
-                      </div>
-                      <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                        <input type="time" name="mulai[]" id="form-repeater-1-1" class="form-control" />
-                      </div>
-                      <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
-                        -
-                      </div>
-                      <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                        <input type="time" name="akhir[]" id="form-repeater-1-2" class="form-control" />
-                      </div>
-                      <div class="mb-3 col-lg-12 col-xl-2 col-12 mb-0">
-                        <button class="btn btn-label-danger" id="delete-column-rabu">
-                          <i class="ti ti-x ti-xs me-1"></i>
-                          <span class="align-middle">Delete</span>
-                        </button>
-                      </div>
-                      <hr>
-                    </div>
+                    <p id="belum-ada-jadwal-rabu" class="text-dark fs-6 mt-3 text-center" style="font-weight: 550;">
+                      Jadwal Presentasi Belum Ada
+                    </p>
                   </div>
                   <div class="mb-0">
                     <button class="btn btn-primary me-2" id="add-form-rabu">Add</button>
@@ -132,33 +78,12 @@
                 </form>
               </div>
               <div class="tab-pane " id="kamis" role="tabpanel">
-                <form action="{{ route('presentasi-divisi.store') }}" method="POST">
+                <form id="form-kamis" action="{{ route('presentasi-divisi.store') }}" method="POST">
                   @csrf
                   <div id="form-repeater-kamis">
-                    <div class="row form-column">
-                      <input name="day" type="hidden" value="thursday">
-                      <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
-                        <p class="text-dark fs-6 mt-3" style="font-weight: 550">
-                          Jadwal Ke 1
-                        </p>
-                      </div>
-                      <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                        <input type="time" name="mulai[]" id="form-repeater-1-1" class="form-control" />
-                      </div>
-                      <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
-                        -
-                      </div>
-                      <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                        <input type="time" name="akhir[]" id="form-repeater-1-2" class="form-control" />
-                      </div>
-                      <div class="mb-3 col-lg-12 col-xl-2 col-12 mb-0">
-                        <button class="btn btn-label-danger" id="delete-column-kamis">
-                          <i class="ti ti-x ti-xs me-1"></i>
-                          <span class="align-middle">Delete</span>
-                        </button>
-                      </div>
-                      <hr>
-                    </div>
+                    <p id="belum-ada-jadwal-kamis" class="text-dark fs-6 mt-3 text-center" style="font-weight: 550;">
+                      Jadwal Presentasi Belum Ada
+                    </p>
                   </div>
                   <div class="mb-0">
                     <button class="btn btn-primary me-2" id="add-form-kamis">Add</button>
@@ -167,33 +92,12 @@
                 </form>
               </div>
               <div class="tab-pane " id="jumat" role="tabpanel">
-                <form action="{{ route('presentasi-divisi.store') }}" method="POST">
+                <form id="form-jumat" action="{{ route('presentasi-divisi.store') }}" method="POST">
                   @csrf
                   <div id="form-repeater-jumat">
-                    <div class="row form-column">
-                      <input name="day" type="hidden" value="friday">
-                      <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
-                        <p class="text-dark fs-6 mt-3" style="font-weight: 550">
-                          Jadwal Ke 1
-                        </p>
-                      </div>
-                      <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                        <input type="time" name="mulai[]" id="form-repeater-1-1" class="form-control" />
-                      </div>
-                      <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
-                        -
-                      </div>
-                      <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                        <input type="time" name="akhir[]" id="form-repeater-1-2" class="form-control" />
-                      </div>
-                      <div class="mb-3 col-lg-12 col-xl-2 col-12 mb-0">
-                        <button class="btn btn-label-danger" id="delete-column-jumat">
-                          <i class="ti ti-x ti-xs me-1"></i>
-                          <span class="align-middle">Delete</span>
-                        </button>
-                      </div>
-                      <hr>
-                    </div>
+                    <p id="belum-ada-jadwal-jumat" class="text-dark fs-6 mt-3 text-center" style="font-weight: 550;">
+                      Jadwal Presentasi Belum Ada
+                    </p>
                   </div>
                   <div class="mb-0">
                     <button class="btn btn-primary me-2" id="add-form-jumat">Add</button>
@@ -203,7 +107,6 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
       <div class="col-12 col-xl-4">

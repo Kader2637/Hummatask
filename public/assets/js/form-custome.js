@@ -1,270 +1,576 @@
+$("form").submit(function (event) {
+    if ($("#form-repeater .form-column").length === 0) {
+        event.preventDefault();
+
+        Swal.fire({
+            title: "Gagal!",
+            text: "Anda harus menambahkan form terlebih dahulu.",
+            icon: "error",
+        });
+    } else {
+    }
+});
+
 var i = 0;
-$("#add-form").click(function () {
+
+$("#add-form").click(function (event) {
     event.preventDefault();
     ++i;
     $("#form-repeater").append(
-        `<div id="form-repeater">
-                <div class="row form-column">
-                    <input name="day" type="hidden" value="monday">
-                    <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
-                      <p class="text-dark fs-6 mt-3" style="font-weight: 550">
-                        Jadwal Ke 1
-                      </p>
-                    </div>
-                    <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                      <input type="time" name="mulai[]" class="form-control" />
-                    </div>
-                    <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
-                      -
-                    </div>
-                    <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                      <input type="time" name="akhir[]" class="form-control" />
-                    </div>
-                    <div class="mb-3 col-lg-12 col-xl-2 col-12 mb-0">
-                      <button class="btn btn-label-danger" id="delete-column">
+        `<div class="form-repeater-item">
+            <div class="row form-column align-items-center">
+                <input name="day" type="hidden" value="monday">
+                <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
+                    <p class="text-dark fs-6 mt-3" style="font-weight: 550">
+                        Jadwal Ke ${i}
+                    </p>
+                </div>
+                <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                    <input type="time" name="mulai[]" class="form-control" />
+                    <div class="invalid-feedback" id="invalid-mulai-${i}"></div>
+                </div>
+                <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
+                    -
+                </div>
+                <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                    <input type="time" name="akhir[]" class="form-control" />
+                    <div class="invalid-feedback" id="invalid-akhir-${i}"></div>
+                </div>
+                <div class="mb-3 col-lg-12 col-xl-2 col-12 mb-0">
+                    <button class="btn btn-label-danger delete-column">
                         <i class="ti ti-x ti-xs me-1"></i>
                         <span class="align-middle">Delete</span>
-                      </button>
-                    </div>
-                    <hr>
-                  </div>
+                    </button>
                 </div>
-                `
+                <hr>
+            </div>
+        </div>`
     );
+
+    updateFormColumnText();
 });
 
-$("#add-form-selasa").click(function () {
+function updateFormColumnText() {
+    var formColumns = $(".form-repeater-item");
+    var belumAdaJadwalText = $("#belum-ada-jadwal");
+
+    if (formColumns.length > 0) {
+        belumAdaJadwalText.hide();
+    } else {
+        belumAdaJadwalText.show();
+    }
+}
+
+$(document).on("click", ".delete-column", function (event) {
     event.preventDefault();
-    ++i;
-    $("#form-repeater-selasa").append(
-        `<div id="form-repeater">
-                <div class="row form-column">
-                    <input name="day" type="hidden" value="tuesday">
-                    <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
-                      <p class="text-dark fs-6 mt-3" style="font-weight: 550">
-                        Jadwal Ke 1
-                      </p>
-                    </div>
-                    <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                      <input type="time" name="mulai[]" class="form-control" />
-                    </div>
-                    <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
-                      -
-                    </div>
-                    <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                      <input type="time" name="akhir[]" class="form-control" />
-                    </div>
-                    <div class="mb-3 col-lg-12 col-xl-2 col-12 mb-0">
-                      <button class="btn btn-label-danger" id="delete-column-selasa">
-                        <i class="ti ti-x ti-xs me-1"></i>
-                        <span class="align-middle">Delete</span>
-                      </button>
-                    </div>
-                    <hr>
-                  </div>
-                </div>
-                `
-    );
+    var deleteButton = $(this);
+
+    Swal.fire({
+        title: "Apakah Anda Yakin?",
+        text: "Anda tidak akan dapat mengembalikan ini!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Ya, hapus!",
+        cancelButtonText: "Tidak",
+        reverseButtons: true,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            deleteButton.closest(".form-repeater-item").remove();
+            --i;
+            updateFormColumnText();
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+        }
+    });
 });
 
-$("#add-form-rabu").click(function () {
-    event.preventDefault();
-    ++i;
-    $("#form-repeater-rabu").append(
-        `<div id="form-repeater">
-                <div class="row form-column">
-                    <input name="day" type="hidden" value="wednesday">
-                    <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
-                      <p class="text-dark fs-6 mt-3" style="font-weight: 550">
-                        Jadwal Ke 1
-                      </p>
-                    </div>
-                    <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                      <input type="time" name="mulai[]" class="form-control" />
-                    </div>
-                    <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
-                      -
-                    </div>
-                    <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                      <input type="time" name="akhir[]" class="form-control" />
-                    </div>
-                    <div class="mb-3 col-lg-12 col-xl-2 col-12 mb-0">
-                      <button class="btn btn-label-danger" id="delete-column-rabu">
-                        <i class="ti ti-x ti-xs me-1"></i>
-                        <span class="align-middle">Delete</span>
-                      </button>
-                    </div>
-                    <hr>
-                  </div>
-                </div>
-                `
-    );
+$("#form-senin").submit(function (event) {
+    var isValid = true;
+
+    $(".form-repeater-item").each(function (index) {
+        var mulaiInput = $(this).find("input[name='mulai[]']");
+        var mulaiValue = mulaiInput.val();
+
+        if (!mulaiValue.trim()) {
+            isValid = false;
+            $(`#invalid-mulai-${index + 1}`).text(
+                "Inputan waktu mulai harus diisi."
+            );
+        } else {
+            $(`#invalid-mulai-${index + 1}`).text("");
+        }
+
+        var akhirInput = $(this).find("input[name='akhir[]']");
+        var akhirValue = akhirInput.val();
+
+        if (!akhirValue.trim()) {
+            isValid = false;
+            $(`#invalid-akhir-${index + 1}`).text(
+                "Inputan waktu akhir harus diisi."
+            );
+        } else {
+            $(`#invalid-akhir-${index + 1}`).text("");
+        }
+    });
+
+    if (isValid) {
+    } else {
+        event.preventDefault();
+        Swal.fire({
+            title: "Gagal!",
+            text: "Inputan waktu harus diisi.",
+            icon: "error",
+        });
+    }
 });
 
-$("#add-form-kamis").click(function () {
+// Hari Selasa
+var iSelasa = 0;
+$("#add-form-selasa").click(function (event) {
+  event.preventDefault();
+  ++iSelasa;
+  $("#form-repeater-selasa").append(
+      `<div class="form-repeater-item-selasa">
+        <div class="row form-column align-items-center">
+            <input name="day" type="hidden" value="tuesday">
+            <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
+                <p class="text-dark fs-6 mt-3" style="font-weight: 550">
+                    Jadwal Ke ${iSelasa}
+                </p>
+            </div>
+            <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                <input type="time" name="mulai[]" class="form-control" />
+                <div class="invalid-feedback" id="invalid-mulai-${iSelasa}"></div>
+            </div>
+            <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
+                -
+            </div>
+            <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                <input type="time" name="akhir[]" class="form-control" />
+                <div class="invalid-feedback" id="invalid-akhir-${iSelasa}"></div>
+            </div>
+            <div class="mb-3 col-lg-12 col-xl-2 col-12 mb-0">
+                <button class="btn btn-label-danger delete-column-selasa">
+                    <i class="ti ti-x ti-xs me-1"></i>
+                    <span class="align-middle">Delete</span>
+                </button>
+            </div>
+            <hr>
+        </div>
+    </div>`
+  );
+
+  updateFormColumnTextSelasa();
+});
+
+$(document).on("click", ".delete-column-selasa", function (event) {
+  event.preventDefault();
+  var deleteButton = $(this);
+
+  Swal.fire({
+      title: "Apakah Anda Yakin?",
+      text: "Anda tidak akan dapat mengembalikan ini!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya, hapus!",
+      cancelButtonText: "Tidak",
+      reverseButtons: true,
+  }).then((result) => {
+      if (result.isConfirmed) {
+          deleteButton.closest(".form-repeater-item-selasa").remove();
+          --iSelasa;
+          updateFormColumnTextSelasa();
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+      }
+  });
+});
+
+function updateFormColumnTextSelasa() {
+  var formColumns = $(".form-repeater-item-selasa");
+  var belumAdaJadwalText = $("#belum-ada-jadwal-selasa");
+
+  if (formColumns.length > 0) {
+      belumAdaJadwalText.hide();
+  } else {
+      belumAdaJadwalText.show();
+  }
+}
+
+$("#form-selasa").submit(function (event) {
+  var isValid = true;
+
+  $(".form-repeater-item-selasa").each(function (index) {
+      var mulaiInput = $(this).find("input[name='mulai[]']");
+      var mulaiValue = mulaiInput.val();
+
+      if (!mulaiValue.trim()) {
+          isValid = false;
+          $(`#invalid-mulai-${index + 1}`).text(
+              "Inputan waktu mulai harus diisi."
+          );
+      } else {
+          $(`#invalid-mulai-${index + 1}`).text("");
+      }
+
+      var akhirInput = $(this).find("input[name='akhir[]']");
+      var akhirValue = akhirInput.val();
+
+      if (!akhirValue.trim()) {
+          isValid = false;
+          $(`#invalid-akhir-${index + 1}`).text(
+              "Inputan waktu akhir harus diisi."
+          );
+      } else {
+          $(`#invalid-akhir-${index + 1}`).text("");
+      }
+  });
+
+  if (isValid) {
+  } else {
+      event.preventDefault();
+      Swal.fire({
+          title: "Gagal!",
+          text: "Inputan waktu harus diisi.",
+          icon: "error",
+      });
+  }
+});
+
+// Hari Rabu
+var iRabu = 0;
+
+$("#add-form-rabu").click(function (event) {
+  event.preventDefault();
+  ++iRabu;
+  $("#form-repeater-rabu").append(
+      `<div class="form-repeater-item-rabu">
+      <div class="row form-column align-items-center">
+          <input name="day" type="hidden" value="wednesday">
+          <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
+              <p class="text-dark fs-6 mt-3" style="font-weight: 550">
+                  Jadwal Ke ${iRabu}
+              </p>
+          </div>
+          <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+              <input type="time" name="mulai[]" class="form-control" />
+              <div class="invalid-feedback" id="invalid-mulai-${iRabu}"></div>
+          </div>
+          <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
+              -
+          </div>
+          <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+              <input type="time" name="akhir[]" class="form-control" />
+              <div class="invalid-feedback" id="invalid-akhir-${iRabu}"></div>
+          </div>
+          <div class="mb-3 col-lg-12 col-xl-2 col-12 mb-0">
+              <button class="btn btn-label-danger delete-column-rabu">
+                  <i class="ti ti-x ti-xs me-1"></i>
+                  <span class="align-middle">Delete</span>
+              </button>
+          </div>
+          <hr>
+      </div>
+  </div>`
+  );
+
+  updateFormColumnTextRabu();
+});
+
+$(document).on("click", ".delete-column-rabu", function (event) {
+  event.preventDefault();
+  var deleteButton = $(this);
+
+  Swal.fire({
+      title: "Apakah Anda Yakin?",
+      text: "Anda tidak akan dapat mengembalikan ini!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya, hapus!",
+      cancelButtonText: "Tidak",
+      reverseButtons: true,
+  }).then((result) => {
+      if (result.isConfirmed) {
+          deleteButton.closest(".form-repeater-item-rabu").remove();
+          --iRabu;
+          updateFormColumnTextRabu();
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+      }
+  });
+});
+
+function updateFormColumnTextRabu() {
+  var formColumns = $(".form-repeater-item-rabu");
+  var belumAdaJadwalText = $("#belum-ada-jadwal-rabu");
+
+  if (formColumns.length > 0) {
+      belumAdaJadwalText.hide();
+  } else {
+      belumAdaJadwalText.show();
+  }
+}
+
+$("#form-rabu").submit(function (event) {
+  var isValid = true;
+
+  $(".form-repeater-item-rabu").each(function (index) {
+      var mulaiInput = $(this).find("input[name='mulai[]']");
+      var mulaiValue = mulaiInput.val();
+
+      if (!mulaiValue.trim()) {
+          isValid = false;
+          $(`#invalid-mulai-${index + 1}`).text(
+              "Inputan waktu mulai harus diisi."
+          );
+      } else {
+          $(`#invalid-mulai-${index + 1}`).text("");
+      }
+
+      var akhirInput = $(this).find("input[name='akhir[]']");
+      var akhirValue = akhirInput.val();
+
+      if (!akhirValue.trim()) {
+          isValid = false;
+          $(`#invalid-akhir-${index + 1}`).text(
+              "Inputan waktu akhir harus diisi."
+          );
+      } else {
+          $(`#invalid-akhir-${index + 1}`).text("");
+      }
+  });
+
+  if (isValid) {
+  } else {
+      event.preventDefault();
+      Swal.fire({
+          title: "Gagal!",
+          text: "Inputan waktu harus diisi.",
+          icon: "error",
+      });
+  }
+});
+
+// Hari Kamis
+var iKamis = 0;
+
+$("#add-form-kamis").click(function (event) {
     event.preventDefault();
-    ++i;
+    ++iKamis;
     $("#form-repeater-kamis").append(
-        `<div id="form-repeater">
-                <div class="row form-column">
-                    <input name="day" type="hidden" value="thursday">
-                    <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
-                      <p class="text-dark fs-6 mt-3" style="font-weight: 550">
-                        Jadwal Ke 1
-                      </p>
-                    </div>
-                    <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                      <input type="time" name="mulai[]" class="form-control" />
-                    </div>
-                    <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
-                      -
-                    </div>
-                    <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                      <input type="time" name="akhir[]" class="form-control" />
-                    </div>
-                    <div class="mb-3 col-lg-12 col-xl-2 col-12 mb-0">
-                      <button class="btn btn-label-danger" id="delete-column-kamis">
-                        <i class="ti ti-x ti-xs me-1"></i>
-                        <span class="align-middle">Delete</span>
-                      </button>
-                    </div>
-                    <hr>
-                  </div>
-                </div>
-                `
+        `<div class="form-repeater-item-kamis">
+        <div class="row form-column align-items-center">
+            <input name="day" type="hidden" value="thursday">
+            <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
+                <p class="text-dark fs-6 mt-3" style="font-weight: 550">
+                    Jadwal Ke ${iKamis}
+                </p>
+            </div>
+            <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                <input type="time" name="mulai[]" class="form-control" />
+                <div class="invalid-feedback" id="invalid-mulai-${iKamis}"></div>
+            </div>
+            <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
+                -
+            </div>
+            <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                <input type="time" name="akhir[]" class="form-control" />
+                <div class="invalid-feedback" id="invalid-akhir-${iKamis}"></div>
+            </div>
+            <div class="mb-3 col-lg-12 col-xl-2 col-12 mb-0">
+                <button class="btn btn-label-danger delete-column-kamis">
+                    <i class="ti ti-x ti-xs me-1"></i>
+                    <span class="align-middle">Delete</span>
+                </button>
+            </div>
+            <hr>
+        </div>
+    </div>`
     );
+
+    updateFormColumnTextKamis();
 });
 
-$("#add-form-jumat").click(function () {
+$(document).on("click", ".delete-column-kamis", function (event) {
     event.preventDefault();
-    ++i;
+    var deleteButton = $(this);
+
+    Swal.fire({
+        title: "Apakah Anda Yakin?",
+        text: "Anda tidak akan dapat mengembalikan ini!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Ya, hapus!",
+        cancelButtonText: "Tidak",
+        reverseButtons: true,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            deleteButton.closest(".form-repeater-item-kamis").remove();
+            --iKamis;
+            updateFormColumnTextKamis();
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+        }
+    });
+});
+
+function updateFormColumnTextKamis() {
+    var formColumns = $(".form-repeater-item-kamis");
+    var belumAdaJadwalText = $("#belum-ada-jadwal-kamis");
+
+    if (formColumns.length > 0) {
+        belumAdaJadwalText.hide();
+    } else {
+        belumAdaJadwalText.show();
+    }
+}
+
+$("#form-kamis").submit(function (event) {
+    var isValid = true;
+
+    $(".form-repeater-item-kamis").each(function (index) {
+        var mulaiInput = $(this).find("input[name='mulai[]']");
+        var mulaiValue = mulaiInput.val();
+
+        if (!mulaiValue.trim()) {
+            isValid = false;
+            $(`#invalid-mulai-${index + 1}`).text(
+                "Inputan waktu mulai harus diisi."
+            );
+        } else {
+            $(`#invalid-mulai-${index + 1}`).text("");
+        }
+
+        var akhirInput = $(this).find("input[name='akhir[]']");
+        var akhirValue = akhirInput.val();
+
+        if (!akhirValue.trim()) {
+            isValid = false;
+            $(`#invalid-akhir-${index + 1}`).text(
+                "Inputan waktu akhir harus diisi."
+            );
+        } else {
+            $(`#invalid-akhir-${index + 1}`).text("");
+        }
+    });
+
+    if (isValid) {
+    } else {
+        event.preventDefault();
+        Swal.fire({
+            title: "Gagal!",
+            text: "Inputan waktu harus diisi.",
+            icon: "error",
+        });
+    }
+});
+
+
+// Hari Jumat
+var iJumat = 0;
+
+$("#add-form-jumat").click(function (event) {
+    event.preventDefault();
+    ++iJumat;
     $("#form-repeater-jumat").append(
-        `<div id="form-repeater">
-                <div class="row form-column">
-                    <input name="day" type="hidden" value="friday">
-                    <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
-                      <p class="text-dark fs-6 mt-3" style="font-weight: 550">
-                        Jadwal Ke 1
-                      </p>
-                    </div>
-                    <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                      <input type="time" name="mulai[]" class="form-control" />
-                    </div>
-                    <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
-                      -
-                    </div>
-                    <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                      <input type="time" name="akhir[]" class="form-control" />
-                    </div>
-                    <div class="mb-3 col-lg-12 col-xl-2 col-12 mb-0">
-                      <button class="btn btn-label-danger" id="delete-column-jumat">
-                        <i class="ti ti-x ti-xs me-1"></i>
-                        <span class="align-middle">Delete</span>
-                      </button>
-                    </div>
-                    <hr>
-                  </div>
-                </div>
-                `
+        `<div class="form-repeater-item-jumat">
+        <div class="row form-column align-items-center">
+            <input name="day" type="hidden" value="thursday">
+            <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
+                <p class="text-dark fs-6 mt-3" style="font-weight: 550">
+                    Jadwal Ke ${iJumat}
+                </p>
+            </div>
+            <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                <input type="time" name="mulai[]" class="form-control" />
+                <div class="invalid-feedback" id="invalid-mulai-${iJumat}"></div>
+            </div>
+            <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
+                -
+            </div>
+            <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                <input type="time" name="akhir[]" class="form-control" />
+                <div class="invalid-feedback" id="invalid-akhir-${iJumat}"></div>
+            </div>
+            <div class="mb-3 col-lg-12 col-xl-2 col-12 mb-0">
+                <button class="btn btn-label-danger delete-column-jumat">
+                    <i class="ti ti-x ti-xs me-1"></i>
+                    <span class="align-middle">Delete</span>
+                </button>
+            </div>
+            <hr>
+        </div>
+    </div>`
     );
+
+    updateFormColumnTextJumat();
 });
 
-$(document).on("click", "#delete-column", function () {
+$(document).on("click", ".delete-column-jumat", function (event) {
     event.preventDefault();
     var deleteButton = $(this);
 
     Swal.fire({
         title: "Apakah Anda Yakin?",
-        text: "Ingin menghapus baris ini ",
+        text: "Anda tidak akan dapat mengembalikan ini!",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: "Yes",
+        confirmButtonText: "Ya, hapus!",
         cancelButtonText: "Tidak",
+        reverseButtons: true,
     }).then((result) => {
         if (result.isConfirmed) {
-            deleteButton.closest(".form-column").remove();
+            deleteButton.closest(".form-repeater-item-jumat").remove();
+            --iJumat;
+            updateFormColumnTextJumat();
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-            Swal.fire("Batal", "Gagal Menghapus baris ini.", "info");
         }
     });
 });
 
-$(document).on("click", "#delete-column-selasa", function () {
-    event.preventDefault();
-    var deleteButton = $(this);
+function updateFormColumnTextJumat() {
+    var formColumns = $(".form-repeater-item-jumat");
+    var belumAdaJadwalText = $("#belum-ada-jadwal-jumat");
 
-    Swal.fire({
-        title: "Apakah Anda Yakin?",
-        text: "Ingin menghapus baris ini ",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes",
-        cancelButtonText: "Tidak",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            deleteButton.closest(".form-column").remove();
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-            Swal.fire("Batal", "Gagal Menghapus baris ini.", "info");
+    if (formColumns.length > 0) {
+        belumAdaJadwalText.hide();
+    } else {
+        belumAdaJadwalText.show();
+    }
+}
+
+$("#form-jumat").submit(function (event) {
+    var isValid = true;
+
+    $(".form-repeater-item-jumat").each(function (index) {
+        var mulaiInput = $(this).find("input[name='mulai[]']");
+        var mulaiValue = mulaiInput.val();
+
+        if (!mulaiValue.trim()) {
+            isValid = false;
+            $(`#invalid-mulai-${index + 1}`).text(
+                "Inputan waktu mulai harus diisi."
+            );
+        } else {
+            $(`#invalid-mulai-${index + 1}`).text("");
+        }
+
+        var akhirInput = $(this).find("input[name='akhir[]']");
+        var akhirValue = akhirInput.val();
+
+        if (!akhirValue.trim()) {
+            isValid = false;
+            $(`#invalid-akhir-${index + 1}`).text(
+                "Inputan waktu akhir harus diisi."
+            );
+        } else {
+            $(`#invalid-akhir-${index + 1}`).text("");
         }
     });
-});
 
-$(document).on("click", "#delete-column-rabu", function () {
-    event.preventDefault();
-    var deleteButton = $(this);
-
-    Swal.fire({
-        title: "Apakah Anda Yakin?",
-        text: "Ingin menghapus baris ini ",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes",
-        cancelButtonText: "Tidak",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            deleteButton.closest(".form-column").remove();
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-            Swal.fire("Batal", "Gagal Menghapus baris ini.", "info");
-        }
-    });
-});
-
-$(document).on("click", "#delete-column-kamis", function () {
-    event.preventDefault();
-    var deleteButton = $(this);
-
-    Swal.fire({
-        title: "Apakah Anda Yakin?",
-        text: "Ingin menghapus baris ini ",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes",
-        cancelButtonText: "Tidak",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            deleteButton.closest(".form-column").remove();
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-            Swal.fire("Batal", "Gagal Menghapus baris ini.", "info");
-        }
-    });
-});
-
-$(document).on("click", "#delete-column-jumat", function () {
-    event.preventDefault();
-    var deleteButton = $(this);
-
-    Swal.fire({
-        title: "Apakah Anda Yakin?",
-        text: "Ingin menghapus baris ini ",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes",
-        cancelButtonText: "Tidak",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            deleteButton.closest(".form-column").remove();
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-            Swal.fire("Batal", "Gagal Menghapus baris ini.", "info");
-        }
-    });
+    if (isValid) {
+    } else {
+        event.preventDefault();
+        Swal.fire({
+            title: "Gagal!",
+            text: "Inputan waktu harus diisi.",
+            icon: "error",
+        });
+    }
 });
