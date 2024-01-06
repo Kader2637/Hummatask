@@ -22,12 +22,12 @@ class PresentasiDivisiControlller extends Controller
         $data = $request->validated();
         $presentasiDivisi = PresentasiDivisi::query()
             ->create($data);
-        foreach ($data['dari'] as $index => $dari) {
+        foreach ($data['mulai'] as $index => $dari) {
             LimitPresentasiDevisi::query()
                 ->create([
                     'presentasi_divisi_id' => $presentasiDivisi->id,
                     'dari' => $dari,
-                    'sampai' => $data['sampai'][$index]
+                    'sampai' => $data['akhir'][$index]
                 ]);
         }
         return redirect()->back()->with('success', 'Berhasil menambahkan divisi');

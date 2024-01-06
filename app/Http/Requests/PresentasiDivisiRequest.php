@@ -12,8 +12,8 @@ class PresentasiDivisiRequest extends FormRequest
             'day' => 'required',
             'mulai' => 'array',
             'mulai.*' => 'required',
-            'dari' => 'array',
-            'dari.*' => 'required',
+            'akhir' => 'array',
+            'akhir.*' => 'required',
         ];
     }
 
@@ -23,8 +23,8 @@ class PresentasiDivisiRequest extends FormRequest
             'day.required' => 'Kolom hari diperlukan.',
             'mulai.required' => 'Setiap nilai di kolom mulai diperlukan.',
             'mulai.*.required' => 'Setiap nilai di kolom mulai harus diisi.',
-            'dari.required' => 'Setiap nilai di kolom dari diperlukan.',
-            'dari.*.required' => 'Setiap nilai di kolom dari harus diisi.',
+            'akhir.required' => 'Setiap nilai di kolom dari diperlukan.',
+            'akhir.*.required' => 'Setiap nilai di kolom dari harus diisi.',
         ];
     }
 }
