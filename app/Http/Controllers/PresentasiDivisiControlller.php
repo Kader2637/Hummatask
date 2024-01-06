@@ -39,9 +39,9 @@ class PresentasiDivisiControlller extends Controller
      * @param  mixed $divisi
      * @return RedirectResponse
      */
-    public function destroy(PresentasiDivisi $presentasiDivisi): RedirectResponse
+    public function destroy(PresentasiDivisi $presentasi_divisi): RedirectResponse
     {
-        $presentasiDivisi->delete();
+        $presentasi_divisi->delete();
         return redirect()->back()->with('success', 'Berhasil menghapus divisi');
     }
 }
