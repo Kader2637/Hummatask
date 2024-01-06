@@ -90,9 +90,20 @@
                             $(this).slideDown();
                     },
                     hide: function (e) {
-                        confirm(
-                            "Are you sure you want to delete this element?"
-                        ) && $(this).slideUp(e);
+                        Swal.fire({
+                            title: "Apakah Anda Yakin?",
+                            text: "Ingin menghapus baris ini ",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonText: "Yes",
+                            cancelButtonText: "Tidak",
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                              $(this).slideUp(e);
+                            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                              Swal.fire("Batal", "Gagal Menghapus baris ini .", "info");
+                            }
+                          });
                     },
                 });
         }

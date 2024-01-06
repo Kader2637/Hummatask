@@ -306,10 +306,10 @@
                                 class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full">Mentor</span>
                         </div>
                         <div class="d-flex align-items-center justify-content-center gap-2 ml-3">
-                            Devisi : 
+                            Devisi :
                             <div class="badge-devisi">
                             </div>
-                            </div>
+                        </div>
                         <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                             </li>
@@ -437,6 +437,7 @@
         <!-- Drag Target Area To SlideIn Menu On Small Screens -->
         <div class="drag-target"></div>
     </div>
+    
 
     <script src="{{ asset('assets/vendor/libs/jquery/jquery1e84.js?id=0f7eb1f3a93e3e19e8505fd8c175925a') }}"></script>
     <script src="{{ asset('assets/vendor/libs/popper/popper0a73.js?id=baf82d96b7771efbcc05c3b77135d24c') }}"></script>
@@ -475,11 +476,12 @@
     <script src="{{ asset('assets/js/forms-tagify.js') }}"></script>
     <script src="{{ asset('assets/js/forms-typeahead.js') }}"></script>
     <script src="{{ asset('assets/js/extended-ui-sweetalert2.js') }}"></script>
-    <script src="{{asset('utils/handleDivision.js')}}"></script>
+    <script src="{{ asset('utils/handleDivision.js') }}"></script>
     <!-- END: Page JS-->
 
     <script>
-        $(".badge-devisi").append(handleDivision('{{Auth::user()->division}}'))
+        $(".badge-devisi").append(handleDivision('{{ Auth::user()->division }}'))
+
         function deletenotifikasi(id) {
             axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute(
                 'content');
