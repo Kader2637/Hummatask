@@ -146,11 +146,12 @@
             }
         }
 
-        @media (max-width: 767px) {
-            #login-sebagai {
-                display: none !important;
-            }
+        @media (max-width: 576px) {
+        #login-pkl-btn {
+            font-size: 12px;
         }
+    }
+
     </style>
     @yield('link')
 </head>
@@ -192,10 +193,10 @@
                 <div class="app-brand demo">
                     <a href="{{ route('dashboard.siswa') }}" class="app-brand-link">
                         <span class="app-brand-logo demo">
-                            <img src="{{ url('assets/img/logo.png') }}" width="50" alt=""
-                                srcset="">
+                            <img src="{{ url('assets/img/logo.png') }}" width="50" alt="" srcset="">
                         </span>
-                        <span class="app-brand-text demo menu-text fw-bold mt-2" style="color: #7367F0;">Humma<span style="color:rgb(8, 8, 50);">Task</span></span>
+                        <span class="app-brand-text demo menu-text fw-bold mt-2" style="color: #7367F0;">Humma<span
+                                style="color:rgb(8, 8, 50);">Task</span></span>
                     </a>
                     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto mt-2">
                         <i class="ti menu-toggle-icon d-none d-xl-block ti-sm align-middle"></i>
@@ -248,8 +249,7 @@
                         </a>
                     </li>
                     <li class="menu-item active mt-5">
-                        <a href="{{ route('dashboard.siswa') }}"
-                            class="menu-link d-flex align-items-center gap-2">
+                        <a href="{{ route('dashboard.siswa') }}" class="menu-link d-flex align-items-center gap-2">
                             <i class="menu-icon tf-icons ti ti-arrow-back"></i>
                             <div class="w-100 d-flex align-items-center justify-content-between">Kembali</div>
                         </a>
@@ -265,22 +265,11 @@
                         </a>
                     </div>
                     <div class="navbar-nav-right d-flex align-items-center gap-3" id="navbar-collapse">
-                        <div class="d-flex align-items-center justify-content-center gap-2" id="login-sebagai">
-                            Login sebagai :
-                            @if (auth()->check() &&
-                                    auth()->user()->can('kelola siswa'))
-                                <span class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full">Pengelola
-                                    Magang</span>
-                            @else
-                                <span class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full">Siswa</span>
-                            @endif
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center gap-2 ml-3">
-                        Devisi : 
-                        <div class="badge-devisi">
-                        </div>
-                        </div>
-                        <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
+                        <ul class="navbar-nav flex-row align-items-center ms-auto gap-1">
+                            <li class="navbar-item">
+                                <button class="btn btn-label-primary btn-md" id="login-pkl-btn">Login
+                                    pkl.hummatech</button>
+                            </li>
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                             </li>
                             <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
@@ -352,9 +341,19 @@
                                                     </span>
                                                     @if (auth()->check() &&
                                                             auth()->user()->can('kelola siswa'))
-                                                        <small class="text-muted">Pengelola Magang</small>
+                                                        <small class="text-muted">Ketua Magang
+                                                            <span
+                                                                class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full text-sm">
+                                                                Mobile
+                                                            </span>
+                                                        </small>
                                                     @else
-                                                        <small class="text-muted">Siswa Magang</small>
+                                                        <small class="text-muted">Siswa Magang
+                                                            <span
+                                                                class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full text-sm">
+                                                                Mobile
+                                                            </span>
+                                                        </small>
                                                     @endif
                                                 </div>
                                             </div>
@@ -421,7 +420,7 @@
     <script src="{{ asset('assets/vendor/libs/moment/moment.js') }}"></script>
     {{-- <script src="{{ asset('assets/js/extended-ui-sweetalert2.js') }}"></script> --}}
     <script src="{{ asset('assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
-    <script src="{{asset('utils/handleDivision.js')}}"></script>
+    <script src="{{ asset('utils/handleDivision.js') }}"></script>
 
     <!-- BEGIN: Page JS-->
     <script src="{{ asset('assets/js/app-calendar-events.js') }}"></script>
@@ -430,9 +429,10 @@
 
     @yield('script')
 
-    
+
     <script>
-        $(".badge-devisi").append(handleDivision('{{Auth::user()->division}}'))
+        $(".badge-devisi").append(handleDivision('{{ Auth::user()->division }}'))
+
         function deletenotifikasi(id) {
             axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute(
                 'content');
@@ -475,7 +475,7 @@
                     countBadge.text(notifikasi.length);
                 } else {
                     countBadge
-                .hide();
+                        .hide();
                 }
 
                 notifikasi.reverse();

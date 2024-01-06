@@ -170,9 +170,9 @@
         }
     }
 
-    @media (max-width: 767px) {
-        #login-sebagai {
-            display: none !important;
+    @media (max-width: 576px) {
+        #login-pkl-btn {
+            font-size: 12px;
         }
     }
 </style>
@@ -311,6 +311,11 @@
                             </div>
                         </div>
                         <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
+                        <ul class="navbar-nav flex-row align-items-center ms-auto gap-1">
+                            <li class="navbar-item">
+                                <button class="btn btn-label-primary btn-md" id="login-pkl-btn">Login
+                                    pkl.hummatech</button>
+                            </li>
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                             </li>
                             <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
