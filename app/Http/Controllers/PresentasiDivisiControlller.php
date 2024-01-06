@@ -20,6 +20,7 @@ class PresentasiDivisiControlller extends Controller
     public function store(PresentasiDivisiRequest $request): RedirectResponse
     {
         $data = $request->validated();
+        $data['divisi_id'] = auth()->user()->divisi_id;
         $presentasiDivisi = PresentasiDivisi::query()
             ->create($data);
         foreach ($data['mulai'] as $index => $dari) {
