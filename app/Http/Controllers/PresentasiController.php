@@ -163,7 +163,7 @@ class PresentasiController extends Controller
             $userId = $member->user_id;
             $statusAnggota = Anggota::where('user_id', $userId)->value('status');
             if ($statusAnggota !== ['kicked','expired']) {
-                $phoneNumber = $member->no_wa;
+                $phoneNumber = $member->tlp;
         
                 $whacenter->to($phoneNumber)->line($message)->send();
             }
