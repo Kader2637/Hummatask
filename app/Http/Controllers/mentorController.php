@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\DayEnum;
 use App\Http\Requests\RequestCreateGalery;
 use App\Http\Requests\RequestCreateLogo;
 use App\Http\Requests\RequestEditGalery;
@@ -11,6 +12,7 @@ use App\Models\Notifikasi;
 use App\Models\Anggota;
 use App\Models\PenglolaMagang;
 use App\Models\Presentasi;
+use App\Models\PresentasiDivisi;
 use App\Models\Project;
 use App\Models\StatusTim;
 use App\Models\TidakPresentasiMingguan;
@@ -148,7 +150,34 @@ class mentorController extends Controller
             ['Jumlah Tim Mini Projek', $mini],
             ['Jumlah Tim Big Projek', $big]
         ];
-        return response()->view('mentor.dashboard', compact('year', 'currentYear', 'processedData', 'presentasi', 'chartData', 'jadwal', 'hari', 'chart', 'notifikasi'));
+
+        $senin = PresentasiDivisi::query()
+            ->with('limitPresentasiDivisis')
+            ->where('day', DayEnum::MONDAY->value)
+            ->where('divisi_id', auth()->user()->divisi_id)
+            ->first();
+        $selasa = PresentasiDivisi::query()
+            ->with('limitPresentasiDivisis')
+            ->where('day', DayEnum::TUESDAY->value)
+            ->where('divisi_id', auth()->user()->divisi_id)
+            ->first();
+        $rabu = PresentasiDivisi::query()
+            ->with('limitPresentasiDivisis')
+            ->where('day', DayEnum::WEDNESDAY->value)
+            ->where('divisi_id', auth()->user()->divisi_id)
+            ->first();
+        $kamis = PresentasiDivisi::query()
+            ->with('limitPresentasiDivisis')
+            ->where('day', DayEnum::THURSDAY->value)
+            ->where('divisi_id', auth()->user()->divisi_id)
+            ->first();
+        $jumat = PresentasiDivisi::query()
+            ->with('limitPresentasiDivisis')
+            ->where('day', DayEnum::FRIDAY->value)
+            ->where('divisi_id', auth()->user()->divisi_id)
+            ->first();
+
+        return response()->view('mentor.dashboard', compact('year', 'currentYear', 'processedData', 'presentasi', 'chartData', 'jadwal', 'hari', 'chart', 'notifikasi', 'senin', 'selasa', 'rabu', 'kamis', 'jumat'));
     }
 
     protected function pengguna()
