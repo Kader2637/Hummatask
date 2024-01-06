@@ -218,6 +218,8 @@
                     @endif
                 </div>
                 {{-- Modal Ajukan presentasi --}}
+                <form action="{{ route('ajukan-presentasi', $tim->code) }}" method="post"  id="formAjukanPresentasi">
+                    @csrf
                 <div class="modal fade" id="ajukanPresentasi" tabindex="-1" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-xl" role="document">
                         <div class="modal-content">
@@ -248,7 +250,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="senin" role="tabpanel">
                                         <label for="">Judul</label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="judul" id="judul">
                                         <label for="" class="mt-3">Jadwal</label>
                                         <div class="row">
                                             <div class="col-12 col-lg-4 col-xxl-4 mt-2">
@@ -292,9 +294,9 @@
                                             </div>
                                         </div>
                                         <label for="" class="mt-3 mb-2">Deskripsi</label>
-                                        <textarea name="" class="form-control" id="" cols="30" rows="10"></textarea>
+                                        <textarea name="deskripsi" class="form-control" id="deskripsi" cols="30" rows="10"></textarea>
                                     </div>
-                                    <div class="tab-pane" id="selasa" role="tabpanel">
+                                    {{-- <div class="tab-pane" id="selasa" role="tabpanel">
                                         <label for="">Judul</label>
                                         <input type="text" class="form-control">
                                         <label for="" class="mt-3">Jadwal</label>
@@ -340,7 +342,7 @@
                                             </div>
                                         </div>
                                         <label for="" class="mt-3 mb-2">Deskripsi</label>
-                                        <textarea name="" class="form-control" id="" cols="30" rows="10"></textarea>
+                                        <textarea name="De" class="form-control" id="" cols="30" rows="10"></textarea>
                                     </div>
                                     <div class="tab-pane" id="rabu" role="tabpanel">
                                         <label for="">Judul</label>
@@ -392,7 +394,7 @@
                                     </div>
                                     <div class="tab-pane" id="kamis" role="tabpanel">
                                         <label for="">Judul</label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="judul">
                                         <label for="" class="mt-3">Jadwal</label>
                                         <div class="row">
                                             <div class="col-12 col-lg-4 col-xxl-4 mt-2">
@@ -436,7 +438,7 @@
                                             </div>
                                         </div>
                                         <label for="" class="mt-3 mb-2">Deskripsi</label>
-                                        <textarea name="" class="form-control" id="" cols="30" rows="10"></textarea>
+                                        <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                                     </div>
                                     <div class="tab-pane" id="jumat" role="tabpanel">
                                         <label for="">Judul</label>
@@ -485,7 +487,7 @@
                                         </div>
                                         <label for="" class="mt-3 mb-2">Deskripsi</label>
                                         <textarea name="" class="form-control" id="" cols="30" rows="10"></textarea>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <hr>
@@ -532,6 +534,7 @@
                         </div>
                     </div>
                 </div>
+            </form>
                 {{-- Modal Ajukan presentasi --}}
 
                 <div class="container table-responsive card-datatable  text-nowrap">
