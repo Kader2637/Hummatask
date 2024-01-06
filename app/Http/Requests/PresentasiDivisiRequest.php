@@ -11,9 +11,9 @@ class PresentasiDivisiRequest extends FormRequest
         return [
             'day' => 'required',
             'mulai' => 'array',
-            'mulai.*' => 'required',
+            'mulai.*' => 'nullable',
             'akhir' => 'array',
-            'akhir.*' => 'required',
+            'akhir.*' => 'nullable',
         ];
     }
 
