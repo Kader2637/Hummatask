@@ -27,8 +27,8 @@ class PresentasiDivisiControlller extends Controller
             LimitPresentasiDevisi::query()
                 ->create([
                     'presentasi_divisi_id' => $presentasiDivisi->id,
-                    'dari' => $dari,
-                    'sampai' => $data['akhir'][$index]
+                    'mulai' => $dari,
+                    'akhir' => $data['akhir'][$index]
                 ]);
         }
         return redirect()->back()->with('success', 'Berhasil menambahkan divisi');
