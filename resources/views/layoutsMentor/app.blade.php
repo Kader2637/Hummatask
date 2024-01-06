@@ -300,42 +300,32 @@
                     </div>
 
                     <div class="navbar-nav-right d-flex align-items-center gap-3" id="navbarcollapse">
-                        <div class="d-flex align-items-center justify-content-center gap-2" id="login-sebagai">
-                            Login sebagai :
-                            <span
-                                class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full">Mentor</span>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center gap-2 ml-3">
-                            Devisi :
-                            <div class="badge-devisi">
-                            </div>
-                        </div>
                         <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
-                        <ul class="navbar-nav flex-row align-items-center ms-auto gap-1">
-                            <li class="navbar-item">
-                                <button class="btn btn-label-primary btn-md" id="login-pkl-btn">Login
-                                    pkl.hummatech</button>
-                            </li>
-                            <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                            </li>
-                            <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
-                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
-                                    data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
-                                    <i class="ti ti-bell ti-md"></i>
-                                    <span class="badge bg-danger rounded-pill badge-notifications"
-                                        id="notification-count"></span>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end py-0">
-                                    <li class="dropdown-menu-header border-bottom">
-                                        <div class="dropdown-header d-flex align-items-center py-3">
-                                            <h5 class="text-body mb-0 me-auto">Notifikasi</h5>
-                                        </div>
-                                    </li>
-                                    @foreach ($notifikasi as $item)
-                                        <li class="dropdown-notifications-list scrollable-container">
-                                            <ul class="list-group list-group-flush" id="notification-list">
-                                                {{-- <li class="list-group-item" id="notification-list"> --}}
-                                                {{-- <div class="d-flex" id="notifikasi-{{ $item->id }}">
+                            <ul class="navbar-nav flex-row align-items-center ms-auto gap-1">
+                                <li class="navbar-item">
+                                    <button class="btn btn-label-primary btn-md" id="login-pkl-btn">Login
+                                        pkl.hummatech</button>
+                                </li>
+                                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                                </li>
+                                <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
+                                    <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
+                                        data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                                        <i class="ti ti-bell ti-md"></i>
+                                        <span class="badge bg-danger rounded-pill badge-notifications"
+                                            id="notification-count"></span>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end py-0">
+                                        <li class="dropdown-menu-header border-bottom">
+                                            <div class="dropdown-header d-flex align-items-center py-3">
+                                                <h5 class="text-body mb-0 me-auto">Notifikasi</h5>
+                                            </div>
+                                        </li>
+                                        @foreach ($notifikasi as $item)
+                                            <li class="dropdown-notifications-list scrollable-container">
+                                                <ul class="list-group list-group-flush" id="notification-list">
+                                                    {{-- <li class="list-group-item" id="notification-list"> --}}
+                                                    {{-- <div class="d-flex" id="notifikasi-{{ $item->id }}">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
                                                             <img src="" alt class="h-auto rounded-circle">
@@ -357,71 +347,76 @@
                                                                 class="ti ti-x"></span></a>
                                                     </div>
                                                 </div> --}}
-                                                {{-- </li> --}}
-                                            </ul>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </li>
+                                                    {{-- </li> --}}
+                                                </ul>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </li>
 
-                            <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
-                                    data-bs-toggle="dropdown">
-                                    <div class="avatar avatar-online">
-                                        @if (Auth::user()->avatar)
-                                            <img src="{{ asset('storage/' . Auth::user()->avatar) }}"
-                                                class="rounded-circle" style="object-fit: cover">
-                                        @else
-                                            <img src="{{ asset('assets/img/avatars/1.png') }}"
-                                                class="h-auto rounded-circle">
-                                        @endif
-                                    </div>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('profile-mentor') }}">
-                                            <div class="d-flex">
-                                                <div class="flex-shrink-0 me-3">
-                                                    <div class="avatar avatar-online">
-                                                        @if (Auth::user()->avatar)
-                                                            <img src="{{ asset('storage/' . Auth::user()->avatar) }}"
-                                                                class="rounded-circle" style="object-fit: cover">
-                                                        @else
-                                                            <img src="{{ asset('assets/img/avatars/1.png') }}"
-                                                                class="h-auto rounded-circle">
-                                                        @endif
+                                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                                    <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
+                                        data-bs-toggle="dropdown">
+                                        <div class="avatar avatar-online">
+                                            @if (Auth::user()->avatar)
+                                                <img src="{{ asset('storage/' . Auth::user()->avatar) }}"
+                                                    class="rounded-circle" style="object-fit: cover">
+                                            @else
+                                                <img src="{{ asset('assets/img/avatars/1.png') }}"
+                                                    class="h-auto rounded-circle">
+                                            @endif
+                                        </div>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('profile-mentor') }}">
+                                                <div class="d-flex">
+                                                    <div class="flex-shrink-0 me-3">
+                                                        <div class="avatar avatar-online">
+                                                            @if (Auth::user()->avatar)
+                                                                <img src="{{ asset('storage/' . Auth::user()->avatar) }}"
+                                                                    class="rounded-circle" style="object-fit: cover">
+                                                            @else
+                                                                <img src="{{ asset('assets/img/avatars/1.png') }}"
+                                                                    class="h-auto rounded-circle">
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <span class="fw-medium d-block">
+                                                            {{ Auth::user()->username }}
+                                                        </span>
+                                                        <small class="text-muted">Mentor
+                                                            <span
+                                                                class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full text-sm">
+                                                                Mobile
+                                                            </span>
+                                                        </small>
                                                     </div>
                                                 </div>
-                                                <div class="flex-grow-1">
-                                                    <span class="fw-medium d-block">
-                                                        {{ Auth::user()->username }}
-                                                    </span>
-                                                    <small class="text-muted">Mentor</small>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown-divider"></div>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('profile-mentor') }}">
-                                            <i class="ti ti-user-check me-2 ti-sm"></i>
-                                            <span class="align-middle">Profil Saya</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown-divider"></div>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('logout') }}">
-                                            <i class='ti ti-logout me-2'></i>
-                                            <span class="align-middle">Logout</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <div class="dropdown-divider"></div>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('profile-mentor') }}">
+                                                <i class="ti ti-user-check me-2 ti-sm"></i>
+                                                <span class="align-middle">Profil Saya</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <div class="dropdown-divider"></div>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('logout') }}">
+                                                <i class='ti ti-logout me-2'></i>
+                                                <span class="align-middle">Logout</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
                     </div>
                 </nav>
                 <!-- / Navbar -->
@@ -442,7 +437,7 @@
         <!-- Drag Target Area To SlideIn Menu On Small Screens -->
         <div class="drag-target"></div>
     </div>
-    
+
 
     <script src="{{ asset('assets/vendor/libs/jquery/jquery1e84.js?id=0f7eb1f3a93e3e19e8505fd8c175925a') }}"></script>
     <script src="{{ asset('assets/vendor/libs/popper/popper0a73.js?id=baf82d96b7771efbcc05c3b77135d24c') }}"></script>
