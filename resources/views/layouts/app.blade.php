@@ -460,7 +460,7 @@
                                                     style="width: 150px; height: 150px; border-radius: 10px; cursor: pointer;object-fit: cover"
                                                     class="rounded-circle" />
                                                 <input type="file" class="form-control d-none" id="image-input1"
-                                                    name="logo" />
+                                                    name="logo" accept="image/*"/>
                                                 @error('logo')
                                                     <p class="text-danger">
                                                         {{ $message }}

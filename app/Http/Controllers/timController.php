@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\DayEnum;
 use App\Models\Anggota;
 use App\Models\catatan;
 use App\Models\Comments;
+use App\Models\LimitPresentasiDevisi;
 use App\Models\Project;
 use App\Models\Notifikasi;
+use App\Models\PresentasiDivisi;
 use App\Models\Tim;
 use App\Models\Tugas;
 use App\Models\User;
@@ -129,10 +132,10 @@ class timController extends Controller
 
         $chartData = [
             ['Status Tugas', 'Jumlah'],
-            ['Selesai', $selesaiCount || 0  ],
-            ['Revisi', $revisiCount || 0 ],
-            ['Dikerjakan', $dikerjakanCount || 0 ],
-            ['Tugas Baru', $tugasBaruCount || 0 ],
+            ['Selesai', $selesaiCount || 0],
+            ['Revisi', $revisiCount || 0],
+            ['Dikerjakan', $dikerjakanCount || 0],
+            ['Tugas Baru', $tugasBaruCount || 0],
         ];
 
         return view('siswa.tim.project', compact('hasProjectRelation', 'days', 'tanggal', 'persentase', 'selesaiCount', 'revisiCount', 'chartData', 'title', 'tim', 'anggota', 'project', 'notifikasi',));
@@ -151,14 +154,14 @@ class timController extends Controller
         }
         $anggota = $tim->user;
         // dd($anggota);
-        $jabatan=[];
+        $jabatan = [];
 
         foreach ($anggota as $data) {
             // dd($anggota[0]->anggotaReal->where('tim_id',$tim->id)->sortByDesc('created_at')->first()->status,$anggota[1]->anggotaReal->where('tim_id',$tim->id)->sortByDesc('created_at')->first()->status);
-            if($data->anggotaReal->where('tim_id',$tim->id)->sortByDesc('created_at')->first()->status !== "active"){
+            if ($data->anggotaReal->where('tim_id', $tim->id)->sortByDesc('created_at')->first()->status !== "active") {
                 $jabatan[] = "Mantan Anggota";
-            }else{
-                $jabatan[] = $data->anggotaReal->where("tim_id",$tim->id)->sortByDesc("created_at")->first()->jabatan->nama_jabatan;
+            } else {
+                $jabatan[] = $data->anggotaReal->where("tim_id", $tim->id)->sortByDesc("created_at")->first()->jabatan->nama_jabatan;
             }
         }
 
@@ -177,6 +180,29 @@ class timController extends Controller
         $tim = Tim::where('code', $code)->firstOrFail();
         $tim_id = $tim->id;
 
+        $allSessions = LimitPresentasiDevisi::whereRelation('presentasiDivisi', 'divisi_id', '=', Auth::user()->divisi_id)
+            ->with('presentasiDivisi')
+            ->get();
+
+        $sesi_senin = $allSessions->filter(function ($session) {
+            return $session->presentasiDivisi->day === DayEnum::MONDAY->value;
+        })->sortBy('mulai');
+
+        $sesi_selasa = $allSessions->filter(function ($session) {
+            return $session->presentasiDivisi->day === DayEnum::TUESDAY->value;
+        })->sortBy('mulai');
+
+        $sesi_rabu = $allSessions->filter(function ($session) {
+            return $session->presentasiDivisi->day === DayEnum::WEDNESDAY->value;
+        })->sortBy('mulai');
+
+        $sesi_kamis = $allSessions->filter(function ($session) {
+            return $session->presentasiDivisi->day === DayEnum::THURSDAY->value;
+        })->sortBy('mulai');
+
+        $sesi_jumat = $allSessions->filter(function ($session) {
+            return $session->presentasiDivisi->day === DayEnum::FRIDAY->value;
+        })->sortBy('mulai');
 
         $project = $tim->project->first();
         if ($project->deskripsi === null) {
@@ -184,7 +210,7 @@ class timController extends Controller
         }
         // $anggota = $tim->user()->where('id',$userID)->first()->anggota->status;
         $anggota = Anggota::where('tim_id', $tim_id)->where('user_id', $userID)->first()->status;
-        $jabatan = $tim->user()->where('id',$userID)->first()->anggota->jabatan_id;
+        $jabatan = $tim->user()->where('id', $userID)->first()->anggota->jabatan_id;
         $presentasi = $tim->presentasi()->orderBy('created_at', 'desc')->get();
         $project = $tim->project->first();
 
@@ -194,7 +220,7 @@ class timController extends Controller
             $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
         }
 
-        return view('siswa.tim.history-presentasi', compact('jabatan','title', 'tim', 'anggota', 'presentasi', 'jadwal', 'hasProjectRelation', 'project', 'notifikasi', 'project'));
+        return view('siswa.tim.history-presentasi', compact('jabatan', 'title', 'tim', 'anggota', 'presentasi', 'jadwal', 'hasProjectRelation', 'project', 'notifikasi', 'project', 'sesi_senin', 'sesi_selasa', 'sesi_rabu', 'sesi_kamis', 'sesi_jumat'));
     }
 
     protected function catatanPage($code)
@@ -214,7 +240,7 @@ class timController extends Controller
 
         $hasProjectRelation = $tim->project()->exists();
 
-        return view('siswa.tim.catatan', compact( 'title', 'anggota', 'tim', 'catatans', 'project', 'notifikasi'));
+        return view('siswa.tim.catatan', compact('title', 'anggota', 'tim', 'catatans', 'project', 'notifikasi'));
     }
 
     protected function historyCatatanPage($code)

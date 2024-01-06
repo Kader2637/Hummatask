@@ -40,4 +40,14 @@ class Presentasi extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * limitPresentasiDivisi
+     *
+     * @return BelongsTo
+     */
+    public function limitPresentasiDivisi(): BelongsTo
+    {
+        return $this->belongsTo(LimitPresentasiDevisi::class, 'limit_presentasi_devisi_id');
+    }
 }

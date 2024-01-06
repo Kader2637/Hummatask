@@ -255,48 +255,31 @@
                                             <input type="text" class="form-control" name="judul" id="judul">
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
-                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                    <label class="card">
-                                                        <input name="plan" class="radio" type="radio"
-                                                            value="jadwal_1">
-                                                        <span class="plan-details text-center">
-                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                                Jadwal Ke 1
-                                                            </p>
-                                                            <p class="fs-5 text-primary mb-0">
-                                                                10:00 - 11:00
-                                                            </p>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                    <label class="card">
-                                                        <input name="plan" class="radio" type="radio"
-                                                            value="jadwal_2">
-                                                        <span class="plan-details text-center">
-                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                                Jadwal Ke 2
-                                                            </p>
-                                                            <p class="fs-5 text-primary mb-0">
-                                                                10:00 - 11:00
-                                                            </p>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                    <label class="card">
-                                                        <input name="plan" class="radio" type="radio"
-                                                            value="jadwal_3">
-                                                        <span class="plan-details text-center">
-                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                                Jadwal Ke 3
-                                                            </p>
-                                                            <p class="fs-5 text-primary mb-0">
-                                                                10:00 - 11:00
-                                                            </p>
-                                                        </span>
-                                                    </label>
-                                                </div>
+                                                @forelse ($sesi_senin as $data)
+                                                    <div class="col-12 col-lg-4 col-xxl-4 mt-2">
+                                                        <label class="card">
+                                                            <input name="plan" class="radio" type="radio"
+                                                                value="{{ $data->id }}">
+                                                            <span class="plan-details text-center">
+                                                                <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
+                                                                    Jadwal Ke-{{ $loop->iteration }}
+                                                                </p>
+                                                                <p class="fs-5 text-primary mb-0">
+                                                                    {{ $data->mulai }} - {{ $data->akhir }}
+                                                                </p>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                @empty
+                                                    <h6 class="text-center mt-4">Tidak ada sesi hari ini, cek di hari lain
+                                                        <i class="ti ti-address-book-off"></i>
+                                                    </h6>
+                                                    <div class="mt-4 mb-3 d-flex justify-content-evenly">
+                                                        <img src="{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}"
+                                                            alt="page-misc-under-maintenance" width="300"
+                                                            class="img-fluid">
+                                                    </div>
+                                                @endforelse
                                             </div>
                                             <label for="" class="mt-3 mb-2">Deskripsi (opsional)</label>
                                             <textarea name="deskripsi" class="form-control" id="deskripsi" cols="30" rows="10"></textarea>
@@ -324,45 +307,31 @@
                                             <input type="text" name="judul" id="judul" class="form-control">
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
-                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                    <label class="card">
-                                                        <input name="plan" class="radio" type="radio">
-                                                        <span class="plan-details text-center">
-                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                                Jadwal Ke 1
-                                                            </p>
-                                                            <p class="fs-5 text-primary mb-0">
-                                                                10:00 - 11:00
-                                                            </p>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                    <label class="card">
-                                                        <input name="plan" class="radio" type="radio">
-                                                        <span class="plan-details text-center">
-                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                                Jadwal Ke 2
-                                                            </p>
-                                                            <p class="fs-5 text-primary mb-0">
-                                                                10:00 - 11:00
-                                                            </p>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                    <label class="card">
-                                                        <input name="plan" class="radio" type="radio">
-                                                        <span class="plan-details text-center">
-                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                                Jadwal Ke 3
-                                                            </p>
-                                                            <p class="fs-5 text-primary mb-0">
-                                                                10:00 - 11:00
-                                                            </p>
-                                                        </span>
-                                                    </label>
-                                                </div>
+                                                @forelse ($sesi_selasa as $data)
+                                                    <div class="col-12 col-lg-4 col-xxl-4 mt-2">
+                                                        <label class="card">
+                                                            <input name="plan" class="radio" type="radio"
+                                                                value="{{ $data->id }}">
+                                                            <span class="plan-details text-center">
+                                                                <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
+                                                                    Jadwal Ke-{{ $loop->iteration }}
+                                                                </p>
+                                                                <p class="fs-5 text-primary mb-0">
+                                                                    {{ $data->mulai }} - {{ $data->akhir }}
+                                                                </p>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                @empty
+                                                    <h6 class="text-center mt-4">Tidak ada sesi hari ini, cek di hari lain
+                                                        <i class="ti ti-address-book-off"></i>
+                                                    </h6>
+                                                    <div class="mt-4 mb-3 d-flex justify-content-evenly">
+                                                        <img src="{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}"
+                                                            alt="page-misc-under-maintenance" width="300"
+                                                            class="img-fluid">
+                                                    </div>
+                                                @endforelse
                                             </div>
                                             <label for="" class="mt-3 mb-2">Deskripsi (opsional)</label>
                                             <textarea name="deskripsi" class="form-control" id="deskripsi" cols="30" rows="10"></textarea>
@@ -390,45 +359,31 @@
                                             <input type="text" class="form-control" name="judul">
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
-                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                    <label class="card">
-                                                        <input name="plan" class="radio" type="radio">
-                                                        <span class="plan-details text-center">
-                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                                Jadwal Ke 1
-                                                            </p>
-                                                            <p class="fs-5 text-primary mb-0">
-                                                                10:00 - 11:00
-                                                            </p>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                    <label class="card">
-                                                        <input name="plan" class="radio" type="radio">
-                                                        <span class="plan-details text-center">
-                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                                Jadwal Ke 2
-                                                            </p>
-                                                            <p class="fs-5 text-primary mb-0">
-                                                                10:00 - 11:00
-                                                            </p>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                    <label class="card">
-                                                        <input name="plan" class="radio" type="radio">
-                                                        <span class="plan-details text-center">
-                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                                Jadwal Ke 3
-                                                            </p>
-                                                            <p class="fs-5 text-primary mb-0">
-                                                                10:00 - 11:00
-                                                            </p>
-                                                        </span>
-                                                    </label>
-                                                </div>
+                                                @forelse ($sesi_rabu as $data)
+                                                    <div class="col-12 col-lg-4 col-xxl-4 mt-2">
+                                                        <label class="card">
+                                                            <input name="plan" class="radio" type="radio"
+                                                                value="{{ $data->id }}">
+                                                            <span class="plan-details text-center">
+                                                                <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
+                                                                    Jadwal Ke-{{ $loop->iteration }}
+                                                                </p>
+                                                                <p class="fs-5 text-primary mb-0">
+                                                                    {{ $data->mulai }} - {{ $data->akhir }}
+                                                                </p>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                @empty
+                                                    <h6 class="text-center mt-4">Tidak ada sesi hari ini, cek di hari lain
+                                                        <i class="ti ti-address-book-off"></i>
+                                                    </h6>
+                                                    <div class="mt-4 mb-3 d-flex justify-content-evenly">
+                                                        <img src="{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}"
+                                                            alt="page-misc-under-maintenance" width="300"
+                                                            class="img-fluid">
+                                                    </div>
+                                                @endforelse
                                             </div>
                                             <label for="" class="mt-3 mb-2">Deskripsi (opsional)</label>
                                             <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
@@ -456,45 +411,31 @@
                                             <input type="text" class="form-control" name="judul">
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
-                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                    <label class="card">
-                                                        <input name="plan" class="radio" type="radio">
-                                                        <span class="plan-details text-center">
-                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                                Jadwal Ke 1
-                                                            </p>
-                                                            <p class="fs-5 text-primary mb-0">
-                                                                10:00 - 11:00
-                                                            </p>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                    <label class="card">
-                                                        <input name="plan" class="radio" type="radio">
-                                                        <span class="plan-details text-center">
-                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                                Jadwal Ke 2
-                                                            </p>
-                                                            <p class="fs-5 text-primary mb-0">
-                                                                10:00 - 11:00
-                                                            </p>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                    <label class="card">
-                                                        <input name="plan" class="radio" type="radio">
-                                                        <span class="plan-details text-center">
-                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                                Jadwal Ke 3
-                                                            </p>
-                                                            <p class="fs-5 text-primary mb-0">
-                                                                10:00 - 11:00
-                                                            </p>
-                                                        </span>
-                                                    </label>
-                                                </div>
+                                                @forelse ($sesi_kamis as $data)
+                                                    <div class="col-12 col-lg-4 col-xxl-4 mt-2">
+                                                        <label class="card">
+                                                            <input name="plan" class="radio" type="radio"
+                                                                value="{{ $data->id }}">
+                                                            <span class="plan-details text-center">
+                                                                <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
+                                                                    Jadwal Ke-{{ $loop->iteration }}
+                                                                </p>
+                                                                <p class="fs-5 text-primary mb-0">
+                                                                    {{ $data->mulai }} - {{ $data->akhir }}
+                                                                </p>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                @empty
+                                                    <h6 class="text-center mt-4">Tidak ada sesi hari ini, cek di hari lain
+                                                        <i class="ti ti-address-book-off"></i>
+                                                    </h6>
+                                                    <div class="mt-4 mb-3 d-flex justify-content-evenly">
+                                                        <img src="{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}"
+                                                            alt="page-misc-under-maintenance" width="300"
+                                                            class="img-fluid">
+                                                    </div>
+                                                @endforelse
                                             </div>
                                             <label for="" class="mt-3 mb-2">Deskripsi (opsional)</label>
                                             <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
@@ -522,45 +463,30 @@
                                             <input type="text" class="form-control" name="judul">
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
-                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                    <label class="card">
-                                                        <input name="plan" class="radio" type="radio">
-                                                        <span class="plan-details text-center">
-                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                                Jadwal Ke 1
-                                                            </p>
-                                                            <p class="fs-5 text-primary mb-0">
-                                                                10:00 - 11:00
-                                                            </p>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                    <label class="card">
-                                                        <input name="plan" class="radio" type="radio">
-                                                        <span class="plan-details text-center">
-                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                                Jadwal Ke 2
-                                                            </p>
-                                                            <p class="fs-5 text-primary mb-0">
-                                                                10:00 - 11:00
-                                                            </p>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                    <label class="card">
-                                                        <input name="plan" class="radio" type="radio">
-                                                        <span class="plan-details text-center">
-                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                                Jadwal Ke 3
-                                                            </p>
-                                                            <p class="fs-5 text-primary mb-0">
-                                                                10:00 - 11:00
-                                                            </p>
-                                                        </span>
-                                                    </label>
-                                                </div>
+                                                @forelse ($sesi_jumat as $data)
+                                                    <div class="col-12 col-lg-4 col-xxl-4 mt-2">
+                                                        <label class="card">
+                                                            <input name="plan" class="radio" type="radio"
+                                                                value="{{ $data->presentasi_divisi_id }}">
+                                                            <span class="plan-details text-center">
+                                                                <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
+                                                                    Jadwal Ke-{{ $loop->iteration }}
+                                                                </p>
+                                                                <p class="fs-5 text-primary mb-0">
+                                                                    {{ $data->mulai }} - {{ $data->akhir }}
+                                                                </p>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                @empty
+                                                    <h6 class="text-center mt-4">Tidak ada sesi hari ini, cek di hari lain
+                                                        <i class="ti ti-address-book-off"></i></h6>
+                                                    <div class="mt-4 mb-3 d-flex justify-content-evenly">
+                                                        <img src="{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}"
+                                                            alt="page-misc-under-maintenance" width="300"
+                                                            class="img-fluid">
+                                                    </div>
+                                                @endforelse
                                             </div>
                                             <label for="" class="mt-3 mb-2">Deskripsi (opsional)</label>
                                             <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>

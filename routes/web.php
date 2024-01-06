@@ -51,6 +51,7 @@ use App\Http\Controllers\profileController;
 
         Route::delete('tim/notifikasi/{id}', [PengajuanProjekController::class, 'destroy']);
         Route::get('/ambil-notifikasi', [PengajuanProjekController::class, 'ambilNotifikasi']);
+        
         Route::prefix('tim')->controller(timController::class)->group(function () {
             // Halaman Tim
             Route::middleware(['auth', 'siswa', 'cekanggota'])->group(function () {

@@ -25,12 +25,12 @@ class LimitPresentasiDevisi extends Model
     }
 
     /**
-     * pengajuanPresentasis
+     * presentasi
      *
      * @return HasMany
      */
-    public function pengajuanPresentasis(): HasMany
+    public function presentasi(): HasMany
     {
-        return $this->hasMany(PengajuanPresentasi::class, 'limit_presentasi_devisi_id');
+        return $this->hasMany(presentasi::class, 'limit_presentasi_devisi_id');
     }
 }
