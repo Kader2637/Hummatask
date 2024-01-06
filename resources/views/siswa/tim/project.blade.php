@@ -351,6 +351,38 @@
                                     </div>
                                     <hr class="my-0">
                                     <div class="card-body">
+                                        @if (@isset($project) && $project->deskripsi == null)
+                                            <div class="alert alert-warning d-flex align-items-center cursor-pointer"
+                                                role="alert" data-bs-toggle="modal" data-bs-target="#editProject"
+                                                style="font-size: 12px">
+                                                <span class="alert-icon text-warning me-2">
+                                                    <i class="ti ti-bell ti-xs"></i>
+                                                </span>
+                                                Tim ini belum memiliki deskripsi tema, mohon isi agar dapat mengakses
+                                                fitur lain nya! Hanya Ketua tim yang dapat mengajukan tema.
+                                            </div>
+                                        @else
+                                            @if ($tim->kadaluwarsa == '0')
+                                                <div class="alert alert-warning d-flex align-items-center cursor-pointer"
+                                                    role="alert" data-bs-toggle="modal" data-bs-target="#ajukanModal"
+                                                    style="font-size: 12px">
+                                                    <span class="alert-icon text-warning me-2">
+                                                        <i class="ti ti-bell ti-xs"></i>
+                                                    </span>
+                                                    Tim ini belum memiliki project, mohon ajukan project agar dapat
+                                                    mengakses
+                                                    fitur lain nya! Hanya Ketua tim yang dapat mengajukan project.
+                                                </div>
+                                            @elseif ($tim->kadaluwarsa == '1')
+                                                <div class="alert alert-danger d-flex align-items-center cursor-pointer"
+                                                    role="alert" style="font-size: 12px">
+                                                    <span class="alert-icon text-danger me-2">
+                                                        <i class="ti ti-bell ti-xs"></i>
+                                                    </span>
+                                                    Tim ini sudah kadaluwarsa
+                                                </div>
+                                            @endif
+                                        @endif
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="d-flex flex-row gap-3">
@@ -375,7 +407,7 @@
                                                         </div>
                                                     @endif
 
-                                                    <div class="mb-3">Jenis : <span class="badge bg-label-warning">
+                                                    <div class="mb-3">Kategori : <span class="badge bg-label-warning">
                                                             @if ($tim->status_tim == 'solo')
                                                                 Solo Project
                                                             @elseif ($tim->status_tim == 'pre_mini')
@@ -431,48 +463,17 @@
                                                         </div>
                                                     @endif
                                                 @endif
-                                            </div>
-                                            @if (@isset($project) && $project->deskripsi != null)
-                                                <div class="deskripsi my-2">
-                                                    <div class="title text-dark">
-                                                        Deskripsi :
-                                                    </div>
-                                                    <div class="isi mt-2">
-                                                        {{ $project->deskripsi }}
-                                                    </div>
-                                                </div>
-                                            @elseif (@isset($project) && $project->deskripsi == null)
-                                                <div class="alert alert-warning d-flex align-items-center mt-4 cursor-pointer"
-                                                    role="alert" data-bs-toggle="modal" data-bs-target="#editProject"
-                                                    style="font-size: 12px">
-                                                    <span class="alert-icon text-warning me-2">
-                                                        <i class="ti ti-bell ti-xs"></i>
-                                                    </span>
-                                                    Tim ini belum memiliki deskripsi tema, mohon isi agar dapat mengakses
-                                                    fitur lain nya! Hanya Ketua tim yang dapat mengajukan tema.
-                                                </div>
-                                            @else
-                                                @if ($tim->kadaluwarsa == '0')
-                                                    <div class="alert alert-warning d-flex align-items-center mt-4 cursor-pointer"
-                                                        role="alert" data-bs-toggle="modal"
-                                                        data-bs-target="#ajukanModal" style="font-size: 12px">
-                                                        <span class="alert-icon text-warning me-2">
-                                                            <i class="ti ti-bell ti-xs"></i>
-                                                        </span>
-                                                        Tim ini belum memiliki project, mohon ajukan project agar dapat
-                                                        mengakses
-                                                        fitur lain nya! Hanya Ketua tim yang dapat mengajukan project.
-                                                    </div>
-                                                @elseif ($tim->kadaluwarsa == '1')
-                                                    <div class="alert alert-danger d-flex align-items-center mt-4 cursor-pointer"
-                                                        role="alert" style="font-size: 12px">
-                                                        <span class="alert-icon text-danger me-2">
-                                                            <i class="ti ti-bell ti-xs"></i>
-                                                        </span>
-                                                        Tim ini sudah kadaluwarsa
+                                                @if (@isset($project) && $project->deskripsi != null)
+                                                    <div class="deskripsi my-2">
+                                                        <div class="title text-dark">
+                                                            Deskripsi :
+                                                        </div>
+                                                        <div class="isi mt-2">
+                                                            {{ $project->deskripsi }}
+                                                        </div>
                                                     </div>
                                                 @endif
-                                            @endif
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -218,10 +218,9 @@
                     @endif
                 </div>
                 {{-- Modal Ajukan presentasi --}}
-                <form action="{{ route('ajukan-presentasi', $tim->code) }}" method="post"  id="formAjukanPresentasi">
-                    @csrf
+                <input type="hidden" id="activeTab" name="active_tab" value="senin">
                 <div class="modal fade" id="ajukanPresentasi" tabindex="-1" style="display: none;" aria-hidden="true">
-                    <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel1">Ajukan Presentasi</h5>
@@ -249,292 +248,344 @@
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="senin" role="tabpanel">
-                                        <label for="">Judul</label>
-                                        <input type="text" class="form-control" name="judul" id="judul">
-                                        <label for="" class="mt-3">Jadwal</label>
-                                        <div class="row">
-                                            <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                <label class="card">
-                                                    <input name="plan" class="radio" type="radio" checked>
-                                                    <span class="plan-details text-center">
-                                                        <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                            Jadwal Ke 1
-                                                        </p>
-                                                        <p class="fs-5 text-primary mb-0">
-                                                            10:00 - 11:00
-                                                        </p>
-                                                    </span>
-                                                </label>
+                                        <form action="{{ route('ajukan-presentasi', $tim->code) }}" method="post"
+                                            id="formAjukanPresentasi_1">
+                                            @csrf
+                                            <label for="">Judul</label>
+                                            <input type="text" class="form-control" name="judul" id="judul">
+                                            <label for="" class="mt-3">Jadwal</label>
+                                            <div class="row">
+                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
+                                                    <label class="card">
+                                                        <input name="plan" class="radio" type="radio"
+                                                            value="jadwal_1">
+                                                        <span class="plan-details text-center">
+                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
+                                                                Jadwal Ke 1
+                                                            </p>
+                                                            <p class="fs-5 text-primary mb-0">
+                                                                10:00 - 11:00
+                                                            </p>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
+                                                    <label class="card">
+                                                        <input name="plan" class="radio" type="radio"
+                                                            value="jadwal_2">
+                                                        <span class="plan-details text-center">
+                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
+                                                                Jadwal Ke 2
+                                                            </p>
+                                                            <p class="fs-5 text-primary mb-0">
+                                                                10:00 - 11:00
+                                                            </p>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
+                                                    <label class="card">
+                                                        <input name="plan" class="radio" type="radio"
+                                                            value="jadwal_3">
+                                                        <span class="plan-details text-center">
+                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
+                                                                Jadwal Ke 3
+                                                            </p>
+                                                            <p class="fs-5 text-primary mb-0">
+                                                                10:00 - 11:00
+                                                            </p>
+                                                        </span>
+                                                    </label>
+                                                </div>
                                             </div>
-                                            <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                <label class="card">
-                                                    <input name="plan" class="radio" type="radio" checked>
-                                                    <span class="plan-details text-center">
-                                                        <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                            Jadwal Ke 2
-                                                        </p>
-                                                        <p class="fs-5 text-primary mb-0">
-                                                            10:00 - 11:00
-                                                        </p>
-                                                    </span>
-                                                </label>
+                                            <label for="" class="mt-3 mb-2">Deskripsi (opsional)</label>
+                                            <textarea name="deskripsi" class="form-control" id="deskripsi" cols="30" rows="10"></textarea>
+                                            <div class="modal-footer">
+                                                <div class="d-flex justify-content-end gap-2">
+                                                    <div class="">
+                                                        <button data-bs-dismiss="modal" class="btn btn-danger">
+                                                            Tutup
+                                                        </button>
+                                                    </div>
+                                                    <div class="">
+                                                        <button type="submit" class="btn btn-primary">
+                                                            Simpan
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                <label class="card">
-                                                    <input name="plan" class="radio" type="radio" checked>
-                                                    <span class="plan-details text-center">
-                                                        <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                            Jadwal Ke 3
-                                                        </p>
-                                                        <p class="fs-5 text-primary mb-0">
-                                                            10:00 - 11:00
-                                                        </p>
-                                                    </span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <label for="" class="mt-3 mb-2">Deskripsi</label>
-                                        <textarea name="deskripsi" class="form-control" id="deskripsi" cols="30" rows="10"></textarea>
+                                        </form>
                                     </div>
-                                    {{-- <div class="tab-pane" id="selasa" role="tabpanel">
-                                        <label for="">Judul</label>
-                                        <input type="text" class="form-control">
-                                        <label for="" class="mt-3">Jadwal</label>
-                                        <div class="row">
-                                            <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                <label class="card">
-                                                    <input name="plan" class="radio" type="radio" checked>
-                                                    <span class="plan-details text-center">
-                                                        <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                            Jadwal Ke 1
-                                                        </p>
-                                                        <p class="fs-5 text-primary mb-0">
-                                                            10:00 - 11:00
-                                                        </p>
-                                                    </span>
-                                                </label>
+                                    <div class="tab-pane" id="selasa" role="tabpanel">
+                                        <form action="{{ route('ajukan-presentasi', $tim->code) }}" method="post"
+                                            id="formAjukanPresentasi_2">
+                                            @csrf
+                                            <label for="">Judul</label>
+                                            <input type="text" name="judul" id="judul" class="form-control">
+                                            <label for="" class="mt-3">Jadwal</label>
+                                            <div class="row">
+                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
+                                                    <label class="card">
+                                                        <input name="plan" class="radio" type="radio">
+                                                        <span class="plan-details text-center">
+                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
+                                                                Jadwal Ke 1
+                                                            </p>
+                                                            <p class="fs-5 text-primary mb-0">
+                                                                10:00 - 11:00
+                                                            </p>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
+                                                    <label class="card">
+                                                        <input name="plan" class="radio" type="radio">
+                                                        <span class="plan-details text-center">
+                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
+                                                                Jadwal Ke 2
+                                                            </p>
+                                                            <p class="fs-5 text-primary mb-0">
+                                                                10:00 - 11:00
+                                                            </p>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
+                                                    <label class="card">
+                                                        <input name="plan" class="radio" type="radio">
+                                                        <span class="plan-details text-center">
+                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
+                                                                Jadwal Ke 3
+                                                            </p>
+                                                            <p class="fs-5 text-primary mb-0">
+                                                                10:00 - 11:00
+                                                            </p>
+                                                        </span>
+                                                    </label>
+                                                </div>
                                             </div>
-                                            <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                <label class="card">
-                                                    <input name="plan" class="radio" type="radio" checked>
-                                                    <span class="plan-details text-center">
-                                                        <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                            Jadwal Ke 2
-                                                        </p>
-                                                        <p class="fs-5 text-primary mb-0">
-                                                            10:00 - 11:00
-                                                        </p>
-                                                    </span>
-                                                </label>
+                                            <label for="" class="mt-3 mb-2">Deskripsi (opsional)</label>
+                                            <textarea name="deskripsi" class="form-control" id="deskripsi" cols="30" rows="10"></textarea>
+                                            <div class="modal-footer">
+                                                <div class="d-flex justify-content-end gap-2">
+                                                    <div class="">
+                                                        <button data-bs-dismiss="modal" class="btn btn-danger">
+                                                            Tutup
+                                                        </button>
+                                                    </div>
+                                                    <div class="">
+                                                        <button type="submit" class="btn btn-primary">
+                                                            Simpan
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                <label class="card">
-                                                    <input name="plan" class="radio" type="radio" checked>
-                                                    <span class="plan-details text-center">
-                                                        <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                            Jadwal Ke 3
-                                                        </p>
-                                                        <p class="fs-5 text-primary mb-0">
-                                                            10:00 - 11:00
-                                                        </p>
-                                                    </span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <label for="" class="mt-3 mb-2">Deskripsi</label>
-                                        <textarea name="De" class="form-control" id="" cols="30" rows="10"></textarea>
+                                        </form>
                                     </div>
                                     <div class="tab-pane" id="rabu" role="tabpanel">
-                                        <label for="">Judul</label>
-                                        <input type="text" class="form-control">
-                                        <label for="" class="mt-3">Jadwal</label>
-                                        <div class="row">
-                                            <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                <label class="card">
-                                                    <input name="plan" class="radio" type="radio" checked>
-                                                    <span class="plan-details text-center">
-                                                        <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                            Jadwal Ke 1
-                                                        </p>
-                                                        <p class="fs-5 text-primary mb-0">
-                                                            10:00 - 11:00
-                                                        </p>
-                                                    </span>
-                                                </label>
+                                        <form action="{{ route('ajukan-presentasi', $tim->code) }}" method="post"
+                                            id="formAjukanPresentasi_3">
+                                            @csrf
+                                            <label for="">Judul</label>
+                                            <input type="text" class="form-control" name="judul">
+                                            <label for="" class="mt-3">Jadwal</label>
+                                            <div class="row">
+                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
+                                                    <label class="card">
+                                                        <input name="plan" class="radio" type="radio">
+                                                        <span class="plan-details text-center">
+                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
+                                                                Jadwal Ke 1
+                                                            </p>
+                                                            <p class="fs-5 text-primary mb-0">
+                                                                10:00 - 11:00
+                                                            </p>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
+                                                    <label class="card">
+                                                        <input name="plan" class="radio" type="radio">
+                                                        <span class="plan-details text-center">
+                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
+                                                                Jadwal Ke 2
+                                                            </p>
+                                                            <p class="fs-5 text-primary mb-0">
+                                                                10:00 - 11:00
+                                                            </p>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
+                                                    <label class="card">
+                                                        <input name="plan" class="radio" type="radio">
+                                                        <span class="plan-details text-center">
+                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
+                                                                Jadwal Ke 3
+                                                            </p>
+                                                            <p class="fs-5 text-primary mb-0">
+                                                                10:00 - 11:00
+                                                            </p>
+                                                        </span>
+                                                    </label>
+                                                </div>
                                             </div>
-                                            <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                <label class="card">
-                                                    <input name="plan" class="radio" type="radio" checked>
-                                                    <span class="plan-details text-center">
-                                                        <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                            Jadwal Ke 2
-                                                        </p>
-                                                        <p class="fs-5 text-primary mb-0">
-                                                            10:00 - 11:00
-                                                        </p>
-                                                    </span>
-                                                </label>
+                                            <label for="" class="mt-3 mb-2">Deskripsi (opsional)</label>
+                                            <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                            <div class="modal-footer">
+                                                <div class="d-flex justify-content-end gap-2">
+                                                    <div class="">
+                                                        <button data-bs-dismiss="modal" class="btn btn-danger">
+                                                            Tutup
+                                                        </button>
+                                                    </div>
+                                                    <div class="">
+                                                        <button type="submit" class="btn btn-primary">
+                                                            Simpan
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                <label class="card">
-                                                    <input name="plan" class="radio" type="radio" checked>
-                                                    <span class="plan-details text-center">
-                                                        <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                            Jadwal Ke 3
-                                                        </p>
-                                                        <p class="fs-5 text-primary mb-0">
-                                                            10:00 - 11:00
-                                                        </p>
-                                                    </span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <label for="" class="mt-3 mb-2">Deskripsi</label>
-                                        <textarea name="" class="form-control" id="" cols="30" rows="10"></textarea>
+                                        </form>
                                     </div>
                                     <div class="tab-pane" id="kamis" role="tabpanel">
-                                        <label for="">Judul</label>
-                                        <input type="text" class="form-control" name="judul">
-                                        <label for="" class="mt-3">Jadwal</label>
-                                        <div class="row">
-                                            <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                <label class="card">
-                                                    <input name="plan" class="radio" type="radio" checked>
-                                                    <span class="plan-details text-center">
-                                                        <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                            Jadwal Ke 1
-                                                        </p>
-                                                        <p class="fs-5 text-primary mb-0">
-                                                            10:00 - 11:00
-                                                        </p>
-                                                    </span>
-                                                </label>
+                                        <form action="{{ route('ajukan-presentasi', $tim->code) }}" method="post"
+                                            id="formAjukanPresentasi_4">
+                                            @csrf
+                                            <label for="">Judul</label>
+                                            <input type="text" class="form-control" name="judul">
+                                            <label for="" class="mt-3">Jadwal</label>
+                                            <div class="row">
+                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
+                                                    <label class="card">
+                                                        <input name="plan" class="radio" type="radio">
+                                                        <span class="plan-details text-center">
+                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
+                                                                Jadwal Ke 1
+                                                            </p>
+                                                            <p class="fs-5 text-primary mb-0">
+                                                                10:00 - 11:00
+                                                            </p>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
+                                                    <label class="card">
+                                                        <input name="plan" class="radio" type="radio">
+                                                        <span class="plan-details text-center">
+                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
+                                                                Jadwal Ke 2
+                                                            </p>
+                                                            <p class="fs-5 text-primary mb-0">
+                                                                10:00 - 11:00
+                                                            </p>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
+                                                    <label class="card">
+                                                        <input name="plan" class="radio" type="radio">
+                                                        <span class="plan-details text-center">
+                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
+                                                                Jadwal Ke 3
+                                                            </p>
+                                                            <p class="fs-5 text-primary mb-0">
+                                                                10:00 - 11:00
+                                                            </p>
+                                                        </span>
+                                                    </label>
+                                                </div>
                                             </div>
-                                            <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                <label class="card">
-                                                    <input name="plan" class="radio" type="radio" checked>
-                                                    <span class="plan-details text-center">
-                                                        <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                            Jadwal Ke 2
-                                                        </p>
-                                                        <p class="fs-5 text-primary mb-0">
-                                                            10:00 - 11:00
-                                                        </p>
-                                                    </span>
-                                                </label>
+                                            <label for="" class="mt-3 mb-2">Deskripsi (opsional)</label>
+                                            <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                            <div class="modal-footer">
+                                                <div class="d-flex justify-content-end gap-2">
+                                                    <div class="">
+                                                        <button data-bs-dismiss="modal" class="btn btn-danger">
+                                                            Tutup
+                                                        </button>
+                                                    </div>
+                                                    <div class="">
+                                                        <button type="submit" class="btn btn-primary">
+                                                            Simpan
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                <label class="card">
-                                                    <input name="plan" class="radio" type="radio" checked>
-                                                    <span class="plan-details text-center">
-                                                        <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                            Jadwal Ke 3
-                                                        </p>
-                                                        <p class="fs-5 text-primary mb-0">
-                                                            10:00 - 11:00
-                                                        </p>
-                                                    </span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <label for="" class="mt-3 mb-2">Deskripsi</label>
-                                        <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                        </form>
                                     </div>
                                     <div class="tab-pane" id="jumat" role="tabpanel">
-                                        <label for="">Judul</label>
-                                        <input type="text" class="form-control">
-                                        <label for="" class="mt-3">Jadwal</label>
-                                        <div class="row">
-                                            <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                <label class="card">
-                                                    <input name="plan" class="radio" type="radio" checked>
-                                                    <span class="plan-details text-center">
-                                                        <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                            Jadwal Ke 1
-                                                        </p>
-                                                        <p class="fs-5 text-primary mb-0">
-                                                            10:00 - 11:00
-                                                        </p>
-                                                    </span>
-                                                </label>
+                                        <form action="{{ route('ajukan-presentasi', $tim->code) }}" method="post"
+                                            id="formAjukanPresentasi_5">
+                                            @csrf
+                                            <label for="">Judul</label>
+                                            <input type="text" class="form-control" name="judul">
+                                            <label for="" class="mt-3">Jadwal</label>
+                                            <div class="row">
+                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
+                                                    <label class="card">
+                                                        <input name="plan" class="radio" type="radio">
+                                                        <span class="plan-details text-center">
+                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
+                                                                Jadwal Ke 1
+                                                            </p>
+                                                            <p class="fs-5 text-primary mb-0">
+                                                                10:00 - 11:00
+                                                            </p>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
+                                                    <label class="card">
+                                                        <input name="plan" class="radio" type="radio">
+                                                        <span class="plan-details text-center">
+                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
+                                                                Jadwal Ke 2
+                                                            </p>
+                                                            <p class="fs-5 text-primary mb-0">
+                                                                10:00 - 11:00
+                                                            </p>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-12 col-lg-4 col-xxl-4 mt-2">
+                                                    <label class="card">
+                                                        <input name="plan" class="radio" type="radio">
+                                                        <span class="plan-details text-center">
+                                                            <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
+                                                                Jadwal Ke 3
+                                                            </p>
+                                                            <p class="fs-5 text-primary mb-0">
+                                                                10:00 - 11:00
+                                                            </p>
+                                                        </span>
+                                                    </label>
+                                                </div>
                                             </div>
-                                            <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                <label class="card">
-                                                    <input name="plan" class="radio" type="radio" checked>
-                                                    <span class="plan-details text-center">
-                                                        <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                            Jadwal Ke 2
-                                                        </p>
-                                                        <p class="fs-5 text-primary mb-0">
-                                                            10:00 - 11:00
-                                                        </p>
-                                                    </span>
-                                                </label>
+                                            <label for="" class="mt-3 mb-2">Deskripsi (opsional)</label>
+                                            <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                            <div class="modal-footer">
+                                                <div class="d-flex justify-content-end gap-2">
+                                                    <div class="">
+                                                        <button data-bs-dismiss="modal" class="btn btn-danger">
+                                                            Tutup
+                                                        </button>
+                                                    </div>
+                                                    <div class="">
+                                                        <button type="submit" class="btn btn-primary">
+                                                            Simpan
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                <label class="card">
-                                                    <input name="plan" class="radio" type="radio" checked>
-                                                    <span class="plan-details text-center">
-                                                        <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                            Jadwal Ke 3
-                                                        </p>
-                                                        <p class="fs-5 text-primary mb-0">
-                                                            10:00 - 11:00
-                                                        </p>
-                                                    </span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <label for="" class="mt-3 mb-2">Deskripsi</label>
-                                        <textarea name="" class="form-control" id="" cols="30" rows="10"></textarea>
-                                    </div> --}}
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                            <hr>
-
-                            <div class="modal-footer">
-                                <div class="d-flex justify-content-end gap-2">
-                                    <div class="">
-                                        <button data-bs-dismiss="modal" class="btn btn-danger">
-                                            Tutup
-                                        </button>
-                                    </div>
-                                    <div class="">
-                                        <button type="submit" class="btn btn-primary">
-                                            Simpan
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            {{-- <form action="{{ route('ajukan-presentasi', $tim->code) }}" method="post"
-                                id="formAjukanPresentasi">
-                                @csrf
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col mb-3">
-                                            <label for="judul" class="form-label">Judul Presentasi</label>
-                                            <input type="text" id="judul" name="judul" class="form-control"
-                                                placeholder="Masukan Judul Presentasi">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <label for="deskripsi" class="form-label">Deskripsi Presentasi</label>
-                                            <textarea name="deskripsi" id="deskripsi" cols="20" rows="10" class="form-control" style="resize: none"
-                                                placeholder="Isi deskripsi pengajuan anda"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-label-secondary waves-effect"
-                                        data-bs-dismiss="modal">Kembali</button>
-                                    <button type="submit"class="btn btn-primary waves-effect waves-light">Ajukan</button>
-                                </div>
-                            </form> --}}
                         </div>
                     </div>
                 </div>
-            </form>
+                </form>
                 {{-- Modal Ajukan presentasi --}}
 
                 <div class="container table-responsive card-datatable  text-nowrap">
@@ -666,39 +717,55 @@
             );
         })
 
-        $('#formAjukanPresentasi').on('submit', function(event) {
-            var judul = $('#judul').val();
-            var deskripsi = $('#deskripsi').val();
+        function validateForm(formId) {
+            $(formId).on('submit', function(event) {
+                var judul = $(this).find('[name="judul"]').val();
+                var checkbox = $(this).find('[name="plan"]:checked').length > 0;
+                var deskripsi = $(this).find('[name="deskripsi"]').val();
 
-            if (judul.length === 0 || deskripsi.length === 0) {
-                swal.fire({
-                    title: 'Peringatan',
-                    text: 'Mohon lengkapi semua data',
-                    icon: 'warning',
-                    showConfirmButton: false,
-                    timer: 2000
-                });
-                event.preventDefault();
-            } else if (judul.length > 25) {
-                swal.fire({
-                    title: 'Peringatan',
-                    text: 'Judul terlalu panjang, maks 25',
-                    icon: 'warning',
-                    showConfirmButton: false,
-                    timer: 2000
-                });
-                event.preventDefault();
-            } else if (deskripsi.length > 50) {
-                swal.fire({
-                    title: 'Peringatan',
-                    text: 'Deskripsi terlalu panjang, maks 50',
-                    icon: 'warning',
-                    showConfirmButton: false,
-                    timer: 2000
-                });
-                event.preventDefault();
-            }
-        })
+                if (judul.length === 0 || deskripsi.length === 0 || !checkbox) {
+                    swal.fire({
+                        title: 'Peringatan',
+                        text: 'Mohon lengkapi semua data',
+                        icon: 'warning',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                    event.preventDefault();
+                } else if (judul.length > 25) {
+                    swal.fire({
+                        title: 'Peringatan',
+                        text: 'Judul terlalu panjang, maksimal 25 karakter',
+                        icon: 'warning',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                    event.preventDefault();
+                } else if (deskripsi.length > 50) {
+                    swal.fire({
+                        title: 'Peringatan',
+                        text: 'Deskripsi terlalu panjang, maksimal 50 karakter',
+                        icon: 'warning',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                    event.preventDefault();
+                }
+            });
+
+            $(formId).on('keydown', 'input', function(event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    return false;
+                }
+            });
+        }
+
+        validateForm('#formAjukanPresentasi_1');
+        validateForm('#formAjukanPresentasi_2');
+        validateForm('#formAjukanPresentasi_3');
+        validateForm('#formAjukanPresentasi_4');
+        validateForm('#formAjukanPresentasi_5');
     </script>
     <script>
         jQuery.noConflict();
