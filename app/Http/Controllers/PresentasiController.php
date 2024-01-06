@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\WhacenterService;
 use App\Http\Requests\RequestPengajuanPresentasi;
 use App\Http\Requests\RequestPenolakanPresentasi;
 use App\Http\Requests\RequestPersetujuanPresentasi;
+use App\Models\Anggota;
 use App\Models\HistoryPresentasi;
 use App\Models\Notifikasi;
 use App\Models\Presentasi;
@@ -143,7 +145,7 @@ class PresentasiController extends Controller
 
     protected function persetujuanPresentasi(RequestPersetujuanPresentasi $request, $code)
     {
-        $dataPresentasi = Presentasi::where('jadwal', Carbon::now()->isoFormat('Y-M-DD'))->where('status_pengajuan', 'disetujui')->get()->count();
+        $dataPresentasi = Presentasi::where('jadwal', Carbon::now()->isoFormat('YYYY-MM-DD'))->where('status_pengajuan', 'disetujui')->get()->count();
         $presentasi = Presentasi::with('tim.project.tema',)->where('code', $code)->first();
         $presentasi->urutan = $dataPresentasi + 1;
         $presentasi->user_approval_id = Auth::user()->id;
@@ -151,6 +153,21 @@ class PresentasiController extends Controller
         $presentasi->status_pengajuan = 'disetujui';
         $presentasi->save();
 
+        $whacenter = new WhacenterService();
+
+        $message = 'Pengajuan Presentasi Tim Anda telah disetujui';
+        $teamMembers = $presentasi->tim->anggota;
+        
+        // dd($teamMembers);
+        foreach ($teamMembers as $member) {
+            $userId = $member->user_id;
+            $statusAnggota = Anggota::where('user_id', $userId)->value('status');
+            if ($statusAnggota !== ['kicked','expired']) {
+                $phoneNumber = $member->no_wa;
+        
+                $whacenter->to($phoneNumber)->line($message)->send();
+            }
+        }
         // dd($presentasi)
         $this->sendNotificationToTeamMembers($presentasi->tim->anggota, 'Presentasi Disetujui', 'Presentasi Anda telah disetujui.','pemberitahuan');
 
