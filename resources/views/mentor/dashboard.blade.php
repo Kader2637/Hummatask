@@ -10,7 +10,7 @@
             <h5 class="pb-0">Atur Jadwal Presentasi</h5>
             <ul class="nav nav-pills bg-light rounded" role="tablist">
               <li class="nav-item">
-                <a class="nav-link active" data-bs-toggle="tab" href="#senin" role="tab">Senin</a>
+                <a class="nav-link day-tab" data-bs-toggle="tab" href="#senin" role="tab">Senin</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#selasa" role="tab">Selasa</a>
@@ -35,16 +35,47 @@
                   </ul>
                 </div>
               @endif
-              <div class="tab-pane active" id="senin" role="tabpanel">
-                <form id="form-senin" action="{{ route('presentasi-divisi.store') }}" method="POST">
+              <div class="tab-pane" id="senin" role="tabpanel">
+                <form id="form-senin active" action="{{ route('presentasi-divisi.store') }}" method="POST">
                   @csrf
                   <div id="form-repeater">
-                    <p id="belum-ada-jadwal" class="text-dark fs-6 mt-3 text-center" style="font-weight: 550;">
-                      Jadwal Presentasi Belum Ada
-                    </p>
+                    @if ($senin)
+                      <div class="form-repeater-item">
+                        @foreach ($senin->limitPresentasiDivisis as $key => $data)
+                          <div class="row form-column align-items-center">
+                            <input name="day" type="hidden" value="monday">
+                            <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
+                              <p class="text-dark fs-6 mt-3" style="font-weight: 550">
+                                Jadwal Ke {{ ++$key }}
+                              </p>
+                            </div>
+                            <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                              <input type="time" name="mulai[]" value="{{ $data->mulai }}" class="form-control" />
+                            </div>
+                            <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
+                              -
+                            </div>
+                            <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                              <input type="time" name="akhir[]" value="{{ $data->akhir }}" class="form-control" />
+                            </div>
+                            <div class="mb-3 col-lg-12 col-xl-2 col-12 mb-0">
+                              <button class="btn btn-label-danger delete-data-column" data-id="{{ $data->id }}">
+                                <i class="ti ti-x ti-xs me-1"></i>
+                                <span class="align-middle">Delete</span>
+                              </button>
+                            </div>
+                            <hr>
+                          </div>
+                        @endforeach
+                      </div>
+                    @else
+                      <p id="belum-ada-jadwal" class="text-dark fs-6 mt-3 text-center" style="font-weight: 550;">
+                        Jadwal Presentasi Belum Ada
+                      </p>
+                    @endif
                   </div>
                   <div class="mb-0">
-                    <button class="btn btn-primary me-2" id="add-form">Add</button>
+                    <button class="btn btn-primary me-2" id="add-form">Tambah Jadwal</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                   </div>
                 </form>
@@ -53,12 +84,42 @@
                 <form id="form-selasa" action="{{ route('presentasi-divisi.store') }}" method="POST">
                   @csrf
                   <div id="form-repeater-selasa">
-                    <p id="belum-ada-jadwal-selasa" class="text-dark fs-6 mt-3 text-center" style="font-weight: 550;">
-                      Jadwal Presentasi Belum Ada
-                    </p>
+                    @if ($selasa)
+                      @foreach ($selasa->limitPresentasiDivisis as $key => $data)
+                        <div class="row form-column align-items-center">
+                          <input name="day" type="hidden" value="tuesday">
+                          <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
+                            <p class="text-dark fs-6 mt-3" style="font-weight: 550">
+                              Jadwal Ke {{ ++$key }}
+                            </p>
+                          </div>
+                          <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                            <input type="time" name="mulai[]" value="{{ $data->mulai }}" class="form-control" />
+                          </div>
+                          <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
+                            -
+                          </div>
+                          <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                            <input type="time" name="akhir[]" value="{{ $data->akhir }}" class="form-control" />
+                          </div>
+                          <div class="mb-3 col-lg-12 col-xl-2 col-12 mb-0">
+                            <button class="btn btn-label-danger delete-data-column-selasa" data-id="{{ $data->id }}">
+                              <i class="ti ti-x ti-xs me-1"></i>
+                              <span class="align-middle">Delete</span>
+                            </button>
+                          </div>
+                          <hr>
+                        </div>
+                      @endforeach
+                    @else
+                      <p id="belum-ada-jadwal-selasa" class="text-dark fs-6 mt-3 text-center"
+                        style="font-weight: 550;">
+                        Jadwal Presentasi Belum Ada
+                      </p>
+                    @endif
                   </div>
                   <div class="mb-0">
-                    <button class="btn btn-primary me-2" id="add-form-selasa">Add</button>
+                    <button class="btn btn-primary me-2" id="add-form-selasa">Tambah Jadwal</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                   </div>
                 </form>
@@ -67,12 +128,41 @@
                 <form id="form-rabu" action="{{ route('presentasi-divisi.store') }}" method="POST">
                   @csrf
                   <div id="form-repeater-rabu">
-                    <p id="belum-ada-jadwal-rabu" class="text-dark fs-6 mt-3 text-center" style="font-weight: 550;">
-                      Jadwal Presentasi Belum Ada
-                    </p>
+                    @if ($rabu)
+                      @foreach ($rabu->limitPresentasiDivisis as $key => $data)
+                        <div class="row form-column align-items-center">
+                          <input name="day" type="hidden" value="wednesday">
+                          <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
+                            <p class="text-dark fs-6 mt-3" style="font-weight: 550">
+                              Jadwal Ke {{ ++$key }}
+                            </p>
+                          </div>
+                          <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                            <input type="time" name="mulai[]" value="{{ $data->mulai }}" class="form-control" />
+                          </div>
+                          <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
+                            -
+                          </div>
+                          <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                            <input type="time" name="akhir[]" value="{{ $data->akhir }}" class="form-control" />
+                          </div>
+                          <div class="mb-3 col-lg-12 col-xl-2 col-12 mb-0">
+                            <button class="btn btn-label-danger delete-data-column-rabu" data-id="{{ $data->id }}">
+                              <i class="ti ti-x ti-xs me-1"></i>
+                              <span class="align-middle">Delete</span>
+                            </button>
+                          </div>
+                          <hr>
+                        </div>
+                      @endforeach
+                    @else
+                      <p id="belum-ada-jadwal-rabu" class="text-dark fs-6 mt-3 text-center" style="font-weight: 550;">
+                        Jadwal Presentasi Belum Ada
+                      </p>
+                    @endif
                   </div>
                   <div class="mb-0">
-                    <button class="btn btn-primary me-2" id="add-form-rabu">Add</button>
+                    <button class="btn btn-primary me-2" id="add-form-rabu">Tambah Jadwal</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                   </div>
                 </form>
@@ -81,26 +171,84 @@
                 <form id="form-kamis" action="{{ route('presentasi-divisi.store') }}" method="POST">
                   @csrf
                   <div id="form-repeater-kamis">
-                    <p id="belum-ada-jadwal-kamis" class="text-dark fs-6 mt-3 text-center" style="font-weight: 550;">
-                      Jadwal Presentasi Belum Ada
-                    </p>
+                    @if ($kamis)
+                      @foreach ($kamis->limitPresentasiDivisis as $key => $data)
+                        <div class="row form-column align-items-center">
+                          <input name="day" type="hidden" value="thursday">
+                          <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
+                            <p class="text-dark fs-6 mt-3" style="font-weight: 550">
+                              Jadwal Ke {{ ++$key }}
+                            </p>
+                          </div>
+                          <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                            <input type="time" name="mulai[]" value="{{ $data->mulai }}" class="form-control" />
+                          </div>
+                          <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
+                            -
+                          </div>
+                          <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                            <input type="time" name="akhir[]" value="{{ $data->akhir }}" class="form-control" />
+                          </div>
+                          <div class="mb-3 col-lg-12 col-xl-2 col-12 mb-0">
+                            <button class="btn btn-label-danger delete-data-column-kamis" data-id="{{ $data->id }}">
+                              <i class="ti ti-x ti-xs me-1"></i>
+                              <span class="align-middle">Delete</span>
+                            </button>
+                          </div>
+                          <hr>
+                        </div>
+                      @endforeach
+                    @else
+                      <p id="belum-ada-jadwal-kamis" class="text-dark fs-6 mt-3 text-center" style="font-weight: 550;">
+                        Jadwal Presentasi Belum Ada
+                      </p>
+                    @endif
                   </div>
                   <div class="mb-0">
-                    <button class="btn btn-primary me-2" id="add-form-kamis">Add</button>
+                    <button class="btn btn-primary me-2" id="add-form-kamis">Tambah Jadwal</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                   </div>
                 </form>
               </div>
-              <div class="tab-pane " id="jumat" role="tabpanel">
+              <div class="tab-pane" id="jumat" role="tabpanel">
                 <form id="form-jumat" action="{{ route('presentasi-divisi.store') }}" method="POST">
                   @csrf
                   <div id="form-repeater-jumat">
-                    <p id="belum-ada-jadwal-jumat" class="text-dark fs-6 mt-3 text-center" style="font-weight: 550;">
-                      Jadwal Presentasi Belum Ada
-                    </p>
+                    @if ($jumat)
+                      @foreach ($jumat->limitPresentasiDivisis as $key => $data)
+                        <div class="row form-column align-items-center">
+                          <input name="day" type="hidden" value="friday">
+                          <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
+                            <p class="text-dark fs-6 mt-3" style="font-weight: 550">
+                              Jadwal Ke {{ ++$key }}
+                            </p>
+                          </div>
+                          <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                            <input type="time" name="mulai[]" value="{{ $data->mulai }}" class="form-control" />
+                          </div>
+                          <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
+                            -
+                          </div>
+                          <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                            <input type="time" name="akhir[]" value="{{ $data->akhir }}" class="form-control" />
+                          </div>
+                          <div class="mb-3 col-lg-12 col-xl-2 col-12 mb-0">
+                            <button class="btn btn-label-danger delete-data-column-jumat" data-id="{{ $data->id }}">
+                              <i class="ti ti-x ti-xs me-1"></i>
+                              <span class="align-middle">Delete</span>
+                            </button>
+                          </div>
+                          <hr>
+                        </div>
+                      @endforeach
+                    @else
+                      <p id="belum-ada-jadwal-jumat" class="text-dark fs-6 mt-3 text-center" style="font-weight: 550;">
+                        Jadwal Presentasi Belum Ada
+                      </p>
+                    @endif
                   </div>
                   <div class="mb-0">
-                    <button class="btn btn-primary me-2" id="add-form-jumat">Add</button>
+                    <button class="btn btn-primary me-2" id="add-form-jumat">Tambah Jadwal</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                   </div>
                 </form>
