@@ -20,6 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::apiResource('divisi', DivisiController::class);
 
 // mentor 
 Route::post('tambah-mentor', [tambahUsersController::class, 'store_mentor']);
