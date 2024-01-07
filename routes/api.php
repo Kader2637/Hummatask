@@ -20,9 +20,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('divisi', DivisiController::class);
+Route::get('division', [DivisiController::class, 'index']);
+Route::post('division', [DivisiController::class, 'store']);
+Route::put('division/{divisi}', [DivisiController::class, 'update']);
+Route::delete('division/{divisi}', [DivisiController::class, 'destroy']);
 
-// mentor 
+// mentor
 Route::post('tambah-mentor', [tambahUsersController::class, 'store_mentor']);
 Route::put('edit-mentor/{uuid}', [tambahUsersController::class, 'edit_mentor']);
 Route::get('delete-mentor/{code}', [tambahUsersController::class, 'delete_mentor']);
