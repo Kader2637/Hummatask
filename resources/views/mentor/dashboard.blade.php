@@ -45,7 +45,7 @@
                 </script>
               @endif
               <div class="tab-pane active" id="senin" role="tabpanel">
-                <form id="form-senin active" action="{{ route('presentasi-divisi-create-jam.store') }}" method="POST">
+                <form id="form-senin active" class="form-senin" action="{{ route('presentasi-divisi-create-jam.store') }}" method="POST">
                   @csrf
                   <input type="hidden" name="presentasi_divisi_id" value="{{ $senin->id ?? '' }}">
                   <div id="form-repeater">
@@ -92,7 +92,7 @@
                 </form>
               </div>
               <div class="tab-pane" id="selasa" role="tabpanel">
-                <form id="form-selasa" action="{{ route('presentasi-divisi-create-jam.store') }}" method="POST">
+                <form id="form-selasa" class="form-selasa" action="{{ route('presentasi-divisi-create-jam.store') }}" method="POST">
                   @csrf
                   <input type="hidden" name="presentasi_divisi_id" value="{{ $selasa->id ?? '' }}">
                   <div id="form-repeater">
@@ -139,7 +139,7 @@
                 </form>
               </div>
               <div class="tab-pane" id="rabu" role="tabpanel">
-                <form id="form-rabu" action="{{ route('presentasi-divisi-create-jam.store') }}" method="POST">
+                <form id="form-rabu" class="form-rabu" action="{{ route('presentasi-divisi-create-jam.store') }}" method="POST">
                   @csrf
                   <input type="hidden" name="presentasi_divisi_id" value="{{ $rabu->id ?? '' }}">
                   <div id="form-repeater">
@@ -186,13 +186,13 @@
                 </form>
               </div>
               <div class="tab-pane " id="kamis" role="tabpanel">
-                <form id="form-kamis" action="{{ route('presentasi-divisi-create-jam.store') }}" method="POST">
+                <form id="form-kamis" class="form-kamis" action="{{ route('presentasi-divisi-create-jam.store') }}" method="POST">
                   @csrf
-                  <input type="hidden" name="presentasi_divisi_id" value="{{ $jumat->id ?? '' }}">
+                  <input type="hidden" name="presentasi_divisi_id" value="{{ $kamis->id ?? '' }}">
                   <div id="form-repeater">
                     <div class="d-flex justify-content-end mb-2">
                       <button class="btn btn-primary" type="button" id="buttonSettings" data-bs-toggle="modal"
-                        data-bs-target="#modalLimitJumat">Setting Limit</button>
+                        data-bs-target="#modalLimitKamis">Setting Limit</button>
                     </div>
                     @if ($kamis)
                       @for ($i = 0; $i < (int) $kamis->limit; $i++)
@@ -233,13 +233,13 @@
                 </form>
               </div>
               <div class="tab-pane" id="jumat" role="tabpanel">
-                <form id="form-jumat" action="{{ route('presentasi-divisi-create-jam.store') }}" method="POST">
+                <form id="form-jumat" class="form-jumat" action="{{ route('presentasi-divisi-create-jam.store') }}" method="POST">
                   @csrf
-                  <input type="hidden" name="presentasi_divisi_id" value="{{ $rabu->id ?? '' }}">
+                  <input type="hidden" name="presentasi_divisi_id" value="{{ $jumat->id ?? '' }}">
                   <div id="form-repeater">
                     <div class="d-flex justify-content-end mb-2">
                       <button class="btn btn-primary" type="button" id="buttonSettings" data-bs-toggle="modal"
-                        data-bs-target="#modalLimitRabu">Setting Limit</button>
+                        data-bs-target="#modalLimitJumat">Setting Limit</button>
                     </div>
                     @if ($jumat)
                       @for ($i = 0; $i < (int) $jumat->limit; $i++)

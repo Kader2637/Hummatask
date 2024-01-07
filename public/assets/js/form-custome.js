@@ -1,3 +1,214 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const forms = document.querySelectorAll(".form-senin");
+
+    forms.forEach(function (form) {
+        form.addEventListener("submit", function (event) {
+            const waktuMulai = form.querySelectorAll('input[name^="mulai["]');
+            const waktuAkhir = form.querySelectorAll('input[name^="akhir["]');
+
+            let isValid = true;
+
+            waktuMulai.forEach(function (input, index) {
+                const mulaiValue = input.value.trim();
+                const akhirValue = waktuAkhir[index].value.trim();
+
+                if (mulaiValue === "" || akhirValue === "") {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error!",
+                    text: "Input Jadwal Waktu Harus diisi",
+                });
+
+                event.preventDefault();
+            }
+        });
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const forms = document.querySelectorAll(".form-selasa");
+
+    forms.forEach(function (form) {
+        form.addEventListener("submit", function (event) {
+            const waktuMulai = form.querySelectorAll('input[name^="mulai["]');
+            const waktuAkhir = form.querySelectorAll('input[name^="akhir["]');
+
+            let isValid = true;
+
+            waktuMulai.forEach(function (input, index) {
+                const mulaiValue = input.value.trim();
+                const akhirValue = waktuAkhir[index].value.trim();
+
+                if (mulaiValue === "" || akhirValue === "") {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error!",
+                    text: "Input Jadwal Waktu Harus diisi",
+                });
+
+                event.preventDefault();
+            }
+        });
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const forms = document.querySelectorAll(".form-rabu");
+
+    forms.forEach(function (form) {
+        form.addEventListener("submit", function (event) {
+            const waktuMulai = form.querySelectorAll('input[name^="mulai["]');
+            const waktuAkhir = form.querySelectorAll('input[name^="akhir["]');
+
+            let isValid = true;
+
+            waktuMulai.forEach(function (input, index) {
+                const mulaiValue = input.value.trim();
+                const akhirValue = waktuAkhir[index].value.trim();
+
+                if (mulaiValue === "" || akhirValue === "") {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error!",
+                    text: "Input Jadwal Waktu Harus diisi",
+                });
+
+                event.preventDefault();
+            }
+        });
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const forms = document.querySelectorAll(".form-kamis");
+
+    forms.forEach(function (form) {
+        form.addEventListener("submit", function (event) {
+            const waktuMulai = form.querySelectorAll('input[name^="mulai["]');
+            const waktuAkhir = form.querySelectorAll('input[name^="akhir["]');
+
+            let isValid = true;
+
+            waktuMulai.forEach(function (input, index) {
+                const mulaiValue = input.value.trim();
+                const akhirValue = waktuAkhir[index].value.trim();
+
+                if (mulaiValue === "" || akhirValue === "") {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error!",
+                    text: "Input Jadwal Waktu Harus diisi",
+                });
+
+                event.preventDefault();
+            }
+        });
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const forms = document.querySelectorAll(".form-jumat");
+
+    forms.forEach(function (form) {
+        form.addEventListener("submit", function (event) {
+            const waktuMulai = form.querySelectorAll('input[name^="mulai["]');
+            const waktuAkhir = form.querySelectorAll('input[name^="akhir["]');
+
+            let isValid = true;
+
+            waktuMulai.forEach(function (input, index) {
+                const mulaiValue = input.value.trim();
+                const akhirValue = waktuAkhir[index].value.trim();
+
+                if (mulaiValue === "" || akhirValue === "") {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error!",
+                    text: "Input Jadwal Waktu Harus diisi",
+                });
+
+                event.preventDefault();
+            }
+        });
+    });
+});
+
+// Submit Disable
+document.addEventListener("DOMContentLoaded", function () {
+    function setupFormRepeater(formRepeaterId) {
+        var submitButton = document.querySelector(
+            "#" + formRepeaterId + ' button[type="submit"]'
+        );
+        var formRepeater = document.getElementById(formRepeaterId);
+
+        if (!formRepeater || !submitButton) {
+            return;
+        }
+
+        submitButton.disabled = true;
+
+        formRepeater.addEventListener("input", function (event) {
+            var targetInput = event.target;
+            var inputName = targetInput.name;
+
+            if (
+                inputName &&
+                (inputName.includes("mulai") || inputName.includes("akhir"))
+            ) {
+                submitButton.disabled = false;
+            }
+        });
+    }
+
+    setupFormRepeater("form-selasa");
+    setupFormRepeater("form-rabu");
+    setupFormRepeater("form-kamis");
+    setupFormRepeater("form-jumat");
+});
+document.addEventListener("DOMContentLoaded", function () {
+    var submitButton = document.querySelector('button[type="submit"]');
+    var formRepeater = document.getElementById("form-repeater");
+
+    submitButton.disabled = true;
+
+    formRepeater.addEventListener("input", function (event) {
+        var targetInput = event.target;
+        var inputName = targetInput.name;
+
+        if (
+            inputName &&
+            (inputName.includes("mulai") || inputName.includes("akhir"))
+        ) {
+            submitButton.disabled = false;
+        }
+    });
+});
+
 // $(document).ready(function () {
 //     $(".delete-data-column").on("click", function (event) {
 //         event.preventDefault();
@@ -433,57 +644,6 @@
 //     setInterval(clearLocalStorage, 60000);
 // });
 
-// document.addEventListener("DOMContentLoaded", function () {
-//     function setupFormRepeater(formRepeaterId) {
-//         var submitButton = document.querySelector(
-//             "#" + formRepeaterId + ' button[type="submit"]'
-//         );
-//         var formRepeater = document.getElementById(formRepeaterId);
-
-//         if (!formRepeater || !submitButton) {
-//             return;
-//         }
-
-//         submitButton.disabled = true;
-
-//         formRepeater.addEventListener("input", function (event) {
-//             var targetInput = event.target;
-//             var inputName = targetInput.name;
-
-//             if (
-//                 inputName &&
-//                 (inputName.includes("mulai") || inputName.includes("akhir"))
-//             ) {
-//                 submitButton.disabled = false;
-//             }
-//         });
-//     }
-
-//     setupFormRepeater("form-selasa");
-//     setupFormRepeater("form-rabu");
-//     setupFormRepeater("form-kamis");
-//     setupFormRepeater("form-jumat");
-// });
-
-// // Hari Senin
-// var i = 0;
-
-// document.addEventListener('DOMContentLoaded', function () {
-//     var submitButton = document.querySelector('button[type="submit"]');
-//     var formRepeater = document.getElementById('form-repeater');
-
-//     submitButton.disabled = true;
-
-//     formRepeater.addEventListener('input', function (event) {
-//         var targetInput = event.target;
-//         var inputName = targetInput.name;
-
-//         if (inputName && (inputName.includes('mulai') || inputName.includes('akhir'))) {
-//             submitButton.disabled = false;
-//         }
-//     });
-// });
-
 // $("#add-form").click(function (event) {
 //     event.preventDefault();
 
@@ -558,7 +718,7 @@
 // $("#form-senin").submit(function (event) {
 //     var isValid = true;
 
-//     $(".form-repeater-item").each(function (index) {
+//     $(".form-repeater").each(function (index) {
 //         var mulaiInput = $(this).find("input[name='mulai[]']");
 //         var mulaiValue = mulaiInput.val();
 
