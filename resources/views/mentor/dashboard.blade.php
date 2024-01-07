@@ -4,7 +4,7 @@
   <div class="container-fluid mt-3">
     <h5 class="mt-3 fs-4">Dashboard Mentor</h5>
     <div class="row">
-      <div class="col-12 col-xl-7">
+      <div class="col-12 col-xl-12">
         <div class="card mb-4">
           <div class="card-body m-0">
             <h5 class="pb-0">Atur Jadwal Presentasi</h5>
@@ -283,6 +283,118 @@
           </div>
         </div>
       </div>
+      
+      <div class="col-12 col-xl-7">
+        <div class="card mb-4">
+          <div class="card-body m-0">
+            <h5 class="pb-0">Jadwal Para Mentor</h5>
+            <ul class="nav nav-pills bg-light rounded" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#mobile" role="tab">Mobile</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#website" role="tab">Website</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#uiux" role="tab">UI/UX</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#bd" role="tab">Marketing Digital</a>
+              </li>
+            </ul>
+            <div class="tab-content mt-3">
+              <div class="tab-pane active" id="mobile" role="tabpanel">
+                <div class="table-responsive text-nowrap card-datatable">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>No</th>
+                        <th>Hari</th>
+                        <th>Mulai</th>
+                        <th>Sampai</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                      <tr>
+                        <td>1.</td>
+                        <td>Senin</td>
+                        <td>10:30</td>
+                        <td>20::30</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="tab-pane" id="website" role="tabpanel">
+                <div class="table-responsive text-nowrap card-datatable">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>No</th>
+                        <th>Hari</th>
+                        <th>Mulai</th>
+                        <th>Sampai</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                      <tr>
+                        <td>1.</td>
+                        <td>Senin</td>
+                        <td>10:30</td>
+                        <td>20::30</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="tab-pane" id="uiux" role="tabpanel">
+                <div class="table-responsive text-nowrap card-datatable">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>No</th>
+                        <th>Hari</th>
+                        <th>Mulai</th>
+                        <th>Sampai</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                      <tr>
+                        <td>1.</td>
+                        <td>Senin</td>
+                        <td>10:30</td>
+                        <td>20::30</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="tab-pane" id="bd" role="tabpanel">
+                <div class="table-responsive text-nowrap card-datatable">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>No</th>
+                        <th>Hari</th>
+                        <th>Mulai</th>
+                        <th>Sampai</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                      <tr>
+                        <td>1.</td>
+                        <td>Senin</td>
+                        <td>10:30</td>
+                        <td>20::30</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div class="col-12 col-xl-5">
         <div class="card">
@@ -335,7 +447,7 @@
           </div>
         </div>
       </div>
-      
+
     </div>
     {{-- Modal Presetanasi --}}
     <form action="{{ route('presentasi-divisi.store') }}" method="POST">
