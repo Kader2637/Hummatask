@@ -52,7 +52,7 @@ class PresentasiDivisiControlller extends Controller
             LimitPresentasiDevisi::query()
                 ->create([
                     'presentasi_divisi_id' => $data['presentasi_divisi_id'],
-                    'mulai' => $data['dari'][$i],
+                    'mulai' => $data['mulai'][$i],
                     'akhir' => $data['akhir'][$i]
                 ]);
         }
