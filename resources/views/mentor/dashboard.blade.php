@@ -51,7 +51,7 @@
                   <div id="form-repeater">
                     <div class="d-flex justify-content-end mb-2">
                       <button class="btn btn-primary" type="button" id="buttonSettings" data-bs-toggle="modal"
-                        data-bs-target="#modalLimitSenin">Setting Limit</button>
+                        data-bs-target="#modalLimit">Setting Limit</button>
                     </div>
                     @if ($senin)
                       @for ($i = 0; $i < (int) $senin->limit; $i++)
