@@ -64,14 +64,16 @@
                           </div>
                           <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
                             <input type="time" name="mulai[]"
-                              value="{{ $senin->limitPresentasiDivisis[$i]->mulai ?? '' }}" class="form-control" />
+                              value="{{ old('mulai.' . $i, $senin->limitPresentasiDivisis[$i]->mulai ?? '') }}"
+                              class="form-control" />
                           </div>
                           <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
                             -
                           </div>
                           <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
                             <input type="time" name="akhir[]"
-                              value="{{ $senin->limitPresentasiDivisis[$i]->akhir ?? '' }}" class="form-control" />
+                              value="{{ old('akhir.' . $i, $senin->limitPresentasiDivisis[$i]->akhir ?? '') }}"
+                              class="form-control" />
                           </div>
                         </div>
                       @endfor
@@ -101,7 +103,7 @@
                     @if ($selasa)
                       @for ($i = 0; $i < (int) $selasa->limit; $i++)
                         <div class="row align-items-center">
-                          <input name="day" type="hidden" value="monday">
+                          <input name="day" type="hidden" value="tuesday">
                           <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
                             <p class="text-dark fs-6 mt-3" style="font-weight: 550">
                               Jadwal Ke {{ $i + 1 }}
@@ -109,14 +111,16 @@
                           </div>
                           <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
                             <input type="time" name="mulai[]"
-                              value="{{ $selasa->limitPresentasiDivisis[$i]->mulai ?? '' }}" class="form-control" />
+                              value="{{ old('mulai.' . $i, $selasa->limitPresentasiDivisis[$i]->mulai ?? '') }}"
+                              class="form-control" />
                           </div>
                           <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
                             -
                           </div>
                           <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
                             <input type="time" name="akhir[]"
-                              value="{{ $selasa->limitPresentasiDivisis[$i]->akhir ?? '' }}" class="form-control" />
+                              value="{{ old('akhir.' . $i, $selasa->limitPresentasiDivisis[$i]->akhir ?? '') }}"
+                              class="form-control" />
                           </div>
                         </div>
                       @endfor
@@ -146,7 +150,7 @@
                     @if ($rabu)
                       @for ($i = 0; $i < (int) $rabu->limit; $i++)
                         <div class="row align-items-center">
-                          <input name="day" type="hidden" value="monday">
+                          <input name="day" type="hidden" value="wednesday">
                           <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
                             <p class="text-dark fs-6 mt-3" style="font-weight: 550">
                               Jadwal Ke {{ $i + 1 }}
@@ -154,14 +158,16 @@
                           </div>
                           <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
                             <input type="time" name="mulai[]"
-                              value="{{ $rabu->limitPresentasiDivisis[$i]->mulai ?? '' }}" class="form-control" />
+                              value="{{ old('mulai.' . $i, $rabu->limitPresentasiDivisis[$i]->mulai ?? '') }}"
+                              class="form-control" />
                           </div>
                           <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
                             -
                           </div>
                           <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
                             <input type="time" name="akhir[]"
-                              value="{{ $rabu->limitPresentasiDivisis[$i]->akhir ?? '' }}" class="form-control" />
+                              value="{{ old('akhir.' . $i, $rabu->limitPresentasiDivisis[$i]->akhir ?? '') }}"
+                              class="form-control" />
                           </div>
                         </div>
                       @endfor
@@ -188,10 +194,10 @@
                       <button class="btn btn-primary" type="button" id="buttonSettings" data-bs-toggle="modal"
                         data-bs-target="#modalLimitJumat">Setting Limit</button>
                     </div>
-                    @if ($jumat)
-                      @for ($i = 0; $i < (int) $jumat->limit; $i++)
+                    @if ($kamis)
+                      @for ($i = 0; $i < (int) $kamis->limit; $i++)
                         <div class="row align-items-center">
-                          <input name="day" type="hidden" value="monday">
+                          <input name="day" type="hidden" value="thursday">
                           <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
                             <p class="text-dark fs-6 mt-3" style="font-weight: 550">
                               Jadwal Ke {{ $i + 1 }}
@@ -199,14 +205,16 @@
                           </div>
                           <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
                             <input type="time" name="mulai[]"
-                              value="{{ $jumat->limitPresentasiDivisis[$i]->mulai ?? '' }}" class="form-control" />
+                              value="{{ old('mulai.' . $i, $kamis->limitPresentasiDivisis[$i]->mulai ?? '') }}"
+                              class="form-control" />
                           </div>
                           <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
                             -
                           </div>
                           <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
                             <input type="time" name="akhir[]"
-                              value="{{ $jumat->limitPresentasiDivisis[$i]->akhir ?? '' }}" class="form-control" />
+                              value="{{ old('akhir.' . $i, $kamis->limitPresentasiDivisis[$i]->akhir ?? '') }}"
+                              class="form-control" />
                           </div>
                         </div>
                       @endfor
@@ -233,10 +241,10 @@
                       <button class="btn btn-primary" type="button" id="buttonSettings" data-bs-toggle="modal"
                         data-bs-target="#modalLimitRabu">Setting Limit</button>
                     </div>
-                    @if ($rabu)
-                      @for ($i = 0; $i < (int) $rabu->limit; $i++)
+                    @if ($jumat)
+                      @for ($i = 0; $i < (int) $jumat->limit; $i++)
                         <div class="row align-items-center">
-                          <input name="day" type="hidden" value="monday">
+                          <input name="day" type="hidden" value="friday">
                           <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
                             <p class="text-dark fs-6 mt-3" style="font-weight: 550">
                               Jadwal Ke {{ $i + 1 }}
@@ -244,14 +252,16 @@
                           </div>
                           <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
                             <input type="time" name="mulai[]"
-                              value="{{ $rabu->limitPresentasiDivisis[$i]->mulai ?? '' }}" class="form-control" />
+                              value="{{ old('mulai.' . $i, $jumat->limitPresentasiDivisis[$i]->mulai ?? '') }}"
+                              class="form-control" />
                           </div>
                           <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
                             -
                           </div>
                           <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
                             <input type="time" name="akhir[]"
-                              value="{{ $rabu->limitPresentasiDivisis[$i]->akhir ?? '' }}" class="form-control" />
+                              value="{{ old('akhir.' . $i, $jumat->limitPresentasiDivisis[$i]->akhir ?? '') }}"
+                              class="form-control" />
                           </div>
                         </div>
                       @endfor
