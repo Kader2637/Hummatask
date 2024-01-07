@@ -72,7 +72,7 @@
                                             -
                                         </div>
                                         <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
-                                            <input type="time" name="akhir[]" 
+                                            <input type="time" name="akhir[]"
                                                 class="form-control" />
                                         </div>
                                     </div>
@@ -226,7 +226,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-xl-4">
+            <div class="col-12">
                 <div class="card">
                     <div class="d-flex justify-content-between mx-3 mb-1 mt-4">
                         <h5 class="pb-0">Data Presentasi hari ini</h5>
