@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DivisiController;
+use App\Http\Controllers\tambahUsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,5 +21,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('divisi', DivisiController::class);
-Route::get('divisi' , [DivisiController::class, 'index']);
-Route::post('divisi-store' , [DivisiController::class, 'store']);
+
+// mentor 
+Route::post('tambah-mentor', [tambahUsersController::class, 'store_mentor'])->name('tambah.mentor');
+Route::put('edit-mentor/{uuid}', [tambahUsersController::class, 'edit_mentor'])->name('edit.mentor');
+Route::get('delete-mentor/{code}', [tambahUsersController::class, 'delete_mentor'])->name('delete.mentor');
