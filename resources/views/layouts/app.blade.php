@@ -306,8 +306,8 @@
                     <div class="navbar-nav-right d-flex align-items-center gap-3" id="navbar-collapse">
                         <ul class="navbar-nav flex-row align-items-center ms-auto gap-1">
                             <li class="navbar-item">
-                                <button class="btn btn-label-primary btn-md" id="login-pkl-btn">Login
-                                    pkl.hummatech</button>
+                                <a href="https://pkl.hummatech.com/auth-login" class="btn btn-label-primary btn-md" id="login-pkl-btn">Login
+                                    pkl.hummatech</a>
                             </li>
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                             </li>

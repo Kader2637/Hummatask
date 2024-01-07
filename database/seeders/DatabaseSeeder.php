@@ -71,6 +71,7 @@ class DatabaseSeeder extends Seeder
                 'email' => 'kurniawan@gmail.com',
                 'password' => Hash::make('password'),
                 'peran_id' => 1,
+                'divisi_id' => $divisi_id->id,
                 'tlp' => "0845889288",
                 'sekolah' => "SMKN 1 Banyuwangi",
                 "tanggal_bergabung" => Carbon::now(),
@@ -479,7 +480,5 @@ class DatabaseSeeder extends Seeder
                 'nama_jabatan' => 'Anggota'
             ],
         ]);
-
-
     }
 }
