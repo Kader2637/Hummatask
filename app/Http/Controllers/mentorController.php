@@ -10,6 +10,7 @@ use App\Models\Galery;
 use App\Models\HistoryPresentasi;
 use App\Models\Notifikasi;
 use App\Models\Anggota;
+use App\Models\LimitPresentasiDevisi;
 use App\Models\PenglolaMagang;
 use App\Models\Presentasi;
 use App\Models\PresentasiDivisi;
@@ -177,7 +178,17 @@ class mentorController extends Controller
             ->where('divisi_id', auth()->user()->divisi_id)
             ->first();
 
-        return response()->view('mentor.dashboard', compact('year', 'currentYear', 'processedData', 'presentasi', 'chartData', 'jadwal', 'hari', 'chart', 'notifikasi', 'senin', 'selasa', 'rabu', 'kamis', 'jumat'));
+
+            $startOfWeek = Carbon::now()->startOfWeek();
+            $endOfWeek = Carbon::now()->endOfWeek();
+
+            $dataPresentasi = LimitPresentasiDevisi::whereBetween('created_at', [$startOfWeek, $endOfWeek])->get();
+
+
+
+
+
+        return response()->view('mentor.dashboard', compact('year', 'currentYear', 'processedData', 'presentasi', 'chartData', 'jadwal', 'hari', 'chart', 'notifikasi', 'senin', 'selasa', 'rabu', 'kamis', 'jumat','dataPresentasi'));
     }
 
     protected function pengguna()
