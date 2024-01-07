@@ -22,11 +22,11 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@v4.0.0
       with:
         # ftp server
-        server: hummatask.dcode.my.id
+        server: ftp.mischool.online
         # ftp username
-        username: hummatask@hummatask.dcode.my.id
+        username: hummatask@hummatask.hummatech.com
         # ftp password
-        password: -%Ql5,}-^8]N
+        password: hummatask
         # Server port to connect to (read your web hosts docs)
         port: 21
         # protocol to deploy with - ftp, ftps, or ftps-legacy
