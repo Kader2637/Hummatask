@@ -10,10 +10,11 @@ class PresentasiDivisiRequest extends FormRequest
     {
         return [
             'day' => 'required',
-            'mulai' => 'required|array',
-            'mulai.*' => 'required',
-            'akhir' => 'array',
-            'akhir.*' => 'required',
+            'limit' => 'required|numeric',
+            // 'mulai' => 'required|array',
+            // 'mulai.*' => 'required',
+            // 'akhir' => 'array',
+            // 'akhir.*' => 'required',
         ];
     }
 
@@ -21,6 +22,7 @@ class PresentasiDivisiRequest extends FormRequest
     {
         return [
             'day.required' => 'Kolom hari diperlukan.',
+            'limit.required' => 'Limit tidak boleh kosong',
             'mulai.required' => 'Setiap nilai di kolom mulai diperlukan.',
             'mulai.*.required' => 'Setiap nilai di kolom mulai harus diisi.',
             'akhir.required' => 'Setiap nilai di kolom dari diperlukan.',

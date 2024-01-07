@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->enum('day', [DayEnum::MONDAY->value, DayEnum::TUESDAY->value, DayEnum::WEDNESDAY->value, DayEnum::THURSDAY->value, DayEnum::FRIDAY->value]);
             $table->foreignId('divisi_id')->constrained('divisis')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->integer('limit');
             $table->timestamps();
         });
     }
