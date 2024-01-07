@@ -26,11 +26,10 @@ class DivisiController extends Controller
      * @param  mixed $request
      * @return RedirectResponse
      */
-    public function store(DivisiRequest $request): RedirectResponse
+    public function store(DivisiRequest $request)
     {
-        Divisi::query()
-            ->create($request->validated());
-        return redirect()->back()->with('success', 'Berhasil menambahkan divisi');
+        Divisi::query()->create($request->validated());
+        return response()->json(['success' => 'Berhasil menambahkan divisi']);
     }
 
     /**
