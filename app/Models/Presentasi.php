@@ -50,4 +50,14 @@ class Presentasi extends Model
     {
         return $this->belongsTo(LimitPresentasiDevisi::class, 'limit_presentasi_devisi_id');
     }
+
+    public function isPengujianDisetujui()
+    {
+        return $this->status_pengajuan === 'disetujui';
+    }
+
+    public function limitPresentasiDevisiId()
+    {
+        return $this->limit_presentasi_devisi_id;
+    }
 }

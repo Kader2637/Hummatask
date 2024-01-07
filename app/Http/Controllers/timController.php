@@ -187,7 +187,7 @@ class timController extends Controller
         $sesi_senin = $allSessions->filter(function ($session) {
             return $session->presentasiDivisi->day === DayEnum::MONDAY->value;
         })->sortBy('mulai');
-
+        
         $sesi_selasa = $allSessions->filter(function ($session) {
             return $session->presentasiDivisi->day === DayEnum::TUESDAY->value;
         })->sortBy('mulai');

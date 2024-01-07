@@ -257,21 +257,42 @@
                                             <div class="row">
                                                 @forelse ($sesi_senin as $data)
                                                     <div class="col-12 col-lg-4 col-xxl-4 mt-2">
-                                                        <label class="card">
-                                                            <input name="plan" class="radio" type="radio"
-                                                                value="{{ $data->id }}">
-                                                            <span class="plan-details text-center">
-                                                                <p class="fs-5 mb-2 text-dark" style="font-weight: 500">
-                                                                    Jadwal Ke-{{ $loop->iteration }}
-                                                                </p>
-                                                                <p class="fs-5 text-primary mb-0">
-                                                                    {{ $data->mulai }} - {{ $data->akhir }}
-                                                                </p>
-                                                            </span>
-                                                        </label>
+                                                        @if (
+                                                            $data->presentasi->isNotEmpty() &&
+                                                                $data->presentasi->first()->isPengujianDisetujui() &&
+                                                                $data->id === $data->presentasi->first()->limitPresentasiDevisiId())
+                                                            <label class="card" disabled>
+                                                                <input name="plan" class="radio" type="radio"
+                                                                    value="{{ $data->id }}" disabled>
+                                                                <span class="plan-details text-center">
+                                                                    <p class="fs-5 mb-2 text-dark"
+                                                                        style="font-weight: 500">
+                                                                        Jadwal Ke-{{ $loop->iteration }}
+                                                                    </p>
+                                                                    <p class="fs-5 text-primary mb-0">
+                                                                        {{ $data->mulai }} - {{ $data->akhir }}
+                                                                    </p>
+                                                                </span>
+                                                            </label>
+                                                        @else
+                                                            <label class="card">
+                                                                <input name="plan" class="radio" type="radio"
+                                                                    value="{{ $data->id }}">
+                                                                <span class="plan-details text-center">
+                                                                    <p class="fs-5 mb-2 text-dark"
+                                                                        style="font-weight: 500">
+                                                                        Jadwal Ke-{{ $loop->iteration }}
+                                                                    </p>
+                                                                    <p class="fs-5 text-primary mb-0">
+                                                                        {{ $data->mulai }} - {{ $data->akhir }}
+                                                                    </p>
+                                                                </span>
+                                                            </label>
+                                                        @endif
                                                     </div>
                                                 @empty
-                                                    <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di hari lain
+                                                    <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di
+                                                        hari lain
                                                         <i class="ti ti-address-book-off"></i>
                                                     </h6>
                                                     <div class="mt-4 mb-3 d-flex justify-content-evenly">
@@ -323,7 +344,8 @@
                                                         </label>
                                                     </div>
                                                 @empty
-                                                    <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di hari lain
+                                                    <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di
+                                                        hari lain
                                                         <i class="ti ti-address-book-off"></i>
                                                     </h6>
                                                     <div class="mt-4 mb-3 d-flex justify-content-evenly">
@@ -375,7 +397,8 @@
                                                         </label>
                                                     </div>
                                                 @empty
-                                                    <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di hari lain
+                                                    <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di
+                                                        hari lain
                                                         <i class="ti ti-address-book-off"></i>
                                                     </h6>
                                                     <div class="mt-4 mb-3 d-flex justify-content-evenly">
@@ -427,7 +450,8 @@
                                                         </label>
                                                     </div>
                                                 @empty
-                                                    <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di hari lain
+                                                    <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di
+                                                        hari lain
                                                         <i class="ti ti-address-book-off"></i>
                                                     </h6>
                                                     <div class="mt-4 mb-3 d-flex justify-content-evenly">
@@ -479,8 +503,10 @@
                                                         </label>
                                                     </div>
                                                 @empty
-                                                    <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di hari lain
-                                                        <i class="ti ti-address-book-off"></i></h6>
+                                                    <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di
+                                                        hari lain
+                                                        <i class="ti ti-address-book-off"></i>
+                                                    </h6>
                                                     <div class="mt-4 mb-3 d-flex justify-content-evenly">
                                                         <img src="{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}"
                                                             alt="page-misc-under-maintenance" width="300"
