@@ -47,6 +47,7 @@ class PresentasiDivisiControlller extends Controller
         $data = $request->validated();
         $pDivisi = PresentasiDivisi::query()
             ->findOrFail($data['presentasi_divisi_id']);
+        $pDivisi->limitPresentasiDivisis()->delete();
         for ($i = 0; $i < (int) $pDivisi->limit; $i++) {
             LimitPresentasiDevisi::query()
                 ->create([
