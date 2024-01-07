@@ -59,6 +59,10 @@ class PresentasiController extends Controller
             return back()->with('error', 'Pengajuan Presentasi hanya bisa dilakuakn dijam kantor');
         }
 
+        if ($request->plan == null) {
+            return back()->with('error', 'Mohon pilih jadwal presentasi');
+        }
+
 
         try {
             //code...
@@ -69,7 +73,6 @@ class PresentasiController extends Controller
             }
 
             $validasiPersetujuan  = $tim->presentasi->sortByDesc('created_at')->first();
-
 
             if($validasiPersetujuan !== null){
                 if($validasiPersetujuan->status_pengajuan === "menunggu" && $validasiPersetujuan->status_presentasi === "menunggu"){
@@ -106,10 +109,9 @@ class PresentasiController extends Controller
         $presentasi->deskripsi = $request->deskripsi;
         $presentasi->jadwal = Carbon::now()->isoFormat('Y-M-DD');
         $presentasi->tim_id = $tim->id;
+        $presentasi->limit_presentasi_id = $request->plan;
 
         $history = HistoryPresentasi::latest()->first();
-
-
 
         if (($history === null)) {
             $historyBaru = new HistoryPresentasi;
@@ -157,7 +159,7 @@ class PresentasiController extends Controller
 
         $message = 'Pengajuan Presentasi Tim Anda telah disetujui';
         $teamMembers = $presentasi->tim->anggota;
-        
+
         // dd($teamMembers);
         foreach ($teamMembers as $member) {
             $userId = $member->user_id;
@@ -165,7 +167,7 @@ class PresentasiController extends Controller
             if ($statusAnggota !== ['kicked','expired']) {
                 if ($member->jabatan_id === 1){
                 $phoneNumber = $member->user->tlp;
-        
+
                 $whacenter->to($phoneNumber)->line($message)->send();
                 }
             }
@@ -256,7 +258,7 @@ class PresentasiController extends Controller
 
     protected function tampilkanDetailPresentasi(Request $request, $code)
     {
-        $history = HistoryPresentasi::with(['presentasi.tim.user', 'presentasi.tim.project.tema'])->where('code', $code)->first();
+        $history = HistoryPresentasi::with(['presentasi.tim.user', 'presentasi.tim.project.tema', 'presentasi.presentasiDivisi'])->where('code', $code)->first();
         $presentasi = $history->presentasi->where('status_pengajuan', 'menunggu');
         $judulModal = Carbon::now()->isoFormat('DD MMMM YYYY');
         $konfirmasi_presentasi = Presentasi::with(['tim.user', 'tim.project.tema', 'tim.presentasi'])

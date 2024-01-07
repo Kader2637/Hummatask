@@ -21,18 +21,18 @@ class PresentasiDivisiControlller extends Controller
     {
         $data = $request->validated();
         $data['divisi_id'] = auth()->user()->divisi_id;
-        $presentasiDivisi = PresentasiDivisi::query()
-            ->updateOrCreate(['divisi_id' => $data['divisi_id'], 'day' => $data['day']], $data);
-        $presentasiDivisi->limitPresentasiDivisis()->delete();
-        foreach ($data['mulai'] as $index => $dari) {
-            LimitPresentasiDevisi::query()
-                ->create([
-                    'presentasi_divisi_id' => $presentasiDivisi->id,
-                    'mulai' => $dari,
-                    'akhir' => $data['akhir'][$index]
-                ]);
-        }
-        return redirect()->back()->with('success', 'Berhasil menambahkan divisi');
+        PresentasiDivisi::query()
+            ->updateOrCreate(['divisi_id' => $data['divisi_id'], 'day' => $data['day']], ['limit' => $data['limit']]);
+        // $presentasiDivisi->limitPresentasiDivisis()->delete();
+        // foreach ($data['mulai'] as $index => $dari) {
+        //     LimitPresentasiDevisi::query()
+        //         ->create([
+        //             'presentasi_divisi_id' => $presentasiDivisi->id,
+        //             'mulai' => $dari,
+        //             'akhir' => $data['akhir'][$index]
+        //         ]);
+        // }
+        return redirect()->back()->with('success', 'Berhasil menambahkan limit');
     }
 
     /**
