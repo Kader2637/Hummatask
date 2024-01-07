@@ -182,6 +182,7 @@ class tambahUsersController extends Controller
             [
                 'username' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
+                'Divisi' => 'required|unique:users,divisi_id'
             ],
             [
                 'username.required' => 'Kolom Nama harus diisi.',
@@ -190,6 +191,8 @@ class tambahUsersController extends Controller
                 'email.required' => 'Kolom Email harus diisi.',
                 'email.email' => 'Email harus berupa alamat email yang valid.',
                 'email.unique' => 'Email sudah digunakan.',
+                'Divisi.required' => 'Divisi harus di isi',
+                'Divisi.unique' => 'Divisi sudah digunakan.',
             ]
         );
 
@@ -219,6 +222,7 @@ class tambahUsersController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make('password'),
                 'peran_id' => 2,
+                'divisi_id' => $request->Divisi,
             ]);
             return redirect()->back()->with('success', 'User berhasil disimpan!');
         } catch (\Throwable $th) {
