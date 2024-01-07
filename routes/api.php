@@ -21,4 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('divisi', DivisiController::class);
 Route::get('divisi' , [DivisiController::class, 'index']);
-Route::get('divisi' , [DivisiController::class, 'store']);
+Route::post('divisi' , [DivisiController::class, 'store']);
