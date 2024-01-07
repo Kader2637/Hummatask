@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LimitPresentasiDivisiRequest;
 use App\Http\Requests\PresentasiDivisiRequest;
 use App\Models\LimitPresentasiDevisi;
 use App\Models\PresentasiDivisi;
@@ -33,6 +34,29 @@ class PresentasiDivisiControlller extends Controller
         //         ]);
         // }
         return redirect()->back()->with('success', 'Berhasil menambahkan limit');
+    }
+
+    /**
+     * createJam
+     *
+     * @param  mixed $request
+     * @return RedirectResponse
+     */
+    public function createJam(LimitPresentasiDivisiRequest $request): RedirectResponse
+    {
+        $data = $request->validated();
+        $pDivisi = PresentasiDivisi::query()
+            ->findOrFail($data['presentasi_divisi_id']);
+        for ($i = 0; $i < (int) $pDivisi->limit; $i++) {
+            LimitPresentasiDevisi::query()
+                ->create([
+                    'presentasi_divisi_id' => $data['presentasi_divisi_id'],
+                    'mulai' => $data['dari'][$i],
+                    'akhir' => $data['akhir'][$i]
+                ]);
+        }
+        return redirect()->back()->with('success', 'Berhasil menambahkan jadwal');
+
     }
 
     /**
