@@ -283,7 +283,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="col-12 col-xl-7">
         <div class="card mb-4">
           <div class="card-body m-0">
@@ -314,13 +314,20 @@
                         <th>Sampai</th>
                       </tr>
                     </thead>
+                    @php
+                      $no = 1;
+                    @endphp
                     <tbody class="table-border-bottom-0">
-                      <tr>
-                        <td>1.</td>
-                        <td>Senin</td>
-                        <td>10:30</td>
-                        <td>20::30</td>
-                      </tr>
+                      @forelse ($dataPresentasiMobile as $Pm => $presentasiMobile)
+                        <tr>
+                          <td>{{ $no++ }}</td>
+                          <td>{{ \Carbon\Carbon::parse($presentasiMobile->created_at)->translatedFormat('l') }}</td>
+                          <td>{{ $presentasiMobile->mulai }}</td>
+                          <td>{{ $presentasiMobile->akhir }}</td>
+                        </tr>
+                      @empty
+                        <p>data kosong</p>
+                      @endforelse
                     </tbody>
                   </table>
                 </div>
@@ -337,12 +344,20 @@
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                      <tr>
-                        <td>1.</td>
-                        <td>Senin</td>
-                        <td>10:30</td>
-                        <td>20::30</td>
-                      </tr>
+                        @php
+                        $no = 1;
+                      @endphp
+                      <tbody class="table-border-bottom-0">
+                        @forelse ($dataPresentasiWebsite as $dw => $presentasiWebsite)
+                          <tr>
+                            <td>{{ $no++ }}</td>
+                            <td>{{ \Carbon\Carbon::parse($presentasiWebsite->created_at)->translatedFormat('l') }}</td>
+                            <td>{{ $presentasiWebsite->mulai }}</td>
+                            <td>{{ $presentasiWebsite->akhir }}</td>
+                          </tr>
+                        @empty
+
+                        @endforelse
                     </tbody>
                   </table>
                 </div>
@@ -359,12 +374,20 @@
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                      <tr>
-                        <td>1.</td>
-                        <td>Senin</td>
-                        <td>10:30</td>
-                        <td>20::30</td>
-                      </tr>
+                        @php
+                        $no = 1;
+                      @endphp
+                      <tbody class="table-border-bottom-0">
+                        @forelse ($dataPresentasiUi as $dU => $presentasiUi)
+                          <tr>
+                            <td>{{ $no++ }}</td>
+                            <td>{{ \Carbon\Carbon::parse($presentasiUi->created_at)->translatedFormat('l') }}</td>
+                            <td>{{ $presentasiUi->mulai }}</td>
+                            <td>{{ $presentasiUi->akhir }}</td>
+                          </tr>
+                        @empty
+
+                        @endforelse
                     </tbody>
                   </table>
                 </div>
@@ -381,12 +404,16 @@
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                      <tr>
-                        <td>1.</td>
-                        <td>Senin</td>
-                        <td>10:30</td>
-                        <td>20::30</td>
-                      </tr>
+                        @forelse ($dataPresentasiMarketing as $dM => $presentasiMarketing)
+                        <tr>
+                          <td>{{ $no++ }}</td>
+                          <td>{{ \Carbon\Carbon::parse($presentasiMarketing->created_at)->translatedFormat('l') }}</td>
+                          <td>{{ $presentasiMarketing->mulai }}</td>
+                          <td>{{ $presentasiMarketing->akhir }}</td>
+                        </tr>
+                      @empty
+
+                      @endforelse
                     </tbody>
                   </table>
                 </div>

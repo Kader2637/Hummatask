@@ -182,13 +182,33 @@ class mentorController extends Controller
             $startOfWeek = Carbon::now()->startOfWeek();
             $endOfWeek = Carbon::now()->endOfWeek();
 
-            $dataPresentasi = LimitPresentasiDevisi::whereBetween('created_at', [$startOfWeek, $endOfWeek])->get();
+
+
+            $dataPresentasiMobile = LimitPresentasiDevisi::whereBetween('created_at', [$startOfWeek, $endOfWeek])
+            ->whereHas('presentasiDivisi', function ($query) {
+                $query->where('divisi_id', 1);
+            })
+            ->get();
+            $dataPresentasiWebsite = LimitPresentasiDevisi::whereBetween('created_at', [$startOfWeek, $endOfWeek])
+            ->whereHas('presentasiDivisi', function ($query) {
+                $query->where('divisi_id', 2);
+            })
+            ->get();
+            $dataPresentasiUi = LimitPresentasiDevisi::whereBetween('created_at', [$startOfWeek, $endOfWeek])
+            ->whereHas('presentasiDivisi', function ($query) {
+                $query->where('divisi_id', 4);
+            })
+            ->get();
+            $dataPresentasiMarketing = LimitPresentasiDevisi::whereBetween('created_at', [$startOfWeek, $endOfWeek])
+            ->whereHas('presentasiDivisi', function ($query) {
+                $query->where('divisi_id', 3);
+            })
+            ->get();
+            // dd($dataPresentasi);
 
 
 
-
-
-        return response()->view('mentor.dashboard', compact('year', 'currentYear', 'processedData', 'presentasi', 'chartData', 'jadwal', 'hari', 'chart', 'notifikasi', 'senin', 'selasa', 'rabu', 'kamis', 'jumat','dataPresentasi'));
+        return response()->view('mentor.dashboard', compact('year', 'currentYear', 'processedData', 'presentasi', 'chartData', 'jadwal', 'hari', 'chart', 'notifikasi', 'senin', 'selasa', 'rabu', 'kamis', 'jumat','dataPresentasiMobile','dataPresentasiWebsite', 'dataPresentasiUi','dataPresentasiMarketing'));
     }
 
     protected function pengguna()
