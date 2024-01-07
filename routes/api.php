@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('division', [DivisiController::class, 'index']);
-Route::post('division', [DivisiController::class, 'store']);
+Route::post('divisionStore', [DivisiController::class, 'store']);
 Route::put('division/{divisi}', [DivisiController::class, 'update']);
 Route::delete('division/{divisi}', [DivisiController::class, 'destroy']);
 
