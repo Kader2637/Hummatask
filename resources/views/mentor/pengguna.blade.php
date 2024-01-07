@@ -228,12 +228,12 @@
                                 aria-controls="pills-profile-tab" aria-selected="false" data-tab="2"><i
                                     class="fa-solid fa-user-group icon-text"></i>Ketua Magang</button>
                         </li>
-                        <li class="nav-item" role="presentation">
+                        {{-- <li class="nav-item" role="presentation">
                             <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-contact" type="button" role="tab"
                                 aria-controls="pills-contact-tab" aria-selected="false" data-tab="3"><i
                                     class="fa-solid fa-user-tie icon-text"></i>Mentor</button>
-                        </li>
+                        </li> --}}
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-team" type="button" role="tab" aria-controls="pills-histori-tab"
@@ -243,7 +243,7 @@
                         </li>
                     </ul>
                 </div>
-                <div id="mentor-content" class="row g-3">
+                {{-- <div id="mentor-content" class="row g-3">
                     <div class="d-flex flex-row gap-2 justify-content-end py-3 px-4">
                         <div class="d-flex">
                             <div class="col d-flex flex-wrap gap-1">
@@ -254,7 +254,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div id="pengelola-content" class="row g-3">
                     <div class="d-flex flex-row gap-2 justify-content-end py-3 px-4">
                         <div class="d-flex">
@@ -672,6 +672,13 @@
                                             placeholder="Masukan tanggal mulai dan selesai magang" required>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col mb-3">
+                                        <label for="tlp" class="form-label">Nomer WhatsApp</label>
+                                        <input name="tlp" type="text" id="tlp" class="form-control"
+                                            placeholder="Masukan nomer WhatsApp" required>
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-label-secondary"
@@ -683,7 +690,7 @@
                 </form>
             </div>
 
-            <div class="modal fade" id="add-data-mentor" tabindex="-1" aria-hidden="true">
+            {{-- <div class="modal fade" id="add-data-mentor" tabindex="-1" aria-hidden="true">
                 <form action="{{ route('tambah.mentor') }}" method="POST">
                     @csrf
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -717,7 +724,7 @@
                         </div>
                     </div>
                 </form>
-            </div>
+            </div> --}}
 
             <div class="modal fade" id="edit-data-mentor" tabindex="-1" aria-hidden="true">
                 <form action="" id="edit-form" method="POST">

@@ -93,6 +93,7 @@ class tambahUsersController extends Controller
             'sekolah' => $request->sekolah,
             'masa_magang_awal' => $tanggalAwal,
             'masa_magang_akhir' => $tanggalAkhir,
+            'tlp' => $request->tlp,
         ];
 
 
@@ -166,6 +167,7 @@ class tambahUsersController extends Controller
                 'peran_id' => 1,
                 'tanggal_bergabung' => $tanggalAwal,
                 'tanggal_lulus' => $tanggalAkhir,
+                'tlp' => $request->tlp,
             ]);
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'User gagal disimpan!');
