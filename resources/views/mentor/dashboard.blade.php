@@ -46,7 +46,7 @@
                                           <img src="{{ asset('assets/img/illustrations/noData2.png') }}"
                                               alt="" class="mb-0" style="width: 250px;">
                                       </div>
-                                      <p class="text-center mb-0 mt-2">Data tidak tersedia <i
+                                      <p class="text-center mb-0 mt-2">Setting Limit Terlebih dahulu ! <i
                                               class="ti ti-address-book-off"></i></p>
                                     </div>
                                     <div class="mb-0 d-flex justify-content-end">
@@ -64,14 +64,14 @@
                                                 Jadwal Ke 1
                                             </p>
                                         </div>
-                                        <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                                        <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
                                             <input type="time" name="mulai[]"
                                                 class="form-control" />
                                         </div>
                                         <div class="mb-3 col-lg-1 col-xl-1 col-1 mb-0 text-center mt-2">
                                             -
                                         </div>
-                                        <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                                        <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
                                             <input type="time" name="akhir[]" 
                                                 class="form-control" />
                                         </div>
