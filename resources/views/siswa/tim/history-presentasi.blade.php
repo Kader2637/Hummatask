@@ -271,7 +271,7 @@
                                                         </label>
                                                     </div>
                                                 @empty
-                                                    <h6 class="text-center mt-4">Tidak ada sesi hari ini, cek di hari lain
+                                                    <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di hari lain
                                                         <i class="ti ti-address-book-off"></i>
                                                     </h6>
                                                     <div class="mt-4 mb-3 d-flex justify-content-evenly">
@@ -323,7 +323,7 @@
                                                         </label>
                                                     </div>
                                                 @empty
-                                                    <h6 class="text-center mt-4">Tidak ada sesi hari ini, cek di hari lain
+                                                    <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di hari lain
                                                         <i class="ti ti-address-book-off"></i>
                                                     </h6>
                                                     <div class="mt-4 mb-3 d-flex justify-content-evenly">
@@ -375,7 +375,7 @@
                                                         </label>
                                                     </div>
                                                 @empty
-                                                    <h6 class="text-center mt-4">Tidak ada sesi hari ini, cek di hari lain
+                                                    <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di hari lain
                                                         <i class="ti ti-address-book-off"></i>
                                                     </h6>
                                                     <div class="mt-4 mb-3 d-flex justify-content-evenly">
@@ -427,7 +427,7 @@
                                                         </label>
                                                     </div>
                                                 @empty
-                                                    <h6 class="text-center mt-4">Tidak ada sesi hari ini, cek di hari lain
+                                                    <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di hari lain
                                                         <i class="ti ti-address-book-off"></i>
                                                     </h6>
                                                     <div class="mt-4 mb-3 d-flex justify-content-evenly">
@@ -479,7 +479,7 @@
                                                         </label>
                                                     </div>
                                                 @empty
-                                                    <h6 class="text-center mt-4">Tidak ada sesi hari ini, cek di hari lain
+                                                    <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di hari lain
                                                         <i class="ti ti-address-book-off"></i></h6>
                                                     <div class="mt-4 mb-3 d-flex justify-content-evenly">
                                                         <img src="{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}"
