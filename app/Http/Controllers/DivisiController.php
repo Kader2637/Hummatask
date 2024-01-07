@@ -15,12 +15,10 @@ class DivisiController extends Controller
      *
      * @return View
      */
-    public function index(): View
+    public function index()
     {
-        $divisis = Divisi::query()
-            ->get();
-        return view('', compact('divisis'));
-    }
+            $divisis = Divisi::query()->get();
+            return response()->json(['divisis' => $divisis]);    }
 
     /**
      * store
