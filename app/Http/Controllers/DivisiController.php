@@ -39,12 +39,12 @@ class DivisiController extends Controller
      * @param  mixed $request
      * @return RedirectResponse
      */
-    public function update(Divisi $divisi, DivisiRequest $request): RedirectResponse
+    public function update(Divisi $divisi, DivisiRequest $request)
     {
         $divisi
             ->update($request->validated());
-        return redirect()->back()->with('success', 'Berhasil merubah divisi');
-    }
+            return response()->json(['success' => 'Berhasil Merubah divisi']);
+        }
 
     /**
      * destroy
@@ -52,9 +52,9 @@ class DivisiController extends Controller
      * @param  mixed $divisi
      * @return RedirectResponse
      */
-    public function destroy(Divisi $divisi):  RedirectResponse
+    public function destroy(Divisi $divisi)
     {
         $divisi->delete();
-        return redirect()->back()->with('success', 'Berhasil menghapus divisi');
+        return response()->json(['success' => 'Berhasil menghapus divisi']);
     }
 }
