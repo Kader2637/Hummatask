@@ -39,7 +39,8 @@
                     <button type="button" data-bs-toggle="modal" data-bs-target="#detailPresentasi"
                         class="btn btn-label-secondary waves-effect" data-bs-dismiss="modal">Kembali</button>
                     <button type="button" onclick="kirimProsesGantiUrutan()" data-bs-toggle="modal"
-                        data-bs-target="#detailPresentasi" class="btn btn-primary waves-effect waves-light">Atur Urutan</button>
+                        data-bs-target="#detailPresentasi" class="btn btn-primary waves-effect waves-light">Atur
+                        Urutan</button>
                 </div>
             </div>
         </div>
@@ -148,9 +149,11 @@
 
                             <div class="col">
                                 <span>Status Revisi</span> <br><br>
-                                <input type="radio" value="selesai" name="status_revisi" class="form-check-input" id="selesai">
+                                <input type="radio" value="selesai" name="status_revisi" class="form-check-input"
+                                    id="selesai">
                                 <label for="selesai">Selesai</label>
-                                <input type="radio" value="tidak_selesai" name="status_revisi" class="form-check-input" id="tidak">
+                                <input type="radio" value="tidak_selesai" name="status_revisi"
+                                    class="form-check-input" id="tidak">
                                 <label for="tidak">Tidak selesai</label>
 
                                 <br>
@@ -437,8 +440,27 @@
 
                         Object.keys(data1).forEach((key) => {
                             let presentasi = data1[key]
-                            // console.log(presentasi.jadwal);
-                            const jadwal = formatDate(presentasi.jadwal)
+                            const jadwal = formatDate(presentasi.jadwal);
+
+                            let limitRelation = presentasi.limit_presentasi_divisi;
+                            let day = limitRelation.presentasi_divisi.day;
+
+                            if (day === 'monday') {
+                                day = 'Senin';
+                            } else if (day === 'tuesday') {
+                                day = 'Selasa';
+                            } else if (day === 'wednesday') {
+                                day = 'Rabu';
+                            } else if (day === 'thursday') {
+                                day = 'Kamis';
+                            } else if (day === 'friday') {
+                                day = 'Jumat';
+                            }
+
+                            let mulai = limitRelation.mulai.split(':').slice(0, 2).join(
+                                ':');
+                            let akhir = limitRelation.akhir.split(':').slice(0, 2).join(
+                                ':');
 
                             let div = document.createElement('div')
                             div.id = "card-persetujuan-" + presentasi.code;
@@ -452,7 +474,7 @@
                                 <h4 class="card-title text-capitalize">${presentasi.tim.nama}</h4>
                                 <a><span class="badge bg-label-warning mb-3 text-capitalize">${presentasi.tim.status_tim} Project</span></a>
                             </div>
-                            <p class="card-text">${presentasi.presentasi_divisis_id}</p>
+                            <p class="card-text">Sesi ${day} ${mulai}-${akhir}</p>
                             <p class="card-text">${jadwal}</p>
                             <div class="d-flex justify-content-center gap-2">
                                 <button onclick="tolakPresentasi('${presentasi.code}','${code}')" data-bs-toggle="modal" data-bs-target="#Reject" class="btn btn-danger" >Tolak</button>
@@ -501,6 +523,26 @@
                             let deadline = data2[6][key]
                             let dataPresentasiTim = data2[7][key]
 
+                            let limitRelation = presentasi.limit_presentasi_divisi;
+                            let day = limitRelation.presentasi_divisi.day;
+
+                            if (day === 'monday') {
+                                day = 'Senin';
+                            } else if (day === 'tuesday') {
+                                day = 'Selasa';
+                            } else if (day === 'wednesday') {
+                                day = 'Rabu';
+                            } else if (day === 'thursday') {
+                                day = 'Kamis';
+                            } else if (day === 'friday') {
+                                day = 'Jumat';
+                            }
+
+                            let mulai = limitRelation.mulai.split(':').slice(0, 2).join(
+                                ':');
+                            let akhir = limitRelation.akhir.split(':').slice(0, 2).join(
+                                ':');
+
                             let kategoryTim;
                             if (presentasi.tim.status_tim === "solo") {
                                 kategoryTim = "Solo Project"
@@ -531,6 +573,7 @@
                                     <h4 class="card-title text-capitalize text-dark mb-0">${presentasi.tim.nama}</h4>
                                     <div class="d-flex flex-column gap-2">
                                     <span class="badge bg-label-warning d-flex align-items-center justify-content-center flex-column cursor-pointer" style="" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Status Tim"    >${kategoryTim}</span>
+                                    <p class="card-text">Sesi ${day} ${mulai}-${akhir}</p>
 
                                     </div>
                                     <div class="d-flex justify-content-around align-items-center w-100 mb-2 gap-2">

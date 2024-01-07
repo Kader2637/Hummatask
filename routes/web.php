@@ -51,7 +51,7 @@ use App\Http\Controllers\profileController;
 
         Route::delete('tim/notifikasi/{id}', [PengajuanProjekController::class, 'destroy']);
         Route::get('/ambil-notifikasi', [PengajuanProjekController::class, 'ambilNotifikasi']);
-        
+
         Route::prefix('tim')->controller(timController::class)->group(function () {
             // Halaman Tim
             Route::middleware(['auth', 'siswa', 'cekanggota'])->group(function () {
@@ -147,7 +147,7 @@ use App\Http\Controllers\profileController;
             Route::post('presentasi-divisi', [PresentasiDivisiControlller::class, 'store'])->name('presentasi-divisi.store');
             Route::delete('presentasi-divisi/{presentasi_divisi}', [PresentasiDivisiControlller::class, 'destroy'])->name('presentasi-divisi.destroy');
             Route::post('presentasi-divisi/jadwalcreate', [PresentasiDivisiControlller::class, 'createJam'])->name('presentasi-divisi-create-jam.store');
-            
+
             // Process`
             Route::post('tampil-detail-presentasi/{code}', [PresentasiController::class, 'tampilkanDetailPresentasi']);
             Route::post('update-deadline/{id}', [mentorController::class, 'updateDeadline']);
@@ -171,7 +171,6 @@ use App\Http\Controllers\profileController;
             Route::post('pembuatantim', [PengajuanTimController::class, 'pembuatanTimProject'])->name('pembuatan.tim');
             Route::post('/update-tim/{timId}', [PengajuanTimController::class, 'updateTimProject'])->name('tim.update');
             Route::post('solo/edit/{timId}', [PengajuanTimController::class, 'updateSolo'])->name('solo.edit');
-
 
             Route::get('delete-user/{code}', [tambahUsersController::class, 'delete'])->name('delete.user.pengguna');
             Route::get('delete-mentor/{code}', [tambahUsersController::class, 'delete_mentor'])->name('delete.mentor');

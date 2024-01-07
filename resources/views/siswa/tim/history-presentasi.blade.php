@@ -251,8 +251,6 @@
                                         <form action="{{ route('ajukan-presentasi', $tim->code) }}" method="post"
                                             id="formAjukanPresentasi_1">
                                             @csrf
-                                            <label for="">Judul</label>
-                                            <input type="text" class="form-control" name="judul" id="judul">
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_senin as $data)
@@ -302,8 +300,6 @@
                                                     </div>
                                                 @endforelse
                                             </div>
-                                            <label for="" class="mt-3 mb-2">Deskripsi (opsional)</label>
-                                            <textarea name="deskripsi" class="form-control" id="deskripsi" cols="30" rows="10"></textarea>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
                                                     <div class="">
@@ -324,8 +320,6 @@
                                         <form action="{{ route('ajukan-presentasi', $tim->code) }}" method="post"
                                             id="formAjukanPresentasi_2">
                                             @csrf
-                                            <label for="">Judul</label>
-                                            <input type="text" name="judul" id="judul" class="form-control">
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_selasa as $data)
@@ -355,8 +349,6 @@
                                                     </div>
                                                 @endforelse
                                             </div>
-                                            <label for="" class="mt-3 mb-2">Deskripsi (opsional)</label>
-                                            <textarea name="deskripsi" class="form-control" id="deskripsi" cols="30" rows="10"></textarea>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
                                                     <div class="">
@@ -377,8 +369,6 @@
                                         <form action="{{ route('ajukan-presentasi', $tim->code) }}" method="post"
                                             id="formAjukanPresentasi_3">
                                             @csrf
-                                            <label for="">Judul</label>
-                                            <input type="text" class="form-control" name="judul">
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_rabu as $data)
@@ -408,8 +398,6 @@
                                                     </div>
                                                 @endforelse
                                             </div>
-                                            <label for="" class="mt-3 mb-2">Deskripsi (opsional)</label>
-                                            <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
                                                     <div class="">
@@ -430,8 +418,6 @@
                                         <form action="{{ route('ajukan-presentasi', $tim->code) }}" method="post"
                                             id="formAjukanPresentasi_4">
                                             @csrf
-                                            <label for="">Judul</label>
-                                            <input type="text" class="form-control" name="judul">
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_kamis as $data)
@@ -461,8 +447,6 @@
                                                     </div>
                                                 @endforelse
                                             </div>
-                                            <label for="" class="mt-3 mb-2">Deskripsi (opsional)</label>
-                                            <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
                                                     <div class="">
@@ -483,8 +467,6 @@
                                         <form action="{{ route('ajukan-presentasi', $tim->code) }}" method="post"
                                             id="formAjukanPresentasi_5">
                                             @csrf
-                                            <label for="">Judul</label>
-                                            <input type="text" class="form-control" name="judul">
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_jumat as $data)
@@ -514,8 +496,6 @@
                                                     </div>
                                                 @endforelse
                                             </div>
-                                            <label for="" class="mt-3 mb-2">Deskripsi (opsional)</label>
-                                            <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
                                                     <div class="">
@@ -671,32 +651,12 @@
 
         function validateForm(formId) {
             $(formId).on('submit', function(event) {
-                var judul = $(this).find('[name="judul"]').val();
                 var checkbox = $(this).find('[name="plan"]:checked').length > 0;
-                var deskripsi = $(this).find('[name="deskripsi"]').val();
 
-                if (judul.length === 0 || deskripsi.length === 0 || !checkbox) {
+                if (!checkbox) {
                     swal.fire({
                         title: 'Peringatan',
-                        text: 'Mohon lengkapi semua data',
-                        icon: 'warning',
-                        showConfirmButton: false,
-                        timer: 2000
-                    });
-                    event.preventDefault();
-                } else if (judul.length > 25) {
-                    swal.fire({
-                        title: 'Peringatan',
-                        text: 'Judul terlalu panjang, maksimal 25 karakter',
-                        icon: 'warning',
-                        showConfirmButton: false,
-                        timer: 2000
-                    });
-                    event.preventDefault();
-                } else if (deskripsi.length > 50) {
-                    swal.fire({
-                        title: 'Peringatan',
-                        text: 'Deskripsi terlalu panjang, maksimal 50 karakter',
+                        text: 'Silahkan pilih data terlebih dahulu',
                         icon: 'warning',
                         showConfirmButton: false,
                         timer: 2000

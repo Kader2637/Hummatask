@@ -17,8 +17,9 @@ class DivisiController extends Controller
      */
     public function index()
     {
-            $divisis = Divisi::query()->get();
-            return response()->json(['divisis' => $divisis]);    }
+        $divisis = Divisi::query()->get();
+        return response()->json(['divisis' => $divisis]);
+    }
 
     /**
      * store
@@ -43,7 +44,7 @@ class DivisiController extends Controller
     {
         $divisi
             ->update($request->validated());
-            return redirect()->back()->with('success', 'Berhasil menambahkan divisi');
+        return response()->json(['success' => 'Berhasil Merubah divisi']);
     }
 
     /**

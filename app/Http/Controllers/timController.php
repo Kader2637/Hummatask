@@ -20,10 +20,9 @@ use Illuminate\Support\Facades\DB;
 
 class timController extends Controller
 {
-
     protected function boardPage($code)
     {
-        $title = "Tim/board";
+        $title = 'Tim/board';
         $tim = Tim::where('code', $code)->firstOrFail();
         $userID = Auth::user()->id;
 
@@ -37,10 +36,22 @@ class timController extends Controller
         }
 
         $anggota = $tim->user()->get();
-        $tugas_baru = $tim->tugas()->where('status_tugas', 'tugas_baru')->get();
-        $tugas_dikerjakan = $tim->tugas()->where('status_tugas', 'dikerjakan')->get();
-        $tugas_revisi = $tim->tugas()->where('status_tugas', 'revisi')->get();
-        $tugas_selesai = $tim->tugas()->where('status_tugas', 'selesai')->get();
+        $tugas_baru = $tim
+            ->tugas()
+            ->where('status_tugas', 'tugas_baru')
+            ->get();
+        $tugas_dikerjakan = $tim
+            ->tugas()
+            ->where('status_tugas', 'dikerjakan')
+            ->get();
+        $tugas_revisi = $tim
+            ->tugas()
+            ->where('status_tugas', 'revisi')
+            ->get();
+        $tugas_selesai = $tim
+            ->tugas()
+            ->where('status_tugas', 'selesai')
+            ->get();
         $code = $tim->code;
 
         return view('siswa.tim.board', compact('title', 'tim', 'anggota', 'tugas_baru', 'tugas_dikerjakan', 'tugas_revisi', 'tugas_selesai', 'project', 'notifikasi', 'code'));
@@ -52,20 +63,23 @@ class timController extends Controller
         $tugas = Tugas::where('nama', $namaTugas)->first();
 
         if (!$tugas) {
-            return redirect()->back()->with('error', 'Tugas tidak ditemukan');
+            return redirect()
+                ->back()
+                ->with('error', 'Tugas tidak ditemukan');
         }
 
         $newStatus = $request->input('newStatus');
         $newPriority = $request->input('newPriority');
         $deadline = $request->input('deadline');
 
-
         $tugas->status_tugas = $newStatus;
         $tugas->prioritas = $newPriority;
         $tugas->deadline = $deadline;
         $tugas->save();
 
-        return redirect()->back()->with('success', 'Status tugas berhasil diperbarui');
+        return redirect()
+            ->back()
+            ->with('success', 'Status tugas berhasil diperbarui');
     }
 
     protected function hapusTugas(Request $request)
@@ -74,16 +88,20 @@ class timController extends Controller
         $tugas = Tugas::where('nama', $nameTask)->first();
 
         if (!$tugas) {
-            return redirect()->back()->with('error', 'Tugas tidak ditemukan');
+            return redirect()
+                ->back()
+                ->with('error', 'Tugas tidak ditemukan');
         }
 
         $tugas->delete();
-        return redirect()->back()->with('success', 'Tugas berhasil dihapus');
+        return redirect()
+            ->back()
+            ->with('success', 'Tugas berhasil dihapus');
     }
 
     protected function kalenderPage($code)
     {
-        $title = "Tim/kalender";
+        $title = 'Tim/kalender';
         $tim = Tim::where('code', $code)->firstOrFail();
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
@@ -101,7 +119,7 @@ class timController extends Controller
 
     protected function projectPage($code)
     {
-        $title = "Tim/project";
+        $title = 'Tim/project';
         $tim = Tim::where('code', $code)->firstOrFail();
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
@@ -118,33 +136,33 @@ class timController extends Controller
         $tgl = $tim->project->pluck('created_at')->toArray();
         $deadline = $tim->project->pluck('deadline')->toArray();
 
-        $tanggal = collect($tgl)->map(function ($tglItem, $index) use ($deadline) {
-            $tglItem = Carbon::parse($tglItem);
-            $deadlineItem = Carbon::parse($deadline[$index]);
-            return $tglItem->diffInHours($deadlineItem);
-        })->toArray();
+        $tanggal = collect($tgl)
+            ->map(function ($tglItem, $index) use ($deadline) {
+                $tglItem = Carbon::parse($tglItem);
+                $deadlineItem = Carbon::parse($deadline[$index]);
+                return $tglItem->diffInHours($deadlineItem);
+            })
+            ->toArray();
 
-        $days = collect($tgl)->map(function ($tglDay, $index) use ($deadline) {
-            $tglDay = Carbon::parse($tglDay);
-            $deadlineItem = Carbon::parse($deadline[$index]);
-            return $tglDay->diffInDays($deadlineItem);
-        })->toArray();
+        $days = collect($tgl)
+            ->map(function ($tglDay, $index) use ($deadline) {
+                $tglDay = Carbon::parse($tglDay);
+                $deadlineItem = Carbon::parse($deadline[$index]);
+                return $tglDay->diffInDays($deadlineItem);
+            })
+            ->toArray();
 
-        $chartData = [
-            ['Status Tugas', 'Jumlah'],
-            ['Selesai', $selesaiCount || 0],
-            ['Revisi', $revisiCount || 0],
-            ['Dikerjakan', $dikerjakanCount || 0],
-            ['Tugas Baru', $tugasBaruCount || 0],
-        ];
+        $chartData = [['Status Tugas', 'Jumlah'], ['Selesai', $selesaiCount || 0], ['Revisi', $revisiCount || 0], ['Dikerjakan', $dikerjakanCount || 0], ['Tugas Baru', $tugasBaruCount || 0]];
 
-        return view('siswa.tim.project', compact('hasProjectRelation', 'days', 'tanggal', 'persentase', 'selesaiCount', 'revisiCount', 'chartData', 'title', 'tim', 'anggota', 'project', 'notifikasi',));
+        return view('siswa.tim.project', compact('hasProjectRelation', 'days', 'tanggal', 'persentase', 'selesaiCount', 'revisiCount', 'chartData', 'title', 'tim', 'anggota', 'project', 'notifikasi'));
     }
 
     protected function statistikPage($code)
     {
-        $title = "Tim/Statistik";
-        $tim = Tim::with('anggota.jabatan')->where('code', $code)->firstOrFail();
+        $title = 'Tim/Statistik';
+        $tim = Tim::with('anggota.jabatan')
+            ->where('code', $code)
+            ->firstOrFail();
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
 
@@ -157,11 +175,18 @@ class timController extends Controller
         $jabatan = [];
 
         foreach ($anggota as $data) {
-            // dd($anggota[0]->anggotaReal->where('tim_id',$tim->id)->sortByDesc('created_at')->first()->status,$anggota[1]->anggotaReal->where('tim_id',$tim->id)->sortByDesc('created_at')->first()->status);
-            if ($data->anggotaReal->where('tim_id', $tim->id)->sortByDesc('created_at')->first()->status !== "active") {
-                $jabatan[] = "Mantan Anggota";
+            if (
+                $data->anggotaReal
+                    ->where('tim_id', $tim->id)
+                    ->sortByDesc('created_at')
+                    ->first()->status !== 'active'
+            ) {
+                $jabatan[] = 'Mantan Anggota';
             } else {
-                $jabatan[] = $data->anggotaReal->where("tim_id", $tim->id)->sortByDesc("created_at")->first()->jabatan->nama_jabatan;
+                $jabatan[] = $data->anggotaReal
+                    ->where('tim_id', $tim->id)
+                    ->sortByDesc('created_at')
+                    ->first()->jabatan->nama_jabatan;
             }
         }
 
@@ -174,7 +199,7 @@ class timController extends Controller
 
     protected function historyPresentasiPage($code)
     {
-        $title = "Tim/presentasi";
+        $title = 'Tim/presentasi';
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
         $tim = Tim::where('code', $code)->firstOrFail();
@@ -184,34 +209,52 @@ class timController extends Controller
             ->with('presentasiDivisi')
             ->get();
 
-        $sesi_senin = $allSessions->filter(function ($session) {
-            return $session->presentasiDivisi->day === DayEnum::MONDAY->value;
-        })->sortBy('mulai');
-        
-        $sesi_selasa = $allSessions->filter(function ($session) {
-            return $session->presentasiDivisi->day === DayEnum::TUESDAY->value;
-        })->sortBy('mulai');
+        $sesi_senin = $allSessions
+            ->filter(function ($session) {
+                return $session->presentasiDivisi->day === DayEnum::MONDAY->value;
+            })
+            ->sortBy('mulai');
 
-        $sesi_rabu = $allSessions->filter(function ($session) {
-            return $session->presentasiDivisi->day === DayEnum::WEDNESDAY->value;
-        })->sortBy('mulai');
+        $sesi_selasa = $allSessions
+            ->filter(function ($session) {
+                return $session->presentasiDivisi->day === DayEnum::TUESDAY->value;
+            })
+            ->sortBy('mulai');
 
-        $sesi_kamis = $allSessions->filter(function ($session) {
-            return $session->presentasiDivisi->day === DayEnum::THURSDAY->value;
-        })->sortBy('mulai');
+        $sesi_rabu = $allSessions
+            ->filter(function ($session) {
+                return $session->presentasiDivisi->day === DayEnum::WEDNESDAY->value;
+            })
+            ->sortBy('mulai');
 
-        $sesi_jumat = $allSessions->filter(function ($session) {
-            return $session->presentasiDivisi->day === DayEnum::FRIDAY->value;
-        })->sortBy('mulai');
+        $sesi_kamis = $allSessions
+            ->filter(function ($session) {
+                return $session->presentasiDivisi->day === DayEnum::THURSDAY->value;
+            })
+            ->sortBy('mulai');
+
+        $sesi_jumat = $allSessions
+            ->filter(function ($session) {
+                return $session->presentasiDivisi->day === DayEnum::FRIDAY->value;
+            })
+            ->sortBy('mulai');
 
         $project = $tim->project->first();
         if ($project->deskripsi === null) {
             return back()->with('tolak', 'Tolong lengkapi deskripsi proyek terlebih dahulu');
         }
         // $anggota = $tim->user()->where('id',$userID)->first()->anggota->status;
-        $anggota = Anggota::where('tim_id', $tim_id)->where('user_id', $userID)->first()->status;
-        $jabatan = $tim->user()->where('id', $userID)->first()->anggota->jabatan_id;
-        $presentasi = $tim->presentasi()->orderBy('created_at', 'desc')->get();
+        $anggota = Anggota::where('tim_id', $tim_id)
+            ->where('user_id', $userID)
+            ->first()->status;
+        $jabatan = $tim
+            ->user()
+            ->where('id', $userID)
+            ->first()->anggota->jabatan_id;
+        $presentasi = $tim
+            ->presentasi()
+            ->orderBy('created_at', 'desc')
+            ->get();
         $project = $tim->project->first();
 
         $hasProjectRelation = $tim->project()->exists();
@@ -225,7 +268,7 @@ class timController extends Controller
 
     protected function catatanPage($code)
     {
-        $title = "catatan";
+        $title = 'catatan';
         $tim = Tim::where('code', $code)->firstOrFail();
         $catatans = catatan::where('tim_id', $tim->id)->get();
         $userID = Auth::user()->id;
@@ -245,7 +288,7 @@ class timController extends Controller
 
     protected function historyCatatanPage($code)
     {
-        $title = "catatan history";
+        $title = 'catatan history';
         $tim = Tim::where('code', $code)->firstOrFail();
 
         $project = $tim->project->first();
