@@ -672,6 +672,13 @@
                                             placeholder="Masukan tanggal mulai dan selesai magang" required>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col mb-3">
+                                        <label for="tlp" class="form-label">Nomer WhatsApp</label>
+                                        <input name="tlp" type="text" id="tlp" class="form-control"
+                                            placeholder="Masukan nomer WhatsApp" required>
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-label-secondary"
