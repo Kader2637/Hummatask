@@ -10,7 +10,7 @@ class DivisiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:255|unique:divisis,name,' . $this->divisi->id
+            'name' => 'required|max:255' 
         ];
     }
 
