@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('divisi', DivisiController::class);
+Route::post('create-divisi' , [DivisiController::class , 'store']);
 
 // mentor 
 Route::post('tambah-mentor', [tambahUsersController::class, 'store_mentor']);
