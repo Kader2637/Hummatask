@@ -13,7 +13,7 @@ class PresentasiDivisi extends Model
 
     protected $table = 'presentasi_divisis';
     protected $guarded = [];
-    protected $fillable = ['id', 'day', 'divisi_id'];
+    protected $fillable = ['id', 'day', 'divisi_id', 'limit'];
 
     /**
      * divisi
