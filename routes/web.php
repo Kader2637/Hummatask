@@ -125,6 +125,7 @@ use App\Http\Controllers\profileController;
             Route::get('ketua/ambil-urutan/{codeHistory}', [PresentasiController::class, 'ambilUrutan']);
             Route::get('ketua/ambil-detail-history-presentasi/{codeHistory}/{codeTim}', [PresentasiController::class, 'ambilDetailHistoryPresentasi']);
         });
+        Route::delete('presentasi-divisi/{presentasi_divisi}', [PresentasiDivisiControlller::class, 'destroy'])->name('presentasi-divisi.destroy');
 
         // Halaman Mentor
         Route::prefix('mentor')->middleware(['auth', 'mentor'])->group(function () {
@@ -145,7 +146,6 @@ use App\Http\Controllers\profileController;
             Route::get('get-galeri', [mentorController::class, 'getGalery'])->name('get.galery');
 
             Route::post('presentasi-divisi', [PresentasiDivisiControlller::class, 'store'])->name('presentasi-divisi.store');
-            Route::delete('presentasi-divisi/{presentasi_divisi}', [PresentasiDivisiControlller::class, 'destroy'])->name('presentasi-divisi.destroy');
 
             // Process`
             Route::post('tampil-detail-presentasi/{code}', [PresentasiController::class, 'tampilkanDetailPresentasi']);

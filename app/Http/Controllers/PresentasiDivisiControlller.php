@@ -42,8 +42,8 @@ class PresentasiDivisiControlller extends Controller
      * @return RedirectResponse
      */
     public function destroy(PresentasiDivisi $presentasi_divisi): RedirectResponse
-    {
-        $presentasi_divisi->delete();
-        return redirect()->back()->with('success', 'Berhasil menghapus divisi');
-    }
+{
+    $presentasi_divisi->delete();
+    return redirect()->back()->with('success', 'Berhasil menghapus divisi');
+}
 }
