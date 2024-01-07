@@ -284,7 +284,7 @@
         </div>
       </div>
 
-      <div class="col-12 col-xl-7">
+      <div class="col-12 col-xl-12">
         <div class="card mb-4">
           <div class="card-body m-0">
             <h5 class="pb-0">Jadwal Para Mentor</h5>
@@ -326,7 +326,16 @@
                           <td>{{ $presentasiMobile->akhir }}</td>
                         </tr>
                       @empty
-                        <p>data kosong</p>
+                        <tr>
+                          <td colspan="4">
+                            <div class="d-flex justify-content-evenly">
+                              <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
+                                class="mb-0" style="width: 250px;">
+                            </div>
+                            <p class="text-center mb-0 mt-2">Data tidak tersedia <i class="ti ti-address-book-off"></i>
+                            </p>
+                          </td>
+                        </tr>
                       @endforelse
                     </tbody>
                   </table>
@@ -344,20 +353,29 @@
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        @php
+                      @php
                         $no = 1;
                       @endphp
-                      <tbody class="table-border-bottom-0">
-                        @forelse ($dataPresentasiWebsite as $dw => $presentasiWebsite)
-                          <tr>
-                            <td>{{ $no++ }}</td>
-                            <td>{{ \Carbon\Carbon::parse($presentasiWebsite->created_at)->translatedFormat('l') }}</td>
-                            <td>{{ $presentasiWebsite->mulai }}</td>
-                            <td>{{ $presentasiWebsite->akhir }}</td>
-                          </tr>
-                        @empty
-
-                        @endforelse
+                    <tbody class="table-border-bottom-0">
+                      @forelse ($dataPresentasiWebsite as $dw => $presentasiWebsite)
+                        <tr>
+                          <td>{{ $no++ }}</td>
+                          <td>{{ \Carbon\Carbon::parse($presentasiWebsite->created_at)->translatedFormat('l') }}</td>
+                          <td>{{ $presentasiWebsite->mulai }}</td>
+                          <td>{{ $presentasiWebsite->akhir }}</td>
+                        </tr>
+                      @empty
+                        <tr>
+                          <td colspan="4">
+                            <div class="d-flex justify-content-evenly">
+                              <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
+                                class="mb-0" style="width: 250px;">
+                            </div>
+                            <p class="text-center mb-0 mt-2">Data tidak tersedia <i class="ti ti-address-book-off"></i>
+                            </p>
+                          </td>
+                        </tr>
+                      @endforelse
                     </tbody>
                   </table>
                 </div>
@@ -374,20 +392,29 @@
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        @php
+                      @php
                         $no = 1;
                       @endphp
-                      <tbody class="table-border-bottom-0">
-                        @forelse ($dataPresentasiUi as $dU => $presentasiUi)
-                          <tr>
-                            <td>{{ $no++ }}</td>
-                            <td>{{ \Carbon\Carbon::parse($presentasiUi->created_at)->translatedFormat('l') }}</td>
-                            <td>{{ $presentasiUi->mulai }}</td>
-                            <td>{{ $presentasiUi->akhir }}</td>
-                          </tr>
-                        @empty
-
-                        @endforelse
+                    <tbody class="table-border-bottom-0">
+                      @forelse ($dataPresentasiUi as $dU => $presentasiUi)
+                        <tr>
+                          <td>{{ $no++ }}</td>
+                          <td>{{ \Carbon\Carbon::parse($presentasiUi->created_at)->translatedFormat('l') }}</td>
+                          <td>{{ $presentasiUi->mulai }}</td>
+                          <td>{{ $presentasiUi->akhir }}</td>
+                        </tr>
+                      @empty
+                        <tr>
+                          <td colspan="4">
+                            <div class="d-flex justify-content-evenly">
+                              <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
+                                class="mb-0" style="width: 250px;">
+                            </div>
+                            <p class="text-center mb-0 mt-2">Data tidak tersedia <i class="ti ti-address-book-off"></i>
+                            </p>
+                          </td>
+                        </tr>
+                      @endforelse
                     </tbody>
                   </table>
                 </div>
@@ -404,7 +431,7 @@
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        @forelse ($dataPresentasiMarketing as $dM => $presentasiMarketing)
+                      @forelse ($dataPresentasiMarketing as $dM => $presentasiMarketing)
                         <tr>
                           <td>{{ $no++ }}</td>
                           <td>{{ \Carbon\Carbon::parse($presentasiMarketing->created_at)->translatedFormat('l') }}</td>
@@ -412,7 +439,16 @@
                           <td>{{ $presentasiMarketing->akhir }}</td>
                         </tr>
                       @empty
-
+                        <tr>
+                          <td colspan="4">
+                            <div class="d-flex justify-content-evenly">
+                              <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
+                                class="mb-0" style="width: 250px;">
+                            </div>
+                            <p class="text-center mb-0 mt-2">Data tidak tersedia <i class="ti ti-address-book-off"></i>
+                            </p>
+                          </td>
+                        </tr>
                       @endforelse
                     </tbody>
                   </table>
@@ -423,7 +459,7 @@
         </div>
       </div>
 
-      <div class="col-12 col-xl-5">
+      <div class="col-12 col-xl-12">
         <div class="card">
           <div class="d-flex justify-content-between mx-3 mb-1 mt-4">
             <h5 class="pb-0">Data Presentasi hari ini</h5>
