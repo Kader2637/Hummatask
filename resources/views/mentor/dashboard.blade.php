@@ -4,7 +4,7 @@
   <div class="container-fluid mt-3">
     <h5 class="mt-3 fs-4">Dashboard Mentor</h5>
     <div class="row">
-      <div class="col">
+      <div class="col-12 col-xl-7">
         <div class="card mb-4">
           <div class="card-body m-0">
             <h5 class="pb-0">Atur Jadwal Presentasi</h5>
@@ -284,147 +284,7 @@
         </div>
       </div>
 
-      {{-- Modal Presetanasi --}}
-      <form action="{{ route('presentasi-divisi.store') }}" method="POST">
-        @csrf
-        <div class="modal fade" id="modalLimit" tabindex="-1" aria-hidden="true">
-          <input type="hidden" name="day" value="monday">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="modalCenterTitle">Setting Limit Presentasi</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <label for="limit" class="form-label">Limit Presentasi</label>
-                <input class="form-control" type="number" id="limit" name="limit">
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
-                <button type="submit" class="btn btn-primary" id="createButton">Simpan</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
-
-      {{-- Modal Presetanasi --}}
-      <form action="{{ route('presentasi-divisi.store') }}" method="POST">
-        @csrf
-        <div class="modal fade" id="modalLimit" tabindex="-1" aria-hidden="true">
-          <input type="hidden" name="day" value="monday">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="modalCenterTitle">Setting Limit Presentasi</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <label for="limit" class="form-label">Limit Presentasi</label>
-                <input class="form-control" type="number" id="limit" name="limit">
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
-                <button type="submit" class="btn btn-primary" id="createButton">Simpan</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
-
-      <form action="{{ route('presentasi-divisi.store') }}" method="POST">
-        @csrf
-        <div class="modal fade" id="modalLimitSelasa" tabindex="-1" aria-hidden="true">
-          <input type="hidden" name="day" value="tuesday">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="modalCenterTitle">Setting Limit Presentasi</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <label for="limit" class="form-label">Limit Presentasi</label>
-                <input class="form-control" type="number" id="limit" name="limit">
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
-                <button type="submit" class="btn btn-primary" id="createButton">Simpan</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
-
-      <form action="{{ route('presentasi-divisi.store') }}" method="POST">
-        @csrf
-        <div class="modal fade" id="modalLimitRabu" tabindex="-1" aria-hidden="true">
-          <input type="hidden" name="day" value="wednesday">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="modalCenterTitle">Setting Limit Presentasi</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <label for="limit" class="form-label">Limit Presentasi</label>
-                <input class="form-control" type="number" id="limit" name="limit">
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
-                <button type="submit" class="btn btn-primary" id="createButton">Simpan</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
-
-      <form action="{{ route('presentasi-divisi.store') }}" method="POST">
-        @csrf
-        <div class="modal fade" id="modalLimitKamis" tabindex="-1" aria-hidden="true">
-          <input type="hidden" name="day" value="thursday">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="modalCenterTitle">Setting Limit Presentasi</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <label for="limit" class="form-label">Limit Presentasi</label>
-                <input class="form-control" type="number" id="limit" name="limit">
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
-                <button type="submit" class="btn btn-primary" id="createButton">Simpan</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
-
-      <form action="{{ route('presentasi-divisi.store') }}" method="POST">
-        @csrf
-        <div class="modal fade" id="modalLimitJumat" tabindex="-1" aria-hidden="true">
-          <input type="hidden" name="day" value="friday">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="modalCenterTitle">Setting Limit Presentasi</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <label for="limit" class="form-label">Limit Presentasi</label>
-                <input class="form-control" type="number" id="limit" name="limit">
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
-                <button type="submit" class="btn btn-primary" id="createButton">Simpan</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
-
-      <div class="col-12 col-xl-4">
+      <div class="col-12 col-xl-5">
         <div class="card">
           <div class="d-flex justify-content-between mx-3 mb-1 mt-4">
             <h5 class="pb-0">Data Presentasi hari ini</h5>
@@ -475,7 +335,147 @@
           </div>
         </div>
       </div>
+      
     </div>
+    {{-- Modal Presetanasi --}}
+    <form action="{{ route('presentasi-divisi.store') }}" method="POST">
+      @csrf
+      <div class="modal fade" id="modalLimit" tabindex="-1" aria-hidden="true">
+        <input type="hidden" name="day" value="monday">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalCenterTitle">Setting Limit Presentasi</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <label for="limit" class="form-label">Limit Presentasi</label>
+              <input class="form-control" type="number" id="limit" name="limit">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
+              <button type="submit" class="btn btn-primary" id="createButton">Simpan</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    {{-- Modal Presetanasi --}}
+    <form action="{{ route('presentasi-divisi.store') }}" method="POST">
+      @csrf
+      <div class="modal fade" id="modalLimit" tabindex="-1" aria-hidden="true">
+        <input type="hidden" name="day" value="monday">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalCenterTitle">Setting Limit Presentasi</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <label for="limit" class="form-label">Limit Presentasi</label>
+              <input class="form-control" type="number" id="limit" name="limit">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
+              <button type="submit" class="btn btn-primary" id="createButton">Simpan</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <form action="{{ route('presentasi-divisi.store') }}" method="POST">
+      @csrf
+      <div class="modal fade" id="modalLimitSelasa" tabindex="-1" aria-hidden="true">
+        <input type="hidden" name="day" value="tuesday">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalCenterTitle">Setting Limit Presentasi</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <label for="limit" class="form-label">Limit Presentasi</label>
+              <input class="form-control" type="number" id="limit" name="limit">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
+              <button type="submit" class="btn btn-primary" id="createButton">Simpan</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <form action="{{ route('presentasi-divisi.store') }}" method="POST">
+      @csrf
+      <div class="modal fade" id="modalLimitRabu" tabindex="-1" aria-hidden="true">
+        <input type="hidden" name="day" value="wednesday">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalCenterTitle">Setting Limit Presentasi</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <label for="limit" class="form-label">Limit Presentasi</label>
+              <input class="form-control" type="number" id="limit" name="limit">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
+              <button type="submit" class="btn btn-primary" id="createButton">Simpan</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <form action="{{ route('presentasi-divisi.store') }}" method="POST">
+      @csrf
+      <div class="modal fade" id="modalLimitKamis" tabindex="-1" aria-hidden="true">
+        <input type="hidden" name="day" value="thursday">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalCenterTitle">Setting Limit Presentasi</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <label for="limit" class="form-label">Limit Presentasi</label>
+              <input class="form-control" type="number" id="limit" name="limit">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
+              <button type="submit" class="btn btn-primary" id="createButton">Simpan</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <form action="{{ route('presentasi-divisi.store') }}" method="POST">
+      @csrf
+      <div class="modal fade" id="modalLimitJumat" tabindex="-1" aria-hidden="true">
+        <input type="hidden" name="day" value="friday">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalCenterTitle">Setting Limit Presentasi</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <label for="limit" class="form-label">Limit Presentasi</label>
+              <input class="form-control" type="number" id="limit" name="limit">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
+              <button type="submit" class="btn btn-primary" id="createButton">Simpan</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
     <div class="row mt-3 mb-5 gy-2">
       <div class="col-12 col-lg-4 col-xxl-4 mb-4">
         <div class="card" style="height: 100%">
