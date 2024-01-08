@@ -15,6 +15,7 @@ class PenggunaResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'uuid' => $this->uuid,
             'avatar' => ($this->avatar != null) ? asset($this->avatar) : asset('assets/img/avatars/1.png'),
             'username' => $this->username,
