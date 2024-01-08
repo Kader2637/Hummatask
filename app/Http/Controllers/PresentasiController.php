@@ -38,9 +38,9 @@ class PresentasiController extends Controller
             return back()->with('error', 'Pengajuan Presentasi dimulai pukul 08:00');
         }
 
-        if (Carbon::now()->isoFormat('HH:m:ss') > '14:00:00') {
-            return back()->with('error', 'Pengajuan Presentasi tidak boleh lebih dari pukul 14:00');
-        }
+        // if (Carbon::now()->isoFormat('HH:m:ss') > '14:00:00') {
+        //     return back()->with('error', 'Pengajuan Presentasi tidak boleh lebih dari pukul 14:00');
+        // }
 
         if (Carbon::now()->isoFormat('dddd') === 'Minggu' || Carbon::now()->isoFormat('dddd') === 'Sabtu') {
             return back()->with('error', 'Pengajuan Presentasi hanya bisa dilakuakn dijam kantor');
@@ -159,13 +159,17 @@ class PresentasiController extends Controller
             ->where('limit_presentasi_devisi_id', $presentasi->limitPresentasiDivisi->id)
             ->get()
             ->except($presentasi->id);
+        
+        if ($otherRequest->isNotEmpty()) {
+            $otherRequest->each(function ($request) {
+                $request->update([
+                    'status_pengajuan' => 'ditolak',
+                    'feedback' => 'Maaf, tim lain telah menggunakan jadwal sesi yang anda pilih',
+                ]);
+                $this->rejectPresentation($request);
+            });
+        }
 
-        $otherRequest->toQuery()->update([
-            'status_pengajuan' => 'ditolak',
-            'feedback' => 'Maaf, tim lain telah menggunakan jadwal sesi yang anda pilih',
-        ]);
-
-        $whacenter = new WhacenterService();
 
         $message = 'Pengajuan Presentasi Tim Anda telah disetujui';
         $teamMembers = $presentasi->tim->anggota;
@@ -177,10 +181,7 @@ class PresentasiController extends Controller
                 if ($member->jabatan_id === 1) {
                     $phoneNumber = $member->user->tlp;
 
-                    $whacenter
-                        ->to($phoneNumber)
-                        ->line($message)
-                        ->send();
+                    $this->sendWhatsAppPersetujuan($phoneNumber, $message);
                 }
             }
         }
@@ -195,6 +196,25 @@ class PresentasiController extends Controller
             'revisiTidakSelesai' => $presentasi->where('status_revisi', 'tidak_selesai')->count(),
             'codeHistory' => $presentasi->historyPresentasi->code,
         ]);
+    }
+
+    protected function sendWhatsAppNotificationOnRejection($phoneNumber, $message)
+    {
+        $whacenter = new WhacenterService();
+        $whacenter->to($phoneNumber)->line($message)->send();
+    }
+
+    protected function rejectPresentation($presentasi)
+    {
+        $messageToTeam = 'Presentasi Tim Anda ditolak karena jadwal sudah dipilih oleh tim lain.';
+
+        $this->sendWhatsAppNotificationOnRejection($presentasi->tim->anggota->where('jabatan_id', 1)->first()->user->tlp, $messageToTeam);
+
+    }
+    protected function sendWhatsAppPersetujuan($phoneNumber, $message)
+    {
+        $whacenter = new WhacenterService();
+        $whacenter->to($phoneNumber)->line($message)->send();
     }
 
     protected function sendNotificationToTeamMembers($teamMembers, $title, $message, $jenisNotifikasi)
