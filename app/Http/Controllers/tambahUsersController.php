@@ -181,6 +181,7 @@ class tambahUsersController extends Controller
         $mentors = User::query()
             ->with('divisi')
             ->where('peran_id', 2)
+            ->whereHas('divisi')
             ->get();
 
         $divisis = Divisi::query()
