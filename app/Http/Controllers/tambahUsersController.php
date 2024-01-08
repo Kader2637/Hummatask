@@ -9,6 +9,7 @@ use Excel;
 use Intervention\Image\ImageManagerStatic as Image;
 use App\Imports\CsvImport;
 use App\Models\Anggota;
+use App\Models\Divisi;
 use App\Models\Notifikasi;
 use App\Models\PenglolaMagang;
 use App\Models\Tim;
@@ -182,7 +183,13 @@ class tambahUsersController extends Controller
             ->where('peran_id', 2)
             ->get();
 
-        return response()->json(['mentors' => $mentors]);
+        $divisis = Divisi::query()
+            ->get();
+
+        return response()->json([
+            'mentors' => $mentors,
+            'divisis' => $divisis
+        ]);
     }
 
     protected function store_mentor(Request $request)
