@@ -38,15 +38,6 @@ class PenggunaController extends Controller
 
         $tanggalAwal = $request->awal_magang;
         $tanggalAkhir = $request->akhir_magang;
-
-        $requestData = [
-            'username' => $request->username,
-            'email' => $request->email,
-            'sekolah' => $request->sekolah,
-            'masa_magang_awal' => $tanggalAwal,
-            'masa_magang_akhir' => $tanggalAkhir,
-            'tlp' => $request->tlp,
-        ];
         $request->validate(
             [
                 'username' => 'required|string|max:255',
