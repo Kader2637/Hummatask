@@ -34,5 +34,5 @@ Route::delete('delete-mentor/{code}', [tambahUsersController::class, 'delete_men
 
 
 Route::get('pengguna',[PenggunaController::class, 'index']);
-Route::post('pengguna',[PenggunaController::class, 'store']);
-Route::delete('deletePengguna/{id}',[PenggunaController::class,'destroy']);
+Route::post('pengguna-api',[PenggunaController::class, 'store']);
+Route::delete('deletePengguna/{user}',[PenggunaController::class,'destroy']);
