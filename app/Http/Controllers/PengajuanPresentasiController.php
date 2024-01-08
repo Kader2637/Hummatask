@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ResponseHelper;
 use App\Models\PengajuanPresentasi;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -60,5 +62,18 @@ class PengajuanPresentasiController extends Controller
     {
         $pengajuan_presentasi->delete();
         return redirect()->back()->with('success', 'Berhasil menghapus pengajuan presentasi');
+    }
+
+    /**
+     * hariIni
+     *
+     * @return JsonResponse
+     */
+    public function hariIni(): JsonResponse
+    {
+        $data = PengajuanPresentasi::query()
+            ->whereRelation('limitPresentasiDivisi.presentasiDivisi', 'day', now()->format('l'))
+            ->get();
+        return ResponseHelper::success($data, null);
     }
 }

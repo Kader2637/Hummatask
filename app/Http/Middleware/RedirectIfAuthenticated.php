@@ -19,13 +19,16 @@ class RedirectIfAuthenticated
 
         $guards = empty($guards) ? [null] : $guards;
 
-        foreach ($guards as $guard) {
-            if (Auth::check()) {
-                return back();
-            } else if (Auth::guard($guard)->check()) {
-                return Auth::user()->peran_id == 1 ? redirect()->intended(route('dashboard.mentor')) : redirect()->intended(route('dashboard.siswa'));
-            }
+        if (auth()->check()) {
+            return auth()->user()->peran_id != 1 ? redirect()->intended(route('dashboard.mentor')) : redirect()->intended(route('dashboard.siswa'));
         }
+        // foreach ($guards as $guard) {
+        //     if (Auth::check()) {
+        //         return back();
+        //     } else if (Auth::guard($guard)->check()) {
+        //         return Auth::user()->peran_id == 1 ? redirect()->intended(route('dashboard.mentor')) : redirect()->intended(route('dashboard.siswa'));
+        //     }
+        // }
         return $next($request);
     }
 }
