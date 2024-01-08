@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ResponseHelper;
+use App\Http\Requests\MentorRequest;
 use App\Http\Requests\RequestTambahSiswa;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -193,27 +195,8 @@ class tambahUsersController extends Controller
         ]);
     }
 
-    protected function store_mentor(Request $request)
+    protected function store_mentor(MentorRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'username' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'Divisi' => 'required|unique:users,divisi_id'
-        ], [
-            'username.required' => 'Kolom Nama harus diisi.',
-            'username.string' => 'Kolom Nama harus berupa teks.',
-            'username.max' => 'Kolom Nama tidak boleh lebih dari :max karakter.',
-            'email.required' => 'Kolom Email harus diisi.',
-            'email.email' => 'Email harus berupa alamat email yang valid.',
-            'email.unique' => 'Email sudah digunakan.',
-            'Divisi.required' => 'Divisi harus di isi',
-            'Divisi.unique' => 'Divisi sudah digunakan.',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => 'Gagal menambah data']);
-        }
-
         try {
             $inisial = strtoupper(implode('', array_map(fn ($name) => substr($name, 0, 1), array_slice(explode(' ', $request->username), 0, 3))));
             $image = Image::canvas(200, 200, '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT));
@@ -237,9 +220,9 @@ class tambahUsersController extends Controller
                 'divisi_id' => $request->Divisi,
             ]);
 
-            return response()->json(['success' => 'Berhasil menambah data']);
+            return ResponseHelper::success(null, "Berhasil menambah mentor");
         } catch (\Throwable $th) {
-            return response()->json(['error', 'Gagal menambah data']);
+            return ResponseHelper::error(null, "Gagal menambah mentor");
         }
     }
 
