@@ -34,13 +34,6 @@ class PenggunaController extends Controller
      */
     public function store(User $request): JsonResponse
     {
-        $dates = explode(' to ', $request->masa_magang);
-
-        if (count($dates) != 2) {
-            return redirect()->back()
-                ->with('error', 'Format Masa Magang harus berupa rentang dua tanggal (tanggal awal dan tanggal akhir)')
-                ->withInput();
-        }
 
         $tanggalAwal = $request->awal_magang;
         $tanggalAkhir = $request->akhir_magang;
@@ -124,7 +117,7 @@ class PenggunaController extends Controller
                 'tanggal_lulus' => $tanggalAkhir,
                 'tlp' => $request->tlp,
             ]);
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
             return redirect()->back()->with('error', 'User gagal disimpan!');
         }
         return ResponseHelper::success(null, 'Berhasil menambahkan User');
