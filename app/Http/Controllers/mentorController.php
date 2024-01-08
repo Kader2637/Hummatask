@@ -216,7 +216,7 @@ class mentorController extends Controller
     {
         $roles = Role::all();
         $mentors = User::where('peran_id', 2)->get();
-        $users = User::with('peran')->where('peran_id', 1)->get();
+        $users = User::with('peran')->where('peran_id', 1)->where('divisi_id', Auth::user()->divisi_id)->get();
         $notifikasi = Notifikasi::where('user_id', Auth::user()->id)->get();
         $pengelolaMagang = new Collection();
         $bukanPengelolaMagang = new Collection();
