@@ -57,6 +57,7 @@ class PenggunaController extends Controller
                 'sekolah' => 'required|string|max:255',
                 'masa_magang_awal' => 'required|date',
                 'masa_magang_akhir' => 'required|date|after_or_equal:masa_magang_awal',
+                'divisi_id' => 'required|unique:divisis,id'
             ],
 
             [
@@ -113,6 +114,7 @@ class PenggunaController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make('password'),
                 'sekolah' => $request->sekolah,
+                'divisi_id' => $request->divisi_id,
                 'peran_id' => 1,
                 'tanggal_bergabung' => $tanggalAwal,
                 'tanggal_lulus' => $tanggalAkhir,
