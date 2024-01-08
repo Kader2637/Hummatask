@@ -42,7 +42,6 @@ class PengajuanTimController extends Controller
             return redirect()->back()->with('error', 'input Foto ataupun nama tim tidak boleh kosong');
         }
 
-
         try {
             $timDulu = User::find(Auth::user()->id)->anggota()->orderByDesc('created_at')->first()->status;
             //code...
@@ -55,7 +54,6 @@ class PengajuanTimController extends Controller
             return redirect()->back()->with('error', 'Kamu masih memiliki tim yang belum selesai');
         }
 
-
         // menyimpan logo
         $logo = $request->logo->store('logo', 'public');
 
@@ -65,7 +63,7 @@ class PengajuanTimController extends Controller
             'nama' => $request->nama,
             'logo' => $logo,
             'repository' => $request->repository,
-            'divisi_id' => 1,
+            'divisi_id' => Auth::user()->divisi_id,
             'status_tim' => 'solo'
         ]);
 
@@ -101,27 +99,28 @@ class PengajuanTimController extends Controller
             ]);
         } else {
 
-// Mendapatkan tanggal hari ini
-$today = Carbon::now();
+            // Mendapatkan tanggal hari ini
+            $today = Carbon::now();
 
-// Mengatur hari ini ke hari Senin
-$today->startOfWeek();
+            // Mengatur hari ini ke hari Senin
+            $today->startOfWeek();
 
-// Menghitung minggu keberapa dalam bulan ini
-$mingguKeberapa = $today->weekOfMonth;
+            // Menghitung minggu keberapa dalam bulan ini
+            $mingguKeberapa = $today->weekOfMonth;
 
-// Membuat objek HistoryPresentasi dan mengatur nilai-noMinggu
-$historyPresentasi = new HistoryPresentasi;
-$historyPresentasi->code = Str::uuid();
+            // Membuat objek HistoryPresentasi dan mengatur nilai-noMinggu
+            $historyPresentasi = new HistoryPresentasi;
+            $historyPresentasi->code = Str::uuid();
+            $historyPresentasi->divisi_id = Auth::user()->divisi_id;
 
-// Mengatur minggu keberapa pada objek HistoryPresentasi
-$historyPresentasi->noMinggu = $mingguKeberapa;
+            // Mengatur minggu keberapa pada objek HistoryPresentasi
+            $historyPresentasi->noMinggu = $mingguKeberapa;
 
-$historyPresentasi->bulan = $today->isoFormat("MMMM");
-$historyPresentasi->tahun = $today->isoFormat("YYYY");
+            $historyPresentasi->bulan = $today->isoFormat("MMMM");
+            $historyPresentasi->tahun = $today->isoFormat("YYYY");
 
-// Menyimpan objek HistoryPresentasi
-$historyPresentasi->save();
+            // Menyimpan objek HistoryPresentasi
+            $historyPresentasi->save();
             TidakPresentasiMingguan::create([
                 'tim_id' => $tim->id,
                 "history_presentasi_id" => $historyPresentasi->id,
@@ -334,21 +333,21 @@ $historyPresentasi->save();
         $anggota = Anggota::whereIn('user_id', $uniqueDaftarAnggota);
 
         $existingAnggota = $anggota
-        ->where('tim_id', '!=', $timId->id)
-        ->where('status', 'active')
-        ->first();
+            ->where('tim_id', '!=', $timId->id)
+            ->where('status', 'active')
+            ->first();
 
-    if ($existingAnggota) {
-        return response()->json(['errors' => ["Siswa {$existingAnggota->user->username} telah masuk di tim {$existingAnggota->tim->nama}"]], 422);
-    }
+        if ($existingAnggota) {
+            return response()->json(['errors' => ["Siswa {$existingAnggota->user->username} telah masuk di tim {$existingAnggota->tim->nama}"]], 422);
+        }
 
 
         $timId->status_tim = $request->status_tim;
         $timId->kadaluwarsa = $request->kadaluwarsa;
         $tema = $request->input('tema');
         Tema::where('tim_id', $timId->id)
-        ->where('nama_tema', '<>', null)
-        ->update(['nama_tema' => $tema]);
+            ->where('nama_tema', '<>', null)
+            ->update(['nama_tema' => $tema]);
 
         // $tema->nama_tema = $request->tema;
 

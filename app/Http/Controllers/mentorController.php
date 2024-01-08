@@ -295,11 +295,8 @@ class mentorController extends Controller
     protected function pengajuanProjekPage(Request $request)
     {
         $projectsQuery = Project::with('tim.anggota.user', 'tim.tema', 'anggota.jabatan', 'anggota.user')
-            ->where('status_project', 'notapproved')
-            ->whereHas('tim', function ($query) {
-                $query->where('id', Auth::user()->divisi_id);
-            })
-            ->get();
+            ->whereRelation('tim.divisi', 'id', '=', Auth::user()->divisi_id)
+            ->where('status_project', 'notapproved');
 
         if ($request->has('status_tim')) {
             if ($request->status_tim != 'all' && $request->status_tim != null) {
@@ -343,10 +340,10 @@ class mentorController extends Controller
             ->whereHas('user', function ($query) {
                 $query->where('divisi_id', Auth::user()->divisi_id);
             })->get();
+
         $projectQuery = Project::with('tim.anggota', 'tema', 'tim.tugas')
-            ->where('status_project', 'approved')->whereHas('tim', function ($query) {
-                $query->where('id', Auth::user()->tim_id);
-            });
+            ->whereRelation('tim.divisi', 'id', '=', Auth::user()->divisi_id)
+            ->where('status_project', 'approved');
 
         if ($request->has('status_tim')) {
             if ($request->status_tim != 'all' && $request->status_tim != null) {
@@ -418,7 +415,10 @@ class mentorController extends Controller
 
     protected function Project()
     {
-        $users = User::where('peran_id', 1)->where('divisi_id', Auth::user()->divisi_id)->where('status_kelulusan', 0)
+        $users = User::query()
+            ->where('peran_id', 1)
+            ->where('divisi_id', Auth::user()->divisi_id)
+            ->where('status_kelulusan', 0)
             ->where(function ($query) {
                 $query->whereDoesntHave('tim', function ($query) {
                     $query->where('kadaluwarsa', false);
@@ -495,7 +495,9 @@ class mentorController extends Controller
 
     protected function tim(Request $request)
     {
-        $timQuery = tim::with('user', 'project');
+        $timQuery = tim::query()
+            ->where('divisi_id', Auth::user()->divisi_id)
+            ->with('user', 'project');
 
         if ($request->has('status_tim')) {
             if ($request->status_tim != 'all' && $request->status_tim != null) {

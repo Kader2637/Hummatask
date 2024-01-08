@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('noMinggu');
             $table->string('bulan');
             $table->integer('tahun');
+            $table->foreignId('divisi_id')->references('id')->on('divisis');
             $table->timestamps();
         });
     }
