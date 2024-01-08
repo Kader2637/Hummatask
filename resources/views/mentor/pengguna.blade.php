@@ -323,6 +323,7 @@
                                 @foreach ($users as $item)
                                     <tr>
                                         <th scope="row">{{ $no_user++ }}.</th>
+
                                         <td class="nama">
                                             @if ($item->avatar)
                                                 <img src="{{ asset('storage/' . $item->avatar) }}" alt=""
@@ -332,7 +333,8 @@
                                                     style="width:30px;height:30px;border-radius:50%; object-fit: cover">
                                             @endif
                                             <span class="ml-3">
-                                                {{ $item->username }}
+                                                {{-- {{ $item->username }} --}}
+                                                @dump($item->divisi_id);
                                             </span>
                                         </td>
                                         <td>{{ $item->email }}</td>
