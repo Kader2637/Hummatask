@@ -244,7 +244,6 @@ class tambahUsersController extends Controller
         ]);
 
         return response()->json(['success' => 'Berhasil mengupdate data']);
-
     }
 
     protected function tambah_pengelola(Request $request)
@@ -323,7 +322,7 @@ class tambahUsersController extends Controller
             }
             $user->delete();
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'User berhasil di hapus!');
+            return response()->json(['error' => 'Gagal menghapus data']);
         }
         return response()->json(['success' => 'Berhasil menghapus data']);
     }
