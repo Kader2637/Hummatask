@@ -389,7 +389,7 @@
                                                         <small class="text-muted">Mentor
                                                             <span
                                                                 class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full text-sm">
-                                                                Mobile
+                                                                {{ Auth::user()->divisi->name }}
                                                             </span>
                                                         </small>
                                                     </div>
