@@ -26,7 +26,7 @@
                 <div class="row">
                     <div class=" jumbotron col-12 d-flex flex-column align-items-center justify-content-center">
                         <p class="fs-5">{{ \Carbon\Carbon::now()->translatedFormat('l, j F Y') }}</p>
-                        <p class="fs-3 text-center">Selamat datang, {{ Auth::user()->username }} divisi {{ Auth::user()->divisi->name  }}</p>
+                        <p class="fs-3 text-center">Selamat datang, {{ Auth::user()->username }} divisi {{ Auth::user()->divisi->name ?? ""  }}</p>
                     </div>
                 </div>
                 <div class="row">
