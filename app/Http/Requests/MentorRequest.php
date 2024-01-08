@@ -15,9 +15,9 @@ class MentorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'Divisi' => 'required|exists:divisis,id'
+            'username' => 'required',
+            'email' => 'required',
+            'Divisi' => 'required'
         ];
     }
 }

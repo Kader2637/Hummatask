@@ -197,6 +197,7 @@ class tambahUsersController extends Controller
 
     protected function store_mentor(MentorRequest $request)
     {
+        $data = $request->validated();
         try {
             $inisial = strtoupper(implode('', array_map(fn ($name) => substr($name, 0, 1), array_slice(explode(' ', $request->username), 0, 3))));
             $image = Image::canvas(200, 200, '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT));
@@ -213,11 +214,11 @@ class tambahUsersController extends Controller
             User::create([
                 'uuid' => Str::uuid(),
                 'avatar' => $nameImage,
-                'username' => $request->username,
-                'email' => $request->email,
+                'username' => $data['username'],
+                'email' => $data['email'],
                 'password' => Hash::make('password'),
                 'peran_id' => 2,
-                'divisi_id' => $request->Divisi,
+                'divisi_id' => $data['Divisi'],
             ]);
 
             return ResponseHelper::success(null, "Berhasil menambah mentor");
