@@ -29,8 +29,8 @@ class DivisiController extends Controller
      */
     public function store(DivisiRequest $request)
     {
-        Divisi::query()->create($request->validated());
-        return redirect()->back()->with('success', 'Berhasil menambahkan divisi');
+        Divisi::create($request->validated());
+        return response()->json(['success' => 'Berhasil Menambahkan divisi']);
     }
 
     /**
@@ -56,6 +56,6 @@ class DivisiController extends Controller
     public function destroy(Divisi $divisi)
     {
         $divisi->delete();
-        return redirect()->back()->with('success', 'Berhasil menambahkan divisi');
+        return response()->json(['success' => 'Berhasil Menghapus divisi']);
     }
 }
