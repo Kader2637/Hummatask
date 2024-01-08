@@ -26,6 +26,7 @@ Route::put('division/{divisi}', [DivisiController::class, 'update']);
 Route::delete('division/{divisi}', [DivisiController::class, 'destroy']);
 
 // mentor
+Route::get('mentor', [tambahUsersController::class, 'get_mentor']);
 Route::post('tambah-mentor', [tambahUsersController::class, 'store_mentor']);
 Route::put('edit-mentor/{uuid}', [tambahUsersController::class, 'edit_mentor']);
-Route::get('delete-mentor/{code}', [tambahUsersController::class, 'delete_mentor']);
+Route::delete('delete-mentor/{code}', [tambahUsersController::class, 'delete_mentor']);

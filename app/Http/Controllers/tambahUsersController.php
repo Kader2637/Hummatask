@@ -61,8 +61,8 @@ class tambahUsersController extends Controller
                     'password' => Hash::make('password'),
                     'sekolah' => $row[2],
                     'peran_id' => 1,
-                    'tanggal_bergabung' => date_format(date_create_from_format("d/m/Y", $row[3]),'Y-m-d'),
-                    'tanggal_lulus' => date_format(date_create_from_format("d/m/Y",$row[4]),'Y-m-d'),
+                    'tanggal_bergabung' => date_format(date_create_from_format("d/m/Y", $row[3]), 'Y-m-d'),
+                    'tanggal_lulus' => date_format(date_create_from_format("d/m/Y", $row[4]), 'Y-m-d'),
                 ]);
             }
 
@@ -175,6 +175,15 @@ class tambahUsersController extends Controller
         return redirect()->back()->with('success', 'User berhasil disimpan!');
     }
 
+    protected function get_data()
+    {
+        $mentors = User::query()
+            ->where('peran_id', 2)
+            ->get();
+
+        return response()->json(['mentors' => $mentors]);
+    }
+
     protected function store_mentor(Request $request)
     {
         $validator = Validator::make(
@@ -277,7 +286,7 @@ class tambahUsersController extends Controller
     {
         $statusAnggota = Anggota::where('user_id', $userId)->value('status');
 
-        if ($statusAnggota != ['kicked','expired']) {
+        if ($statusAnggota != ['kicked', 'expired']) {
             Notifikasi::create([
                 'user_id' => $userId,
                 'judul' => $title,
