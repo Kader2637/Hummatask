@@ -216,6 +216,11 @@ class PresentasiController extends Controller
         $whacenter = new WhacenterService();
         $whacenter->to($phoneNumber)->line($message)->send();
     }
+    protected function sendWhatsAppPenolakan($phoneNumber, $message)
+    {
+        $whacenter = new WhacenterService();
+        $whacenter->to($phoneNumber)->line($message)->send();
+    }
 
     protected function sendNotificationToTeamMembers($teamMembers, $title, $message, $jenisNotifikasi)
     {
@@ -245,6 +250,22 @@ class PresentasiController extends Controller
         $presentasi->feedback = $request->alasan;
         $presentasi->user_approval_id = Auth::user()->id;
         $presentasi->save();
+
+        $message = 'Pengajuan Presentasi Tim Anda ditolak, Karena '.$request->alasan;
+        $teamMembers = $presentasi->tim->anggota;
+
+        foreach ($teamMembers as $member) {
+            dd($message);
+            $userId = $member->user_id;
+            $statusAnggota = Anggota::where('user_id', $userId)->value('status');
+            if ($statusAnggota !== ['kicked', 'expired']) {
+                if ($member->jabatan_id === 1) {
+                    $phoneNumber = $member->user->tlp;
+
+                    $this->sendWhatsAppPenolakan($phoneNumber, $message);
+                }
+            }
+        }
 
         return response()->json(['success' => 'Berhasil Memberikan Penolakan']);
     }
