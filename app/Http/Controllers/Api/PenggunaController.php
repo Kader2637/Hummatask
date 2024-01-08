@@ -47,11 +47,7 @@ class PenggunaController extends Controller
             'masa_magang_akhir' => $tanggalAkhir,
             'tlp' => $request->tlp,
         ];
-        
-
-
-        $validator = Validator::make(
-            $requestData,
+        $request->validate(
             [
                 'username' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
@@ -59,7 +55,6 @@ class PenggunaController extends Controller
                 'masa_magang_awal' => 'required|date',
                 'masa_magang_akhir' => 'required|date|after_or_equal:masa_magang_awal',
             ],
-
             [
                 'username.required' => 'Kolom Nama harus diisi',
                 'username.string' => 'Kolom Nama harus berupa teks',
@@ -77,18 +72,7 @@ class PenggunaController extends Controller
                 'masa_magang_akhir.after_or_equal' => 'Masa Magang Akhir harus setelah atau sama dengan Masa Magang Awal',
             ]
         );
-
-
-        if ($validator->fails()) {
-            $errors = $validator->errors()->all();
-
-            if (count($errors) > 1) {
-                $errorMessage = implode(', ', $errors);
-                return response()->json(['error' => $errorMessage]);
-            } else {
-                return response()->json(['error' => $errors[0]]);
-            }
-        }
+       
 
         try {
             $inisial = strtoupper(implode('', array_map(fn ($name) => substr($name, 0, 1), array_slice(explode(' ', $request->username), 0, 3))));
