@@ -178,6 +178,7 @@ class tambahUsersController extends Controller
     protected function get_mentor()
     {
         $mentors = User::query()
+            ->with('divisi')
             ->where('peran_id', 2)
             ->get();
 
