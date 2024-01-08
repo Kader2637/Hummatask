@@ -20,7 +20,7 @@ class RedirectIfAuthenticated
         $guards = empty($guards) ? [null] : $guards;
 
         if (auth()->check()) {
-            return auth()->user()->peran_id == 1 ? redirect()->intended(route('dashboard.mentor')) : redirect()->intended(route('dashboard.siswa'));
+            return auth()->user()->peran_id != 1 ? redirect()->intended(route('dashboard.mentor')) : redirect()->intended(route('dashboard.siswa'));
         }
         // foreach ($guards as $guard) {
         //     if (Auth::check()) {
