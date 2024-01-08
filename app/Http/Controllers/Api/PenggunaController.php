@@ -8,7 +8,6 @@ use App\Helpers\ResponseHelper;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
-use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -33,12 +32,24 @@ class PenggunaController extends Controller
      * @param  mixed $request
      * @return JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(User $request)
     {
 
         $tanggalAwal = $request->awal_magang;
         $tanggalAkhir = $request->akhir_magang;
-        $request->validate(
+
+        $requestData = [
+            'username' => $request->username,
+            'email' => $request->email,
+            'sekolah' => $request->sekolah,
+            'masa_magang_awal' => $tanggalAwal,
+            'masa_magang_akhir' => $tanggalAkhir,
+            'tlp' => $request->tlp,
+        ];
+
+
+        $validator = Validator::make(
+            $requestData,
             [
                 'username' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
@@ -46,6 +57,7 @@ class PenggunaController extends Controller
                 'masa_magang_awal' => 'required|date',
                 'masa_magang_akhir' => 'required|date|after_or_equal:masa_magang_awal',
             ],
+
             [
                 'username.required' => 'Kolom Nama harus diisi',
                 'username.string' => 'Kolom Nama harus berupa teks',
@@ -63,7 +75,22 @@ class PenggunaController extends Controller
                 'masa_magang_akhir.after_or_equal' => 'Masa Magang Akhir harus setelah atau sama dengan Masa Magang Awal',
             ]
         );
-       
+
+
+        if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+
+            if (count($errors) > 1) {
+                $errorMessage = implode(', ', $errors);
+                return redirect()->back()
+                    ->with('error', $errorMessage)
+                    ->withInput();
+            } else {
+                return redirect()->back()
+                    ->with('error', $errors[0])
+                    ->withInput();
+            }
+        }
 
         try {
             $inisial = strtoupper(implode('', array_map(fn ($name) => substr($name, 0, 1), array_slice(explode(' ', $request->username), 0, 3))));
@@ -91,9 +118,9 @@ class PenggunaController extends Controller
                 'tlp' => $request->tlp,
             ]);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e]);
+            return redirect()->back()->with('error', 'User gagal disimpan!');
         }
-        return response()->json(['success' => 'Berhasil menambah pengguna']);
+        return response()->json(['success' => 'Berhasil Menambahkan Pengguna']);
     }
 
      /**
