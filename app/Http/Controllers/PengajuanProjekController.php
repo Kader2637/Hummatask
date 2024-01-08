@@ -126,7 +126,7 @@ class PengajuanProjekController extends Controller
     {
         $statusAnggota = Anggota::where('user_id', $userId)->value('status');
 
-        if ($statusAnggota != ['kicked','expired']) {
+        if ($statusAnggota != ['kicked', 'expired']) {
             Notifikasi::create([
                 'user_id' => $userId,
                 'judul' => $title,
@@ -209,7 +209,10 @@ class PengajuanProjekController extends Controller
     public function ambilNotifikasi()
     {
         $userID = Auth::user()->id;
-        $notifikasi = Notifikasi::where('user_id', $userID)->get();
+        $notifikasi = Notifikasi::query()
+            ->whereRelation('user.divisi', 'id', '=', Auth::user()->divisi_id)
+            ->where('user_id', $userID)
+            ->get();
 
         return response()->json(['notifikasi' => $notifikasi]);
     }

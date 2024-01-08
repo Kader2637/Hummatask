@@ -496,10 +496,6 @@ class mentorController extends Controller
         $users = $users1->merge($users2);
         // dd($users);
 
-
-
-
-
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
         return response()->json(['users' => $users, 'status_tim' => $status_tim, 'ketua' => $ketua, 'ketua_id' => $ketuaId]);
     }
