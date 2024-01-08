@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\DivisiController;
-use App\Http\Controllers\tambahUsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DivisiController;
+use App\Http\Controllers\tambahUsersController;
+use App\Http\Controllers\Api\PenggunaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,7 @@ Route::get('mentor', [tambahUsersController::class, 'get_mentor']);
 Route::post('tambah-mentor', [tambahUsersController::class, 'store_mentor']);
 Route::put('edit-mentor/{uuid}', [tambahUsersController::class, 'edit_mentor']);
 Route::delete('delete-mentor/{code}', [tambahUsersController::class, 'delete_mentor']);
+
+
+Route::get('pengguna',[PenggunaController::class, 'index']);
+Route::post('penggunaStore',[PenggunaController::class, 'store']);
