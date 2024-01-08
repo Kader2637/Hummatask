@@ -109,6 +109,11 @@ class User extends Authenticatable
         return $this->hasMany(Anggota::class);
     }
 
+    public function notifikasi()
+    {
+        return $this->hasMany(Notifikasi::class,'user_id');
+    }
+
     /**
      * divisi
      *
