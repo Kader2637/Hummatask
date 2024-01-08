@@ -195,23 +195,24 @@ class tambahUsersController extends Controller
 
     protected function store_mentor(Request $request)
     {
-        $request->validate(
-            [
-                'username' => 'required|string|max:255',
-                'email' => 'required|email|unique:users,email',
-                'Divisi' => 'required|unique:users,divisi_id'
-            ],
-            [
-                'username.required' => 'Kolom Nama harus diisi.',
-                'username.string' => 'Kolom Nama harus berupa teks.',
-                'username.max' => 'Kolom Nama tidak boleh lebih dari :max karakter.',
-                'email.required' => 'Kolom Email harus diisi.',
-                'email.email' => 'Email harus berupa alamat email yang valid.',
-                'email.unique' => 'Email sudah digunakan.',
-                'Divisi.required' => 'Divisi harus di isi',
-                'Divisi.unique' => 'Divisi sudah digunakan.',
-            ]
-        );
+        $validator = Validator::make($request->all(), [
+            'username' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'Divisi' => 'required|unique:users,divisi_id'
+        ], [
+            'username.required' => 'Kolom Nama harus diisi.',
+            'username.string' => 'Kolom Nama harus berupa teks.',
+            'username.max' => 'Kolom Nama tidak boleh lebih dari :max karakter.',
+            'email.required' => 'Kolom Email harus diisi.',
+            'email.email' => 'Email harus berupa alamat email yang valid.',
+            'email.unique' => 'Email sudah digunakan.',
+            'Divisi.required' => 'Divisi harus di isi',
+            'Divisi.unique' => 'Divisi sudah digunakan.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => 'Gagal menambah data']);
+        }
 
         try {
             $inisial = strtoupper(implode('', array_map(fn ($name) => substr($name, 0, 1), array_slice(explode(' ', $request->username), 0, 3))));
@@ -256,7 +257,8 @@ class tambahUsersController extends Controller
             'email' => $validatedData['email'],
         ]);
 
-        return redirect()->back()->with('success', 'Mentor berhasil diupdate');
+        return response()->json(['success' => 'Berhasil mengupdate data']);
+
     }
 
     protected function tambah_pengelola(Request $request)
@@ -337,7 +339,7 @@ class tambahUsersController extends Controller
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'User berhasil di hapus!');
         }
-        return redirect()->back()->with('success', 'User berhasil di hapus!');
+        return response()->json(['success' => 'Berhasil menghapus data']);
     }
 
     protected function delete_permisions(string $code)
