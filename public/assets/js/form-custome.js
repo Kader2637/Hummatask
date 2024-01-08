@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 Swal.fire({
                     icon: "error",
                     title: "Error!",
-                    text: "Input Jadwal Waktu Harus diisi",
+                    text: "Input waktu pada jadwal tidak boleh kosong.",
                 });
 
                 event.preventDefault();
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 Swal.fire({
                     icon: "error",
                     title: "Error!",
-                    text: "Input Jadwal Waktu Harus diisi",
+                    text: "Input waktu pada jadwal tidak boleh kosong.",
                 });
 
                 event.preventDefault();
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 Swal.fire({
                     icon: "error",
                     title: "Error!",
-                    text: "Input Jadwal Waktu Harus diisi",
+                    text: "Input waktu pada jadwal tidak boleh kosong.",
                 });
 
                 event.preventDefault();
@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 Swal.fire({
                     icon: "error",
                     title: "Error!",
-                    text: "Input Jadwal Waktu Harus diisi",
+                    text: "Input waktu pada jadwal tidak boleh kosong.",
                 });
 
                 event.preventDefault();
@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 Swal.fire({
                     icon: "error",
                     title: "Error!",
-                    text: "Input Jadwal Waktu Harus diisi",
+                    text: "Input waktu pada jadwal tidak boleh kosong.",
                 });
 
                 event.preventDefault();
@@ -207,6 +207,73 @@ document.addEventListener("DOMContentLoaded", function () {
             submitButton.disabled = false;
         }
     });
+});
+
+function setInitialActiveTab() {
+    var lastActiveTab = localStorage.getItem("lastActiveTab");
+    var currentDay = new Date().getDay();
+
+    $(".nav-link.day-tab").removeClass("active");
+    $(".tab-pane").removeClass("active");
+
+    if (lastActiveTab) {
+        $('a[data-bs-toggle="tab"][href="#' + lastActiveTab + '"]').addClass(
+            "active"
+        );
+        $("#" + lastActiveTab).addClass("active");
+    } else {
+        var dayTabId = "";
+        if (currentDay === 0 || currentDay === 6) {
+            dayTabId = "senin";
+        } else {
+            switch (currentDay) {
+                case 1:
+                    dayTabId = "senin";
+                    break;
+                case 2:
+                    dayTabId = "selasa";
+                    break;
+                case 3:
+                    dayTabId = "rabu";
+                    break;
+                case 4:
+                    dayTabId = "kamis";
+                    break;
+                case 5:
+                    dayTabId = "jumat";
+                    break;
+            }
+        }
+
+        if (dayTabId) {
+            $('a[data-bs-toggle="tab"][href="#' + dayTabId + '"]').addClass(
+                "active"
+            );
+            $("#" + dayTabId).addClass("active");
+        }
+    }
+}
+
+function clearLocalStorage() {
+    localStorage.removeItem("lastActiveTab");
+}
+
+function handleFormSubmission(formId, repeaterId, dayId) {
+    $("#" + formId).submit(function () {
+        localStorage.setItem("lastActiveTab", dayId);
+    });
+}
+
+$(document).ready(function () {
+    setInitialActiveTab();
+
+    handleFormSubmission("form-senin", "form-repeater", "senin");
+    handleFormSubmission("form-selasa", "form-repeater-selasa", "selasa");
+    handleFormSubmission("form-rabu", "form-repeater-rabu", "rabu");
+    handleFormSubmission("form-kamis", "form-repeater-kamis", "kamis");
+    handleFormSubmission("form-jumat", "form-repeater-jumat", "jumat");
+
+    setInterval(clearLocalStorage, 60000);
 });
 
 // $(document).ready(function () {
@@ -580,68 +647,6 @@ document.addEventListener("DOMContentLoaded", function () {
 //             }
 //         });
 //     });
-// });
-
-// function setInitialActiveTab() {
-//     var lastActiveTab = localStorage.getItem("lastActiveTab");
-//     var currentDay = new Date().getDay();
-
-//     $(".nav-link.day-tab").removeClass("active");
-//     $(".tab-pane").removeClass("active");
-
-//     if (lastActiveTab) {
-//         $('a[data-bs-toggle="tab"][href="#' + lastActiveTab + '"]').addClass(
-//             "active"
-//         );
-//         $("#" + lastActiveTab).addClass("active");
-//     } else {
-//         var dayTabId = "";
-//         if (currentDay === 0 || currentDay === 6) {
-//             dayTabId = "senin";
-//         } else {
-//             switch (currentDay) {
-//                 case 1:
-//                     dayTabId = "senin";
-//                     break;
-//                 case 2:
-//                     dayTabId = "selasa";
-//                     break;
-//                 case 3:
-//                     dayTabId = "rabu";
-//                     break;
-//                 case 4:
-//                     dayTabId = "kamis";
-//                     break;
-//                 case 5:
-//                     dayTabId = "jumat";
-//                     break;
-//             }
-//         }
-
-//         if (dayTabId) {
-//             $('a[data-bs-toggle="tab"][href="#' + dayTabId + '"]').addClass(
-//                 "active"
-//             );
-//             $("#" + dayTabId).addClass("active");
-//         }
-//     }
-// }
-
-// function clearLocalStorage() {
-//     console.log("Calling clearLocalStorage");
-//     localStorage.removeItem("lastActiveTab");
-// }
-
-// $(document).ready(function () {
-//     setInitialActiveTab();
-
-//     handleFormSubmission("form-senin", "form-repeater", "senin");
-//     handleFormSubmission("form-selasa", "form-repeater-selasa", "selasa");
-//     handleFormSubmission("form-rabu", "form-repeater-rabu", "rabu");
-//     handleFormSubmission("form-kamis", "form-repeater-kamis", "kamis");
-//     handleFormSubmission("form-jumat", "form-repeater-jumat", "jumat");
-
-//     setInterval(clearLocalStorage, 60000);
 // });
 
 // $("#add-form").click(function (event) {

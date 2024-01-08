@@ -204,6 +204,7 @@ $historyPresentasi->save();
             $tim->status_tim = $request->status_tim;
             $tim->logo = $nameImage;
             $tim->kadaluwarsa = false;
+            $tim->divisi_id = Auth::user()->divisi_id;
             $tim->save();
 
             DB::table('labels')->insert([

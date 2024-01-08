@@ -33,4 +33,9 @@ class Divisi extends Model
     {
         return $this->hasMany(User::class, 'divisi_id');
     }
+
+    public function tims(): HasMany
+    {
+        return $this->hasMany(Tim::class, 'divisi_id');
+    }
 }

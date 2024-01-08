@@ -10,7 +10,7 @@
             <h5 class="pb-0">Atur Jadwal Presentasi</h5>
             <ul class="nav nav-pills bg-light rounded" role="tablist">
               <li class="nav-item">
-                <a class="nav-link active" data-bs-toggle="tab" href="#senin" role="tab">Senin</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#senin" role="tab">Senin</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#selasa" role="tab">Selasa</a>
@@ -44,8 +44,8 @@
                   });
                 </script>
               @endif
-              <div class="tab-pane active" id="senin" role="tabpanel">
-                <form id="form-senin active" class="form-senin" action="{{ route('presentasi-divisi-create-jam.store') }}" method="POST">
+              <div class="tab-pane" id="senin" role="tabpanel">
+                <form id="form-senin " class="form-senin" action="{{ route('presentasi-divisi-create-jam.store') }}" method="POST">
                   @csrf
                   <input type="hidden" name="presentasi_divisi_id" value="{{ $senin->id ?? '' }}">
                   <div id="form-repeater">
@@ -768,7 +768,7 @@
   <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}"></script>
   <script src="{{ asset('assets/vendor/libs/jquery/jquery1e84.js?id=0f7eb1f3a93e3e19e8505fd8c175925a') }}"></script>
   <script src="{{ asset('assets/vendor/libs/popper/popper0a73.js?id=baf82d96b7771efbcc05c3b77135d24c') }}"></script>
-  <script src="{{ asset('assets/vendor/js/bootstraped84.js?id=9a6c701557297a042348b5aea69e9b76') }}"></script>
+  {{-- <script src="{{ asset('assets/vendor/js/bootstraped84.js?id=9a6c701557297a042348b5aea69e9b76') }}"></script> --}}
   <script src="{{ asset('assets/vendor/libs/node-waves/node-waves259f.js?id=4fae469a3ded69fb59fce3dcc14cd638') }}">
   </script>
   <script

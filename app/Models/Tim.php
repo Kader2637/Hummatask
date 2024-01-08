@@ -63,7 +63,10 @@ class Tim extends Model
         return $this->hasMany(Project::class);
     }
 
-    
+    public function divisi_id(): BelongsTo
+    {
+        return $this->belongsTo(Divisi::class);
+    }
 
     public function tidakPresentasiMingguan(): HasMany
     {
