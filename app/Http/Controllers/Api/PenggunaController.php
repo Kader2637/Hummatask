@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PenggunaRequest;
+use App\Http\Resources\PenggunaResource;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -29,7 +30,7 @@ class PenggunaController extends Controller
                 $query->take((int) $request->limit);
             })
             ->get();
-        return ResponseHelper::success($pengguna);
+        return ResponseHelper::success(PenggunaResource::collection($pengguna));
     }
 
      /**
