@@ -38,7 +38,7 @@ class PenggunaController extends Controller
     {
         $tanggalAwal = $request->awal_magang;
         $tanggalAkhir = $request->akhir_magang;
-        
+
         try {
             $inisial = strtoupper(implode('', array_map(fn ($name) => substr($name, 0, 1), array_slice(explode(' ', $request->username), 0, 3))));
             $image = Image::canvas(200, 200, '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT));
@@ -66,7 +66,7 @@ class PenggunaController extends Controller
                 'tlp' => $request->tlp,
             ]);
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'User gagal disimpan!');
+            return ResponseHelper::success(null, 'User gagal disimpan!');
         }
         return ResponseHelper::success(null, 'Berhasil menambahkan User');
     }
