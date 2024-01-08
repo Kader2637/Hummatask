@@ -34,7 +34,7 @@ class PenggunaController extends Controller
      * @param  mixed $request
      * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(PenggunaRequest $request)
     {
         $tanggalAwal = $request->awal_magang;
         $tanggalAkhir = $request->akhir_magang;

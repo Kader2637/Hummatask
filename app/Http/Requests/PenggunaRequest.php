@@ -9,13 +9,13 @@ class PenggunaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'sekolah' => 'required|string|max:255',
-            'awal_magang' => 'required|date',
-            'akhir_magang' => 'required|date|after_or_equal:masa_magang_awal',
+            'username' => 'required',
+            'email' => 'required',
+            'sekolah' => 'required',
+            'awal_magang' => 'required',
+            'akhir_magang' => 'required',
             'tlp' => 'required',
-            'divisi_id' => 'required|unique:divisis,id'
+            'divisi_id' => 'required'
         ];
     }
 
