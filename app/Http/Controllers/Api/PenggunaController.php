@@ -35,8 +35,6 @@ class PenggunaController extends Controller
      */
     public function store(Request $request)
     {
-
-        dd($request->all());
         $tanggalAwal = $request->awal_magang;
         $tanggalAkhir = $request->akhir_magang;
 
