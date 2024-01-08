@@ -241,9 +241,10 @@ class tambahUsersController extends Controller
                 'peran_id' => 2,
                 'divisi_id' => $request->Divisi,
             ]);
-            return redirect()->back()->with('success', 'User berhasil disimpan!');
+
+            return response()->json(['success' => 'Berhasil menambah data']);
         } catch (\Throwable $th) {
-            return redirect()->back()->with('success', 'User gagal disimpan!');
+            return response()->json(['error', 'Gagal menambah data']);
         }
     }
 
