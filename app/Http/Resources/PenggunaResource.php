@@ -19,7 +19,7 @@ class PenggunaResource extends JsonResource
             'avatar' => ($this->avatar != null) ? asset($this->avatar) : asset('assets/img/avatars/1.png'),
             'username' => $this->username,
             'email' => $this->email,
-            'divisi' => $this->divisi->name,
+            'divisi' => $this->divisi->name ?? "",
             'status' => $this->status,
             'sekolah' => $this->sekolah,
             'peran' => $this->peran->peran,
