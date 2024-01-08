@@ -383,14 +383,14 @@
                                                         <small class="text-muted">Ketua Magang
                                                             <span
                                                                 class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full text-sm">
-                                                                {{ Auth::user()->divisi->name }}
+                                                                {{ Auth::user()->divisi->name ?? "" }}
                                                             </span>
                                                         </small>
                                                     @else
                                                         <small class="text-muted">Siswa Magang
                                                             <span
                                                                 class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full text-sm">
-                                                                {{ Auth::user()->divisi->name }}
+                                                                {{ Auth::user()->divisi->name ?? "" }}
                                                             </span>
                                                         </small>
                                                     @endif
