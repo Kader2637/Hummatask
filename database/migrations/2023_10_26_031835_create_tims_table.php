@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
+
         Schema::create('tims', function (Blueprint $table) {
             $table->id();
             $table->string('code');
             $table->string('logo')->default('avatar');
             $table->string('nama')->nullable();
             $table->string('repository')->nullable();
+            $table->foreignId('divisi_id')->constrained('divisis');
             $table->enum('status_tim',['solo','pre_mini','mini','big']);
             $table->boolean('sudah_presentasi')->default(false);
             $table->boolean('kadaluwarsa')->default(false);

@@ -99,7 +99,7 @@ class PengajuanTimController extends Controller
                 "history_presentasi_id" => $historyPresentasi->id,
             ]);
         } else {
-          
+
 // Mendapatkan tanggal hari ini
 $today = Carbon::now();
 
@@ -157,6 +157,7 @@ $historyPresentasi->save();
         return redirect()->back()->with('success', 'Berhasil membuat tim solo project');
     }
 
+
     protected function pembuatanTimProject(RequestPembentukanTimProject $request)
     {
         try {
@@ -204,6 +205,7 @@ $historyPresentasi->save();
             $tim->status_tim = $request->status_tim;
             $tim->logo = $nameImage;
             $tim->kadaluwarsa = false;
+            $tim->divisi_id = Auth::user()->divisi_id;
             $tim->save();
 
             DB::table('labels')->insert([

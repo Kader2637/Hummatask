@@ -45,7 +45,8 @@
                 </script>
               @endif
               <div class="tab-pane active" id="senin" role="tabpanel">
-                <form id="form-senin active" class="form-senin" action="{{ route('presentasi-divisi-create-jam.store') }}" method="POST">
+                <form id="form-senin" class="form-senin" action="{{ route('presentasi-divisi-create-jam.store') }}"
+                  method="POST">
                   @csrf
                   <input type="hidden" name="presentasi_divisi_id" value="{{ $senin->id ?? '' }}">
                   <div id="form-repeater">
@@ -92,7 +93,8 @@
                 </form>
               </div>
               <div class="tab-pane" id="selasa" role="tabpanel">
-                <form id="form-selasa" class="form-selasa" action="{{ route('presentasi-divisi-create-jam.store') }}" method="POST">
+                <form id="form-selasa" class="form-selasa" action="{{ route('presentasi-divisi-create-jam.store') }}"
+                  method="POST">
                   @csrf
                   <input type="hidden" name="presentasi_divisi_id" value="{{ $selasa->id ?? '' }}">
                   <div id="form-repeater">
@@ -139,7 +141,8 @@
                 </form>
               </div>
               <div class="tab-pane" id="rabu" role="tabpanel">
-                <form id="form-rabu" class="form-rabu" action="{{ route('presentasi-divisi-create-jam.store') }}" method="POST">
+                <form id="form-rabu" class="form-rabu" action="{{ route('presentasi-divisi-create-jam.store') }}"
+                  method="POST">
                   @csrf
                   <input type="hidden" name="presentasi_divisi_id" value="{{ $rabu->id ?? '' }}">
                   <div id="form-repeater">
@@ -186,7 +189,8 @@
                 </form>
               </div>
               <div class="tab-pane " id="kamis" role="tabpanel">
-                <form id="form-kamis" class="form-kamis" action="{{ route('presentasi-divisi-create-jam.store') }}" method="POST">
+                <form id="form-kamis" class="form-kamis" action="{{ route('presentasi-divisi-create-jam.store') }}"
+                  method="POST">
                   @csrf
                   <input type="hidden" name="presentasi_divisi_id" value="{{ $kamis->id ?? '' }}">
                   <div id="form-repeater">
@@ -233,7 +237,8 @@
                 </form>
               </div>
               <div class="tab-pane" id="jumat" role="tabpanel">
-                <form id="form-jumat" class="form-jumat" action="{{ route('presentasi-divisi-create-jam.store') }}" method="POST">
+                <form id="form-jumat" class="form-jumat" action="{{ route('presentasi-divisi-create-jam.store') }}"
+                  method="POST">
                   @csrf
                   <input type="hidden" name="presentasi_divisi_id" value="{{ $jumat->id ?? '' }}">
                   <div id="form-repeater">
@@ -304,154 +309,990 @@
             </ul>
             <div class="tab-content mt-3">
               <div class="tab-pane active" id="mobile" role="tabpanel">
-                <div class="table-responsive text-nowrap card-datatable">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>No</th>
-                        <th>Hari</th>
-                        <th>Mulai</th>
-                        <th>Sampai</th>
-                      </tr>
-                    </thead>
-                    @php
-                      $no = 1;
-                    @endphp
-                    <tbody class="table-border-bottom-0">
-                      @forelse ($dataPresentasiMobile as $Pm => $presentasiMobile)
-                        <tr>
-                          <td>{{ $no++ }}</td>
-                          <td>{{ \Carbon\Carbon::parse($presentasiMobile->created_at)->translatedFormat('l') }}</td>
-                          <td>{{ $presentasiMobile->mulai }}</td>
-                          <td>{{ $presentasiMobile->akhir }}</td>
-                        </tr>
-                      @empty
-                        <tr>
-                          <td colspan="4">
-                            <div class="d-flex justify-content-evenly">
-                              <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
-                                class="mb-0" style="width: 250px;">
-                            </div>
-                            <p class="text-center mb-0 mt-2">Data tidak tersedia <i class="ti ti-address-book-off"></i>
-                            </p>
-                          </td>
-                        </tr>
-                      @endforelse
-                    </tbody>
-                  </table>
+                <div class="card">
+                  <div class="card-body m-0">
+                    <ul class="nav nav-tabs" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#seninMobile" role="tab">Senin</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#selasaMobile" role="tab">Selasa</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#rabuMobile" role="tab">Rabu</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#kamisMobile" role="tab">Kamis</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#jumatMobile" role="tab">Jumat</a>
+                      </li>
+                    </ul>
+                    <div class="tab-content mt-3">
+                      @if ($errors->any())
+                        <script>
+                          $(document).ready(function() {
+                            let errorText = '';
+                            @foreach ($errors->all() as $error)
+                              errorText += '{{ $error }}\n';
+                            @endforeach
+
+                            Swal.fire({
+                              icon: 'error',
+                              title: 'Gagal',
+                              text: errorText.trim(),
+                              timer: 4000,
+                              showConfirmButton: false
+                            });
+                          });
+                        </script>
+                      @endif
+                      {{-- Senin --}}
+                      <div class="tab-pane active" id="seninMobile" role="tabpanel">
+                        <div class="table-responsive text-nowrap card-datatable">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>No</th>
+                                <th>Hari</th>
+                                <th>Mulai</th>
+                                <th>Sampai</th>
+                              </tr>
+                            </thead>
+                            @php
+                              $no = 1;
+                            @endphp
+                            <tbody class="table-border-bottom-0">
+                              @forelse ($dataPresentasiMobile as $Pm => $presentasiMobile)
+                                <tr>
+                                  <td>{{ $no++ }}</td>
+                                  <td>{{ \Carbon\Carbon::parse($presentasiMobile->created_at)->translatedFormat('l') }}
+                                  </td>
+                                  <td>{{ $presentasiMobile->mulai }}</td>
+                                  <td>{{ $presentasiMobile->akhir }}</td>
+                                </tr>
+                              @empty
+                                <tr>
+                                  <td colspan="4">
+                                    <div class="d-flex justify-content-evenly">
+                                      <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
+                                        class="mb-0" style="width: 250px;">
+                                    </div>
+                                    <p class="text-center mb-0 mt-2">Data tidak tersedia <i
+                                        class="ti ti-address-book-off"></i>
+                                    </p>
+                                  </td>
+                                </tr>
+                              @endforelse
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      {{-- Selasa --}}
+                      <div class="tab-pane" id="selasaMobile" role="tabpanel">
+                        <div class="table-responsive text-nowrap card-datatable">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>No</th>
+                                <th>Hari</th>
+                                <th>Mulai</th>
+                                <th>Sampai</th>
+                              </tr>
+                            </thead>
+                            @php
+                              $no = 1;
+                            @endphp
+                            <tbody class="table-border-bottom-0">
+                              @forelse ($dataPresentasiMobile as $Pm => $presentasiMobile)
+                                <tr>
+                                  <td>{{ $no++ }}</td>
+                                  <td>{{ \Carbon\Carbon::parse($presentasiMobile->created_at)->translatedFormat('l') }}
+                                  </td>
+                                  <td>{{ $presentasiMobile->mulai }}</td>
+                                  <td>{{ $presentasiMobile->akhir }}</td>
+                                </tr>
+                              @empty
+                                <tr>
+                                  <td colspan="4">
+                                    <div class="d-flex justify-content-evenly">
+                                      <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
+                                        class="mb-0" style="width: 250px;">
+                                    </div>
+                                    <p class="text-center mb-0 mt-2">Data tidak tersedia <i
+                                        class="ti ti-address-book-off"></i>
+                                    </p>
+                                  </td>
+                                </tr>
+                              @endforelse
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      {{-- Rabu --}}
+                      <div class="tab-pane" id="rabuMobile" role="tabpanel">
+                        <div class="table-responsive text-nowrap card-datatable">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>No</th>
+                                <th>Hari</th>
+                                <th>Mulai</th>
+                                <th>Sampai</th>
+                              </tr>
+                            </thead>
+                            @php
+                              $no = 1;
+                            @endphp
+                            <tbody class="table-border-bottom-0">
+                              @forelse ($dataPresentasiMobile as $Pm => $presentasiMobile)
+                                <tr>
+                                  <td>{{ $no++ }}</td>
+                                  <td>{{ \Carbon\Carbon::parse($presentasiMobile->created_at)->translatedFormat('l') }}
+                                  </td>
+                                  <td>{{ $presentasiMobile->mulai }}</td>
+                                  <td>{{ $presentasiMobile->akhir }}</td>
+                                </tr>
+                              @empty
+                                <tr>
+                                  <td colspan="4">
+                                    <div class="d-flex justify-content-evenly">
+                                      <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
+                                        class="mb-0" style="width: 250px;">
+                                    </div>
+                                    <p class="text-center mb-0 mt-2">Data tidak tersedia <i
+                                        class="ti ti-address-book-off"></i>
+                                    </p>
+                                  </td>
+                                </tr>
+                              @endforelse
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      {{-- Kamis --}}
+                      <div class="tab-pane" id="kamisMobile" role="tabpanel">
+                        <div class="table-responsive text-nowrap card-datatable">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>No</th>
+                                <th>Hari</th>
+                                <th>Mulai</th>
+                                <th>Sampai</th>
+                              </tr>
+                            </thead>
+                            @php
+                              $no = 1;
+                            @endphp
+                            <tbody class="table-border-bottom-0">
+                              @forelse ($dataPresentasiMobile as $Pm => $presentasiMobile)
+                                <tr>
+                                  <td>{{ $no++ }}</td>
+                                  <td>{{ \Carbon\Carbon::parse($presentasiMobile->created_at)->translatedFormat('l') }}
+                                  </td>
+                                  <td>{{ $presentasiMobile->mulai }}</td>
+                                  <td>{{ $presentasiMobile->akhir }}</td>
+                                </tr>
+                              @empty
+                                <tr>
+                                  <td colspan="4">
+                                    <div class="d-flex justify-content-evenly">
+                                      <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
+                                        class="mb-0" style="width: 250px;">
+                                    </div>
+                                    <p class="text-center mb-0 mt-2">Data tidak tersedia <i
+                                        class="ti ti-address-book-off"></i>
+                                    </p>
+                                  </td>
+                                </tr>
+                              @endforelse
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      {{-- Jumat --}}
+                      <div class="tab-pane" id="jumatMobile" role="tabpanel">
+                        <div class="table-responsive text-nowrap card-datatable">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>No</th>
+                                <th>Hari</th>
+                                <th>Mulai</th>
+                                <th>Sampai</th>
+                              </tr>
+                            </thead>
+                            @php
+                              $no = 1;
+                            @endphp
+                            <tbody class="table-border-bottom-0">
+                              @forelse ($dataPresentasiMobile as $Pm => $presentasiMobile)
+                                <tr>
+                                  <td>{{ $no++ }}</td>
+                                  <td>{{ \Carbon\Carbon::parse($presentasiMobile->created_at)->translatedFormat('l') }}
+                                  </td>
+                                  <td>{{ $presentasiMobile->mulai }}</td>
+                                  <td>{{ $presentasiMobile->akhir }}</td>
+                                </tr>
+                              @empty
+                                <tr>
+                                  <td colspan="4">
+                                    <div class="d-flex justify-content-evenly">
+                                      <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
+                                        class="mb-0" style="width: 250px;">
+                                    </div>
+                                    <p class="text-center mb-0 mt-2">Data tidak tersedia <i
+                                        class="ti ti-address-book-off"></i>
+                                    </p>
+                                  </td>
+                                </tr>
+                              @endforelse
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="tab-pane" id="website" role="tabpanel">
-                <div class="table-responsive text-nowrap card-datatable">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>No</th>
-                        <th>Hari</th>
-                        <th>Mulai</th>
-                        <th>Sampai</th>
-                      </tr>
-                    </thead>
-                    <tbody class="table-border-bottom-0">
-                      @php
-                        $no = 1;
-                      @endphp
-                    <tbody class="table-border-bottom-0">
-                      @forelse ($dataPresentasiWebsite as $dw => $presentasiWebsite)
-                        <tr>
-                          <td>{{ $no++ }}</td>
-                          <td>{{ \Carbon\Carbon::parse($presentasiWebsite->created_at)->translatedFormat('l') }}</td>
-                          <td>{{ $presentasiWebsite->mulai }}</td>
-                          <td>{{ $presentasiWebsite->akhir }}</td>
-                        </tr>
-                      @empty
-                        <tr>
-                          <td colspan="4">
-                            <div class="d-flex justify-content-evenly">
-                              <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
-                                class="mb-0" style="width: 250px;">
-                            </div>
-                            <p class="text-center mb-0 mt-2">Data tidak tersedia <i class="ti ti-address-book-off"></i>
-                            </p>
-                          </td>
-                        </tr>
-                      @endforelse
-                    </tbody>
-                  </table>
+                <div class="card">
+                  <div class="card-body m-0">
+                    <ul class="nav nav-tabs" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#seninWebsite" role="tab">Senin</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#selasaWebsite" role="tab">Selasa</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#rabuWebsite" role="tab">Rabu</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#kamisWebsite" role="tab">Kamis</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#jumatWebsite" role="tab">Jumat</a>
+                      </li>
+                    </ul>
+                    <div class="tab-content mt-3">
+                      @if ($errors->any())
+                        <script>
+                          $(document).ready(function() {
+                            let errorText = '';
+                            @foreach ($errors->all() as $error)
+                              errorText += '{{ $error }}\n';
+                            @endforeach
+
+                            Swal.fire({
+                              icon: 'error',
+                              title: 'Gagal',
+                              text: errorText.trim(),
+                              timer: 4000,
+                              showConfirmButton: false
+                            });
+                          });
+                        </script>
+                      @endif
+                      {{-- Senin --}}
+                      <div class="tab-pane active" id="seninWebsite" role="tabpanel">
+                        <div class="table-responsive text-nowrap card-datatable">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>No</th>
+                                <th>Hari</th>
+                                <th>Mulai</th>
+                                <th>Sampai</th>
+                              </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                              @php
+                                $no = 1;
+                              @endphp
+                            <tbody class="table-border-bottom-0">
+                              @forelse ($dataPresentasiWebsite as $dw => $presentasiWebsite)
+                                <tr>
+                                  <td>{{ $no++ }}</td>
+                                  <td>{{ \Carbon\Carbon::parse($presentasiWebsite->created_at)->translatedFormat('l') }}
+                                  </td>
+                                  <td>{{ $presentasiWebsite->mulai }}</td>
+                                  <td>{{ $presentasiWebsite->akhir }}</td>
+                                </tr>
+                              @empty
+                                <tr>
+                                  <td colspan="4">
+                                    <div class="d-flex justify-content-evenly">
+                                      <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
+                                        class="mb-0" style="width: 250px;">
+                                    </div>
+                                    <p class="text-center mb-0 mt-2">Data tidak tersedia <i
+                                        class="ti ti-address-book-off"></i>
+                                    </p>
+                                  </td>
+                                </tr>
+                              @endforelse
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      {{-- Selasa --}}
+                      <div class="tab-pane" id="selasaWebsite" role="tabpanel">
+                        <div class="table-responsive text-nowrap card-datatable">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>No</th>
+                                <th>Hari</th>
+                                <th>Mulai</th>
+                                <th>Sampai</th>
+                              </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                              @php
+                                $no = 1;
+                              @endphp
+                            <tbody class="table-border-bottom-0">
+                              @forelse ($dataPresentasiWebsite as $dw => $presentasiWebsite)
+                                <tr>
+                                  <td>{{ $no++ }}</td>
+                                  <td>{{ \Carbon\Carbon::parse($presentasiWebsite->created_at)->translatedFormat('l') }}
+                                  </td>
+                                  <td>{{ $presentasiWebsite->mulai }}</td>
+                                  <td>{{ $presentasiWebsite->akhir }}</td>
+                                </tr>
+                              @empty
+                                <tr>
+                                  <td colspan="4">
+                                    <div class="d-flex justify-content-evenly">
+                                      <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
+                                        class="mb-0" style="width: 250px;">
+                                    </div>
+                                    <p class="text-center mb-0 mt-2">Data tidak tersedia <i
+                                        class="ti ti-address-book-off"></i>
+                                    </p>
+                                  </td>
+                                </tr>
+                              @endforelse
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      {{-- Rabu --}}
+                      <div class="tab-pane" id="rabuWebsite" role="tabpanel">
+                        <div class="table-responsive text-nowrap card-datatable">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>No</th>
+                                <th>Hari</th>
+                                <th>Mulai</th>
+                                <th>Sampai</th>
+                              </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                              @php
+                                $no = 1;
+                              @endphp
+                            <tbody class="table-border-bottom-0">
+                              @forelse ($dataPresentasiWebsite as $dw => $presentasiWebsite)
+                                <tr>
+                                  <td>{{ $no++ }}</td>
+                                  <td>{{ \Carbon\Carbon::parse($presentasiWebsite->created_at)->translatedFormat('l') }}
+                                  </td>
+                                  <td>{{ $presentasiWebsite->mulai }}</td>
+                                  <td>{{ $presentasiWebsite->akhir }}</td>
+                                </tr>
+                              @empty
+                                <tr>
+                                  <td colspan="4">
+                                    <div class="d-flex justify-content-evenly">
+                                      <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
+                                        class="mb-0" style="width: 250px;">
+                                    </div>
+                                    <p class="text-center mb-0 mt-2">Data tidak tersedia <i
+                                        class="ti ti-address-book-off"></i>
+                                    </p>
+                                  </td>
+                                </tr>
+                              @endforelse
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      {{-- Kamis --}}
+                      <div class="tab-pane" id="kamisWebsite" role="tabpanel">
+                        <div class="table-responsive text-nowrap card-datatable">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>No</th>
+                                <th>Hari</th>
+                                <th>Mulai</th>
+                                <th>Sampai</th>
+                              </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                              @php
+                                $no = 1;
+                              @endphp
+                            <tbody class="table-border-bottom-0">
+                              @forelse ($dataPresentasiWebsite as $dw => $presentasiWebsite)
+                                <tr>
+                                  <td>{{ $no++ }}</td>
+                                  <td>{{ \Carbon\Carbon::parse($presentasiWebsite->created_at)->translatedFormat('l') }}
+                                  </td>
+                                  <td>{{ $presentasiWebsite->mulai }}</td>
+                                  <td>{{ $presentasiWebsite->akhir }}</td>
+                                </tr>
+                              @empty
+                                <tr>
+                                  <td colspan="4">
+                                    <div class="d-flex justify-content-evenly">
+                                      <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
+                                        class="mb-0" style="width: 250px;">
+                                    </div>
+                                    <p class="text-center mb-0 mt-2">Data tidak tersedia <i
+                                        class="ti ti-address-book-off"></i>
+                                    </p>
+                                  </td>
+                                </tr>
+                              @endforelse
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      {{-- Jumat --}}
+                      <div class="tab-pane" id="jumatWebsite" role="tabpanel">
+                        <div class="table-responsive text-nowrap card-datatable">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>No</th>
+                                <th>Hari</th>
+                                <th>Mulai</th>
+                                <th>Sampai</th>
+                              </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                              @php
+                                $no = 1;
+                              @endphp
+                            <tbody class="table-border-bottom-0">
+                              @forelse ($dataPresentasiWebsite as $dw => $presentasiWebsite)
+                                <tr>
+                                  <td>{{ $no++ }}</td>
+                                  <td>{{ \Carbon\Carbon::parse($presentasiWebsite->created_at)->translatedFormat('l') }}
+                                  </td>
+                                  <td>{{ $presentasiWebsite->mulai }}</td>
+                                  <td>{{ $presentasiWebsite->akhir }}</td>
+                                </tr>
+                              @empty
+                                <tr>
+                                  <td colspan="4">
+                                    <div class="d-flex justify-content-evenly">
+                                      <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
+                                        class="mb-0" style="width: 250px;">
+                                    </div>
+                                    <p class="text-center mb-0 mt-2">Data tidak tersedia <i
+                                        class="ti ti-address-book-off"></i>
+                                    </p>
+                                  </td>
+                                </tr>
+                              @endforelse
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="tab-pane" id="uiux" role="tabpanel">
-                <div class="table-responsive text-nowrap card-datatable">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>No</th>
-                        <th>Hari</th>
-                        <th>Mulai</th>
-                        <th>Sampai</th>
-                      </tr>
-                    </thead>
-                    <tbody class="table-border-bottom-0">
-                      @php
-                        $no = 1;
-                      @endphp
-                    <tbody class="table-border-bottom-0">
-                      @forelse ($dataPresentasiUi as $dU => $presentasiUi)
-                        <tr>
-                          <td>{{ $no++ }}</td>
-                          <td>{{ \Carbon\Carbon::parse($presentasiUi->created_at)->translatedFormat('l') }}</td>
-                          <td>{{ $presentasiUi->mulai }}</td>
-                          <td>{{ $presentasiUi->akhir }}</td>
-                        </tr>
-                      @empty
-                        <tr>
-                          <td colspan="4">
-                            <div class="d-flex justify-content-evenly">
-                              <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
-                                class="mb-0" style="width: 250px;">
-                            </div>
-                            <p class="text-center mb-0 mt-2">Data tidak tersedia <i class="ti ti-address-book-off"></i>
-                            </p>
-                          </td>
-                        </tr>
-                      @endforelse
-                    </tbody>
-                  </table>
+                <div class="card">
+                  <div class="card-body m-0">
+                    <ul class="nav nav-tabs" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#seninUIUX" role="tab">Senin</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#selasaUIUX" role="tab">Selasa</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#rabuUIUX" role="tab">Rabu</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#kamisUIUX" role="tab">Kamis</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#jumatUIUX" role="tab">Jumat</a>
+                      </li>
+                    </ul>
+                    <div class="tab-content mt-3">
+                      @if ($errors->any())
+                        <script>
+                          $(document).ready(function() {
+                            let errorText = '';
+                            @foreach ($errors->all() as $error)
+                              errorText += '{{ $error }}\n';
+                            @endforeach
+
+                            Swal.fire({
+                              icon: 'error',
+                              title: 'Gagal',
+                              text: errorText.trim(),
+                              timer: 4000,
+                              showConfirmButton: false
+                            });
+                          });
+                        </script>
+                      @endif
+                      {{-- Senin --}}
+                      <div class="tab-pane active" id="seninUIUX" role="tabpanel">
+                        <div class="table-responsive text-nowrap card-datatable">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>No</th>
+                                <th>Hari</th>
+                                <th>Mulai</th>
+                                <th>Sampai</th>
+                              </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                              @php
+                                $no = 1;
+                              @endphp
+                            <tbody class="table-border-bottom-0">
+                              @forelse ($dataPresentasiUi as $dU => $presentasiUi)
+                                <tr>
+                                  <td>{{ $no++ }}</td>
+                                  <td>{{ \Carbon\Carbon::parse($presentasiUi->created_at)->translatedFormat('l') }}</td>
+                                  <td>{{ $presentasiUi->mulai }}</td>
+                                  <td>{{ $presentasiUi->akhir }}</td>
+                                </tr>
+                              @empty
+                                <tr>
+                                  <td colspan="4">
+                                    <div class="d-flex justify-content-evenly">
+                                      <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
+                                        class="mb-0" style="width: 250px;">
+                                    </div>
+                                    <p class="text-center mb-0 mt-2">Data tidak tersedia <i
+                                        class="ti ti-address-book-off"></i>
+                                    </p>
+                                  </td>
+                                </tr>
+                              @endforelse
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      {{-- Selasa --}}
+                      <div class="tab-pane" id="selasaUIUX" role="tabpanel">
+                        <div class="table-responsive text-nowrap card-datatable">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>No</th>
+                                <th>Hari</th>
+                                <th>Mulai</th>
+                                <th>Sampai</th>
+                              </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                              @php
+                                $no = 1;
+                              @endphp
+                            <tbody class="table-border-bottom-0">
+                              @forelse ($dataPresentasiUi as $dU => $presentasiUi)
+                                <tr>
+                                  <td>{{ $no++ }}</td>
+                                  <td>{{ \Carbon\Carbon::parse($presentasiUi->created_at)->translatedFormat('l') }}</td>
+                                  <td>{{ $presentasiUi->mulai }}</td>
+                                  <td>{{ $presentasiUi->akhir }}</td>
+                                </tr>
+                              @empty
+                                <tr>
+                                  <td colspan="4">
+                                    <div class="d-flex justify-content-evenly">
+                                      <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
+                                        class="mb-0" style="width: 250px;">
+                                    </div>
+                                    <p class="text-center mb-0 mt-2">Data tidak tersedia <i
+                                        class="ti ti-address-book-off"></i>
+                                    </p>
+                                  </td>
+                                </tr>
+                              @endforelse
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      {{-- Rabu --}}
+                      <div class="tab-pane" id="rabuUIUX" role="tabpanel">
+                        <div class="table-responsive text-nowrap card-datatable">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>No</th>
+                                <th>Hari</th>
+                                <th>Mulai</th>
+                                <th>Sampai</th>
+                              </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                              @php
+                                $no = 1;
+                              @endphp
+                            <tbody class="table-border-bottom-0">
+                              @forelse ($dataPresentasiUi as $dU => $presentasiUi)
+                                <tr>
+                                  <td>{{ $no++ }}</td>
+                                  <td>{{ \Carbon\Carbon::parse($presentasiUi->created_at)->translatedFormat('l') }}</td>
+                                  <td>{{ $presentasiUi->mulai }}</td>
+                                  <td>{{ $presentasiUi->akhir }}</td>
+                                </tr>
+                              @empty
+                                <tr>
+                                  <td colspan="4">
+                                    <div class="d-flex justify-content-evenly">
+                                      <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
+                                        class="mb-0" style="width: 250px;">
+                                    </div>
+                                    <p class="text-center mb-0 mt-2">Data tidak tersedia <i
+                                        class="ti ti-address-book-off"></i>
+                                    </p>
+                                  </td>
+                                </tr>
+                              @endforelse
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      {{-- Kamis --}}
+                      <div class="tab-pane" id="kamisUIUX" role="tabpanel">
+                        <div class="table-responsive text-nowrap card-datatable">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>No</th>
+                                <th>Hari</th>
+                                <th>Mulai</th>
+                                <th>Sampai</th>
+                              </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                              @php
+                                $no = 1;
+                              @endphp
+                            <tbody class="table-border-bottom-0">
+                              @forelse ($dataPresentasiUi as $dU => $presentasiUi)
+                                <tr>
+                                  <td>{{ $no++ }}</td>
+                                  <td>{{ \Carbon\Carbon::parse($presentasiUi->created_at)->translatedFormat('l') }}</td>
+                                  <td>{{ $presentasiUi->mulai }}</td>
+                                  <td>{{ $presentasiUi->akhir }}</td>
+                                </tr>
+                              @empty
+                                <tr>
+                                  <td colspan="4">
+                                    <div class="d-flex justify-content-evenly">
+                                      <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
+                                        class="mb-0" style="width: 250px;">
+                                    </div>
+                                    <p class="text-center mb-0 mt-2">Data tidak tersedia <i
+                                        class="ti ti-address-book-off"></i>
+                                    </p>
+                                  </td>
+                                </tr>
+                              @endforelse
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      {{-- Jumat --}}
+                      <div class="tab-pane" id="jumatUIUX" role="tabpanel">
+                        <div class="table-responsive text-nowrap card-datatable">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>No</th>
+                                <th>Hari</th>
+                                <th>Mulai</th>
+                                <th>Sampai</th>
+                              </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                              @php
+                                $no = 1;
+                              @endphp
+                            <tbody class="table-border-bottom-0">
+                              @forelse ($dataPresentasiUi as $dU => $presentasiUi)
+                                <tr>
+                                  <td>{{ $no++ }}</td>
+                                  <td>{{ \Carbon\Carbon::parse($presentasiUi->created_at)->translatedFormat('l') }}</td>
+                                  <td>{{ $presentasiUi->mulai }}</td>
+                                  <td>{{ $presentasiUi->akhir }}</td>
+                                </tr>
+                              @empty
+                                <tr>
+                                  <td colspan="4">
+                                    <div class="d-flex justify-content-evenly">
+                                      <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
+                                        class="mb-0" style="width: 250px;">
+                                    </div>
+                                    <p class="text-center mb-0 mt-2">Data tidak tersedia <i
+                                        class="ti ti-address-book-off"></i>
+                                    </p>
+                                  </td>
+                                </tr>
+                              @endforelse
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="tab-pane" id="bd" role="tabpanel">
-                <div class="table-responsive text-nowrap card-datatable">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>No</th>
-                        <th>Hari</th>
-                        <th>Mulai</th>
-                        <th>Sampai</th>
-                      </tr>
-                    </thead>
-                    <tbody class="table-border-bottom-0">
-                      @forelse ($dataPresentasiMarketing as $dM => $presentasiMarketing)
-                        <tr>
-                          <td>{{ $no++ }}</td>
-                          <td>{{ \Carbon\Carbon::parse($presentasiMarketing->created_at)->translatedFormat('l') }}</td>
-                          <td>{{ $presentasiMarketing->mulai }}</td>
-                          <td>{{ $presentasiMarketing->akhir }}</td>
-                        </tr>
-                      @empty
-                        <tr>
-                          <td colspan="4">
-                            <div class="d-flex justify-content-evenly">
-                              <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
-                                class="mb-0" style="width: 250px;">
-                            </div>
-                            <p class="text-center mb-0 mt-2">Data tidak tersedia <i class="ti ti-address-book-off"></i>
-                            </p>
-                          </td>
-                        </tr>
-                      @endforelse
-                    </tbody>
-                  </table>
+                <div class="card">
+                  <div class="card-body m-0">
+                    <ul class="nav nav-tabs" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#seninBD" role="tab">Senin</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#selasaBD" role="tab">Selasa</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#rabuBD" role="tab">Rabu</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#kamisBD" role="tab">Kamis</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#jumatBD" role="tab">Jumat</a>
+                      </li>
+                    </ul>
+                    <div class="tab-content mt-3">
+                      @if ($errors->any())
+                        <script>
+                          $(document).ready(function() {
+                            let errorText = '';
+                            @foreach ($errors->all() as $error)
+                              errorText += '{{ $error }}\n';
+                            @endforeach
+
+                            Swal.fire({
+                              icon: 'error',
+                              title: 'Gagal',
+                              text: errorText.trim(),
+                              timer: 4000,
+                              showConfirmButton: false
+                            });
+                          });
+                        </script>
+                      @endif
+                      {{-- Senin --}}
+                      <div class="tab-pane active" id="seninBD" role="tabpanel">
+                        <div class="table-responsive text-nowrap card-datatable">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>No</th>
+                                <th>Hari</th>
+                                <th>Mulai</th>
+                                <th>Sampai</th>
+                              </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                              @forelse ($dataPresentasiMarketing as $dM => $presentasiMarketing)
+                                <tr>
+                                  <td>{{ $no++ }}</td>
+                                  <td>
+                                    {{ \Carbon\Carbon::parse($presentasiMarketing->created_at)->translatedFormat('l') }}
+                                  </td>
+                                  <td>{{ $presentasiMarketing->mulai }}</td>
+                                  <td>{{ $presentasiMarketing->akhir }}</td>
+                                </tr>
+                              @empty
+                                <tr>
+                                  <td colspan="4">
+                                    <div class="d-flex justify-content-evenly">
+                                      <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
+                                        class="mb-0" style="width: 250px;">
+                                    </div>
+                                    <p class="text-center mb-0 mt-2">Data tidak tersedia <i
+                                        class="ti ti-address-book-off"></i>
+                                    </p>
+                                  </td>
+                                </tr>
+                              @endforelse
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      {{-- Selasa --}}
+                      <div class="tab-pane" id="selasaBD" role="tabpanel">
+                        <div class="table-responsive text-nowrap card-datatable">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>No</th>
+                                <th>Hari</th>
+                                <th>Mulai</th>
+                                <th>Sampai</th>
+                              </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                              @forelse ($dataPresentasiMarketing as $dM => $presentasiMarketing)
+                                <tr>
+                                  <td>{{ $no++ }}</td>
+                                  <td>
+                                    {{ \Carbon\Carbon::parse($presentasiMarketing->created_at)->translatedFormat('l') }}
+                                  </td>
+                                  <td>{{ $presentasiMarketing->mulai }}</td>
+                                  <td>{{ $presentasiMarketing->akhir }}</td>
+                                </tr>
+                              @empty
+                                <tr>
+                                  <td colspan="4">
+                                    <div class="d-flex justify-content-evenly">
+                                      <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
+                                        class="mb-0" style="width: 250px;">
+                                    </div>
+                                    <p class="text-center mb-0 mt-2">Data tidak tersedia <i
+                                        class="ti ti-address-book-off"></i>
+                                    </p>
+                                  </td>
+                                </tr>
+                              @endforelse
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      {{-- Rabu --}}
+                      <div class="tab-pane" id="rabuBD" role="tabpanel">
+                        <div class="table-responsive text-nowrap card-datatable">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>No</th>
+                                <th>Hari</th>
+                                <th>Mulai</th>
+                                <th>Sampai</th>
+                              </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                              @forelse ($dataPresentasiMarketing as $dM => $presentasiMarketing)
+                                <tr>
+                                  <td>{{ $no++ }}</td>
+                                  <td>
+                                    {{ \Carbon\Carbon::parse($presentasiMarketing->created_at)->translatedFormat('l') }}
+                                  </td>
+                                  <td>{{ $presentasiMarketing->mulai }}</td>
+                                  <td>{{ $presentasiMarketing->akhir }}</td>
+                                </tr>
+                              @empty
+                                <tr>
+                                  <td colspan="4">
+                                    <div class="d-flex justify-content-evenly">
+                                      <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
+                                        class="mb-0" style="width: 250px;">
+                                    </div>
+                                    <p class="text-center mb-0 mt-2">Data tidak tersedia <i
+                                        class="ti ti-address-book-off"></i>
+                                    </p>
+                                  </td>
+                                </tr>
+                              @endforelse
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      {{-- Kamis --}}
+                      <div class="tab-pane" id="kamisBD" role="tabpanel">
+                        <div class="table-responsive text-nowrap card-datatable">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>No</th>
+                                <th>Hari</th>
+                                <th>Mulai</th>
+                                <th>Sampai</th>
+                              </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                              @forelse ($dataPresentasiMarketing as $dM => $presentasiMarketing)
+                                <tr>
+                                  <td>{{ $no++ }}</td>
+                                  <td>
+                                    {{ \Carbon\Carbon::parse($presentasiMarketing->created_at)->translatedFormat('l') }}
+                                  </td>
+                                  <td>{{ $presentasiMarketing->mulai }}</td>
+                                  <td>{{ $presentasiMarketing->akhir }}</td>
+                                </tr>
+                              @empty
+                                <tr>
+                                  <td colspan="4">
+                                    <div class="d-flex justify-content-evenly">
+                                      <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
+                                        class="mb-0" style="width: 250px;">
+                                    </div>
+                                    <p class="text-center mb-0 mt-2">Data tidak tersedia <i
+                                        class="ti ti-address-book-off"></i>
+                                    </p>
+                                  </td>
+                                </tr>
+                              @endforelse
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      {{-- Jumat --}}
+                      <div class="tab-pane" id="jumatBD" role="tabpanel">
+                        <div class="table-responsive text-nowrap card-datatable">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>No</th>
+                                <th>Hari</th>
+                                <th>Mulai</th>
+                                <th>Sampai</th>
+                              </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                              @forelse ($dataPresentasiMarketing as $dM => $presentasiMarketing)
+                                <tr>
+                                  <td>{{ $no++ }}</td>
+                                  <td>
+                                    {{ \Carbon\Carbon::parse($presentasiMarketing->created_at)->translatedFormat('l') }}
+                                  </td>
+                                  <td>{{ $presentasiMarketing->mulai }}</td>
+                                  <td>{{ $presentasiMarketing->akhir }}</td>
+                                </tr>
+                              @empty
+                                <tr>
+                                  <td colspan="4">
+                                    <div class="d-flex justify-content-evenly">
+                                      <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
+                                        class="mb-0" style="width: 250px;">
+                                    </div>
+                                    <p class="text-center mb-0 mt-2">Data tidak tersedia <i
+                                        class="ti ti-address-book-off"></i>
+                                    </p>
+                                  </td>
+                                </tr>
+                              @endforelse
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -512,30 +1353,7 @@
       </div>
 
     </div>
-    {{-- Modal Presetanasi --}}
-    <form action="{{ route('presentasi-divisi.store') }}" method="POST">
-      @csrf
-      <div class="modal fade" id="modalLimit" tabindex="-1" aria-hidden="true">
-        <input type="hidden" name="day" value="monday">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="modalCenterTitle">Setting Limit Presentasi</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <label for="limit" class="form-label">Limit Presentasi</label>
-              <input class="form-control" type="number" id="limit" name="limit">
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
-              <button type="submit" class="btn btn-primary" id="createButton">Simpan</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
-
+    
     {{-- Modal Presetanasi --}}
     <form action="{{ route('presentasi-divisi.store') }}" method="POST">
       @csrf

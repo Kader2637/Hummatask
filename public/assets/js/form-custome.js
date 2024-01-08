@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 Swal.fire({
                     icon: "error",
                     title: "Error!",
-                    text: "Input Jadwal Waktu Harus diisi",
+                    text: "Input waktu jadwal harus diisi!",
                 });
 
                 event.preventDefault();
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 Swal.fire({
                     icon: "error",
                     title: "Error!",
-                    text: "Input Jadwal Waktu Harus diisi",
+                    text: "Input waktu jadwal harus diisi!",
                 });
 
                 event.preventDefault();
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 Swal.fire({
                     icon: "error",
                     title: "Error!",
-                    text: "Input Jadwal Waktu Harus diisi",
+                    text: "Input waktu jadwal harus diisi!",
                 });
 
                 event.preventDefault();
@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 Swal.fire({
                     icon: "error",
                     title: "Error!",
-                    text: "Input Jadwal Waktu Harus diisi",
+                    text: "Input waktu jadwal harus diisi!",
                 });
 
                 event.preventDefault();
@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 Swal.fire({
                     icon: "error",
                     title: "Error!",
-                    text: "Input Jadwal Waktu Harus diisi",
+                    text: "Input waktu jadwal harus diisi!",
                 });
 
                 event.preventDefault();
