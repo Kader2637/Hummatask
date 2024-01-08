@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class PenggunaController extends Controller
@@ -32,7 +33,7 @@ class PenggunaController extends Controller
      * @param  mixed $request
      * @return JsonResponse
      */
-    public function store(User $request)
+    public function store(Request $request)
     {
 
         $tanggalAwal = $request->awal_magang;
@@ -122,6 +123,9 @@ class PenggunaController extends Controller
         }
         return ResponseHelper::success(null, 'Berhasil menambahkan User');
     }
+
+
+    // public function storePengguna()
 
      /**
      * update
