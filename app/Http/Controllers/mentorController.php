@@ -35,7 +35,11 @@ class mentorController extends Controller
         $jadwal = [];
         $hari = [];
         $userID = Auth::user()->id;
-        $notifikasi = Notifikasi::where('user_id', $userID)->get();
+        $notifikasi = Notifikasi::where('user_id', $userID)
+            ->whereHas('user', function ($query) {
+                $query->where('divisi_id', Auth::user()->divisi_id);
+            })
+            ->get();
         $presentasi = Presentasi::with('tim')->where('status_presentasi', 'selesai')->whereDate('created_at', now())->latest('created_at')->take(5)->get()->reverse();
         foreach ($presentasi as $i => $data) {
             $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
@@ -125,23 +129,28 @@ class mentorController extends Controller
 
         $chartData = array_values($processedData);
 
-
-
         $solo = Tim::where(function ($query) {
             $query->whereIn('status_tim', ['solo'])
-                ->where('kadaluwarsa', '0');
+                ->where('kadaluwarsa', '0')
+                ->where('divisi_id', Auth::user()->divisi_id);
         })->count();
+
         $preMini = Tim::where(function ($query) {
             $query->whereIn('status_tim', ['pre_mini'])
-                ->where('kadaluwarsa', '0');
+                ->where('kadaluwarsa', '0')
+                ->where('divisi_id', Auth::user()->divisi_id);
         })->count();
+
         $mini = Tim::where(function ($query) {
             $query->whereIn('status_tim', ['mini'])
-                ->where('kadaluwarsa', '0');
+                ->where('kadaluwarsa', '0')
+                ->where('divisi_id', Auth::user()->divisi_id);
         })->count();
+
         $big = Tim::where(function ($query) {
             $query->whereIn('status_tim', ['big'])
-                ->where('kadaluwarsa', '0');
+                ->where('kadaluwarsa', '0')
+                ->where('divisi_id', Auth::user()->divisi_id);
         })->count();
 
         $chart = [
@@ -179,27 +188,27 @@ class mentorController extends Controller
             ->first();
 
 
-            $startOfWeek = Carbon::now()->startOfWeek();
-            $endOfWeek = Carbon::now()->endOfWeek();
+        $startOfWeek = Carbon::now()->startOfWeek();
+        $endOfWeek = Carbon::now()->endOfWeek();
 
 
 
-            $dataPresentasiMobile = LimitPresentasiDevisi::whereBetween('created_at', [$startOfWeek, $endOfWeek])
+        $dataPresentasiMobile = LimitPresentasiDevisi::whereBetween('created_at', [$startOfWeek, $endOfWeek])
             ->whereHas('presentasiDivisi', function ($query) {
                 $query->where('divisi_id', 1);
             })
             ->get();
-            $dataPresentasiWebsite = LimitPresentasiDevisi::whereBetween('created_at', [$startOfWeek, $endOfWeek])
+        $dataPresentasiWebsite = LimitPresentasiDevisi::whereBetween('created_at', [$startOfWeek, $endOfWeek])
             ->whereHas('presentasiDivisi', function ($query) {
                 $query->where('divisi_id', 2);
             })
             ->get();
-            $dataPresentasiUi = LimitPresentasiDevisi::whereBetween('created_at', [$startOfWeek, $endOfWeek])
+        $dataPresentasiUi = LimitPresentasiDevisi::whereBetween('created_at', [$startOfWeek, $endOfWeek])
             ->whereHas('presentasiDivisi', function ($query) {
                 $query->where('divisi_id', 4);
             })
             ->get();
-            $dataPresentasiMarketing = LimitPresentasiDevisi::whereBetween('created_at', [$startOfWeek, $endOfWeek])
+        $dataPresentasiMarketing = LimitPresentasiDevisi::whereBetween('created_at', [$startOfWeek, $endOfWeek])
             ->whereHas('presentasiDivisi', function ($query) {
                 $query->where('divisi_id', 3);
             })
@@ -207,7 +216,7 @@ class mentorController extends Controller
 
 
 
-        return response()->view('mentor.dashboard', compact('year', 'currentYear', 'processedData', 'presentasi', 'chartData', 'jadwal', 'hari', 'chart', 'notifikasi', 'senin', 'selasa', 'rabu', 'kamis', 'jumat','dataPresentasiMobile','dataPresentasiWebsite', 'dataPresentasiUi','dataPresentasiMarketing'));
+        return response()->view('mentor.dashboard', compact('year', 'currentYear', 'processedData', 'presentasi', 'chartData', 'jadwal', 'hari', 'chart', 'notifikasi', 'senin', 'selasa', 'rabu', 'kamis', 'jumat', 'dataPresentasiMobile', 'dataPresentasiWebsite', 'dataPresentasiUi', 'dataPresentasiMarketing'));
     }
 
 
@@ -217,7 +226,11 @@ class mentorController extends Controller
         $roles = Role::all();
         $mentors = User::where('peran_id', 2)->get();
         $users = User::with('peran')->where('peran_id', 1)->where('divisi_id', Auth::user()->divisi_id)->get();
-        $notifikasi = Notifikasi::where('user_id', Auth::user()->id)->get();
+        $notifikasi = Notifikasi::where('user_id', Auth::user()->id)
+            ->whereHas('user', function ($query) {
+                $query->where('divisi_id', Auth::user()->divisi_id);
+            })
+            ->get();
         $pengelolaMagang = new Collection();
         $bukanPengelolaMagang = new Collection();
         $magang = PenglolaMagang::all();
@@ -251,7 +264,11 @@ class mentorController extends Controller
     protected function history()
     {
         $userID = Auth::user()->id;
-        $notifikasi = Notifikasi::where('user_id', $userID)->get();
+        $notifikasi = Notifikasi::where('user_id', $userID)
+            ->whereHas('user', function ($query) {
+                $query->where('divisi_id', Auth::user()->divisi_id);
+            })
+            ->get();
 
         $telatDeadline = Project::with('tim.anggota.user', 'tema')
             ->where('deadline', '<', now())
@@ -278,7 +295,11 @@ class mentorController extends Controller
     protected function pengajuanProjekPage(Request $request)
     {
         $projectsQuery = Project::with('tim.anggota.user', 'tim.tema', 'anggota.jabatan', 'anggota.user')
-            ->where('status_project', 'notapproved');
+            ->where('status_project', 'notapproved')
+            ->whereHas('tim', function ($query) {
+                $query->where('id', Auth::user()->divisi_id);
+            })
+            ->get();
 
         if ($request->has('status_tim')) {
             if ($request->status_tim != 'all' && $request->status_tim != null) {
@@ -298,7 +319,11 @@ class mentorController extends Controller
         $projects = $projectsQuery->paginate(12);
 
         $userID = Auth::user()->id;
-        $notifikasi = Notifikasi::where('user_id', $userID)->get();
+        $notifikasi = Notifikasi::where('user_id', $userID)
+            ->whereHas('user', function ($query) {
+                $query->where('divisi_id', Auth::user()->divisi_id);
+            })
+            ->get();
 
         return response()->view('mentor.pengajuan-projek', compact('projects', 'notifikasi'));
     }
@@ -314,10 +339,14 @@ class mentorController extends Controller
     // Return view projek mentor
     protected function projekPage(Request $request)
     {
-        $notifikasi = Notifikasi::where('user_id', Auth::user()->id)->get();
-
+        $notifikasi = Notifikasi::where('user_id', Auth::user()->id)
+            ->whereHas('user', function ($query) {
+                $query->where('divisi_id', Auth::user()->divisi_id);
+            })->get();
         $projectQuery = Project::with('tim.anggota', 'tema', 'tim.tugas')
-            ->where('status_project', 'approved');
+            ->where('status_project', 'approved')->whereHas('tim', function ($query) {
+                $query->where('id', Auth::user()->tim_id);
+            });
 
         if ($request->has('status_tim')) {
             if ($request->status_tim != 'all' && $request->status_tim != null) {
@@ -389,7 +418,7 @@ class mentorController extends Controller
 
     protected function Project()
     {
-        $users = User::where('peran_id', 1)->where('status_kelulusan', 0)
+        $users = User::where('peran_id', 1)->where('divisi_id', Auth::user()->divisi_id)->where('status_kelulusan', 0)
             ->where(function ($query) {
                 $query->whereDoesntHave('tim', function ($query) {
                     $query->where('kadaluwarsa', false);
@@ -488,7 +517,11 @@ class mentorController extends Controller
         $tims = $timQuery->orderBy('kadaluwarsa')->paginate(12);
 
         $userID = Auth::user()->id;
-        $notifikasi = Notifikasi::where('user_id', $userID)->get();
+        $notifikasi = Notifikasi::where('user_id', $userID)
+            ->whereHas('user', function ($query) {
+                $query->where('divisi_id', Auth::user()->divisi_id);
+            })
+            ->get();
         $status_tim = StatusTim::whereNot('status', 'solo')->get();
 
         return response()->view('mentor.tim', compact('tims', 'status_tim', 'notifikasi'));
@@ -499,7 +532,11 @@ class mentorController extends Controller
     {
         $user = Auth::user();
         $userID = Auth::user()->id;
-        $notifikasi = Notifikasi::where('user_id', $userID)->get();
+        $notifikasi = Notifikasi::where('user_id', $userID)
+            ->whereHas('user', function ($query) {
+                $query->where('divisi_id', Auth::user()->divisi_id);
+            })
+            ->get();
         return response()->view('mentor.profile-mentor', compact('user', 'notifikasi'));
     }
 
@@ -507,7 +544,11 @@ class mentorController extends Controller
     protected function presentasi()
     {
         $userID = Auth::user()->id;
-        $notifikasi = Notifikasi::where('user_id', $userID)->get();
+        $notifikasi = Notifikasi::where('user_id', $userID)
+            ->whereHas('user', function ($query) {
+                $query->where('divisi_id', Auth::user()->divisi_id);
+            })
+            ->get();
         $historyPresentasi = HistoryPresentasi::all()->sortByDesc('created_at')->take(5);
 
         // dd($historyPresentasi);
@@ -517,14 +558,22 @@ class mentorController extends Controller
     protected function laporanProgres()
     {
         $userID = Auth::user()->id;
-        $notifikasi = Notifikasi::where('user_id', $userID)->get();
+        $notifikasi = Notifikasi::where('user_id', $userID)
+            ->whereHas('user', function ($query) {
+                $query->where('divisi_id', Auth::user()->divisi_id);
+            })
+            ->get();
         return response()->view('mentor.laporan-progres', compact('notifikasi'));
     }
 
     protected function galery()
     {
         $userID = Auth::user()->id;
-        $notifikasi = Notifikasi::where('user_id', $userID)->get();
+        $notifikasi = Notifikasi::where('user_id', $userID)
+            ->whereHas('user', function ($query) {
+                $query->where('divisi_id', Auth::user()->divisi_id);
+            })
+            ->get();
 
         return response()->view('mentor.galery', compact('notifikasi'));
     }
@@ -532,7 +581,11 @@ class mentorController extends Controller
     protected function getGalery()
     {
         $userID = Auth::user()->id;
-        $notifikasi = Notifikasi::where('user_id', $userID)->get();
+        $notifikasi = Notifikasi::where('user_id', $userID)
+            ->whereHas('user', function ($query) {
+                $query->where('divisi_id', Auth::user()->divisi_id);
+            })
+            ->get();
         $galery = Galery::where('status', 'album')->paginate(8);
         $logo = Galery::where('status', 'logo')->paginate(8);
 

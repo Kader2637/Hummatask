@@ -311,6 +311,7 @@
                                 <tr>
                                     <th scope="col">NO</th>
                                     <th scope="col">USER</th>
+                                    <th scope="col">DIVISI</th>
                                     <th scope="col">EMAIL</th>
                                     <th scope="col">STATUS KELULUSAN</th>
                                     <th scope="col">ACTION</th>
@@ -323,7 +324,6 @@
                                 @foreach ($users as $item)
                                     <tr>
                                         <th scope="row">{{ $no_user++ }}.</th>
-
                                         <td class="nama">
                                             @if ($item->avatar)
                                                 <img src="{{ asset('storage/' . $item->avatar) }}" alt=""
@@ -334,9 +334,11 @@
                                             @endif
                                             <span class="ml-3">
                                                 {{ $item->username }}
-                                                {{-- @dump($item->divisi_id); --}}
                                             </span>
                                         </td>
+                                        <td><span class="badge bg-label-warning">
+                                            {{ $item->divisi->name }}
+                                        </span></td>
                                         <td>{{ $item->email }}</td>
                                         <td>
                                             @if ($item->status_kelulusan === true || $item->status_kelulusan === 1)
