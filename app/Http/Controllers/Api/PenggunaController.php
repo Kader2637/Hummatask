@@ -114,7 +114,7 @@ class PenggunaController extends Controller
                 'tlp' => $request->tlp,
             ]);
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'User gagal disimpan!');
+            return response()->json(['error' => $e]);
         }
         return response()->json(['success' => 'Berhasil menambah pengguna']);
     }
