@@ -54,7 +54,7 @@
                     </div>
                 </div>
                 @forelse ($projects as $item)
-                    {{-- @dd($item->tim) --}}
+                {{-- @dd($item->tim) --}}
                     @php
                         $anggotaArray = [];
                         foreach ($item->tim->anggota as $anggota) {
@@ -104,8 +104,6 @@
                                                         Active Team
                                                     </span>
                                                 @endif
-                                                <span
-                                                    class="badge bg-label-primary text-capitalize">{{ $item->tim->divisi->name }}</span>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-center justify-content-center">
@@ -181,10 +179,10 @@
                         <img src="{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}"
                             alt="page-misc-under-maintenance" width="300" class="img-fluid">
                     </div>
-                @endforelse
-                <div>
-                    {{ $projects->links('pagination::bootstrap-5') }}
-                </div>
+                    @endforelse
+                    <div>
+                        {{ $projects->links('pagination::bootstrap-5') }}
+                    </div>
             </div>
         </div>
     </div>
@@ -289,8 +287,7 @@
                                                 {{-- card projects --}}
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <div
-                                                            class="d-flex flex-column flex-md-row align-items-md-center justify-content-between">
+                                                        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between">
                                                             <div class="fs-4 text-black">
                                                                 Projek
                                                             </div>
@@ -306,14 +303,10 @@
                                                             <div class="col-lg-6">
                                                                 <div class="d-flex flex-column flex-md-row gap-3">
                                                                     <div class="text-center">
-                                                                        <img id="logo-tim" src="" alt='logo tim'
-                                                                            class="rounded-circle"
-                                                                            style="width: 90px; height: 90px">
+                                                                        <img id="logo-tim" src="" alt='logo tim' class="rounded-circle" style="width: 90px; height: 90px">
                                                                     </div>
-                                                                    <div
-                                                                        class="d-flex flex-column justify-content-center align-items-center">
-                                                                        <span class="d-block text-black fs-5"
-                                                                            id="nama-tim">nama tim</span>
+                                                                    <div class="d-flex flex-column justify-content-center align-items-center">
+                                                                        <span class="d-block text-black fs-5" id="nama-tim">nama tim</span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="mt-4">

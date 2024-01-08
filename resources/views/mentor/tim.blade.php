@@ -73,6 +73,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <p class="mb-0 d-flex justify-content-center">
                                 <span class="badge bg-label-warning">
                                     @if ($tim->status_tim == 'solo')
                                         Solo Project
@@ -93,7 +94,7 @@
                                         Active Team
                                     </span>
                                 @endif
-                                <span class="badge bg-label-primary text-capitalize">{{ $tim->divisi->name }}</span>
+                            </p>
                             <h5 class="card-title">{{ $tim->nama }}</h5>
                             <p class="card-text" data-bs-toggle="tooltip" data-popup="tooltip-custom"
                                 data-bs-placement="bottom" title="Deadline Project">
@@ -493,7 +494,7 @@
             $('#tema').val(tema);
             if (tema == 0) {
                 $('.temas').addClass('d-none');
-            } else {
+            }else{
                 $('.temas').removeClass('d-none');
             }
             $('#updateTimForm').attr('action', '/mentor/update-tim/' + dataId);

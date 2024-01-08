@@ -294,15 +294,12 @@ class mentorController extends Controller
     // Return view pengajuan projek mentor
     protected function pengajuanProjekPage(Request $request)
     {
-        $projectsQuery = Project::query()
-            ->with(
-                'tim.anggota.user',
-                'tim.tema',
-                'anggota.jabatan',
-                'anggota.user',
-            )
-            ->whereRelation('tim.divisi', 'id', '=', Auth::user()->divisi_id)
-            ->where('status_project', 'notapproved');
+        $projectsQuery = Project::with('tim.anggota.user', 'tim.tema', 'anggota.jabatan', 'anggota.user')
+            ->where('status_project', 'notapproved')
+            ->whereHas('tim', function ($query) {
+                $query->where('id', Auth::user()->divisi_id);
+            })
+            ->get();
 
         if ($request->has('status_tim')) {
             if ($request->status_tim != 'all' && $request->status_tim != null) {
@@ -346,9 +343,7 @@ class mentorController extends Controller
             ->whereHas('user', function ($query) {
                 $query->where('divisi_id', Auth::user()->divisi_id);
             })->get();
-        $projectQuery = Project::query()
-            ->with('tim.anggota', 'tema', 'tim.tugas', 'tim.divisi')
-            ->whereRelation('tim.divisi', 'id', '=', Auth::user()->divisi_id)
+        $projectQuery = Project::with('tim.anggota', 'tema', 'tim.tugas')
             ->where('status_project', 'approved')->whereHas('tim', function ($query) {
                 $query->where('id', Auth::user()->tim_id);
             });
@@ -423,9 +418,7 @@ class mentorController extends Controller
 
     protected function Project()
     {
-        $users = User::query()
-            ->where('divisi_id', Auth::user()->divisi_id)
-            ->where('peran_id', 1)->where('status_kelulusan', 0)
+        $users = User::where('peran_id', 1)->where('divisi_id', Auth::user()->divisi_id)->where('status_kelulusan', 0)
             ->where(function ($query) {
                 $query->whereDoesntHave('tim', function ($query) {
                     $query->where('kadaluwarsa', false);
@@ -502,9 +495,7 @@ class mentorController extends Controller
 
     protected function tim(Request $request)
     {
-        $timQuery = tim::query()
-            ->with('user', 'project', 'divisi')
-            ->where('divisi_id', Auth::user()->divisi_id);
+        $timQuery = tim::with('user', 'project');
 
         if ($request->has('status_tim')) {
             if ($request->status_tim != 'all' && $request->status_tim != null) {
@@ -554,12 +545,7 @@ class mentorController extends Controller
                 $query->where('divisi_id', Auth::user()->divisi_id);
             })
             ->get();
-        $historyPresentasi = HistoryPresentasi::query()
-            ->with('divisi')
-            ->where('divisi_id', Auth::user()->divisi_id)
-            ->get()
-            ->sortByDesc('created_at')
-            ->take(5);
+        $historyPresentasi = HistoryPresentasi::all()->sortByDesc('created_at')->take(5);
 
         // dd($historyPresentasi);
         return response()->view('mentor.presentasi', compact('historyPresentasi', 'notifikasi'));
