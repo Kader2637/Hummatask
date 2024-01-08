@@ -93,6 +93,8 @@ class PresentasiController extends Controller
 
         $presentasi = new Presentasi();
         $presentasi->code = Str::uuid();
+        $presentasi->judul = $request->judul;
+        $presentasi->deskripsi = $request->judul ?: null;
         $presentasi->jadwal = Carbon::now()->isoFormat('Y-M-DD');
         $presentasi->tim_id = $tim->id;
         $presentasi->limit_presentasi_devisi_id = $request->plan;

@@ -251,10 +251,12 @@
                                         <form action="{{ route('ajukan-presentasi', $tim->code) }}" method="post"
                                             id="formAjukanPresentasi_1">
                                             @csrf
+                                            <label for="judul" class="form-label">Judul Presentasi</label>
+                                            <input type="text" name="judul" class="form-control">
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_senin as $data)
-                                                    <div class="col-12 col-lg-4 col-xxl-4 mt-2">
+                                                    <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                         @if (
                                                             $data->presentasi->isNotEmpty() &&
                                                                 $data->presentasi->first()->isPengujianDisetujui() &&
@@ -299,6 +301,8 @@
                                                             class="img-fluid">
                                                     </div>
                                                 @endforelse
+                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
@@ -320,10 +324,12 @@
                                         <form action="{{ route('ajukan-presentasi', $tim->code) }}" method="post"
                                             id="formAjukanPresentasi_2">
                                             @csrf
+                                            <label for="judul" class="form-label">Judul Presentasi</label>
+                                            <input type="text" name="judul" class="form-control">
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_selasa as $data)
-                                                    <div class="col-12 col-lg-4 col-xxl-4 mt-2">
+                                                    <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                         <label class="card">
                                                             <input name="plan" class="radio" type="radio"
                                                                 value="{{ $data->id }}">
@@ -348,6 +354,8 @@
                                                             class="img-fluid">
                                                     </div>
                                                 @endforelse
+                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
@@ -369,10 +377,12 @@
                                         <form action="{{ route('ajukan-presentasi', $tim->code) }}" method="post"
                                             id="formAjukanPresentasi_3">
                                             @csrf
+                                            <label for="judul" class="form-label">Judul Presentasi</label>
+                                            <input type="text" name="judul" class="form-control">
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_rabu as $data)
-                                                    <div class="col-12 col-lg-4 col-xxl-4 mt-2">
+                                                    <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                         <label class="card">
                                                             <input name="plan" class="radio" type="radio"
                                                                 value="{{ $data->id }}">
@@ -397,6 +407,8 @@
                                                             class="img-fluid">
                                                     </div>
                                                 @endforelse
+                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
@@ -418,10 +430,12 @@
                                         <form action="{{ route('ajukan-presentasi', $tim->code) }}" method="post"
                                             id="formAjukanPresentasi_4">
                                             @csrf
+                                            <label for="judul" class="form-label">Judul Presentasi</label>
+                                            <input type="text" name="judul" class="form-control">
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_kamis as $data)
-                                                    <div class="col-12 col-lg-4 col-xxl-4 mt-2">
+                                                    <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                         <label class="card">
                                                             <input name="plan" class="radio" type="radio"
                                                                 value="{{ $data->id }}">
@@ -446,6 +460,8 @@
                                                             class="img-fluid">
                                                     </div>
                                                 @endforelse
+                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
@@ -467,10 +483,12 @@
                                         <form action="{{ route('ajukan-presentasi', $tim->code) }}" method="post"
                                             id="formAjukanPresentasi_5">
                                             @csrf
+                                            <label for="judul" class="form-label">Judul Presentasi</label>
+                                            <input type="text" name="judul" class="form-control">
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_jumat as $data)
-                                                    <div class="col-12 col-lg-4 col-xxl-4 mt-2">
+                                                    <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                         <label class="card">
                                                             <input name="plan" class="radio" type="radio"
                                                                 value="{{ $data->presentasi_divisi_id }}">
@@ -495,6 +513,8 @@
                                                             class="img-fluid">
                                                     </div>
                                                 @endforelse
+                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
