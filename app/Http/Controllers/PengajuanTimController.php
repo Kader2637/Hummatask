@@ -156,7 +156,8 @@ $historyPresentasi->save();
 
         return redirect()->back()->with('success', 'Berhasil membuat tim solo project');
     }
-
+ 
+    
     protected function pembuatanTimProject(RequestPembentukanTimProject $request)
     {
         try {

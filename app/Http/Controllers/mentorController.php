@@ -445,7 +445,8 @@ class mentorController extends Controller
 
         $usersArray = $users->pluck('user_id')->toArray();
         $uniqueUsersArray = array_unique($usersArray);
-
+        
+        
         $users1 = User::whereIn('id', $uniqueUsersArray)->get();
 
         $users2 = User::where('peran_id', 1)

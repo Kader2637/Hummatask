@@ -24,6 +24,8 @@ class Divisi extends Model
         return $this->hasOne(PresentasiDivisi::class, 'divisi_id');
     }
 
+
+    
     /**
      * users
      *
