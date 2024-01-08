@@ -120,7 +120,7 @@ class PenggunaController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'User gagal disimpan!');
         }
-        return response()->json(['success' => 'Berhasil Menambahkan Pengguna']);
+        return ResponseHelper::success(null, 'Berhasil menambahkan User');
     }
 
      /**
