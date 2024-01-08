@@ -333,8 +333,8 @@
                                                     style="width:30px;height:30px;border-radius:50%; object-fit: cover">
                                             @endif
                                             <span class="ml-3">
-                                                {{-- {{ $item->username }} --}}
-                                                @dump($item->divisi_id);
+                                                {{ $item->username }}
+                                                {{-- @dump($item->divisi_id); --}}
                                             </span>
                                         </td>
                                         <td>{{ $item->email }}</td>
