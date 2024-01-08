@@ -152,7 +152,7 @@ class PenggunaController extends Controller
     public function destroy(User $user): JsonResponse
     {
         $user->delete();
-        return Response()->json(['success']);
+        return ResponseHelper::success(null, "Berhasil menghapus pengguna");
     }
 
 }
