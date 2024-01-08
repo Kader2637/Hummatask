@@ -8,6 +8,7 @@ use App\Helpers\ResponseHelper;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -32,7 +33,7 @@ class PenggunaController extends Controller
      * @param  mixed $request
      * @return JsonResponse
      */
-    public function store(User $request): JsonResponse
+    public function store(Request $request): JsonResponse
     {
 
         $tanggalAwal = $request->awal_magang;
@@ -46,6 +47,7 @@ class PenggunaController extends Controller
             'masa_magang_akhir' => $tanggalAkhir,
             'tlp' => $request->tlp,
         ];
+        
 
 
         $validator = Validator::make(
