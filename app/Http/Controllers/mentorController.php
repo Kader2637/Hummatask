@@ -204,12 +204,13 @@ class mentorController extends Controller
                 $query->where('divisi_id', 3);
             })
             ->get();
-            // dd($dataPresentasi);
 
 
 
         return response()->view('mentor.dashboard', compact('year', 'currentYear', 'processedData', 'presentasi', 'chartData', 'jadwal', 'hari', 'chart', 'notifikasi', 'senin', 'selasa', 'rabu', 'kamis', 'jumat','dataPresentasiMobile','dataPresentasiWebsite', 'dataPresentasiUi','dataPresentasiMarketing'));
     }
+
+
 
     protected function pengguna()
     {
