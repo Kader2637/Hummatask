@@ -368,7 +368,8 @@
                                 src="{{ asset('assets/img/presentasi.png') }}" alt="">
                             <div class="d-flex justify-content-around align-items-center">
                                 <span class="badge bg-label-info">Minggu ke-{{ $history->noMinggu }}</span>
-                                <span class="badge bg-label-primary">{{ $history->bulan }}</span>
+                                <span class="badge bg-label-warning">{{ $history->bulan }}</span>
+                                <span class="badge bg-label-primary">{{ $history->divisi->name }}</span>
                             </div>
                             <div class="d-flex justify-content-around align-items-center gap-3  mt-3">
                                 <button onclick="tampilkanDetail('{{ $history->code }}')" data-bs-toggle="modal"

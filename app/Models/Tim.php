@@ -94,8 +94,8 @@ class Tim extends Model
         ->get();
     }
 
-    public function divisi_id(): BelongsTo
+    public function divisi(): BelongsTo
     {
-        return $this->belongsTo(Divisi::class);
+        return $this->belongsTo(Divisi::class, 'divisi_id');
     }
 }

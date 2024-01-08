@@ -38,9 +38,9 @@ class PresentasiController extends Controller
             return back()->with('error', 'Pengajuan Presentasi dimulai pukul 08:00');
         }
 
-        // if (Carbon::now()->isoFormat('HH:m:ss') > '14:00:00') {
-        //     return back()->with('error', 'Pengajuan Presentasi tidak boleh lebih dari pukul 14:00');
-        // }
+        if (Carbon::now()->isoFormat('HH:m:ss') > '14:00:00') {
+            return back()->with('error', 'Pengajuan Presentasi tidak boleh lebih dari pukul 14:00');
+        }
 
         if (Carbon::now()->isoFormat('dddd') === 'Minggu' || Carbon::now()->isoFormat('dddd') === 'Sabtu') {
             return back()->with('error', 'Pengajuan Presentasi hanya bisa dilakuakn dijam kantor');
@@ -108,6 +108,7 @@ class PresentasiController extends Controller
         if ($history === null) {
             $historyBaru = new HistoryPresentasi();
             $historyBaru->code = Str::uuid();
+            $historyBaru->divisi_id = Auth::user()->divisi_id;
             $historyBaru->save();
 
             $presentasi->history_presentasi_id = $historyBaru->id;
@@ -159,7 +160,7 @@ class PresentasiController extends Controller
             ->where('limit_presentasi_devisi_id', $presentasi->limitPresentasiDivisi->id)
             ->get()
             ->except($presentasi->id);
-        
+
         if ($otherRequest->isNotEmpty()) {
             $otherRequest->each(function ($request) {
                 $request->update([
