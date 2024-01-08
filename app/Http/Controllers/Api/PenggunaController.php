@@ -22,9 +22,13 @@ class PenggunaController extends Controller
      *
      * @return JsonResponse
      */
-    public function index() : JsonResponse
+    public function index(Request $request) : JsonResponse
     {
-        $pengguna = User::query()->get();
+        $pengguna = User::query()
+            ->when($request->limit, function ($query) use ($request) {
+                $query->take((int) $request->limit);
+            })
+            ->get();
         return ResponseHelper::success($pengguna);
     }
 
