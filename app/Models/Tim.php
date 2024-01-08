@@ -13,7 +13,7 @@ class Tim extends Model
 {
     use HasFactory;
 
-    
+
     protected $guarded = [];
 
     public function user(): BelongsToMany
@@ -64,7 +64,7 @@ class Tim extends Model
         return $this->hasMany(Project::class);
     }
 
-    
+
 
     public function tidakPresentasiMingguan(): HasMany
     {
@@ -92,5 +92,10 @@ class Tim extends Model
         ->with(['user','jabatan']) // Memuat relasi 'user'
         ->orderByRaw("jabatan_id = 1 DESC")
         ->get();
+    }
+
+    public function divisi_id(): BelongsTo
+    {
+        return $this->belongsTo(Divisi::class);
     }
 }

@@ -25,7 +25,7 @@ class Divisi extends Model
     }
 
 
-    
+
     /**
      * users
      *
@@ -34,5 +34,10 @@ class Divisi extends Model
     public function users(): HasMany
     {
         return $this->hasMany(User::class, 'divisi_id');
+    }
+
+    public function tims(): HasMany
+    {
+        return $this->hasMany(Tim::class, 'divisi_id');
     }
 }
