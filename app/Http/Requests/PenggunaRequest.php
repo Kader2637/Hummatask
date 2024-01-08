@@ -14,6 +14,7 @@ class PenggunaRequest extends FormRequest
             'sekolah' => 'required|string|max:255',
             'awal_magang' => 'required|date',
             'akhir_magang' => 'required|date|after_or_equal:masa_magang_awal',
+            'tlp' => 'required',
             'divisi_id' => 'required|unique:divisis,id'
         ];
     }
