@@ -82,13 +82,9 @@ class PenggunaController extends Controller
 
             if (count($errors) > 1) {
                 $errorMessage = implode(', ', $errors);
-                return redirect()->back()
-                    ->with('error', $errorMessage)
-                    ->withInput();
+                return response()->json(['error' => $errorMessage]);
             } else {
-                return redirect()->back()
-                    ->with('error', $errors[0])
-                    ->withInput();
+                return response()->json(['error' => $errors[0]]);
             }
         }
 
@@ -118,9 +114,9 @@ class PenggunaController extends Controller
                 'tlp' => $request->tlp,
             ]);
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'User gagal disimpan!');
+            return response()->json(['error' => $e]);
         }
-        return ResponseHelper::success(null, 'Berhasil menambahkan User');
+        return response()->json(['success' => 'Berhasil menambah pengguna']);
     }
 
      /**

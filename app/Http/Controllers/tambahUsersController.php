@@ -195,8 +195,7 @@ class tambahUsersController extends Controller
 
     protected function store_mentor(Request $request)
     {
-        $validator = Validator::make(
-            $request->all(),
+        $request->validate(
             [
                 'username' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
