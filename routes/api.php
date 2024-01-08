@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\tambahUsersController;
 use App\Http\Controllers\Api\PenggunaController;
+use App\Http\Controllers\PengajuanPresentasiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,8 @@ Route::get('division', [DivisiController::class, 'index']);
 Route::post('divisionStore', [DivisiController::class, 'store']);
 Route::put('division/{divisi}', [DivisiController::class, 'update']);
 Route::delete('division/{divisi}', [DivisiController::class, 'destroy']);
+
+Route::get('pengajuan-presentasi-hari-ini', [PengajuanPresentasiController::class, 'hariIni']);
 
 // mentor
 Route::get('mentor', [tambahUsersController::class, 'get_mentor']);
