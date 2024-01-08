@@ -65,6 +65,7 @@ class PengajuanTimController extends Controller
             'nama' => $request->nama,
             'logo' => $logo,
             'repository' => $request->repository,
+            'divisi_id' => 1,
             'status_tim' => 'solo'
         ]);
 
