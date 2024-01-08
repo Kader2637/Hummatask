@@ -175,7 +175,7 @@ class tambahUsersController extends Controller
         return redirect()->back()->with('success', 'User berhasil disimpan!');
     }
 
-    protected function get_data()
+    protected function get_mentor()
     {
         $mentors = User::query()
             ->where('peran_id', 2)
