@@ -524,7 +524,7 @@
                     <table id="jstabel" class="table">
                         <thead class="bg-primary">
                             <tr>
-                                <th class="text-white">Presentasi</th>
+                                <th class="text-white">No</th>
                                 <th class="text-white">Tanggal</th>
                                 <th class="text-white">Status Presentasi</th>
                                 <th class="text-white">Status Pengajuan</th>
@@ -535,7 +535,7 @@
                         <tbody class="table-border-bottom-0">
                             @forelse ($presentasi as $i=> $data)
                                 <tr>
-                                    <td><span class="fw-medium">{{ $data->judul }}</span></td>
+                                    <td><span class="fw-medium">{{ $loop->iteration }}</span></td>
                                     <td>{{ $jadwal[$i] }}</td>
                                     <td>
                                         @if ($data->status_presentasi === 'menunggu')

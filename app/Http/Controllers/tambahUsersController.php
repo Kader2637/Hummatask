@@ -250,11 +250,13 @@ class tambahUsersController extends Controller
         $validatedData = $request->validate([
             'username' => 'required|string',
             'email' => 'required|email|unique:users,email,' . $mentor->id,
+            'Divisi' => 'required'
         ]);
 
         $mentor->update([
             'username' => $validatedData['username'],
             'email' => $validatedData['email'],
+            'divisi_id' => $validatedData['Divisi']
         ]);
 
         return response()->json(['success' => 'Berhasil mengupdate data']);
