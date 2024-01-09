@@ -261,15 +261,15 @@
                                                             $data->presentasi->isNotEmpty() &&
                                                                 $data->presentasi->first()->isPengujianDisetujui() &&
                                                                 $data->id === $data->presentasi->first()->limitPresentasiDevisiId())
-                                                            <label class="card" disabled>
+                                                            <label class="card bg-label-primary" disabled>
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}" disabled>
                                                                 <span class="plan-details text-center">
-                                                                    <p class="fs-5 mb-2 text-dark"
+                                                                    <p class="fs-6 mb-2 text-dark"
                                                                         style="font-weight: 500">
                                                                         Jadwal Ke-{{ $loop->iteration }}
                                                                     </p>
-                                                                    <p class="fs-5 text-primary mb-0">
+                                                                    <p class=" text-primary mb-0">
                                                                         {{ $data->mulai }} - {{ $data->akhir }}
                                                                     </p>
                                                                 </span>
@@ -279,11 +279,11 @@
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}">
                                                                 <span class="plan-details text-center">
-                                                                    <p class="fs-5 mb-2 text-dark"
+                                                                    <p class="fs-6 mb-2 text-dark"
                                                                         style="font-weight: 500">
                                                                         Jadwal Ke-{{ $loop->iteration }}
                                                                     </p>
-                                                                    <p class="fs-5 text-primary mb-0">
+                                                                    <p class="text-primary mb-0">
                                                                         {{ $data->mulai }} - {{ $data->akhir }}
                                                                     </p>
                                                                 </span>
@@ -334,15 +334,15 @@
                                                             $data->presentasi->isNotEmpty() &&
                                                                 $data->presentasi->first()->isPengujianDisetujui() &&
                                                                 $data->id === $data->presentasi->first()->limitPresentasiDevisiId())
-                                                            <label class="card" disabled>
+                                                            <label class="card bg-label-primary" disabled>
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}" disabled>
                                                                 <span class="plan-details text-center">
-                                                                    <p class="fs-5 mb-2 text-dark"
+                                                                    <p class="fs-6 mb-2 text-dark"
                                                                         style="font-weight: 500">
                                                                         Jadwal Ke-{{ $loop->iteration }}
                                                                     </p>
-                                                                    <p class="fs-5 text-primary mb-0">
+                                                                    <p class="text-primary mb-0">
                                                                         {{ $data->mulai }} - {{ $data->akhir }}
                                                                     </p>
                                                                 </span>
@@ -352,11 +352,11 @@
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}">
                                                                 <span class="plan-details text-center">
-                                                                    <p class="fs-5 mb-2 text-dark"
+                                                                    <p class="fs-6 mb-2 text-dark"
                                                                         style="font-weight: 500">
                                                                         Jadwal Ke-{{ $loop->iteration }}
                                                                     </p>
-                                                                    <p class="fs-5 text-primary mb-0">
+                                                                    <p class="text-primary mb-0">
                                                                         {{ $data->mulai }} - {{ $data->akhir }}
                                                                     </p>
                                                                 </span>
@@ -407,15 +407,15 @@
                                                             $data->presentasi->isNotEmpty() &&
                                                                 $data->presentasi->first()->isPengujianDisetujui() &&
                                                                 $data->id === $data->presentasi->first()->limitPresentasiDevisiId())
-                                                            <label class="card" disabled>
+                                                            <label class="card bg-label-primary" disabled>
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}" disabled>
                                                                 <span class="plan-details text-center">
-                                                                    <p class="fs-5 mb-2 text-dark"
+                                                                    <p class="fs-6 mb-2 text-dark"
                                                                         style="font-weight: 500">
                                                                         Jadwal Ke-{{ $loop->iteration }}
                                                                     </p>
-                                                                    <p class="fs-5 text-primary mb-0">
+                                                                    <p class="text-primary mb-0">
                                                                         {{ $data->mulai }} - {{ $data->akhir }}
                                                                     </p>
                                                                 </span>
@@ -425,11 +425,11 @@
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}">
                                                                 <span class="plan-details text-center">
-                                                                    <p class="fs-5 mb-2 text-dark"
+                                                                    <p class="fs-6 mb-2 text-dark"
                                                                         style="font-weight: 500">
                                                                         Jadwal Ke-{{ $loop->iteration }}
                                                                     </p>
-                                                                    <p class="fs-5 text-primary mb-0">
+                                                                    <p class="text-primary mb-0">
                                                                         {{ $data->mulai }} - {{ $data->akhir }}
                                                                     </p>
                                                                 </span>
@@ -480,15 +480,15 @@
                                                             $data->presentasi->isNotEmpty() &&
                                                                 $data->presentasi->first()->isPengujianDisetujui() &&
                                                                 $data->id === $data->presentasi->first()->limitPresentasiDevisiId())
-                                                            <label class="card" disabled>
+                                                            <label class="card bg-label-primary" disabled>
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}" disabled>
                                                                 <span class="plan-details text-center">
-                                                                    <p class="fs-5 mb-2 text-dark"
+                                                                    <p class="fs-6 mb-2 text-dark"
                                                                         style="font-weight: 500">
                                                                         Jadwal Ke-{{ $loop->iteration }}
                                                                     </p>
-                                                                    <p class="fs-5 text-primary mb-0">
+                                                                    <p class="text-primary mb-0">
                                                                         {{ $data->mulai }} - {{ $data->akhir }}
                                                                     </p>
                                                                 </span>
@@ -498,11 +498,11 @@
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}">
                                                                 <span class="plan-details text-center">
-                                                                    <p class="fs-5 mb-2 text-dark"
+                                                                    <p class="fs-6 mb-2 text-dark"
                                                                         style="font-weight: 500">
                                                                         Jadwal Ke-{{ $loop->iteration }}
                                                                     </p>
-                                                                    <p class="fs-5 text-primary mb-0">
+                                                                    <p class="text-primary mb-0">
                                                                         {{ $data->mulai }} - {{ $data->akhir }}
                                                                     </p>
                                                                 </span>
@@ -553,15 +553,15 @@
                                                             $data->presentasi->isNotEmpty() &&
                                                                 $data->presentasi->first()->isPengujianDisetujui() &&
                                                                 $data->id === $data->presentasi->first()->limitPresentasiDevisiId())
-                                                            <label class="card" disabled>
+                                                            <label class="card bg-label-primary" disabled>
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}" disabled>
                                                                 <span class="plan-details text-center">
-                                                                    <p class="fs-5 mb-2 text-dark"
+                                                                    <p class="fs-6 mb-2 text-dark"
                                                                         style="font-weight: 500">
                                                                         Jadwal Ke-{{ $loop->iteration }}
                                                                     </p>
-                                                                    <p class="fs-5 text-primary mb-0">
+                                                                    <p class="text-primary mb-0">
                                                                         {{ $data->mulai }} - {{ $data->akhir }}
                                                                     </p>
                                                                 </span>
@@ -571,11 +571,11 @@
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}">
                                                                 <span class="plan-details text-center">
-                                                                    <p class="fs-5 mb-2 text-dark"
+                                                                    <p class="fs-6 mb-2 text-dark"
                                                                         style="font-weight: 500">
                                                                         Jadwal Ke-{{ $loop->iteration }}
                                                                     </p>
-                                                                    <p class="fs-5 text-primary mb-0">
+                                                                    <p class="text-primary mb-0">
                                                                         {{ $data->mulai }} - {{ $data->akhir }}
                                                                     </p>
                                                                 </span>
