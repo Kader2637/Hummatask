@@ -18,6 +18,7 @@ use Carbon\Exceptions\Exception as ExceptionsException;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class PresentasiController extends Controller
@@ -97,13 +98,13 @@ class PresentasiController extends Controller
         $presentasi->jadwal = Carbon::now()->isoFormat('Y-M-DD');
         $presentasi->tim_id = $tim->id;
         $presentasi->limit_presentasi_devisi_id = $request->plan;
-        // $presentasiSudah = Presentasi::where('status_pengajuan', 'disetujui')->get();
-        // foreach ($presentasiSudah as $pS) {
-        //     if ($pS->isPengujianDisetujui() && $pS->id === $pS->limitPresentasiDevisiId());
-        //     return redirect()
-        //         ->back()
-        //         ->with('error', 'Sudah ada tim lain yang memilih jadwal ini');
-        // }
+        $presentasiSudah = Presentasi::where('status_pengajuan', 'disetujui')->get();
+        foreach ($presentasiSudah as $pS) {
+            if ($pS->id === $pS->limitPresentasiDevisiId());
+            return redirect()
+                ->back()
+                ->with('error', 'Sudah ada tim lain yang memilih jadwal ini');
+        }
         $history = HistoryPresentasi::latest()->first();
 
         if ($history === null) {
@@ -239,7 +240,8 @@ class PresentasiController extends Controller
     }
 
     protected function penolakanPresentasi(RequestPenolakanPresentasi $request, $code)
-    {
+{
+    try {
         if ($request->alasan === null) {
             return response()->json(['error' => 'Alasan penolakan tidak boleh kosong']);
         }
@@ -254,10 +256,9 @@ class PresentasiController extends Controller
         $teamMembers = $presentasi->tim->anggota;
 
         foreach ($teamMembers as $member) {
-            dd($message);
             $userId = $member->user_id;
             $statusAnggota = Anggota::where('user_id', $userId)->value('status');
-            if ($statusAnggota !== ['kicked', 'expired']) {
+            if ($statusAnggota !== 'kicked' && $statusAnggota !== 'expired') {
                 if ($member->jabatan_id === 1) {
                     $phoneNumber = $member->user->tlp;
 
@@ -267,7 +268,12 @@ class PresentasiController extends Controller
         }
 
         return response()->json(['success' => 'Berhasil Memberikan Penolakan']);
+    } catch (\Exception $e) {
+        Log::error('Error in penolakanPresentasi: ' . $e->getMessage());
+        return response()->json(['error' => 'Terjadi kesalahan saat menolak presentasi'], 500);
     }
+}
+
 
     protected function konfirmasiPresentasi(Request $request, $code)
     {
