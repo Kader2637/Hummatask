@@ -185,11 +185,13 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col mb-3">
-                                <label for="nameWithTitle" class="form-label">Repository Github</label>
-                                <input type="text" id="repoInput" class="form-control" name="repoInput"
-                                    placeholder="Masukkan URL Repository" value="{{ $tim->repository }}">
-                            </div>
+                            @if (@isset($project) && $project->tim->repository)
+                                <div class="col mb-3">
+                                    <label for="nameWithTitle" class="form-label">Repository Github</label>
+                                    <input type="text" id="repoInput" class="form-control" name="repoInput"
+                                        placeholder="Masukkan URL Repository" value="{{ $tim->repository }}">
+                                </div>
+                            @endif
                         </div>
                         @if (@isset($project) && $project->status_project === 'approved')
                             <div class="row">
