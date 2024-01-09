@@ -566,7 +566,6 @@
                                                                 </div>
                                                                 <div
                                                                     style="display: flex; flex-direction: column; justify-items: center; align-items: left;">
-
                                                                     <span>Tanggal Mulai : <span id="tglmulai"></span>
                                                                     </span>
 
