@@ -10,6 +10,7 @@ use App\Models\Galery;
 use App\Models\HistoryPresentasi;
 use App\Models\Notifikasi;
 use App\Models\Anggota;
+use App\Models\Divisi;
 use App\Models\LimitPresentasiDevisi;
 use App\Models\PenglolaMagang;
 use App\Models\Presentasi;
@@ -187,36 +188,18 @@ class mentorController extends Controller
             ->where('divisi_id', auth()->user()->divisi_id)
             ->first();
 
+            
+        $divisis = Divisi::all();
 
-        $startOfWeek = Carbon::now()->startOfWeek();
-        $endOfWeek = Carbon::now()->endOfWeek();
+        $dataPresentasi = [];
 
+        foreach ($divisis as $divisi) {
+            $dataPresentasi[$divisi->id] = LimitPresentasiDevisi::whereHas('presentasiDivisi', function ($query) use ($divisi) {
+                $query->where('divisi_id', $divisi->id);
+            })->get();
+        }
 
-
-        $dataPresentasiMobile = LimitPresentasiDevisi::whereBetween('created_at', [$startOfWeek, $endOfWeek])
-            ->whereHas('presentasiDivisi', function ($query) {
-                $query->where('divisi_id', 1);
-            })
-            ->get();
-        $dataPresentasiWebsite = LimitPresentasiDevisi::whereBetween('created_at', [$startOfWeek, $endOfWeek])
-            ->whereHas('presentasiDivisi', function ($query) {
-                $query->where('divisi_id', 2);
-            })
-            ->get();
-        $dataPresentasiUi = LimitPresentasiDevisi::whereBetween('created_at', [$startOfWeek, $endOfWeek])
-            ->whereHas('presentasiDivisi', function ($query) {
-                $query->where('divisi_id', 4);
-            })
-            ->get();
-        $dataPresentasiMarketing = LimitPresentasiDevisi::whereBetween('created_at', [$startOfWeek, $endOfWeek])
-            ->whereHas('presentasiDivisi', function ($query) {
-                $query->where('divisi_id', 3);
-            })
-            ->get();
-
-
-
-        return response()->view('mentor.dashboard', compact('year', 'currentYear', 'processedData', 'presentasi', 'chartData', 'jadwal', 'hari', 'chart', 'notifikasi', 'senin', 'selasa', 'rabu', 'kamis', 'jumat', 'dataPresentasiMobile', 'dataPresentasiWebsite', 'dataPresentasiUi', 'dataPresentasiMarketing'));
+        return response()->view('mentor.dashboard', compact('divisis','dataPresentasi','year', 'currentYear', 'processedData', 'presentasi', 'chartData', 'jadwal', 'hari', 'chart', 'notifikasi', 'senin', 'selasa', 'rabu', 'kamis', 'jumat'));
     }
 
 

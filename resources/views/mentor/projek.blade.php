@@ -81,9 +81,8 @@
                                         style="width: 100px; height: 100px; object-fit: cover" class="rounded-circle mb-3">
                                     <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;"
                                         class="">
-                                        <span class="text-black fs-6">{{ $item->tim->nama }}</span>
                                         <div class="d-flex align-items-center">
-                                            <div class="align-items-center">
+                                            <div class="d-flex flex-column align-items-end">
                                                 <span class="badge bg-label-warning my-1">
                                                     @if ($item->tim->status_tim == 'solo')
                                                         Solo Project
@@ -96,16 +95,15 @@
                                                     @endif
                                                 </span>
                                                 @if ($item->tim->kadaluwarsa == 1)
-                                                    <span class="mx-1 badge bg-label-danger">
+                                                    <span class="badge bg-label-danger">
                                                         Expired Team
                                                     </span>
                                                 @elseif ($item->tim->kadaluwarsa == 0)
-                                                    <span class="mx-1 badge bg-label-success">
+                                                    <span class="badge bg-label-success">
                                                         Active Team
                                                     </span>
                                                 @endif
-                                                <span
-                                                    class="badge bg-label-primary text-capitalize">{{ $item->tim->divisi->name }}</span>
+                                                <span class="badge bg-label-primary text-capitalize mt-1">{{ $item->tim->divisi->name }}</span>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-center justify-content-center">
@@ -128,6 +126,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <span class="text-black fs-6">{{ $item->tim->nama }}</span>
                                 <div id="info" class="my-4">
                                     <div class="d-flex justify-content-between">
                                         <span>Mulai : </span>

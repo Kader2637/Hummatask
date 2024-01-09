@@ -222,25 +222,25 @@
                                 aria-selected="true" data-tab="1"><i
                                     class="fa-solid fa-users icon-text"></i>Siswa</button>
                         </li>
-                        <li class="nav-item" role="presentation">
+                        {{-- <li class="nav-item" role="presentation">
                             <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-profile" type="button" role="tab"
                                 aria-controls="pills-profile-tab" aria-selected="false" data-tab="2"><i
                                     class="fa-solid fa-user-group icon-text"></i>Ketua Magang</button>
-                        </li>
+                        </li> --}}
                         {{-- <li class="nav-item" role="presentation">
                             <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-contact" type="button" role="tab"
                                 aria-controls="pills-contact-tab" aria-selected="false" data-tab="3"><i
                                     class="fa-solid fa-user-tie icon-text"></i>Mentor</button>
                         </li> --}}
-                        <li class="nav-item" role="presentation">
+                        {{-- <li class="nav-item" role="presentation">
                             <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-team" type="button" role="tab" aria-controls="pills-histori-tab"
                                 aria-selected="false" data-tab="4"><i class="fa-solid fa-user-slash icon-text"></i>Histori
                                 Pengelola
                                 Magang</button>
-                        </li>
+                        </li> --}}
                     </ul>
                 </div>
                 {{-- <div id="mentor-content" class="row g-3">
@@ -268,7 +268,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="siswa-content" class="row g-3">
+                {{-- <div id="siswa-content" class="row g-3">
                     <div class="d-flex flex-row gap-2 justify-content-end py-3 px-4">
                         <div class="d-flex">
                             <div class="col d-flex flex-wrap gap-1">
@@ -299,7 +299,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
 
             <div class="tab-content" id="pills-tabContent">
