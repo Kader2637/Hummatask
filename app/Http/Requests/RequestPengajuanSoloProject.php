@@ -25,7 +25,7 @@ class RequestPengajuanSoloProject extends FormRequest
             //
             'nama' => 'required|string|max:50',
             'logo' => 'required|image|mimes:png,jpg,gif,jpeg|max:10240',
-            'repository' => 'url|max:100',
+            'repository' => 'nullable|url|max:100',
             'temaInput' => 'required|string|max:50'
         ];
     }

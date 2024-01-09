@@ -62,7 +62,7 @@ class PengajuanTimController extends Controller
             'code' => Str::uuid(),
             'nama' => $request->nama,
             'logo' => $logo,
-            'repository' => $request->repository,
+            'repository' => $request->repository ?: null,
             'divisi_id' => Auth::user()->divisi_id,
             'status_tim' => 'solo'
         ]);
@@ -248,6 +248,7 @@ class PengajuanTimController extends Controller
                 $historyPresentasi->noMinggu = 1;
                 $historyPresentasi->bulan = Carbon::now()->isoFormat("MMMM");
                 $historyPresentasi->tahun = Carbon::now()->isoFormat("YYYY");
+                $historyPresentasi->divisi_id = Auth::user()->divisi_id;
                 $historyPresentasi->save();
 
                 TidakPresentasiMingguan::create([
@@ -255,7 +256,6 @@ class PengajuanTimController extends Controller
                     "history_presentasi_id" => $historyPresentasi->id,
                 ]);
             }
-
 
             foreach ($uniqueDaftarAnggota as $anggota) {
                 $anggotaModel = new Anggota;

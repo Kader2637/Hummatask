@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('code');
             $table->integer('urutan')->nullable();
+            $table->string('judul');
+            $table->text('deskripsi')->nullable();
             $table->date('jadwal');
             $table->enum('status_pengajuan',['menunggu','disetujui','ditolak'])->default('menunggu');
             $table->enum('status_presentasi',['menunggu','selesai','telat'])->default('menunggu');

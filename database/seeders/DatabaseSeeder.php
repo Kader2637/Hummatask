@@ -30,15 +30,6 @@ class DatabaseSeeder extends Seeder
         $divisi_id = Divisi::query()
             ->create(['name' => 'mobile']);
 
-        $divisi_id = Divisi::query()
-            ->create(['name' => 'web']);
-
-        $divisi_id = Divisi::query()
-            ->create(['name' => 'ui/ux']);
-
-        $divisi_id = Divisi::query()
-            ->create(['name' => 'marketing_digital']);
-
         DB::table('status_tims')->insert([
             [
                 'status' => 'solo'
@@ -56,93 +47,38 @@ class DatabaseSeeder extends Seeder
 
 
 
-        DB::table('users')->insert([
-            [
-                'uuid' => Str::uuid(),
-                'username' => 'Mentor Mobile',
-                'email' => 'mentormob@gmail.com',
-                'divisi_id' => 1,
-                'password' => Hash::make('password'),
-                'peran_id' => 2,
-            ]
-        ]);
+        // DB::table('users')->insert([
+        //     [
+        //         'uuid' => Str::uuid(),
+        //         'username' => 'mentor',
+        //         'email' => 'mentor@gmail.com',
+        //         'divisi_id' => $divisi_id->id,
+        //         'password' => Hash::make('password'),
+        //         'peran_id' => 2,
+        //     ]
+        // ]);
 
-        DB::table('users')->insert([
-            [
-                'uuid' => Str::uuid(),
-                'username' => 'Mentor Web',
-                'email' => 'mentorweb@gmail.com',
-                'divisi_id' => 2,
-                'password' => Hash::make('password'),
-                'peran_id' => 2,
-            ]
-        ]);
+        // app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        // Permission::create(['name' => 'kelola siswa']);
 
-        Permission::create(['name' => 'kelola siswa']);
+        // $role = Role::create(['name' => 'ketua magang']);
+        // $role->givePermissionTo('kelola siswa');
+        // User::create(
+        //     [
+        //         'uuid' => Str::uuid(),
+        //         'username' => 'Adi Kurniawan',
+        //         'email' => 'kurniawan@gmail.com',
+        //         'password' => Hash::make('password'),
+        //         'peran_id' => 1,
+        //         'divisi_id' => $divisi_id->id,
+        //         'tlp' => "0845889288",
+        //         'sekolah' => "SMKN 1 Banyuwangi",
+        //         "tanggal_bergabung" => Carbon::now(),
+        //         "tanggal_lulus" => Carbon::now()->addDays(100)
+        //     ]
+        // )->assignRole($role);
 
-        $role = Role::create(['name' => 'ketua magang']);
-        $role->givePermissionTo('kelola siswa');
-        User::create(
-            [
-                'uuid' => Str::uuid(),
-                'username' => 'Adi Kurniawan',
-                'email' => 'kurniawan@gmail.com',
-                'password' => Hash::make('password'),
-                'peran_id' => 1,
-                'divisi_id' => 1,
-                'tlp' => "0845889288",
-                'sekolah' => "SMKN 1 Banyuwangi",
-                "tanggal_bergabung" => Carbon::now(),
-                "tanggal_lulus" => Carbon::now()->addDays(100)
-            ]
-        )->assignRole($role);
-
-        User::create(
-            [
-                'uuid' => Str::uuid(),
-                'username' => 'Yafy Habibi Ramadhani',
-                'email' => 'yafyhabibi@gmail.com',
-                'password' => Hash::make('password'),
-                'peran_id' => 1,
-                'divisi_id' => 1,
-                'tlp' => "08731859817",
-                'sekolah' => "SMKN 1 Probolinggo",
-                "tanggal_bergabung" => Carbon::now(),
-                "tanggal_lulus" => Carbon::now()->addDays(100)
-            ]
-        )->assignRole($role);
-
-        User::create(
-            [
-                'uuid' => Str::uuid(),
-                'username' => 'Andika Riztanta Previan',
-                'email' => 'VianRiztanta71@gmail.com',
-                'password' => Hash::make('password'),
-                'peran_id' => 1,
-                'divisi_id' => 2,
-                'tlp' => "08731859817",
-                'sekolah' => "SMKN 1 Probolinggo",
-                "tanggal_bergabung" => Carbon::now(),
-                "tanggal_lulus" => Carbon::now()->addDays(100)
-            ]
-        )->assignRole($role);
-
-        User::create(
-            [
-                'uuid' => Str::uuid(),
-                'username' => 'Andi Rizki',
-                'email' => 'bababboi@gmail.com',
-                'password' => Hash::make('password'),
-                'peran_id' => 1,
-                'divisi_id' => 2,
-                'tlp' => "08731859817",
-                'sekolah' => "SMKN 1 Probolinggo",
-                "tanggal_bergabung" => Carbon::now(),
-                "tanggal_lulus" => Carbon::now()->addDays(100)
-            ]
-        )->assignRole($role);
 
 
         // $data1 = [

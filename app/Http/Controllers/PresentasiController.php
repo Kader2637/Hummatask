@@ -73,7 +73,6 @@ class PresentasiController extends Controller
                 $tidakPresentasiMingguan = TidakPresentasiMingguan::where('tim_id', $tim->id)
                     ->latest()
                     ->first();
-                // dd($tidakPresentasiMingguan);
                 $tidakPresentasiMingguan->delete();
             }
 
@@ -93,6 +92,8 @@ class PresentasiController extends Controller
 
         $presentasi = new Presentasi();
         $presentasi->code = Str::uuid();
+        $presentasi->judul = $request->judul;
+        $presentasi->deskripsi = $request->judul ?: null;
         $presentasi->jadwal = Carbon::now()->isoFormat('Y-M-DD');
         $presentasi->tim_id = $tim->id;
         $presentasi->limit_presentasi_devisi_id = $request->plan;
@@ -209,7 +210,6 @@ class PresentasiController extends Controller
         $messageToTeam = 'Presentasi Tim Anda ditolak karena jadwal sudah dipilih oleh tim lain.';
 
         $this->sendWhatsAppNotificationOnRejection($presentasi->tim->anggota->where('jabatan_id', 1)->first()->user->tlp, $messageToTeam);
-
     }
     protected function sendWhatsAppPersetujuan($phoneNumber, $message)
     {
@@ -251,7 +251,7 @@ class PresentasiController extends Controller
         $presentasi->user_approval_id = Auth::user()->id;
         $presentasi->save();
 
-        $message = 'Pengajuan Presentasi Tim Anda ditolak, Karena '.$request->alasan;
+        $message = 'Pengajuan Presentasi Tim Anda ditolak, Karena ' . $request->alasan;
         $teamMembers = $presentasi->tim->anggota;
 
         foreach ($teamMembers as $member) {

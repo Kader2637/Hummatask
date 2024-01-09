@@ -26,6 +26,7 @@ class PenggunaController extends Controller
     public function index(Request $request) : JsonResponse
     {
         $pengguna = User::query()
+           ->where('peran_id', 1)
             ->when($request->limit, function ($query) use ($request) {
                 $query->take((int) $request->limit);
             })
@@ -103,6 +104,20 @@ class PenggunaController extends Controller
     {
         $user->delete();
         return ResponseHelper::success(null, "Berhasil menghapus pengguna");
+    }
+
+      /**
+     * UpdateDivisi
+     *
+     * @param  mixed $divisi
+     * @return JsonResponse
+     */
+
+    public function UpdateDivisi(User $user, Request $request): JsonResponse
+    {
+        $user->divisi_id = $request->divisi_id;
+        $user->save();
+        return response()->json(['success']);
     }
 
 }
