@@ -576,30 +576,35 @@
                                                         <hr class="my-0">
                                                         <div class="card-body">
                                                             <div class="row">
-                                                                <div class="col-lg-6">
-                                                                    <div class="d-flex flex-row gap-3">
-                                                                        <img id="logo-tim" src="" alt='logo tim'
-                                                                            class="rounded-circle"
-                                                                            style="width: 90px; height: 90px">
-                                                                        <div
-                                                                            style="display: flex; flex-direction: column; justify-content: center; align-items: center">
-                                                                            <span class="d-block text-black fs-5"
-                                                                                id="nama-tim">nama tim</span>
+                                                                <div class="col-lg-4 d-flex flex-column justify-content-center align-items-center">
+                                                                    <div class="d-flex flex-column gap-3 justify-content-center align-items-center">
+                                                                        <div>
+                                                                            <img id="logo-tim" src="" alt='logo tim' class="rounded-circle" style="width: 90px; height: 90px">
+                                                                        </div>
+                                                                        <div>
+                                                                            <span class="d-block text-black fs-5" id="nama-tim">nama tim</span>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="mt-4">
-                                                                        <div class="mb-3">Status : <span
-                                                                                class="badge bg-label-warning"
-                                                                                id="status"></span>
+                                                                    <div class="row w-60 mt-3">
+                                                                        <div class="col-md-6 col-12 justify-content-center align-items-center d-flex flex-column">
+                                                                            <div>
+                                                                                <p class="mb-1 text-center">Status</p>
+                                                                            </div>
+                                                                            <div>
+                                                                                <span class="badge bg-label-warning" id="status"></span>
+                                                                            </div>
                                                                         </div>
-
-                                                                        <div>Tema : <span class="badge bg-label-warning"
-                                                                                id="tema"></span>
-
+                                                                        <div class="col-md-6 col-12 justify-content-center align-items-center d-flex flex-column">
+                                                                            <div>
+                                                                                <p class="mb-1 text-center">Tema</p>
+                                                                            </div>
+                                                                            <div>
+                                                                                <span class="badge bg-label-warning" id="tema"></span>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-lg-6">
+                                                                <div class="col-lg-8">
                                                                     <div class="progres-bar">
                                                                         <div class="d-flex justify-content-between">
                                                                             <span>Hari</span>
