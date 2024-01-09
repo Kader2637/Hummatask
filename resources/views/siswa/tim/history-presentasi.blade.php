@@ -332,7 +332,7 @@
                                                     <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                         @if (
                                                             $data->presentasi->isNotEmpty() &&
-                                                                $data->presentasi->first()->isPengujianDisetujui() &&
+                                                                $data->presentasi->first()->isPengujianMenunggu() &&
                                                                 $data->id === $data->presentasi->first()->limitPresentasiDevisiId())
                                                             <label class="card bg-label-primary" disabled>
                                                                 <input name="plan" class="radio" type="radio"

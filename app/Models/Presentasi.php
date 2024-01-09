@@ -55,6 +55,10 @@ class Presentasi extends Model
     {
         return $this->status_pengajuan === 'disetujui';
     }
+    public function isPengujianMenunggu()
+    {
+        return $this->status_pengajuan === 'menunggu';
+    }
 
     public function limitPresentasiDevisiId()
     {
