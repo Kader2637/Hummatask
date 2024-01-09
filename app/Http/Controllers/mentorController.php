@@ -271,22 +271,26 @@ class mentorController extends Controller
             ->get();
 
         $telatDeadline = Project::with('tim.anggota.user', 'tema')
+            ->whereRelation('tim.divisi', 'id', '=', Auth::user()->divisi_id)
             ->where('deadline', '<', now())
             ->get();
         $presentasiSelesai = Presentasi::with('tim.anggota.user', 'tim.project.tema')
+            ->whereRelation('tim.divisi', 'id', '=', Auth::user()->divisi_id)
             ->where('status_presentasi', 'selesai')
             ->where('status_pengajuan', 'disetujui')
             ->whereHas('tim.project.tema')
             ->get();
         $timSolo = Tim::with('anggota.user', 'project.tema')
+            ->where('divisi_id', Auth::user()->divisi_id)
             ->where('status_tim', 'solo')
             ->get();
         $timGroup = Tim::with('anggota.user', 'project.tema')
+            ->where('divisi_id', Auth::user()->divisi_id)
             ->where('status_tim', '!=', 'solo')
             ->whereHas('project')
             ->get();
 
-        $tidakPresentasiMingguan = TidakPresentasiMingguan::with('tim.ketuaTim', 'historyPresentasi')->get();
+        $tidakPresentasiMingguan = TidakPresentasiMingguan::with('tim.ketuaTim', 'historyPresentasi')->whereRelation('tim.divisi', 'id', '=', Auth::user()->divisi_id)->get();
 
         return response()->view('mentor.history', compact('tidakPresentasiMingguan', 'telatDeadline', 'presentasiSelesai', 'timSolo', 'timGroup', 'notifikasi'));
     }
@@ -547,7 +551,7 @@ class mentorController extends Controller
                 $query->where('divisi_id', Auth::user()->divisi_id);
             })
             ->get();
-        $historyPresentasi = HistoryPresentasi::all()->sortByDesc('created_at')->take(5);
+        $historyPresentasi = HistoryPresentasi::all()->sortByDesc('created_at')->whereRelation('tim.divisi', 'id', '=', Auth::user()->divisi_id)->take(5);
 
         // dd($historyPresentasi);
         return response()->view('mentor.presentasi', compact('historyPresentasi', 'notifikasi'));
