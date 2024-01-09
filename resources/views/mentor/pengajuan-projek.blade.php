@@ -431,11 +431,8 @@
 
             });
 
-            const oneWeekFromToday = new Date();
-            oneWeekFromToday.setDate(oneWeekFromToday.getDate() + 7);
-
             flatpickr("#deadline", {
-                minDate: oneWeekFromToday,
+                minDate: today,
                 dateFormat: "Y-m-d",
             });
 
