@@ -296,8 +296,6 @@
                                         </div>
                                     </div>
                                     <div class="row" id="row-konfirmasi">
-
-
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="navs-pills-top-baru" role="tabpanel">
@@ -321,26 +319,28 @@
                                         </div>
                                     </div>
                                     <div class="card overflow-auto">
-                                        <div class="card-header ">
-                                            <div class="table text-nowrap">
-                                                <table id="jstabel3" class="table">
-                                                    <div class="">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>No</th>
-                                                                <th>Nama</th>
-                                                                <th>Kategori Project</th>
-                                                                <th>Status</th>
-                                                            </tr>
-                                                        </thead>
-                                                        @php
-                                                            $no = 1;
-                                                        @endphp
-                                                        <tbody id="tr-belum-presentasi">
-
-                                                        </tbody>
-                                                    </div>
-                                                </table>
+                                        <div class="card-header">
+                                            <div class="table-responsive">
+                                                <div class="table text-nowrap">
+                                                    <table id="jstabel3" class="table">
+                                                        <div class="">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>No</th>
+                                                                    <th>Nama</th>
+                                                                    <th>Kategori Project</th>
+                                                                    <th>Status</th>
+                                                                </tr>
+                                                            </thead>
+                                                            @php
+                                                                $no = 1;
+                                                            @endphp
+                                                            <tbody id="tr-belum-presentasi">
+    
+                                                            </tbody>
+                                                        </div>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
