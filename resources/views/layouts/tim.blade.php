@@ -147,11 +147,10 @@
         }
 
         @media (max-width: 576px) {
-        #login-pkl-btn {
-            font-size: 12px;
+            #login-pkl-btn {
+                font-size: 12px;
+            }
         }
-    }
-
     </style>
     @yield('link')
 </head>
@@ -267,7 +266,8 @@
                     <div class="navbar-nav-right d-flex align-items-center gap-3" id="navbar-collapse">
                         <ul class="navbar-nav flex-row align-items-center ms-auto gap-1">
                             <li class="navbar-item">
-                                <a href="https://pkl.hummatech.com/auth-login" class="btn btn-label-primary btn-md" id="login-pkl-btn">Login
+                                <a href="https://pkl.hummatech.com/auth-login" class="btn btn-label-primary btn-md"
+                                    id="login-pkl-btn">Login
                                     pkl.hummatech</a>
                             </li>
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
@@ -344,14 +344,14 @@
                                                         <small class="text-muted">Ketua Magang
                                                             <span
                                                                 class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full text-sm">
-                                                                Mobile
+                                                                {{ Auth::user()->divisi->name ?? '' }}
                                                             </span>
                                                         </small>
                                                     @else
                                                         <small class="text-muted">Siswa Magang
                                                             <span
                                                                 class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full text-sm">
-                                                                Mobile
+                                                                {{ Auth::user()->divisi->name ?? '' }}
                                                             </span>
                                                         </small>
                                                     @endif
