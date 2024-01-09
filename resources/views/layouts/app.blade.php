@@ -306,7 +306,8 @@
                     <div class="navbar-nav-right d-flex align-items-center gap-3" id="navbar-collapse">
                         <ul class="navbar-nav flex-row align-items-center ms-auto gap-1">
                             <li class="navbar-item">
-                                <a href="https://pkl.hummatech.com/auth-login" target="_blank" class="btn btn-label-primary btn-md" id="login-pkl-btn">Login
+                                <a href="https://pkl.hummatech.com/auth-login" target="_blank"
+                                    class="btn btn-label-primary btn-md" id="login-pkl-btn">Login
                                     pkl.hummatech</a>
                             </li>
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
@@ -383,14 +384,14 @@
                                                         <small class="text-muted">Ketua Magang
                                                             <span
                                                                 class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full text-sm">
-                                                                {{ Auth::user()->divisi->name ?? "" }}
+                                                                {{ Auth::user()->divisi->name ?? '' }}
                                                             </span>
                                                         </small>
                                                     @else
                                                         <small class="text-muted">Siswa Magang
                                                             <span
                                                                 class="py-2 px-3 badge bg-label-primary text-white rounded rounded-full text-sm">
-                                                                {{ Auth::user()->divisi->name ?? "" }}
+                                                                {{ Auth::user()->divisi->name ?? '' }}
                                                             </span>
                                                         </small>
                                                     @endif
@@ -460,7 +461,7 @@
                                                     style="width: 150px; height: 150px; border-radius: 10px; cursor: pointer;object-fit: cover"
                                                     class="rounded-circle" />
                                                 <input type="file" class="form-control d-none" id="image-input1"
-                                                    name="logo" accept="image/*"/>
+                                                    name="logo" accept="image/*" />
                                                 @error('logo')
                                                     <p class="text-danger">
                                                         {{ $message }}
@@ -480,7 +481,7 @@
                                             @enderror
                                             <label class="form-label m-0 p-0 mt-2" for="modalEditUserLastName">Link
                                                 Repository
-                                                Github</label>
+                                                Github (Opsional)</label>
                                             <input type="text" id="modalEditUserLastName" name="repository"
                                                 class="form-control" placeholder="https://.." />
                                             @error('repository')
@@ -501,8 +502,8 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="reset" class="btn btn-label-secondary waves-effect" data-bs-dismiss="modal"
-                                        aria-label="Close">Batal</button>
+                                    <button type="reset" class="btn btn-label-secondary waves-effect"
+                                        data-bs-dismiss="modal" aria-label="Close">Batal</button>
                                     <button type="submit" class="btn btn-primary me-sm-3 me-1">Buat</button>
                                 </div>
                             </form>
@@ -563,7 +564,7 @@
                 const temaInput = document.querySelector('input[name="temaInput"]');
 
                 // Validasi input kosong
-                if (namaInput.value.trim() === '' || repositoryInput.value.trim() === '' || temaInput.value
+                if (namaInput.value.trim() === '' || temaInput.value
                     .trim() === '' || logoInput.files
                     .length === 0) {
                     event.preventDefault(); // Mencegah pengiriman formulir
@@ -576,7 +577,7 @@
                     });
                 }
                 // Validasi repositoryInput sebagai URL
-                else if (!repositoryInput.value.match(
+                else if (repositoryInput.value.length > 0 && !repositoryInput.value.match(
                         /^(http(s)?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/)) {
                     event.preventDefault(); // Mencegah pengiriman formulir
                     Swal.fire({

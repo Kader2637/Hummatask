@@ -62,7 +62,7 @@ class PengajuanTimController extends Controller
             'code' => Str::uuid(),
             'nama' => $request->nama,
             'logo' => $logo,
-            'repository' => $request->repository,
+            'repository' => $request->repository ?: null,
             'divisi_id' => Auth::user()->divisi_id,
             'status_tim' => 'solo'
         ]);
