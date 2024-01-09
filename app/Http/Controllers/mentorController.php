@@ -269,7 +269,6 @@ class mentorController extends Controller
                 $query->where('divisi_id', Auth::user()->divisi_id);
             })
             ->get();
-
         $telatDeadline = Project::with('tim.anggota.user', 'tema')
             ->whereRelation('tim.divisi', 'id', '=', Auth::user()->divisi_id)
             ->where('deadline', '<', now())
@@ -551,7 +550,7 @@ class mentorController extends Controller
                 $query->where('divisi_id', Auth::user()->divisi_id);
             })
             ->get();
-        $historyPresentasi = HistoryPresentasi::all()->sortByDesc('created_at')->whereRelation('tim.divisi', 'id', '=', Auth::user()->divisi_id)->take(5);
+        $historyPresentasi = HistoryPresentasi::all()->sortByDesc('created_at')->where('divisi_id', Auth::user()->divisi_id)->take(5);
 
         // dd($historyPresentasi);
         return response()->view('mentor.presentasi', compact('historyPresentasi', 'notifikasi'));
