@@ -47,37 +47,37 @@ class DatabaseSeeder extends Seeder
 
 
 
-        DB::table('users')->insert([
-            [
-                'uuid' => Str::uuid(),
-                'username' => 'mentor',
-                'email' => 'mentor@gmail.com',
-                'divisi_id' => $divisi_id->id,
-                'password' => Hash::make('password'),
-                'peran_id' => 2,
-            ]
-        ]);
+        // DB::table('users')->insert([
+        //     [
+        //         'uuid' => Str::uuid(),
+        //         'username' => 'mentor',
+        //         'email' => 'mentor@gmail.com',
+        //         'divisi_id' => $divisi_id->id,
+        //         'password' => Hash::make('password'),
+        //         'peran_id' => 2,
+        //     ]
+        // ]);
 
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        // app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        Permission::create(['name' => 'kelola siswa']);
+        // Permission::create(['name' => 'kelola siswa']);
 
-        $role = Role::create(['name' => 'ketua magang']);
-        $role->givePermissionTo('kelola siswa');
-        User::create(
-            [
-                'uuid' => Str::uuid(),
-                'username' => 'Adi Kurniawan',
-                'email' => 'kurniawan@gmail.com',
-                'password' => Hash::make('password'),
-                'peran_id' => 1,
-                'divisi_id' => $divisi_id->id,
-                'tlp' => "0845889288",
-                'sekolah' => "SMKN 1 Banyuwangi",
-                "tanggal_bergabung" => Carbon::now(),
-                "tanggal_lulus" => Carbon::now()->addDays(100)
-            ]
-        )->assignRole($role);
+        // $role = Role::create(['name' => 'ketua magang']);
+        // $role->givePermissionTo('kelola siswa');
+        // User::create(
+        //     [
+        //         'uuid' => Str::uuid(),
+        //         'username' => 'Adi Kurniawan',
+        //         'email' => 'kurniawan@gmail.com',
+        //         'password' => Hash::make('password'),
+        //         'peran_id' => 1,
+        //         'divisi_id' => $divisi_id->id,
+        //         'tlp' => "0845889288",
+        //         'sekolah' => "SMKN 1 Banyuwangi",
+        //         "tanggal_bergabung" => Carbon::now(),
+        //         "tanggal_lulus" => Carbon::now()->addDays(100)
+        //     ]
+        // )->assignRole($role);
 
 
 
