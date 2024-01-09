@@ -432,7 +432,7 @@
             });
 
             flatpickr("#deadline", {
-                minDate: today,
+                minDate: "today",
                 dateFormat: "Y-m-d",
             });
 
