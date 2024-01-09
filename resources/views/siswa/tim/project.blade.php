@@ -185,7 +185,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            @if ($project->tim->repository)
+                            @if (@isset($project) && $project->tim->repository)
                                 <div class="col mb-3">
                                     <label for="nameWithTitle" class="form-label">Repository Github</label>
                                     <input type="text" id="repoInput" class="form-control" name="repoInput"
