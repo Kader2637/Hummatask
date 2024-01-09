@@ -530,7 +530,7 @@
                         <div class="container-fluid">
                             <div class="col-12">
                                 <div class="nav-align-top d-flex justify-between">
-                                    <div class="nav nav-pills d-flex justify-content-between my-4" role="tablist">
+                                    <div class="nav nav-pills d-flex justify-content-between my-4  py-2 px-3 shadow" role="tablist">
                                         <div class="d-flex justify-content-between">
                                             <div class="nav-item" role="presentation">
                                                 <button type="button" class="nav-link active button-nav" role="tab"
@@ -543,6 +543,12 @@
                                                     data-bs-toggle="tab" data-bs-target="#navs-pills-top-profile"
                                                     aria-controls="navs-pills-top-profile" aria-selected="false"
                                                     tabindex="-1">Anggota</button>
+                                            </div>
+                                            <div class="nav-item button-nav" role="presentation">
+                                                <button type="button" class="nav-link" role="tab"
+                                                    data-bs-toggle="tab" data-bs-target="#board"
+                                                    aria-controls="board" aria-selected="false"
+                                                    tabindex="-1">Board</button>
                                             </div>
                                         </div>
                                     </div>
@@ -644,7 +650,7 @@
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="navs-pills-top-profile" role="tabpanel">
-                                            <div class="container">
+                                            <div class="container-fluid">
                                                 <div class="row">
                                                     <div
                                                         class="card cursor-default col-12 d-flex align-items-center justify-content-center">
@@ -663,6 +669,81 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="tab-pane fade" id="board" role="tabpanel">
+                                            <div class="container-fluid">
+                                                <div style="height: 80vh" class="container-fluid mt-2">
+                                                    <div class="d-flex mt-3 mb-0  row hide-sroll" style="height: 83vh">
+                                                        <div style="" class="col-lg-3 col-md-6 col-12 py-2   ">
+                                                            <div style="max-height: 80vh; overflow:auto; overflow-x:hidden;background-color: #edeaea" class="p-2  rounded">
+                                                                <div style="width:100%" class="card card-status-tugas">
+                                                                    <div class="card-body p-2 py-2 row justify-content-between">
+                                                                        <span class="col-8">Tugas </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12 d-flex justify-content-center">
+                                                                    <div class="row d-flex flex-column justify-content-center align-items-center w-100"
+                                                                        id="tugas_baru">
+                        
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div style="" class="col-lg-3 col-md-6 col-12 py-2">
+                                                            <div style="max-height: 80vh; overflow:auto; overflow-x:hidden;background-color: #edeaea" class="p-2  rounded">
+                                                                <div style="width:100%" class="card card-status-tugas">
+                                                                    <div class="card-body p-2 py-2 row">
+                                                                        <div class="col-8 d-flex align-items-center position-sticky top-0">
+                                                                            <span style="font-size: 15px" class="">Dikerjakan</span>
+                                                                        </div>
+                                                                    </div>
+                        
+                                                                </div>
+                                                                <div class="col-12 d-flex justify-content-center">
+                                                                    <div class="row row d-flex flex-column justify-content-center align-items-center w-100"
+                                                                        id="dikerjakan">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div style="" class="col-lg-3 col-md-6 col-12 py-2">
+                                                            <div style="max-height: 80vh; overflow:auto; overflow-x:hidden;background-color: #edeaea" class="p-2  rounded">
+                                                                <div style="width:100%" class="card card-status-tugas">
+                        
+                                                                    <div class="card-body p-2 py-2 row">
+                                                                        <div class="col-8 d-flex align-items-center position-sticky top-0">
+                                                                            <span style="font-size: 15px" class="">Direvisi</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12 d-flex justify-content-center">
+                                                                    <div class="w-100 row d-flex flex-column justify-content-center align-items-center"
+                                                                        id="revisi">
+                        
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div style="" class="col-lg-3 col-md-6 col-12 py-2    ">
+                                                            <div style="max-height: 80vh; overflow:auto; overflow-x:hidden;background-color: #edeaea" class="p-2  rounded">
+                                                                <div style="width:100%" class="card card-status-tugas">
+                                                                    <div class="card-body p-2 py-2 row">
+                                                                        <div class="col-8 d-flex align-items-center position-sticky top-0">
+                                                                            <span style="font-size: 15px" class="">Selesai</span>
+                                                                        </div>
+                                                                    </div>
+                        
+                                                                </div>
+                                                                <div class="col-12 d-flex justify-content-center">
+                                                                    <div class="row d-flex flex-column justify-content-center align-items-center w-100"
+                                                                        id="selesai">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -674,6 +755,51 @@
     </div>
 @endsection
 @section('script')
+<script src="{{ asset('assets/vendor/libs/jquery/jquery1e84.js?id=0f7eb1f3a93e3e19e8505fd8c175925a') }}"></script>
+                        <script src="{{ asset('assets/vendor/libs/popper/popper0a73.js?id=baf82d96b7771efbcc05c3b77135d24c') }}"></script>
+                        {{-- <script src="{{ asset('assets/vendor/js/bootstraped84.js?id=9a6c701557297a042348b5aea69e9b76') }}"></script> --}}
+                        <script src="{{ asset('assets/vendor/libs/node-waves/node-waves259f.js?id=4fae469a3ded69fb59fce3dcc14cd638') }}">
+                        </script>
+                        <script
+                            src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar6188.js?id=44b8e955848dc0c56597c09f6aebf89a') }}">
+                        </script>
+                        <script src="{{ asset('assets/vendor/libs/hammer/hammer2de0.js?id=0a520e103384b609e3c9eb3b732d1be8') }}"></script>
+                        <script src="{{ asset('assets/vendor/libs/typeahead-js/typeahead60e7.js?id=f6bda588c16867a6cc4158cb4ed37ec6') }}">
+                        </script>
+                        <script src="{{ asset('assets/vendor/js/menu2dc9.js?id=c6ce30ded4234d0c4ca0fb5f2a2990d8') }}"></script>
+                        <script src="{{ asset('assets/vendor/libs/moment/moment.js') }}"></script>
+                        <script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+                        <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
+                        <script src="{{ asset('assets/vendor/libs/jkanban/jkanban.js') }}"></script>
+                        <script src="{{ asset('assets/vendor/libs/quill/katex.js') }}"></script>
+                        <script src="{{ asset('assets/vendor/libs/quill/quill.js') }}"></script>
+                        <script src="{{ asset('utils/handleErrorResponse.js') }}"></script>
+                        <!-- END: Page Vendor JS-->
+                        <!-- BEGIN: Theme JS-->
+                        <script src="{{ asset('assets/js/mainf696.js?id=8bd0165c1c4340f4d4a66add0761ae8a') }}"></script>
+
+                        <!-- END: Theme JS-->
+                        <!-- Pricing Modal JS-->
+                        <!-- END: Pricing Modal JS-->
+                        <!-- BEGIN: Page JS-->
+                        {{-- <script src="{{ asset('assets/js/app-kanban.js') }}"></script> --}}
+                        <!-- END: Page JS-->
+                        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+                        <link rel="stylesheet" href="{{ asset('assets/vendor/libs/toastr/toastr.js') }}" />
+                        <script src="{{ asset('assets/js/forms-selects.js') }}"></script>
+                        <script src="{{ asset('assets/js/forms-typeahead.js') }}"></script>
+                        {{-- <script src="{{ asset('assets/js/forms-tagify.js') }}"></script> --}}
+                        <script src="{{ asset('assets/vendor/libs/bloodhound/bloodhound.js') }}"></script>
+                        <script src="{{ asset('utils/prioritas.js') }}"></script>
+
+                        <script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+                        <script src="{{ asset('assets/js/extended-ui-perfect-scrollbar.js') }}"></script>
+                        <script src="{{ asset('assets/js/ui-popover.js') }}"></script>
+                        <script src="{{ asset('utils/handleSuccessResponse.js') }}"></script>
+                        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+                        <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+                        <script src="{{ asset('utils/hadleLabel.js') }}"></script>
+                        <script src="{{ asset('utils/handleFormatDate.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
