@@ -97,13 +97,13 @@ class PresentasiController extends Controller
         $presentasi->jadwal = Carbon::now()->isoFormat('Y-M-DD');
         $presentasi->tim_id = $tim->id;
         $presentasi->limit_presentasi_devisi_id = $request->plan;
-        $presentasiSudah = Presentasi::where('status_pengajuan', 'disetujui')->get();
-        foreach ($presentasiSudah as $pS) {
-            if ($pS->isPengujianDisetujui() && $pS->id === $pS->limitPresentasiDevisiId());
-            return redirect()
-                ->back()
-                ->with('error', 'Sudah ada tim lain yang memilih jadwal ini');
-        }
+        // $presentasiSudah = Presentasi::where('status_pengajuan', 'disetujui')->get();
+        // foreach ($presentasiSudah as $pS) {
+        //     if ($pS->isPengujianDisetujui() && $pS->id === $pS->limitPresentasiDevisiId());
+        //     return redirect()
+        //         ->back()
+        //         ->with('error', 'Sudah ada tim lain yang memilih jadwal ini');
+        // }
         $history = HistoryPresentasi::latest()->first();
 
         if ($history === null) {
