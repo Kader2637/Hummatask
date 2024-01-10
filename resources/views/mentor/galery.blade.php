@@ -51,7 +51,7 @@
                     <button class="nav-link active" id="pills-galery-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-galery" type="button" role="tab" aria-controls="pills-galery"
                         aria-selected="true" data-tab="1"><i class="menu-icon ti ti-album album-rounded"></i>
-                        Album Dashboard</button>
+                        halo wassap ges Dashboard</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
