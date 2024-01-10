@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('judul');
             $table->text('deskripsi')->nullable();
             $table->date('jadwal');
-            $table->enum('status_pengajuan',['menunggu','disetujui','ditolak'])->default('menunggu');
             $table->enum('status_presentasi',['menunggu','selesai','telat'])->default('menunggu');
             $table->boolean('status_presentasi_mingguan')->default(false);
             $table->text('feedback')->nullable();

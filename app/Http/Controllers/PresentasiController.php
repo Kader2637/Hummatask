@@ -57,11 +57,7 @@ class PresentasiController extends Controller
             $validasiPersetujuan = $tim->presentasi->sortByDesc('created_at')->first();
 
             if ($validasiPersetujuan !== null) {
-                if ($validasiPersetujuan->status_pengajuan === 'menunggu' && $validasiPersetujuan->status_presentasi === 'menunggu') {
-                    return back()->with('error', 'Tim anda sudah mengajukan presentasi tunggu disetujui oleh mentor');
-                }
-
-                if ($validasiPersetujuan->status_pengajuan === 'disetujui' && $validasiPersetujuan->status_presentasi === 'menunggu') {
+                if ($validasiPersetujuan->status_presentasi === 'menunggu') {
                     return back()->with('error', 'Tim anda sudah terjadwal presentasi');
                 }
             }
@@ -94,15 +90,6 @@ class PresentasiController extends Controller
         $presentasi->jadwal = Carbon::now()->isoFormat('Y-M-DD');
         $presentasi->tim_id = $tim->id;
         $presentasi->limit_presentasi_devisi_id = $request->plan;
-        // $presentasiSudah = Presentasi::where('status_pengajuan', 'disetujui')->get();
-        // foreach ($presentasiSudah as $pS) {
-        //     if ($pS->isPengujianDisetujui() && $pS->id === $pS->limit_presentasi_devisi_id) {
-        //         dd($pS->isPengujianDisetujui() && $pS->id === $pS->limit_presentasi_devisi_id);
-        //         return redirect()
-        //         ->back()
-        //         ->with('error', 'Sudah ada tim lain yang memilih jadwal ini');
-        //     }
-        // }
         $history = HistoryPresentasi::latest()->first();
 
         if ($history === null) {
@@ -144,7 +131,6 @@ class PresentasiController extends Controller
     protected function persetujuanPresentasi(RequestPersetujuanPresentasi $request, $code)
     {
         $dataPresentasi = Presentasi::where('jadwal', Carbon::now()->isoFormat('YYYY-MM-DD'))
-            ->where('status_pengajuan', 'disetujui')
             ->get()
             ->count();
 
@@ -162,7 +148,6 @@ class PresentasiController extends Controller
         if ($otherRequest->isNotEmpty()) {
             $otherRequest->each(function ($request) {
                 $request->update([
-                    'status_pengajuan' => 'ditolak',
                     'feedback' => 'Maaf, tim lain telah menggunakan jadwal sesi yang anda pilih',
                 ]);
                 $this->rejectPresentation($request);

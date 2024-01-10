@@ -276,7 +276,6 @@ class mentorController extends Controller
         $presentasiSelesai = Presentasi::with('tim.anggota.user', 'tim.project.tema')
             ->whereRelation('tim.divisi', 'id', '=', Auth::user()->divisi_id)
             ->where('status_presentasi', 'selesai')
-            ->where('status_pengajuan', 'disetujui')
             ->whereHas('tim.project.tema')
             ->get();
         $timSolo = Tim::with('anggota.user', 'project.tema')

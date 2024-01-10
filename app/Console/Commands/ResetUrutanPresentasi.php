@@ -27,7 +27,7 @@ class ResetUrutanPresentasi extends Command
      */
     public function handle()
     {
-        $presentasi = Presentasi::where('jadwal', Carbon::now()->isoFormat('Y-M-DD'))->where('status_presentasi', 'menunggu')->where('status_pengajuan', 'disetujui')->orderBy('urutan', 'asc')->get();
+        $presentasi = Presentasi::where('jadwal', Carbon::now()->isoFormat('Y-M-DD'))->where('status_presentasi', 'menunggu')->orderBy('urutan', 'asc')->get();
 
         foreach ($presentasi as $i => $data) {
 
