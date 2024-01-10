@@ -16,7 +16,7 @@ class Anggota extends Model
 
     public function jabatan(): BelongsTo
     {
-        return $this->belongsTo(Jabatan::class);
+        return $this->belongsTo(Jabatan::class, 'jabatan_id');
     }
 
     public function user(): BelongsTo

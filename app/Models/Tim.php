@@ -83,15 +83,16 @@ class Tim extends Model
             ->whereHas('user', function ($query) {
                 $query->where('status_kelulusan', 0);
             })
-            ->get();
+            ->get()
+            ->sortBy('jabatan');
     }
     public function anggota_profile()
     {
         return Anggota::where('tim_id', $this->id)
-        ->whereIn('status', ['active', 'expired', 'kicked'])
-        ->with(['user','jabatan']) // Memuat relasi 'user'
-        ->orderByRaw("jabatan_id = 1 DESC")
-        ->get();
+            ->whereIn('status', ['active', 'expired', 'kicked'])
+            ->with(['user', 'jabatan']) // Memuat relasi 'user'
+            ->orderByRaw("jabatan_id = 1 DESC")
+            ->get();
     }
 
     public function divisi(): BelongsTo
