@@ -337,10 +337,10 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-lg-6">
-                                                <div class="d-flex flex-row gap-3">
-                                                    <img src="{{ asset('storage/' . $tim->logo) }}" alt='logo tim'
-                                                        class="rounded-circle"
-                                                        style="width: 90px; height: 90px; object-fit: cover">
+                                                <div class="d-flex flex-column justify-content-center align-items-center gap-3">
+                                                    <div>
+                                                        <img src="{{ asset('storage/' . $tim->logo) }}" alt='logo tim' class="rounded-circle" style="width: 90px; height: 90px; object-fit: cover">
+                                                    </div>
                                                     <div
                                                         style="display: flex; flex-direction: column; justify-content: center; align-items: center">
                                                         <span class="d-block text-black fs-5">{{ $tim->nama }}</span>
