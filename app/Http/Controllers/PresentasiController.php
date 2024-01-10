@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LimitPresentasiDivisiRequest;
 use App\Services\WhacenterService;
 use App\Http\Requests\RequestPengajuanPresentasi;
 use App\Http\Requests\RequestPenolakanPresentasi;
 use App\Http\Requests\RequestPersetujuanPresentasi;
 use App\Models\Anggota;
 use App\Models\HistoryPresentasi;
+use App\Models\LimitPresentasiDevisi;
 use App\Models\Notifikasi;
 use App\Models\Presentasi;
 use App\Models\TidakPresentasiMingguan;
@@ -89,7 +91,8 @@ class PresentasiController extends Controller
         $presentasi->deskripsi = $request->judul ?: null;
         $presentasi->jadwal = Carbon::now()->isoFormat('Y-M-DD');
         $presentasi->tim_id = $tim->id;
-        $presentasi->limit_presentasi_devisi_id = $request->plan;
+        $limitPresentasiDivisiId = LimitPresentasiDevisi::find($request->plan);
+        $presentasi->jadwal_ke = $limitPresentasiDivisiId->jadwal_ke;
         $history = HistoryPresentasi::latest()->first();
 
         if ($history === null) {
