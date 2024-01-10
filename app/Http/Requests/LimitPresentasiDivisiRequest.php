@@ -14,12 +14,14 @@ class LimitPresentasiDivisiRequest extends FormRequest
             'mulai.*' => 'required',
             'akhir' => 'array',
             'akhir.*' => 'required',
+            'jadwal_ke' => 'required',
         ];
     }
 
     public function messages()
     {
         return [
+            'jadwal_web.required' => 'Tidak boleh kosong.',
             'mulai.required' => 'Setiap nilai di kolom mulai diperlukan.',
             'mulai.*.required' => 'Setiap nilai di kolom mulai harus diisi.',
             'akhir.required' => 'Setiap nilai di kolom dari diperlukan.',

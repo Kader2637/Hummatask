@@ -11,14 +11,14 @@ class LimitPresentasiDevisi extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['presentasi_divisi_id', 'mulai', 'akhir'];
+    protected $fillable = ['presentasi_divisi_id', 'mulai', 'akhir', 'jadwal_ke'];
     protected $guarded = [];
 
     /**
      * presentasiDivisi
      *
      * @return BelongsTo
-     */
+     */ 
     public function presentasiDivisi(): BelongsTo
     {
         return $this->belongsTo(PresentasiDivisi::class, 'presentasi_divisi_id');

@@ -188,21 +188,38 @@ class mentorController extends Controller
             ->where('divisi_id', auth()->user()->divisi_id)
             ->first();
 
-            
+        $day = $request->query('day');
+        $divisiId = $request->query('divisi_id');
+
         $divisis = Divisi::all();
 
         $dataPresentasi = [];
 
         foreach ($divisis as $divisi) {
-            $dataPresentasi[$divisi->id] = LimitPresentasiDevisi::whereHas('presentasiDivisi', function ($query) use ($divisi) {
-                $query->where('divisi_id', $divisi->id);
-            })->get();
+            $query = LimitPresentasiDevisi::whereHas('presentasiDivisi', function ($query) use ($divisiId, $day) {
+                if ($divisiId) {
+                    $query->where('divisi_id', $divisiId);
+                }
+                if ($day) {
+                    $query->where('day', $day);
+                }
+            });
+
+            $dataPresentasi[$divisi->id] = $query->get();
         }
 
-        return response()->view('mentor.dashboard', compact('divisis','dataPresentasi','year', 'currentYear', 'processedData', 'presentasi', 'chartData', 'jadwal', 'hari', 'chart', 'notifikasi', 'senin', 'selasa', 'rabu', 'kamis', 'jumat'));
+        if (!$day && !$divisiId) {
+            foreach ($divisis as $divisi) {
+                $query = LimitPresentasiDevisi::whereHas('presentasiDivisi', function ($query) use ($divisi) {
+                    $query->where('divisi_id', $divisi->id);
+                });
+
+                $dataPresentasi[$divisi->id] = $query->get();
+            }
+        }
+
+        return response()->view('mentor.dashboard', compact('divisis', 'dataPresentasi', 'year', 'currentYear', 'processedData', 'presentasi', 'chartData', 'jadwal', 'hari', 'chart', 'notifikasi', 'senin', 'selasa', 'rabu', 'kamis', 'jumat'));
     }
-
-
 
     protected function pengguna()
     {

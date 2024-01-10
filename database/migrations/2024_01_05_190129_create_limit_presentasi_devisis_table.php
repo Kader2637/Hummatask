@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('presentasi_divisi_id')->constrained('presentasi_divisis')->cascadeOnDelete()->cascadeOnUpdate();
             $table->time('mulai');
             $table->time('akhir');
+            $table->string('jadwal_ke');
             $table->timestamps();
         });
     }

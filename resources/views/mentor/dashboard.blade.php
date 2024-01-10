@@ -58,6 +58,8 @@
                       @for ($i = 0; $i < (int) $senin->limit; $i++)
                         <div class="row align-items-center">
                           <input name="day" type="hidden" value="monday">
+                          <input type="hidden" name="jadwal_ke[]"
+                            value="{{ old('jadwal_ke' . $i, 'Jadwal ke - ' . ($i + 1)) }}">
                           <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
                             <p class="text-dark fs-6 mt-3" style="font-weight: 550">
                               Jadwal Ke {{ $i + 1 }}
@@ -106,6 +108,8 @@
                       @for ($i = 0; $i < (int) $selasa->limit; $i++)
                         <div class="row align-items-center">
                           <input name="day" type="hidden" value="tuesday">
+                          <input type="hidden" name="jadwal_ke[]"
+                            value="{{ old('jadwal_ke' . $i, 'Jadwal ke - ' . ($i + 1)) }}">
                           <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
                             <p class="text-dark fs-6 mt-3" style="font-weight: 550">
                               Jadwal Ke {{ $i + 1 }}
@@ -154,6 +158,8 @@
                       @for ($i = 0; $i < (int) $rabu->limit; $i++)
                         <div class="row align-items-center">
                           <input name="day" type="hidden" value="wednesday">
+                          <input type="hidden" name="jadwal_ke[]"
+                            value="{{ old('jadwal_ke' . $i, 'Jadwal ke - ' . ($i + 1)) }}">
                           <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
                             <p class="text-dark fs-6 mt-3" style="font-weight: 550">
                               Jadwal Ke {{ $i + 1 }}
@@ -202,6 +208,8 @@
                       @for ($i = 0; $i < (int) $kamis->limit; $i++)
                         <div class="row align-items-center">
                           <input name="day" type="hidden" value="thursday">
+                          <input type="hidden" name="jadwal_ke[]"
+                            value="{{ old('jadwal_ke' . $i, 'Jadwal ke - ' . ($i + 1)) }}">
                           <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
                             <p class="text-dark fs-6 mt-3" style="font-weight: 550">
                               Jadwal Ke {{ $i + 1 }}
@@ -250,6 +258,8 @@
                       @for ($i = 0; $i < (int) $jumat->limit; $i++)
                         <div class="row align-items-center">
                           <input name="day" type="hidden" value="friday">
+                          <input type="hidden" name="jadwal_ke[]"
+                            value="{{ old('jadwal_ke' . $i, 'Jadwal ke - ' . ($i + 1)) }}">
                           <div class="mb-3 col-lg-9 col-xl-2 col-4 mb-0">
                             <p class="text-dark fs-6 mt-3" style="font-weight: 550">
                               Jadwal Ke {{ $i + 1 }}
@@ -305,6 +315,14 @@
               @foreach ($divisis as $index => $divisi)
                 <div class="tab-pane {{ $index == 0 ? 'active' : '' }}" id="{{ $divisi->name }}" role="tabpanel">
                   <div class="card">
+                    <select class="form-select" id="filterDayTab{{ $divisi->id }}">
+                      <option value="all">Semua Hari</option>
+                      <option value="Senin">Senin</option>
+                      <option value="Selasa">Selasa</option>
+                      <option value="Rabu">Rabu</option>
+                      <option value="Kamis">Kamis</option>
+                      <option value="Jumat">Jumat</option>
+                    </select>
                     <div class="card-body m-0">
                       @if ($errors->any())
                         <script>
@@ -334,9 +352,9 @@
                               <th>Sampai</th>
                             </tr>
                           </thead>
-                          <tbody class="table-border-bottom-0">
+                          <tbody class="table-border-bottom-0" id="tableBody{{ $divisi->id }}">
                             @forelse ($dataPresentasi[$divisi->id] as $index => $data)
-                              <tr>
+                              <tr class="dataRow">
                                 <td>{{ $index + 1 }}</td>
                                 <td>
                                   @if ($data->presentasiDivisi->day == 'monday')
@@ -379,6 +397,28 @@
           </div>
         </div>
       </div>
+
+      <script>
+        $(document).ready(function() {
+          $('select[id^="filterDayTab"]').on('change', function() {
+            const divisiId = $(this).attr('id').replace('filterDayTab', '');
+            const selectedDay = $(this).val();
+
+            $(`#tableBody${divisiId} .dataRow`).show();
+
+            if (selectedDay !== 'all') {
+              $(`#tableBody${divisiId} .dataRow`).filter(function() {
+                const rowDay = $(this).find('td:eq(1)').text().trim(); // Assuming the day is in the second <td>
+                return rowDay !== selectedDay;
+              }).hide();
+            }
+          });
+        });
+
+        $.expr[':'].contains = function(a, i, m) {
+          return $(a).text().toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
+        };
+      </script>
 
       <div class="col-12 col-xl-12">
         <div class="card">
