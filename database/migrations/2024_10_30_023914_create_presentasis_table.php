@@ -25,7 +25,7 @@ return new class extends Migration
             $table->foreignId('tim_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('history_presentasi_id')->references('id')->on('history_presentasis')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('user_approval_id')->nullable()->references('id')->on('users');
-            $table->foreignId('limit_presentasi_devisi_id')->references('id')->on('limit_presentasi_devisis')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('jadwal_ke');
             $table->timestamps();
         });
     }
