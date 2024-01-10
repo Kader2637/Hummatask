@@ -123,7 +123,11 @@ class timController extends Controller
         $tim = Tim::where('code', $code)->firstOrFail();
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
-        $anggota = $tim->anggota()->get();
+        $anggota = $tim
+            ->anggota()
+            ->orderBy('jabatan_id')
+            ->get();
+
         $project = $tim->project->first();
 
         $hasProjectRelation = $tim->project()->exists();
@@ -177,9 +181,9 @@ class timController extends Controller
         foreach ($anggota as $data) {
             if (
                 $data->anggotaReal
-                    ->where('tim_id', $tim->id)
-                    ->sortByDesc('created_at')
-                    ->first()->status !== 'active'
+                ->where('tim_id', $tim->id)
+                ->sortByDesc('created_at')
+                ->first()->status !== 'active'
             ) {
                 $jabatan[] = 'Mantan Anggota';
             } else {

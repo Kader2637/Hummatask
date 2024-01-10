@@ -453,25 +453,14 @@ class mentorController extends Controller
                 $query->where('id', $tim);
             })
             ->get();
-        // $users = User::where('peran_id', 1)->where('status_kelulusan', 0)
-        // ->where(function ($query) use ($tim) {
-        //     $query->whereDoesntHave('tim', function ($subQuery) {
-        //         $subQuery->where('kadaluwarsa', false);
-        //     })
-        //         ->orWhere(function ($subQuery) use ($tim) {
-        //             $subQuery->whereHas('tim', function ($innerSubQuery) use ($tim) {
-        //                 $innerSubQuery->where('id', $tim);
-        //             });
-        //         });
-        // })
-        // ->get();
-        // dd($tim);
+
         $users = Anggota::whereIn('status', ['kicked', 'expired'])
             ->where('tim_id', '!=', $tim)
             ->orWhere(function ($query) use ($tim) {
                 $query->where('tim_id', $tim)
                     ->where('status', 'active');
             })
+            // ->orderBy('jabatan_id')
             ->get();
 
         $usersArray = $users->pluck('user_id')->toArray();
