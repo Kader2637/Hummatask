@@ -24,7 +24,7 @@ class editProjectRequest extends FormRequest
         return [
             'logo' => 'nullable|image',
             'namaTimInput' => 'nullable|string|max:50',
-            'deskripsiInput' => 'nullable|string|max:250',
+            'deskripsiInput' => 'nullable|string',
             'repoInput' => 'nullable|string|max:250|url',
         ];
     }
@@ -36,7 +36,6 @@ class editProjectRequest extends FormRequest
             'namaTimInput.string' => 'Nama tim harus berupa teks.',
             'namaTimInput.max' => 'Nama tim maksimal 50 karakter.',
             'deskripsiInput.string' => 'Deskripsi harus berupa teks.',
-            'deskripsiInput.max' => 'Deskripsi maksimal 250 karakter.',
             'repoInput.string' => 'URL repository harus berupa teks.',
             'repoInput.url' => 'URL repository harus berupa URL yang valid.',
             'repoInput.max' => 'URL repository maksimal 250 karakter.',
