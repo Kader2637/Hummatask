@@ -73,6 +73,7 @@
                         $progressPercentage = $totalDeadline > 0 ? 100 - ($dayLeft / $totalDeadline) * 100 : 0;
                     @endphp
                     <div class="col-md-6 col-lg-4" id="projectList">
+                        @dump($anggotaJson)
                         <div class="card text-center mb-3 projek-item" data-status-tim="{{ $item->tim->status_tim }}">
                             <div class="card-body">
                                 <div class="d-flex flex-row gap-3 justify-content-between align-items-center">
