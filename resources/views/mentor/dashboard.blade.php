@@ -292,7 +292,7 @@
       <div class="col-12 col-xl-12">
         <div class="card mb-4">
           <div class="card-body m-0">
-            <h5 class="pb-0">Jadwal Para Mentor</h5>
+            <h5 class="pb-0">Jadwal Presentasi Para Mentor</h5>
             <ul class="nav nav-pills bg-light rounded" role="tablist">
               @foreach ($divisis as $index => $divisi)
                 <li class="nav-item">
@@ -335,7 +335,7 @@
                             </tr>
                           </thead>
                           <tbody class="table-border-bottom-0">
-                            @foreach ($dataPresentasi[$divisi->id] as $index => $data)
+                            @forelse ($dataPresentasi[$divisi->id] as $index => $data)
                               <tr>
                                 <td>{{ $index + 1 }}</td>
                                 <td>
@@ -356,7 +356,18 @@
                                 <td>{{ $data->mulai }}</td>
                                 <td>{{ $data->akhir }}</td>
                               </tr>
-                            @endforeach
+                            @empty
+                              <tr>
+                                <td colspan="4">
+                                  <div class="d-flex justify-content-evenly">
+                                    <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt=""
+                                      class="mb-0" style="width: 250px;">
+                                  </div>
+                                  <p class="text-center mb-0 mt-2">Tidak ada Jadwal Presentasi<i
+                                      class="ti ti-address-book-off"></i></p>
+                                </td>
+                              </tr>
+                            @endforelse
                           </tbody>
                         </table>
                       </div>
@@ -421,7 +432,7 @@
         </div>
       </div>
     </div>
-    
+
     {{-- Modal Presetanasi --}}
     <form action="{{ route('presentasi-divisi.store') }}" method="POST">
       @csrf

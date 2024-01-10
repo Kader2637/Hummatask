@@ -76,11 +76,10 @@
                     <div class="col-md-6 col-lg-4" id="projectList">
                         <div class="card text-center mb-3 projek-item" data-status-tim="{{ $item->tim->status_tim }}">
                             <div class="card-body">
-                                <div class="d-flex flex-row gap-3 justify-content-between">
+                                <div class="d-flex flex-row gap-3 justify-content-between align-items-center">
                                     <img src="{{ asset('storage/' . $item->tim->logo) }}" alt="foto logo"
                                         style="width: 100px; height: 100px; object-fit: cover" class="rounded-circle mb-3">
-                                    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;"
-                                        class="">
+                                    <div>
                                         <div class="d-flex align-items-center">
                                             <div class="d-flex flex-column align-items-end">
                                                 <span class="badge bg-label-warning my-1">
@@ -106,7 +105,7 @@
                                                 <span class="badge bg-label-primary text-capitalize mt-1">{{ $item->tim->divisi->name }}</span>
                                             </div>
                                         </div>
-                                        <div class="d-flex align-items-center justify-content-center">
+                                        <div class="d-flex justify-content-end mt-1">
                                             <div class="d-flex align-items-center pt-1 mb-3 justify-content-center">
                                                 <div class="d-flex align-items-center">
                                                     <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
@@ -244,7 +243,7 @@
                                         <div class="row">
                                             <div class="col-lg-4 mb-4">
                                                 <div class="card">
-                                                    <h5 class="card-header">Progres Tim</h5>
+                                                    <h5 class="card-header text-dark">Progres Tim</h5>
                                                     <div class="card-body">
                                                         <p id="" class="text-center chart-status"></p>
                                                         <canvas id="" class="chartjs mb-4 mt-2 piechart-project"
@@ -290,44 +289,47 @@
                                                     <div class="card-header">
                                                         <div
                                                             class="d-flex flex-column flex-md-row align-items-md-center justify-content-between">
-                                                            <div class="fs-4 text-black">
+                                                            <div class="fs-4 text-dark fw-medium">
                                                                 Projek
                                                             </div>
                                                             <div class="d-flex flex-column mt-1">
-                                                                <span>Tanggal Mulai: <span id="tglmulai"></span></span>
-                                                                <span>Tenggat: <span id="deadline"></span></span>
+                                                                <span>Tanggal Mulai : <span id="tglmulai"></span></span>
+                                                                <span>Tenggat : <span id="deadline"></span></span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <hr class="my-0">
                                                     <div class="card-body">
                                                         <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <div class="d-flex flex-column flex-md-row gap-3">
+                                                            <div class="col-lg-5 align-items-center justify-content-center d-flex flex-column">
+                                                                <div>
                                                                     <div class="text-center">
-                                                                        <img id="logo-tim" src="" alt='logo tim'
-                                                                            class="rounded-circle"
-                                                                            style="width: 90px; height: 90px">
+                                                                        <img id="logo-tim" src="" alt='logo tim' class="rounded-circle mb-3" style="width: 90px; height: 90px">
                                                                     </div>
-                                                                    <div
-                                                                        class="d-flex flex-column justify-content-center align-items-center">
-                                                                        <span class="d-block text-black fs-5"
-                                                                            id="nama-tim">nama tim</span>
+                                                                    <div class="d-flex flex-column justify-content-center align-items-center">
+                                                                        <span class="d-block text-black fs-5" id="nama-tim">nama tim</span>
                                                                     </div>
                                                                 </div>
-                                                                <div class="mt-4">
-                                                                    <div class="mb-3">Status : <span
-                                                                            class="badge bg-label-warning"
-                                                                            id="status"></span>
+                                                                <div class="row w-80 mt-3">
+                                                                    <div class="col-md-6 col-12 justify-content-center align-items-center d-flex flex-column">
+                                                                        <div>
+                                                                            <p class="mb-1 text-center">Status</p>
+                                                                        </div>
+                                                                        <div>
+                                                                            <span class="badge bg-label-warning" id="status"></span>
+                                                                        </div>
                                                                     </div>
-
-                                                                    <div>Tema : <span class="badge bg-label-warning"
-                                                                            id="tema"></span>
-
+                                                                    <div class="col-md-6 col-12 justify-content-center align-items-center d-flex flex-column">
+                                                                        <div>
+                                                                            <p class="mb-1 text-center">Tema</p>
+                                                                        </div>
+                                                                        <div>
+                                                                            <span class="badge bg-label-warning" id="tema"></span>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-lg-6">
+                                                            <div class="col-lg-7">
                                                                 <div class="progres-bar">
                                                                     <div class="d-flex justify-content-between">
                                                                         <span>Hari</span>
@@ -358,12 +360,10 @@
                                                                     <div class="title text-dark">
                                                                         Link Repository :
                                                                     </div>
-                                                                    <a href="" id="repository"
-                                                                        target="_blank"><span class="text-blue"
-                                                                            id="text-repo"></span></a>
+                                                                    <a href="" id="repository" target="_blank"><span class="text-blue" id="text-repo"></span></a>
                                                                 </div>
                                                                 <div class="deskripsi my-2">
-                                                                    <div class="title text-dark">
+                                                                    <div class="title text-dark mb-0">
                                                                         Deskripsi :
                                                                     </div>
                                                                     <div class="isi mt-2" id="deskripsi">
