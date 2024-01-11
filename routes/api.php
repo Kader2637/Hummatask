@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\PenggunaController;
 use App\Http\Controllers\Api\PresentasiDivisiController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\PengajuanPresentasiController;
+use App\Http\Controllers\siswaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,8 @@ Route::post('forgot', [LoginController::class, 'forgot']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [UserController::class, 'user']);
     Route::post('presentasi-divisi', [PresentasiDivisiController::class, 'store']);
+
+    Route::get('siswa',[siswaController::class,'list']);
 });
 
 Route::get('division', [DivisiController::class, 'index']);
