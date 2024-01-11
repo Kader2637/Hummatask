@@ -128,7 +128,7 @@
                     </div>
                 </div>
             @empty
-                <h6 class="text-center mt-4">Tidak Ada Projek <i class="ti ti-address-book-off"></i></h6>
+                <h6 class="text-center mt-4">Tidak Ada tim <i class="ti ti-address-book-off"></i></h6>
                 <div class="mt-4 mb-3 d-flex justify-content-evenly">
                     <img src="{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}"
                         alt="page-misc-under-maintenance" width="300" class="img-fluid">

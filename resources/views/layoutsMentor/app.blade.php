@@ -242,26 +242,26 @@
                             <div>Presentasi</div>
                         </a>
                         <ul class="menu-sub">
-                            <li class="menu-item ">
-                                <a href="{{ route('siswa-presentasi.mentor') }}"
-                                    class="menu-link">
+                            <li
+                                class="menu-item {{ (request()->routeIs('siswa-presentasi.mentor') ? 'active' : '' || request()->routeIs('detail-presentasi.mentor')) ? 'active' : '' }}">
+                                <a href="{{ route('siswa-presentasi.mentor') }}" class="menu-link ">
                                     <div>Siswa Presentasi</div>
                                 </a>
                             </li>
-                            <li class="menu-item ">
-                                <a href="{{ route('histori-presentasi.mentor') }}"
-                                    class="menu-link">
+                            <li
+                                class="menu-item {{ request()->routeIs('histori-presentasi.mentor') ? 'active' : '' }}">
+                                <a href="{{ route('histori-presentasi.mentor') }}" class="menu-link">
                                     <div>Histori Presentasi</div>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li class="menu-item {{ request()->routeIs('presentasi.mentor') ? 'active' : '' }}">
+                    {{-- <li class="menu-item {{ request()->routeIs('presentasi.mentor') ? 'active' : '' }}">
                         <a href="{{ route('presentasi.mentor') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-presentation"></i>
                             <div>Presentasi</div>
                         </a>
-                    </li>
+                    </li> --}}
                     <li
                         class="menu-item {{ request()->routeIs('tim') || request()->routeIs('cari_tim') || request()->routeIs('tim.filter') ? 'active' : '' }}">
                         <a href="{{ route('tim') }}" class="menu-link">

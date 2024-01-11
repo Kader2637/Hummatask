@@ -35,161 +35,188 @@
                                 margin-right: 10px;
                             }
 
-                            @media screen and (max-width: 460px){
-                                .card-status-tugas{
+                            @media screen and (max-width: 460px) {
+                                .card-status-tugas {
                                     width: 100% !important;
                                 }
 
-                                #tugas_baru .card{
+                                #tugas_baru .card {
                                     width: 100% !important;
                                 }
-                                #dikerjakan .card{
+
+                                #dikerjakan .card {
                                     width: 100% !important;
                                 }
-                                #revisi .card{
+
+                                #revisi .card {
                                     width: 100% !important;
                                 }
-                                #selesai .card{
+
+                                #selesai .card {
                                     width: 100% !important;
                                 }
                             }
 
 
-                            .btn-tambah-labels  {
+                            .btn-tambah-labels {
                                 height: 40px;
                                 width: 40px;
                                 border-radius: 100%;
                             }
-
                         </style>
                     @endsection
 
                     @section('content')
-
-
-                    <div class="modal fade" id="modalEditLabel" tabindex="-1" style="display: none;" aria-hidden="true">
-                        <div class="modal-dialog modal-md" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel2ty">Edit Labels</h5>
-                              <button type="button" onclick="closeModalEditLabel()" class="btn-close" ></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="col-12">
-                                    <div class="d-flex" style="margin-top: 10px;background-color: gray;width: 100%;height: 60px;border-radius: 10px;margin-bottom: 10px;">
-                                        <span class="badge m-auto" id="edit-preview-label">
-                                            Label
-                                        </span>
+                        <div class="modal fade" id="modalEditLabel" tabindex="-1" style="display: none;"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-md" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel2ty">Edit Labels</h5>
+                                        <button type="button" onclick="closeModalEditLabel()" class="btn-close"></button>
                                     </div>
-                                    <form id="formEditLabel" method="post">
-                                        @csrf
-                                        @method("PUT")
-                                        <div class="row">
-                                            <div class="col mb-3">
-                                            <label for="Text" class="form-label">Text</label>
-                                            <input type="text" id="editText" class="form-control" value="Label" placeholder="Enter text">
-                                            </div>
-                                        </div>
-                                        <div class="row g-2">
-                                            <div class="mb-3 col-6">
-                                            <label for="background-color-input" class="col-md-2 col-form-label">Background</label>
-                                            <div class="col-md-10">
-                                                <input class="form-control" type="color" value="#666EE8" id="edit-background-color-input">
-                                            </div>
-                                            </div>
-                                            <div class="mb-3 col">
-                                            <label for="text-color-input" class="col-md-2 col-form-label">Text</label>
-                                            <div class="col-md-10">
-                                                <input class="form-control" type="color" value="#FFFFFF" id="edit-text-color-input">
-                                            </div>
-                                            </div>
-                                        </div>
-                                        <button type="button" class="btn btn-edit-submit-tambah-label btn-primary waves-effect waves-light w-100">Save changes</button>
-                                    </form>
-                                </div>
-                            </div>
-
-                          </div>
-                        </div>
-                    </div>
-
-
-                    <div class="modal fade" id="tambahLabel" tabindex="-1" style="display: none;" aria-hidden="true">
-                        <div class="modal-dialog modal-md" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel2">Labels</h5>
-                              <button type="button" class="btn-close tutup-label" data-bs-dismiss="tambahLabel"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="col-12">
-                                    <div class="nav-align-top nav-tabs-shadow mb-4">
-                                      <ul class="nav nav-tabs nav-fill" role="tablist">
-                                        <li class="nav-item" role="presentation">
-                                          <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-justified-home" aria-controls="navs-justified-home" aria-selected="true">Tambah</button>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                          <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-justified-profile" aria-controls="navs-justified-profile" aria-selected="false" tabindex="-1">Daftar</button>
-                                        </li>
-                                      </ul>
-                                      <div class="tab-content" style="box-shadow: 0px 0px 0px">
-                                        <div class="tab-pane fade active show" id="navs-justified-home" role="tabpanel">
-                                            <div class="d-flex" style="margin-top: 10px;background-color: gray;width: 100%;height: 60px;border-radius: 10px;margin-bottom: 10px;">
-                                                <span class="badge m-auto" id="preview-label">
+                                    <div class="modal-body">
+                                        <div class="col-12">
+                                            <div class="d-flex"
+                                                style="margin-top: 10px;background-color: gray;width: 100%;height: 60px;border-radius: 10px;margin-bottom: 10px;">
+                                                <span class="badge m-auto" id="edit-preview-label">
                                                     Label
                                                 </span>
                                             </div>
-                                            <form id="formTambahLabel" method="post">
+                                            <form id="formEditLabel" method="post">
                                                 @csrf
+                                                @method('PUT')
                                                 <div class="row">
                                                     <div class="col mb-3">
-                                                    <label for="Text" class="form-label">Text</label>
-                                                    <input type="text" id="Text" class="form-control" value="Label" placeholder="Enter text">
+                                                        <label for="Text" class="form-label">Text</label>
+                                                        <input type="text" id="editText" class="form-control"
+                                                            value="Label" placeholder="Enter text">
                                                     </div>
                                                 </div>
                                                 <div class="row g-2">
                                                     <div class="mb-3 col-6">
-                                                    <label for="background-color-input" class="col-md-2 col-form-label">Background</label>
-                                                    <div class="col-md-10">
-                                                        <input class="form-control" type="color" value="#666EE8" id="background-color-input">
-                                                    </div>
+                                                        <label for="background-color-input"
+                                                            class="col-md-2 col-form-label">Background</label>
+                                                        <div class="col-md-10">
+                                                            <input class="form-control" type="color" value="#666EE8"
+                                                                id="edit-background-color-input">
+                                                        </div>
                                                     </div>
                                                     <div class="mb-3 col">
-                                                    <label for="text-color-input" class="col-md-2 col-form-label">Text</label>
-                                                    <div class="col-md-10">
-                                                        <input class="form-control" type="color" value="#FFFFFF" id="text-color-input">
-                                                    </div>
+                                                        <label for="text-color-input"
+                                                            class="col-md-2 col-form-label">Text</label>
+                                                        <div class="col-md-10">
+                                                            <input class="form-control" type="color" value="#FFFFFF"
+                                                                id="edit-text-color-input">
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <button type="button" class="btn btn-submit-tambah-label btn-primary waves-effect waves-light w-100">Save changes</button>
+                                                <button type="button"
+                                                    class="btn btn-edit-submit-tambah-label btn-primary waves-effect waves-light w-100">Save
+                                                    changes</button>
                                             </form>
                                         </div>
-                                        <div class="tab-pane fade" id="navs-justified-profile" role="tabpanel">
-                                            <div class="card">
-                                                <div class="card-datatable table-responsive p-4">
-                                                    <table id="daftarLabels" class="dt-responsive table">
-                                                        <thead>
-                                                            <tr>
-                                                                <th scope="col">NO</th>
-                                                                <th scope="col">LABEL</th>
-                                                                <th scope="col">AKSI</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
+                                    </div>
 
-                                                        </tbody>
-                                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="modal fade" id="tambahLabel" tabindex="-1" style="display: none;" aria-hidden="true">
+                            <div class="modal-dialog modal-md" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel2">Labels</h5>
+                                        <button type="button" class="btn-close tutup-label"
+                                            data-bs-dismiss="tambahLabel"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="col-12">
+                                            <div class="nav-align-top nav-tabs-shadow mb-4">
+                                                <ul class="nav nav-tabs nav-fill" role="tablist">
+                                                    <li class="nav-item" role="presentation">
+                                                        <button type="button" class="nav-link active" role="tab"
+                                                            data-bs-toggle="tab" data-bs-target="#navs-justified-home"
+                                                            aria-controls="navs-justified-home"
+                                                            aria-selected="true">Tambah</button>
+                                                    </li>
+                                                    <li class="nav-item" role="presentation">
+                                                        <button type="button" class="nav-link" role="tab"
+                                                            data-bs-toggle="tab" data-bs-target="#navs-justified-profile"
+                                                            aria-controls="navs-justified-profile" aria-selected="false"
+                                                            tabindex="-1">Daftar</button>
+                                                    </li>
+                                                </ul>
+                                                <div class="tab-content" style="box-shadow: 0px 0px 0px">
+                                                    <div class="tab-pane fade active show" id="navs-justified-home"
+                                                        role="tabpanel">
+                                                        <div class="d-flex"
+                                                            style="margin-top: 10px;background-color: gray;width: 100%;height: 60px;border-radius: 10px;margin-bottom: 10px;">
+                                                            <span class="badge m-auto" id="preview-label">
+                                                                Label
+                                                            </span>
+                                                        </div>
+                                                        <form id="formTambahLabel" method="post">
+                                                            @csrf
+                                                            <div class="row">
+                                                                <div class="col mb-3">
+                                                                    <label for="Text" class="form-label">Text</label>
+                                                                    <input type="text" id="Text"
+                                                                        class="form-control" value="Label"
+                                                                        placeholder="Enter text">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row g-2">
+                                                                <div class="mb-3 col-6">
+                                                                    <label for="background-color-input"
+                                                                        class="col-md-2 col-form-label">Background</label>
+                                                                    <div class="col-md-10">
+                                                                        <input class="form-control" type="color"
+                                                                            value="#666EE8" id="background-color-input">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-3 col">
+                                                                    <label for="text-color-input"
+                                                                        class="col-md-2 col-form-label">Text</label>
+                                                                    <div class="col-md-10">
+                                                                        <input class="form-control" type="color"
+                                                                            value="#FFFFFF" id="text-color-input">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <button type="button"
+                                                                class="btn btn-submit-tambah-label btn-primary waves-effect waves-light w-100">Save
+                                                                changes</button>
+                                                        </form>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="navs-justified-profile"
+                                                        role="tabpanel">
+                                                        <div class="card">
+                                                            <div class="card-datatable table-responsive p-4">
+                                                                <table id="daftarLabels" class="dt-responsive table">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th scope="col">NO</th>
+                                                                            <th scope="col">LABEL</th>
+                                                                            <th scope="col">AKSI</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                      </div>
                                     </div>
-                                  </div>
-                            </div>
 
-                          </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
 
 
@@ -197,13 +224,15 @@
                         <div style="height: 80vh" class="container-fluid mt-2">
                             <div class="d-flex mt-3 mb-0  row hide-sroll" style="height: 83vh">
                                 <div style="" class="col-lg-3 col-md-6 col-12 py-2   ">
-                                    <div style="max-height: 80vh; overflow:auto; overflow-x:hidden;background-color: #edeaea" class="p-2  rounded">
+                                    <div style="max-height: 80vh; overflow:auto; overflow-x:hidden;background-color: #edeaea"
+                                        class="p-2  rounded">
                                         <div style="width:100%" class="card card-status-tugas">
                                             <div class="card-body p-2 py-2 row justify-content-between">
                                                 <span class="col-8">Tugas baru</span>
                                                 <div class="col-4 d-flex justify-content-end cursor-pointer">
-                                                    <svg onclick="showForm('tambahTugas')" xmlns="http://www.w3.org/2000/svg"
-                                                        width="20" height="20" viewBox="0 0 1024 1024">
+                                                    <svg onclick="showForm('tambahTugas')"
+                                                        xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                        viewBox="0 0 1024 1024">
                                                         <path fill="currentColor"
                                                             d="M352 480h320a32 32 0 1 1 0 64H352a32 32 0 0 1 0-64z" />
                                                         <path fill="currentColor"
@@ -237,7 +266,8 @@
                                     </div>
                                 </div>
                                 <div style="" class="col-lg-3 col-md-6 col-12 py-2">
-                                    <div style="max-height: 80vh; overflow:auto; overflow-x:hidden;background-color: #edeaea" class="p-2  rounded">
+                                    <div style="max-height: 80vh; overflow:auto; overflow-x:hidden;background-color: #edeaea"
+                                        class="p-2  rounded">
                                         <div style="width:100%" class="card card-status-tugas">
                                             <div class="card-body p-2 py-2 row">
                                                 <div class="col-8 d-flex align-items-center position-sticky top-0">
@@ -254,7 +284,8 @@
                                     </div>
                                 </div>
                                 <div style="" class="col-lg-3 col-md-6 col-12 py-2">
-                                    <div style="max-height: 80vh; overflow:auto; overflow-x:hidden;background-color: #edeaea" class="p-2  rounded">
+                                    <div style="max-height: 80vh; overflow:auto; overflow-x:hidden;background-color: #edeaea"
+                                        class="p-2  rounded">
                                         <div style="width:100%" class="card card-status-tugas">
 
                                             <div class="card-body p-2 py-2 row">
@@ -272,7 +303,8 @@
                                     </div>
                                 </div>
                                 <div style="" class="col-lg-3 col-md-6 col-12 py-2    ">
-                                    <div style="max-height: 80vh; overflow:auto; overflow-x:hidden;background-color: #edeaea" class="p-2  rounded">
+                                    <div style="max-height: 80vh; overflow:auto; overflow-x:hidden;background-color: #edeaea"
+                                        class="p-2  rounded">
                                         <div style="width:100%" class="card card-status-tugas">
                                             <div class="card-body p-2 py-2 row">
                                                 <div class="col-8 d-flex align-items-center position-sticky top-0">
@@ -297,25 +329,28 @@
                         <div class="offcanvas offcanvas-start modal fade position-fixed top-0 start-0" id="editTugasBar">
                             <div class="offcanvas-header border-bottom">
                                 <h5 class="offcanvas-title">Edit Task</h5>
-                                <button onclick="closeCanvasEditTugas()" type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                                    aria-label="Close"></button>
+                                <button onclick="closeCanvasEditTugas()" type="button" class="btn-close"
+                                    data-bs-dismiss="offcanvas" aria-label="Close"></button>
                             </div>
                             <div class="offcanvas-body">
                                 <ul class="nav nav-tabs tabs-line">
                                     <li class="nav-item col-4">
-                                        <button onclick="tutupKomentar()" class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-update">
+                                        <button onclick="tutupKomentar()" class="nav-link active" data-bs-toggle="tab"
+                                            data-bs-target="#tab-update">
                                             <i class="ti ti-edit me-2"></i>
                                             <span class="align-middle">Edit</span>
                                         </button>
                                     </li>
                                     <li class="nav-item col-4">
-                                        <button onclick="bukaKomentar()" class="nav-link" data-bs-toggle="tab" data-bs-target="#komentar">
+                                        <button onclick="bukaKomentar()" class="nav-link" data-bs-toggle="tab"
+                                            data-bs-target="#komentar">
                                             <i class="ti ti-message-dots ti-xs me-1"></i>
                                             <span class="align-middle">Komentar</span>
                                         </button>
                                     </li>
                                     <li class="nav-item col-4">
-                                        <button onclick="tutupKomentar()" class="nav-link" data-bs-toggle="tab" data-bs-target="#aktifitas">
+                                        <button onclick="tutupKomentar()" class="nav-link" data-bs-toggle="tab"
+                                            data-bs-target="#aktifitas">
                                             <i class="ti ti-message-dots ti-xs me-1"></i>
                                             <span class="align-middle">Aktifitas</span>
                                         </button>
@@ -336,7 +371,7 @@
                                                 <label class="form-label" for="due-date">Deadline</label>
 
                                                 <input type="text" class="form-control" placeholder="YYYY-MM-DD"
-                                        name="deadline" id="due-date" />
+                                                    name="deadline" id="due-date" />
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="newStatus"> Status</label>
@@ -372,12 +407,14 @@
                                                         </div>
                                                         <select name="labels[]" id="labels"
                                                             class="select2 form-select select2-hidden-accessible"
-                                                            multiple="" data-select2-id="labels"
-                                                            tabindex="-1" aria-hidden="true">
+                                                            multiple="" data-select2-id="labels" tabindex="-1"
+                                                            aria-hidden="true">
 
                                                         </select>
                                                     </div>
-                                                    <button data-bs-toggle="modal" data-bs-target="#tambahLabel" type="button" class="btn-tambah-labels btn btn-primary text-white d-flex justify-content-center align-items-center rounded-circle bg-primary">
+                                                    <button data-bs-toggle="modal" data-bs-target="#tambahLabel"
+                                                        type="button"
+                                                        class="btn-tambah-labels btn btn-primary text-white d-flex justify-content-center align-items-center rounded-circle bg-primary">
                                                         +
                                                     </button>
                                                 </div>
@@ -412,57 +449,57 @@
                                             </div>
                                         </form>
                                     </div>
-                                <div class="tab-pane fade" id="komentar" role="tabpanel">
+                                    <div class="tab-pane fade" id="komentar" role="tabpanel">
 
-                                    <div class="list-komentar mt-3" style="margin-bottom: 80px">
+                                        <div class="list-komentar mt-3" style="margin-bottom: 80px">
 
-                                    </div>
+                                        </div>
 
-                                    <div class="form-komentar d-none" style="width: 100%;">
-                                        <div class="row w-100 justify-content-center d-flex mb-3">
-                                            <div class="col-11">
-                                                <form id="tambahKomentar" method="post">
-                                                    @csrf
-                                                    <label class="form-label"
-                                                        for="bootstrap-maxlength-example2">Komentar</label>
-                                                    <div
-                                                        class="w-100 d-flex justify-content-between align-items-center gap-2">
-                                                        <textarea style="resize: none" id="bootstrap-maxlength-example2"
-                                                            class="form-control bootstrap-maxlength-example inp-tambah-komentar" rows="1" maxlength=""
-                                                            style="height: 43px;"></textarea>
-                                                        <button type="submit" class="btn btn-primary">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                height="20" viewBox="0 0 24 24">
-                                                                <g fill="none">
-                                                                    <path
-                                                                        d="M24 0v24H0V0h24ZM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018Zm.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022Zm-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01l-.184-.092Z" />
+                                        <div class="form-komentar d-none" style="width: 100%;">
+                                            <div class="row w-100 justify-content-center d-flex mb-3">
+                                                <div class="col-11">
+                                                    <form id="tambahKomentar" method="post">
+                                                        @csrf
+                                                        <label class="form-label"
+                                                            for="bootstrap-maxlength-example2">Komentar</label>
+                                                        <div
+                                                            class="w-100 d-flex justify-content-between align-items-center gap-2">
+                                                            <textarea style="resize: none" id="bootstrap-maxlength-example2"
+                                                                class="form-control bootstrap-maxlength-example inp-tambah-komentar" rows="1" maxlength=""
+                                                                style="height: 43px;"></textarea>
+                                                            <button type="submit" class="btn btn-primary">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                                    height="20" viewBox="0 0 24 24">
+                                                                    <g fill="none">
+                                                                        <path
+                                                                            d="M24 0v24H0V0h24ZM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018Zm.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022Zm-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01l-.184-.092Z" />
+                                                                        <path fill="currentColor"
+                                                                            d="m21.433 4.861l-6 15.5a1 1 0 0 1-1.624.362l-3.382-3.235l-2.074 2.073a.5.5 0 0 1-.853-.354v-4.519L2.309 9.723a1 1 0 0 1 .442-1.691l17.5-4.5a1 1 0 0 1 1.181 1.329ZM19 6.001L8.032 13.152l1.735 1.66L19 6Z" />
+                                                                    </g>
+                                                                </svg>
+                                                            </button>
+                                                            <button type="button" onclick="cancelEdit()"
+                                                                class="btn btn-danger btn-edit-komentar d-none">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                                    height="20" viewBox="0 0 24 24">
                                                                     <path fill="currentColor"
-                                                                        d="m21.433 4.861l-6 15.5a1 1 0 0 1-1.624.362l-3.382-3.235l-2.074 2.073a.5.5 0 0 1-.853-.354v-4.519L2.309 9.723a1 1 0 0 1 .442-1.691l17.5-4.5a1 1 0 0 1 1.181 1.329ZM19 6.001L8.032 13.152l1.735 1.66L19 6Z" />
-                                                                </g>
-                                                            </svg>
-                                                        </button>
-                                                        <button type="button" onclick="cancelEdit()"
-                                                            class="btn btn-danger btn-edit-komentar d-none">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                height="20" viewBox="0 0 24 24">
-                                                                <path fill="currentColor"
-                                                                    d="M6.4 19L5 17.6l5.6-5.6L5 6.4L6.4 5l5.6 5.6L17.6 5L19 6.4L13.4 12l5.6 5.6l-1.4 1.4l-5.6-5.6L6.4 19Z" />
-                                                            </svg>
-                                                        </button>
-                                                    </div>
-                                                </form>
+                                                                        d="M6.4 19L5 17.6l5.6-5.6L5 6.4L6.4 5l5.6 5.6L17.6 5L19 6.4L13.4 12l5.6 5.6l-1.4 1.4l-5.6-5.6L6.4 19Z" />
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="tab-pane fade" id="aktifitas" role="tabpanel">
-                                    <div class="row">
-                                        <div class="col-12 tab-aktifitas mb-3">
+                                    <div class="tab-pane fade" id="aktifitas" role="tabpanel">
+                                        <div class="row">
+                                            <div class="col-12 tab-aktifitas mb-3">
 
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                 </div>
 
                                 <!-- Activities -->
@@ -522,65 +559,63 @@
                             // let dataEmpty
 
                             const handleAktifitas = (aktifitas, pelaku, status) => {
-    console.log(aktifitas);
-    const jadwal = formatDate(aktifitas.deadline)
+                                console.log(aktifitas);
+                                const jadwal = formatDate(aktifitas.deadline)
 
+                                const avatar = aktifitas.user.avatar === null ? "assets/img/avatars/1.png" : "storage/" + aktifitas.user
+                                    .avatar;
 
+                                const labels = aktifitas.aktifitas_data_label;
+                                let elementLabel = " "
 
-    const avatar = aktifitas.user.avatar === null ? "assets/img/avatars/1.png" : "storage/" + aktifitas.user.avatar;
+                                $.each(labels, (index, data) => {
+                                    let dataLabel = data.label;
+                                    elementLabel += handleLabel(dataLabel.text, dataLabel.warna_text, dataLabel.warna_bg)
+                                })
 
-
-
-    const labels = aktifitas.aktifitas_data_label;
-    let elementLabel = " "
-
-    $.each(labels , (index,data)=>{
-        let dataLabel = data.label;
-        elementLabel += handleLabel(dataLabel.text,dataLabel.warna_text,dataLabel.warna_bg)
-    })
-
-    let tugaskan = ""
-    const ditugaskan = aktifitas.aktifitas_data_user;
-    $.each(ditugaskan,(index,data)=>{
-        const dataUser = data.user;
-        const avatar = dataUser.avatar === null ? "assets/img/avatars/1.png" : "storage/" + dataUser.avatar;
-        tugaskan +=
-        `
+                                let tugaskan = ""
+                                const ditugaskan = aktifitas.aktifitas_data_user;
+                                $.each(ditugaskan, (index, data) => {
+                                    const dataUser = data.user;
+                                    const avatar = dataUser.avatar === null ? "assets/img/avatars/1.png" : "storage/" + dataUser
+                                        .avatar;
+                                    tugaskan +=
+                                        `
         <div class="avatar avatar-xs avatar-aktifitas-${index}" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="${dataUser.username}" data-bs-original-title="${dataUser.username}">
             <img style="object-fit: cover;" src="{{ asset('${avatar}') }}" alt="Avatar" class="rounded-circle pull-up">
         </div>
 
         `
 
-        $(`.avatar-aktifitas-${index}`).tooltip();
-    })
+                                    $(`.avatar-aktifitas-${index}`).tooltip();
+                                })
 
-    const elementPrioritas = prioritas(aktifitas.prioritas)
+                                const elementPrioritas = prioritas(aktifitas.prioritas)
 
 
-    let updatedTimestamp = new Date(aktifitas.created_at);
+                                let updatedTimestamp = new Date(aktifitas.created_at);
 
-let currentTimestamp = new Date();
+                                let currentTimestamp = new Date();
 
-let timeDifference = currentTimestamp - updatedTimestamp;
+                                let timeDifference = currentTimestamp - updatedTimestamp;
 
-let minutesAgo = Math.floor(timeDifference / (1000 * 60));
-let hoursAgo = Math.floor(timeDifference / (1000 * 60 * 60));
-let daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+                                let minutesAgo = Math.floor(timeDifference / (1000 * 60));
+                                let hoursAgo = Math.floor(timeDifference / (1000 * 60 * 60));
+                                let daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
-let waktu;
+                                let waktu;
 
-if (minutesAgo < 60) {
-   waktu = `${minutesAgo} menit yang lalu`;
-} else if (hoursAgo < 24) {
-   waktu = `${hoursAgo} jam yang lalu`;
-} else {
-   waktu = `${daysAgo} hari yang lalu`;
-}
+                                if (minutesAgo < 60) {
+                                    waktu = `${minutesAgo} menit yang lalu`;
+                                } else if (hoursAgo < 24) {
+                                    waktu = `${hoursAgo} jam yang lalu`;
+                                } else {
+                                    waktu = `${daysAgo} hari yang lalu`;
+                                }
 
-    // console.log(tug);
-    if (status === "create") {
-        return `
+                                // console.log(tug);
+                                if (status === "create") {
+                                    return `
             <div class="media d-flex align-items-start my-5">
                 <div class="avatar me-2 flex-shrink-0 mt-1">
                     <img style="object-fit: cover" src="{{ asset('${avatar}') }}" alt="Avatar" class="rounded-circle">
@@ -593,8 +628,8 @@ if (minutesAgo < 60) {
                 </div>
             </div>
         `;
-    } else {
-        return `
+                                } else {
+                                    return `
         <div class="media mt-3 d-flex align-items-start">
                                                 <div class="avatar me-2 flex-shrink-0 mt-1">
                                                 <img src="{{ asset('${avatar}') }}" alt="Avatar" class="rounded-circle">
@@ -635,8 +670,8 @@ if (minutesAgo < 60) {
         `;
 
 
-    }
-};
+                                }
+                            };
 
 
 
@@ -646,131 +681,142 @@ if (minutesAgo < 60) {
                             var editTextColorInput = $('#edit-text-color-input');
 
 
-                            $(".btn-submit-tambah-label").click(function () {
+                            $(".btn-submit-tambah-label").click(function() {
                                 var text = $('#Text').val();
                                 var warna_bg = $('#background-color-input').val();
                                 var warna_text = $('#text-color-input').val();
                                 const tim_id = "{{ $tim->id }}";
 
-                                axios.post("{{ route('label.create') }}",{text,warna_bg,warna_text,tim_id})
-                                .then((res) => {
-                                    getLabels()
-                                    var text = $('#Text').val("Label");
-                                    var warna_bg = $('#background-color-input').val("#666EE8");
-                                    var warna_text = $('#text-color-input').val("#FFFFFF");
-                                    updatePreview()
-                                    Swal.fire({
-                                        icon: "success",
-                                        title : "Berhasil!",
-                                        text: res.data.success,
-                                        showConfirmButton : false,
-                                        timer : 2500,
+                                axios.post("{{ route('label.create') }}", {
+                                        text,
+                                        warna_bg,
+                                        warna_text,
+                                        tim_id
                                     })
-                                })
-                                .catch((err) => {
-                                    let data = err.response.data.errors;
-                                            let message = "";
-
-                                            // Menggabungkan pesan-pesan validasi menjadi satu pesan
-                                            $.each(data, function(key, value) {
-                                                message += value + "\n";
-                                            });
-
-                                    Swal.fire({
-                                        icon: "error",
-                                        title : "Error!",
-                                        text: ( typeof err.response.data.message === "undefined" ) ? err : message,
-                                        showConfirmButton : false,
-                                        timer : 2500,
+                                    .then((res) => {
+                                        getLabels()
+                                        var text = $('#Text').val("Label");
+                                        var warna_bg = $('#background-color-input').val("#666EE8");
+                                        var warna_text = $('#text-color-input').val("#FFFFFF");
+                                        updatePreview()
+                                        Swal.fire({
+                                            icon: "success",
+                                            title: "Berhasil!",
+                                            text: res.data.success,
+                                            showConfirmButton: false,
+                                            timer: 2500,
+                                        })
                                     })
-                                })
-                             })
+                                    .catch((err) => {
+                                        let data = err.response.data.errors;
+                                        let message = "";
+
+                                        // Menggabungkan pesan-pesan validasi menjadi satu pesan
+                                        $.each(data, function(key, value) {
+                                            message += value + "\n";
+                                        });
+
+                                        Swal.fire({
+                                            icon: "error",
+                                            title: "Error!",
+                                            text: (typeof err.response.data.message === "undefined") ? err : message,
+                                            showConfirmButton: false,
+                                            timer: 2500,
+                                        })
+                                    })
+                            })
 
                             //  editlabel
 
-                            $(".btn-edit-submit-tambah-label").click(function () {
+                            $(".btn-edit-submit-tambah-label").click(function() {
                                 let text = $('#editText').val();
                                 let warna_bg = $('#edit-background-color-input').val();
                                 let warna_text = $('#edit-text-color-input').val();
                                 const tim_id = "{{ $tim->id }}";
                                 const label_id = $(this).data('label_id')
 
-                                axios.put("{{ route('label.edit') }}",{text,warna_bg,warna_text,tim_id,label_id})
-                                .then((res) => {
-                                    getLabels()
-                                    var text = $('#Text').val("Label");
-                                    var warna_bg = $('#background-color-input').val("#666EE8");
-                                    var warna_text = $('#text-color-input').val("#FFFFFF");
-                                    updatePreview()
-                                    closeModalEditLabel()
-                                    Swal.fire({
-                                        icon: "success",
-                                        title : "Berhasil!",
-                                        text: res.data.success,
-                                        showConfirmButton : false,
-                                        timer : 2500,
+                                axios.put("{{ route('label.edit') }}", {
+                                        text,
+                                        warna_bg,
+                                        warna_text,
+                                        tim_id,
+                                        label_id
                                     })
-                                })
-                                .catch((err) => {
-                                    console.log(err);
-                                    Swal.fire({
-                                        icon: "error",
-                                        title : "Error!",
-                                        text: ( typeof err.response.data.message === "undefined" ) ? err : err.response.data.message,
-                                        showConfirmButton : false,
-                                        timer : 2500,
+                                    .then((res) => {
+                                        getLabels()
+                                        var text = $('#Text').val("Label");
+                                        var warna_bg = $('#background-color-input').val("#666EE8");
+                                        var warna_text = $('#text-color-input').val("#FFFFFF");
+                                        updatePreview()
+                                        closeModalEditLabel()
+                                        Swal.fire({
+                                            icon: "success",
+                                            title: "Berhasil!",
+                                            text: res.data.success,
+                                            showConfirmButton: false,
+                                            timer: 2500,
+                                        })
                                     })
-                                })
-                             })
+                                    .catch((err) => {
+                                        console.log(err);
+                                        Swal.fire({
+                                            icon: "error",
+                                            title: "Error!",
+                                            text: (typeof err.response.data.message === "undefined") ? err : err.response
+                                                .data.message,
+                                            showConfirmButton: false,
+                                            timer: 2500,
+                                        })
+                                    })
+                            })
 
 
                             // Fungsi untuk mengupdate tampilan preview
                             function editUpdatePreview() {
-                            let text = editInputText.val();
-                            let backgroundColor = editBackgroundColorInput.val();
-                            let textColor = editTextColorInput.val();
+                                let text = editInputText.val();
+                                let backgroundColor = editBackgroundColorInput.val();
+                                let textColor = editTextColorInput.val();
 
-                            editPreviewLabel.text(text);
-                            editPreviewLabel.css('background-color', backgroundColor);
-                            editPreviewLabel.css('color', textColor);
+                                editPreviewLabel.text(text);
+                                editPreviewLabel.css('background-color', backgroundColor);
+                                editPreviewLabel.css('color', textColor);
                             }
 
                             $('#editText, #edit-background-color-input, #edit-text-color-input').on('input', function() {
-                            let text = $('#editText').val();
-                            let backgroundColor = $('#edit-background-color-input').val();
-                            let textColor = $('#edit-text-color-input').val();
+                                let text = $('#editText').val();
+                                let backgroundColor = $('#edit-background-color-input').val();
+                                let textColor = $('#edit-text-color-input').val();
 
-                            // Mengupdate teks, warna latar belakang, dan warna teks pada live preview
-                            $('#edit-preview-label').text(text);
-                            $('#edit-preview-label').css('background-color', backgroundColor);
-                            $('#edit-preview-label').css('color', textColor);
+                                // Mengupdate teks, warna latar belakang, dan warna teks pada live preview
+                                $('#edit-preview-label').text(text);
+                                $('#edit-preview-label').css('background-color', backgroundColor);
+                                $('#edit-preview-label').css('color', textColor);
                             });
 
 
-                            function editLabel(label_id,label_text,warna_bg,warna_text){
-                             console.log(label_id);
-                             $(".btn-edit-submit-tambah-label").removeAttr('data-label_id');
+                            function editLabel(label_id, label_text, warna_bg, warna_text) {
+                                console.log(label_id);
+                                $(".btn-edit-submit-tambah-label").removeAttr('data-label_id');
                                 $("#tambahLabel").hide()
                                 $("#editTugasBar").hide()
-                                $("#modalEditLabel").addClass("show").css("display","block")
+                                $("#modalEditLabel").addClass("show").css("display", "block")
 
                                 $("#editText").val(label_text);
                                 $("#edit-background-color-input").val(warna_bg);
                                 $("#edit-text-color-input").val(warna_text);
 
-                                $(".btn-edit-submit-tambah-label").attr('data-label_id',label_id);
+                                $(".btn-edit-submit-tambah-label").attr('data-label_id', label_id);
                                 editUpdatePreview()
                             }
 
-                            function closeModalEditLabel()
-                            {
+                            function closeModalEditLabel() {
                                 $("#tambahLabel").show()
                                 // $("#editTugasBar").hide()
-                                $("#modalEditLabel").removeClass("show").css("display","none")
+                                $("#modalEditLabel").removeClass("show").css("display", "none")
                             }
 
 
-                            function deleteLabel(label_id){
+                            function deleteLabel(label_id) {
                                 Swal.fire({
                                     title: "Kamu Yakin?",
                                     text: "Data yang kamu hapus tidak bisa dikembalikan",
@@ -779,47 +825,48 @@ if (minutesAgo < 60) {
                                     confirmButtonColor: "#3085d6",
                                     cancelButtonColor: "#d33",
                                     confirmButtonText: "Hapus!"
-                                    }).then((result) => {
+                                }).then((result) => {
 
 
                                     if (result.isConfirmed) {
 
 
-                                        axios.delete("delete-label/"+label_id)
-                                .then((res) => {
-                                    getLabels()
-                                    $(".tr-label-"+label_id).addClass("d-none");
-                                })
-                                .catch((err) => {
-                                    console.log(err);
-                                })
+                                        axios.delete("delete-label/" + label_id)
+                                            .then((res) => {
+                                                getLabels()
+                                                $(".tr-label-" + label_id).addClass("d-none");
+                                            })
+                                            .catch((err) => {
+                                                console.log(err);
+                                            })
 
                                         Swal.fire({
-                                        title: "Deleted!",
-                                        text: "Datamu berhasil dihapus",
-                                        icon: "success"
+                                            title: "Deleted!",
+                                            text: "Datamu berhasil dihapus",
+                                            icon: "success"
                                         });
                                     }
 
-                                    });
+                                });
                             }
 
 
 
                             function getLabels() {
-  const tim_id = "{{ $tim->id }}";
-  axios
-    .get("ambil-labels/" + tim_id)
-    .then((res) => {
-      // Menghapus isi tabel sebelum menambahkan data baru
-      $("#daftarLabels").DataTable().clear().destroy();
-      $("#daftarLabels tbody").empty();
+                                const tim_id = "{{ $tim->id }}";
+                                axios
+                                    .get("ambil-labels/" + tim_id)
+                                    .then((res) => {
+                                        // Menghapus isi tabel sebelum menambahkan data baru
+                                        $("#daftarLabels").DataTable().clear().destroy();
+                                        $("#daftarLabels tbody").empty();
 
-      const data = res.data;
-      $.each(data, (index, item) => {
-        let label = `<span class="badge" style="background-color: ${item.warna_bg}; color: ${item.warna_text}">${item.text}</span>`;
+                                        const data = res.data;
+                                        $.each(data, (index, item) => {
+                                            let label =
+                                                `<span class="badge" style="background-color: ${item.warna_bg}; color: ${item.warna_text}">${item.text}</span>`;
 
-        let row = `
+                                            let row = `
         <tr class="tr-label-${item.id}">
             <td>${index + 1}</td>
             <td>
@@ -835,43 +882,43 @@ if (minutesAgo < 60) {
             </td>
         </tr>
         `;
-        $("#daftarLabels tbody").append(row);
-      });
+                                            $("#daftarLabels tbody").append(row);
+                                        });
 
-      // Inisialisasi DataTable
-      $("#daftarLabels").DataTable({
-        lengthMenu: [
-          [5, 10, 15, -1],
-          [5, 10, 15, "All"],
-        ],
-        pageLength: 5,
-        order: [],
-        ordering: false,
-        pagingType: "simple_numbers",
-        language: {
-          sProcessing: "Sedang memproses...",
-          sLengthMenu: "Tampilkan data _MENU_",
-          sZeroRecords: "Tidak ditemukan Data",
-          sInfo: "Tampil _START_ sampai _END_ dari _TOTAL_ data",
-          sInfoEmpty: " 0 sampai 0 dari 0 data",
-          sInfoFiltered: "(disaring dari _MAX_ data keseluruhan)",
-          sInfoPostFix: "",
-          sSearch: "Cari :",
-          sUrl: "",
-          oPaginate: {
-            sFirst: "Pertama",
-            sPrevious: "&#8592;",
-            sNext: "&#8594;",
-            sLast: "Terakhir",
-          },
-        },
-        dom: "lrtip",
-      });
-    })
-    .catch((err) => {
-    console.log(err);
-  });
-}
+                                        // Inisialisasi DataTable
+                                        $("#daftarLabels").DataTable({
+                                            lengthMenu: [
+                                                [5, 10, 15, -1],
+                                                [5, 10, 15, "All"],
+                                            ],
+                                            pageLength: 5,
+                                            order: [],
+                                            ordering: false,
+                                            pagingType: "simple_numbers",
+                                            language: {
+                                                sProcessing: "Sedang memproses...",
+                                                sLengthMenu: "Tampilkan data _MENU_",
+                                                sZeroRecords: "Tidak ditemukan Data",
+                                                sInfo: "Tampil _START_ sampai _END_ dari _TOTAL_ data",
+                                                sInfoEmpty: " 0 sampai 0 dari 0 data",
+                                                sInfoFiltered: "(disaring dari _MAX_ data keseluruhan)",
+                                                sInfoPostFix: "",
+                                                sSearch: "Cari :",
+                                                sUrl: "",
+                                                oPaginate: {
+                                                    sFirst: "Pertama",
+                                                    sPrevious: "&#8592;",
+                                                    sNext: "&#8594;",
+                                                    sLast: "Terakhir",
+                                                },
+                                            },
+                                            dom: "lrtip",
+                                        });
+                                    })
+                                    .catch((err) => {
+                                        console.log(err);
+                                    });
+                            }
 
 
 
@@ -921,37 +968,37 @@ if (minutesAgo < 60) {
 
                             // Fungsi untuk mengupdate tampilan preview
                             function updatePreview() {
-                            var text = inputText.val();
-                            var backgroundColor = backgroundColorInput.val();
-                            var textColor = textColorInput.val();
+                                var text = inputText.val();
+                                var backgroundColor = backgroundColorInput.val();
+                                var textColor = textColorInput.val();
 
-                            previewLabel.text(text);
-                            previewLabel.css('background-color', backgroundColor);
-                            previewLabel.css('color', textColor);
+                                previewLabel.text(text);
+                                previewLabel.css('background-color', backgroundColor);
+                                previewLabel.css('color', textColor);
                             }
 
 
                             $(document).ready(function() {
-                            // Mengupdate live preview saat input berubah
-                            $('#Text, #background-color-input, #text-color-input').on('input', function() {
-                            var text = $('#Text').val();
-                            var backgroundColor = $('#background-color-input').val();
-                            var textColor = $('#text-color-input').val();
+                                // Mengupdate live preview saat input berubah
+                                $('#Text, #background-color-input, #text-color-input').on('input', function() {
+                                    var text = $('#Text').val();
+                                    var backgroundColor = $('#background-color-input').val();
+                                    var textColor = $('#text-color-input').val();
 
-                            // Mengupdate teks, warna latar belakang, dan warna teks pada live preview
-                            $('#preview-label').text(text);
-                            $('#preview-label').css('background-color', backgroundColor);
-                            $('#preview-label').css('color', textColor);
+                                    // Mengupdate teks, warna latar belakang, dan warna teks pada live preview
+                                    $('#preview-label').text(text);
+                                    $('#preview-label').css('background-color', backgroundColor);
+                                    $('#preview-label').css('color', textColor);
+                                });
                             });
-                        });
 
 
-                            function bukaKomentar(){
+                            function bukaKomentar() {
                                 $(".form-komentar").removeClass("d-none")
                                 console.log("Buka Komentar");
                             }
 
-                            function tutupKomentar(){
+                            function tutupKomentar() {
                                 console.log("tutup Komentar");
                                 $(".form-komentar").addClass("d-none")
                             }
@@ -994,7 +1041,8 @@ if (minutesAgo < 60) {
                                             console.log(userTugaskan);
 
                                             userTugaskan.forEach(element => {
-                                                let avatar = element.avatar ? 'storage/' + element.avatar : 'assets/img/avatars/1.png';
+                                                let avatar = element.avatar ? 'storage/' + element.avatar :
+                                                    'assets/img/avatars/1.png';
                                                 if (element === null || element === undefined) {
                                                     tugaskan += "";
                                                 } else {
@@ -1018,18 +1066,18 @@ if (minutesAgo < 60) {
                                                 deadline = '-';
                                             }
 
-                                            let wordDeadline ;
-                                            if(deadline < 0){
+                                            let wordDeadline;
+                                            if (deadline < 0) {
 
                                                 wordDeadline = `${Math.abs(deadline)} hari terlewat`
 
-                                            }else if(deadline == '-'){
+                                            } else if (deadline == '-') {
 
                                                 wordDeadline = '-'
 
-                                            }else if(deadline == 0){
+                                            } else if (deadline == 0) {
                                                 wordDeadline = `hari ini`;
-                                            }else{
+                                            } else {
                                                 wordDeadline = `${deadline} hari lagi`
 
                                             }
@@ -1037,7 +1085,7 @@ if (minutesAgo < 60) {
                                             let elementPrioritas = prioritas(tugas.prioritas)
 
                                             let dropdownTugas =
-                                            `
+                                                `
                                             <div class="dropdown kanban-tasks-item-dropdown cursor-pointer">
                                                     <i class="ti ti-dots-vertical" id="kanban-tasks-item-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="kanban-tasks-item-dropdown" style="">
@@ -1048,21 +1096,21 @@ if (minutesAgo < 60) {
 
                                             `
 
-                                            if( res.data.status_keanggotaan !== 'active'){
+                                            if (res.data.status_keanggotaan !== 'active') {
                                                 dropdownTugas = ''
                                             }
 
                                             let labels = ""
-                                            $.each(tugas.label,(index,label)=>{
+                                            $.each(tugas.label, (index, label) => {
 
-                                                labels += handleLabel(label.text,label.warna_text,label.warna_bg);
+                                                labels += handleLabel(label.text, label.warna_text, label.warna_bg);
                                             })
 
                                             console.log(labels);
 
                                             const element = $(`<div>`)
                                                 .attr("id", "board-" + tugas.code)
-                                                .css("width","100%")
+                                                .css("width", "100%")
                                                 .addClass('col-12 p-2 mt-3 card')
                                                 .html(
                                                     `
@@ -1096,7 +1144,7 @@ if (minutesAgo < 60) {
                                             </div>
                         `
                                                 );
-                                                element.find('[data-bs-toggle="tooltip"]').tooltip();
+                                            element.find('[data-bs-toggle="tooltip"]').tooltip();
 
 
                                             if (tugas.status_tugas === "tugas_baru") {
@@ -1120,31 +1168,32 @@ if (minutesAgo < 60) {
                             const tommorow = new Date(today)
                             tommorow.setDate(today.getDate() + 1);
 
-                flatpickr("#due-date", {
-                    minDate: today,
-                    dateFormat: "Y-m-d",
-                });
+                            flatpickr("#due-date", {
+                                minDate: today,
+                                dateFormat: "Y-m-d",
+                            });
 
-            function openModal(){
-                $("#tambahLabel").show()
-                $("#editTugasBar").hide()
-                // $("#tambahLabel").css("display","block");
-                $("#tambahLabel").addClass("show");
+                            function openModal() {
+                                $("#tambahLabel").show()
+                                $("#editTugasBar").hide()
+                                // $("#tambahLabel").css("display","block");
+                                $("#tambahLabel").addClass("show");
 
-                updatePreview()
-                getLabels()
-            }
+                                updatePreview()
+                                getLabels()
+                            }
 
-            const modal = $(".modal")
+                            const modal = $(".modal")
 
                             $(".btn-tambah-labels").on('click', openModal)
-                              function closeCanvasEditTugas(){
+
+                            function closeCanvasEditTugas() {
                                 $("#editTugasBar").hide()
                                 $(".modal-backdrop").addClass("d-none");
-                              }
+                            }
 
 
-                            function bukaCanvasEditTugas(){
+                            function bukaCanvasEditTugas() {
                                 $("#tambahLabel").hide()
                                 $(".modal-backdrop").removeClass(".modal-backdrop")
                                 $("#editTugasBar").show();
@@ -1154,7 +1203,7 @@ if (minutesAgo < 60) {
                                 $("#tambahLabel").hide()
                                 // $(".modal-backdrop").removeClass(".modal-backdrop")
                                 $("#editTugasBar").show();
-                                });
+                            });
 
                             function editTugas(codeTugas) {
                                 bukaCanvasEditTugas()
@@ -1179,10 +1228,10 @@ if (minutesAgo < 60) {
 
 
                                         $(".tab-aktifitas").empty()
-                                        $.each(aktifitas,(index,data)=>{
+                                        $.each(aktifitas, (index, data) => {
 
                                             console.log(data.tugas);
-                                            const elements = handleAktifitas(data,data.aktifitas_data_user,data.status);
+                                            const elements = handleAktifitas(data, data.aktifitas_data_user, data.status);
                                             $(".tab-aktifitas").append(elements)
                                         })
 
@@ -1192,19 +1241,19 @@ if (minutesAgo < 60) {
 
 
                                         Object.keys(label).forEach(key => {
-                                                const labelOption = label[key];
+                                            const labelOption = label[key];
 
-                                                const option = document.createElement('option')
-                                                option.value = labelOption.id;
-                                                option.textContent = labelOption.text;
+                                            const option = document.createElement('option')
+                                            option.value = labelOption.id;
+                                            option.textContent = labelOption.text;
 
-                                                labelSelected.forEach(data => {
-                                                    if (data.id === labelOption.id) {
-                                                        option.setAttribute("selected", true);
-                                                    }
-                                                });
-                                                $("#labels").append(option);
+                                            labelSelected.forEach(data => {
+                                                if (data.id === labelOption.id) {
+                                                    option.setAttribute("selected", true);
+                                                }
                                             });
+                                            $("#labels").append(option);
+                                        });
 
                                         console.log(label);
 
@@ -1257,25 +1306,25 @@ if (minutesAgo < 60) {
                                         $(".list-komentar").empty();
 
                                         console.log(comments);
-                                      if(comments.length !== 0){
-                                        Object.keys(comments).forEach((keys, i) => {
-                                            const jadwal = res.data.komentarTerbuat[i];
+                                        if (comments.length !== 0) {
+                                            Object.keys(comments).forEach((keys, i) => {
+                                                const jadwal = res.data.komentarTerbuat[i];
 
-                                            const komentar = comments[keys];
-                                            console.log(jadwal);
-                                            let div = document.createElement("div");
+                                                const komentar = comments[keys];
+                                                console.log(jadwal);
+                                                let div = document.createElement("div");
 
 
-                                            const user = komentar.user;
-                                            div.className =
-                                                "media mb-4 d-flex align-items-start card flex-row px-3 py-2 mb-3 w-100";
-                                            div.style.overflowWrap = "anywhere";
-                                            div.setAttribute('id', 'komentar-' + komentar.id);
+                                                const user = komentar.user;
+                                                div.className =
+                                                    "media mb-4 d-flex align-items-start card flex-row px-3 py-2 mb-3 w-100";
+                                                div.style.overflowWrap = "anywhere";
+                                                div.setAttribute('id', 'komentar-' + komentar.id);
 
-                                            let avatar = user.avatar ? 'storage/' + user.avatar : 'assets/img/avatars/1.png';
+                                                let avatar = user.avatar ? 'storage/' + user.avatar : 'assets/img/avatars/1.png';
 
-                                            let editButtonKomentar =
-                                                `
+                                                let editButtonKomentar =
+                                                    `
                     <div class="dropdown kanban-tasks-item-dropdown dropdown-edit">
                                 <i class="ti ti-dots-vertical cursor-pointer" id="kanban-tasks-item" data-bs-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false"></i>
@@ -1289,7 +1338,7 @@ if (minutesAgo < 60) {
 
 
 
-                                            let elementComments = `
+                                                let elementComments = `
                         <div class="avatar me-2 flex-shrink-0 mt-1">
                         <img style="object-fit:cover" src="{{ asset('${avatar}') }}"
                             alt="Avatar" class="rounded-circle">
@@ -1316,18 +1365,18 @@ if (minutesAgo < 60) {
                         </div>
                     `;
 
-                                            div.innerHTML =  elementComments;
-                                            $(".list-komentar").append(div);
-                                        });
-                                    }else{
-                                        const div =
-                                        `
+                                                div.innerHTML = elementComments;
+                                                $(".list-komentar").append(div);
+                                            });
+                                        } else {
+                                            const div =
+                                                `
                                         <img class="w-50 d-block mx-auto" src="{{ asset('assets/img/no-data.png') }}" />
                                         <h5 class="text-center">Belum ada komentar</h5>
                                         `
-                                          $(".list-komentar").append(div);
+                                            $(".list-komentar").append(div);
 
-                                      }
+                                        }
 
                                     });
                             }
@@ -1537,17 +1586,17 @@ if (minutesAgo < 60) {
 
                             function deleteTugas(codetugas) {
                                 Swal.fire({
-                                title: "Are you sure?",
-                                text: "You won't be able to revert this!",
-                                icon: "warning",
-                                showCancelButton: true,
-                                confirmButtonColor: "#3085d6",
-                                cancelButtonColor: "#d33",
-                                confirmButtonText: "Yes, delete it!"
+                                    title: "Are you sure?",
+                                    text: "You won't be able to revert this!",
+                                    icon: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#3085d6",
+                                    cancelButtonColor: "#d33",
+                                    confirmButtonText: "Yes, delete it!"
                                 }).then((result) => {
-                                if (result.isConfirmed) {
+                                    if (result.isConfirmed) {
 
-                                    axios.delete("delete/tugas/" + codetugas)
+                                        axios.delete("delete/tugas/" + codetugas)
                                             .then((res) => {
                                                 const data = res.data;
                                                 $("#board-" + codetugas).addClass("d-none")
@@ -1560,16 +1609,14 @@ if (minutesAgo < 60) {
                                             })
 
 
-                                    Swal.fire({
-                                    title: "Deleted!",
-                                    text: "Your file has been deleted.",
-                                    icon: "success"
-                                    });
-                                }
+                                        Swal.fire({
+                                            title: "Deleted!",
+                                            text: "Your file has been deleted.",
+                                            icon: "success"
+                                        });
+                                    }
                                 });
 
                             }
-
-
                         </script>
                     @endsection

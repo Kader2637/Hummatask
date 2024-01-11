@@ -64,8 +64,6 @@ class Tim extends Model
         return $this->hasMany(Project::class);
     }
 
-
-
     public function tidakPresentasiMingguan(): HasMany
     {
         return $this->hasMany(TidakPresentasiMingguan::class);
@@ -86,6 +84,7 @@ class Tim extends Model
             ->get()
             ->sortBy('jabatan');
     }
+
     public function anggota_profile()
     {
         return Anggota::where('tim_id', $this->id)

@@ -95,14 +95,17 @@ class PresentasiController extends Controller
                 ->with('error', 'Timmu tidak ditemukan');
         }
 
+        $jadwalQuery = LimitPresentasiDevisi::find($request->plan);
+
         $presentasi = new Presentasi();
         $presentasi->code = Str::uuid();
         $presentasi->judul = $request->judul;
         $presentasi->deskripsi = $request->judul ?: null;
         $presentasi->jadwal = Carbon::now()->isoFormat('Y-M-DD');
         $presentasi->tim_id = $tim->id;
-        $limitPresentasiDivisiId = LimitPresentasiDevisi::find($request->plan);
-        $presentasi->jadwal_ke = $limitPresentasiDivisiId->jadwal_ke;
+        $presentasi->jadwal_ke = $jadwalQuery->jadwal_ke;
+        $presentasi->mulai = $jadwalQuery->mulai;
+        $presentasi->akhir = $jadwalQuery->akhir;
         $history = HistoryPresentasi::latest()->first();
 
         if ($history === null) {
@@ -239,66 +242,64 @@ class PresentasiController extends Controller
     }
 
     protected function penolakanPresentasi(RequestPenolakanPresentasi $request, $code)
-{
-    try {
-        if ($request->alasan === null) {
-            return response()->json(['error' => 'Alasan penolakan tidak boleh kosong']);
-        }
+    {
+        try {
+            if ($request->alasan === null) {
+                return response()->json(['error' => 'Alasan penolakan tidak boleh kosong']);
+            }
 
-        $presentasi = Presentasi::where('code', $code)->first();
-        $presentasi->status_pengajuan = 'ditolak';
-        $presentasi->feedback = $request->alasan;
-        $presentasi->user_approval_id = Auth::user()->id;
-        $presentasi->save();
+            $presentasi = Presentasi::where('code', $code)->first();
+            $presentasi->status_pengajuan = 'ditolak';
+            $presentasi->feedback = $request->alasan;
+            $presentasi->user_approval_id = Auth::user()->id;
+            $presentasi->save();
 
-        $message = 'Pengajuan Presentasi Tim Anda ditolak, Karena ' . $request->alasan;
-        $teamMembers = $presentasi->tim->anggota;
+            $message = 'Pengajuan Presentasi Tim Anda ditolak, Karena ' . $request->alasan;
+            $teamMembers = $presentasi->tim->anggota;
 
-        foreach ($teamMembers as $member) {
-            $userId = $member->user_id;
-            $statusAnggota = Anggota::where('user_id', $userId)->value('status');
-            if ($statusAnggota !== 'kicked' && $statusAnggota !== 'expired') {
-                if ($member->jabatan_id === 1) {
-                    $phoneNumber = $member->user->tlp;
+            foreach ($teamMembers as $member) {
+                $userId = $member->user_id;
+                $statusAnggota = Anggota::where('user_id', $userId)->value('status');
+                if ($statusAnggota !== 'kicked' && $statusAnggota !== 'expired') {
+                    if ($member->jabatan_id === 1) {
+                        $phoneNumber = $member->user->tlp;
 
-                    $this->sendWhatsAppPenolakan($phoneNumber, $message);
+                        $this->sendWhatsAppPenolakan($phoneNumber, $message);
+                    }
                 }
             }
-        }
 
-        return response()->json(['success' => 'Berhasil Memberikan Penolakan']);
-    } catch (\Exception $e) {
-        Log::error('Error in penolakanPresentasi: ' . $e->getMessage());
-        return response()->json(['error' => 'Terjadi kesalahan saat menolak presentasi'], 500);
+            return response()->json(['success' => 'Berhasil Memberikan Penolakan']);
+        } catch (\Exception $e) {
+            Log::error('Error in penolakanPresentasi: ' . $e->getMessage());
+            return response()->json(['error' => 'Terjadi kesalahan saat menolak presentasi'], 500);
+        }
     }
-}
 
 
     protected function konfirmasiPresentasi(Request $request, $code)
     {
         if ($request->status_revisi === null) {
-            return response('tidak boleh kosong', 404)->json(['error' => 'Status revisi tidak boleh kosong']);
+            return back()->with('warning', 'Status revisi tidak boleh kosong');
         }
 
         if (Str::length($request->feedback) > 300) {
-            return response()->json(['error' => 'Feedback kepada user tidak boleh lebih dari 300 karakter']);
+            return back()->with('warning', 'Feedback kepada user tidak boleh lebih dari 300 karakter');
         }
 
-        $presentasi = Presentasi::where('code', $code)->first();
+        $presentasi = Presentasi::query()
+            ->where('code', $code)
+            ->update([
+                'status_presentasi' => 'selesai',
+                'status_revisi' => $request->status_revisi,
+                'feedback' => $request->feedback
+            ]);
 
-        $validasiKonfirm = Presentasi::where('urutan', $presentasi->urutan - 1)
-            ->where('jadwal', Carbon::now()->isoFormat('Y-M-DD'))
-            ->where('status_presentasi', 'menunggu')
-            ->first();
-        if ($validasiKonfirm) {
-            return response()->json(['error' => 'Urutan Sebelumnya belum dikonfirmasi']);
+        if ($presentasi) {
+            return back()->with('success', 'Berhasil konfirmasi presentasi');
+        } else {
+            return back()->with('warning', 'Data presentasi tidak ditemukan');
         }
-        $presentasi->status_presentasi = $request->persetujuan;
-        $presentasi->status_revisi = $request->status_revisi;
-        $presentasi->feedback = $request->feedback;
-
-        $presentasi->save();
-        return response()->json($presentasi);
     }
 
     protected function aturJadwal(Request $request, $code)

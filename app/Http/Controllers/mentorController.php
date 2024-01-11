@@ -666,4 +666,53 @@ class mentorController extends Controller
 
         return response()->json(['galery' => $galery]);
     }
+
+    protected function siswaPresentasiPage()
+    {
+        $notifikasi = Notifikasi::where('user_id', Auth::user()->id)
+            ->whereHas('user', function ($query) {
+                $query->where('divisi_id', Auth::user()->divisi_id);
+            })
+            ->get();
+
+        $historyPresentasi = HistoryPresentasi::query()
+            ->orderBy('created_at')
+            ->paginate(12);
+
+        return response()->view('mentor.siswa-presentasi', compact('notifikasi', 'historyPresentasi'));
+    }
+
+    protected function detailPresentasiPage(String $code)
+    {
+        $notifikasi = Notifikasi::where('user_id', Auth::user()->id)
+            ->whereHas('user', function ($query) {
+                $query->where('divisi_id', Auth::user()->divisi_id);
+            })
+            ->get();
+
+        $history = HistoryPresentasi::with([
+            'presentasi.tim.user',
+            'presentasi.tim.project.tema',
+            'presentasi.limitPresentasiDivisi.presentasiDivisi' => function ($query) {
+                $query->where('divisi_id', Auth::user()->divisi_id);
+            },
+        ])
+            ->where('code', $code)
+            ->first();
+
+        $unconfirmedPresentasi = Presentasi::with([
+            'tim.user',
+            'tim.project.tema',
+            'tim.presentasi',
+        ])
+            ->where('history_presentasi_id', $history->id)
+            ->whereHas('tim.divisi', function ($query) {
+                $query->where('id', Auth::user()->divisi_id);
+            })
+            ->where('status_presentasi', 'menunggu')
+            ->orderBy('jadwal_ke', 'asc')
+            ->get();
+
+        return response()->view('mentor.detail-presentasi', compact('history', 'unconfirmedPresentasi', 'notifikasi'));
+    }
 }

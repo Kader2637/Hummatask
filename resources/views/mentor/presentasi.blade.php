@@ -964,7 +964,6 @@
                                     })
                                 }, 400)
                             } else {
-
                                 setTimeout(() => {
                                     swal.fire({
                                         icon: 'success',
