@@ -80,13 +80,17 @@ class catatanController extends Controller
     protected function update(Request $request, $id)
     {
         try {
+
             $catatan = Catatan::findOrFail($id);
 
             $catatan->title = $request->titleUpdate;
             $catatan->type_note = $catatan->type_note;
 
-            $catatan->catatanDetail()->delete();
+            if (!$request->catatan_text) {
+                return redirect()->back()->with('error', 'Catatan harus diisi!');
+            }
 
+            $catatan->catatanDetail()->delete();
             if ($request->catatan_text) {
                 foreach ($request->catatan_text as $item) {
                     CatatanDetail::create([
