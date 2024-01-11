@@ -535,7 +535,7 @@
 
                         // Cek apakah ada data notifikasi baru yang belum ada di local storage
                         if (notifikasiBaru.length > 0) {
-                            var audio = new Audio('<?php echo asset('notification.mp3'); ?>');
+                            var audio = new Audio('<?php echo asset('notification.wav'); ?>');
                             audio.play();
                         }
                     },
