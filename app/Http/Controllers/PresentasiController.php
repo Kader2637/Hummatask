@@ -325,7 +325,7 @@ class PresentasiController extends Controller
         ])
             ->where('history_presentasi_id', $history->id)
             ->where('status_presentasi', 'menunggu')
-            ->where('status_pengajuan', 'disetujui')
+            // ->where('status_pengajuan', 'disetujui')
             ->whereDate('jadwal', Carbon::now()->format('Y-m-d'))
             ->orderBy('urutan', 'asc')
             ->get();
@@ -341,7 +341,7 @@ class PresentasiController extends Controller
         foreach ($konfirmasi_presentasi as $data) {
             $konfirmasi_presentasi_date[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
             $totalPresentasi[] = $data->tim->presentasiSelesai->count();
-            $totalPresentasiDitolak[] = $data->tim->presentasi->where('status_pengajuan', 'ditolak')->count();
+            // $totalPresentasiDitolak[] = $data->tim->presentasi->where('status_pengajuan', 'ditolak')->count();
             $revisiSelesai[] = $data->tim->presentasi->where('status_revisi', 'selesai')->count();
             $revisiTidakSelesai[] = $data->tim->presentasi->where('status_revisi', 'tidak_selesai')->count();
             $deadline[] = Carbon::parse($data->tim->project[0]->deadline)->isoFormat('DD MMMM YYYY');

@@ -369,7 +369,7 @@
                             <div class="d-flex justify-content-around align-items-center">
                                 <span class="badge bg-label-info">Minggu ke-{{ $history->noMinggu }}</span>
                                 <span class="badge bg-label-warning">{{ $history->bulan }}</span>
-                                <span class="badge bg-label-primary">{{ $history->divisi->name }}</span>
+                                {{-- <span class="badge bg-label-primary">{{ $history->divisi->name }}</span> --}}
                             </div>
                             <div class="d-flex justify-content-around align-items-center gap-3  mt-3">
                                 <button onclick="tampilkanDetail('{{ $history->code }}')" data-bs-toggle="modal"
@@ -443,25 +443,25 @@
                             let presentasi = data1[key]
                             const jadwal = formatDate(presentasi.jadwal);
 
-                            let limitRelation = presentasi.limit_presentasi_divisi;
-                            let day = limitRelation.presentasi_divisi.day;
+                            // let limitRelation = presentasi.limit_presentasi_divisi;
+                            // let day = limitRelation.presentasi_divisi.day;
 
-                            if (day === 'monday') {
-                                day = 'Senin';
-                            } else if (day === 'tuesday') {
-                                day = 'Selasa';
-                            } else if (day === 'wednesday') {
-                                day = 'Rabu';
-                            } else if (day === 'thursday') {
-                                day = 'Kamis';
-                            } else if (day === 'friday') {
-                                day = 'Jumat';
-                            }
+                            // if (day === 'monday') {
+                            //     day = 'Senin';
+                            // } else if (day === 'tuesday') {
+                            //     day = 'Selasa';
+                            // } else if (day === 'wednesday') {
+                            //     day = 'Rabu';
+                            // } else if (day === 'thursday') {
+                            //     day = 'Kamis';
+                            // } else if (day === 'friday') {
+                            //     day = 'Jumat';
+                            // }
 
-                            let mulai = limitRelation.mulai.split(':').slice(0, 2).join(
-                                ':');
-                            let akhir = limitRelation.akhir.split(':').slice(0, 2).join(
-                                ':');
+                            // let mulai = limitRelation.mulai.split(':').slice(0, 2).join(
+                            //     ':');
+                            // let akhir = limitRelation.akhir.split(':').slice(0, 2).join(
+                            //     ':');
 
                             let div = document.createElement('div')
                             div.id = "card-persetujuan-" + presentasi.code;
@@ -475,7 +475,6 @@
                                 <h4 class="card-title text-capitalize">${presentasi.tim.nama}</h4>
                                 <a><span class="badge bg-label-warning mb-3 text-capitalize">${presentasi.tim.status_tim} Project</span></a>
                             </div>
-                            <p class="card-text">Sesi ${day} ${mulai}-${akhir}</p>
                             <p class="card-text">${jadwal}</p>
                             <div class="d-flex justify-content-center gap-2">
                                 <button onclick="tolakPresentasi('${presentasi.code}','${code}')" data-bs-toggle="modal" data-bs-target="#Reject" class="btn btn-danger" >Tolak</button>
@@ -524,25 +523,25 @@
                             let deadline = data2[6][key]
                             let dataPresentasiTim = data2[7][key]
 
-                            let limitRelation = presentasi.limit_presentasi_divisi;
-                            let day = limitRelation.presentasi_divisi.day;
+                            // let limitRelation = presentasi.limit_presentasi_divisi;
+                            // let day = limitRelation.presentasi_divisi.day;
 
-                            if (day === 'monday') {
-                                day = 'Senin';
-                            } else if (day === 'tuesday') {
-                                day = 'Selasa';
-                            } else if (day === 'wednesday') {
-                                day = 'Rabu';
-                            } else if (day === 'thursday') {
-                                day = 'Kamis';
-                            } else if (day === 'friday') {
-                                day = 'Jumat';
-                            }
+                            // if (day === 'monday') {
+                            //     day = 'Senin';
+                            // } else if (day === 'tuesday') {
+                            //     day = 'Selasa';
+                            // } else if (day === 'wednesday') {
+                            //     day = 'Rabu';
+                            // } else if (day === 'thursday') {
+                            //     day = 'Kamis';
+                            // } else if (day === 'friday') {
+                            //     day = 'Jumat';
+                            // }
 
-                            let mulai = limitRelation.mulai.split(':').slice(0, 2).join(
-                                ':');
-                            let akhir = limitRelation.akhir.split(':').slice(0, 2).join(
-                                ':');
+                            // let mulai = limitRelation.mulai.split(':').slice(0, 2).join(
+                            //     ':');
+                            // let akhir = limitRelation.akhir.split(':').slice(0, 2).join(
+                            //     ':');
 
                             let kategoryTim;
                             if (presentasi.tim.status_tim === "solo") {
@@ -566,25 +565,17 @@
                                 `
                     <div class="card text-center mb-3">
                             <div class="card-body">
-                                <div style="width: 30px; height: 30px; top: -10px;left : -10px;" class="rounded bg-primary d-flex justify-content-center align-items-center text-white position-absolute">
-                                    ${presentasi.urutan}
-                                </div>
                                 <img src="{{ asset('storage/${presentasi.tim.logo}') }}" alt="logo tim" class="rounded-circle mb-3 border-primary border-2" style="width: 100px; height: 100px; object-fit: cover; ">
                                 <div class="d-flex justify-content-center align-items-center gap-2 flex-column flex-wrap">
                                     <h4 class="card-title text-capitalize text-dark mb-0">${presentasi.tim.nama}</h4>
                                     <div class="d-flex flex-column gap-2">
                                     <span class="badge bg-label-warning d-flex align-items-center justify-content-center flex-column cursor-pointer" style="" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Status Tim"    >${kategoryTim}</span>
-                                    <p class="card-text">Sesi ${day} ${mulai}-${akhir}</p>
 
                                     </div>
                                     <div class="d-flex justify-content-around align-items-center w-100 mb-2 gap-2">
                                         <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Data Pengajuan Presentasi yang selesai"    class="badge cursor-pointer bg-label-success">
                                             <i class="fas fa-chalkboard"></i>
                                             ${totalPresentasi}
-                                        </span>
-                                        <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Data Pengajuan Presentasi yang ditolak"    class="badge cursor-pointer bg-label-danger">
-                                            <i class="fas fa-chalkboard"></i>
-                                            ${presentasiDitolak}
                                         </span>
                                         <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="top" title="Data Revisi yang selesai"      class="badge cursor-pointer bg-label-success">
                                             <i class="fas fa-exclamation-triangle"></i>
