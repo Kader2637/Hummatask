@@ -143,8 +143,8 @@
             Route::get('pieproject/{timId}', [mentorController::class, 'pieproject'])->name('piechart');
             Route::get('galeri', [mentorController::class, 'galery'])->name('galery');
             Route::get('get-galeri', [mentorController::class, 'getGalery'])->name('get.galery');
-            Route::get('siswa-presentasi', [mentorController::class, 'siswaPresentasiPage'])->name('siswa-presentasi.mentor');
-            Route::get('histori-presentasi', [mentorController::class, 'historiPresentasiPage'])->name('histori-presentasi.mentor');
+            Route::get('siswa-presentasi', [PresentasiController::class, 'siswaPresentasiPage'])->name('siswa-presentasi.mentor');
+            Route::get('histori-presentasi', [PresentasiController::class, 'historiPresentasiPage'])->name('histori-presentasi.mentor');
 
 
             // Process`
