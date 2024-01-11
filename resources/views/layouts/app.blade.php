@@ -645,111 +645,140 @@
                 });
         }
     </script>
+<script>
+    $(document).ready(function() {
+        function ambilNotifikasi() {
+            $.ajax({
+                url: '/ambil-notifikasi',
+                method: 'GET',
+                success: function(response) {
+                    tampilkanNotifikasi(response.notifikasi);
 
-    <script>
-        $(document).ready(function() {
-            function ambilNotifikasi() {
-                $.ajax({
-                    url: '/ambil-notifikasi',
-                    method: 'GET',
-                    success: function(response) {
-                        tampilkanNotifikasi(response.notifikasi);
-                    },
-                    error: function(error) {
-                        console.log('Error mengambil notifikasi:', error);
+                    var notifikasiLama = JSON.parse(localStorage.getItem('notifikasi')) || [];
+                    var notifikasiBaru = cekNotifikasiBaru(response.notifikasi, notifikasiLama);
+
+                    // Simpan data notifikasi ke dalam local storage
+                    localStorage.setItem('notifikasi', JSON.stringify(response.notifikasi));
+
+                    // Cek apakah ada data notifikasi baru yang belum ada di local storage
+                    if (notifikasiBaru.length > 0) {
+                        var audio = new Audio('<?php echo asset('notification.mp3'); ?>');
+                            audio.play();
                     }
-                });
+                },
+                error: function(error) {
+                    console.log('Error mengambil notifikasi:', error);
+                }
+            });
+        }
+
+        function tampilkanNotifikasi(notifikasi) {
+            var daftarNotifikasi = $('#notification-list');
+            var countBadge = $('#notification-count');
+
+            daftarNotifikasi.empty();
+
+            if (notifikasi.length > 0) {
+                countBadge.text(notifikasi.length);
+                countBadge.show();
+            } else {
+                countBadge.hide();
             }
 
-            function tampilkanNotifikasi(notifikasi) {
-                var daftarNotifikasi = $('#notification-list');
-                var countBadge = $('#notification-count');
+            notifikasi.reverse();
 
-                daftarNotifikasi.empty();
+            notifikasi.forEach(function(item) {
+                var waktuNotifikasi = new Date(item.created_at);
+                var waktuSekarang = new Date();
+                var perbedaanWaktu = Math.floor((waktuSekarang - waktuNotifikasi) / 1000);
 
-                if (notifikasi.length > 0) {
-                    countBadge.text(notifikasi.length);
-                } else {
-                    countBadge
-                        .hide();
+                function formatWaktu(detik) {
+                    if (detik < 60) {
+                        return detik + ' detik yang lalu';
+                    } else if (detik < 3600) {
+                        return Math.floor(detik / 60) + ' menit yang lalu';
+                    } else if (detik < 86400) {
+                        return Math.floor(detik / 3600) + ' jam yang lalu';
+                    } else {
+                        return Math.floor(detik / 86400) + ' hari yang lalu';
+                    }
                 }
 
-                notifikasi.reverse();
+                var jenisClass, icon, textClass;
 
-                notifikasi.forEach(function(item) {
-                    var waktuNotifikasi = new Date(item.created_at);
-                    var waktuSekarang = new Date();
-                    var perbedaanWaktu = Math.floor((waktuSekarang - waktuNotifikasi) /
-                        1000);
+                switch (item.jenis_notifikasi) {
+                    case 'info':
+                        jenisClass = 'alert-info';
+                        textClass = 'text-info';
+                        icon = '<i class="ti ti-info-circle ti-xs"></i>';
+                        break;
+                    case 'deadline':
+                        jenisClass = 'alert-warning';
+                        textClass = 'text-warning';
+                        icon = '<i class="ti ti-clock ti-xs"></i>';
+                        break;
+                    case 'pemberitahuan':
+                        jenisClass = 'alert-success';
+                        textClass = 'text-success';
+                        icon = '<i class="ti ti-check ti-xs"></i>';
+                        break;
+                    default:
+                        jenisClass = 'bg-secondary';
+                        icon = '<i class="ti ti-alert ti-xs"></i>';
+                }
 
-                    function formatWaktu(detik) {
-                        if (detik < 60) {
-                            return detik + ' detik yang lalu';
-                        } else if (detik < 3600) {
-                            return Math.floor(detik / 60) + ' menit yang lalu';
-                        } else if (detik < 86400) {
-                            return Math.floor(detik / 3600) + ' jam yang lalu';
-                        } else {
-                            return Math.floor(detik / 86400) + ' hari yang lalu';
-                        }
-                    }
-
-                    var jenisClass, icon, textClass;
-
-                    switch (item.jenis_notifikasi) {
-                        case 'info':
-                            jenisClass = 'alert-info';
-                            textClass = 'text-info';
-                            icon = '<i class="ti ti-info-circle ti-xs"></i>';
-                            break;
-                        case 'deadline':
-                            jenisClass = 'alert-warning';
-                            textClass = 'text-warning';
-                            icon = '<i class="ti ti-clock ti-xs"></i>';
-                            break;
-                        case 'pemberitahuan':
-                            jenisClass = 'alert-success';
-                            textClass = 'text-success';
-                            icon = '<i class="ti ti-check ti-xs"></i>';
-                            break;
-                        default:
-                            jenisClass = 'bg-secondary';
-                            icon = '<i class="ti ti-alert ti-xs"></i>';
-                    }
-
-                    var notifikasiBaru = `
-                    <li class="list-group-item" id="notification-list-${item.id}">
-                        <div class="d-flex mt-2 mb-2 pl-5">
-                            <div class="flex-grow-1">
-                                <div class="alert ${jenisClass} d-flex align-items-center justify-content-between" role="alert">
-                                    <div>
-                                        <span class="alert-icon ${textClass} me-2">
-                                            ${icon}
-                                        </span>
-                                        ${item.judul}
-                                    </div>
-                                    <a href="javascript:void(0)" class="dropdown-notifications-archive ml-auto ${jenisClass}"
-                                        onclick="deletenotifikasi(${item.id})">
-                                        <span class="ti ti-x"></span>
-                                    </a>
+                var notifikasiBaru = `
+                <li class="list-group-item" id="notification-list-${item.id}">
+                    <div class="d-flex mt-2 mb-2 pl-5">
+                        <div class="flex-grow-1">
+                            <div class="alert ${jenisClass} d-flex align-items-center justify-content-between" role="alert">
+                                <div>
+                                    <span class="alert-icon ${textClass} me-2">
+                                        ${icon}
+                                    </span>
+                                    ${item.judul}
                                 </div>
-                                <p class="mb-0">${item.body}</p>
-                                <small class="text-muted">${formatWaktu(perbedaanWaktu)}</small>
+                                <a href="javascript:void(0)" class="dropdown-notifications-archive ml-auto ${jenisClass}"
+                                    onclick="deletenotifikasi(${item.id})">
+                                    <span class="ti ti-x"></span>
+                                </a>
                             </div>
+                            <p class="mb-0">${item.body}</p>
+                            <small class="text-muted">${formatWaktu(perbedaanWaktu)}</small>
                         </div>
-                    </li>
-                `;
-                    daftarNotifikasi.append(notifikasiBaru);
-                });
-            }
+                    </div>
+                </li>
+            `;
+                daftarNotifikasi.append(notifikasiBaru);
+            });
+        }
 
-            ambilNotifikasi();
+        function cekNotifikasiBaru(notifikasiBaru, notifikasiLama) {
+            var notifikasiBaruFiltered = [];
 
-            setInterval(function() {
-                ambilNotifikasi();
-            }, 5000);
-        });
-    </script>
+            notifikasiBaru.forEach(function(item) {
+                var found = false;
+                for (var i = 0; i < notifikasiLama.length; i++) {
+                    if (notifikasiLama[i].id === item.id) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    notifikasiBaruFiltered.push(item);
+                }
+            });
+
+            return notifikasiBaruFiltered;
+        }
+
+        ambilNotifikasi();
+
+        setInterval(function(){
+    ambilNotifikasi();
+}, 5000);
+    });
+</script>
 
     @if (session()->has('unauthorize'))
         <script>
