@@ -25,6 +25,12 @@ use Illuminate\Support\Str;
 
 class PresentasiController extends Controller
 {
+    protected function historiPresentasiPage()
+    {
+        $historyPresentasi = Presentasi::where('status_presentasi', 'menunggu');
+        return view('mentor.presentasi', compact('historyPresentasi'));
+    }
+
     protected function ajukanPresentasi(RequestPengajuanPresentasi $request, $code)
     {
         $tim = Tim::where('code', $code)->firstOrFail();
@@ -104,8 +110,11 @@ class PresentasiController extends Controller
         } else {
             $presentasi->history_presentasi_id = $history->id;
         }
-
-        $presentasi->status_presentasi_mingguan = true;
+        if ($presentasi->status_presentasi === 'selesai') {
+            $presentasi->status_presentasi_mingguan = true;
+        } else {
+            $presentasi->status_presentasi_mingguan = false;
+        }
         $presentasi->save();
 
         $mentorId = User::where('peran_id', 2)

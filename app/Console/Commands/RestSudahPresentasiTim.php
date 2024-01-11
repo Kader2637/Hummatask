@@ -31,13 +31,11 @@ class RestSudahPresentasiTim extends Command
      */
     public function handle()
     {
-
         DB::table('tims')->update(['sudah_presentasi' => false]);
 
         $newHistoryPresentasi = new HistoryPresentasi;
         $newHistoryPresentasi->code = Str::uuid();
 
-        // mengecek senen depan bulan apa
         $seninDepan = Carbon::now()->addDays(3)->isoFormat("MMMM");
 
         if (Carbon::now()->isoFormat('MMMM') !== $seninDepan) {

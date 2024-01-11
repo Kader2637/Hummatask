@@ -532,7 +532,7 @@
                                 <th class="text-white">No</th>
                                 <th class="text-white">Tanggal</th>
                                 <th class="text-white">Status Presentasi</th>
-                                <th class="text-white">Jadwal ke</th>
+                                <th class="text-white">Jadwal</th>
                                 <th class="text-white">Dikonfirmasi oleh</th>
                                 <th class="text-white">Feedback</th>
                             </tr>
@@ -576,11 +576,11 @@
                                                 data-feedback="{{ $data->feedback }}">
                                                 <i class="ti ti-eye me-1 text-warning"></i>
                                             </button>
-                                        @elseIf(($data->status_pengajuan === 'menunggu' || $data->status_presentasi === 'menunggu') && $data->feedback === null)
+                                        {{-- @elseIf(($data->status_pengajuan === 'menunggu' || $data->status_presentasi === 'menunggu') && $data->feedback === null)
                                             <button onclick="handleBelumDisetujuiFeedback()"
                                                 class=" border-0 text-secondary bg-transparent btn-feedback-modal">
                                                 <i class="ti ti-eye me-1 text-warning"></i>
-                                            </button>
+                                            </button> --}}
                                         @elseIf(($data->status_pengajuan === 'disetujui' || $data->status_presentasi === 'selesai') && $data->feedback === null)
                                             <button onclick="handleDitolakFeedback()"
                                                 class=" border-0 text-secondary bg-transparent btn-feedback-modal">
