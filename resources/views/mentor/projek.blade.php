@@ -54,7 +54,6 @@
                     </div>
                 </div>
                 @forelse ($projects as $item)
-                    {{-- @dd($item->tim) --}}
                     @php
                         $anggotaArray = [];
                         foreach ($item->tim->anggota as $anggota) {

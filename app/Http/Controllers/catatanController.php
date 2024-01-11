@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\catatan;
+use App\Models\CatatanDetail;
 use App\Models\Tim;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -21,7 +22,8 @@ class catatanController extends Controller
     protected function store(Request $request)
     {
         try {
-            if (!$request->contentCreate) {
+
+            if (!$request->catatan_text) {
                 return redirect()->back()->with('error', 'Isilah catatan terlebih dahulu!');
             }
 
@@ -58,9 +60,15 @@ class catatanController extends Controller
                 }
             }
 
-            $catatan->content = $request->contentCreate;
             $catatan->type_note = $request->type_note;
             $catatan->save();
+
+            foreach ($request->catatan_text as $item) {
+                CatatanDetail::create([
+                    'catatan_id' => $catatan->id,
+                    'catatan_text' => $item
+                ]);
+            }
 
             return redirect()->back()->with('success', 'Catatan berhasil dibuat!');
         } catch (\Throwable $th) {
@@ -69,36 +77,31 @@ class catatanController extends Controller
         }
     }
 
-    protected function update(Request $request, string $code)
+    protected function update(Request $request, $id)
     {
         try {
-            $catatan = catatan::where('code', $code)->firstOrFail();
-            $tim = $catatan->tim;
+            $catatan = Catatan::findOrFail($id);
 
-            $checkResult = $this->checkTeam($tim);
-            if ($checkResult) {
-                return $checkResult;
+            $catatan->title = $request->titleUpdate;
+            $catatan->type_note = $catatan->type_note;
+
+            $catatan->catatanDetail()->delete();
+
+            if ($request->catatan_text) {
+                foreach ($request->catatan_text as $item) {
+                    CatatanDetail::create([
+                        'catatan_id' => $catatan->id,
+                        'catatan_text' => $item
+                    ]);
+                }
             }
 
-            if ($catatan->type_note == 'revisi') {
-                return back()->with('warning', 'Jenis catatan ini tidak bisa di edit');
-            }
+            $catatan->save();
 
-            if ($request->contentEdit == null || $request->contentEdit == '<p><br></p>' && $request->title === null) {
-                $catatan->update([
-                    'title' => $catatan->title,
-                    'content' => $catatan->content,
-                ]);
-            } else {
-                $catatan->update([
-                    'title' => $request->titleEdit,
-                    'content' => $request->contentEdit,
-                ]);
-            }
-
-            return back()->with('success', 'Berhasil mengedit catatan!');
+            return redirect()->back()->with('success', 'Catatan berhasil diupdate!');
         } catch (\Throwable $th) {
-            return back()->with('error', 'Gagal mengedit catatan!');
+            dd($th);
+            return redirect()->back()->with('error', 'Catatan gagal diupdate!');
         }
     }
 

@@ -18,15 +18,16 @@ return new class extends Migration
             $table->string('judul');
             $table->text('deskripsi')->nullable();
             $table->date('jadwal');
-            $table->enum('status_pengajuan',['menunggu','disetujui','ditolak'])->default('menunggu');
-            $table->enum('status_presentasi',['menunggu','selesai','telat'])->default('menunggu');
+            $table->enum('status_presentasi', ['menunggu', 'selesai', 'telat'])->default('menunggu');
             $table->boolean('status_presentasi_mingguan')->default(false);
             $table->text('feedback')->nullable();
-            $table->enum('status_revisi',['selesai','tidak_selesai'])->nullable();
+            $table->enum('status_revisi', ['selesai', 'tidak_selesai'])->nullable();
             $table->foreignId('tim_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('history_presentasi_id')->references('id')->on('history_presentasis')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('user_approval_id')->nullable()->references('id')->on('users');
-            $table->foreignId('limit_presentasi_devisi_id')->references('id')->on('limit_presentasi_devisis')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('jadwal_ke');
+            $table->time('mulai');
+            $table->time('akhir');
             $table->timestamps();
         });
     }

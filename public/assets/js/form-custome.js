@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
     setupFormRepeater("form-rabu");
     setupFormRepeater("form-kamis");
     setupFormRepeater("form-jumat");
-});
+}); 
 document.addEventListener("DOMContentLoaded", function () {
     var submitButton = document.querySelector('button[type="submit"]');
     var formRepeater = document.getElementById("form-repeater");
@@ -208,6 +208,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+
 
 // $(document).ready(function () {
 //     $(".delete-data-column").on("click", function (event) {

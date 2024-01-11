@@ -123,7 +123,11 @@ class timController extends Controller
         $tim = Tim::where('code', $code)->firstOrFail();
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
-        $anggota = $tim->anggota()->get();
+        $anggota = $tim
+            ->anggota()
+            ->orderBy('jabatan_id')
+            ->get();
+
         $project = $tim->project->first();
 
         $hasProjectRelation = $tim->project()->exists();
@@ -152,7 +156,13 @@ class timController extends Controller
             })
             ->toArray();
 
-        $chartData = [['Status Tugas', 'Jumlah'], ['Selesai', $selesaiCount || 0], ['Revisi', $revisiCount || 0], ['Dikerjakan', $dikerjakanCount || 0], ['Tugas Baru', $tugasBaruCount || 0]];
+        $chartData = [
+            ['Status Tugas', 'Jumlah'],
+            ['Selesai', $selesaiCount],
+            ['Revisi', $revisiCount],
+            ['Dikerjakan', $dikerjakanCount],
+            ['Tugas Baru', $tugasBaruCount]
+        ];
 
         return view('siswa.tim.project', compact('hasProjectRelation', 'days', 'tanggal', 'persentase', 'selesaiCount', 'revisiCount', 'chartData', 'title', 'tim', 'anggota', 'project', 'notifikasi'));
     }
@@ -177,9 +187,9 @@ class timController extends Controller
         foreach ($anggota as $data) {
             if (
                 $data->anggotaReal
-                    ->where('tim_id', $tim->id)
-                    ->sortByDesc('created_at')
-                    ->first()->status !== 'active'
+                ->where('tim_id', $tim->id)
+                ->sortByDesc('created_at')
+                ->first()->status !== 'active'
             ) {
                 $jabatan[] = 'Mantan Anggota';
             } else {
@@ -283,7 +293,13 @@ class timController extends Controller
 
         $hasProjectRelation = $tim->project()->exists();
 
-        return view('siswa.tim.catatan', compact('title', 'anggota', 'tim', 'catatans', 'project', 'notifikasi'));
+        $catatanTeam = Catatan::whereHas('CatatanDetail', function ($query) {
+            $query->whereColumn('catatan_details.catatan_id', 'catatans.id');
+        })
+            ->with('catatanDetail')
+            ->get();
+
+        return view('siswa.tim.catatan', compact('catatanTeam', 'title', 'anggota', 'tim', 'catatans', 'project', 'notifikasi'));
     }
 
     protected function historyCatatanPage($code)

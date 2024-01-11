@@ -188,21 +188,38 @@ class mentorController extends Controller
             ->where('divisi_id', auth()->user()->divisi_id)
             ->first();
 
-            
+        $day = $request->query('day');
+        $divisiId = $request->query('divisi_id');
+
         $divisis = Divisi::all();
 
         $dataPresentasi = [];
 
         foreach ($divisis as $divisi) {
-            $dataPresentasi[$divisi->id] = LimitPresentasiDevisi::whereHas('presentasiDivisi', function ($query) use ($divisi) {
-                $query->where('divisi_id', $divisi->id);
-            })->get();
+            $query = LimitPresentasiDevisi::whereHas('presentasiDivisi', function ($query) use ($divisiId, $day) {
+                if ($divisiId) {
+                    $query->where('divisi_id', $divisiId);
+                }
+                if ($day) {
+                    $query->where('day', $day);
+                }
+            });
+
+            $dataPresentasi[$divisi->id] = $query->get();
         }
 
-        return response()->view('mentor.dashboard', compact('divisis','dataPresentasi','year', 'currentYear', 'processedData', 'presentasi', 'chartData', 'jadwal', 'hari', 'chart', 'notifikasi', 'senin', 'selasa', 'rabu', 'kamis', 'jumat'));
+        if (!$day && !$divisiId) {
+            foreach ($divisis as $divisi) {
+                $query = LimitPresentasiDevisi::whereHas('presentasiDivisi', function ($query) use ($divisi) {
+                    $query->where('divisi_id', $divisi->id);
+                });
+
+                $dataPresentasi[$divisi->id] = $query->get();
+            }
+        }
+
+        return response()->view('mentor.dashboard', compact('divisis', 'dataPresentasi', 'year', 'currentYear', 'processedData', 'presentasi', 'chartData', 'jadwal', 'hari', 'chart', 'notifikasi', 'senin', 'selasa', 'rabu', 'kamis', 'jumat'));
     }
-
-
 
     protected function pengguna()
     {
@@ -259,7 +276,6 @@ class mentorController extends Controller
         $presentasiSelesai = Presentasi::with('tim.anggota.user', 'tim.project.tema')
             ->whereRelation('tim.divisi', 'id', '=', Auth::user()->divisi_id)
             ->where('status_presentasi', 'selesai')
-            ->where('status_pengajuan', 'disetujui')
             ->whereHas('tim.project.tema')
             ->get();
         $timSolo = Tim::with('anggota.user', 'project.tema')
@@ -388,13 +404,11 @@ class mentorController extends Controller
 
         $chartData = [
             ['Status Tugas', 'Jumlah'],
-            ['Selesai', $selesai || 0],
-            ['Revisi', $revisi || 0],
-            ['Dikerjakan', $dikerjakan || 0],
-            ['Tugas Baru', $tugas_baru || 0]
+            ['Selesai', $selesai],
+            ['Revisi', $revisi],
+            ['Dikerjakan', $dikerjakan],
+            ['Tugas Baru', $tugas_baru]
         ];
-
-        // dd($chartData);
 
         return response()->json(['selesai' => $selesai, 'revisi' => $revisi, 'tugas_baru' => $tugas_baru, 'chartData' => $chartData]);
     }
@@ -437,25 +451,14 @@ class mentorController extends Controller
                 $query->where('id', $tim);
             })
             ->get();
-        // $users = User::where('peran_id', 1)->where('status_kelulusan', 0)
-        // ->where(function ($query) use ($tim) {
-        //     $query->whereDoesntHave('tim', function ($subQuery) {
-        //         $subQuery->where('kadaluwarsa', false);
-        //     })
-        //         ->orWhere(function ($subQuery) use ($tim) {
-        //             $subQuery->whereHas('tim', function ($innerSubQuery) use ($tim) {
-        //                 $innerSubQuery->where('id', $tim);
-        //             });
-        //         });
-        // })
-        // ->get();
-        // dd($tim);
+
         $users = Anggota::whereIn('status', ['kicked', 'expired'])
             ->where('tim_id', '!=', $tim)
             ->orWhere(function ($query) use ($tim) {
                 $query->where('tim_id', $tim)
                     ->where('status', 'active');
             })
+            // ->orderBy('jabatan_id')
             ->get();
 
         $usersArray = $users->pluck('user_id')->toArray();
@@ -660,5 +663,55 @@ class mentorController extends Controller
         $galery->delete();
 
         return response()->json(['galery' => $galery]);
+    }
+
+    protected function siswaPresentasiPage()
+    {
+        $notifikasi = Notifikasi::where('user_id', Auth::user()->id)
+            ->whereHas('user', function ($query) {
+                $query->where('divisi_id', Auth::user()->divisi_id);
+            })
+            ->get();
+
+        $historyPresentasi = HistoryPresentasi::query()
+            ->orderBy('created_at')
+            ->paginate(12);
+
+        return response()->view('mentor.siswa-presentasi', compact('notifikasi', 'historyPresentasi'));
+    }
+
+    protected function detailPresentasiPage(String $code)
+    {
+        $notifikasi = Notifikasi::where('user_id', Auth::user()->id)
+            ->whereHas('user', function ($query) {
+                $query->where('divisi_id', Auth::user()->divisi_id);
+            })
+            ->get();
+
+        $history = HistoryPresentasi::with([
+            'presentasi.tim.user',
+            'presentasi.tim.project.tema',
+            'presentasi.limitPresentasiDivisi.presentasiDivisi' => function ($query) {
+                $query->where('divisi_id', Auth::user()->divisi_id);
+            },
+        ])
+            ->where('code', $code)
+            ->first();
+
+        $unconfirmedPresentasi = Presentasi::query()
+            ->with([
+                'tim.user',
+                'tim.project.tema',
+                'tim.presentasi',
+            ])
+            ->where('history_presentasi_id', $history->id)
+            ->whereHas('tim.divisi', function ($query) {
+                $query->where('id', Auth::user()->divisi_id);
+            })
+            ->where('status_presentasi', 'menunggu')
+            ->orderBy('jadwal_ke', 'asc')
+            ->get();
+
+        return response()->view('mentor.detail-presentasi', compact('history', 'unconfirmedPresentasi', 'notifikasi'));
     }
 }

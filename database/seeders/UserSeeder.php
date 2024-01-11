@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -25,6 +26,8 @@ class UserSeeder extends Seeder
                     'divisi_id' => '1',
                     'password' => Hash::make('password'),
                     'peran_id' => 1,
+                    "tanggal_bergabung" => Carbon::now(),
+                    "tanggal_lulus" => Carbon::now()->addDays(100)
                 ]
             ]);
 

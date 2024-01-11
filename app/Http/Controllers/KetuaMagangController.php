@@ -27,10 +27,10 @@ class KetuaMagangController extends Controller
             $query->whereIn('status_tim', ['pre_mini', 'mini', 'big'])
                 ->where('kadaluwarsa', 0);
         })->count();
-        $present = Presentasi::where('status_pengajuan', 'disetujui')->whereDate('created_at', now())->count();
+        $present = Presentasi::whereDate('created_at', now())->count();
         $tims = User::find(Auth::user()->id)->tim()->get();
 
-        $presentasi = Presentasi::with('tim')->where('status_pengajuan', 'disetujui')->whereDate('created_at', now())->latest('created_at')->take(5)->get()->reverse();
+        $presentasi = Presentasi::with('tim')->whereDate('created_at', now())->latest('created_at')->take(5)->get()->reverse();
 
         $currentYear = Carbon::now()->year;
         $currentMonth = Carbon::now()->month;

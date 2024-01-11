@@ -1,11 +1,15 @@
 <?php
 
+use App\Http\Controllers\Api\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\tambahUsersController;
 use App\Http\Controllers\Api\PenggunaController;
+use App\Http\Controllers\Api\PresentasiDivisiController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\PengajuanPresentasiController;
+use App\Http\Controllers\siswaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,8 +22,14 @@ use App\Http\Controllers\PengajuanPresentasiController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('login', [LoginController::class, 'login']);
+Route::post('forgot', [LoginController::class, 'forgot']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('user', [UserController::class, 'user']);
+    Route::post('presentasi-divisi', [PresentasiDivisiController::class, 'store']);
+
+    Route::get('siswa',[siswaController::class,'list']);
 });
 
 Route::get('division', [DivisiController::class, 'index']);
@@ -40,3 +50,4 @@ Route::get('pengguna',[PenggunaController::class, 'index']);
 Route::post('pengguna-api',[PenggunaController::class, 'store']);
 Route::delete('deletePengguna/{user}',[PenggunaController::class,'destroy']);
 Route::patch('editDivisi/{user}', [PenggunaController::class, 'UpdateDivisi']);
+Route::post('storeCvs', [PenggunaController::class, 'storeCsv']);

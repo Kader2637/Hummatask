@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ResponseHelper;
+use App\Http\Resources\SiswaResource;
 use App\Models\Anggota;
 use App\Models\Comments;
 use App\Models\Notifikasi;
@@ -10,7 +12,9 @@ use App\Models\User;
 use App\Models\Tim;
 use App\Models\Tugas;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 
 class siswaController extends Controller
@@ -88,5 +92,12 @@ class siswaController extends Controller
         // dd($tims);
         $notifikasi = Notifikasi::where('user_id', Auth::user()->id)->get();
         return response()->view('siswa.profile-siswa', compact('title', 'user', 'tims', 'notifikasi'));
+    }
+
+    public function list() : JsonResponse
+    {
+        $student = User::where('status_kelulusan', 0)->get();
+
+        return ResponseHelper::success(SiswaResource::collection($student));
     }
 }
