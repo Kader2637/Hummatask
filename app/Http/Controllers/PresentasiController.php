@@ -27,8 +27,12 @@ class PresentasiController extends Controller
 {
     protected function historiPresentasiPage()
     {
+
+        $userID = Auth::user()->id;
+
+        $notifikasi = Notifikasi::where('user_id', $userID)->get();
         $historyPresentasi = Presentasi::where('status_presentasi', 'menunggu');
-        return view('mentor.presentasi', compact('historyPresentasi'));
+        return view('mentor.history-presentasi', compact('notifikasi','historyPresentasi'));
     }
 
     protected function ajukanPresentasi(RequestPengajuanPresentasi $request, $code)
