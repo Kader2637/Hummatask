@@ -156,7 +156,13 @@ class timController extends Controller
             })
             ->toArray();
 
-        $chartData = [['Status Tugas', 'Jumlah'], ['Selesai', $selesaiCount || 0], ['Revisi', $revisiCount || 0], ['Dikerjakan', $dikerjakanCount || 0], ['Tugas Baru', $tugasBaruCount || 0]];
+        $chartData = [
+            ['Status Tugas', 'Jumlah'],
+            ['Selesai', $selesaiCount],
+            ['Revisi', $revisiCount],
+            ['Dikerjakan', $dikerjakanCount],
+            ['Tugas Baru', $tugasBaruCount]
+        ];
 
         return view('siswa.tim.project', compact('hasProjectRelation', 'days', 'tanggal', 'persentase', 'selesaiCount', 'revisiCount', 'chartData', 'title', 'tim', 'anggota', 'project', 'notifikasi'));
     }
@@ -290,8 +296,8 @@ class timController extends Controller
         $catatanTeam = Catatan::whereHas('CatatanDetail', function ($query) {
             $query->whereColumn('catatan_details.catatan_id', 'catatans.id');
         })
-        ->with('catatanDetail')
-        ->get();        
+            ->with('catatanDetail')
+            ->get();
 
         return view('siswa.tim.catatan', compact('catatanTeam', 'title', 'anggota', 'tim', 'catatans', 'project', 'notifikasi'));
     }
