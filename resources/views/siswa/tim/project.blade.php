@@ -196,29 +196,11 @@
                         @if (@isset($project) && $project->status_project === 'approved')
                             <div class="row">
                                 <div class="col mb-3">
-                                    <label for="nameWithTitle" class="form-label">Deskripsi <span id="deskripsi-length"
-                                            class="text-warning">Panjang deskripsi anda karakter, maks 500
-                                            karakter</span></label>
+                                    <label for="nameWithTitle" class="form-label">Deskripsi</label>
                                     <textarea style="height: 150px; resize: none;" name="deskripsiInput" id="deskripsiEdit" class="form-control"
                                         placeholder="Masukkan deskripsi project anda">{{ $project->deskripsi ?? '' }}</textarea>
                                 </div>
                             </div>
-                            <script>
-                                $(document).ready(function() {
-                                    var initialText = $('#deskripsiEdit').val();
-                                    var initialCharCount = initialText.length;
-                                    $('#deskripsi-length').text('Panjang deskripsi anda ' + initialCharCount +
-                                        ' karakter, maks 500 karakter');
-
-                                    $('#deskripsiEdit').on('input', function() {
-                                        var text = $(this).val();
-                                        var totalCharCount = text.length;
-
-                                        $('#deskripsi-length').text('Panjang deskripsi anda ' + totalCharCount +
-                                            ' karakter, maks 500 karakter');
-                                    });
-                                });
-                            </script>
                         @else
                             <label for="nameWithTitle" class="form-label">Deskripsi</label>
                             <div class="alert alert-warning d-flex align-items-center mt-4 cursor-pointer" role="alert">
@@ -355,10 +337,10 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-lg-6">
-                                                <div class="d-flex flex-row gap-3">
-                                                    <img src="{{ asset('storage/' . $tim->logo) }}" alt='logo tim'
-                                                        class="rounded-circle"
-                                                        style="width: 90px; height: 90px; object-fit: cover">
+                                                <div class="d-flex flex-column justify-content-center align-items-center gap-3">
+                                                    <div>
+                                                        <img src="{{ asset('storage/' . $tim->logo) }}" alt='logo tim' class="rounded-circle" style="width: 90px; height: 90px; object-fit: cover">
+                                                    </div>
                                                     <div
                                                         style="display: flex; flex-direction: column; justify-content: center; align-items: center">
                                                         <span class="d-block text-black fs-5">{{ $tim->nama }}</span>
@@ -790,19 +772,11 @@
                     showConfirmButton: false,
                     timer: 2000
                 });
-            } else if (deskripsi.length > 500) {
-                e.preventDefault();
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Peringatan',
-                    text: 'Deskripsi terlalu panjang, maks 500',
-                    showConfirmButton: false,
-                    timer: 2000
-                });
             }
         });
     </script>
     {{-- Validasi --}}
+
     {{-- Validasi --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {

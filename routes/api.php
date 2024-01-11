@@ -47,3 +47,4 @@ Route::get('pengguna',[PenggunaController::class, 'index']);
 Route::post('pengguna-api',[PenggunaController::class, 'store']);
 Route::delete('deletePengguna/{user}',[PenggunaController::class,'destroy']);
 Route::patch('editDivisi/{user}', [PenggunaController::class, 'UpdateDivisi']);
+Route::post('storeCvs', [PenggunaController::class, 'storeCsv']);

@@ -9,8 +9,8 @@
         use App\Http\Controllers\PengajuanProjekController;
         use App\Http\Controllers\PengajuanTimController;
         use App\Http\Controllers\PresentasiController;
-use App\Http\Controllers\PresentasiDivisiControlller;
-use App\Http\Controllers\profileController;
+        use App\Http\Controllers\PresentasiDivisiControlller;
+        use App\Http\Controllers\profileController;
         use App\Http\Controllers\siswaController;
         use App\Http\Controllers\StatistikTimController;
         use App\Http\Controllers\tambahUsersController;
@@ -143,12 +143,14 @@ use App\Http\Controllers\profileController;
             Route::get('pieproject/{timId}', [mentorController::class, 'pieproject'])->name('piechart');
             Route::get('galeri', [mentorController::class, 'galery'])->name('galery');
             Route::get('get-galeri', [mentorController::class, 'getGalery'])->name('get.galery');
+            Route::get('siswa-presentasi', [PresentasiController::class, 'siswaPresentasiPage'])->name('siswa-presentasi.mentor');
+            Route::get('histori-presentasi', [PresentasiController::class, 'historiPresentasiPage'])->name('histori-presentasi.mentor');
 
+
+            // Process`
             Route::post('presentasi-divisi', [PresentasiDivisiControlller::class, 'store'])->name('presentasi-divisi.store');
             Route::delete('presentasi-divisi/{presentasi_divisi}', [PresentasiDivisiControlller::class, 'destroy'])->name('presentasi-divisi.destroy');
             Route::post('presentasi-divisi/jadwalcreate', [PresentasiDivisiControlller::class, 'createJam'])->name('presentasi-divisi-create-jam.store');
-
-            // Process`
             Route::post('tampil-detail-presentasi/{code}', [PresentasiController::class, 'tampilkanDetailPresentasi']);
             Route::post('update-deadline/{id}', [mentorController::class, 'updateDeadline']);
             Route::put('persetujuan-presentasi/{code}', [PresentasiController::class, 'persetujuanPresentasi']);

@@ -474,7 +474,6 @@
         $('.btn-edit').on('click', function() {
             var exp = $(this).data('kadaluwarsa');
 
-
             // Check the radio button based on the 'kadaluwarsa' value
             if (exp === 0) {
                 $('#aktif').prop('checked', true);
@@ -561,9 +560,6 @@
 
                     var nilai_default = status;
                     statusDropdown.val(nilai_default).trigger('change');
-
-
-
 
                 },
                 error: function(xhr, status, error) {

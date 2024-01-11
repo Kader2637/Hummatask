@@ -257,24 +257,6 @@
                                             <div class="row">
                                                 @forelse ($sesi_senin as $data)
                                                     <div class="col-12 col-lg-4 col-xxl-4 my-2">
-                                                        @if (
-                                                            $data->presentasi->isNotEmpty() &&
-                                                                $data->presentasi->first()->isPengujianDisetujui() &&
-                                                                $data->id === $data->presentasi->first()->limitPresentasiDevisiId())
-                                                            <label class="card bg-label-primary" disabled>
-                                                                <input name="plan" class="radio" type="radio"
-                                                                    value="{{ $data->id }}" disabled>
-                                                                <span class="plan-details text-center">
-                                                                    <p class="fs-6 mb-2 text-dark"
-                                                                        style="font-weight: 500">
-                                                                        Jadwal Ke-{{ $loop->iteration }}
-                                                                    </p>
-                                                                    <p class=" text-primary mb-0">
-                                                                        {{ $data->mulai }} - {{ $data->akhir }}
-                                                                    </p>
-                                                                </span>
-                                                            </label>
-                                                        @else
                                                             <label class="card">
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}">
@@ -288,7 +270,6 @@
                                                                     </p>
                                                                 </span>
                                                             </label>
-                                                        @endif
                                                     </div>
                                                 @empty
                                                     <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di
@@ -330,24 +311,6 @@
                                             <div class="row">
                                                 @forelse ($sesi_selasa as $data)
                                                     <div class="col-12 col-lg-4 col-xxl-4 my-2">
-                                                        @if (
-                                                            $data->presentasi->isNotEmpty() &&
-                                                                $data->presentasi->first()->isPengujianMenunggu() &&
-                                                                $data->id === $data->presentasi->first()->limitPresentasiDevisiId())
-                                                            <label class="card bg-label-primary" disabled>
-                                                                <input name="plan" class="radio" type="radio"
-                                                                    value="{{ $data->id }}" disabled>
-                                                                <span class="plan-details text-center">
-                                                                    <p class="fs-6 mb-2 text-dark"
-                                                                        style="font-weight: 500">
-                                                                        Jadwal Ke-{{ $loop->iteration }}
-                                                                    </p>
-                                                                    <p class="text-primary mb-0">
-                                                                        {{ $data->mulai }} - {{ $data->akhir }}
-                                                                    </p>
-                                                                </span>
-                                                            </label>
-                                                        @else
                                                             <label class="card">
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}">
@@ -361,7 +324,6 @@
                                                                     </p>
                                                                 </span>
                                                             </label>
-                                                        @endif
                                                     </div>
                                                 @empty
                                                     <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di
@@ -403,24 +365,6 @@
                                             <div class="row">
                                                 @forelse ($sesi_rabu as $data)
                                                     <div class="col-12 col-lg-4 col-xxl-4 my-2">
-                                                        @if (
-                                                            $data->presentasi->isNotEmpty() &&
-                                                                $data->presentasi->first()->isPengujianDisetujui() &&
-                                                                $data->id === $data->presentasi->first()->limitPresentasiDevisiId())
-                                                            <label class="card bg-label-primary" disabled>
-                                                                <input name="plan" class="radio" type="radio"
-                                                                    value="{{ $data->id }}" disabled>
-                                                                <span class="plan-details text-center">
-                                                                    <p class="fs-6 mb-2 text-dark"
-                                                                        style="font-weight: 500">
-                                                                        Jadwal Ke-{{ $loop->iteration }}
-                                                                    </p>
-                                                                    <p class="text-primary mb-0">
-                                                                        {{ $data->mulai }} - {{ $data->akhir }}
-                                                                    </p>
-                                                                </span>
-                                                            </label>
-                                                        @else
                                                             <label class="card">
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}">
@@ -434,7 +378,6 @@
                                                                     </p>
                                                                 </span>
                                                             </label>
-                                                        @endif
                                                     </div>
                                                 @empty
                                                     <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di
@@ -476,24 +419,6 @@
                                             <div class="row">
                                                 @forelse ($sesi_kamis as $data)
                                                     <div class="col-12 col-lg-4 col-xxl-4 my-2">
-                                                        @if (
-                                                            $data->presentasi->isNotEmpty() &&
-                                                                $data->presentasi->first()->isPengujianDisetujui() &&
-                                                                $data->id === $data->presentasi->first()->limitPresentasiDevisiId())
-                                                            <label class="card bg-label-primary" disabled>
-                                                                <input name="plan" class="radio" type="radio"
-                                                                    value="{{ $data->id }}" disabled>
-                                                                <span class="plan-details text-center">
-                                                                    <p class="fs-6 mb-2 text-dark"
-                                                                        style="font-weight: 500">
-                                                                        Jadwal Ke-{{ $loop->iteration }}
-                                                                    </p>
-                                                                    <p class="text-primary mb-0">
-                                                                        {{ $data->mulai }} - {{ $data->akhir }}
-                                                                    </p>
-                                                                </span>
-                                                            </label>
-                                                        @else
                                                             <label class="card">
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}">
@@ -507,7 +432,6 @@
                                                                     </p>
                                                                 </span>
                                                             </label>
-                                                        @endif
                                                     </div>
                                                 @empty
                                                     <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di
@@ -549,24 +473,6 @@
                                             <div class="row">
                                                 @forelse ($sesi_jumat as $data)
                                                     <div class="col-12 col-lg-4 col-xxl-4 my-2">
-                                                        @if (
-                                                            $data->presentasi->isNotEmpty() &&
-                                                                $data->presentasi->first()->isPengujianDisetujui() &&
-                                                                $data->id === $data->presentasi->first()->limitPresentasiDevisiId())
-                                                            <label class="card bg-label-primary" disabled>
-                                                                <input name="plan" class="radio" type="radio"
-                                                                    value="{{ $data->id }}" disabled>
-                                                                <span class="plan-details text-center">
-                                                                    <p class="fs-6 mb-2 text-dark"
-                                                                        style="font-weight: 500">
-                                                                        Jadwal Ke-{{ $loop->iteration }}
-                                                                    </p>
-                                                                    <p class="text-primary mb-0">
-                                                                        {{ $data->mulai }} - {{ $data->akhir }}
-                                                                    </p>
-                                                                </span>
-                                                            </label>
-                                                        @else
                                                             <label class="card">
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}">
@@ -580,7 +486,6 @@
                                                                     </p>
                                                                 </span>
                                                             </label>
-                                                        @endif
                                                     </div>
                                                 @empty
                                                     <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di
@@ -627,7 +532,7 @@
                                 <th class="text-white">No</th>
                                 <th class="text-white">Tanggal</th>
                                 <th class="text-white">Status Presentasi</th>
-                                <th class="text-white">Status Pengajuan</th>
+                                <th class="text-white">Jadwal ke</th>
                                 <th class="text-white">Dikonfirmasi oleh</th>
                                 <th class="text-white">Feedback</th>
                             </tr>
@@ -649,15 +554,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($data->status_pengajuan === 'menunggu')
-                                            <span class="badge bg-label-warning me-1">menunggu</span>
-                                        @endif
-                                        @if ($data->status_pengajuan === 'disetujui')
-                                            <span class="badge bg-label-success me-1">disetujui</span>
-                                        @endif
-                                        @if ($data->status_pengajuan === 'ditolak')
-                                            <span class="badge bg-label-danger me-1">ditolak</span>
-                                        @endif
+                                        {{ $data->jadwal_ke }}
                                     </td>
                                     <td class="d-flex align-items-center justify-content-center">
                                         @if ($data->user_approval_id === null)
