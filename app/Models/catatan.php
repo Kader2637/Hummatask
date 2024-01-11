@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class catatan extends Model
 {
@@ -13,7 +14,13 @@ class catatan extends Model
 
     protected $guarded = [];
 
-    public function tim(): BelongsTo {
+    public function tim(): BelongsTo
+    {
         return $this->BelongsTo(Tim::class);
+    }
+
+    public function catatanDetail(): HasMany
+    {
+        return $this->HasMany(CatatanDetail::class, 'catatan_id', 'id');
     }
 }

@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('catatans', function (Blueprint $table) {
+        Schema::create('catatan_details', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
-            $table->foreignId('tim_id')->nullable()->constrained('tims');
-            $table->string('title')->nullable();
-            $table->enum('type_note', ['private', 'revisi']);
+            $table->text('catatan_text');
+            $table->foreignId('catatan_id')->constrained('catatans')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('catatans');
+        Schema::dropIfExists('catatan_details');
     }
 };

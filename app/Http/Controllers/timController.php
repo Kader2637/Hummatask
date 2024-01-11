@@ -287,7 +287,13 @@ class timController extends Controller
 
         $hasProjectRelation = $tim->project()->exists();
 
-        return view('siswa.tim.catatan', compact('title', 'anggota', 'tim', 'catatans', 'project', 'notifikasi'));
+        $catatanTeam = Catatan::whereHas('CatatanDetail', function ($query) {
+            $query->whereColumn('catatan_details.catatan_id', 'catatans.id');
+        })
+        ->with('catatanDetail')
+        ->get();        
+
+        return view('siswa.tim.catatan', compact('catatanTeam', 'title', 'anggota', 'tim', 'catatans', 'project', 'notifikasi'));
     }
 
     protected function historyCatatanPage($code)
