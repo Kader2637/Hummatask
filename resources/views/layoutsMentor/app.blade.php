@@ -236,6 +236,26 @@
                             <div>Dashboard</div>
                         </a>
                     </li>
+                    <li class="menu-item open">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons ti ti-presentation"></i>
+                            <div>Presentasi</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item ">
+                                <a href="{{ route('siswa-presentasi.mentor') }}"
+                                    class="menu-link">
+                                    <div>Siswa Presentasi</div>
+                                </a>
+                            </li>
+                            <li class="menu-item ">
+                                <a href="{{ route('histori-presentasi.mentor') }}"
+                                    class="menu-link">
+                                    <div>Histori Presentasi</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="menu-item {{ request()->routeIs('presentasi.mentor') ? 'active' : '' }}">
                         <a href="{{ route('presentasi.mentor') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-presentation"></i>
@@ -303,7 +323,8 @@
                         <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
                             <ul class="navbar-nav flex-row align-items-center ms-auto gap-1">
                                 <li class="navbar-item">
-                                    <a href="https://pkl.hummatech.com/auth-login" class="btn btn-label-primary btn-md" id="login-pkl-btn">Login
+                                    <a href="https://pkl.hummatech.com/auth-login"
+                                        class="btn btn-label-primary btn-md" id="login-pkl-btn">Login
                                         pkl.hummatech</a>
                                 </li>
                                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
