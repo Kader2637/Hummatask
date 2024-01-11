@@ -404,13 +404,11 @@ class mentorController extends Controller
 
         $chartData = [
             ['Status Tugas', 'Jumlah'],
-            ['Selesai', $selesai || 0],
-            ['Revisi', $revisi || 0],
-            ['Dikerjakan', $dikerjakan || 0],
-            ['Tugas Baru', $tugas_baru || 0]
+            ['Selesai', $selesai],
+            ['Revisi', $revisi],
+            ['Dikerjakan', $dikerjakan],
+            ['Tugas Baru', $tugas_baru]
         ];
-
-        // dd($chartData);
 
         return response()->json(['selesai' => $selesai, 'revisi' => $revisi, 'tugas_baru' => $tugas_baru, 'chartData' => $chartData]);
     }
@@ -700,11 +698,12 @@ class mentorController extends Controller
             ->where('code', $code)
             ->first();
 
-        $unconfirmedPresentasi = Presentasi::with([
-            'tim.user',
-            'tim.project.tema',
-            'tim.presentasi',
-        ])
+        $unconfirmedPresentasi = Presentasi::query()
+            ->with([
+                'tim.user',
+                'tim.project.tema',
+                'tim.presentasi',
+            ])
             ->where('history_presentasi_id', $history->id)
             ->whereHas('tim.divisi', function ($query) {
                 $query->where('id', Auth::user()->divisi_id);
