@@ -285,7 +285,7 @@
                             <div class="form-catatan-repeater row mb-3">
                               <div class="col-md-10 col-10">
                                 <label for="catatan" class="mb-2 form-label">Catatan {{ ++$i }}</label>
-                                <input name="catatan_text[]" id="catatan-input" type="text"
+                                <input name="catatan_text[]" id="catatan-input-edit" type="text"
                                   value="{{ $item->catatan_text }}" class="form-control">
                               </div>
                               <div class="col-md-1 col-1 d-flex justify-content-center align-items-end">
@@ -316,7 +316,7 @@
                         `<div class="form-catatan-repeater row mb-3">
                               <div class="col-md-10 col-10">
                                 <label for="catatan" class="mb-2 form-label">Catatan Baru</label>
-                                <input name="catatan_text[]" id="catatan-input" type="text" value class="form-control">
+                                <input name="catatan_text[]" id="catatan-input-edit" type="text" value class="form-control">
                               </div>
                               <div class="col-md-1 col-1 d-flex justify-content-center align-items-end">
                                 <div id="button-delete">
@@ -345,7 +345,7 @@
                           $formCatatanRepeater.remove();
                           swal.fire(
                             'Terhapus!',
-                            'Elemen berhasil dihapus.',
+                            'Catatan berhasil dihapus.',
                             'success'
                           );
                         }
@@ -509,7 +509,19 @@
 
     document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('edit-form').addEventListener('submit', function(event) {
+        var judulCatatan = document.getElementById('titleEdit').value;
         var catatanInput = document.getElementById('catatan-input-edit').value;
+
+        if (judulCatatan.trim() === '') {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Gagal',
+            text: 'Judul catatan tidak boleh kosong!',
+            showConfirmButton: false,
+            timer: 4000,
+          });
+          event.preventDefault();
+        } else {}
 
         if (catatanInput.trim() === '') {
           event.preventDefault();
