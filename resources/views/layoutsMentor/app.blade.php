@@ -303,7 +303,8 @@
                         <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
                             <ul class="navbar-nav flex-row align-items-center ms-auto gap-1">
                                 <li class="navbar-item">
-                                    <a href="https://pkl.hummatech.com/auth-login" class="btn btn-label-primary btn-md" id="login-pkl-btn">Login
+                                    <a href="https://pkl.hummatech.com/auth-login"
+                                        class="btn btn-label-primary btn-md" id="login-pkl-btn">Login
                                         pkl.hummatech</a>
                                 </li>
                                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
@@ -505,6 +506,18 @@
                     method: 'GET',
                     success: function(response) {
                         tampilkanNotifikasi(response.notifikasi);
+
+                        var notifikasiLama = JSON.parse(localStorage.getItem('notifikasi')) || [];
+                        var notifikasiBaru = cekNotifikasiBaru(response.notifikasi, notifikasiLama);
+
+                        // Simpan data notifikasi ke dalam local storage
+                        localStorage.setItem('notifikasi', JSON.stringify(response.notifikasi));
+
+                        // Cek apakah ada data notifikasi baru yang belum ada di local storage
+                        if (notifikasiBaru.length > 0) {
+                            var audio = new Audio('<?php echo asset('notification.mp3'); ?>');
+                            audio.play();
+                        }
                     },
                     error: function(error) {
                         console.log('Error mengambil notifikasi:', error);
@@ -520,15 +533,9 @@
 
                 if (notifikasi.length > 0) {
                     countBadge.text(notifikasi.length);
+                    countBadge.show();
                 } else {
-                    countBadge
-                        .hide();
-                }
-                if (notifikasi.length > 0) {
-                    countBadge.text(notifikasi.length);
-                } else {
-                    countBadge
-                        .hide();
+                    countBadge.hide();
                 }
 
                 notifikasi.reverse();
@@ -536,8 +543,7 @@
                 notifikasi.forEach(function(item) {
                     var waktuNotifikasi = new Date(item.created_at);
                     var waktuSekarang = new Date();
-                    var perbedaanWaktu = Math.floor((waktuSekarang - waktuNotifikasi) /
-                        1000);
+                    var perbedaanWaktu = Math.floor((waktuSekarang - waktuNotifikasi) / 1000);
 
                     function formatWaktu(detik) {
                         if (detik < 60) {
@@ -599,6 +605,25 @@
 
                     daftarNotifikasi.append(notifikasiBaru);
                 });
+            }
+
+            function cekNotifikasiBaru(notifikasiBaru, notifikasiLama) {
+                var notifikasiBaruFiltered = [];
+
+                notifikasiBaru.forEach(function(item) {
+                    var found = false;
+                    for (var i = 0; i < notifikasiLama.length; i++) {
+                        if (notifikasiLama[i].id === item.id) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        notifikasiBaruFiltered.push(item);
+                    }
+                });
+
+                return notifikasiBaruFiltered;
             }
 
             ambilNotifikasi();
