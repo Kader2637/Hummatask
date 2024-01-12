@@ -31,13 +31,15 @@ class PresentasiController extends Controller
 
         $userID = Auth::user()->id;
 
-        $presentasiSelesai = Presentasi::where('status_presentasi', 'selesai')->whereDate('created_at', $hariIni)->get();
+        $presentasiSelesai = Presentasi::where('status_presentasi', 'selesai')
+        ->whereDate('created_at', $hariIni)
+        ->get();
+        
         $tidakPresentasi = Tim::where('sudah_presentasi', 0)->whereDate('created_at', $hariIni)
         ->whereDoesntHave('presentasi', function ($query) use ($hariIni) {
             $query->whereDate('created_at', $hariIni);
         })
         ->get();
-        dd($tidakPresentasi);
 
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
         return view('mentor.history-presentasi', compact('notifikasi', 'presentasiSelesai', 'tidakPresentasi', 'hariIni'));
