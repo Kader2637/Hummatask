@@ -255,21 +255,24 @@
                                             <input type="text" name="judul" class="form-control">
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
+                                                @php
+                                                    $pfft = 1;
+                                                @endphp
                                                 @forelse ($sesi_senin as $data)
                                                     @php
                                                         $xx = false;
                                                     @endphp
                                                     @if (\Carbon\Carbon::now()->parse('l') == 'Monday')
-                                                    @foreach ($cek_present as $item)
-                                                        @if ($item->jadwal_ke == $pfft)
-                                                            @php
-                                                                $xx = true;
-                                                            @endphp
-                                                        @endif
-                                                    @endforeach
+                                                        @foreach ($cek_present as $item)
+                                                            @if ($item->jadwal_ke == $pfft)
+                                                                @php
+                                                                    $xx = true;
+                                                                @endphp
+                                                            @endif
+                                                        @endforeach
 
-                                                    <div class="col-12 col-lg-4 col-xxl-4 my-2">
-                                                            <label class="card">{{ $xx ? "Disable" : "" }}
+                                                        <div class="col-12 col-lg-4 col-xxl-4 my-2">
+                                                            <label class="card">{{ $xx ? 'Disable' : '' }}
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}">
                                                                 <span class="plan-details text-center">
@@ -282,9 +285,9 @@
                                                                     </p>
                                                                 </span>
                                                             </label>
-                                                    </div>
+                                                        </div>
                                                     @else
-                                                    <div class="col-12 col-lg-4 col-xxl-4 my-2">
+                                                        <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                             <label class="card">
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}">
@@ -298,7 +301,7 @@
                                                                     </p>
                                                                 </span>
                                                             </label>
-                                                    </div>
+                                                        </div>
                                                     @endif
                                                 @empty
                                                     <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di
@@ -317,7 +320,7 @@
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
                                                     <div class="">
-                                                        <button data-bs-dismiss="modal" class="btn btn-danger">
+                                                        <button data-bs-dismiss="modal" class="btn btn-label-secondary waves-effect">
                                                             Tutup
                                                         </button>
                                                     </div>
@@ -338,51 +341,54 @@
                                             <input type="text" name="judul" class="form-control">
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
-                                                @forelse ($sesi_selasa as $data)
                                                 @php
-                                                $xx = false;
+                                                    $pfft = 1;
                                                 @endphp
-                                                @if (\Carbon\Carbon::now()->parse('l') == 'Tuesday')
-                                                @foreach ($cek_present as $item)
-                                                    @if ($item->jadwal_ke == $pfft)
-                                                        @php
-                                                            $xx = true;
-                                                        @endphp
-                                                    @endif
-                                                @endforeach
+                                                @forelse ($sesi_selasa as $data)
+                                                    @php
+                                                        $xx = false;
+                                                    @endphp
+                                                    @if (\Carbon\Carbon::now()->parse('l') == 'Tuesday')
+                                                        @foreach ($cek_present as $item)
+                                                            @if ($item->jadwal_ke == $pfft)
+                                                                @php
+                                                                    $xx = true;
+                                                                @endphp
+                                                            @endif
+                                                        @endforeach
 
-                                                <div class="col-12 col-lg-4 col-xxl-4 my-2">
-                                                        <label class="card">{{ $xx ? "Disable" : "" }}
-                                                            <input name="plan" class="radio" type="radio"
-                                                                value="{{ $data->id }}">
-                                                            <span class="plan-details text-center">
-                                                                <p class="fs-6 mb-2 text-dark"
-                                                                    style="font-weight: 500">
-                                                                    Jadwal Ke-{{ $pfft++ }}
-                                                                </p>
-                                                                <p class="text-primary mb-0">
-                                                                    {{ $data->mulai }} - {{ $data->akhir }}
-                                                                </p>
-                                                            </span>
-                                                        </label>
-                                                </div>
-                                                @else
-                                                <div class="col-12 col-lg-4 col-xxl-4 my-2">
-                                                        <label class="card">
-                                                            <input name="plan" class="radio" type="radio"
-                                                                value="{{ $data->id }}">
-                                                            <span class="plan-details text-center">
-                                                                <p class="fs-6 mb-2 text-dark"
-                                                                    style="font-weight: 500">
-                                                                    Jadwal Ke-{{ $pfft++ }}
-                                                                </p>
-                                                                <p class="text-primary mb-0">
-                                                                    {{ $data->mulai }} - {{ $data->akhir }}
-                                                                </p>
-                                                            </span>
-                                                        </label>
-                                                </div>
-                                                @endif
+                                                        <div class="col-12 col-lg-4 col-xxl-4 my-2">
+                                                            <label class="card">{{ $xx ? 'Disable' : '' }}
+                                                                <input name="plan" class="radio" type="radio"
+                                                                    value="{{ $data->id }}">
+                                                                <span class="plan-details text-center">
+                                                                    <p class="fs-6 mb-2 text-dark"
+                                                                        style="font-weight: 500">
+                                                                        Jadwal Ke-{{ $pfft++ }}
+                                                                    </p>
+                                                                    <p class="text-primary mb-0">
+                                                                        {{ $data->mulai }} - {{ $data->akhir }}
+                                                                    </p>
+                                                                </span>
+                                                            </label>
+                                                        </div>
+                                                    @else
+                                                        <div class="col-12 col-lg-4 col-xxl-4 my-2">
+                                                            <label class="card">
+                                                                <input name="plan" class="radio" type="radio"
+                                                                    value="{{ $data->id }}">
+                                                                <span class="plan-details text-center">
+                                                                    <p class="fs-6 mb-2 text-dark"
+                                                                        style="font-weight: 500">
+                                                                        Jadwal Ke-{{ $pfft++ }}
+                                                                    </p>
+                                                                    <p class="text-primary mb-0">
+                                                                        {{ $data->mulai }} - {{ $data->akhir }}
+                                                                    </p>
+                                                                </span>
+                                                            </label>
+                                                        </div>
+                                                    @endif
                                                 @empty
                                                     <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di
                                                         hari lain
@@ -421,21 +427,24 @@
                                             <input type="text" name="judul" class="form-control">
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
-                                                @forelse ($sesi_rabu as $data)
                                                 @php
+                                                    $pfft = 1;
+                                                @endphp
+                                                @forelse ($sesi_rabu as $data)
+                                                    @php
                                                         $xx = false;
                                                     @endphp
                                                     @if (\Carbon\Carbon::now()->parse('l') == 'Wednesday')
-                                                    @foreach ($cek_present as $item)
-                                                        @if ($item->jadwal_ke == $pfft)
-                                                            @php
-                                                                $xx = true;
-                                                            @endphp
-                                                        @endif
-                                                    @endforeach
+                                                        @foreach ($cek_present as $item)
+                                                            @if ($item->jadwal_ke == $pfft)
+                                                                @php
+                                                                    $xx = true;
+                                                                @endphp
+                                                            @endif
+                                                        @endforeach
 
-                                                    <div class="col-12 col-lg-4 col-xxl-4 my-2">
-                                                            <label class="card">{{ $xx ? "Disable" : "" }}
+                                                        <div class="col-12 col-lg-4 col-xxl-4 my-2">
+                                                            <label class="card">{{ $xx ? 'Disable' : '' }}
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}">
                                                                 <span class="plan-details text-center">
@@ -448,9 +457,9 @@
                                                                     </p>
                                                                 </span>
                                                             </label>
-                                                    </div>
+                                                        </div>
                                                     @else
-                                                    <div class="col-12 col-lg-4 col-xxl-4 my-2">
+                                                        <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                             <label class="card">
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}">
@@ -464,7 +473,7 @@
                                                                     </p>
                                                                 </span>
                                                             </label>
-                                                    </div>
+                                                        </div>
                                                     @endif
                                                 @empty
                                                     <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di
@@ -504,21 +513,24 @@
                                             <input type="text" name="judul" class="form-control">
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
-                                                @forelse ($sesi_kamis as $data)
                                                 @php
+                                                    $pfft = 1;
+                                                @endphp
+                                                @forelse ($sesi_kamis as $data)
+                                                    @php
                                                         $xx = false;
                                                     @endphp
                                                     @if (\Carbon\Carbon::now()->parse('l') == 'Thursday')
-                                                    @foreach ($cek_present as $item)
-                                                        @if ($item->jadwal_ke == $pfft)
-                                                            @php
-                                                                $xx = true;
-                                                            @endphp
-                                                        @endif
-                                                    @endforeach
+                                                        @foreach ($cek_present as $item)
+                                                            @if ($item->jadwal_ke == $pfft)
+                                                                @php
+                                                                    $xx = true;
+                                                                @endphp
+                                                            @endif
+                                                        @endforeach
 
-                                                    <div class="col-12 col-lg-4 col-xxl-4 my-2">
-                                                            <label class="card">{{ $xx ? "Disable" : "" }}
+                                                        <div class="col-12 col-lg-4 col-xxl-4 my-2">
+                                                            <label class="card">{{ $xx ? 'Disable' : '' }}
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}">
                                                                 <span class="plan-details text-center">
@@ -531,9 +543,9 @@
                                                                     </p>
                                                                 </span>
                                                             </label>
-                                                    </div>
+                                                        </div>
                                                     @else
-                                                    <div class="col-12 col-lg-4 col-xxl-4 my-2">
+                                                        <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                             <label class="card">
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}">
@@ -547,7 +559,7 @@
                                                                     </p>
                                                                 </span>
                                                             </label>
-                                                    </div>
+                                                        </div>
                                                     @endif
                                                 @empty
                                                     <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di
@@ -595,16 +607,16 @@
                                                         $xx = false;
                                                     @endphp
                                                     @if (\Carbon\Carbon::now()->parse('l') == 'Friday')
-                                                    @foreach ($cek_present as $item)
-                                                        @if ($item->jadwal_ke == $pfft)
-                                                            @php
-                                                                $xx = true;
-                                                            @endphp
-                                                        @endif
-                                                    @endforeach
+                                                        @foreach ($cek_present as $item)
+                                                            @if ($item->jadwal_ke == $pfft)
+                                                                @php
+                                                                    $xx = true;
+                                                                @endphp
+                                                            @endif
+                                                        @endforeach
 
-                                                    <div class="col-12 col-lg-4 col-xxl-4 my-2">
-                                                            <label class="card">{{ $xx ? "Disable" : "" }}
+                                                        <div class="col-12 col-lg-4 col-xxl-4 my-2">
+                                                            <label class="card">{{ $xx ? 'Disable' : '' }}
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}">
                                                                 <span class="plan-details text-center">
@@ -617,9 +629,9 @@
                                                                     </p>
                                                                 </span>
                                                             </label>
-                                                    </div>
+                                                        </div>
                                                     @else
-                                                    <div class="col-12 col-lg-4 col-xxl-4 my-2">
+                                                        <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                             <label class="card">
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}">
@@ -633,7 +645,7 @@
                                                                     </p>
                                                                 </span>
                                                             </label>
-                                                    </div>
+                                                        </div>
                                                     @endif
                                                 @empty
                                                     <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di
@@ -724,7 +736,7 @@
                                                 data-feedback="{{ $data->feedback }}">
                                                 <i class="ti ti-eye me-1 text-warning"></i>
                                             </button>
-                                        {{-- @elseIf(($data->status_pengajuan === 'menunggu' || $data->status_presentasi === 'menunggu') && $data->feedback === null)
+                                            {{-- @elseIf(($data->status_pengajuan === 'menunggu' || $data->status_presentasi === 'menunggu') && $data->feedback === null)
                                             <button onclick="handleBelumDisetujuiFeedback()"
                                                 class=" border-0 text-secondary bg-transparent btn-feedback-modal">
                                                 <i class="ti ti-eye me-1 text-warning"></i>
@@ -807,13 +819,6 @@
                         timer: 2000
                     });
                     event.preventDefault();
-                }
-            });
-
-            $(formId).on('keydown', 'input', function(event) {
-                if (event.key === "Enter") {
-                    event.preventDefault();
-                    return false;
                 }
             });
         }
