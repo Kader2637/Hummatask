@@ -574,7 +574,7 @@
                         }
                     });
 
-                    if (values.slice(1).every(value => value === false)) {
+                    if (values.slice(1).every(value => value === 0)) {
                         chartStatus.style.display = 'block';
                         doughnutChart.style.display = 'none';
 

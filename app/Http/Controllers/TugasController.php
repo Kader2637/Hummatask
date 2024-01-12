@@ -50,7 +50,7 @@ class TugasController extends Controller
         $tugas = $tim
         ->tugas()
         ->with('comments.user', 'user','label')
-        ->orderBy('updated_at', 'desc')
+    ->orderBy('updated_at', 'desc')
         ->get();
 
         $dataTugas = [

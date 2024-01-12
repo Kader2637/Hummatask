@@ -216,7 +216,8 @@ class timController extends Controller
         $tim = Tim::where('code', $code)->firstOrFail();
         $tim_id = $tim->id;
 
-        $allSessions = LimitPresentasiDevisi::whereRelation('presentasiDivisi', 'divisi_id', '=', Auth::user()->divisi_id)
+        $allSessions = LimitPresentasiDevisi::query()
+            ->whereRelation('presentasiDivisi', 'divisi_id', '=', Auth::user()->divisi_id)
             ->with('presentasiDivisi')
             ->get();
 

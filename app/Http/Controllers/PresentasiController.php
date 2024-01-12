@@ -63,7 +63,6 @@ class PresentasiController extends Controller
         }
 
         try {
-            //code...
             $tim = Tim::where('code', $code)->first();
             if ($tim->kadaluwarsa == 1) {
                 return back()->with('error', 'Tim anda sudah kadaluwarsa');
@@ -104,7 +103,7 @@ class PresentasiController extends Controller
         $presentasi->code = Str::uuid();
         $presentasi->judul = $request->judul;
         $presentasi->divisi_id = auth()->user()->divisi_id;
-        $presentasi->deskripsi = $request->judul ?: null;
+        $presentasi->deskripsi = $request->deskripsi ?: null;
         $presentasi->jadwal = Carbon::now()->isoFormat('Y-M-DD');
         $presentasi->tim_id = $tim->id;
         $presentasi->jadwal_ke = $jadwalQuery->jadwal_ke;
@@ -293,7 +292,8 @@ class PresentasiController extends Controller
             ->update([
                 'status_presentasi' => 'selesai',
                 'status_revisi' => $request->status_revisi,
-                'feedback' => $request->feedback
+                'feedback' => $request->feedback,
+                'user_approval_id' => auth()->id()
             ]);
 
             if ($presentasi) {

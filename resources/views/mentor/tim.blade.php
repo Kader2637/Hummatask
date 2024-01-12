@@ -153,6 +153,12 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col mb-3">
+                                    <label for="" class="form-label">Nama Tim (Opsional)</label>
+                                    <input type="text" name="nama_tim" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
                                     <label for="status_tim" class="form-label">Kategori Tim</label>
                                     <select id="status_tim" name="status_tim" class="select2 form-select form-select-lg"
                                         data-allow-clear="true">

@@ -111,7 +111,6 @@ class PengajuanTimController extends Controller
             // Membuat objek HistoryPresentasi dan mengatur nilai-noMinggu
             $historyPresentasi = new HistoryPresentasi;
             $historyPresentasi->code = Str::uuid();
-            $historyPresentasi->divisi_id = Auth::user()->divisi_id;
 
             // Mengatur minggu keberapa pada objek HistoryPresentasi
             $historyPresentasi->noMinggu = $mingguKeberapa;
@@ -201,7 +200,13 @@ class PengajuanTimController extends Controller
 
             $tim = new Tim;
             $tim->code = Str::uuid();
-            $tim->nama = $namaTim;
+
+            if ($request->nama_tim) {
+                $tim->nama = $request->nama_tim;
+            } else {
+                $tim->nama = $namaTim;
+            }
+
             $tim->status_tim = $request->status_tim;
             $tim->logo = $nameImage;
             $tim->kadaluwarsa = false;
@@ -244,11 +249,9 @@ class PengajuanTimController extends Controller
             } else {
                 $historyPresentasi = new HistoryPresentasi;
                 $historyPresentasi->code = Str::uuid();
-
                 $historyPresentasi->noMinggu = 1;
                 $historyPresentasi->bulan = Carbon::now()->isoFormat("MMMM");
                 $historyPresentasi->tahun = Carbon::now()->isoFormat("YYYY");
-                $historyPresentasi->divisi_id = Auth::user()->divisi_id;
                 $historyPresentasi->save();
 
                 TidakPresentasiMingguan::create([
@@ -282,7 +285,6 @@ class PengajuanTimController extends Controller
 
             return back()->with('success', 'Berhasil membuat tim');
         } catch (QueryException $e) {
-            // Tangani exception terkait query/database
             return back()->with('error', 'Gagal membentuk tim');
         }
     }

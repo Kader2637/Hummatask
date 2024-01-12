@@ -49,7 +49,7 @@
                             <span class="badge bg-label-primary text-capitalize">Sedang Presentasi</span>
                             <h5 class="card-title my-2 text-capitalize">{{ $item->tim->nama }}</h5>
                             <p class="card-text" data-bs-toggle="tooltip" data-popup="tooltip-custom"
-                                data-bs-placement="bottom" title="Jadwal Presentasi">
+                                data-bs-placement="bottom" title="Jadwal Presentasi"> 
                                 {{ $item->jadwal_ke }} {{ $item->mulai }}-{{ $item->akhir }}
                             </p>
                             <div class="d-flex justify-content-around align-items-center gap-3 mt-3">
@@ -107,7 +107,7 @@
                 </div>
                 {{-- Modal Konfirmasi Project --}}
             @empty
-                <h6 class="text-center mt-4">Tidak Ada tim <i class="ti ti-address-book-off"></i></h6>
+                <h6 class="text-center mt-4">Tidak Ada presentasi <i class="ti ti-address-book-off"></i></h6>
                 <div class="mt-4 mb-3 d-flex justify-content-evenly">
                     <img src="{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}"
                         alt="page-misc-under-maintenance" width="300" class="img-fluid">
