@@ -31,7 +31,7 @@ class PresentasiController extends Controller
 
         $userID = Auth::user()->id;
 
-        $presentasiSelesai = Presentasi::where('status_presentasi', 'selesai')->get();
+        $presentasiSelesai = Presentasi::where('status_presentasi', 'selesai')->whereDate('created_at', $hariIni)->get();
         $tidakPresentasi = Tim::where('sudah_presentasi', 0)->whereDate('created_at', $hariIni)->get();
 
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
@@ -302,6 +302,8 @@ class PresentasiController extends Controller
                 {
                     $presentasiQuery->tim->update([
                         'sudah_presentasi' => true,
+                    ]);
+                    $presentasiQuery->update([
                         'status_presentasi_mingguan' => true
                     ]);
                 }
