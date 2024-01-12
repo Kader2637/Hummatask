@@ -27,12 +27,12 @@ class PresentasiController extends Controller
 {
     protected function historiPresentasiPage()
     {
-
         $userID = Auth::user()->id;
-
+        $presentasiSelesai = Presentasi::where('status_presentasi', 'selesai')->get();
+        $tidakPresentasi = Tim::where('sudah_presentasi', 0)->get();
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
         $historyPresentasi = Presentasi::where('status_presentasi', 'menunggu');
-        return view('mentor.history-presentasi', compact('notifikasi','historyPresentasi'));
+        return view('mentor.history-presentasi', compact('notifikasi', 'presentasiSelesai', 'tidakPresentasi'));
     }
 
     protected function ajukanPresentasi(RequestPengajuanPresentasi $request, $code)
@@ -81,7 +81,7 @@ class PresentasiController extends Controller
                 $tidakPresentasiMingguan->delete();
             }
 
-            $tim->sudah_presentasi = true;
+            $tim->sudah_presentasi = false;
             $tim->save();
 
             $validasi = $tim->presentasi->where('jadwal', Carbon::now()->isoFormat('YYYY-M-DD'))->first();
@@ -117,18 +117,15 @@ class PresentasiController extends Controller
         } else {
             $presentasi->history_presentasi_id = $history->id;
         }
-        if ($presentasi->status_presentasi === 'selesai') {
-            $presentasi->status_presentasi_mingguan = true;
-        } else {
-            $presentasi->status_presentasi_mingguan = false;
-        }
+        
+        $presentasi->status_presentasi_mingguan = false;
         $presentasi->save();
 
         $mentorId = User::where('peran_id', 2)
             ->pluck('id')
             ->first();
         if ($mentorId) {
-            $this->sendNotificationToMentor($mentorId, 'Pengajuan Project!', 'Ada anggota tim yang mengajukan presentasi.', 'pemberitahuan');
+            $this->sendNotificationToMentor($mentorId, 'Pengajuan Presentasi!', 'Ada anggota tim yang mengajukan presentasi.', 'pemberitahuan');
         }
 
         return redirect()
@@ -189,7 +186,7 @@ class PresentasiController extends Controller
             }
         }
 
-        $this->sendNotificationToTeamMembers($presentasi->tim->anggota, 'Presentasi Disetujui', 'Presentasi Anda telah disetujui.', 'pemberitahuan');
+        
 
         return response()->json([
             'presentasi' => $presentasi,
@@ -294,6 +291,17 @@ class PresentasiController extends Controller
                 'status_revisi' => $request->status_revisi,
                 'feedback' => $request->feedback
             ]);
+
+            if ($presentasi) {
+                $presentasiQuery = Presentasi::where('code', $code)->first();
+                if ($presentasiQuery->status_presentasi === 'selesai' || $presentasiQuery->status_revisi === 'tidak_selesai')
+                {
+                    $presentasiQuery->tim->update([
+                        'sudah_presentasi' => true,
+                        'status_presentasi_mingguan' => true
+                    ]);
+                }
+            }
 
         if ($presentasi) {
             return back()->with('success', 'Berhasil konfirmasi presentasi');
