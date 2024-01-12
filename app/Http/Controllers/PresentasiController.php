@@ -117,11 +117,8 @@ class PresentasiController extends Controller
         } else {
             $presentasi->history_presentasi_id = $history->id;
         }
-        if ($presentasi->status_presentasi === 'selesai') {
-            $presentasi->status_presentasi_mingguan = true;
-        } else {
-            $presentasi->status_presentasi_mingguan = false;
-        }
+        
+        $presentasi->status_presentasi_mingguan = false;
         $presentasi->save();
 
         $mentorId = User::where('peran_id', 2)
@@ -297,10 +294,11 @@ class PresentasiController extends Controller
 
             if ($presentasi) {
                 $presentasiQuery = Presentasi::where('code', $code)->first();
-                if ($presentasiQuery->status_presentasi === 'selesai')
+                if ($presentasiQuery->status_presentasi === 'selesai' || $presentasiQuery->status_revisi === 'tidak_selesai')
                 {
                     $presentasiQuery->tim->update([
-                        'sudah_presentasi' => true
+                        'sudah_presentasi' => true,
+                        'status_presentasi_mingguan' => true
                     ]);
                 }
             }
