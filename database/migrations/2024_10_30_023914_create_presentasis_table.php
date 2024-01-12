@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code');
             $table->integer('urutan')->nullable();
+            $table->foreignId('divisi_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('judul');
             $table->text('deskripsi')->nullable();
             $table->date('jadwal');

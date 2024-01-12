@@ -100,6 +100,7 @@ class PresentasiController extends Controller
         $presentasi = new Presentasi();
         $presentasi->code = Str::uuid();
         $presentasi->judul = $request->judul;
+        $presentasi->divisi_id = auth()->user()->divisi_id;
         $presentasi->deskripsi = $request->judul ?: null;
         $presentasi->jadwal = Carbon::now()->isoFormat('Y-M-DD');
         $presentasi->tim_id = $tim->id;
@@ -117,7 +118,7 @@ class PresentasiController extends Controller
         } else {
             $presentasi->history_presentasi_id = $history->id;
         }
-        
+
         $presentasi->status_presentasi_mingguan = false;
         $presentasi->save();
 
@@ -186,7 +187,7 @@ class PresentasiController extends Controller
             }
         }
 
-        
+
 
         return response()->json([
             'presentasi' => $presentasi,

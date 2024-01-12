@@ -9,6 +9,7 @@ use App\Models\Comments;
 use App\Models\LimitPresentasiDevisi;
 use App\Models\Project;
 use App\Models\Notifikasi;
+use App\Models\Presentasi;
 use App\Models\PresentasiDivisi;
 use App\Models\Tim;
 use App\Models\Tugas;
@@ -249,6 +250,11 @@ class timController extends Controller
             })
             ->sortBy('mulai');
 
+        $cek_present = Presentasi::query()
+            ->whereDate('jadwal', now())
+            ->where('divisi_id', auth()->user()->divisi_od)
+            ->get();
+
         $project = $tim->project->first();
         if ($project->deskripsi === null) {
             return back()->with('tolak', 'Tolong lengkapi deskripsi proyek terlebih dahulu');
@@ -273,7 +279,7 @@ class timController extends Controller
             $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
         }
 
-        return view('siswa.tim.history-presentasi', compact('jabatan', 'title', 'tim', 'anggota', 'presentasi', 'jadwal', 'hasProjectRelation', 'project', 'notifikasi', 'project', 'sesi_senin', 'sesi_selasa', 'sesi_rabu', 'sesi_kamis', 'sesi_jumat'));
+        return view('siswa.tim.history-presentasi', compact('cek_present', 'jabatan', 'title', 'tim', 'anggota', 'presentasi', 'jadwal', 'hasProjectRelation', 'project', 'notifikasi', 'project', 'sesi_senin', 'sesi_selasa', 'sesi_rabu', 'sesi_kamis', 'sesi_jumat'));
     }
 
     protected function catatanPage($code)
