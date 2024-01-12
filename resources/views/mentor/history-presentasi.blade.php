@@ -10,7 +10,7 @@
         <li class="nav-item" role="presentation">
           <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
             type="button" role="tab" aria-controls="pills-home" aria-selected="true" data-tab="1"><i
-              class="fa-solid fa-calendar-xmark icon-text me-2"></i>Telat Presentasi</button>
+              class="fa-solid fa-calendar-xmark icon-text me-2"></i>Belum Presentasi</button>
         </li>
         <li class="nav-item" role="presentation">
           <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
@@ -30,7 +30,7 @@
                   <th scope="col">NO</th>
                   <th scope="col">NAMA TIM</th>
                   <th scope="col">STATUS TIM</th>
-                  <th scope="col">TANGGAL</th>
+                  <th scope="col">HARI/TANGGAL</th>
                 </tr>
               </thead>
               <tbody>
@@ -49,7 +49,7 @@
                         <span class="badge bg-label-primary">Big Project</span>
                       @endif
                     </td>
-                    <td>01 Januari 2024</td>
+                    <td>{{ \Carbon\Carbon::now()->translatedFormat('l, j F Y') }}</td>
                   </tr>
                 @endforeach
               </tbody>
@@ -66,7 +66,7 @@
                   <th scope="col">NO</th>
                   <th scope="col">NAMA TIM</th>
                   <th scope="col">STATUS TIM</th>
-                  <th scope="col">TANGGAL</th>
+                  <th scope="col">HARI/TANGGAL</th>
                 </tr>
               </thead>
               <tbody>
@@ -85,7 +85,7 @@
                         <span class="badge bg-label-primary">Big Project</span>
                       @endif
                     </td>
-                    <td>01 Januari 2024</td>
+                    <td>{{ \Carbon\Carbon::now()->translatedFormat('l, j F Y') }}</td>
                   </tr>
                 @endforeach
               </tbody>

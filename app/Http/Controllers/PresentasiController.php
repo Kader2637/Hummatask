@@ -27,12 +27,15 @@ class PresentasiController extends Controller
 {
     protected function historiPresentasiPage()
     {
+        $hariIni = Carbon::now()->toDateString();
+
         $userID = Auth::user()->id;
+
         $presentasiSelesai = Presentasi::where('status_presentasi', 'selesai')->get();
-        $tidakPresentasi = Tim::where('sudah_presentasi', 0)->get();
+        $tidakPresentasi = Tim::where('sudah_presentasi', 0)->whereDate('created_at', $hariIni)->get();
+
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
-        $historyPresentasi = Presentasi::where('status_presentasi', 'menunggu');
-        return view('mentor.history-presentasi', compact('notifikasi', 'presentasiSelesai', 'tidakPresentasi'));
+        return view('mentor.history-presentasi', compact('notifikasi', 'presentasiSelesai', 'tidakPresentasi', 'hariIni'));
     }
 
     protected function ajukanPresentasi(RequestPengajuanPresentasi $request, $code)
