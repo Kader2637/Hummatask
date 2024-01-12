@@ -47,7 +47,12 @@ class TugasController extends Controller
             return response()->json(['error' => 'Tim tidak dapat ditemukan']);
         }
 
-        $tugas = $tim->tugas()->with('comments.user', 'user','label')->get();
+        $tugas = $tim
+        ->tugas()
+        ->with('comments.user', 'user','label')
+        ->orderBy('updated_at')
+        ->get();
+
         $dataTugas = [
             "tugas_baru" =>  $tugas->where('status_tugas', 'tugas_baru'),
             "tugas_dikerjakan" => $tugas->where('status_tugas', 'dikerjakan'),
