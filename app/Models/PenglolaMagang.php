@@ -17,6 +17,11 @@ class PenglolaMagang extends Model
         'masih_menjabat',
     ];
 
+    /**
+     * user
+     *
+     * @return void
+     */
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

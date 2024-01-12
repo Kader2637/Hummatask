@@ -10,5 +10,4 @@ class AjukanPresentasi extends Model
     use HasFactory;
     protected $table = 'ajukanpresentasis';
     protected $guarded = [];
-
 }

@@ -8,9 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class StatusTim extends Model
 {
     use HasFactory;
-    protected $guarded=[];
+    protected $guarded = [];
 }
-
-
-
-

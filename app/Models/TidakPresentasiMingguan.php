@@ -10,18 +10,25 @@ class TidakPresentasiMingguan extends Model
 {
     use HasFactory;
 
-    protected $guarded=[
+    protected $guarded = [];
 
-    ];
-
-    public function tim():BelongsTo
+    /**
+     * tim
+     *
+     * @return BelongsTo
+     */
+    public function tim(): BelongsTo
     {
         return $this->belongsTo(Tim::class);
     }
 
+    /**
+     * historyPresentasi
+     *
+     * @return void
+     */
     public function historyPresentasi()
     {
         return $this->belongsTo(HistoryPresentasi::class);
     }
-
 }

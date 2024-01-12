@@ -53,10 +53,8 @@
         Route::get('/ambil-notifikasi', [PengajuanProjekController::class, 'ambilNotifikasi']);
 
         Route::prefix('tim')->controller(timController::class)->group(function () {
-            // Halaman Tim
             Route::middleware(['auth', 'siswa', 'cekanggota'])->group(function () {
                 Route::get('project/{code}', 'projectPage')->name('tim.project');
-                // Process
                 Route::patch('edit-project/{code}', [PengajuanProjekController::class, 'editProject'])->name('tim.editProject');
                 Route::post('project/ajukan-project/{code}', [PengajuanProjekController::class, 'ajukanProject'])->name('tim.ajukanProject');
             });
@@ -77,27 +75,26 @@
                 Route::delete('/delete-tugas', 'hapusTugas')->name('delete.tugas');
                 Route::post('/add-comment', 'comments')->name('tim.addComment');
                 Route::get('/view-comment', 'viewComments');
-                // proses di halaman tim
             });
 
             Route::middleware(['auth', 'siswa'])->group(function () {
                 Route::get('tampil-tugas/{code}', [TugasController::class, 'getData'])->name('tim.tampilTugas');
+                Route::get('board/ambil-data-tugas/{code}', [TugasController::class, 'getData'])->name('tim.proses.ambilTugas');
+                Route::get('board/data-edit-tugas/{codeTugas}', [TugasController::class, 'dataEditTugas']);
+                Route::get('statistik/data-kontribusi/{codeTim}/{uuid}', [StatistikTimController::class, 'getDataKontribusi']);
+                Route::get('statistik/data-progres/{codeTim}', [StatistikTimController::class, 'getProgres']);
+                Route::get('board/ambil-labels/{tim_id}', [LabelController::class, 'getLabels']);
+
                 Route::post('board/tambah-tugas/{code}', [TugasController::class, 'buatTugas']);
                 Route::post('ajukan-presentasi/{code}', [PresentasiController::class, 'ajukanPresentasi'])->name('ajukan-presentasi');
                 Route::patch('edit-project/{code}', [PengajuanProjekController::class, 'editProject'])->name('tim.editProject');
-                Route::get('board/ambil-data-tugas/{code}', [TugasController::class, 'getData'])->name('tim.proses.ambilTugas');
-                Route::get('board/data-edit-tugas/{codeTugas}', [TugasController::class, 'dataEditTugas']);
                 Route::put('board/proses-edit-tugas', [TugasController::class, 'prosesEditTugas'])->name('editTugas');
                 Route::delete('board/delete/tugas/{codeTugas}', [TugasController::class, 'hapusTugas']);
                 Route::post("board/tambah-komentar", [TugasController::class, 'tambahKomentar']);
                 Route::delete('board/hapus-komentar/{tugas_id}', [TugasController::class, 'hapusKomentar']);
 
-                Route::get('statistik/data-kontribusi/{codeTim}/{uuid}', [StatistikTimController::class, 'getDataKontribusi']);
-                Route::get('statistik/data-progres/{codeTim}', [StatistikTimController::class, 'getProgres']);
-
                 // label tugas
                 Route::post('board/tambah-label', [LabelController::class, 'createLabel'])->name('label.create');
-                Route::get('board/ambil-labels/{tim_id}', [LabelController::class, 'getLabels']);
                 Route::delete('board/delete-label/{label_id}', [LabelController::class, 'deleteLabel']);
                 Route::put("board/edit-label", [LabelController::class, "editLabel"])->name("label.edit");
             });
@@ -111,9 +108,12 @@
             Route::get('projek', 'projek')->name('tampilprojek');
             Route::get('history', 'historyPage')->name('ketua.history');
             Route::get('pieprojectKetua/{timId}', 'pieProjectKetua')->name('pie.projectKetua');
-            Route::post('pembuatantim', [PengajuanTimController::class, 'pembuatanTimProjectKetua'])->name('pembuatantim.ketua');
+            Route::get('ketua/ambil-urutan/{codeHistory}', [PresentasiController::class, 'ambilUrutan']);
+            Route::get('ketua/ambil-urutan/{codeHistory}', [PresentasiController::class, 'ambilUrutan']);
+            Route::get('ketua/ambil-detail-history-presentasi/{codeHistory}/{codeTim}', [PresentasiController::class, 'ambilDetailHistoryPresentasi']);
 
             // proses
+            Route::post('pembuatantim', [PengajuanTimController::class, 'pembuatanTimProjectKetua'])->name('pembuatantim.ketua');
             Route::post('ketua/tampil-detail-presentasi/{code}', [PresentasiController::class, 'tampilkanDetailPresentasi']);
             Route::put('ketua/persetujuan-presentasi/{code}', [PresentasiController::class, 'persetujuanPresentasi']);
             Route::put('ketua/penolakan-presentasi/{code}', [PresentasiController::class, 'penolakanPresentasi']);
@@ -121,9 +121,6 @@
             Route::put('ketua/konfirmasi-presentasi/{code}', [PresentasiController::class, 'konfirmasiPresentasi']);
             Route::patch('ketua/persetujuan-project/{code}', [PengajuanProjekController::class, 'persetujuanProject'])->name('ketua.persetujuan-project');
             Route::put('ketua/atur-urutan/{code}', [PresentasiController::class, 'gantiUrutan']);
-            Route::get('ketua/ambil-urutan/{codeHistory}', [PresentasiController::class, 'ambilUrutan']);
-            Route::get('ketua/ambil-urutan/{codeHistory}', [PresentasiController::class, 'ambilUrutan']);
-            Route::get('ketua/ambil-detail-history-presentasi/{codeHistory}/{codeTim}', [PresentasiController::class, 'ambilDetailHistoryPresentasi']);
         });
 
         // Halaman Mentor
@@ -184,10 +181,4 @@
             Route::put('edit-mentor/{uuid}', [tambahUsersController::class, 'edit_mentor'])->name('edit.mentor');
             Route::post('tambah-pengelola', [tambahUsersController::class, 'tambah_pengelola'])->name('tambah.pengelola');
             Route::post('tambah-role', [tambahUsersController::class, 'tambah_role'])->name('tambah.roles');
-        });
-
-        Route::get('coba', function () {
-            $galery = Galery::where('status', 'album')->get();
-
-            return view('coba', compact('galery'));
         });

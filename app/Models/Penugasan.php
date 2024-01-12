@@ -8,8 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Penugasan extends Model
 {
     use HasFactory;
-    protected $guarded =[
-
-    ];
-
+    protected $guarded = [];
 }

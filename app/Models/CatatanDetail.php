@@ -12,6 +12,11 @@ class CatatanDetail extends Model
 
     protected $guarded = ['id'];
 
+    /**
+     * catatan
+     *
+     * @return HasMany
+     */
     public function catatan(): HasMany
     {
         return $this->hasMany(catatan::class, 'catatan_id');

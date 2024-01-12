@@ -10,14 +10,15 @@ class Label extends Model
 {
     use HasFactory;
 
-    protected $guarded=[
+    protected $guarded = [];
 
-    ];
-
-    public function tugas():BelongsToMany
+    /**
+     * tugas
+     *
+     * @return BelongsToMany
+     */
+    public function tugas(): BelongsToMany
     {
-        return $this->belongsToMany(Tugas::class,'label_tugas');
+        return $this->belongsToMany(Tugas::class, 'label_tugas');
     }
-    
-
 }

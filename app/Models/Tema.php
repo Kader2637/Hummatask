@@ -12,6 +12,11 @@ class Tema extends Model
 
     protected $guarded = [];
 
+    /**
+     * tim
+     *
+     * @return BelongsTo
+     */
     public function tim(): BelongsTo
     {
         return $this->belongsTo(Tim::class);

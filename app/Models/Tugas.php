@@ -11,39 +11,66 @@ class Tugas extends Model
 {
     use HasFactory;
 
-    protected $guarded=[
-    ];
-// sesuai yang ada didala array 
-    protected $fillable=['status_tugas','nama','prioritas'];
+    protected $guarded = [];
+    protected $fillable = ['status_tugas', 'nama', 'prioritas'];
 
-    public function tim():BelongsTo
+    /**
+     * tim
+     *
+     * @return BelongsTo
+     */
+    public function tim(): BelongsTo
     {
         return $this->belongsTo(Tim::class);
     }
 
-    public function user():BelongsToMany
+    /**
+     * user
+     *
+     * @return BelongsToMany
+     */
+    public function user(): BelongsToMany
     {
-        return $this->belongsToMany(User::class,'penugasans');
+        return $this->belongsToMany(User::class, 'penugasans');
     }
 
+    /**
+     * comments
+     *
+     * @return void
+     */
     public function comments()
     {
         return $this->hasMany(Comments::class);
     }
 
+    /**
+     * penugasan
+     *
+     * @return BelongsTo
+     */
     public function penugasan(): BelongsTo
     {
         return $this->belongsTo(Penugasan::class);
     }
 
-    public function label():BelongsToMany
+    /**
+     * label
+     *
+     * @return BelongsToMany
+     */
+    public function label(): BelongsToMany
     {
-        return $this->belongsToMany(Label::class,'label_tugas');
+        return $this->belongsToMany(Label::class, 'label_tugas');
     }
 
+    /**
+     * aktifitas
+     *
+     * @return void
+     */
     public function aktifitas()
     {
         return $this->hasMany(Aktifitas::class);
     }
-
 }

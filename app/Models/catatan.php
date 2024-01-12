@@ -14,11 +14,21 @@ class catatan extends Model
 
     protected $guarded = [];
 
+    /**
+     * tim
+     *
+     * @return BelongsTo
+     */
     public function tim(): BelongsTo
     {
         return $this->BelongsTo(Tim::class);
     }
 
+    /**
+     * catatanDetail
+     *
+     * @return HasMany
+     */
     public function catatanDetail(): HasMany
     {
         return $this->HasMany(CatatanDetail::class, 'catatan_id', 'id');

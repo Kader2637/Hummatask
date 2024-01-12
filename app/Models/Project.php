@@ -13,20 +13,41 @@ class Project extends Model
 
     protected $guarded = [];
 
+    /**
+     * anggota
+     *
+     * @return BelongsTo
+     */
     public function anggota(): BelongsTo
     {
         return $this->belongsTo(Anggota::class);
     }
 
+    /**
+     * tim
+     *
+     * @return BelongsTo
+     */
     public function tim(): BelongsTo
     {
         return $this->belongsTo(Tim::class);
     }
 
+    /**
+     * tema
+     *
+     * @return BelongsTo
+     */
     public function tema(): BelongsTo
     {
         return $this->belongsTo(Tema::class);
     }
+
+    /**
+     * anggota_tim
+     *
+     * @return void
+     */
     public function anggota_tim()
     {
         return Anggota::where('tim_id', $this->tim->id)
@@ -37,6 +58,12 @@ class Project extends Model
             ->get()
             ->sortBy('jabatan');
     }
+    
+    /**
+     * anggota_profile
+     *
+     * @return void
+     */
     public function anggota_profile()
     {
         return Anggota::where('tim_id', $this->id)

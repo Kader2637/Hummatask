@@ -12,6 +12,11 @@ class Jabatan extends Model
 
     protected $guarded = [];
 
+    /**
+     * anggota
+     *
+     * @return HasMany
+     */
     public function anggota(): HasMany
     {
         return $this->anggota(Anggota::class);

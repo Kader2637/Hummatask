@@ -17,7 +17,13 @@ class Notifikasi extends Model
         'jenis_notifikasi',
     ];
 
-    public function user() {
+    /**
+     * user
+     *
+     * @return void
+     */
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }

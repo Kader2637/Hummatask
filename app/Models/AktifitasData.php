@@ -10,23 +10,35 @@ class AktifitasData extends Model
 {
     use HasFactory;
 
-    protected $guarded=[
+    protected $guarded = [];
 
-    ];
-
-    public function aktifitas():BelongsTo
+    /**
+     * aktifitas
+     *
+     * @return BelongsTo
+     */
+    public function aktifitas(): BelongsTo
     {
         return $this->belongsTo(Aktifitas::class);
     }
 
-    public function label():BelongsTo
+    /**
+     * label
+     *
+     * @return BelongsTo
+     */
+    public function label(): BelongsTo
     {
-         return $this->belongsTo(Label::class);
+        return $this->belongsTo(Label::class);
     }
 
+    /**
+     * user
+     *
+     * @return void
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
 }

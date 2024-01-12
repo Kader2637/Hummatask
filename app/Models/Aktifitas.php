@@ -9,26 +9,55 @@ class Aktifitas extends Model
 {
     use HasFactory;
 
-    protected $guarded=[
+    protected $guarded = [];
 
-    ];
-
-    public function user(){
-        return $this->belongsTo(User::class,'pelaku_id');
+    /**
+     * user
+     *
+     * @return void
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'pelaku_id');
     }
 
-    public function tugas(){
+    /**
+     * tugas
+     *
+     * @return void
+     */
+    public function tugas()
+    {
         return $this->belongsTo(Tugas::class);
     }
 
-    public function aktifitasData(){
+    /**
+     * aktifitasData
+     *
+     * @return void
+     */
+    public function aktifitasData()
+    {
         return $this->hasMany(AktifitasData::class);
     }
-    public function aktifitasDataUser(){
-        return $this->hasMany(AktifitasData::class)->where("status","penugasan");
+
+    /**
+     * aktifitasDataUser
+     *
+     * @return void
+     */
+    public function aktifitasDataUser()
+    {
+        return $this->hasMany(AktifitasData::class)->where("status", "penugasan");
     }
-    public function aktifitasDataLabel(){
-        return $this->hasMany(AktifitasData::class)->where("status","label");
+
+    /**
+     * aktifitasDataLabel
+     *
+     * @return void
+     */
+    public function aktifitasDataLabel()
+    {
+        return $this->hasMany(AktifitasData::class)->where("status", "label");
     }
 }
-

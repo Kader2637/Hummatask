@@ -31,31 +31,13 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'uuid',
-        'avatar',
-        'username',
-        'email',
-        'password',
-        'divisi_id',
-        'status',
-        'sekolah',
-        'peran_id',
-        'tlp',
-        'deskripsi',
-        'is_login',
-        'tanggal_bergabung',
-        'tanggal_lulus',
-    ];
+    protected $fillable = ['uuid', 'avatar', 'username', 'email', 'password', 'divisi_id', 'status', 'sekolah', 'peran_id', 'tlp', 'deskripsi', 'is_login', 'tanggal_bergabung', 'tanggal_lulus'];
     /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ['password', 'remember_token'];
 
     /**
      * The attributes that should be cast.
@@ -67,51 +49,94 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    /**
+     * tim
+     *
+     * @return BelongsToMany
+     */
     public function tim(): BelongsToMany
     {
-        return $this->belongsToMany(Tim::class, 'anggotas','user_id','tim_id');
+        return $this->belongsToMany(Tim::class, 'anggotas', 'user_id', 'tim_id');
     }
 
+    /**
+     * aktifitas
+     *
+     * @return void
+     */
     public function aktifitas()
     {
         return $this->hasMany(Aktifitas::class);
     }
 
-
-
-    public function tugas():BelongsToMany
+    /**
+     * tugas
+     *
+     * @return BelongsToMany
+     */
+    public function tugas(): BelongsToMany
     {
-        return $this->belongsToMany(Tugas::class,'penugasans');
+        return $this->belongsToMany(Tugas::class, 'penugasans');
     }
 
+    /**
+     * comments
+     *
+     * @return void
+     */
     public function comments()
     {
         return $this->hasMany(Comments::class);
     }
 
+    /**
+     * peran
+     *
+     * @return HasOne
+     */
     public function peran(): HasOne
     {
         return $this->hasOne(peran::class, 'id', 'peran_id');
     }
 
+    /**
+     * konfirmasi_presentasi
+     *
+     * @return HasMany
+     */
     public function konfirmasi_presentasi(): HasMany
     {
-        return $this->hasMany(Presentasi::class,'user_approval_id');
+        return $this->hasMany(Presentasi::class, 'user_approval_id');
     }
 
-    public function anggota():BelongsTo
+    /**
+     * anggota
+     *
+     * @return BelongsTo
+     */
+    public function anggota(): BelongsTo
     {
-        return $this->belongsTo(Anggota::class,'id','user_id');
+        return $this->belongsTo(Anggota::class, 'id', 'user_id');
     }
 
-    public function anggotaReal():HasMany
+    /**
+     * anggotaReal
+     *
+     * @return HasMany
+     */
+    public function anggotaReal(): HasMany
     {
         return $this->hasMany(Anggota::class);
     }
 
+    /**
+     * notifikasi
+     *
+     * @return void
+     */
     public function notifikasi()
     {
-        return $this->hasMany(Notifikasi::class,'user_id');
+        return $this->hasMany(Notifikasi::class, 'user_id');
     }
 
     /**

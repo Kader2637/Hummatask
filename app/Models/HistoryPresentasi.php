@@ -14,21 +14,41 @@ class HistoryPresentasi extends Model
 
     protected $guarded;
 
+    /**
+     * presentasi
+     *
+     * @return HasMany
+     */
     public function presentasi(): HasMany
     {
         return $this->hasMany(Presentasi::class);
     }
 
+    /**
+     * tim
+     *
+     * @return HasManyThrough
+     */
     public function tim(): HasManyThrough
     {
         return $this->hasManyThrough(Tim::class, Presentasi::class);
     }
 
+    /**
+     * tidakPresentasiMingguan
+     *
+     * @return void
+     */
     public function tidakPresentasiMingguan()
     {
         return $this->hasMany(TidakPresentasiMingguan::class);
     }
 
+    /**
+     * divisi
+     *
+     * @return BelongsTo
+     */
     public function divisi(): BelongsTo
     {
         return $this->belongsTo(Divisi::class);
