@@ -22,7 +22,7 @@
     <div class="tab-content px-0 mt-2" id="pills-tabContent">
       <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
         tabindex="0">
-        <div class="card p-5">
+        <div class="card p-3">
           <div class="card-datatable table-responsive">
             <table id="jstabel1" class="dt-responsive table">
               <thead>
@@ -35,22 +35,22 @@
               </thead>
               <tbody>
                 @foreach ($tidakPresentasi as $item)
-                <tr>
-                  <td>{{ $loop->iteration }}</td>
-                  <td>{{ $item->nama }}</td>
-                  <td>@if ($item->status_tim === "solo")
-                    <span class="badge bg-label-danger">Solo Project</span>
-                    @elseif ($item->status_tim === "pre_mini")
-                    <span class="badge bg-label-warning">Pre Mini Project</span>
-                    @elseif ($item->status_tim === "mini")
-                    <span class="badge bg-label-success">Mini Project</span>
-                    @else
-                    <span class="badge bg-label-primary">Big Project</span>
-
-                    @endif
-                  </td>
-                  <td>01 Januari 2024</td>
-                </tr>
+                  <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $item->nama }}</td>
+                    <td>
+                      @if ($item->status_tim === 'solo')
+                        <span class="badge bg-label-danger">Solo Project</span>
+                      @elseif ($item->status_tim === 'pre_mini')
+                        <span class="badge bg-label-warning">Pre Mini Project</span>
+                      @elseif ($item->status_tim === 'mini')
+                        <span class="badge bg-label-success">Mini Project</span>
+                      @else
+                        <span class="badge bg-label-primary">Big Project</span>
+                      @endif
+                    </td>
+                    <td>01 Januari 2024</td>
+                  </tr>
                 @endforeach
               </tbody>
             </table>
@@ -58,7 +58,7 @@
         </div>
       </div>
       <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
-        <div class="card">
+        <div class="card p-3">
           <div class="card-datatable table-responsive">
             <table id="jstabel2" class="dt-responsive table">
               <thead>
@@ -71,22 +71,22 @@
               </thead>
               <tbody>
                 @foreach ($presentasiSelesai as $item)
-                <tr>
-                  <td>{{ $loop->iteration }}</td>
-                  <td>{{ $item->tim->nama }}</td>
-                  <td>@if ($item->tim->status_tim === "solo")
-                    <span class="badge bg-label-danger">Solo Project</span>
-                    @elseif ($item->tim->status_tim === "pre_mini")
-                    <span class="badge bg-label-warning">Pre Mini Project</span>
-                    @elseif ($item->tim->status_tim === "mini")
-                    <span class="badge bg-label-success">Mini Project</span>
-                    @else
-                    <span class="badge bg-label-primary">Big Project</span>
-
-                    @endif
-                  </td>
-                  <td>01 Januari 2024</td>
-                </tr>
+                  <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $item->tim->nama }}</td>
+                    <td>
+                      @if ($item->tim->status_tim === 'solo')
+                        <span class="badge bg-label-danger">Solo Project</span>
+                      @elseif ($item->tim->status_tim === 'pre_mini')
+                        <span class="badge bg-label-warning">Pre Mini Project</span>
+                      @elseif ($item->tim->status_tim === 'mini')
+                        <span class="badge bg-label-success">Mini Project</span>
+                      @else
+                        <span class="badge bg-label-primary">Big Project</span>
+                      @endif
+                    </td>
+                    <td>01 Januari 2024</td>
+                  </tr>
                 @endforeach
               </tbody>
             </table>
@@ -97,72 +97,75 @@
   </div>
 @endsection
 @section('script')
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
-    <script>
-        jQuery.noConflict();
+  <script>
+    jQuery.noConflict();
 
-        jQuery(document).ready(function($) {
-          $('#jstabel1').DataTable({
-                "paging": true,
-                "lengthMenu": [
-                    [5, 10, 15, -1],
-                    [5, 10, 15, "All"]
-                ],
-                "pageLength": 5,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "language": {
-                    "search": "Cari:",
-                    "lengthMenu": "Tampilkan _MENU_ entri per halaman",
-                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri (difilter dari _MAX_ total entri)",
-                    "paginate": {
-                        "first": "Pertama",
-                        "last": "Terakhir",
-                        "next": "Selanjutnya",
-                        "previous": "Sebelumnya"
-                    },
-                    "emptyTable": "Tidak ada data yang ditemukan",
-                    "zeroRecords": "Tidak ada hasil yang ditemukan",
-                    "infoEmpty": "Menampilkan 0 hingga 0 dari 0 entri",
-                    "infoFiltered": "(difilter dari _MAX_ total entri)"
-                }
-            });
-        });
-    </script>
-    <script>
-        jQuery.noConflict();
+    jQuery(document).ready(function($) {
+      $('#jstabel1').DataTable({
+        "paging": true,
+        "lengthMenu": [
+          [5, 10, 15, -1],
+          [5, 10, 15, "All"]
+        ],
+        "pageLength": 5,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "language": {
+          "search": "Cari:",
+          "lengthMenu": "Tampilkan _MENU_ entri per halaman",
+          "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri (difilter dari _MAX_ total entri)",
+          "paginate": {
+            "first": "Pertama",
+            "last": "Terakhir",
+            "next": "&#8594;",
+            "previous": "&#8592;",
+          },
+          "emptyTable": "Tidak ada data yang ditemukan",
+          "zeroRecords": "Tidak ada hasil yang ditemukan",
+          "infoEmpty": "Menampilkan 0 hingga 0 dari 0 entri",
+          "infoFiltered": "(difilter dari _MAX_ total entri)"
+        }
+      });
+    });
+  </script>
 
-        jQuery(document).ready(function($) {
-          $('#jstabel2').DataTable({
-                "paging": true,
-                "lengthMenu": [
-                    [5, 10, 15, -1],
-                    [5, 10, 15, "All"]
-                ],
-                "pageLength": 5,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "language": {
-                    "search": "Cari:",
-                    "lengthMenu": "Tampilkan _MENU_ entri per halaman",
-                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri (difilter dari _MAX_ total entri)",
-                    "paginate": {
-                        "first": "Pertama",
-                        "last": "Terakhir",
-                        "next": "Selanjutnya",
-                        "previous": "Sebelumnya"
-                    },
-                    "emptyTable": "Tidak ada data yang ditemukan",
-                    "zeroRecords": "Tidak ada hasil yang ditemukan",
-                    "infoEmpty": "Menampilkan 0 hingga 0 dari 0 entri",
-                    "infoFiltered": "(difilter dari _MAX_ total entri)"
-                }
-            });
-        });
-    </script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+  <script>
+    jQuery.noConflict();
+
+    jQuery(document).ready(function($) {
+      $('#jstabel2').DataTable({
+        "paging": true,
+        "lengthMenu": [
+          [5, 10, 15, -1],
+          [5, 10, 15, "All"]
+        ],
+        "pageLength": 5,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "language": {
+          "search": "Cari:",
+          "lengthMenu": "Tampilkan _MENU_ entri per halaman",
+          "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri (difilter dari _MAX_ total entri)",
+          "paginate": {
+            "first": "Pertama",
+            "last": "Terakhir",
+            "next": "&#8594;",
+            "previous": "&#8592;",
+          },
+          "emptyTable": "Tidak ada data yang ditemukan",
+          "zeroRecords": "Tidak ada hasil yang ditemukan",
+          "infoEmpty": "Menampilkan 0 hingga 0 dari 0 entri",
+          "infoFiltered": "(difilter dari _MAX_ total entri)"
+        }
+      });
+    });
+  </script>
 @endsection
