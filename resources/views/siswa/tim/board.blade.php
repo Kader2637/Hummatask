@@ -246,9 +246,15 @@
                                                 <div class="col-12">
                                                     <form id="formTambahTugas" method="post">
                                                         @csrf
-                                                        <label for="tugas">Nama Tugas</label>
+                                                        <label for="tugas">Judul</label>
                                                         <input type="text" class="form-control" id="tugas"
-                                                            name="tugas">
+                                                        name="tugas">
+                                                        <label class="mt-2">Tugas</label>
+                                                        <select  class="select2">
+                                                            <option value="1" disabled selected>Pilih tugas</option>
+                                                            <option value="3">Option3</option>
+                                                            <option value="4">Option4</option>
+                                                        </select>
                                                         <div class="d-flex justify-content-end mt-3">
                                                             <button type="submit" class="btn btn-primary">Submit</button>
                                                         </div>
@@ -545,7 +551,6 @@
                         {{-- <script src="{{ asset('assets/js/forms-tagify.js') }}"></script> --}}
                         <script src="{{ asset('assets/vendor/libs/bloodhound/bloodhound.js') }}"></script>
                         <script src="{{ asset('utils/prioritas.js') }}"></script>
-
                         <script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
                         <script src="{{ asset('assets/js/extended-ui-perfect-scrollbar.js') }}"></script>
                         <script src="{{ asset('assets/js/ui-popover.js') }}"></script>
