@@ -270,7 +270,6 @@
                                                                 @endphp
                                                             @endif
                                                         @endforeach
-
                                                         <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                             <label class="card">{{ $xx ? 'Disable' : '' }}
                                                                 <input name="plan" class="radio" type="radio"

@@ -253,9 +253,9 @@ class timController extends Controller
 
         $cek_present = Presentasi::query()
             ->whereDate('jadwal', now())
-            ->where('divisi_id', auth()->user()->divisi_od)
+            ->where('divisi_id', auth()->user()->divisi_id)
             ->get();
-
+            
         $project = $tim->project->first();
         if ($project->deskripsi === null) {
             return back()->with('tolak', 'Tolong lengkapi deskripsi proyek terlebih dahulu');

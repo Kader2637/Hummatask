@@ -88,7 +88,10 @@ class PresentasiController extends Controller
                 $tidakPresentasiMingguan = TidakPresentasiMingguan::where('tim_id', $tim->id)
                     ->latest()
                     ->first();
-                $tidakPresentasiMingguan->delete();
+            
+                if ($tidakPresentasiMingguan) {
+                    $tidakPresentasiMingguan->delete();
+                }
             }
 
             $tim->sudah_presentasi = false;
@@ -141,7 +144,20 @@ class PresentasiController extends Controller
         } else {
             $presentasi->history_presentasi_id = $history->id;
         }
+        $cek_present = Presentasi::query()
+            ->whereDate('jadwal', now())
+            ->where('divisi_id', auth()->user()->divisi_id)
+            ->whereHas()
+            ->get();
 
+        foreach ($cek_present as $present) {
+            if ($present->jadwal_ke === $jadwalQuery->jadwal_ke){
+                return redirect()->back()->with('error', 'Jadwal sudah dipilih tim lain');
+            }
+        }
+
+
+            
         $presentasi->status_presentasi_mingguan = false;
         $presentasi->save();
 
