@@ -41,7 +41,13 @@ class mentorController extends Controller
                 $query->where('divisi_id', Auth::user()->divisi_id);
             })
             ->get();
-        $presentasi = Presentasi::with('tim')->where('status_presentasi', 'selesai')->whereDate('created_at', now())->latest('created_at')->take(5)->get()->reverse();
+        $presentasi = Presentasi::with('tim')
+            ->where('status_presentasi', 'selesai')
+            ->whereDate('created_at', now())
+            ->latest('created_at')
+            ->take(5)
+            ->get()
+            ->reverse();
         foreach ($presentasi as $i => $data) {
             $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
             $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd');
@@ -65,23 +71,13 @@ class mentorController extends Controller
         $month = $request->input('month', $currentMonth);
 
         // grafik
-        $users = User::select(
-            DB::raw('MONTH(created_at) as month'),
-            DB::raw('YEAR(created_at) as year'),
-            'peran_id',
-            DB::raw('count(*) as total')
-        )
+        $users = User::select(DB::raw('MONTH(created_at) as month'), DB::raw('YEAR(created_at) as year'), 'peran_id', DB::raw('count(*) as total'))
             ->whereIn('peran_id', ['1'])
             ->whereYear('created_at', $year)
             ->groupBy('year', 'month', 'peran_id')
             ->get();
 
-        $tim = Tim::select(
-            DB::raw('MONTH(created_at) as month'),
-            DB::raw('YEAR(created_at) as year'),
-            'status_tim',
-            DB::raw('count(*) as total')
-        )
+        $tim = Tim::select(DB::raw('MONTH(created_at) as month'), DB::raw('YEAR(created_at) as year'), 'status_tim', DB::raw('count(*) as total'))
             ->whereIn('status_tim', ['mini', 'pre_mini', 'big'])
             ->whereYear('created_at', $year)
             ->groupBy('year', 'month', 'status_tim')
@@ -92,10 +88,10 @@ class mentorController extends Controller
             $date = Carbon::createFromDate($year, $m, 1);
             $yearMonth = $date->isoFormat('MMMM');
 
-            $color = ($year == $currentYear && $m == $month) ? 'blue' : 'blue';
-            $colorwait = ($year == $currentYear && $m == $month) ? 'grey' : 'grey';
-            $colors = ($year == $currentYear && $m == $month) ? 'red' : 'red';
-            $piecolor = ($year == $currentYear && $m == $month) ? 'orange' : 'orange';
+            $color = $year == $currentYear && $m == $month ? 'blue' : 'blue';
+            $colorwait = $year == $currentYear && $m == $month ? 'grey' : 'grey';
+            $colors = $year == $currentYear && $m == $month ? 'red' : 'red';
+            $piecolor = $year == $currentYear && $m == $month ? 'orange' : 'orange';
 
             $processedData[$yearMonth] = [
                 'month' => $yearMonth,
@@ -107,7 +103,7 @@ class mentorController extends Controller
                 'color' => $color,
                 'colorwait' => $colorwait,
                 'colors' => $colors,
-                'piecolor' => $piecolor
+                'piecolor' => $piecolor,
             ];
         }
 
@@ -131,36 +127,34 @@ class mentorController extends Controller
         $chartData = array_values($processedData);
 
         $solo = Tim::where(function ($query) {
-            $query->whereIn('status_tim', ['solo'])
+            $query
+                ->whereIn('status_tim', ['solo'])
                 ->where('kadaluwarsa', '0')
                 ->where('divisi_id', Auth::user()->divisi_id);
         })->count();
 
         $preMini = Tim::where(function ($query) {
-            $query->whereIn('status_tim', ['pre_mini'])
+            $query
+                ->whereIn('status_tim', ['pre_mini'])
                 ->where('kadaluwarsa', '0')
                 ->where('divisi_id', Auth::user()->divisi_id);
         })->count();
 
         $mini = Tim::where(function ($query) {
-            $query->whereIn('status_tim', ['mini'])
+            $query
+                ->whereIn('status_tim', ['mini'])
                 ->where('kadaluwarsa', '0')
                 ->where('divisi_id', Auth::user()->divisi_id);
         })->count();
 
         $big = Tim::where(function ($query) {
-            $query->whereIn('status_tim', ['big'])
+            $query
+                ->whereIn('status_tim', ['big'])
                 ->where('kadaluwarsa', '0')
                 ->where('divisi_id', Auth::user()->divisi_id);
         })->count();
 
-        $chart = [
-            ['Jumlah', 'Data'],
-            ['Jumlah Solo Projek', $solo],
-            ['Jumlah Tim Premini Projek', $preMini],
-            ['Jumlah Tim Mini Projek', $mini],
-            ['Jumlah Tim Big Projek', $big]
-        ];
+        $chart = [['Jumlah', 'Data'], ['Jumlah Solo Projek', $solo], ['Jumlah Tim Premini Projek', $preMini], ['Jumlah Tim Mini Projek', $mini], ['Jumlah Tim Big Projek', $big]];
 
         $senin = PresentasiDivisi::query()
             ->with('limitPresentasiDivisis')
@@ -225,7 +219,10 @@ class mentorController extends Controller
     {
         $roles = Role::all();
         $mentors = User::where('peran_id', 2)->get();
-        $users = User::with('peran')->where('peran_id', 1)->where('divisi_id', Auth::user()->divisi_id)->get();
+        $users = User::with('peran')
+            ->where('peran_id', 1)
+            ->where('divisi_id', Auth::user()->divisi_id)
+            ->get();
         $notifikasi = Notifikasi::where('user_id', Auth::user()->id)
             ->whereHas('user', function ($query) {
                 $query->where('divisi_id', Auth::user()->divisi_id);
@@ -239,15 +236,16 @@ class mentorController extends Controller
             ->whereDoesntHave('permissions')
             ->whereDoesntHave('roles', function ($query) {
                 $query->where('id', 1);
-            })->where('peran_id', 1)->where('status_kelulusan', false)
+            })
+            ->where('peran_id', 1)
+            ->where('status_kelulusan', false)
             ->get();
 
         foreach ($users as $user) {
             $penglolaMagang = PenglolaMagang::where('user_id', $user->id)->first();
 
             if ($penglolaMagang && $penglolaMagang->akhir_menjabat < Carbon::now()) {
-                PenglolaMagang::where('user_id', $user->id)
-                    ->update(['masih_menjabat' => false]);
+                PenglolaMagang::where('user_id', $user->id)->update(['masih_menjabat' => false]);
 
                 $updatedPenglolaMagang = PenglolaMagang::where('user_id', $user->id)->first();
 
@@ -288,7 +286,9 @@ class mentorController extends Controller
             ->whereHas('project')
             ->get();
 
-        $tidakPresentasiMingguan = TidakPresentasiMingguan::with('tim.ketuaTim', 'historyPresentasi')->whereRelation('tim.divisi', 'id', '=', Auth::user()->divisi_id)->get();
+        $tidakPresentasiMingguan = TidakPresentasiMingguan::with('tim.ketuaTim', 'historyPresentasi')
+            ->whereRelation('tim.divisi', 'id', '=', Auth::user()->divisi_id)
+            ->get();
 
         return response()->view('mentor.history', compact('tidakPresentasiMingguan', 'telatDeadline', 'presentasiSelesai', 'timSolo', 'timGroup', 'notifikasi'));
     }
@@ -341,7 +341,8 @@ class mentorController extends Controller
         $notifikasi = Notifikasi::where('user_id', Auth::user()->id)
             ->whereHas('user', function ($query) {
                 $query->where('divisi_id', Auth::user()->divisi_id);
-            })->get();
+            })
+            ->get();
 
         $projectQuery = Project::with('tim.anggota', 'tema', 'tim.tugas')
             ->whereRelation('tim.divisi', 'id', '=', Auth::user()->divisi_id)
@@ -391,7 +392,6 @@ class mentorController extends Controller
 
     protected function pieproject($timId)
     {
-
         $tim = Tim::where('code', $timId)->first();
 
         $selesai = $tim->tugas->where('status_tugas', 'selesai')->count();
@@ -402,13 +402,7 @@ class mentorController extends Controller
 
         $dikerjakan = $tim->tugas->where('status_tugas', 'dikerjakan')->count();
 
-        $chartData = [
-            ['Status Tugas', 'Jumlah'],
-            ['Selesai', $selesai],
-            ['Revisi', $revisi],
-            ['Dikerjakan', $dikerjakan],
-            ['Tugas Baru', $tugas_baru]
-        ];
+        $chartData = [['Status Tugas', 'Jumlah'], ['Selesai', $selesai], ['Revisi', $revisi], ['Dikerjakan', $dikerjakan], ['Tugas Baru', $tugas_baru]];
 
         return response()->json(['selesai' => $selesai, 'revisi' => $revisi, 'tugas_baru' => $tugas_baru, 'chartData' => $chartData]);
     }
@@ -420,13 +414,16 @@ class mentorController extends Controller
             ->where('divisi_id', Auth::user()->divisi_id)
             ->where('status_kelulusan', 0)
             ->where(function ($query) {
-                $query->whereDoesntHave('tim', function ($query) {
-                    $query->where('kadaluwarsa', false);
-                })->orWhereHas('tim', function ($query) {
-                    $query->whereIn('status', ['kicked', 'expired']);
-                })->whereDoesntHave('anggota', function ($query) {
-                    $query->where('status', 'active');
-                });
+                $query
+                    ->whereDoesntHave('tim', function ($query) {
+                        $query->where('kadaluwarsa', false);
+                    })
+                    ->orWhereHas('tim', function ($query) {
+                        $query->whereIn('status', ['kicked', 'expired']);
+                    })
+                    ->whereDoesntHave('anggota', function ($query) {
+                        $query->where('status', 'active');
+                    });
             })
             ->get();
 
@@ -436,17 +433,17 @@ class mentorController extends Controller
 
     protected function timEdit($tim)
     {
-
         $ketuaId = Tim::where('id', $tim)
-            ->with(['anggota' => function ($query) {
-                $query->where('jabatan_id', 1);
-            }])
+            ->with([
+                'anggota' => function ($query) {
+                    $query->where('jabatan_id', 1);
+                },
+            ])
             ->first()
-            ->anggota
-            ->pluck('user_id');
+            ->anggota->pluck('user_id');
 
-
-        $ketua = User::where('peran_id', 1)->where('status_kelulusan', 0)
+        $ketua = User::where('peran_id', 1)
+            ->where('status_kelulusan', 0)
             ->whereHas('tim', function ($query) use ($tim) {
                 $query->where('id', $tim);
             })
@@ -455,8 +452,7 @@ class mentorController extends Controller
         $users = Anggota::whereIn('status', ['kicked', 'expired'])
             ->where('tim_id', '!=', $tim)
             ->orWhere(function ($query) use ($tim) {
-                $query->where('tim_id', $tim)
-                    ->where('status', 'active');
+                $query->where('tim_id', $tim)->where('status', 'active');
             })
             // ->orderBy('jabatan_id')
             ->get();
@@ -536,7 +532,10 @@ class mentorController extends Controller
                 $query->where('divisi_id', Auth::user()->divisi_id);
             })
             ->get();
-        $historyPresentasi = HistoryPresentasi::all()->sortByDesc('created_at')->where('divisi_id', Auth::user()->divisi_id)->take(5);
+        $historyPresentasi = HistoryPresentasi::all()
+            ->sortByDesc('created_at')
+            ->where('divisi_id', Auth::user()->divisi_id)
+            ->take(5);
 
         // dd($historyPresentasi);
         return response()->view('mentor.presentasi', compact('historyPresentasi', 'notifikasi'));
@@ -588,7 +587,7 @@ class mentorController extends Controller
         $logo = new Galery([
             'judul' => $request->input('judulLogo'),
             'foto' => $img,
-            'status' => 'logo'
+            'status' => 'logo',
         ]);
 
         $logo->save();
@@ -607,15 +606,13 @@ class mentorController extends Controller
             'judul' => $request->input('judul'),
             'keterangan' => $request->input('keterangan'),
             'foto' => $img,
-            'status' => 'album'
+            'status' => 'album',
         ]);
 
         $galery->save();
 
         return response()->json(['galery' => $galery]);
     }
-
-
 
     protected function updateGalery(RequestEditGalery $request, $id)
     {
@@ -680,7 +677,7 @@ class mentorController extends Controller
         return response()->view('mentor.siswa-presentasi', compact('notifikasi', 'historyPresentasi'));
     }
 
-    protected function detailPresentasiPage(String $code)
+    protected function detailPresentasiPage(string $code)
     {
         $notifikasi = Notifikasi::where('user_id', Auth::user()->id)
             ->whereHas('user', function ($query) {
@@ -699,19 +696,26 @@ class mentorController extends Controller
             ->first();
 
         $unconfirmedPresentasi = Presentasi::query()
-            ->with([
-                'tim.user',
-                'tim.project.tema',
-                'tim.presentasi',
-            ])
+            ->with(['tim.user', 'tim.project.tema', 'tim.presentasi'])
             ->where('history_presentasi_id', $history->id)
             ->whereHas('tim.divisi', function ($query) {
                 $query->where('id', Auth::user()->divisi_id);
             })
-            ->where('status_presentasi', 'menunggu')
+            ->whereIn('status_presentasi', ['menunggu', 'sedang_presentasi'])
+            ->orderByRaw("status_presentasi = 'sedang_presentasi' asc")
             ->orderBy('jadwal_ke', 'asc')
             ->get();
 
-        return response()->view('mentor.detail-presentasi', compact('history', 'unconfirmedPresentasi', 'notifikasi'));
+        $presentasiSenin = $unconfirmedPresentasi->where('hari', 'senin');
+
+        $presentasiSelasa = $unconfirmedPresentasi->where('hari', 'selasa');
+
+        $presentasiRabu = $unconfirmedPresentasi->where('hari', 'rabu');
+
+        $presentasiKamis = $unconfirmedPresentasi->where('hari', 'kamis');
+
+        $presentasiJumat = $unconfirmedPresentasi->where('hari', 'jumat');
+
+        return response()->view('mentor.detail-presentasi', compact('history', 'presentasiSenin', 'presentasiSelasa', 'presentasiRabu', 'presentasiKamis', 'presentasiJumat', 'notifikasi'));
     }
 }

@@ -26,7 +26,6 @@
                             <div class="d-flex justify-content-around align-items-center">
                                 <span class="badge bg-label-info">Minggu ke-{{ $history->noMinggu }}</span>
                                 <span class="badge bg-label-warning">{{ $history->bulan }} {{ $history->tahun }}</span>
-                                {{-- <span class="badge bg-label-primary">{{ $history->divisi->name }}</span> --}}
                             </div>
                             <div class="d-flex justify-content-around align-items-center gap-3  mt-3">
                                 <a href="{{ route('detail-presentasi.mentor', $history->code) }}"

@@ -32,14 +32,15 @@ class PresentasiController extends Controller
         $userID = Auth::user()->id;
 
         $presentasiSelesai = Presentasi::where('status_presentasi', 'selesai')
-        ->whereDate('created_at', $hariIni)
-        ->get();
-        
-        $tidakPresentasi = Tim::where('sudah_presentasi', 0)->whereDate('created_at', $hariIni)
-        ->whereDoesntHave('presentasi', function ($query) use ($hariIni) {
-            $query->whereDate('created_at', $hariIni);
-        })
-        ->get();
+            ->whereDate('created_at', $hariIni)
+            ->get();
+
+        $tidakPresentasi = Tim::where('sudah_presentasi', 0)
+            ->whereDate('created_at', $hariIni)
+            ->whereDoesntHave('presentasi', function ($query) use ($hariIni) {
+                $query->whereDate('created_at', $hariIni);
+            })
+            ->get();
 
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
         return view('mentor.history-presentasi', compact('notifikasi', 'presentasiSelesai', 'tidakPresentasi', 'hariIni'));
@@ -61,9 +62,9 @@ class PresentasiController extends Controller
             return back()->with('error', 'Pengajuan Presentasi dimulai pukul 08:00');
         }
 
-        if (Carbon::now()->isoFormat('dddd') === 'Minggu' || Carbon::now()->isoFormat('dddd') === 'Sabtu') {
-            return back()->with('error', 'Pengajuan Presentasi hanya bisa dilakuakn dijam kantor');
-        }
+        // if (Carbon::now()->isoFormat('dddd') === 'Minggu' || Carbon::now()->isoFormat('dddd') === 'Sabtu') {
+        //     return back()->with('error', 'Pengajuan Presentasi hanya bisa dilakuakn dijam kantor');
+        // }
 
         if ($request->plan == null) {
             return back()->with('error', 'Mohon pilih jadwal presentasi');
@@ -106,6 +107,18 @@ class PresentasiController extends Controller
 
         $jadwalQuery = LimitPresentasiDevisi::find($request->plan);
 
+        if ($jadwalQuery->presentasiDivisi->day == 'monday') {
+            $day = 'senin';
+        } else if ($jadwalQuery->presentasiDivisi->day == 'tuesday') {
+            $day = 'selasa';
+        } else if ($jadwalQuery->presentasiDivisi->day == 'wednesday') {
+            $day = 'rabu';
+        } else if ($jadwalQuery->presentasiDivisi->day == 'thursday') {
+            $day = 'kamis';
+        } else if ($jadwalQuery->presentasiDivisi->day == 'friday') {
+            $day = 'jumat';
+        }
+
         $presentasi = new Presentasi();
         $presentasi->code = Str::uuid();
         $presentasi->judul = $request->judul;
@@ -114,6 +127,7 @@ class PresentasiController extends Controller
         $presentasi->jadwal = Carbon::now()->isoFormat('Y-M-DD');
         $presentasi->tim_id = $tim->id;
         $presentasi->jadwal_ke = $jadwalQuery->jadwal_ke;
+        $presentasi->hari = $day;
         $presentasi->mulai = $jadwalQuery->mulai;
         $presentasi->akhir = $jadwalQuery->akhir;
         $history = HistoryPresentasi::latest()->first();
@@ -180,7 +194,6 @@ class PresentasiController extends Controller
             });
         }
 
-
         $message = 'Pengajuan Presentasi Tim Anda telah disetujui';
         $teamMembers = $presentasi->tim->anggota;
 
@@ -196,8 +209,6 @@ class PresentasiController extends Controller
             }
         }
 
-
-
         return response()->json([
             'presentasi' => $presentasi,
             'totalPresentasi' => $presentasi->where('status_presentasi', 'selesai')->count(),
@@ -211,7 +222,10 @@ class PresentasiController extends Controller
     protected function sendWhatsAppNotificationOnRejection($phoneNumber, $message)
     {
         $whacenter = new WhacenterService();
-        $whacenter->to($phoneNumber)->line($message)->send();
+        $whacenter
+            ->to($phoneNumber)
+            ->line($message)
+            ->send();
     }
 
     protected function rejectPresentation($presentasi)
@@ -223,12 +237,18 @@ class PresentasiController extends Controller
     protected function sendWhatsAppPersetujuan($phoneNumber, $message)
     {
         $whacenter = new WhacenterService();
-        $whacenter->to($phoneNumber)->line($message)->send();
+        $whacenter
+            ->to($phoneNumber)
+            ->line($message)
+            ->send();
     }
     protected function sendWhatsAppPenolakan($phoneNumber, $message)
     {
         $whacenter = new WhacenterService();
-        $whacenter->to($phoneNumber)->line($message)->send();
+        $whacenter
+            ->to($phoneNumber)
+            ->line($message)
+            ->send();
     }
 
     protected function sendNotificationToTeamMembers($teamMembers, $title, $message, $jenisNotifikasi)
@@ -283,7 +303,6 @@ class PresentasiController extends Controller
         }
     }
 
-
     protected function konfirmasiPresentasi(Request $request, $code)
     {
         if ($request->status_revisi === null) {
@@ -297,24 +316,23 @@ class PresentasiController extends Controller
         $presentasi = Presentasi::query()
             ->where('code', $code)
             ->update([
-                'status_presentasi' => 'selesai',
+                'status_presentasi' => $request->status_presentasi,
                 'status_revisi' => $request->status_revisi,
                 'feedback' => $request->feedback,
-                'user_approval_id' => auth()->id()
+                'user_approval_id' => auth()->id(),
             ]);
 
-            if ($presentasi) {
-                $presentasiQuery = Presentasi::where('code', $code)->first();
-                if ($presentasiQuery->status_presentasi === 'selesai' || $presentasiQuery->status_revisi === 'tidak_selesai')
-                {
-                    $presentasiQuery->tim->update([
-                        'sudah_presentasi' => true,
-                    ]);
-                    $presentasiQuery->update([
-                        'status_presentasi_mingguan' => true
-                    ]);
-                }
+        if ($presentasi) {
+            $presentasiQuery = Presentasi::where('code', $code)->first();
+            if ($presentasiQuery->status_presentasi === 'selesai' || $presentasiQuery->status_revisi === 'tidak_selesai') {
+                $presentasiQuery->tim->update([
+                    'sudah_presentasi' => true,
+                ]);
+                $presentasiQuery->update([
+                    'status_presentasi_mingguan' => true,
+                ]);
             }
+        }
 
         if ($presentasi) {
             return back()->with('success', 'Berhasil konfirmasi presentasi');
