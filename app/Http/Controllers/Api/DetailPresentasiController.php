@@ -16,10 +16,12 @@ class DetailPresentasiController extends Controller
      *
      * @return JsonResponse
      */
-    public function index(): JsonResponse
+    public function index()
     {
         $presentasi = Presentasi::query()
             ->get();
-        return ResponseHelper::success($presentasi);
+            return response()->json([
+                'presentasi' => $presentasi,
+            ]);
     }
 }
