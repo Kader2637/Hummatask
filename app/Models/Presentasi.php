@@ -24,7 +24,11 @@ class Presentasi extends Model
     {
         return $this->belongsTo(Tim::class);
     }
-
+    
+    public function divisi(): BelongsTo
+    {
+        return $this->belongsTo(Divisi::class);
+    }
     /**
      * users
      *
