@@ -255,6 +255,8 @@ class timController extends Controller
             ->whereDate('jadwal', now())
             ->where('divisi_id', auth()->user()->divisi_id)
             ->get();
+
+        // dd($sesi_senin->first()->jadwal_ke === $cek_present->jadwal_ke);
             
         $project = $tim->project->first();
         if ($project->deskripsi === null) {
