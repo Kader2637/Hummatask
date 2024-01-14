@@ -19,6 +19,7 @@ class DetailPresentasiController extends Controller
     public function index()
     {
         $presentasi = Presentasi::query()
+            ->with('tim')
             ->get();
             return response()->json([
                 'presentasi' => $presentasi,
