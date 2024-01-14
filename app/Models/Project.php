@@ -72,4 +72,5 @@ class Project extends Model
             ->orderByRaw("jabatan_id = 1 DESC")
             ->get();
     }
+
 }

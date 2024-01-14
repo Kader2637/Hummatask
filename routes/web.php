@@ -140,6 +140,7 @@
                 Route::get('pengajuan-projek', [mentorController::class, 'pengajuanProjekPage'])->name('pengajuan-projek');
                 Route::get('detail-pengajuan-projek/{code}', [mentorController::class, 'detailPengajuan'])->name('detail-pengajuan-projek');
                 Route::get('projek', [mentorController::class, 'projekPage'])->name('projek');
+                Route::get('projek/detail/{code}', [mentorController::class, 'projekDetail'])->name('projek.detail');
                 Route::get('profile-mentor', [mentorController::class, 'profilePage'])->name('profile-mentor');
                 Route::get('pengguna', [mentorController::class, 'pengguna'])->name('pengguna.mentor');
                 Route::get('history', [mentorController::class, 'history'])->name('history.mentor');
@@ -176,6 +177,8 @@
                 Route::put('galery-update/{id}', [mentorController::class, 'updateGalery'])->name('galery.update');
                 Route::put('logo-update/{id}', [mentorController::class, 'updateLogo'])->name('logo.update');
                 Route::delete('galery-delete/{id}', [mentorController::class, 'deleteGalery'])->name('galery.delete');
+
+                Route::put('catatan/update/{code}', [mentorController::class, 'updateCatatanMentor'])->name('mentor.update.catatan');
 
                 Route::post('pembuatantim', [PengajuanTimController::class, 'pembuatanTimProject'])->name('pembuatan.tim');
                 Route::post('/update-tim/{timId}', [PengajuanTimController::class, 'updateTimProject'])->name('tim.update');

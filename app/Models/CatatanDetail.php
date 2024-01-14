@@ -21,4 +21,9 @@ class CatatanDetail extends Model
     {
         return $this->hasMany(catatan::class, 'catatan_id');
     }
+
+    public function project(): HasMany
+    {
+        return $this->hasMany(Project::class);
+    }
 }

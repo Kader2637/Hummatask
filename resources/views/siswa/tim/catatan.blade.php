@@ -285,8 +285,7 @@
                             <div class="form-catatan-repeater row mb-3">
                               <div class="col-md-10 col-10">
                                 <label for="catatan" class="mb-2 form-label">Catatan {{ ++$i }}</label>
-                                <input name="catatan_text[]" id="catatan-input-edit" type="text"
-                                  value="{{ $item->catatan_text }}" class="form-control">
+                                <input name="catatan_text[]" id="catatan-input-edit" type="text" value="{{ $item->catatan_text }}" class="form-control">
                               </div>
                               <div class="col-md-1 col-1 d-flex justify-content-center align-items-end">
                                 <div id="button-delete">

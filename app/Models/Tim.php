@@ -15,6 +15,11 @@ class Tim extends Model
 
     protected $guarded = [];
 
+    public function catatans(): HasMany
+    {
+        return $this->hasMany(catatan::class, 'tim_id');
+    }
+
     /**
      * user
      *

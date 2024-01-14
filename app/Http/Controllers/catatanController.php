@@ -41,7 +41,7 @@ class catatanController extends Controller
             }
 
             $catatan = new catatan();
-            $catatan->code = Str::uuid();
+            $catatan->code = $tims->code;
             $catatan->tim_id = $tim;
 
             if ($request->type_note == 'private') {
@@ -130,4 +130,8 @@ class catatanController extends Controller
             return redirect()->back()->with('error', 'Catatan gagal dihapus!');
         }
     }
+
+    // protected function catatanUpdate(Request $request)
+    // {
+    // }
 }

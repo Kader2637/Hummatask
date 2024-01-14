@@ -10,6 +10,8 @@ use App\Models\Galery;
 use App\Models\HistoryPresentasi;
 use App\Models\Notifikasi;
 use App\Models\Anggota;
+use App\Models\catatan;
+use App\Models\CatatanDetail;
 use App\Models\Divisi;
 use App\Models\LimitPresentasiDevisi;
 use App\Models\PenglolaMagang;
@@ -372,6 +374,39 @@ class mentorController extends Controller
             ->get();
 
         return response()->view('mentor.projek', compact('users', 'projects', 'notifikasi'));
+    }
+
+    protected function projekDetail($code)
+    {
+        $project = Project::where('code', $code)->firstOrFail();
+
+        $catatan = catatan::where('code', $code)->get();
+
+        $notifikasi = Notifikasi::where('user_id', Auth::user()->id)
+            ->whereHas('user', function ($query) {
+                $query->where('divisi_id', Auth::user()->divisi_id);
+            })->get();
+
+        return view('mentor.projekDetail', compact('project', 'notifikasi', 'catatan'));
+    }
+    
+    protected function updateCatatanMentor(Request $request, $code) {
+        $catatan = catatan::where('code', $code)->firstOrFail();
+    
+        $catatan->catatanDetail()->delete();
+
+        if ($request->has('catatan_text') && is_array($request->catatan_text) && count($request->catatan_text) > 0) {
+            foreach ($request->catatan_text as $item) {
+                CatatanDetail::create([
+                    'catatan_id' => $catatan->id,
+                    'catatan_text' => $item
+                ]);
+            }
+    
+            return redirect()->back()->with('success', 'Catatan berhasil diperbarui.');
+        } else {
+            return redirect()->back()->with('error', 'Anda tidak mengubah catatan apapun.');
+        }
     }
 
     function updateDeadline($id, Request $request)
