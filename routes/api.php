@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\DetailPresentasiController;
 use App\Http\Controllers\Api\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -8,8 +9,11 @@ use App\Http\Controllers\tambahUsersController;
 use App\Http\Controllers\Api\PenggunaController;
 use App\Http\Controllers\Api\PresentasiDivisiController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\PresentasiController;
+use App\Http\Controllers\mentorController;
 use App\Http\Controllers\PengajuanPresentasiController;
 use App\Http\Controllers\siswaController;
+use App\Http\Controllers\timController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +49,7 @@ Route::post('tambah-mentor', [tambahUsersController::class, 'store_mentor']);
 Route::put('edit-mentor/{uuid}', [tambahUsersController::class, 'edit_mentor']);
 Route::delete('delete-mentor/{code}', [tambahUsersController::class, 'delete_mentor']);
 
+Route::get('detail-presentasi', [DetailPresentasiController::class, 'index']);
 
 Route::get('pengguna',[PenggunaController::class, 'index']);
 Route::post('pengguna-api',[PenggunaController::class, 'store']);
