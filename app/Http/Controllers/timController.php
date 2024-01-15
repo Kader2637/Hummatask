@@ -279,7 +279,7 @@ class timController extends Controller
         foreach ($presentasiID as $present) {
             $presentID = $present->id;
         }
-        $latestPresentasi = Presentasi::first();
+        $latestPresentasi = $tim->presentasi()->latest()->first();
         $presentID = $latestPresentasi->id;
 
         $hasProjectRelation = $tim->project()->exists();
