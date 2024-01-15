@@ -88,7 +88,8 @@
                                     <h5 class="card-title my-2 text-capitalize">{{ $item->tim->nama }}</h5>
                                     <p class="card-text" data-bs-toggle="tooltip" data-popup="tooltip-custom"
                                         data-bs-placement="bottom" title="Jadwal Presentasi">
-                                        {{ $item->jadwal_ke }} {{ $item->mulai }}-{{ $item->akhir }}
+                                        {{ $item->jadwal_ke }} {{ \Carbon\Carbon::parse($item->mulai)->format('H:i') }} -
+                                        {{ \Carbon\Carbon::parse($item->akhir)->format('H:i') }}
                                     </p>
                                     <div class="d-flex justify-content-around align-items-center gap-3 mt-3">
                                         <button data-bs-toggle="modal"
@@ -231,7 +232,8 @@
                                     <h5 class="card-title my-2 text-capitalize">{{ $item->tim->nama }}</h5>
                                     <p class="card-text" data-bs-toggle="tooltip" data-popup="tooltip-custom"
                                         data-bs-placement="bottom" title="Jadwal Presentasi">
-                                        {{ $item->jadwal_ke }} {{ $item->mulai }}-{{ $item->akhir }}
+                                        {{ $item->jadwal_ke }} {{ \Carbon\Carbon::parse($item->mulai)->format('H:i') }} -
+                                        {{ \Carbon\Carbon::parse($item->akhir)->format('H:i') }}
                                     </p>
                                     <div class="d-flex justify-content-around align-items-center gap-3 mt-3">
                                         <button data-bs-toggle="modal"
@@ -376,7 +378,8 @@
                                     <h5 class="card-title my-2 text-capitalize">{{ $item->tim->nama }}</h5>
                                     <p class="card-text" data-bs-toggle="tooltip" data-popup="tooltip-custom"
                                         data-bs-placement="bottom" title="Jadwal Presentasi">
-                                        {{ $item->jadwal_ke }} {{ $item->mulai }}-{{ $item->akhir }}
+                                        {{ $item->jadwal_ke }} {{ \Carbon\Carbon::parse($item->mulai)->format('H:i') }} -
+                                        {{ \Carbon\Carbon::parse($item->akhir)->format('H:i') }}
                                     </p>
                                     <div class="d-flex justify-content-around align-items-center gap-3 mt-3">
                                         <button data-bs-toggle="modal"
@@ -525,7 +528,8 @@
                                     <h5 class="card-title my-2 text-capitalize">{{ $item->tim->nama }}</h5>
                                     <p class="card-text" data-bs-toggle="tooltip" data-popup="tooltip-custom"
                                         data-bs-placement="bottom" title="Jadwal Presentasi">
-                                        {{ $item->jadwal_ke }} {{ $item->mulai }}-{{ $item->akhir }}
+                                        {{ $item->jadwal_ke }} {{ \Carbon\Carbon::parse($item->mulai)->format('H:i') }} -
+                                        {{ \Carbon\Carbon::parse($item->akhir)->format('H:i') }}
                                     </p>
                                     <div class="d-flex justify-content-around align-items-center gap-3 mt-3">
                                         <button data-bs-toggle="modal"
@@ -674,7 +678,8 @@
                                     </h5>
                                     <p class="card-text" data-bs-toggle="tooltip" data-popup="tooltip-custom"
                                         data-bs-placement="bottom" title="Jadwal Presentasi">
-                                        {{ $item->jadwal_ke }} {{ $item->mulai }}-{{ $item->akhir }}
+                                        {{ $item->jadwal_ke }} {{ \Carbon\Carbon::parse($item->mulai)->format('H:i') }} -
+                                        {{ \Carbon\Carbon::parse($item->akhir)->format('H:i') }}
                                     </p>
                                     <div class="d-flex justify-content-around align-items-center gap-3 mt-3">
                                         <button data-bs-toggle="modal"
