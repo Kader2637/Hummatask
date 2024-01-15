@@ -20,14 +20,11 @@ class DetailPresentasiController extends Controller
     public function index()
     {
         $presentasi = Presentasi::query()
-            ->with('tim','divisi')
+            ->with('tim','divisi','tim.user')
             ->get();
-        $anggota = Anggota::query()
-            ->with('user')
-            ->get();
+
             return response()->json([
                 'presentasi' => $presentasi,
-                'anggota' => $anggota,
             ]);
     }
 }
