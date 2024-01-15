@@ -553,23 +553,21 @@ class mentorController extends Controller
 
     protected function tim(Request $request)
     {
-        $tims = Tim::query()
-            ->leftJoin('projects', 'tims.id', '=', 'projects.tim_id')
-            ->where('tims.divisi_id', Auth::user()->divisi_id)
+        $timQuery = tim::query()
+            ->where('divisi_id', Auth::user()->divisi_id)
             ->with('user', 'project')
-            ->orderByRaw("FIELD(projects.type_project, 'big', 'mini', 'pre_mini', 'solo')")
-            ->orderBy('tims.kadaluwarsa');
+            ->orderBy('kadaluwarsa');
 
         if ($request->has('status_tim') && $request->status_tim !== 'all') {
-            $tims->where('tims.status_tim', $request->status_tim);
+            $timQuery->where('status_tim', $request->status_tim);
         }
 
         if ($request->has('nama_tim') && $request->nama_tim !== null) {
             $query = $request->nama_tim;
-            $tims->where('tims.nama', 'like', "%$query%");
+            $timQuery->where('nama', 'like', "%$query%");
         }
 
-        $tims = $tims->paginate(12);
+        $tims = $timQuery->paginate(12);
 
         $notifikasi = Notifikasi::where('user_id', auth()->id())
             ->whereHas('user', function ($query) {
