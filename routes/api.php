@@ -34,7 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [UserController::class, 'user']);
     Route::post('presentasi-divisi', [PresentasiDivisiController::class, 'store']);
 
-    Route::get('siswa',[siswaController::class,'list']);
+    Route::get('siswa', [siswaController::class, 'list']);
 });
 
 Route::get('division', [DivisiController::class, 'index']);
@@ -52,13 +52,14 @@ Route::delete('delete-mentor/{code}', [tambahUsersController::class, 'delete_men
 
 Route::get('detail-presentasi', [DetailPresentasiController::class, 'index']);
 
-Route::get('pengguna',[PenggunaController::class, 'index']);
-Route::post('pengguna-api',[PenggunaController::class, 'store']);
-Route::delete('deletePengguna/{user}',[PenggunaController::class,'destroy']);
+Route::get('pengguna', [PenggunaController::class, 'index']);
+Route::post('pengguna-api', [PenggunaController::class, 'store']);
+Route::delete('deletePengguna/{user}', [PenggunaController::class, 'destroy']);
 Route::patch('editDivisi/{user}', [PenggunaController::class, 'UpdateDivisi']);
 Route::post('storeCvs', [PenggunaController::class, 'storeCsv']);
 
 //Route Menu Mentor PKL Hummatech
-Route::controller(ProjectAPI::class)->group(function(){
-    Route::get('get-project', 'getProject');
+Route::controller(ProjectAPI::class)->group(function () {
+    Route::get('get-team', 'getTeam');
+    Route::get('get-team-detail/{code}', 'getTeamDetail');
 });

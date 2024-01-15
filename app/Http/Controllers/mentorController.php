@@ -553,7 +553,8 @@ class mentorController extends Controller
 
     protected function tim(Request $request)
     {
-        $tims = Tim::leftJoin('projects', 'tims.id', '=', 'projects.tim_id')
+        $tims = Tim::query()
+            ->leftJoin('projects', 'tims.id', '=', 'projects.tim_id')
             ->where('tims.divisi_id', Auth::user()->divisi_id)
             ->with('user', 'project')
             ->orderByRaw("FIELD(projects.type_project, 'big', 'mini', 'pre_mini', 'solo')")
@@ -570,8 +571,7 @@ class mentorController extends Controller
 
         $tims = $tims->paginate(12);
 
-        $userID = Auth::user()->id;
-        $notifikasi = Notifikasi::where('user_id', $userID)
+        $notifikasi = Notifikasi::where('user_id', auth()->id())
             ->whereHas('user', function ($query) {
                 $query->where('divisi_id', Auth::user()->divisi_id);
             })
