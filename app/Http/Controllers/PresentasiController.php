@@ -170,6 +170,20 @@ class PresentasiController extends Controller
             ->with('success', 'Berhasil mengajukan presentasi');
     }
 
+    protected function updatePresentasi(Request $request, $id){
+        $jadwalQuery = LimitPresentasiDevisi::find($request->plan);
+        // dd($jadwalQuery);
+        $presentasi = Presentasi::query()
+            ->where('id', $id)
+            ->update([
+                'jadwal_ke' => $jadwalQuery->jadwal_ke,
+                'mulai' => $jadwalQuery->mulai,
+                'akhir' => $jadwalQuery->akhir,
+            ]);
+        // dd($request, $presentasiID);
+        return redirect()->back()->with('success', 'Berhasil Merubah Jadwal');
+    }
+
     protected function sendNotificationToMentor($mentorId, $title, $message, $jenisNotifikasi)
     {
         Notifikasi::create([

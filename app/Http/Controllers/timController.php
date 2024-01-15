@@ -249,6 +249,12 @@ class timController extends Controller
             ->where('divisi_id', auth()->user()->divisi_id)
             ->get();
 
+            $validasiPersetujuan = $tim->presentasi->sortByDesc('created_at')->first();
+            // if ($validasiPersetujuan !== null) {
+            //     if ($validasiPersetujuan->status_presentasi === 'menunggu') {
+            //         return back()->with('error', 'Tim anda sudah terjadwal presentasi');
+            //     }
+            // }
         // dd($sesi_senin->first()->jadwal_ke === $cek_present->jadwal_ke);
             
         $project = $tim->project->first();
@@ -269,13 +275,20 @@ class timController extends Controller
             ->get();
         $project = $tim->project->first();
 
+        $presentasiID = Presentasi::all();
+        foreach ($presentasiID as $present) {
+            $presentID = $present->id;
+        }
+        $latestPresentasi = $tim->presentasi()->latest()->first();
+        $presentID = $latestPresentasi->id;
+
         $hasProjectRelation = $tim->project()->exists();
         $jadwal = [];
         foreach ($presentasi as $data) {
             $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
         }
 
-        return view('siswa.tim.history-presentasi', compact('cek_present', 'jabatan', 'title', 'tim', 'anggota', 'presentasi', 'jadwal', 'hasProjectRelation', 'project', 'notifikasi', 'project', 'sesi_senin', 'sesi_selasa', 'sesi_rabu', 'sesi_kamis', 'sesi_jumat'));
+        return view('siswa.tim.history-presentasi', compact('cek_present','presentID','presentasiID','validasiPersetujuan', 'jabatan', 'title', 'tim', 'anggota', 'presentasi', 'jadwal', 'hasProjectRelation', 'project', 'notifikasi', 'project', 'sesi_senin', 'sesi_selasa', 'sesi_rabu', 'sesi_kamis', 'sesi_jumat'));
     }
 
     protected function catatanPage($code)
