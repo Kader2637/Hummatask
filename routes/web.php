@@ -93,6 +93,7 @@
 
                     Route::post('board/tambah-tugas/{code}', [TugasController::class, 'buatTugas']);
                     Route::post('ajukan-presentasi/{code}', [PresentasiController::class, 'ajukanPresentasi'])->name('ajukan-presentasi');
+                    Route::put('update-presentasi/{id}', [PresentasiController::class, 'updatePresentasi'])->name('update-presentasi');
                     Route::patch('edit-project/{code}', [PengajuanProjekController::class, 'editProject'])->name('tim.editProject');
                     Route::put('board/proses-edit-tugas', [TugasController::class, 'prosesEditTugas'])->name('editTugas');
                     Route::delete('board/delete/tugas/{codeTugas}', [TugasController::class, 'hapusTugas']);

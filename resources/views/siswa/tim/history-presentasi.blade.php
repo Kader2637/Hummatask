@@ -248,11 +248,22 @@
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="senin" role="tabpanel">
-                                        <form action="{{ route('ajukan-presentasi', $tim->code) }}" method="post"
-                                            id="formAjukanPresentasi_1">
+                                        <form id="formAjukanPresentasi_1"
+                                            @if ($validasiPersetujuan !== null) 
+                                            action="{{ route('update-presentasi', $presentID) }}" method="post" 
+                                            @else
+                                            action="{{ route('ajukan-presentasi', $tim->code) }}" method="post" @endif>
                                             @csrf
+                                            @if ($validasiPersetujuan !== null)
+                                                @method('PUT')
+                                            @endif
+                                            @if ($validasiPersetujuan !== null)
+                                            <label for="judul" class="form-label" disabled>Judul Presentasi</label>
+                                            <input type="text" name="judul" class="form-control" disabled>
+                                            @else
                                             <label for="judul" class="form-label">Judul Presentasi</label>
                                             <input type="text" name="judul" class="form-control">
+                                            @endif
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_senin as $data)
@@ -263,14 +274,15 @@
                                                     @endphp
 
                                                     <div class="col-12 col-lg-4 col-xxl-4 my-2">
-                                                        <label class="card {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'bg-label-primary' : '' }}">
+                                                        <label
+                                                            class="card {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'bg-label-primary' : '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}">
                                                             <input name="plan" class="radio" type="radio"
                                                                 value="{{ $data->id }}"
                                                                 {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'checked' : '' }}
                                                                 {{ $cekJadwal ? 'disabled' : '' }}>
                                                             <span class="plan-details text-center">
                                                                 <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
-                                                                    Jadwal Ke-
+                                                                    {{ $data->jadwal_ke }}
                                                                 </p>
                                                                 <p class="text-primary mb-0">
                                                                     {{ $data->mulai }} - {{ $data->akhir }}
@@ -289,21 +301,41 @@
                                                             class="img-fluid">
                                                     </div>
                                                 @endforelse
+                                                @if ($validasiPersetujuan !== null)
+                                                <label for="deskripsi" class="form-label" disabled>Deskripsi (Opsional)</label>
+                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10" disabled></textarea>
+                                                @else
                                                 <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
                                                 <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                @endif
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
+                                                    @if ($validasiPersetujuan !== null)
+                                                    <div class="">
+                                                        <button type="button" data-bs-dismiss="modal"
+                                                        class="btn btn-primary bg-danger waves-effect">
+                                                        Anda hanya dapat merubah Jadwal Presentasi!
+                                                        </button>
+                                                    </div>
+                                                    @elseif ($validasiPersetujuan === null)
                                                     <div class="">
                                                         <button data-bs-dismiss="modal"
                                                             class="btn btn-label-secondary waves-effect">
                                                             Tutup
                                                         </button>
                                                     </div>
+                                                    @endif
                                                     <div class="">
-                                                        <button type="submit" class="btn btn-primary">
-                                                            Simpan
-                                                        </button>
+                                                        @if ($validasiPersetujuan !== null)
+                                                            <button type="submit" class="btn btn-primary">
+                                                                Update
+                                                            </button>
+                                                        @elseif ($validasiPersetujuan === null)
+                                                            <button type="submit" class="btn btn-primary">
+                                                                Simpan
+                                                            </button>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -318,28 +350,29 @@
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_selasa as $data)
-                                                @php
-                                                $cekJadwal = \App\Models\Presentasi::where('jadwal_ke', $data->jadwal_ke)
-                                                    ->where('divisi_id', auth()->user()->divisi_id)
-                                                    ->first();
-                                            @endphp
+                                                    @php
+                                                        $cekJadwal = \App\Models\Presentasi::where('jadwal_ke', $data->jadwal_ke)
+                                                            ->where('divisi_id', auth()->user()->divisi_id)
+                                                            ->first();
+                                                    @endphp
 
-                                            <div class="col-12 col-lg-4 col-xxl-4 my-2">
-                                                <label class="card {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'checked' : '' }}">
-                                                    <input name="plan" class="radio" type="radio"
-                                                        value="{{ $data->id }}"
-                                                        {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'checked' : '' }}
-                                                        {{ $cekJadwal ? 'disabled' : '' }}>
-                                                    <span class="plan-details text-center">
-                                                        <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
-                                                            Jadwal Ke-
-                                                        </p>
-                                                        <p class="text-primary mb-0">
-                                                            {{ $data->mulai }} - {{ $data->akhir }}
-                                                        </p>
-                                                    </span>
-                                                </label>
-                                            </div>
+                                                    <div class="col-12 col-lg-4 col-xxl-4 my-2">
+                                                        <label
+                                                            class="card {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'bg-label-primary' : '' }}">
+                                                            <input name="plan" class="radio" type="radio"
+                                                                value="{{ $data->id }}"
+                                                                {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'checked' : '' }}
+                                                                {{ $cekJadwal ? 'disabled' : '' }}>
+                                                            <span class="plan-details text-center">
+                                                                <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
+                                                                    {{ $data->jadwal_ke }}
+                                                                </p>
+                                                                <p class="text-primary mb-0">
+                                                                    {{ $data->mulai }} - {{ $data->akhir }}
+                                                                </p>
+                                                            </span>
+                                                        </label>
+                                                    </div>
                                                 @empty
                                                     <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di
                                                         hari lain
@@ -379,28 +412,29 @@
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_rabu as $data)
-                                                @php
-                                                $cekJadwal = \App\Models\Presentasi::where('jadwal_ke', $data->jadwal_ke)
-                                                    ->where('divisi_id', auth()->user()->divisi_id)
-                                                    ->first();
-                                            @endphp
+                                                    @php
+                                                        $cekJadwal = \App\Models\Presentasi::where('jadwal_ke', $data->jadwal_ke)
+                                                            ->where('divisi_id', auth()->user()->divisi_id)
+                                                            ->first();
+                                                    @endphp
 
-                                            <div class="col-12 col-lg-4 col-xxl-4 my-2">
-                                                <label class="card {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'checked' : '' }}">
-                                                    <input name="plan" class="radio" type="radio"
-                                                        value="{{ $data->id }}"
-                                                        {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'checked' : '' }}
-                                                        {{ $cekJadwal ? 'disabled' : '' }}>
-                                                    <span class="plan-details text-center">
-                                                        <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
-                                                            Jadwal Ke-
-                                                        </p>
-                                                        <p class="text-primary mb-0">
-                                                            {{ $data->mulai }} - {{ $data->akhir }}
-                                                        </p>
-                                                    </span>
-                                                </label>
-                                            </div>
+                                                    <div class="col-12 col-lg-4 col-xxl-4 my-2">
+                                                        <label
+                                                            class="card {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'bg-label-primary' : '' }}">
+                                                            <input name="plan" class="radio" type="radio"
+                                                                value="{{ $data->id }}"
+                                                                {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'checked' : '' }}
+                                                                {{ $cekJadwal ? 'disabled' : '' }}>
+                                                            <span class="plan-details text-center">
+                                                                <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
+                                                                    {{ $data->jadwal_ke }}
+                                                                </p>
+                                                                <p class="text-primary mb-0">
+                                                                    {{ $data->mulai }} - {{ $data->akhir }}
+                                                                </p>
+                                                            </span>
+                                                        </label>
+                                                    </div>
                                                 @empty
                                                     <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di
                                                         hari lain
@@ -440,28 +474,29 @@
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_kamis as $data)
-                                                @php
-                                                $cekJadwal = \App\Models\Presentasi::where('jadwal_ke', $data->jadwal_ke)
-                                                    ->where('divisi_id', auth()->user()->divisi_id)
-                                                    ->first();
-                                            @endphp
+                                                    @php
+                                                        $cekJadwal = \App\Models\Presentasi::where('jadwal_ke', $data->jadwal_ke)
+                                                            ->where('divisi_id', auth()->user()->divisi_id)
+                                                            ->first();
+                                                    @endphp
 
-                                            <div class="col-12 col-lg-4 col-xxl-4 my-2">
-                                                <label class="card {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'checked' : '' }}">
-                                                    <input name="plan" class="radio" type="radio"
-                                                        value="{{ $data->id }}"
-                                                        {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'checked' : '' }}
-                                                        {{ $cekJadwal ? 'disabled' : '' }}>
-                                                    <span class="plan-details text-center">
-                                                        <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
-                                                            Jadwal Ke-
-                                                        </p>
-                                                        <p class="text-primary mb-0">
-                                                            {{ $data->mulai }} - {{ $data->akhir }}
-                                                        </p>
-                                                    </span>
-                                                </label>
-                                            </div>
+                                                    <div class="col-12 col-lg-4 col-xxl-4 my-2">
+                                                        <label
+                                                            class="card {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'bg-label-primary' : '' }}">
+                                                            <input name="plan" class="radio" type="radio"
+                                                                value="{{ $data->id }}"
+                                                                {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'checked' : '' }}
+                                                                {{ $cekJadwal ? 'disabled' : '' }}>
+                                                            <span class="plan-details text-center">
+                                                                <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
+                                                                    {{ $data->jadwal_ke }}
+                                                                </p>
+                                                                <p class="text-primary mb-0">
+                                                                    {{ $data->mulai }} - {{ $data->akhir }}
+                                                                </p>
+                                                            </span>
+                                                        </label>
+                                                    </div>
                                                 @empty
                                                     <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di
                                                         hari lain
@@ -501,28 +536,29 @@
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_jumat as $data)
-                                                @php
-                                                $cekJadwal = \App\Models\Presentasi::where('jadwal_ke', $data->jadwal_ke)
-                                                    ->where('divisi_id', auth()->user()->divisi_id)
-                                                    ->first();
-                                            @endphp
+                                                    @php
+                                                        $cekJadwal = \App\Models\Presentasi::where('jadwal_ke', $data->jadwal_ke)
+                                                            ->where('divisi_id', auth()->user()->divisi_id)
+                                                            ->first();
+                                                    @endphp
 
-                                            <div class="col-12 col-lg-4 col-xxl-4 my-2">
-                                                <label class="card {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'checked' : '' }}">
-                                                    <input name="plan" class="radio" type="radio"
-                                                        value="{{ $data->id }}"
-                                                        {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'checked' : '' }}
-                                                        {{ $cekJadwal ? 'disabled' : '' }}>
-                                                    <span class="plan-details text-center">
-                                                        <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
-                                                            Jadwal Ke-
-                                                        </p>
-                                                        <p class="text-primary mb-0">
-                                                            {{ $data->mulai }} - {{ $data->akhir }}
-                                                        </p>
-                                                    </span>
-                                                </label>
-                                            </div>
+                                                    <div class="col-12 col-lg-4 col-xxl-4 my-2">
+                                                        <label
+                                                            class="card {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'bg-label-primary' : '' }}">
+                                                            <input name="plan" class="radio" type="radio"
+                                                                value="{{ $data->id }}"
+                                                                {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'checked' : '' }}
+                                                                {{ $cekJadwal ? 'disabled' : '' }}>
+                                                            <span class="plan-details text-center">
+                                                                <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
+                                                                    {{ $data->jadwal_ke }}
+                                                                </p>
+                                                                <p class="text-primary mb-0">
+                                                                    {{ $data->mulai }} - {{ $data->akhir }}
+                                                                </p>
+                                                            </span>
+                                                        </label>
+                                                    </div>
                                                 @empty
                                                     <h6 class="text-center mt-4">Tidak ada jadwal sesi hari ini, cek di
                                                         hari lain
