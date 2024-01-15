@@ -211,7 +211,7 @@
                                 </div>
                             </div>
                             <div class="row mt-2 justify-content-center align-items-center grid">
-                                @foreach ($project->tim->anggota as $data)
+                                @foreach ($project->tim->anggota_profile() as $data)
                                     <div class="col-lg-4 p-2" style="box-shadow: none">
                                         <div class="card">
                                             <div class="card-body d-flex gap-3 align-items-center">
