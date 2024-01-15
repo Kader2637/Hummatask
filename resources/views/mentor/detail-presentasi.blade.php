@@ -83,7 +83,7 @@
                                     @if ($item->status_presentasi == 'menunggu')
                                         <span class="badge bg-label-danger text-capitalize">Menunggu Presentasi</span>
                                     @elseif ($item->status_presentasi == 'sedang_presentasi')
-                                        <span class="badge bg-label-danger text-capitalize">Sedang Presentasi</span>
+                                        <span class="badge bg-label-success text-capitalize">Sedang Presentasi</span>
                                     @endif
                                     <h5 class="card-title my-2 text-capitalize">{{ $item->tim->nama }}</h5>
                                     <p class="card-text" data-bs-toggle="tooltip" data-popup="tooltip-custom"
@@ -94,7 +94,7 @@
                                     <div class="d-flex justify-content-around align-items-center gap-3 mt-3">
                                         <button data-bs-toggle="modal"
                                             data-bs-target="#konfirmasi-presentasi-{{ $item->code }}"
-                                            class="btn btn-success w-100 confirm-btn">Konfirmasi Presentasi</button>
+                                            class="btn btn-primary w-100 confirm-btn">Konfirmasi Presentasi</button>
                                     </div>
                                 </div>
                             </div>
@@ -227,7 +227,7 @@
                                     @if ($item->status_presentasi == 'menunggu')
                                         <span class="badge bg-label-danger text-capitalize">Menunggu Presentasi</span>
                                     @elseif ($item->status_presentasi == 'sedang_presentasi')
-                                        <span class="badge bg-label-danger text-capitalize">Sedang Presentasi</span>
+                                        <span class="badge bg-label-success text-capitalize">Sedang Presentasi</span>
                                     @endif
                                     <h5 class="card-title my-2 text-capitalize">{{ $item->tim->nama }}</h5>
                                     <p class="card-text" data-bs-toggle="tooltip" data-popup="tooltip-custom"
@@ -238,7 +238,7 @@
                                     <div class="d-flex justify-content-around align-items-center gap-3 mt-3">
                                         <button data-bs-toggle="modal"
                                             data-bs-target="#konfirmasi-presentasi-{{ $item->code }}"
-                                            class="btn btn-success w-100 confirm-btn">Konfirmasi Presentasi</button>
+                                            class="btn btn-primary w-100 confirm-btn">Konfirmasi Presentasi</button>
                                     </div>
                                 </div>
                             </div>

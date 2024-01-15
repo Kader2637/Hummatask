@@ -41,7 +41,7 @@ class PresentasiController extends Controller
                 $query->whereDate('created_at', $hariIni);
             })
             ->get();
-            // dd($tidakPresentasi);
+        // dd($tidakPresentasi);
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
         return view('mentor.history-presentasi', compact('notifikasi', 'presentasiSelesai', 'tidakPresentasi', 'hariIni'));
     }
@@ -88,7 +88,7 @@ class PresentasiController extends Controller
                 $tidakPresentasiMingguan = TidakPresentasiMingguan::where('tim_id', $tim->id)
                     ->latest()
                     ->first();
-            
+
                 if ($tidakPresentasiMingguan) {
                     $tidakPresentasiMingguan->delete();
                 }
@@ -150,11 +150,11 @@ class PresentasiController extends Controller
             ->get();
 
         foreach ($cek_present as $present) {
-            if ($present->jadwal_ke === $jadwalQuery->jadwal_ke){
+            if ($present->jadwal_ke === $jadwalQuery->jadwal_ke) {
                 return redirect()->back()->with('error', 'Jadwal sudah dipilih tim lain');
             }
         }
-            
+
         $presentasi->status_presentasi_mingguan = false;
         $presentasi->save();
 
@@ -324,6 +324,10 @@ class PresentasiController extends Controller
 
         if (Str::length($request->feedback) > 300) {
             return back()->with('warning', 'Feedback kepada user tidak boleh lebih dari 300 karakter');
+        }
+
+        if ($request->status_presentasi === null) {
+            return back()->with('warning', 'Status presentasi harus di isi');
         }
 
         $presentasi = Presentasi::query()
