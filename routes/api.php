@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PresentasiController;
 use App\Http\Controllers\mentorController;
 use App\Http\Controllers\PengajuanPresentasiController;
+use App\Http\Controllers\ProjectAPI;
 use App\Http\Controllers\siswaController;
 use App\Http\Controllers\timController;
 
@@ -56,3 +57,8 @@ Route::post('pengguna-api',[PenggunaController::class, 'store']);
 Route::delete('deletePengguna/{user}',[PenggunaController::class,'destroy']);
 Route::patch('editDivisi/{user}', [PenggunaController::class, 'UpdateDivisi']);
 Route::post('storeCvs', [PenggunaController::class, 'storeCsv']);
+
+//Route Menu Mentor PKL Hummatech
+Route::controller(ProjectAPI::class)->group(function(){
+    Route::get('get-project', 'getProject');
+});
