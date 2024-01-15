@@ -122,7 +122,6 @@
                             </div>
                         </div>
 
-
                         <div class="modal fade" id="tambahLabel" tabindex="-1" style="display: none;" aria-hidden="true">
                             <div class="modal-dialog modal-md" role="document">
                                 <div class="modal-content">
@@ -218,9 +217,6 @@
                             </div>
                         </div>
 
-
-
-
                         <div style="height: 80vh" class="container-fluid mt-2">
                             <div class="d-flex mt-3 mb-0  row hide-sroll" style="height: 83vh">
                                 <div style="" class="col-lg-3 col-md-6 col-12 py-2   ">
@@ -248,9 +244,9 @@
                                                         @csrf
                                                         <label for="tugas">Judul</label>
                                                         <input type="text" class="form-control" id="tugas"
-                                                        name="tugas">
+                                                            name="tugas">
                                                         <label class="mt-2">Tugas</label>
-                                                        <select  class="select2">
+                                                        <select class="select2">
                                                             <option value="1" disabled selected>Pilih tugas</option>
                                                             <option value="3">Option3</option>
                                                             <option value="4">Option4</option>
@@ -586,11 +582,11 @@
                                         .avatar;
                                     tugaskan +=
                                         `
-        <div class="avatar avatar-xs avatar-aktifitas-${index}" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="${dataUser.username}" data-bs-original-title="${dataUser.username}">
-            <img style="object-fit: cover;" src="{{ asset('${avatar}') }}" alt="Avatar" class="rounded-circle pull-up">
-        </div>
+                                    <div class="avatar avatar-xs avatar-aktifitas-${index}" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="${dataUser.username}" data-bs-original-title="${dataUser.username}">
+                                        <img style="object-fit: cover;" src="{{ asset('${avatar}') }}" alt="Avatar" class="rounded-circle pull-up">
+                                    </div>
 
-        `
+                                    `
 
                                     $(`.avatar-aktifitas-${index}`).tooltip();
                                 })
@@ -621,21 +617,21 @@
                                 // console.log(tug);
                                 if (status === "create") {
                                     return `
-            <div class="media d-flex align-items-start my-5">
-                <div class="avatar me-2 flex-shrink-0 mt-1">
-                    <img style="object-fit: cover" src="{{ asset('${avatar}') }}" alt="Avatar" class="rounded-circle">
-                </div>
-                <div class="media-body">
-                    <p class="mb-0">
-                        <span class="fw-medium">${aktifitas.user.username}</span> membuat tugas ${aktifitas.judul}
-                    </p>
-                    <small class="text-muted">${waktu}</small>
-                </div>
-            </div>
-        `;
+                                    <div class="media d-flex align-items-start my-5">
+                                        <div class="avatar me-2 flex-shrink-0 mt-1">
+                                            <img style="object-fit: cover" src="{{ asset('${avatar}') }}" alt="Avatar" class="rounded-circle">
+                                        </div>
+                                        <div class="media-body">
+                                            <p class="mb-0">
+                                                <span class="fw-medium">${aktifitas.user.username}</span> membuat tugas ${aktifitas.judul}
+                                            </p>
+                                            <small class="text-muted">${waktu}</small>
+                                        </div>
+                                    </div>
+                                `;
                                 } else {
                                     return `
-        <div class="media mt-3 d-flex align-items-start">
+                                        <div class="media mt-3 d-flex align-items-start">
                                                 <div class="avatar me-2 flex-shrink-0 mt-1">
                                                 <img src="{{ asset('${avatar}') }}" alt="Avatar" class="rounded-circle">
                                                 </div>
@@ -671,14 +667,10 @@
                                                 </p>
                                                 <small class="text-muted">${waktu}</small>
                                                 </div>
-     </div>
-        `;
-
-
+                                        </div>
+                                            `;
                                 }
                             };
-
-
 
                             var editPreviewLabel = $('#edit-preview-label');
                             var editInputText = $('#editText');
@@ -855,8 +847,6 @@
                                 });
                             }
 
-
-
                             function getLabels() {
                                 const tim_id = "{{ $tim->id }}";
                                 axios
@@ -872,21 +862,21 @@
                                                 `<span class="badge" style="background-color: ${item.warna_bg}; color: ${item.warna_text}">${item.text}</span>`;
 
                                             let row = `
-        <tr class="tr-label-${item.id}">
-            <td>${index + 1}</td>
-            <td>
-                ${label}
-            </td>
-            <td>
-                <button onclick="deleteLabel('${item.id}')" class="btn border-none btn-delete-label bg-transparent">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/></svg>
-                </button>
-                <button onclick="editLabel('${item.id}', '${item.text}', '${item.warna_bg}', '${item.warna_text}')" class="btn border-none btn-delete-label bg-transparent">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M10 14v-2.615l8.944-8.945q.166-.165.348-.228q.183-.064.385-.064q.188 0 .368.064q.18.063.326.21L21.483 3.5q.16.165.242.364q.083.2.083.401t-.06.382q-.061.18-.227.345L12.52 14H10Zm9.465-8.354l1.348-1.361l-1.111-1.17l-1.387 1.381l1.15 1.15ZM5.615 20q-.69 0-1.152-.462Q4 19.075 4 18.385V5.615q0-.69.463-1.152Q4.925 4 5.615 4h8.387l-6.387 6.387v5.998h5.897L20 9.896v8.489q0 .69-.462 1.152q-.463.463-1.153.463H5.615Z"/></svg>
-                </button>
-            </td>
-        </tr>
-        `;
+                                                <tr class="tr-label-${item.id}">
+                                                    <td>${index + 1}</td>
+                                                    <td>
+                                                        ${label}
+                                                    </td>
+                                                    <td>
+                                                        <button onclick="deleteLabel('${item.id}')" class="btn border-none btn-delete-label bg-transparent">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/></svg>
+                                                        </button>
+                                                        <button onclick="editLabel('${item.id}', '${item.text}', '${item.warna_bg}', '${item.warna_text}')" class="btn border-none btn-delete-label bg-transparent">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M10 14v-2.615l8.944-8.945q.166-.165.348-.228q.183-.064.385-.064q.188 0 .368.064q.18.063.326.21L21.483 3.5q.16.165.242.364q.083.2.083.401t-.06.382q-.061.18-.227.345L12.52 14H10Zm9.465-8.354l1.348-1.361l-1.111-1.17l-1.387 1.381l1.15 1.15ZM5.615 20q-.69 0-1.152-.462Q4 19.075 4 18.385V5.615q0-.69.463-1.152Q4.925 4 5.615 4h8.387l-6.387 6.387v5.998h5.897L20 9.896v8.489q0 .69-.462 1.152q-.463.463-1.153.463H5.615Z"/></svg>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                `;
                                             $("#daftarLabels tbody").append(row);
                                         });
 
@@ -924,47 +914,6 @@
                                         console.log(err);
                                     });
                             }
-
-
-
-
-
-
-
-                            // $(".btn-submit-tambah-label").click(function () {
-                            //     var text = $('#Text').val();
-                            //     var warna_bg = $('#background-color-input').val();
-                            //     var warna_text = $('#text-color-input').val();
-                            //     const tim_id = "{{ $tim->id }}";
-
-                            //     axios.post("tambah-label/",{text,warna_bg,warna_text,tim_id})
-                            //     .then((res) => {
-                            //         var text = $('#Text').val("Label");
-                            //         var warna_bg = $('#background-color-input').val("#666EE8");
-                            //         var warna_text = $('#text-color-input').val("#FFFFFF");
-                            //         updatePreview()
-                            //         Swal.fire({
-                            //             icon: "success",
-                            //             title : "Berhasil!",
-                            //             text: res.data.success,
-                            //             showConfirmButton : false,
-                            //             timer : 2500,
-                            //         })
-                            //         getLabels()
-                            //     })
-                            //     .catch((err) => {
-                            //         console.log(err);
-                            //         Swal.fire({
-                            //             icon: "error",
-                            //             title : "Error!",
-                            //             text: ( typeof err.response.data.message === "undefined" ) ? err : err.response.data.message,
-                            //             showConfirmButton : false,
-                            //             timer : 2500,
-                            //         })
-                            //     })
-                            //  })
-
-
 
                             var previewLabel = $('#preview-label');
                             var inputText = $('#Text');
@@ -1330,45 +1279,42 @@
 
                                                 let editButtonKomentar =
                                                     `
-                    <div class="dropdown kanban-tasks-item-dropdown dropdown-edit">
-                                <i class="ti ti-dots-vertical cursor-pointer" id="kanban-tasks-item" data-bs-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false"></i>
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="kanban-tasks-item" style="">
-                                <button onclick="editKomentar('${komentar.id}','${komentar.text}')" type="button" class="dropdown-item">Edit</button>
-                                <button onclick="deleteKomentar('${komentar.id}')" class="dropdown-item" href="javascript:void(0)">Delete</button>
-                                </div>
-                    </div>
+                                                <div class="dropdown kanban-tasks-item-dropdown dropdown-edit">
+                                                            <i class="ti ti-dots-vertical cursor-pointer" id="kanban-tasks-item" data-bs-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false"></i>
+                                                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="kanban-tasks-item" style="">
+                                                            <button onclick="editKomentar('${komentar.id}','${komentar.text}')" type="button" class="dropdown-item">Edit</button>
+                                                            <button onclick="deleteKomentar('${komentar.id}')" class="dropdown-item" href="javascript:void(0)">Delete</button>
+                                                            </div>
+                                                </div>
 
-                    `
-
-
+                                                `
 
                                                 let elementComments = `
-                        <div class="avatar me-2 flex-shrink-0 mt-1">
-                        <img style="object-fit:cover" src="{{ asset('${avatar}') }}"
-                            alt="Avatar" class="rounded-circle">
-                        </div>
-                        <div class="d-flex flex-column w-100">
-                        <div class="media-body">
-                            <div class="d-flex justify-content-between align-items-center">
-                            <span class="fw-medium">${komentar.user.username} <small class="text-muted">${jadwal}</small></span>
-                            ${
+                                                    <div class="avatar me-2 flex-shrink-0 mt-1">
+                                                    <img style="object-fit:cover" src="{{ asset('${avatar}') }}"
+                                                        alt="Avatar" class="rounded-circle">
+                                                    </div>
+                                                    <div class="d-flex flex-column w-100">
+                                                    <div class="media-body">
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                        <span class="fw-medium">${komentar.user.username} <small class="text-muted">${jadwal}</small></span>
+                                                        ${
 
-                                ( komentar.user.id == "{{ Auth::user()->id }}" )
+                                                            ( komentar.user.id == "{{ Auth::user()->id }}" )
 
-                                ?
+                                                            ?
 
-                                editButtonKomentar
+                                                            editButtonKomentar
 
-                            : ''
+                                                        : ''
 
-
-                            }
-                            </div>
-                            <span class="mb-0" style="font-size: 13px;">${komentar.text}</span>
-                        </div>
-                        </div>
-                    `;
+                                                        }
+                                                        </div>
+                                                        <span class="mb-0" style="font-size: 13px;">${komentar.text}</span>
+                                                    </div>
+                                                    </div>
+                                                `;
 
                                                 div.innerHTML = elementComments;
                                                 $(".list-komentar").append(div);
@@ -1549,17 +1495,8 @@
                                         alertError(error)
 
                                         console.log(error);
-                                        // $(this).removeData("komentar-id");
-                                        // $(this).removeData('codetugas');
-                                        // $(".btn-edit-komentar").addClass("d-none");
-                                        // $("#komentar-"+komentar_id).removeClass("border border-primary");
-                                        // $(this).removeData('codetugas');
-
                                     })
                             })
-
-
-
 
                             $("#formTambahTugas").submit((event) => {
                                 event.preventDefault();

@@ -157,13 +157,7 @@ class timController extends Controller
             })
             ->toArray();
 
-        $chartData = [
-            ['Status Tugas', 'Jumlah'],
-            ['Selesai', $selesaiCount],
-            ['Revisi', $revisiCount],
-            ['Dikerjakan', $dikerjakanCount],
-            ['Tugas Baru', $tugasBaruCount]
-        ];
+        $chartData = [['Status Tugas', 'Jumlah'], ['Selesai', $selesaiCount], ['Revisi', $revisiCount], ['Dikerjakan', $dikerjakanCount], ['Tugas Baru', $tugasBaruCount]];
 
         return view('siswa.tim.project', compact('hasProjectRelation', 'days', 'tanggal', 'persentase', 'selesaiCount', 'revisiCount', 'chartData', 'title', 'tim', 'anggota', 'project', 'notifikasi'));
     }
@@ -182,7 +176,6 @@ class timController extends Controller
             return back()->with('tolak', 'Tolong lengkapi deskripsi proyek terlebih dahulu');
         }
         $anggota = $tim->user;
-        // dd($anggota);
         $jabatan = [];
 
         foreach ($anggota as $data) {

@@ -21,6 +21,7 @@ use App\Models\Project;
 use App\Models\StatusTim;
 use App\Models\TidakPresentasiMingguan;
 use App\Models\Tim;
+use App\Models\Tugas;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -348,7 +349,8 @@ class mentorController extends Controller
 
         $projectQuery = Project::with('tim.anggota', 'tema', 'tim.tugas')
             ->whereRelation('tim.divisi', 'id', '=', Auth::user()->divisi_id)
-            ->where('status_project', 'approved');
+            ->where('status_project', 'approved')
+            ->orderByRaw("FIELD(type_project, 'big', 'mini', 'pre_mini', 'solo')");
 
         if ($request->has('status_tim')) {
             if ($request->status_tim != 'all' && $request->status_tim != null) {
@@ -385,27 +387,63 @@ class mentorController extends Controller
         $notifikasi = Notifikasi::where('user_id', Auth::user()->id)
             ->whereHas('user', function ($query) {
                 $query->where('divisi_id', Auth::user()->divisi_id);
-            })->get();
+            })
+            ->get();
 
-        return view('mentor.projekDetail', compact('project', 'notifikasi', 'catatan'));
+        $tugas = $project->tim->tugas;
+
+        $selesaiQuery = $tugas->where('status_tugas', 'selesai');
+        $revisiQuery = $tugas->where('status_tugas', 'revisi');
+        $tugasBaruQuery = $tugas->where('status_tugas', 'tugas_baru');
+        $dikerjakanQuery = $tugas->where('status_tugas', 'dikerjakan');
+
+        $chartData = [['Status Tugas', 'Jumlah'], ['Selesai', $selesaiQuery->count()], ['Revisi', $revisiQuery->count()], ['Dikerjakan', $dikerjakanQuery->count()], ['Tugas Baru', $tugasBaruQuery->count()]];
+
+        $tanggalMulai = $project->tim->created_at->translatedFormat('Y-m-d');
+        $deadline = \Carbon\Carbon::parse($project->deadline)->translatedFormat('Y-m-d');
+        $totalDeadline = \Carbon\Carbon::parse($deadline)->diffInDays($tanggalMulai);
+        $dayLeft = \Carbon\Carbon::parse($deadline)->diffInDays(\Carbon\Carbon::now()->startOfDay());
+        $progressPercentage = $totalDeadline > 0 ? round(100 - ($dayLeft / $totalDeadline) * 100) : 0;
+
+        $day = [
+            'tanggalMulai' => $tanggalMulai,
+            'deadline' => $deadline,
+            'totalDeadline' => $totalDeadline,
+            'dayleft' => $dayLeft,
+            'progresspercent' => $progressPercentage,
+        ];
+
+        $board = [
+            'boardTugasBaru' => $tugasBaruQuery,
+            'boardRevisi' => $revisiQuery,
+            'boardDikerjakan' => $dikerjakanQuery,
+            'boardSelesai' => $selesaiQuery,
+        ];
+
+        return view('mentor.projekDetail', compact('project', 'notifikasi', 'catatan', 'chartData', 'day', 'board'));
     }
-    
-    protected function updateCatatanMentor(Request $request, $code) {
+
+    protected function updateCatatanMentor(Request $request, $code)
+    {
         $catatan = catatan::where('code', $code)->firstOrFail();
-    
+
         $catatan->catatanDetail()->delete();
 
         if ($request->has('catatan_text') && is_array($request->catatan_text) && count($request->catatan_text) > 0) {
             foreach ($request->catatan_text as $item) {
                 CatatanDetail::create([
                     'catatan_id' => $catatan->id,
-                    'catatan_text' => $item
+                    'catatan_text' => $item,
                 ]);
             }
-    
-            return redirect()->back()->with('success', 'Catatan berhasil diperbarui.');
+
+            return redirect()
+                ->back()
+                ->with('success', 'Catatan berhasil diperbarui.');
         } else {
-            return redirect()->back()->with('error', 'Anda tidak mengubah catatan apapun.');
+            return redirect()
+                ->back()
+                ->with('error', 'Anda tidak mengubah catatan apapun.');
         }
     }
 
@@ -517,22 +555,19 @@ class mentorController extends Controller
     {
         $timQuery = tim::query()
             ->where('divisi_id', Auth::user()->divisi_id)
-            ->with('user', 'project');
+            ->with('user', 'project')
+            ->orderBy('kadaluwarsa');
 
-        if ($request->has('status_tim')) {
-            if ($request->status_tim != 'all' && $request->status_tim != null) {
-                $timQuery->where('status_tim', $request->status_tim);
-            }
+        if ($request->has('status_tim') && $request->status_tim !== 'all') {
+            $timQuery->where('status_tim', $request->status_tim);
         }
 
-        if ($request->has('nama_tim')) {
+        if ($request->has('nama_tim') && $request->nama_tim !== null) {
             $query = $request->nama_tim;
-            if ($query != null) {
-                $timQuery->where('nama', 'like', "%$query%");
-            }
+            $timQuery->where('nama', 'like', "%$query%");
         }
 
-        $tims = $timQuery->orderBy('kadaluwarsa')->paginate(12);
+        $tims = $timQuery->paginate(12);
 
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)
@@ -737,8 +772,8 @@ class mentorController extends Controller
                 $query->where('id', Auth::user()->divisi_id);
             })
             ->whereIn('status_presentasi', ['menunggu', 'sedang_presentasi'])
-            ->orderByRaw("status_presentasi = 'sedang_presentasi' asc")
-            ->orderBy('jadwal_ke', 'asc')
+            ->orderByRaw("status_presentasi = 'sedang_presentasi' desc")
+            ->orderBy('jadwal_ke', 'desc')
             ->get();
 
         $presentasiSenin = $unconfirmedPresentasi->where('hari', 'senin');
