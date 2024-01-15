@@ -5,8 +5,11 @@
 
 @section('content')
     <div class="container-fluid mt-5 justify-content-center">
-        <div class="card-header fs-5 mb-3">
-            Daftar Presentasi di minggu ke {{ $history->noMinggu }} bulan {{ $history->bulan }} tahun {{ $history->tahun }}
+        <div class="card-header fs-5 mb-3 d-flex justify-content-between">
+            <span> Daftar Presentasi di minggu ke {{ $history->noMinggu }} bulan {{ $history->bulan }} tahun
+                {{ $history->tahun }}
+            </span>
+            <a class="btn btn-primary" href="{{ url()->previous() }}">Kembali</a>
         </div>
         <div class="d-flex card flex-md-row align-items-center justify-content-between">
             <div class=" nav nav-pills mb-3 mt-3 d-flex flex-wrap navbar-ul px-3" id="pills-tab" role="tablist">
@@ -294,8 +297,8 @@
                             <img src="{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}"
                                 alt="page-misc-under-maintenance" width="300" class="img-fluid">
                         </div>
+                    @endforelse
                 </div>
-                @endforelse
             </div>
             <div class="tab-pane fade" id="pills-kamis" role="tabpanel" aria-labelledby="pills-home-tab"
                 tabindex="0">
@@ -382,8 +385,8 @@
                             <img src="{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}"
                                 alt="page-misc-under-maintenance" width="300" class="img-fluid">
                         </div>
+                    @endforelse
                 </div>
-                @endforelse
             </div>
             <div class="tab-pane fade" id="pills-jumat" role="tabpanel" aria-labelledby="pills-home-tab"
                 tabindex="0">
@@ -471,13 +474,13 @@
                             <img src="{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}"
                                 alt="page-misc-under-maintenance" width="300" class="img-fluid">
                         </div>
+                    @endforelse
                 </div>
-                @endforelse
             </div>
         </div>
 
         {{-- Modal Konfirmasi Project --}}
-        <form id="selesaiPresentasiForm" action="{{ route('konfirmasiPresentasi', $item->code) }}" method="post">
+        <form id="selesaiPresentasiForm" action="" method="post">
             @csrf
             @method('PUT')
             <div class="modal fade" id="konfirmasi-presentasi" tabindex="-1" aria-labelledby="" aria-hidden="true">

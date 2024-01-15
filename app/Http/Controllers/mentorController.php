@@ -769,7 +769,7 @@ class mentorController extends Controller
             ->get();
 
         $historyPresentasi = HistoryPresentasi::query()
-            ->orderBy('created_at')
+            ->latest()
             ->paginate(12);
 
         return response()->view('mentor.siswa-presentasi', compact('notifikasi', 'historyPresentasi'));
