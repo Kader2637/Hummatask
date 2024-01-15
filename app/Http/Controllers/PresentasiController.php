@@ -41,7 +41,7 @@ class PresentasiController extends Controller
                 $query->whereDate('created_at', $hariIni);
             })
             ->get();
-
+            // dd($tidakPresentasi);
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
         return view('mentor.history-presentasi', compact('notifikasi', 'presentasiSelesai', 'tidakPresentasi', 'hariIni'));
     }

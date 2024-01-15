@@ -6,6 +6,7 @@ use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Anggota;
 use App\Models\Presentasi;
+use App\Models\Tim;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -23,8 +24,11 @@ class DetailPresentasiController extends Controller
             ->with('tim','divisi','tim.user')
             ->get();
 
+        $tim = Tim::query()
+            ->get();
             return response()->json([
                 'presentasi' => $presentasi,
+                'tim' => $tim,
             ]);
     }
 }
