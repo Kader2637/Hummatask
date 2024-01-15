@@ -26,4 +26,14 @@ class CatatanDetail extends Model
     {
         return $this->hasMany(Project::class);
     }
+
+    public function tim(): HasMany
+    {
+        return $this->hasMany(Tim::class);
+    }
+
+    public function tugas(): HasMany
+    {
+        return $this->hasMany(Tugas::class);
+    }
 }

@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\catatan;
 use App\Models\CatatanDetail;
 use App\Models\Tim;
+use App\Models\Tugas;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -64,9 +66,20 @@ class catatanController extends Controller
             $catatan->save();
 
             foreach ($request->catatan_text as $item) {
-                CatatanDetail::create([
+                $catatanDetail = CatatanDetail::create([
                     'catatan_id' => $catatan->id,
                     'catatan_text' => $item
+                ]);
+
+                Tugas::create([
+                    'tim_id' => $tims->id,
+                    'code' => Str::uuid(),
+                    'nama' => $catatanDetail->catatan_text,
+                    'catatan_detail_id' => $catatanDetail->id,
+                    'status_tugas' => 'tugas_baru',
+                    'prioritas' => 'biasa',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
                 ]);
             }
 
@@ -80,29 +93,60 @@ class catatanController extends Controller
     protected function update(Request $request, $id)
     {
         try {
-
             $catatan = Catatan::findOrFail($id);
-
             $catatan->title = $request->titleUpdate;
             $catatan->type_note = $catatan->type_note;
 
-            if (!$request->catatan_text) {
+            if (!$request->catatan_text || count($request->catatan_text) === 0) {
                 return redirect()->back()->with('error', 'Catatan harus diisi!');
             }
 
-            $catatan->catatanDetail()->delete();
-            if ($request->catatan_text) {
-                foreach ($request->catatan_text as $item) {
-                    CatatanDetail::create([
-                        'catatan_id' => $catatan->id,
-                        'catatan_text' => $item
-                    ]);
+            foreach ($request->catatan_text as $index => $catatan_text) {
+                $id_detail = $request->id[$index];
+                if ($catatan_text) {
+                    $tugas = Tugas::where('catatan_detail_id', $id_detail)->first();
+
+                    $catatanDetail = CatatanDetail::updateOrCreate(
+                        ['id' => $id_detail],
+                        ['catatan_text' => $catatan_text, 'catatan_id' => $catatan->id]
+                    );
+
+                    if ($tugas) {
+                        $tugas->update([
+                            'tim_id' => $request->tim_id,
+                            'code' => $tugas->code,
+                            'nama' => $catatan_text,
+                            'status_tugas' => 'tugas_baru',
+                            'prioritas' => 'biasa'
+                        ]);
+                    } else {
+                        Tugas::create([
+                            'catatan_detail_id' => $catatanDetail->id,
+                            'tim_id' => $request->tim_id,
+                            'code' => Str::uuid(),
+                            'nama' => $catatanDetail->catatan_text,
+                            'status_tugas' => 'tugas_baru',
+                            'prioritas' => 'biasa'
+                        ]);
+                    }
+
+
+                } else {
+                    $catatanDetail = CatatanDetail::find($id_detail);
+                    if ($catatanDetail) {
+                        $catatanDetail->delete();
+                    }
+
+                    $tugas = Tugas::where('catatan_detail_id', $id_detail)->first();
+                    if ($tugas) {
+                        $tugas->delete();
+                    }
                 }
             }
 
             $catatan->save();
 
-            return redirect()->back()->with('success', 'Catatan berhasil diupdate!');
+            return redirect()->back()->with('success', 'Catatan berhasil diperbarui.');
         } catch (\Throwable $th) {
             dd($th);
             return redirect()->back()->with('error', 'Catatan gagal diupdate!');

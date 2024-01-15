@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class mentorController extends Controller
 {
@@ -427,23 +428,51 @@ class mentorController extends Controller
     {
         $catatan = catatan::where('code', $code)->firstOrFail();
 
-        $catatan->catatanDetail()->delete();
+        if ($request->catatan_text) {
+            foreach ($request->catatan_text as $index => $catatan_text) {
+                $id_detail = $request->id[$index];
+                if ($catatan_text) {
+                    $tugas = Tugas::where('catatan_detail_id', $id_detail)->first();
 
-        if ($request->has('catatan_text') && is_array($request->catatan_text) && count($request->catatan_text) > 0) {
-            foreach ($request->catatan_text as $item) {
-                CatatanDetail::create([
-                    'catatan_id' => $catatan->id,
-                    'catatan_text' => $item,
-                ]);
+                    $catatanDetail = CatatanDetail::updateOrCreate(
+                        ['id' => $id_detail],
+                        ['catatan_text' => $catatan_text, 'catatan_id' => $catatan->id]
+                    );
+
+                    if ($tugas) {
+                        $tugas->update([
+                            'tim_id' => $request->tim_id,
+                            'code' => $tugas->code,
+                            'nama' => $catatan_text,
+                            'status_tugas' => 'tugas_baru',
+                            'prioritas' => 'biasa'
+                        ]);
+                    } else {
+                        Tugas::create([
+                            'catatan_detail_id' => $catatanDetail->id,
+                            'tim_id' => $request->tim_id,
+                            'code' => Str::uuid(),
+                            'nama' => $catatanDetail->catatan_text,
+                            'status_tugas' => 'tugas_baru',
+                            'prioritas' => 'biasa'
+                        ]);
+                    }
+                } else {
+                    $catatanDetail = CatatanDetail::find($id_detail);
+                    if ($catatanDetail) {
+                        $catatanDetail->delete();
+                    }
+
+                    $tugas = Tugas::where('catatan_detail_id', $id_detail)->first();
+                    if ($tugas) {
+                        $tugas->delete();
+                    }
+                }
             }
 
-            return redirect()
-                ->back()
-                ->with('success', 'Catatan berhasil diperbarui.');
+            return redirect()->back()->with('success', 'Catatan berhasil diperbarui.');
         } else {
-            return redirect()
-                ->back()
-                ->with('error', 'Anda tidak mengubah catatan apapun.');
+            return redirect()->back()->with('error', 'Anda tidak mengubah catatan apapun.');
         }
     }
 

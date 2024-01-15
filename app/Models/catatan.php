@@ -33,4 +33,9 @@ class catatan extends Model
     {
         return $this->HasMany(CatatanDetail::class, 'catatan_id', 'id');
     }
+
+    public function catatan(): HasMany
+    {
+        return $this->hasMany(Tugas::class);
+    }
 }

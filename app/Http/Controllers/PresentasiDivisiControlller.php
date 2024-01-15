@@ -22,8 +22,7 @@ class PresentasiDivisiControlller extends Controller
     {
         $data = $request->validated();
         $data['divisi_id'] = auth()->user()->divisi_id;
-        PresentasiDivisi::query()
-            ->updateOrCreate(['divisi_id' => $data['divisi_id'], 'day' => $data['day']], ['limit' => $data['limit']]);
+        PresentasiDivisi::query()->updateOrCreate(['divisi_id' => $data['divisi_id'], 'day' => $data['day']], ['limit' => $data['limit']]);
         // $presentasiDivisi->limitPresentasiDivisis()->delete();
         // foreach ($data['mulai'] as $index => $dari) {
         //     LimitPresentasiDevisi::query()

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Aktifitas;
 use App\Models\AktifitasData;
+use App\Models\catatan;
+use App\Models\CatatanDetail;
 use App\Models\Comments;
 use App\Models\Label;
 use App\Models\LabelTugas;
@@ -118,12 +120,14 @@ class TugasController extends Controller
         $tugas->tim_id = $tim->id;
         $tugas->code = Str::uuid();
         $tugas->nama = $request->nama;
+        $tugas->catatan_detail_id = $request->catatan_detail_id;
         $tugas->save();
 
         Aktifitas::create([
             'tugas_id' => $tugas->id,
             'pelaku_id' => Auth::user()->id,
             'judul' => $tugas->nama,
+            'catatan_detail_id' => $tugas->catatan_detail_id, 
             'status_tugas' => 'tugas_baru',
             'prioritas' => 'biasa',
             'status' => 'create',
@@ -176,9 +180,7 @@ class TugasController extends Controller
                 'tim.user' => function ($query) {
                     $query->wherePivot('status', 'active');
                 },
-            ])
-                ->where('code', $codeTugas)
-                ->first();
+            ])->where('code', $codeTugas)->first();
 
             $jadwal = [];
             foreach ($tugass->comments as $data) {

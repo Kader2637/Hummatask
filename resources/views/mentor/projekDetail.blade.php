@@ -269,22 +269,17 @@
                                             id="v-pills-{{ $catatanTab->id }}" role="tabpanel"
                                             aria-labelledby="v-pills-{{ $catatanTab->id }}-tab" tabindex="0">
                                             <div class="w-100">
-                                                <form action="{{ route('mentor.update.catatan', $project->code) }}"
-                                                    method="POST">
+                                                <form action="{{ route('mentor.update.catatan', $project->code) }}" method="POST">
                                                     @method('PUT')
                                                     @csrf
-                                                    <div
-                                                        class="form-repeater d-flex flex-column justify-content-center align-items-center">
+                                                    <div class="form-repeater d-flex flex-column justify-content-center align-items-center">
+                                                        <input type="hidden" name="tim_id" value="{{ $catatanTab->tim_id }}">
                                                         @forelse ($catatanTab->catatanDetail as $i => $data)
                                                             <div class="form-add row mb-3 w-100">
                                                                 <div class="col-11 col-md-11">
-                                                                    <label for="catatan" class="mb-2 form-label">Catatan
-                                                                        {{ ++$i }}</label>
-                                                                    <input type="text"
-                                                                        value="{{ $data->catatan_text }}"
-                                                                        name="catatan_text[]" class="form-control">
-                                                                    <input type="hidden" name="id[]"
-                                                                        value="{{ $data->id }}">
+                                                                    <label for="catatan" class="mb-2 form-label">Catatan {{ ++$i }}</label>
+                                                                    <input type="text" value="{{ $data->catatan_text }}" name="catatan_text[]" class="form-control">
+                                                                    <input type="hidden" name="id[]" value="{{ $data->id }}">
                                                                 </div>
                                                                 <div class="col-1 col-md-1 d-flex align-items-end">
                                                                     <button type="button"
@@ -819,15 +814,15 @@
             ++i;
             $('.form-repeater').append(
                 `<div class="form-add row mb-3 w-100">
-              <div class="col-11 col-md-11">
-                <label for="catatan" class="mb-2 form-label">Catatan ${i}</label>
-                <input type="text" name="catatan_text[]" class="form-control">
-                <input type="hidden" name="id[]" value="0">
-              </div>
-              <div class="col-1 col-md-1 d-flex align-items-end">
-                  <button type="button" class="btn btn-icon btn-danger button-delete-repeater">
-                  <i class="ti ti-trash text-white"></i></button>
-              </div>
+                    <div class="col-11 col-md-11">
+                        <label for="catatan" class="mb-2 form-label">Catatan {{ ++$i }}</label>
+                        <input type="text" name="catatan_text[]" class="form-control">
+                        <input type="hidden" name="id[]" value="0">
+                    </div>
+                <div class="col-1 col-md-1 d-flex align-items-end">
+                    <button type="button" class="btn btn-icon btn-danger button-delete-repeater">
+                    <i class="ti ti-trash text-white"></i></button>
+                </div>
             </div>`
             )
         })

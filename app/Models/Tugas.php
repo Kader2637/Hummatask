@@ -12,7 +12,7 @@ class Tugas extends Model
     use HasFactory;
 
     protected $guarded = [];
-    protected $fillable = ['status_tugas', 'nama', 'prioritas'];
+    protected $fillable = ['tim_id','code','status_tugas', 'nama', 'prioritas', 'catatan_detail_id'];
 
     /**
      * tim
@@ -72,5 +72,15 @@ class Tugas extends Model
     public function aktifitas()
     {
         return $this->hasMany(Aktifitas::class);
+    }
+
+    public function catatanDetail(): BelongsTo
+    {
+        return $this->belongsTo(CatatanDetail::class);
+    }
+
+    public function catatan()
+    {
+        return $this->hasMany(Catatan::class);
     }
 }

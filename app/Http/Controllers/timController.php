@@ -26,6 +26,7 @@ class timController extends Controller
         $title = 'Tim/board';
         $tim = Tim::where('code', $code)->firstOrFail();
         $userID = Auth::user()->id;
+        $catatan = catatan::where('code', $code)->get();
 
         $anggota = Anggota::all();
 
@@ -55,7 +56,7 @@ class timController extends Controller
             ->get();
         $code = $tim->code;
 
-        return view('siswa.tim.board', compact('title', 'tim', 'anggota', 'tugas_baru', 'tugas_dikerjakan', 'tugas_revisi', 'tugas_selesai', 'project', 'notifikasi', 'code'));
+        return view('siswa.tim.board', compact( 'catatan','title', 'tim', 'anggota', 'tugas_baru', 'tugas_dikerjakan', 'tugas_revisi', 'tugas_selesai', 'project', 'notifikasi', 'code'));
     }
 
     protected function ubahStatus(Request $request)
