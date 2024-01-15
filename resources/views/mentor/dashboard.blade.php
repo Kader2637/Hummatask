@@ -424,7 +424,7 @@
         <div class="card">
           <div class="d-flex justify-content-between mx-3 mb-1 mt-4">
             <h5 class="pb-0">Data Presentasi hari ini</h5>
-            <a href="{{ route('presentasi.mentor') }}" class="btn btn-primary d-flex justify-content-end">Detail</a>
+            <a href="{{ route('siswa-presentasi.mentor') }}" class="btn btn-primary d-flex justify-content-end">Detail</a>
           </div>
           <div class="table-responsive text-nowrap card-datatable">
             @php
