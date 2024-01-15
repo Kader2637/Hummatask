@@ -372,6 +372,18 @@ class PresentasiController extends Controller
         }
     }
 
+    protected function konfirmasiPengajuanPresentasi(mixed $code) {
+        $data = Presentasi::where('code', $code)->first();
+
+        if (!$data) {
+            return back()->with('warning', 'Data tidak ditemukan');
+        } else {
+            $data->update(['status_presentasi' => 'sedang_presentasi']);
+
+            return back()->with('success', 'Berhasil konfirmasi pengajuan presentasi');
+        }
+    }
+
     protected function aturJadwal(Request $request, $code)
     {
         $presentasi = Presentasi::where('code', $code)->first();

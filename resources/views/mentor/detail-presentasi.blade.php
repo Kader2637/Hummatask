@@ -92,86 +92,28 @@
                                         {{ \Carbon\Carbon::parse($item->akhir)->format('H:i') }}
                                     </p>
                                     <div class="d-flex justify-content-around align-items-center gap-3 mt-3">
-                                        <button data-bs-toggle="modal"
-                                            data-bs-target="#konfirmasi-presentasi-{{ $item->code }}"
-                                            class="btn btn-primary w-100 confirm-btn">Konfirmasi Presentasi</button>
+                                        @if ($item->status_presentasi == 'menunggu')
+                                            <form class="konfirmasi-pengajuan-presentasi-form w-100"
+                                                action="{{ route('konfirmasi-pengajuan-presentasi', $item->code) }}"
+                                                method="post">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="button" onclick="konfirmasiPengajuan()"
+                                                    class="btn btn-primary w-100">Konfirmasi
+                                                    Presentasi
+                                                </button>
+                                            </form>
+                                        @else
+                                            <button class="btn btn-primary w-100 confirm-btn"
+                                                data-nama-tim="{{ $item->tim->nama }}"
+                                                data-url="{{ route('konfirmasiPresentasi', $item->code) }}">Konfirmasi
+                                                Presentasi
+                                            </button>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        {{-- Modal Konfirmasi Project --}}
-                        <div class="modal fade" id="konfirmasi-presentasi-{{ $item->code }}" tabindex="-1"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <form id="selesaiPresentasiForm"
-                                        action="{{ route('konfirmasiPresentasi', $item->code) }}" method="post">
-                                        @csrf
-                                        @method('PUT')
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Selesai Presentasi
-                                            </h5>
-                                            <button type="button" class="btn-close" data-bs-toggle="modal"
-                                                data-bs-target="#detailPresentasi" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <label for="status_revisi" class="form-label">Status Revisi</label>
-                                                    <div class="form-check">
-                                                        <input type="radio" value="selesai" name="status_revisi"
-                                                            class="form-check-input" id="selesai_revisi">
-                                                        <label for="selesai_revisi"
-                                                            class="form-check-label">Selesai</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input type="radio" value="tidak_selesai" name="status_revisi"
-                                                            class="form-check-input" id="tidak_selesai_revisi">
-                                                        <label for="tidak_selesai_revisi" class="form-check-label">Tidak
-                                                            selesai</label>
-                                                    </div>
-                                                    <label for="status_presentasi" class="form-label">Status
-                                                        Presentasi</label>
-                                                    <div class="form-check">
-                                                        <input type="radio" value="sedang_presentasi"
-                                                            name="status_presentasi" class="form-check-input"
-                                                            id="sedang_presentasi">
-                                                        <label for="sedang_presentasi" class="form-check-label">Sedang
-                                                            Presentasi</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input type="radio" value="selesai" name="status_presentasi"
-                                                            class="form-check-input" id="selesai_presentasi">
-                                                        <label for="selesai_presentasi" class="form-check-label">Selesai
-                                                            Presentasi</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input type="radio" value="tidak_selesai"
-                                                            name="status_presentasi" class="form-check-input"
-                                                            id="tidak_selesai_presentasi">
-                                                        <label for="tidak_selesai_presentasi"
-                                                            class="form-check-label">Tidak
-                                                            Selesai Presentasi</label>
-                                                    </div>
-                                                    <label for="feedback" class="form-label mb-3">Feedback <span
-                                                            class="badge bg-label-warning">Opsional</span></label>
-                                                    <textarea type="text" name="feedback" class="form-control" id="feedback" placeholder="Beri Feedback Presentasi"
-                                                        style="height: 150px; resize: none">{{ $item->feedback ?: null }}</textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                                                data-bs-target="#detailPresentasi">Kembali</button>
-                                            <button type="submit" class="btn btn-success" data-bs-toggle="modal"
-                                                data-bs-target="#detailPresentasi">Simpan</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Modal Konfirmasi Project --}}
                     @empty
                         <h6 class="text-center mt-4">Tidak Ada presentasi <i class="ti ti-address-book-off"></i></h6>
                         <div class="mt-4 mb-3 d-flex justify-content-evenly">
@@ -236,87 +178,28 @@
                                         {{ \Carbon\Carbon::parse($item->akhir)->format('H:i') }}
                                     </p>
                                     <div class="d-flex justify-content-around align-items-center gap-3 mt-3">
-                                        <button data-bs-toggle="modal"
-                                            data-bs-target="#konfirmasi-presentasi-{{ $item->code }}"
-                                            class="btn btn-primary w-100 confirm-btn">Konfirmasi Presentasi</button>
+                                        @if ($item->status_presentasi == 'menunggu')
+                                            <form class="konfirmasi-pengajuan-presentasi-form w-100"
+                                                action="{{ route('konfirmasi-pengajuan-presentasi', $item->code) }}"
+                                                method="post">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="button" onclick="konfirmasiPengajuan()"
+                                                    class="btn btn-primary w-100">Konfirmasi
+                                                    Presentasi
+                                                </button>
+                                            </form>
+                                        @else
+                                            <button class="btn btn-primary w-100 confirm-btn"
+                                                data-nama-tim="{{ $item->tim->nama }}"
+                                                data-url="{{ route('konfirmasiPresentasi', $item->code) }}">Konfirmasi
+                                                Presentasi
+                                            </button>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        {{-- Modal Konfirmasi Project --}}
-                        <div class="modal fade" id="konfirmasi-presentasi-{{ $item->code }}" tabindex="-1"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <form id="selesaiPresentasiForm"
-                                        action="{{ route('konfirmasiPresentasi', $item->code) }}" method="post">
-                                        @csrf
-                                        @method('PUT')
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Selesai
-                                                Presentasi</h5>
-                                            <button type="button" class="btn-close" data-bs-toggle="modal"
-                                                data-bs-target="#detailPresentasi" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <label for="status_revisi" class="form-label">Status
-                                                        Revisi</label>
-                                                    <div class="form-check">
-                                                        <input type="radio" value="selesai" name="status_revisi"
-                                                            class="form-check-input" id="selesai_revisi">
-                                                        <label for="selesai_revisi"
-                                                            class="form-check-label">Selesai</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input type="radio" value="tidak_selesai" name="status_revisi"
-                                                            class="form-check-input" id="tidak_selesai_revisi">
-                                                        <label for="tidak_selesai_revisi" class="form-check-label">Tidak
-                                                            selesai</label>
-                                                    </div>
-                                                    <label for="status_presentasi" class="form-label">Status
-                                                        Presentasi</label>
-                                                    <div class="form-check">
-                                                        <input type="radio" value="sedang_presentasi"
-                                                            name="status_presentasi" class="form-check-input"
-                                                            id="sedang_presentasi">
-                                                        <label for="sedang_presentasi" class="form-check-label">Sedang
-                                                            Presentasi</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input type="radio" value="selesai" name="status_presentasi"
-                                                            class="form-check-input" id="selesai_presentasi">
-                                                        <label for="selesai_presentasi" class="form-check-label">Selesai
-                                                            Presentasi</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input type="radio" value="tidak_selesai"
-                                                            name="status_presentasi" class="form-check-input"
-                                                            id="tidak_selesai_presentasi">
-                                                        <label for="tidak_selesai_presentasi"
-                                                            class="form-check-label">Tidak
-                                                            Selesai Presentasi</label>
-                                                    </div>
-                                                    <label for="feedback" class="form-label mb-3">Feedback <span
-                                                            class="badge bg-label-warning">Opsional</span></label>
-                                                    <textarea type="text" name="feedback" class="form-control" id="feedback" placeholder="Beri Feedback Presentasi"
-                                                        style="height: 150px; resize: none">{{ $item->feedback ?: null }}</textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                                                data-bs-target="#detailPresentasi">Kembali</button>
-                                            <button type="submit" class="btn btn-success" data-bs-toggle="modal"
-                                                data-bs-target="#detailPresentasi">Simpan</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Modal Konfirmasi Project --}}
                     @empty
                         <h6 class="text-center mt-4">Tidak Ada presentasi <i class="ti ti-address-book-off"></i></h6>
                         <div class="mt-4 mb-3 d-flex justify-content-evenly">
@@ -382,88 +265,28 @@
                                         {{ \Carbon\Carbon::parse($item->akhir)->format('H:i') }}
                                     </p>
                                     <div class="d-flex justify-content-around align-items-center gap-3 mt-3">
-                                        <button data-bs-toggle="modal"
-                                            data-bs-target="#konfirmasi-presentasi-{{ $item->code }}"
-                                            class="btn btn-success w-100 confirm-btn">Konfirmasi
-                                            Presentasi</button>
+                                        @if ($item->status_presentasi == 'menunggu')
+                                            <form class="konfirmasi-pengajuan-presentasi-form w-100"
+                                                action="{{ route('konfirmasi-pengajuan-presentasi', $item->code) }}"
+                                                method="post">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="button" onclick="konfirmasiPengajuan()"
+                                                    class="btn btn-primary w-100">Konfirmasi
+                                                    Presentasi
+                                                </button>
+                                            </form>
+                                        @else
+                                            <button class="btn btn-primary w-100 confirm-btn"
+                                                data-nama-tim="{{ $item->tim->nama }}"
+                                                data-url="{{ route('konfirmasiPresentasi', $item->code) }}">Konfirmasi
+                                                Presentasi
+                                            </button>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        {{-- Modal Konfirmasi Project --}}
-                        <div class="modal fade" id="konfirmasi-presentasi-{{ $item->code }}" tabindex="-1"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <form id="selesaiPresentasiForm"
-                                        action="{{ route('konfirmasiPresentasi', $item->code) }}" method="post">
-                                        @csrf
-                                        @method('PUT')
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Selesai
-                                                Presentasi</h5>
-                                            <button type="button" class="btn-close" data-bs-toggle="modal"
-                                                data-bs-target="#detailPresentasi" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <label for="status_revisi" class="form-label">Status
-                                                        Revisi</label>
-                                                    <div class="form-check">
-                                                        <input type="radio" value="selesai" name="status_revisi"
-                                                            class="form-check-input" id="selesai_revisi">
-                                                        <label for="selesai_revisi"
-                                                            class="form-check-label">Selesai</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input type="radio" value="tidak_selesai" name="status_revisi"
-                                                            class="form-check-input" id="tidak_selesai_revisi">
-                                                        <label for="tidak_selesai_revisi" class="form-check-label">Tidak
-                                                            selesai</label>
-                                                    </div>
-                                                    <label for="status_presentasi" class="form-label">Status
-                                                        Presentasi</label>
-                                                    <div class="form-check">
-                                                        <input type="radio" value="sedang_presentasi"
-                                                            name="status_presentasi" class="form-check-input"
-                                                            id="sedang_presentasi">
-                                                        <label for="sedang_presentasi" class="form-check-label">Sedang
-                                                            Presentasi</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input type="radio" value="selesai" name="status_presentasi"
-                                                            class="form-check-input" id="selesai_presentasi">
-                                                        <label for="selesai_presentasi" class="form-check-label">Selesai
-                                                            Presentasi</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input type="radio" value="tidak_selesai"
-                                                            name="status_presentasi" class="form-check-input"
-                                                            id="tidak_selesai_presentasi">
-                                                        <label for="tidak_selesai_presentasi"
-                                                            class="form-check-label">Tidak
-                                                            Selesai Presentasi</label>
-                                                    </div>
-                                                    <label for="feedback" class="form-label mb-3">Feedback <span
-                                                            class="badge bg-label-warning">Opsional</span></label>
-                                                    <textarea type="text" name="feedback" class="form-control" id="feedback" placeholder="Beri Feedback Presentasi"
-                                                        style="height: 150px; resize: none">{{ $item->feedback ?: null }}</textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                                                data-bs-target="#detailPresentasi">Kembali</button>
-                                            <button type="submit" class="btn btn-success" data-bs-toggle="modal"
-                                                data-bs-target="#detailPresentasi">Simpan</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Modal Konfirmasi Project --}}
                     @empty
                         <h6 class="text-center mt-4">Tidak Ada presentasi <i class="ti ti-address-book-off"></i>
                         </h6>
@@ -471,7 +294,6 @@
                             <img src="{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}"
                                 alt="page-misc-under-maintenance" width="300" class="img-fluid">
                         </div>
-
                 </div>
                 @endforelse
             </div>
@@ -532,95 +354,34 @@
                                         {{ \Carbon\Carbon::parse($item->akhir)->format('H:i') }}
                                     </p>
                                     <div class="d-flex justify-content-around align-items-center gap-3 mt-3">
-                                        <button data-bs-toggle="modal"
-                                            data-bs-target="#konfirmasi-presentasi-{{ $item->code }}"
-                                            class="btn btn-success w-100 confirm-btn">Konfirmasi
-                                            Presentasi</button>
+                                        @if ($item->status_presentasi == 'menunggu')
+                                            <form class="konfirmasi-pengajuan-presentasi-form w-100"
+                                                action="{{ route('konfirmasi-pengajuan-presentasi', $item->code) }}"
+                                                method="post">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="button" onclick="konfirmasiPengajuan()"
+                                                    class="btn btn-primary w-100">Konfirmasi
+                                                    Presentasi
+                                                </button>
+                                            </form>
+                                        @else
+                                            <button class="btn btn-primary w-100 confirm-btn"
+                                                data-nama-tim="{{ $item->tim->nama }}"
+                                                data-url="{{ route('konfirmasiPresentasi', $item->code) }}">Konfirmasi
+                                                Presentasi
+                                            </button>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        {{-- Modal Konfirmasi Project --}}
-                        <div class="modal fade" id="konfirmasi-presentasi-{{ $item->code }}" tabindex="-1"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <form id="selesaiPresentasiForm"
-                                        action="{{ route('konfirmasiPresentasi', $item->code) }}" method="post">
-                                        @csrf
-                                        @method('PUT')
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Selesai
-                                                Presentasi</h5>
-                                            <button type="button" class="btn-close" data-bs-toggle="modal"
-                                                data-bs-target="#detailPresentasi" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <label for="status_revisi" class="form-label">Status
-                                                        Revisi</label>
-                                                    <div class="form-check">
-                                                        <input type="radio" value="selesai" name="status_revisi"
-                                                            class="form-check-input" id="selesai_revisi">
-                                                        <label for="selesai_revisi"
-                                                            class="form-check-label">Selesai</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input type="radio" value="tidak_selesai" name="status_revisi"
-                                                            class="form-check-input" id="tidak_selesai_revisi">
-                                                        <label for="tidak_selesai_revisi" class="form-check-label">Tidak
-                                                            selesai</label>
-                                                    </div>
-                                                    <label for="status_presentasi" class="form-label">Status
-                                                        Presentasi</label>
-                                                    <div class="form-check">
-                                                        <input type="radio" value="sedang_presentasi"
-                                                            name="status_presentasi" class="form-check-input"
-                                                            id="sedang_presentasi">
-                                                        <label for="sedang_presentasi" class="form-check-label">Sedang
-                                                            Presentasi</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input type="radio" value="selesai" name="status_presentasi"
-                                                            class="form-check-input" id="selesai_presentasi">
-                                                        <label for="selesai_presentasi" class="form-check-label">Selesai
-                                                            Presentasi</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input type="radio" value="tidak_selesai"
-                                                            name="status_presentasi" class="form-check-input"
-                                                            id="tidak_selesai_presentasi">
-                                                        <label for="tidak_selesai_presentasi"
-                                                            class="form-check-label">Tidak
-                                                            Selesai Presentasi</label>
-                                                    </div>
-                                                    <label for="feedback" class="form-label mb-3">Feedback
-                                                        <span class="badge bg-label-warning">Opsional</span></label>
-                                                    <textarea type="text" name="feedback" class="form-control" id="feedback" placeholder="Beri Feedback Presentasi"
-                                                        style="height: 150px; resize: none">{{ $item->feedback ?: null }}</textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                                                data-bs-target="#detailPresentasi">Kembali</button>
-                                            <button type="submit" class="btn btn-success" data-bs-toggle="modal"
-                                                data-bs-target="#detailPresentasi">Simpan</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Modal Konfirmasi Project --}}
                     @empty
                         <h6 class="text-center mt-4">Tidak Ada presentasi <i class="ti ti-address-book-off"></i></h6>
                         <div class="mt-4 mb-3 d-flex justify-content-evenly">
                             <img src="{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}"
                                 alt="page-misc-under-maintenance" width="300" class="img-fluid">
                         </div>
-
                 </div>
                 @endforelse
             </div>
@@ -682,100 +443,142 @@
                                         {{ \Carbon\Carbon::parse($item->akhir)->format('H:i') }}
                                     </p>
                                     <div class="d-flex justify-content-around align-items-center gap-3 mt-3">
-                                        <button data-bs-toggle="modal"
-                                            data-bs-target="#konfirmasi-presentasi-{{ $item->code }}"
-                                            class="btn btn-success w-100 confirm-btn">Konfirmasi
-                                            Presentasi</button>
+                                        @if ($item->status_presentasi == 'menunggu')
+                                            <form class="konfirmasi-pengajuan-presentasi-form w-100"
+                                                action="{{ route('konfirmasi-pengajuan-presentasi', $item->code) }}"
+                                                method="post">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="button" onclick="konfirmasiPengajuan()"
+                                                    class="btn btn-primary w-100">Konfirmasi
+                                                    Presentasi
+                                                </button>
+                                            </form>
+                                        @else
+                                            <button class="btn btn-primary w-100 confirm-btn"
+                                                data-nama-tim="{{ $item->tim->nama }}"
+                                                data-url="{{ route('konfirmasiPresentasi', $item->code) }}">Konfirmasi
+                                                Presentasi
+                                            </button>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        {{-- Modal Konfirmasi Project --}}
-                        <div class="modal fade" id="konfirmasi-presentasi-{{ $item->code }}" tabindex="-1"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <form id="selesaiPresentasiForm"
-                                        action="{{ route('konfirmasiPresentasi', $item->code) }}" method="post">
-                                        @csrf
-                                        @method('PUT')
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Konfirmasi
-                                                Selesai Presentasi</h5>
-                                            <button type="button" class="btn-close" data-bs-toggle="modal"
-                                                data-bs-target="#detailPresentasi" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <label for="status_revisi" class="form-label">Status
-                                                        Revisi</label>
-                                                    <div class="form-check">
-                                                        <input type="radio" value="selesai" name="status_revisi"
-                                                            class="form-check-input" id="selesai_revisi">
-                                                        <label for="selesai_revisi"
-                                                            class="form-check-label">Selesai</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input type="radio" value="tidak_selesai" name="status_revisi"
-                                                            class="form-check-input" id="tidak_selesai_revisi">
-                                                        <label for="tidak_selesai_revisi" class="form-check-label">Tidak
-                                                            selesai</label>
-                                                    </div>
-                                                    <label for="status_presentasi" class="form-label">Status
-                                                        Presentasi</label>
-                                                    <div class="form-check">
-                                                        <input type="radio" value="sedang_presentasi"
-                                                            name="status_presentasi" class="form-check-input"
-                                                            id="sedang_presentasi">
-                                                        <label for="sedang_presentasi" class="form-check-label">Sedang
-                                                            Presentasi</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input type="radio" value="selesai" name="status_presentasi"
-                                                            class="form-check-input" id="selesai_presentasi">
-                                                        <label for="selesai_presentasi" class="form-check-label">Selesai
-                                                            Presentasi</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input type="radio" value="tidak_selesai"
-                                                            name="status_presentasi" class="form-check-input"
-                                                            id="tidak_selesai_presentasi">
-                                                        <label for="tidak_selesai_presentasi"
-                                                            class="form-check-label">Tidak
-                                                            Selesai Presentasi</label>
-                                                    </div>
-                                                    <label for="feedback" class="form-label mb-3">Feedback
-                                                        <span class="badge bg-label-warning">Opsional</span></label>
-                                                    <textarea type="text" name="feedback" class="form-control" id="feedback" placeholder="Beri Feedback Presentasi"
-                                                        style="height: 150px; resize: none">{{ $item->feedback ?: null }}</textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                                                data-bs-target="#detailPresentasi">Kembali</button>
-                                            <button type="submit" class="btn btn-success" data-bs-toggle="modal"
-                                                data-bs-target="#detailPresentasi">Simpan</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Modal Konfirmasi Project --}}
                     @empty
                         <h6 class="text-center mt-4">Tidak Ada presentasi <i class="ti ti-address-book-off"></i></h6>
                         <div class="mt-4 mb-3 d-flex justify-content-evenly">
                             <img src="{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}"
                                 alt="page-misc-under-maintenance" width="300" class="img-fluid">
                         </div>
-
                 </div>
                 @endforelse
             </div>
         </div>
-    @endsection
 
-    @section('script')
-    @endsection
+        {{-- Modal Konfirmasi Project --}}
+        <form id="selesaiPresentasiForm" action="{{ route('konfirmasiPresentasi', $item->code) }}" method="post">
+            @csrf
+            @method('PUT')
+            <div class="modal fade" id="konfirmasi-presentasi" tabindex="-1" aria-labelledby="" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="">Konfirmasi Selesai Presentasi</h5>
+                            <button type="button" class="btn-close" data-bs-toggle="modal"
+                                data-bs-target="#detailPresentasi" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <div for="nama-tim" id="nama-tim" class="form-div text-capitalize">Nama Tim : Pre
+                                        Mini Team</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="status_revisi" class="form-label mb-2">Status Revisi</label>
+                                    <div class="form-check">
+                                        <input type="radio" value="selesai" name="status_revisi"
+                                            class="form-check-input" id="selesai_revisi">
+                                        <label for="selesai_revisi" class="form-check-label">Selesai</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="radio" value="tidak_selesai" name="status_revisi"
+                                            class="form-check-input" id="tidak_selesai_revisi">
+                                        <label for="tidak_selesai_revisi" class="form-check-label">Tidak
+                                            selesai</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="status_presentasi" class="form-label mb-2">Status Presentasi</label>
+                                    <div class="form-check">
+                                        <input type="radio" value="selesai" name="status_presentasi"
+                                            class="form-check-input" id="selesai_presentasi">
+                                        <label for="selesai_presentasi" class="form-check-label">Selesai
+                                            Presentasi</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="radio" value="tidak_selesai" name="status_presentasi"
+                                            class="form-check-input" id="tidak_selesai_presentasi">
+                                        <label for="tidak_selesai_presentasi" class="form-check-label">Tidak
+                                            Selesai
+                                            Presentasi</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="feedback" class="form-label mb-3">Feedback <span
+                                            class="badge bg-label-warning">Opsional</span></label>
+                                    <textarea type="text" name="feedback" class="form-control" id="feedback" placeholder="Beri Feedback Presentasi"
+                                        style="height: 150px; resize: none"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                                data-bs-target="#detailPresentasi">Kembali</button>
+                            <button type="submit" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#detailPresentasi">Simpan</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    {{-- Modal Konfirmasi Project --}}
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function() {
+            $('.confirm-btn').on('click', function() {
+                let url = $(this).data('url');
+                let nama = $(this).data('nama-tim');
+                let modal = $('#konfirmasi-presentasi');
+
+                modal.find('#selesaiPresentasiForm').attr('action', url);
+                modal.find('#nama-tim').text('Nama tim : ' + nama);
+                modal.modal('show');
+            });
+        });
+
+        function konfirmasiPengajuan() {
+            Swal.fire({
+                title: 'Konfirmasi Pengajuan',
+                text: 'Setelah dikonfirmasi, status akan menjadi "sedang presentasi"',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('.konfirmasi-pengajuan-presentasi-form').submit();
+                }
+            });
+        };
+    </script>
+@endsection

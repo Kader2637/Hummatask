@@ -167,6 +167,7 @@
                 Route::put('penolakan-presentasi/{code}', [PresentasiController::class, 'penolakanPresentasi']);
                 Route::put('atur-jadwal-presentasi/{code}', [PresentasiController::class, 'aturJadwal']);
                 Route::put('konfirmasi-presentasi/{code}', [PresentasiController::class, 'konfirmasiPresentasi'])->name('konfirmasiPresentasi');
+                Route::patch('konfirmasi-pengajuan-presentasi/{code}', [PresentasiController::class, 'konfirmasiPengajuanPresentasi'])->name('konfirmasi-pengajuan-presentasi');
                 Route::patch('persetujuan-project/{code}', [PengajuanProjekController::class, 'persetujuanProject'])->name('persetujuan-project');
                 Route::put('atur-urutan/{code}', [PresentasiController::class, 'gantiUrutan']);
                 Route::get('ambil-urutan/{codeHistory}', [PresentasiController::class, 'ambilUrutan']);
