@@ -101,8 +101,8 @@
                                                 method="post">
                                                 @csrf
                                                 @method('PATCH')
-                                                <button type="button" onclick="konfirmasiPengajuan()"
-                                                    class="btn btn-primary w-100">Konfirmasi
+                                                <button type="button"
+                                                    class="btn btn-primary w-100 confirm-btn-up">Konfirmasi
                                                     Presentasi
                                                 </button>
                                             </form>
@@ -187,8 +187,8 @@
                                                 method="post">
                                                 @csrf
                                                 @method('PATCH')
-                                                <button type="button" onclick="konfirmasiPengajuan()"
-                                                    class="btn btn-primary w-100">Konfirmasi
+                                                <button type="button"
+                                                    class="btn btn-primary w-100 confirm-btn-up">Konfirmasi
                                                     Presentasi
                                                 </button>
                                             </form>
@@ -274,8 +274,8 @@
                                                 method="post">
                                                 @csrf
                                                 @method('PATCH')
-                                                <button type="button" onclick="konfirmasiPengajuan()"
-                                                    class="btn btn-primary w-100">Konfirmasi
+                                                <button type="button"
+                                                    class="btn btn-primary w-100 confirm-btn-up">Konfirmasi
                                                     Presentasi
                                                 </button>
                                             </form>
@@ -363,8 +363,8 @@
                                                 method="post">
                                                 @csrf
                                                 @method('PATCH')
-                                                <button type="button" onclick="konfirmasiPengajuan()"
-                                                    class="btn btn-primary w-100">Konfirmasi
+                                                <button type="button"
+                                                    class="btn btn-primary w-100 confirm-btn-up">Konfirmasi
                                                     Presentasi
                                                 </button>
                                             </form>
@@ -452,8 +452,8 @@
                                                 method="post">
                                                 @csrf
                                                 @method('PATCH')
-                                                <button type="button" onclick="konfirmasiPengajuan()"
-                                                    class="btn btn-primary w-100">Konfirmasi
+                                                <button type="button"
+                                                    class="btn btn-primary w-100 confirm-btn-up">Konfirmasi
                                                     Presentasi
                                                 </button>
                                             </form>
@@ -569,7 +569,7 @@
             });
         });
 
-        function konfirmasiPengajuan() {
+        $('.confirm-btn-up').on('click', function(){
             Swal.fire({
                 title: 'Konfirmasi Pengajuan',
                 text: 'Setelah dikonfirmasi, status akan menjadi "sedang presentasi"',
@@ -579,9 +579,11 @@
                 cancelButtonText: 'Tidak'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    $('.konfirmasi-pengajuan-presentasi-form').submit();
+                    var form = $(this).closest('form');
+                    form.submit();
                 }
             });
-        };
+        });
+
     </script>
 @endsection
