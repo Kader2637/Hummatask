@@ -44,11 +44,9 @@ class PengajuanTimController extends Controller
 
         try {
             $timDulu = User::find(Auth::user()->id)->anggota()->orderByDesc('created_at')->first()->status;
-            //code...
         } catch (\Throwable $th) {
             $timDulu = null;
         }
-        // dd($timDulu);
 
         if ($timDulu === 'active') {
             return redirect()->back()->with('error', 'Kamu masih memiliki tim yang belum selesai');
