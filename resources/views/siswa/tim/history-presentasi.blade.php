@@ -391,15 +391,31 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
+                                                    @if ($validasiPersetujuan !== null)
+                                                        <div class="">
+                                                            <button type="button" data-bs-dismiss="modal"
+                                                                class="btn btn-primary bg-danger waves-effect">
+                                                                Anda hanya dapat merubah Jadwal Presentasi!
+                                                            </button>
+                                                        </div>
+                                                    @elseif ($validasiPersetujuan === null)
+                                                        <div class="">
+                                                            <button data-bs-dismiss="modal"
+                                                                class="btn btn-label-secondary waves-effect">
+                                                                Tutup
+                                                            </button>
+                                                        </div>
+                                                    @endif
                                                     <div class="">
-                                                        <button data-bs-dismiss="modal" class="btn btn-danger">
-                                                            Tutup
-                                                        </button>
-                                                    </div>
-                                                    <div class="">
-                                                        <button type="submit" class="btn btn-primary">
-                                                            Simpan
-                                                        </button>
+                                                        @if ($validasiPersetujuan !== null)
+                                                            <button type="submit" class="btn btn-primary">
+                                                                Update
+                                                            </button>
+                                                        @elseif ($validasiPersetujuan === null)
+                                                            <button type="submit" class="btn btn-primary">
+                                                                Simpan
+                                                            </button>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -454,15 +470,31 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
+                                                    @if ($validasiPersetujuan !== null)
+                                                        <div class="">
+                                                            <button type="button" data-bs-dismiss="modal"
+                                                                class="btn btn-primary bg-danger waves-effect">
+                                                                Anda hanya dapat merubah Jadwal Presentasi!
+                                                            </button>
+                                                        </div>
+                                                    @elseif ($validasiPersetujuan === null)
+                                                        <div class="">
+                                                            <button data-bs-dismiss="modal"
+                                                                class="btn btn-label-secondary waves-effect">
+                                                                Tutup
+                                                            </button>
+                                                        </div>
+                                                    @endif
                                                     <div class="">
-                                                        <button data-bs-dismiss="modal" class="btn btn-danger">
-                                                            Tutup
-                                                        </button>
-                                                    </div>
-                                                    <div class="">
-                                                        <button type="submit" class="btn btn-primary">
-                                                            Simpan
-                                                        </button>
+                                                        @if ($validasiPersetujuan !== null)
+                                                            <button type="submit" class="btn btn-primary">
+                                                                Update
+                                                            </button>
+                                                        @elseif ($validasiPersetujuan === null)
+                                                            <button type="submit" class="btn btn-primary">
+                                                                Simpan
+                                                            </button>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -517,15 +549,31 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
+                                                    @if ($validasiPersetujuan !== null)
+                                                        <div class="">
+                                                            <button type="button" data-bs-dismiss="modal"
+                                                                class="btn btn-primary bg-danger waves-effect">
+                                                                Anda hanya dapat merubah Jadwal Presentasi!
+                                                            </button>
+                                                        </div>
+                                                    @elseif ($validasiPersetujuan === null)
+                                                        <div class="">
+                                                            <button data-bs-dismiss="modal"
+                                                                class="btn btn-label-secondary waves-effect">
+                                                                Tutup
+                                                            </button>
+                                                        </div>
+                                                    @endif
                                                     <div class="">
-                                                        <button data-bs-dismiss="modal" class="btn btn-danger">
-                                                            Tutup
-                                                        </button>
-                                                    </div>
-                                                    <div class="">
-                                                        <button type="submit" class="btn btn-primary">
-                                                            Simpan
-                                                        </button>
+                                                        @if ($validasiPersetujuan !== null)
+                                                            <button type="submit" class="btn btn-primary">
+                                                                Update
+                                                            </button>
+                                                        @elseif ($validasiPersetujuan === null)
+                                                            <button type="submit" class="btn btn-primary">
+                                                                Simpan
+                                                            </button>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -580,15 +628,31 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
+                                                    @if ($validasiPersetujuan !== null)
+                                                        <div class="">
+                                                            <button type="button" data-bs-dismiss="modal"
+                                                                class="btn btn-primary bg-danger waves-effect">
+                                                                Anda hanya dapat merubah Jadwal Presentasi!
+                                                            </button>
+                                                        </div>
+                                                    @elseif ($validasiPersetujuan === null)
+                                                        <div class="">
+                                                            <button data-bs-dismiss="modal"
+                                                                class="btn btn-label-secondary waves-effect">
+                                                                Tutup
+                                                            </button>
+                                                        </div>
+                                                    @endif
                                                     <div class="">
-                                                        <button data-bs-dismiss="modal" class="btn btn-danger">
-                                                            Tutup
-                                                        </button>
-                                                    </div>
-                                                    <div class="">
-                                                        <button type="submit" class="btn btn-primary">
-                                                            Simpan
-                                                        </button>
+                                                        @if ($validasiPersetujuan !== null)
+                                                            <button type="submit" class="btn btn-primary">
+                                                                Update
+                                                            </button>
+                                                        @elseif ($validasiPersetujuan === null)
+                                                            <button type="submit" class="btn btn-primary">
+                                                                Simpan
+                                                            </button>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -626,8 +690,11 @@
                                         @if ($data->status_presentasi === 'selesai')
                                             <span class="badge bg-label-success me-1">selesai</span>
                                         @endif
-                                        @if ($data->status_presentasi === 'telat')
-                                            <span class="badge bg-label-danger me-1">telat</span>
+                                        @if ($data->status_presentasi === 'tidak_selesai')
+                                            <span class="badge bg-label-danger me-1">Tidak Selesai</span>
+                                        @endif
+                                        @if ($data->status_presentasi === 'sedang_presentasi')
+                                            <span class="badge bg-label-primary me-1">Sedang Presentasi</span>
                                         @endif
                                     </td>
                                     <td>
