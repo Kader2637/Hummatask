@@ -37,6 +37,7 @@ class PresentasiController extends Controller
 
         $tidakPresentasi = Tim::where('sudah_presentasi', 0)
             ->whereDate('created_at', $hariIni)
+            ->where('divisi_id', Auth()->user()->divisi_id)
             ->whereDoesntHave('presentasi', function ($query) use ($hariIni) {
                 $query->whereDate('created_at', $hariIni);
             })
