@@ -66,6 +66,10 @@ class PresentasiController extends Controller
         //     return back()->with('error', 'Pengajuan Presentasi hanya bisa dilakuakn dijam kantor');
         // }
 
+        if (!$request->judul) {
+            return back()->with('warning', 'Mohon isi judul presentasi!');
+        }
+
         if ($request->plan == null) {
             return back()->with('error', 'Mohon pilih jadwal presentasi');
         }

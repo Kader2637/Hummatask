@@ -27,15 +27,18 @@ class siswaController extends Controller
     protected function dashboard()
     {
         $title = 'Dashboard';
-        $tims = User::find(Auth::user()->id)
-            ->tim()
-            ->get();
+
         $userID = Auth::user()->id;
+        $tims = User::find($userID)
+            ->tim()
+            ->latest()
+            ->get();
+
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
 
         $timbaru = $tims->sortByDesc('created_at')->first();
 
-        $tugas = User::find(Auth::user()->id)
+        $tugas = User::find($userID)
             ->tugas()
             ->where('status_tugas', 'tugas_baru')
             ->with('user', 'comments')
@@ -44,9 +47,7 @@ class siswaController extends Controller
                 $deadline = \Carbon\Carbon::parse($item->deadline);
                 $created = \Carbon\Carbon::parse($item->created_at);
                 return $deadline->diffInDays($created);
-            });
-
-        $tugas = $tugas
+            })
             ->map(function ($item) {
                 $deadline = \Carbon\Carbon::parse($item->deadline)->startOfDay();
                 $created = \Carbon\Carbon::parse($item->created_at)->startOfDay();
@@ -54,15 +55,13 @@ class siswaController extends Controller
                 $item->tim_code = $item->tim->code;
                 return $item;
             })
-            ->loadCount('comments');
+            ->loadCount('comments')
+            ->take(3);
 
-        $tugas = $tugas->take(3);
-
-        $tugasBelum = User::find(Auth::user()->id)
+        $tugasBelum = User::find($userID)
             ->tugas()
             ->where(function ($query) use ($timbaru) {
                 $query->where('status_tugas', 'revisi')->orWhere('status_tugas', 'dikerjakan');
-
                 if ($timbaru) {
                     $query->where('tim_id', $timbaru->id);
                 }
@@ -73,7 +72,16 @@ class siswaController extends Controller
                 $deadline = \Carbon\Carbon::parse($item->deadline);
                 $created = \Carbon\Carbon::parse($item->created_at);
                 return $deadline->diffInDays($created);
-            });
+            })
+            ->map(function ($item) {
+                $deadline = \Carbon\Carbon::parse($item->deadline)->startOfDay();
+                $created = \Carbon\Carbon::parse($item->created_at)->startOfDay();
+                $item->dayleft = $deadline->diffInDays($created);
+                $item->tim_code = $item->tim->code;
+                return $item;
+            })
+            ->loadCount('comments')
+            ->take(3);
 
         $user = User::where('status_kelulusan', 0)->get();
 
@@ -83,18 +91,6 @@ class siswaController extends Controller
                 $data->save();
             }
         }
-
-        $tugasBelum = $tugasBelum
-            ->map(function ($item) {
-                $deadline = \Carbon\Carbon::parse($item->deadline)->startOfDay();
-                $created = \Carbon\Carbon::parse($item->created_at)->startOfDay();
-                $item->dayleft = $deadline->diffInDays($created);
-                $item->tim_code = $item->tim->code;
-                return $item;
-            })
-            ->loadCount('comments');
-
-        $tugasBelum = $tugasBelum->take(3);
 
         return response()->view('siswa.dashboard', compact('title', 'tims', 'tugas', 'tugasBelum', 'notifikasi'));
     }
@@ -107,11 +103,14 @@ class siswaController extends Controller
     protected function profilePage()
     {
         $title = 'Profile Siswa';
+
+        $userID = Auth::user()->id;
         $user = User::with('peran')
-            ->where('id', Auth::user()->id)
-            ->first();
+            ->findOrFail($userID);
+
         $tims = $user->tim()->get();
-        $notifikasi = Notifikasi::where('user_id', Auth::user()->id)->get();
+        $notifikasi = Notifikasi::where('user_id', $userID)->get();
+
         return response()->view('siswa.profile-siswa', compact('title', 'user', 'tims', 'notifikasi'));
     }
 
