@@ -24,27 +24,27 @@ class DetailPresentasiController extends Controller
         $presentasi = Presentasi::query();
         $tim = Tim::query()->get();
 
-        $filterType = $request->input('filter_type');
-        $customDate = $request->input('Harian');
-        $customDateMingguan = $request->input('Mingguan');
+        // $filterType = $request->input('filter_type');
+        // $customDate = $request->input('Harian');
+        // $customDateMingguan = $request->input('Mingguan');
 
-        switch ($filterType) {
-            case 'Mingguan':
-                $startDate = Carbon::createFromFormat('Y-W', $customDateMingguan)->startOfWeek();
-                $endDate = Carbon::createFromFormat('Y-W', $customDateMingguan)->endOfWeek();
-                $presentasi->whereBetween('created_at', [$startDate, $endDate]);
-                break;
+        // switch ($filterType) {
+        //     case 'Mingguan':
+        //         $startDate = Carbon::createFromFormat('Y-W', $customDateMingguan)->startOfWeek();
+        //         $endDate = Carbon::createFromFormat('Y-W', $customDateMingguan)->endOfWeek();
+        //         $presentasi->whereBetween('created_at', [$startDate, $endDate]);
+        //         break;
 
-            case 'Bulanan':
+        //     case 'Bulanan':
                 
-                break;
+        //         break;
 
-            case 'Harian':
-                $presentasi->whereDate('created_at', $customDate);
-                break;
+        //     case 'Harian':
+        //         $presentasi->whereDate('created_at', $customDate);
+        //         break;
 
-            default:
-        }
+        //     default:
+        // }
 
         $presentasiFilter = $presentasi->with('tim', 'divisi', 'tim.user')->get();
 
