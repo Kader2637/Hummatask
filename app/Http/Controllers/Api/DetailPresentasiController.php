@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Anggota;
 use App\Models\Presentasi;
 use App\Models\Tim;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -25,10 +26,13 @@ class DetailPresentasiController extends Controller
 
         $filterType = $request->input('filter_type');
         $customDate = $request->input('Harian');
+        $customDateMingguan = $request->input('Mingguan');
 
         switch ($filterType) {
             case 'Mingguan':
-                
+                $startDate = Carbon::createFromFormat('Y-W', $customDateMingguan)->startOfWeek();
+                $endDate = Carbon::createFromFormat('Y-W', $customDateMingguan)->endOfWeek();
+                $presentasi->whereBetween('created_at', [$startDate, $endDate]);
                 break;
 
             case 'Bulanan':
