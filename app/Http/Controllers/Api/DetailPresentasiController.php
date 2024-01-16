@@ -18,17 +18,32 @@ class DetailPresentasiController extends Controller
      *
      * @return JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        $presentasi = Presentasi::query()
-            ->with('tim','divisi','tim.user')
-            ->get();
+        $presentasi = Presentasi::query();
 
-        $tim = Tim::query()
-            ->get();
-            return response()->json([
-                'presentasi' => $presentasi,
-                'tim' => $tim,
-            ]);
+    $tim = Tim::query()
+        ->get();
+
+    $filterType = $request->input('filter_type');
+    $customDate = $request->input('Harian');
+
+
+    if ($filterType === 'Mingguan') {
+        
+    } elseif ($filterType === 'Bulanan') {
+        
+    } elseif ($filterType === 'Harian') {
+        $presentasi->whereDate('created_at', $customDate)
+        ->with('tim', 'divisi', 'tim.user');
+    } else {
+        $presentasi->with('tim', 'divisi', 'tim.user');
+    }
+
+    $presentasiFilter = $presentasi->get();
+    return response()->json([
+        'presentasi' => $presentasiFilter,
+        'tim' => $tim,
+    ]);
     }
 }
