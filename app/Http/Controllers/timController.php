@@ -209,7 +209,9 @@ class timController extends Controller
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
         $tim = Tim::where('code', $code)->firstOrFail();
         $tim_id = $tim->id;
-
+        $cekJadwalRabu = null;
+        $cekJadwalKamis = null;
+        $cekJadwalJumat = null;
         $allSessions = LimitPresentasiDevisi::query()
             ->whereRelation('presentasiDivisi', 'divisi_id', '=', Auth::user()->divisi_id)
             ->with('presentasiDivisi')
@@ -220,30 +222,55 @@ class timController extends Controller
                 return $session->presentasiDivisi->day === DayEnum::MONDAY->value;
             })
             ->sortBy('mulai');
-
+            foreach ($sesi_senin as $senin) {
+                $cekJadwalSenin = Presentasi::where('presentasi_divisi_id', $senin->presentasi_divisi_id)
+                    ->where('divisi_id', auth()->user()->divisi_id)
+                    ->first();
+            }
+        
         $sesi_selasa = $allSessions
             ->filter(function ($session) {
                 return $session->presentasiDivisi->day === DayEnum::TUESDAY->value;
             })
             ->sortBy('mulai');
+            foreach ($sesi_selasa as $selasa) {
+                $cekJadwalSelasa = Presentasi::where('presentasi_divisi_id', $selasa->presentasi_divisi_id)
+                    ->where('divisi_id', auth()->user()->divisi_id)
+                    ->first();
+            }
             
         $sesi_rabu = $allSessions
             ->filter(function ($session) {
                 return $session->presentasiDivisi->day === DayEnum::WEDNESDAY->value;
             })
             ->sortBy('mulai');
+            foreach ($sesi_rabu as $rabu) {
+                $cekJadwalRabu = Presentasi::where('presentasi_divisi_id', $rabu->presentasi_divisi_id)
+                    ->where('divisi_id', auth()->user()->divisi_id)
+                    ->first();
+            }
 
         $sesi_kamis = $allSessions
             ->filter(function ($session) {
                 return $session->presentasiDivisi->day === DayEnum::THURSDAY->value;
             })
             ->sortBy('mulai');
+            foreach ($sesi_kamis as $kamis) {
+                $cekJadwalKamis = Presentasi::where('presentasi_divisi_id', $kamis->presentasi_divisi_id)
+                    ->where('divisi_id', auth()->user()->divisi_id)
+                    ->first();
+            }
 
         $sesi_jumat = $allSessions
             ->filter(function ($session) {
                 return $session->presentasiDivisi->day === DayEnum::FRIDAY->value;
             })
             ->sortBy('mulai');
+            foreach ($sesi_jumat as $jumat) {
+                $cekJadwalJumat = Presentasi::where('presentasi_divisi_id', $jumat->presentasi_divisi_id)
+                    ->where('divisi_id', auth()->user()->divisi_id)
+                    ->first();
+            }
 
         $cek_present = Presentasi::query()
             ->whereDate('jadwal', now())
@@ -282,7 +309,6 @@ class timController extends Controller
             $presentID = null;
         }
 
-
         
         $hasProjectRelation = $tim->project()->exists();
         $jadwal = [];
@@ -290,7 +316,7 @@ class timController extends Controller
             $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
         }
 
-        return view('siswa.tim.history-presentasi', compact('cek_present','presentID','presentasiID','validasiPersetujuan', 'jabatan', 'title', 'tim', 'anggota', 'presentasi', 'jadwal', 'hasProjectRelation', 'project', 'notifikasi', 'project', 'sesi_senin', 'sesi_selasa', 'sesi_rabu', 'sesi_kamis', 'sesi_jumat'));
+        return view('siswa.tim.history-presentasi', compact('cek_present','presentID','presentasiID','validasiPersetujuan','cekJadwalSenin','cekJadwalSelasa','cekJadwalRabu','cekJadwalKamis','cekJadwalJumat', 'jabatan', 'title', 'tim', 'anggota', 'presentasi', 'jadwal', 'hasProjectRelation', 'project', 'notifikasi', 'project', 'sesi_senin', 'sesi_selasa', 'sesi_rabu', 'sesi_kamis', 'sesi_jumat'));
     }
 
     protected function catatanPage($code)

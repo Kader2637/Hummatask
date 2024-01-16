@@ -41,8 +41,9 @@ class DetailPresentasiController extends Controller
 
             case 'Bulanan':
                 $customDateBulanan = $request->input('Bulanan');
-                $presentasi->whereYear('created_at', Carbon::parse($customDateBulanan)->year);
-                $presentasi->whereMonth('created_at', Carbon::parse($customDateBulanan)->month);
+                $parsedDate = Carbon::parse($customDateBulanan);
+                $presentasi->whereYear('created_at', $parsedDate->year);
+                $presentasi->whereMonth('created_at', $parsedDate->month);
                 break;
 
             case 'Harian':

@@ -249,14 +249,14 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="senin" role="tabpanel">
                                         <form id="formAjukanPresentasi_1"
-                                            @if ($validasiPersetujuan !== null) action="{{ route('update-presentasi', $presentID) }}" method="post" 
+                                            @if ($cekJadwalSenin !== null) action="{{ route('update-presentasi', $presentID) }}" method="post" 
                                             @else
                                             action="{{ route('ajukan-presentasi', $tim->code) }}" method="post" @endif>
                                             @csrf
-                                            @if ($validasiPersetujuan !== null)
+                                            @if ($cekJadwalSenin !== null)
                                                 @method('PUT')
                                             @endif
-                                            @if ($validasiPersetujuan !== null)
+                                            @if ($cekJadwalSenin !== null)
                                                 <label for="judul" class="form-label" disabled>Judul Presentasi</label>
                                                 <input type="text" name="judul" class="form-control" disabled>
                                             @else
@@ -301,7 +301,7 @@
                                                             class="img-fluid">
                                                     </div>
                                                 @endforelse
-                                                @if ($validasiPersetujuan !== null)
+                                                @if ($cekJadwalSenin !== null)
                                                     <label for="deskripsi" class="form-label" disabled>Deskripsi
                                                         (Opsional)</label>
                                                     <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10" disabled></textarea>
@@ -312,14 +312,14 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
-                                                    @if ($validasiPersetujuan !== null)
+                                                    @if ($cekJadwalSenin !== null)
                                                         <div class="">
                                                             <button type="button" data-bs-dismiss="modal"
                                                                 class="btn btn-primary bg-danger waves-effect">
                                                                 Anda hanya dapat merubah Jadwal Presentasi!
                                                             </button>
                                                         </div>
-                                                    @elseif ($validasiPersetujuan === null)
+                                                    @elseif ($cekJadwalSenin === null)
                                                         <div class="">
                                                             <button data-bs-dismiss="modal"
                                                                 class="btn btn-label-secondary waves-effect">
@@ -328,11 +328,11 @@
                                                         </div>
                                                     @endif
                                                     <div class="">
-                                                        @if ($validasiPersetujuan !== null)
+                                                        @if ($cekJadwalSenin !== null)
                                                             <button type="submit" class="btn btn-primary">
                                                                 Update
                                                             </button>
-                                                        @elseif ($validasiPersetujuan === null)
+                                                        @elseif ($cekJadwalSenin === null)
                                                             <button type="submit" class="btn btn-primary">
                                                                 Simpan
                                                             </button>
@@ -343,9 +343,14 @@
                                         </form>
                                     </div>
                                     <div class="tab-pane" id="selasa" role="tabpanel">
-                                        <form action="{{ route('ajukan-presentasi', $tim->code) }}" method="post"
-                                            id="formAjukanPresentasi_2">
+                                        <form id="formAjukanPresentasi_2"
+                                            @if ($cekJadwalSelasa !== null) action="{{ route('update-presentasi', $presentID) }}" method="post" 
+                                            @else
+                                            action="{{ route('ajukan-presentasi', $tim->code) }}" method="post" @endif>
                                             @csrf
+                                            @if ($cekJadwalSelasa !== null)
+                                                @method('PUT')
+                                            @endif
                                             <label for="judul" class="form-label">Judul Presentasi</label>
                                             <input type="text" name="judul" class="form-control">
                                             <label for="" class="mt-3">Jadwal</label>
@@ -391,14 +396,14 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
-                                                    @if ($validasiPersetujuan !== null)
+                                                    @if ($cekJadwalSelasa !== null)
                                                         <div class="">
                                                             <button type="button" data-bs-dismiss="modal"
                                                                 class="btn btn-primary bg-danger waves-effect">
                                                                 Anda hanya dapat merubah Jadwal Presentasi!
                                                             </button>
                                                         </div>
-                                                    @elseif ($validasiPersetujuan === null)
+                                                    @elseif ($cekJadwalSelasa === null)
                                                         <div class="">
                                                             <button data-bs-dismiss="modal"
                                                                 class="btn btn-label-secondary waves-effect">
@@ -407,11 +412,11 @@
                                                         </div>
                                                     @endif
                                                     <div class="">
-                                                        @if ($validasiPersetujuan !== null)
+                                                        @if ($cekJadwalSelasa !== null)
                                                             <button type="submit" class="btn btn-primary">
                                                                 Update
                                                             </button>
-                                                        @elseif ($validasiPersetujuan === null)
+                                                        @elseif ($cekJadwalSelasa === null)
                                                             <button type="submit" class="btn btn-primary">
                                                                 Simpan
                                                             </button>
@@ -422,9 +427,14 @@
                                         </form>
                                     </div>
                                     <div class="tab-pane" id="rabu" role="tabpanel">
-                                        <form action="{{ route('ajukan-presentasi', $tim->code) }}" method="post"
-                                            id="formAjukanPresentasi_3">
+                                        <form id="formAjukanPresentasi_3"
+                                            @if ($cekjadwalRabu !== null) action="{{ route('update-presentasi', $presentID) }}" method="post" 
+                                            @else
+                                            action="{{ route('ajukan-presentasi', $tim->code) }}" method="post" @endif>
                                             @csrf
+                                            @if ($cekjadwalRabu !== null)
+                                                @method('PUT')
+                                            @endif
                                             <label for="judul" class="form-label">Judul Presentasi</label>
                                             <input type="text" name="judul" class="form-control">
                                             <label for="" class="mt-3">Jadwal</label>
@@ -470,14 +480,14 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
-                                                    @if ($validasiPersetujuan !== null)
+                                                    @if ($cekjadwalRabu !== null)
                                                         <div class="">
                                                             <button type="button" data-bs-dismiss="modal"
                                                                 class="btn btn-primary bg-danger waves-effect">
                                                                 Anda hanya dapat merubah Jadwal Presentasi!
                                                             </button>
                                                         </div>
-                                                    @elseif ($validasiPersetujuan === null)
+                                                    @elseif ($cekjadwalRabu === null)
                                                         <div class="">
                                                             <button data-bs-dismiss="modal"
                                                                 class="btn btn-label-secondary waves-effect">
@@ -486,11 +496,11 @@
                                                         </div>
                                                     @endif
                                                     <div class="">
-                                                        @if ($validasiPersetujuan !== null)
+                                                        @if ($cekjadwalRabu !== null)
                                                             <button type="submit" class="btn btn-primary">
                                                                 Update
                                                             </button>
-                                                        @elseif ($validasiPersetujuan === null)
+                                                        @elseif ($cekjadwalRabu === null)
                                                             <button type="submit" class="btn btn-primary">
                                                                 Simpan
                                                             </button>
@@ -501,9 +511,14 @@
                                         </form>
                                     </div>
                                     <div class="tab-pane" id="kamis" role="tabpanel">
-                                        <form action="{{ route('ajukan-presentasi', $tim->code) }}" method="post"
-                                            id="formAjukanPresentasi_4">
+                                        <form id="formAjukanPresentasi_4"
+                                            @if ($cekJadwalKamis !== null) action="{{ route('update-presentasi', $presentID) }}" method="post" 
+                                            @else
+                                            action="{{ route('ajukan-presentasi', $tim->code) }}" method="post" @endif>
                                             @csrf
+                                            @if ($cekJadwalKamis !== null)
+                                                @method('PUT')
+                                            @endif
                                             <label for="judul" class="form-label">Judul Presentasi</label>
                                             <input type="text" name="judul" class="form-control">
                                             <label for="" class="mt-3">Jadwal</label>
@@ -549,14 +564,14 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
-                                                    @if ($validasiPersetujuan !== null)
+                                                    @if ($cekJadwalKamis !== null)
                                                         <div class="">
                                                             <button type="button" data-bs-dismiss="modal"
                                                                 class="btn btn-primary bg-danger waves-effect">
                                                                 Anda hanya dapat merubah Jadwal Presentasi!
                                                             </button>
                                                         </div>
-                                                    @elseif ($validasiPersetujuan === null)
+                                                    @elseif ($cekJadwalKamis === null)
                                                         <div class="">
                                                             <button data-bs-dismiss="modal"
                                                                 class="btn btn-label-secondary waves-effect">
@@ -565,11 +580,11 @@
                                                         </div>
                                                     @endif
                                                     <div class="">
-                                                        @if ($validasiPersetujuan !== null)
+                                                        @if ($cekJadwalKamis !== null)
                                                             <button type="submit" class="btn btn-primary">
                                                                 Update
                                                             </button>
-                                                        @elseif ($validasiPersetujuan === null)
+                                                        @elseif ($cekJadwalKamis === null)
                                                             <button type="submit" class="btn btn-primary">
                                                                 Simpan
                                                             </button>
@@ -580,9 +595,14 @@
                                         </form>
                                     </div>
                                     <div class="tab-pane" id="jumat" role="tabpanel">
-                                        <form action="{{ route('ajukan-presentasi', $tim->code) }}" method="post"
-                                            id="formAjukanPresentasi_5">
+                                        <form id="formAjukanPresentasi_"5
+                                            @if ($cekJadwalJumat !== null) action="{{ route('update-presentasi', $presentID) }}" method="post" 
+                                            @else
+                                            action="{{ route('ajukan-presentasi', $tim->code) }}" method="post" @endif>
                                             @csrf
+                                            @if ($cekJadwalJumat !== null)
+                                                @method('PUT')
+                                            @endif
                                             <label for="judul" class="form-label">Judul Presentasi</label>
                                             <input type="text" name="judul" class="form-control">
                                             <label for="" class="mt-3">Jadwal</label>
@@ -628,14 +648,14 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
-                                                    @if ($validasiPersetujuan !== null)
+                                                    @if ($cekJadwalJumat !== null)
                                                         <div class="">
                                                             <button type="button" data-bs-dismiss="modal"
                                                                 class="btn btn-primary bg-danger waves-effect">
                                                                 Anda hanya dapat merubah Jadwal Presentasi!
                                                             </button>
                                                         </div>
-                                                    @elseif ($validasiPersetujuan === null)
+                                                    @elseif ($cekJadwalJumat === null)
                                                         <div class="">
                                                             <button data-bs-dismiss="modal"
                                                                 class="btn btn-label-secondary waves-effect">
@@ -644,11 +664,11 @@
                                                         </div>
                                                     @endif
                                                     <div class="">
-                                                        @if ($validasiPersetujuan !== null)
+                                                        @if ($cekJadwalJumat !== null)
                                                             <button type="submit" class="btn btn-primary">
                                                                 Update
                                                             </button>
-                                                        @elseif ($validasiPersetujuan === null)
+                                                        @elseif ($cekJadwalJumat === null)
                                                             <button type="submit" class="btn btn-primary">
                                                                 Simpan
                                                             </button>
