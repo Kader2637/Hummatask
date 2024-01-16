@@ -428,11 +428,11 @@
                                     </div>
                                     <div class="tab-pane" id="rabu" role="tabpanel">
                                         <form id="formAjukanPresentasi_3"
-                                            @if ($cekjadwalRabu !== null) action="{{ route('update-presentasi', $presentID) }}" method="post" 
+                                            @if ($cekJadwalRabu !== null) action="{{ route('update-presentasi', $presentID) }}" method="post" 
                                             @else
                                             action="{{ route('ajukan-presentasi', $tim->code) }}" method="post" @endif>
                                             @csrf
-                                            @if ($cekjadwalRabu !== null)
+                                            @if ($cekJadwalRabu !== null)
                                                 @method('PUT')
                                             @endif
                                             <label for="judul" class="form-label">Judul Presentasi</label>
@@ -480,14 +480,14 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
-                                                    @if ($cekjadwalRabu !== null)
+                                                    @if ($cekJadwalRabu !== null)
                                                         <div class="">
                                                             <button type="button" data-bs-dismiss="modal"
                                                                 class="btn btn-primary bg-danger waves-effect">
                                                                 Anda hanya dapat merubah Jadwal Presentasi!
                                                             </button>
                                                         </div>
-                                                    @elseif ($cekjadwalRabu === null)
+                                                    @elseif ($cekJadwalRabu === null)
                                                         <div class="">
                                                             <button data-bs-dismiss="modal"
                                                                 class="btn btn-label-secondary waves-effect">
@@ -496,11 +496,11 @@
                                                         </div>
                                                     @endif
                                                     <div class="">
-                                                        @if ($cekjadwalRabu !== null)
+                                                        @if ($cekJadwalRabu !== null)
                                                             <button type="submit" class="btn btn-primary">
                                                                 Update
                                                             </button>
-                                                        @elseif ($cekjadwalRabu === null)
+                                                        @elseif ($cekJadwalRabu === null)
                                                             <button type="submit" class="btn btn-primary">
                                                                 Simpan
                                                             </button>

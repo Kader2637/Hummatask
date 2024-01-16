@@ -209,7 +209,7 @@ class timController extends Controller
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
         $tim = Tim::where('code', $code)->firstOrFail();
         $tim_id = $tim->id;
-        
+
         $allSessions = LimitPresentasiDevisi::query()
             ->whereRelation('presentasiDivisi', 'divisi_id', '=', Auth::user()->divisi_id)
             ->with('presentasiDivisi')
@@ -220,6 +220,7 @@ class timController extends Controller
                 return $session->presentasiDivisi->day === DayEnum::MONDAY->value;
             })
             ->sortBy('mulai');
+            $cekJadwalSenin = null;
             foreach ($sesi_senin as $senin) {
                 $cekJadwalSenin = Presentasi::where('presentasi_divisi_id', $senin->presentasi_divisi_id)
                     ->where('divisi_id', auth()->user()->divisi_id)
@@ -231,6 +232,7 @@ class timController extends Controller
                 return $session->presentasiDivisi->day === DayEnum::TUESDAY->value;
             })
             ->sortBy('mulai');
+            $cekJadwalSelasa = null;
             foreach ($sesi_selasa as $selasa) {
                 $cekJadwalSelasa = Presentasi::where('presentasi_divisi_id', $selasa->presentasi_divisi_id)
                     ->where('divisi_id', auth()->user()->divisi_id)
@@ -242,6 +244,7 @@ class timController extends Controller
                 return $session->presentasiDivisi->day === DayEnum::WEDNESDAY->value;
             })
             ->sortBy('mulai');
+            $cekJadwalRabu = null;
             foreach ($sesi_rabu as $rabu) {
                 $cekJadwalRabu = Presentasi::where('presentasi_divisi_id', $rabu->presentasi_divisi_id)
                     ->where('divisi_id', auth()->user()->divisi_id)
@@ -253,6 +256,7 @@ class timController extends Controller
                 return $session->presentasiDivisi->day === DayEnum::THURSDAY->value;
             })
             ->sortBy('mulai');
+            $cekJadwalKamis = null;
             foreach ($sesi_kamis as $kamis) {
                 $cekJadwalKamis = Presentasi::where('presentasi_divisi_id', $kamis->presentasi_divisi_id)
                     ->where('divisi_id', auth()->user()->divisi_id)
@@ -264,6 +268,7 @@ class timController extends Controller
                 return $session->presentasiDivisi->day === DayEnum::FRIDAY->value;
             })
             ->sortBy('mulai');
+            $cekJadwalJumat = null;
             foreach ($sesi_jumat as $jumat) {
                 $cekJadwalJumat = Presentasi::where('presentasi_divisi_id', $jumat->presentasi_divisi_id)
                     ->where('divisi_id', auth()->user()->divisi_id)
