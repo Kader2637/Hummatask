@@ -30,9 +30,11 @@ class DetailPresentasiController extends Controller
 
         switch ($filterType) {
             case 'Mingguan':
-                $startDate = Carbon::createFromFormat('Y-W', $customDateMingguan)->startOfWeek();
-                $endDate = Carbon::createFromFormat('Y-W', $customDateMingguan)->endOfWeek();
-                $presentasi->whereBetween('created_at', [$startDate, $endDate]);
+                $customDateMingguan = date('Y-m-d', strtotime($customDateMingguan));
+                $presentasi->whereBetween('created_at', [
+                    Carbon::parse($customDateMingguan)->startOfWeek(),
+                    Carbon::parse($customDateMingguan)->endOfWeek(),
+                ]);
                 break;
 
             case 'Bulanan':
