@@ -225,7 +225,7 @@
                                         <div style="width:100%" class="card card-status-tugas">
                                             <div class="card-body p-2 py-2 row justify-content-between">
                                                 <span class="col-8">Tugas baru</span>
-                                                <div class="col-4 d-flex justify-content-end cursor-pointer">
+                                                {{-- <div class="col-4 d-flex justify-content-end cursor-pointer">
                                                     <svg onclick="showForm('tambahTugas')"
                                                         xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                         viewBox="0 0 1024 1024">
@@ -236,9 +236,9 @@
                                                         <path fill="currentColor"
                                                             d="M512 896a384 384 0 1 0 0-768a384 384 0 0 0 0 768zm0 64a448 448 0 1 1 0-896a448 448 0 0 1 0 896z" />
                                                     </svg>
-                                                </div>
+                                                </div> --}}
                                             </div>
-                                            <div class="row p-3 d-none" id="tambahTugas">
+                                            {{-- <div class="row p-3 d-none" id="tambahTugas">
                                                 <div class="col-12">
                                                     <form id="formTambahTugas" method="post">
                                                         @csrf
@@ -256,7 +256,7 @@
                                                         </div>
                                                     </form>
                                                 </div>
-                                            </div>
+                                            </div> --}}
 
                                         </div>
                                         <div class="col-12 d-flex justify-content-center">
