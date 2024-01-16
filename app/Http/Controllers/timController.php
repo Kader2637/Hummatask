@@ -209,9 +209,7 @@ class timController extends Controller
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
         $tim = Tim::where('code', $code)->firstOrFail();
         $tim_id = $tim->id;
-        $cekJadwalRabu = null;
-        $cekJadwalKamis = null;
-        $cekJadwalJumat = null;
+        
         $allSessions = LimitPresentasiDevisi::query()
             ->whereRelation('presentasiDivisi', 'divisi_id', '=', Auth::user()->divisi_id)
             ->with('presentasiDivisi')
