@@ -557,19 +557,19 @@
 
 @section('script')
     <script>
-        $(document).ready(function() {
-            $('.confirm-btn').on('click', function() {
-                let url = $(this).data('url');
-                let nama = $(this).data('nama-tim');
-                let modal = $('#konfirmasi-presentasi');
+        $('.confirm-btn').on('click', function() {
+            let url = $(this).data('url');
+            let nama = $(this).data('nama-tim');
+            let modal = $('#konfirmasi-presentasi');
 
-                modal.find('#selesaiPresentasiForm').attr('action', url);
-                modal.find('#nama-tim').text('Nama tim : ' + nama);
-                modal.modal('show');
-            });
+            let form = $('#selesaiPresentasiForm');
+            form.attr('action', url);
+
+            modal.find('#nama-tim').text('Nama tim : ' + nama);
+            modal.modal('show');
         });
 
-        $('.confirm-btn-up').on('click', function(){
+        $('.confirm-btn-up').on('click', function() {
             Swal.fire({
                 title: 'Konfirmasi Pengajuan',
                 text: 'Setelah dikonfirmasi, status akan menjadi "sedang presentasi"',
@@ -584,6 +584,5 @@
                 }
             });
         });
-
     </script>
 @endsection
