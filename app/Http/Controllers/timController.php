@@ -275,8 +275,15 @@ class timController extends Controller
             $presentID = $present->id;
         }
         $latestPresentasi = $tim->presentasi()->latest()->first();
-        $presentID = $latestPresentasi->id;
 
+        if ($latestPresentasi) {
+            $presentID = $latestPresentasi->id;
+        } else {
+            $presentID = null;
+        }
+
+
+        
         $hasProjectRelation = $tim->project()->exists();
         $jadwal = [];
         foreach ($presentasi as $data) {
