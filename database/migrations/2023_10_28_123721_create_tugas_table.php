@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('tim_id')->constrained();
             $table->string('code');
             $table->string('nama');
-            $table->foreignId('catatan_detail_id')->constrained('catatan_details')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('catatan_detail_id')->nullable()->constrained('catatan_details')->cascadeOnDelete()->cascadeOnUpdate();
             $table->date('deadline')->nullable();
             $table->enum('status_tugas',['tugas_baru','dikerjakan','revisi','selesai'])->default('tugas_baru');
             $table->enum('prioritas',['mendesak','penting','biasa','tambahan','opsional'])->default('biasa');

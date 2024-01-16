@@ -120,14 +120,13 @@ class TugasController extends Controller
         $tugas->tim_id = $tim->id;
         $tugas->code = Str::uuid();
         $tugas->nama = $request->nama;
-        $tugas->catatan_detail_id = $request->catatan_detail_id;
+        $tugas->catatan_detail_id = null;
         $tugas->save();
 
         Aktifitas::create([
             'tugas_id' => $tugas->id,
             'pelaku_id' => Auth::user()->id,
             'judul' => $tugas->nama,
-            'catatan_detail_id' => $tugas->catatan_detail_id, 
             'status_tugas' => 'tugas_baru',
             'prioritas' => 'biasa',
             'status' => 'create',
