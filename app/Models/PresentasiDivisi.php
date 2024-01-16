@@ -34,4 +34,9 @@ class PresentasiDivisi extends Model
     {
         return $this->hasMany(LimitPresentasiDevisi::class, 'presentasi_divisi_id');
     }
+
+    public function presentasi(): HasMany
+    {
+        return $this->hasMany(presentasi::class, 'presentasi_divisi_id');
+    }
 }

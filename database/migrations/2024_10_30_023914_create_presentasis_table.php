@@ -24,6 +24,7 @@ return new class extends Migration
             $table->text('feedback')->nullable();
             $table->enum('status_revisi', ['selesai', 'tidak_selesai'])->nullable();
             $table->foreignId('tim_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('presentasi_divisi_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('history_presentasi_id')->references('id')->on('history_presentasis')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('user_approval_id')->nullable()->references('id')->on('users');
             $table->string('hari');

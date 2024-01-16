@@ -107,4 +107,9 @@ class Presentasi extends Model
     {
         return $this->limit_presentasi_devisi_id;
     }
+
+    public function presentasiDivisiID(): BelongsTo
+    {
+        return $this->belongsTo(PresentasiDivisi::class, 'presentasi_divisi_id');
+    }
 }

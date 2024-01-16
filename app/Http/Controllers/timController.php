@@ -226,7 +226,7 @@ class timController extends Controller
                 return $session->presentasiDivisi->day === DayEnum::TUESDAY->value;
             })
             ->sortBy('mulai');
-
+            
         $sesi_rabu = $allSessions
             ->filter(function ($session) {
                 return $session->presentasiDivisi->day === DayEnum::WEDNESDAY->value;

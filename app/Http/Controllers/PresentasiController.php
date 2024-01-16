@@ -137,6 +137,7 @@ class PresentasiController extends Controller
         $presentasi->hari = $day;
         $presentasi->mulai = $jadwalQuery->mulai;
         $presentasi->akhir = $jadwalQuery->akhir;
+        $presentasi->presentasi_divisi_id = $jadwalQuery->presentasi_divisi_id;
         $history = HistoryPresentasi::latest()->first();
 
         if ($history === null) {

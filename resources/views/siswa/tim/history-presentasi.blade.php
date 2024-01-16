@@ -249,8 +249,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="senin" role="tabpanel">
                                         <form id="formAjukanPresentasi_1"
-                                            @if ($validasiPersetujuan !== null) 
-                                            action="{{ route('update-presentasi', $presentID) }}" method="post" 
+                                            @if ($validasiPersetujuan !== null) action="{{ route('update-presentasi', $presentID) }}" method="post" 
                                             @else
                                             action="{{ route('ajukan-presentasi', $tim->code) }}" method="post" @endif>
                                             @csrf
@@ -258,17 +257,18 @@
                                                 @method('PUT')
                                             @endif
                                             @if ($validasiPersetujuan !== null)
-                                            <label for="judul" class="form-label" disabled>Judul Presentasi</label>
-                                            <input type="text" name="judul" class="form-control" disabled>
+                                                <label for="judul" class="form-label" disabled>Judul Presentasi</label>
+                                                <input type="text" name="judul" class="form-control" disabled>
                                             @else
-                                            <label for="judul" class="form-label">Judul Presentasi</label>
-                                            <input type="text" name="judul" class="form-control">
+                                                <label for="judul" class="form-label">Judul Presentasi</label>
+                                                <input type="text" name="judul" class="form-control">
                                             @endif
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_senin as $data)
                                                     @php
-                                                        $cekJadwal = \App\Models\Presentasi::where('jadwal_ke', $data->jadwal_ke)
+                                                        $cekJadwal = \App\Models\Presentasi::where('presentasi_divisi_id', $data->presentasi_divisi_id)
+                                                            ->where('jadwal_ke', $data->jadwal_ke)
                                                             ->where('divisi_id', auth()->user()->divisi_id)
                                                             ->first();
                                                     @endphp
@@ -302,29 +302,30 @@
                                                     </div>
                                                 @endforelse
                                                 @if ($validasiPersetujuan !== null)
-                                                <label for="deskripsi" class="form-label" disabled>Deskripsi (Opsional)</label>
-                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10" disabled></textarea>
+                                                    <label for="deskripsi" class="form-label" disabled>Deskripsi
+                                                        (Opsional)</label>
+                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10" disabled></textarea>
                                                 @else
-                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
-                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                    <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                                                 @endif
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
                                                     @if ($validasiPersetujuan !== null)
-                                                    <div class="">
-                                                        <button type="button" data-bs-dismiss="modal"
-                                                        class="btn btn-primary bg-danger waves-effect">
-                                                        Anda hanya dapat merubah Jadwal Presentasi!
-                                                        </button>
-                                                    </div>
+                                                        <div class="">
+                                                            <button type="button" data-bs-dismiss="modal"
+                                                                class="btn btn-primary bg-danger waves-effect">
+                                                                Anda hanya dapat merubah Jadwal Presentasi!
+                                                            </button>
+                                                        </div>
                                                     @elseif ($validasiPersetujuan === null)
-                                                    <div class="">
-                                                        <button data-bs-dismiss="modal"
-                                                            class="btn btn-label-secondary waves-effect">
-                                                            Tutup
-                                                        </button>
-                                                    </div>
+                                                        <div class="">
+                                                            <button data-bs-dismiss="modal"
+                                                                class="btn btn-label-secondary waves-effect">
+                                                                Tutup
+                                                            </button>
+                                                        </div>
                                                     @endif
                                                     <div class="">
                                                         @if ($validasiPersetujuan !== null)
@@ -351,7 +352,8 @@
                                             <div class="row">
                                                 @forelse ($sesi_selasa as $data)
                                                     @php
-                                                        $cekJadwal = \App\Models\Presentasi::where('jadwal_ke', $data->jadwal_ke)
+                                                        $cekJadwal = \App\Models\Presentasi::where('presentasi_divisi_id', $data->presentasi_divisi_id)
+                                                            ->where('jadwal_ke', $data->jadwal_ke)
                                                             ->where('divisi_id', auth()->user()->divisi_id)
                                                             ->first();
                                                     @endphp
@@ -413,7 +415,8 @@
                                             <div class="row">
                                                 @forelse ($sesi_rabu as $data)
                                                     @php
-                                                        $cekJadwal = \App\Models\Presentasi::where('jadwal_ke', $data->jadwal_ke)
+                                                        $cekJadwal = \App\Models\Presentasi::where('presentasi_divisi_id', $data->presentasi_divisi_id)
+                                                            ->where('jadwal_ke', $data->jadwal_ke)
                                                             ->where('divisi_id', auth()->user()->divisi_id)
                                                             ->first();
                                                     @endphp
@@ -475,7 +478,8 @@
                                             <div class="row">
                                                 @forelse ($sesi_kamis as $data)
                                                     @php
-                                                        $cekJadwal = \App\Models\Presentasi::where('jadwal_ke', $data->jadwal_ke)
+                                                        $cekJadwal = \App\Models\Presentasi::where('presentasi_divisi_id', $data->presentasi_divisi_id)
+                                                            ->where('jadwal_ke', $data->jadwal_ke)
                                                             ->where('divisi_id', auth()->user()->divisi_id)
                                                             ->first();
                                                     @endphp
@@ -537,7 +541,8 @@
                                             <div class="row">
                                                 @forelse ($sesi_jumat as $data)
                                                     @php
-                                                        $cekJadwal = \App\Models\Presentasi::where('jadwal_ke', $data->jadwal_ke)
+                                                        $cekJadwal = \App\Models\Presentasi::where('presentasi_divisi_id', $data->presentasi_divisi_id)
+                                                            ->where('jadwal_ke', $data->jadwal_ke)
                                                             ->where('divisi_id', auth()->user()->divisi_id)
                                                             ->first();
                                                     @endphp
