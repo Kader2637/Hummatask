@@ -251,12 +251,6 @@ class timController extends Controller
             ->get();
 
             $validasiPersetujuan = $tim->presentasi->sortByDesc('created_at')->first();
-            // if ($validasiPersetujuan !== null) {
-            //     if ($validasiPersetujuan->status_presentasi === 'menunggu') {
-            //         return back()->with('error', 'Tim anda sudah terjadwal presentasi');
-            //     }
-            // }
-        // dd($sesi_senin->first()->jadwal_ke === $cek_present->jadwal_ke);
             
         $project = $tim->project->first();
         if ($project->deskripsi === null) {
