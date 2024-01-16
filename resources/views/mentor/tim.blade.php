@@ -7,47 +7,50 @@
 @section('content')
     <div class="container-fluid mt-5 justify-content-center">
         <div class="row">
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between align-items-center mb-3">
                 <div class="card-header fs-4">
-                    Daftar Tim
+                    <p class="mb-0">Daftar Tim</p>
                 </div>
                 <div id="buatTim" class="d-flex align-items-end">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalBuatTim">Buat
-                        Tim</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalBuatTim">BuatTim</button>
                 </div>
             </div>
-            <div class="d-flex justify-content-between mb-4 gap-2">
-                <div class="filter col-lg-3 col-md-3 col-sm-3">
-                    <label for="select2Basic" class="form-label">Filter</label>
-                    <form id="filterForm" action="{{ route('tim') }}" method="get">
-                        <select id="select2Basic" name="status_tim" class="form-select select2" data-allow-clear="true"
-                            onchange="filterProjek(this)">
-                            <option value="" disabled selected>Pilih Data</option>
-                            <option value="all" {{ request('status_tim') == 'all' ? 'selected' : '' }}>Semua</option>
-                            <option value="solo" {{ request('status_tim') == 'solo' ? 'selected' : '' }}>Solo Project
-                            </option>
-                            <option value="pre_mini" {{ request('status_tim') == 'pre_mini' ? 'selected' : '' }}>Pre-mini
-                                Project</option>
-                            <option value="mini" {{ request('status_tim') == 'mini' ? 'selected' : '' }}>Mini Project
-                            </option>
-                            <option value="big" {{ request('status_tim') == 'big' ? 'selected' : '' }}>Big Project
-                            </option>
-                        </select>
-                        <input type="hidden" name="nama_tim" value="{{ request('nama_tim') }}">
-                    </form>
-
-                </div>
-                <div class="filter col-lg-3 col-md-3 col-sm-3">
-                    <label for="select2Basic" class="form-label">Cari</label>
-                    <form action="{{ route('tim') }}" method="get">
-                        <div class="flex-grow-1 input-group input-group-merge">
-                            <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-search"></i></span>
-                            <input name="nama_tim" type="text" class="form-control chat-search-input"
-                                placeholder="Cari nama tim..." aria-label="Cari nama tim..."
-                                aria-describedby="basic-addon-search31" value="{{ request('nama_tim') }}">
+            <div class="col-md-12">
+                <div class="card mb-4 px-3 py-3">
+                    <div class="d-flex justify-content-between gap-2">
+                        <div class="filter col-lg-3 col-md-3 col-sm-3">
+                            <label for="select2Basic" class="form-label">Filter</label>
+                            <form id="filterForm" action="{{ route('tim') }}" method="get">
+                                <select id="select2Basic" name="status_tim" class="form-select select2" data-allow-clear="true"
+                                    onchange="filterProjek(this)">
+                                    <option value="" disabled selected>Pilih Data</option>
+                                    <option value="all" {{ request('status_tim') == 'all' ? 'selected' : '' }}>Semua</option>
+                                    <option value="solo" {{ request('status_tim') == 'solo' ? 'selected' : '' }}>Solo Project
+                                    </option>
+                                    <option value="pre_mini" {{ request('status_tim') == 'pre_mini' ? 'selected' : '' }}>Pre-mini
+                                        Project</option>
+                                    <option value="mini" {{ request('status_tim') == 'mini' ? 'selected' : '' }}>Mini Project
+                                    </option>
+                                    <option value="big" {{ request('status_tim') == 'big' ? 'selected' : '' }}>Big Project
+                                    </option>
+                                </select>
+                                <input type="hidden" name="nama_tim" value="{{ request('nama_tim') }}">
+                            </form>
+        
                         </div>
-                        <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
-                    </form>
+                        <div class="filter col-lg-3 col-md-3 col-sm-3">
+                            <label for="select2Basic" class="form-label">Cari</label>
+                            <form action="{{ route('tim') }}" method="get">
+                                <div class="flex-grow-1 input-group input-group-merge">
+                                    <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-search"></i></span>
+                                    <input name="nama_tim" type="text" class="form-control chat-search-input"
+                                        placeholder="Cari nama tim..." aria-label="Cari nama tim..."
+                                        aria-describedby="basic-addon-search31" value="{{ request('nama_tim') }}">
+                                </div>
+                                <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
             @forelse ($tims as $tim)

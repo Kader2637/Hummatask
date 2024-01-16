@@ -315,7 +315,7 @@
                       $('.form-add-edit').append(
                         `<div class="form-catatan-repeater row mb-3">
                           <div class="col-md-10 col-10">
-                                <label for="catatan" class="mb-2 form-label">Catatan {{ ++$i }}</label>
+                                <label for="catatan" class="mb-2 form-label">Catatan Baru</label>
                                 <input name="catatan_text[]" id="catatan-input-edit" type="text" class="form-control">
                                 <input type="hidden" name="id[]" value="0">
                               </div>

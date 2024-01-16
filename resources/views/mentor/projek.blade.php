@@ -14,41 +14,45 @@
 
 @section('content')
   <div class="container-fluid mt-5 justify-content-center">
-    <div class="card-header fs-4">Daftar Project</div>
+    <div class="card-header fs-4 mb-3">Daftar Project</div>
     <div class="col-12">
       <div class="row">
-        <div class="d-flex justify-content-between mb-4 gap-2">
-          <div class="filter col-lg-3 col-md-3 col-sm-3">
-            <label for="select2Basic" class="form-label">Filter</label>
-            <form id="filterForm" action="{{ route('projek') }}" method="get">
-              <select id="select2Basic" name="status_tim" class="form-select select2" data-allow-clear="true"
-                onchange="filterProjek(this)">
-                <option value="" disabled selected>Pilih Data</option>
-                <option value="all" {{ request('status_tim') == 'all' ? 'selected' : '' }}>Semua</option>
-                <option value="solo" {{ request('status_tim') == 'solo' ? 'selected' : '' }}>Solo Project
-                </option>
-                <option value="pre_mini" {{ request('status_tim') == 'pre_mini' ? 'selected' : '' }}>
-                  Pre-mini
-                  Project</option>
-                <option value="mini" {{ request('status_tim') == 'mini' ? 'selected' : '' }}>Mini Project
-                </option>
-                <option value="big" {{ request('status_tim') == 'big' ? 'selected' : '' }}>Big Project
-                </option>
-              </select>
-              <input type="hidden" name="nama_tim" value="{{ request('nama_tim') }}">
-            </form>
-          </div>
-          <div class="filter col-lg-3 col-md-3 col-sm-3">
-            <label for="select2Basic" class="form-label">Cari</label>
-            <form action="{{ route('projek') }}" method="get">
-              <div class="flex-grow-1 input-group input-group-merge">
-                <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-search"></i></span>
-                <input name="nama_tim" type="text" class="form-control chat-search-input"
-                  placeholder="Cari nama tim..." aria-label="Cari nama tim..." aria-describedby="basic-addon-search31"
-                  value="{{ request('nama_tim') }}">
+        <div class="col-md-12">
+          <div class="card mb-4 py-3 px-3">
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="filter col-lg-3 col-md-3 col-sm-3">
+                <label for="select2Basic" class="form-label">Filter</label>
+                <form id="filterForm" action="{{ route('projek') }}" method="get">
+                  <select id="select2Basic" name="status_tim" class="form-select select2" data-allow-clear="true"
+                    onchange="filterProjek(this)">
+                    <option value="" disabled selected>Pilih Data</option>
+                    <option value="all" {{ request('status_tim') == 'all' ? 'selected' : '' }}>Semua</option>
+                    <option value="solo" {{ request('status_tim') == 'solo' ? 'selected' : '' }}>Solo Project
+                    </option>
+                    <option value="pre_mini" {{ request('status_tim') == 'pre_mini' ? 'selected' : '' }}>
+                      Pre-mini
+                      Project</option>
+                    <option value="mini" {{ request('status_tim') == 'mini' ? 'selected' : '' }}>Mini Project
+                    </option>
+                    <option value="big" {{ request('status_tim') == 'big' ? 'selected' : '' }}>Big Project
+                    </option>
+                  </select>
+                  <input type="hidden" name="nama_tim" value="{{ request('nama_tim') }}">
+                </form>
               </div>
-              <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
-            </form>
+              <div class="filter col-lg-3 col-md-3 col-sm-3">
+                <label for="select2Basic" class="form-label">Cari</label>
+                <form action="{{ route('projek') }}" method="get">
+                  <div class="flex-grow-1 input-group input-group-merge">
+                    <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-search"></i></span>
+                    <input name="nama_tim" type="text" class="form-control chat-search-input"
+                      placeholder="Cari nama tim..." aria-label="Cari nama tim..." aria-describedby="basic-addon-search31"
+                      value="{{ request('nama_tim') }}">
+                  </div>
+                  <input type="hidden" name="status_tim" value="{{ request('status_tim') }}">
+                </form>
+              </div>
+            </div>
           </div>
         </div>
         @forelse ($projects as $item)
@@ -195,7 +199,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-         
+
         </div>
       </div>
     </div>
@@ -368,9 +372,9 @@
             }
           });
 
-                    if (values.slice(1).every(value => value === 0)) {
-                        chartStatus.style.display = 'block';
-                        doughnutChart.style.display = 'none';
+          if (values.slice(1).every(value => value === 0)) {
+            chartStatus.style.display = 'block';
+            doughnutChart.style.display = 'none';
 
             const img = document.createElement('img');
             img.src = '{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}';
