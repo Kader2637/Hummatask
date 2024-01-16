@@ -54,7 +54,8 @@ class DetailPresentasiController extends Controller
             break;
         }
 
-        $presentasiFilter = $presentasi->with('tim', 'divisi', 'tim.user')->get();
+        $presentasiFilter = $presentasi->with('tim', 'divisi', 'tim.user')
+        ->get();
 
         return response()->json([
             'presentasi' => $presentasiFilter,

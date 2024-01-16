@@ -223,7 +223,11 @@ class timController extends Controller
             $cekJadwalSenin = null;
             foreach ($sesi_senin as $senin) {
                 $cekJadwalSenin = Presentasi::where('presentasi_divisi_id', $senin->presentasi_divisi_id)
+                    ->where('tim_id', auth()->user()->anggota->tim_id)
                     ->where('divisi_id', auth()->user()->divisi_id)
+                    ->whereHas('tim.anggota', function ($query) {
+                        $query->where('status', 'active');
+                    })
                     ->first();
             }
         
@@ -235,6 +239,7 @@ class timController extends Controller
             $cekJadwalSelasa = null;
             foreach ($sesi_selasa as $selasa) {
                 $cekJadwalSelasa = Presentasi::where('presentasi_divisi_id', $selasa->presentasi_divisi_id)
+                    ->where('tim_id', auth()->user()->anggota->tim_id)
                     ->where('divisi_id', auth()->user()->divisi_id)
                     ->first();
             }
@@ -301,17 +306,13 @@ class timController extends Controller
         $project = $tim->project->first();
 
         $presentasiID = Presentasi::all();
-        foreach ($presentasiID as $present) {
-            $presentID = $present->id;
-        }
-        $latestPresentasi = $tim->presentasi()->latest()->first();
+        $latestPresentasi = $tim->latest()->first();
 
         if ($latestPresentasi) {
             $presentID = $latestPresentasi->id;
         } else {
             $presentID = null;
         }
-
         
         $hasProjectRelation = $tim->project()->exists();
         $jadwal = [];

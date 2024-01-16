@@ -275,7 +275,7 @@
 
                                                     <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                         <label
-                                                            class="card {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'bg-label-primary' : '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}">
+                                                            class="card card-jadwal {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'bg-label-primary' : '' }}">
                                                             <input name="plan" class="radio" type="radio"
                                                                 value="{{ $data->id }}"
                                                                 {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'checked' : '' }}
@@ -328,15 +328,9 @@
                                                         </div>
                                                     @endif
                                                     <div class="">
-                                                        @if ($cekJadwalSenin !== null)
-                                                            <button type="submit" class="btn btn-primary">
-                                                                Update
-                                                            </button>
-                                                        @elseif ($cekJadwalSenin === null)
                                                             <button type="submit" class="btn btn-primary">
                                                                 Simpan
                                                             </button>
-                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -365,7 +359,9 @@
 
                                                     <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                         <label
-                                                            class="card {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'bg-label-primary' : '' }}">
+                                                            class="card card-jadwal {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'bg-label-primary' : '' }}"
+                                                            data-jadwal-ke="{{ $cekJadwalSelasa ? $cekJadwalSelasa->jadwal_ke : '' }}"
+                                                            id="jadwalCard{{ $data->id }}">
                                                             <input name="plan" class="radio" type="radio"
                                                                 value="{{ $data->id }}"
                                                                 {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'checked' : '' }}
@@ -412,15 +408,9 @@
                                                         </div>
                                                     @endif
                                                     <div class="">
-                                                        @if ($cekJadwalSelasa !== null)
-                                                            <button type="submit" class="btn btn-primary">
-                                                                Update
-                                                            </button>
-                                                        @elseif ($cekJadwalSelasa === null)
                                                             <button type="submit" class="btn btn-primary">
                                                                 Simpan
                                                             </button>
-                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -449,7 +439,7 @@
 
                                                     <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                         <label
-                                                            class="card {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'bg-label-primary' : '' }}">
+                                                            class="card card-jadwal {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'bg-label-primary' : '' }}">
                                                             <input name="plan" class="radio" type="radio"
                                                                 value="{{ $data->id }}"
                                                                 {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'checked' : '' }}
@@ -533,7 +523,7 @@
 
                                                     <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                         <label
-                                                            class="card {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'bg-label-primary' : '' }}">
+                                                            class="card card-jadwal {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'bg-label-primary' : '' }}">
                                                             <input name="plan" class="radio" type="radio"
                                                                 value="{{ $data->id }}"
                                                                 {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'checked' : '' }}
@@ -617,7 +607,7 @@
 
                                                     <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                         <label
-                                                            class="card {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'bg-label-primary' : '' }}">
+                                                            class="card card-jadwal {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'bg-label-primary' : '' }}">
                                                             <input name="plan" class="radio" type="radio"
                                                                 value="{{ $data->id }}"
                                                                 {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota->tim_id ? 'checked' : '' }}
@@ -865,6 +855,48 @@
                         "sLast": "Terakhir"
                     }
                 }
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card-jadwal');
+
+            // Simpan status checked awal untuk setiap card
+            const initialCheckedStatus = {};
+            cards.forEach(card => {
+                const radio = card.querySelector('.radio');
+                initialCheckedStatus[card.id] = radio.checked;
+            });
+
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const radio = this.querySelector('.radio');
+                    const jadwalId = radio.value;
+                    const isDisabled = radio.disabled;
+                    const isJadwalSelected = {{ $cekJadwalSelasa ? 'true' : 'false' }};
+                    const cardId = this.id;
+
+                    if (!isDisabled && isJadwalSelected) {
+                        Swal.fire({
+                            title: 'Konfirmasi',
+                            text: 'Apakah Anda yakin ingin mengganti jadwal?',
+                            icon: 'info',
+                            showCancelButton: true,
+                            confirmButtonText: 'Ya, pilih jadwal',
+                            cancelButtonText: 'Batal',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                console.log('User memilih jadwal dengan ID:', jadwalId);
+                                radio.checked = true;
+                            } else if (result.isDismissed) {
+                                radio.checked = initialCheckedStatus[cardId];
+                                console.log(radio.checked);
+                            }
+                        });
+                    }
+                });
             });
         });
     </script>

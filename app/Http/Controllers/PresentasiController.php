@@ -152,9 +152,9 @@ class PresentasiController extends Controller
         }
         $cek_present = Presentasi::query()
             ->whereDate('jadwal', now())
-            ->where('divisi_id', auth()->user()->divisi_id)
+            ->where('presentasi_divisi_id', $jadwalQuery->presentasi_divisi_id)
             ->get();
-
+            
         foreach ($cek_present as $present) {
             if ($present->jadwal_ke === $jadwalQuery->jadwal_ke) {
                 return redirect()->back()->with('error', 'Jadwal sudah dipilih tim lain');
