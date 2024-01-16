@@ -438,7 +438,7 @@ class TugasController extends Controller
                 'text' => 'required|string|max:244',
             ],
             [
-                'text.required' => 'Komentar wajin diisi',
+                'text.required' => 'Komentar wajib diisi',
                 'text.string' => 'Komentar harus berupa string',
                 'text.max' => 'Komentar tidak boleh lebih dari 244 karakter',
             ],
