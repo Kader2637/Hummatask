@@ -30,11 +30,10 @@ class DetailPresentasiController extends Controller
 
         switch ($filterType) {
             case 'Mingguan':
-                $customDateMingguan = date('Y-m-d', strtotime($customDateMingguan));
-                $presentasi->whereBetween('created_at', [
-                    Carbon::parse($customDateMingguan)->startOfWeek(),
-                    Carbon::parse($customDateMingguan)->endOfWeek(),
-                ]);
+                $startOfWeek = Carbon::parse($customDateMingguan)->startOfWeek();
+                $endOfWeek = Carbon::parse($customDateMingguan)->endOfWeek();
+
+                $presentasi->whereBetween('created_at', [$startOfWeek, $endOfWeek]);
                 break;
 
             case 'Bulanan':
@@ -46,6 +45,7 @@ class DetailPresentasiController extends Controller
                 break;
 
             default:
+            break;
         }
 
         $presentasiFilter = $presentasi->with('tim', 'divisi', 'tim.user')->get();
