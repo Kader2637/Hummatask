@@ -27,7 +27,6 @@ class DetailPresentasiController extends Controller
 
     $filterType = $request->input('filter_type');
     $customDate = $request->input('Harian');
-        dd($customDate);
 
     if ($filterType === 'Mingguan') {
         
