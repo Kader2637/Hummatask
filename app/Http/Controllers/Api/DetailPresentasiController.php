@@ -30,6 +30,7 @@ class DetailPresentasiController extends Controller
 
         switch ($filterType) {
             case 'Mingguan':
+                $customDateMingguan = str_replace("W", "-", $customDateMingguan);
                 $startOfWeek = Carbon::parse($customDateMingguan)->startOfWeek();
                 $endOfWeek = Carbon::parse($customDateMingguan)->endOfWeek();
 
