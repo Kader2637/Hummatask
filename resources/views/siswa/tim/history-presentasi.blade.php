@@ -311,14 +311,8 @@
                                                             class="img-fluid">
                                                     </div>
                                                 @endforelse
-                                                @if ($cekJadwalSenin !== null)
-                                                    <label for="deskripsi" class="form-label" disabled>Deskripsi
-                                                        (Opsional)</label>
-                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10" disabled></textarea>
-                                                @else
                                                     <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
                                                     <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
-                                                @endif
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
