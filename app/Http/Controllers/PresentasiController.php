@@ -338,7 +338,7 @@ class PresentasiController extends Controller
 
     protected function konfirmasiPresentasi(Request $request, $code)
     {
-        if ($request->status_revisi === null) {
+        if ($request->status_revisi == null) {
             return back()->with('warning', 'Status revisi tidak boleh kosong');
         }
 
@@ -346,7 +346,7 @@ class PresentasiController extends Controller
             return back()->with('warning', 'Feedback kepada user tidak boleh lebih dari 300 karakter');
         }
 
-        if ($request->status_presentasi === null) {
+        if ($request->status_presentasi == null) {
             return back()->with('warning', 'Status presentasi harus di isi');
         }
 
