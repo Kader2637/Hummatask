@@ -223,7 +223,7 @@ class timController extends Controller
             $cekJadwalSenin = null;
             foreach ($sesi_senin as $senin) {
                 $cekJadwalSenin = Presentasi::where('presentasi_divisi_id', $senin->presentasi_divisi_id)
-                    ->where('tim_id', auth()->user()->anggota->tim_id)
+                    ->where('tim_id', Auth::user()->anggota()->latest()->first()->tim_id)
                     ->where('divisi_id', auth()->user()->divisi_id)
                     ->whereHas('tim.anggota', function ($query) {
                         $query->where('status', 'active');
@@ -239,7 +239,7 @@ class timController extends Controller
             $cekJadwalSelasa = null;
             foreach ($sesi_selasa as $selasa) {
                 $cekJadwalSelasa = Presentasi::where('presentasi_divisi_id', $selasa->presentasi_divisi_id)
-                    ->where('tim_id', auth()->user()->anggota->tim_id)
+                    ->where('tim_id', Auth::user()->anggota()->latest()->first()->tim_id)
                     ->where('divisi_id', auth()->user()->divisi_id)
                     ->whereHas('tim.anggota', function ($query) {
                         $query->where('status', 'active');
@@ -256,7 +256,7 @@ class timController extends Controller
             foreach ($sesi_rabu as $rabu) {
                 $cekJadwalRabu = Presentasi::where('presentasi_divisi_id', $rabu->presentasi_divisi_id)
                     ->where('divisi_id', auth()->user()->divisi_id)
-                    ->where('tim_id', auth()->user()->anggota->tim_id)
+                    ->where('tim_id', Auth::user()->anggota()->latest()->first()->tim_id)
                     ->whereHas('tim.anggota', function ($query) {
                         $query->where('status', 'active');
                     })
@@ -272,7 +272,7 @@ class timController extends Controller
             foreach ($sesi_kamis as $kamis) {
                 $cekJadwalKamis = Presentasi::where('presentasi_divisi_id', $kamis->presentasi_divisi_id)
                     ->where('divisi_id', auth()->user()->divisi_id)
-                    ->where('tim_id', auth()->user()->anggota->tim_id)
+                    ->where('tim_id', Auth::user()->anggota()->latest()->first()->tim_id)
                     ->whereHas('tim.anggota', function ($query) {
                         $query->where('status', 'active');
                     })
@@ -288,7 +288,7 @@ class timController extends Controller
             foreach ($sesi_jumat as $jumat) {
                 $cekJadwalJumat = Presentasi::where('presentasi_divisi_id', $jumat->presentasi_divisi_id)
                     ->where('divisi_id', auth()->user()->divisi_id)
-                    ->where('tim_id', auth()->user()->anggota->tim_id)
+                    ->where('tim_id', Auth::user()->anggota()->latest()->first()->tim_id)
                     ->whereHas('tim.anggota', function ($query) {
                         $query->where('status', 'active');
                     })
@@ -321,7 +321,7 @@ class timController extends Controller
         $project = $tim->project->first();
 
         $presentasiID = Presentasi::all();
-        $latestPresentasi = $tim->latest()->first();
+        $latestPresentasi = $tim->presentasi()->latest()->first();
 
         if ($latestPresentasi) {
             $presentID = $latestPresentasi->id;
