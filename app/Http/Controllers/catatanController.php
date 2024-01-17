@@ -128,8 +128,6 @@ class catatanController extends Controller
                             'prioritas' => 'biasa'
                         ]);
                     }
-
-
                 } else {
                     $catatanDetail = CatatanDetail::find($id_detail);
                     if ($catatanDetail) {
@@ -173,4 +171,20 @@ class catatanController extends Controller
         }
     }
 
+    protected function deleteInput($id)
+    {
+        try {
+            $catatanDetail = CatatanDetail::find($id);
+
+            if (!$catatanDetail) {
+                return response()->json(['message' => 'Catatan detail not found.'], 404);
+            }
+
+            $catatanDetail->delete();
+
+            return response()->json(['message' => 'Catatan detail deleted successfully.'], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Error deleting catatan detail.'], 500);
+        }
+    }
 }

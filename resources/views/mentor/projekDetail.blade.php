@@ -271,7 +271,8 @@
                                   <input type="hidden" name="id[]" value="{{ $data->id }}">
                                 </div>
                                 <div class="col-1 col-md-1 d-flex align-items-end">
-                                  <button type="button" class="btn btn-icon btn-danger button-delete-repeater">
+                                  <button data-id="{{ $data->id }}" type="submit"
+                                    class="btn btn-icon btn-danger btn-delete-catatan">
                                     <i class="ti ti-trash text-white"></i>
                                   </button>
                                 </div>
@@ -795,6 +796,43 @@
             'Catatan berhasil dihapus.',
             'success'
           );
+        }
+      });
+    });
+
+    $(document).on('click', '.btn-delete-catatan', function(event) {
+      event.preventDefault();
+      var catatanDetailId = $(this).data('id');
+      var csrfToken = $('meta[name="csrf-token"]').attr('content');
+      var $formCatatanRepeater = $(this).parents('.form-add');
+
+      swal.fire({
+        title: 'Konfirmasi',
+        text: 'Apakah Anda yakin ingin menghapus baris catatan ini?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, hapus',
+        cancelButtonText: 'Batal'
+      }).then(function(result) {
+        if (result.isConfirmed) {
+          $.ajax({
+            url: '/mentor/catatan/delete/mentor/' + catatanDetailId,
+            type: 'DELETE',
+            headers: {
+              'X-CSRF-TOKEN': csrfToken
+            },
+            success: function(response) {
+              $formCatatanRepeater.remove();
+              swal.fire(
+                'Terhapus!',
+                'Catatan berhasil dihapus.',
+                'success'
+              );
+            },
+            error: function(error) {
+              console.log(error.responseJSON.message);
+            }
+          });
         }
       });
     });

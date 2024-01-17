@@ -68,6 +68,7 @@
                     Route::post('catatan', [catatanController::class, 'store'])->name('catatan.store');
                     Route::patch('catatan/update/{code}', [catatanController::class, 'update'])->name('catatan.update');
                     Route::delete('catatan/delete/{code}', [catatanController::class, 'delete'])->name('catatan.delete');
+                    Route::delete('catatan/delete/input/{code}', [catatanController::class, 'deleteInput'])->name('catatan.delete.input');
                 });
                 Route::middleware(['auth', 'siswa', 'cekanggota'])->group(function () {
                     Route::get('board/{code}', 'boardPage')->name('tim.board');
@@ -181,6 +182,7 @@
                 Route::delete('galery-delete/{id}', [mentorController::class, 'deleteGalery'])->name('galery.delete');
 
                 Route::put('catatan/update/{code}', [mentorController::class, 'updateCatatanMentor'])->name('mentor.update.catatan');
+                Route::delete('catatan/delete/mentor/{code}', [catatanController::class, 'deleteInput'])->name('catatan.delete.mentor');
 
                 Route::post('pembuatantim', [PengajuanTimController::class, 'pembuatanTimProject'])->name('pembuatan.tim');
                 Route::post('/update-tim/{timId}', [PengajuanTimController::class, 'updateTimProject'])->name('tim.update');

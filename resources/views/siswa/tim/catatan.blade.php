@@ -291,9 +291,9 @@
                                 <input type="hidden" name="id[]" value="{{ $item->id }}">
                               </div>
                               <div class="col-md-1 col-1 d-flex justify-content-center align-items-end">
-                                <div id="button-delete">
-                                  <button
-                                    class="btn btn-icon d-flex justify-content-center align-items-center btn-label-danger mx-2 waves-effect me-3">
+                                <div>
+                                  <button type="submit" data-id="{{ $item->id }}"
+                                    class="btn btn-icon btn-delete-catatan d-flex justify-content-center align-items-center btn-label-danger mx-2 waves-effect me-3">
                                     <i class="ti ti-trash text-danger"></i>
                                   </button>
                                 </div>
@@ -351,6 +351,43 @@
                             'Catatan berhasil dihapus.',
                             'success'
                           );
+                        }
+                      });
+                    });
+
+                    $(document).on('click', '.btn-delete-catatan', function(event) {
+                      event.preventDefault();
+                      var catatanDetailId = $(this).data('id');
+                      var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                      var $formCatatanRepeater = $(this).parents('.form-catatan-repeater');
+
+                      swal.fire({
+                        title: 'Konfirmasi',
+                        text: 'Apakah Anda yakin ingin menghapus baris catatan ini?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Ya, hapus',
+                        cancelButtonText: 'Batal'
+                      }).then(function(result) {
+                        if (result.isConfirmed) {
+                          $.ajax({
+                            url: '/tim/catatan/delete/input/' + catatanDetailId,
+                            type: 'DELETE',
+                            headers: {
+                              'X-CSRF-TOKEN': csrfToken
+                            },
+                            success: function(response) {
+                              $formCatatanRepeater.remove();
+                              swal.fire(
+                                'Terhapus!',
+                                'Catatan berhasil dihapus.',
+                                'success'
+                              );
+                            },
+                            error: function(error) {
+                              console.log(error.responseJSON.message);
+                            }
+                          });
                         }
                       });
                     });
