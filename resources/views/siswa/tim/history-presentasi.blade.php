@@ -849,22 +849,23 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const cards = document.querySelectorAll('.card-jadwal');
-
-            // Simpan status checked awal untuk setiap card
+            const hariSaatIni = new Date().getDay();
+    
             const initialCheckedStatus = {};
             cards.forEach(card => {
                 const radio = card.querySelector('.radio');
                 initialCheckedStatus[card.id] = radio.checked;
             });
-
+    
             cards.forEach(card => {
                 card.addEventListener('click', function() {
                     const radio = this.querySelector('.radio');
                     const jadwalId = radio.value;
                     const isDisabled = radio.disabled;
-                    const isJadwalSelected = {{ $cekJadwalSelasa ? 'true' : 'false' }};
+                    if ()
+                    const isJadwalSelected = {{$cekJadwalSenin ? 'true' : 'false' }};
                     const cardId = this.id;
-
+                    
                     if (!isDisabled && isJadwalSelected) {
                         Swal.fire({
                             title: 'Konfirmasi',
