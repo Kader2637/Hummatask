@@ -1511,8 +1511,8 @@
                         function deleteTugas(codetugas) {
                           const swalWithBootstrapButtons = Swal.mixin({
                             customClass: {
-                              confirmButton: "btn btn-label-primary",
-                              cancelButton: "btn btn-label-danger"
+                              confirmButton: "btn btn-label-danger",
+                              cancelButton: "btn btn-label-primary"
                             },
                             buttonsStyling: false
                           });
