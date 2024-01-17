@@ -184,27 +184,6 @@
 @endsection
 
 @section('content')
-    <div class="modal fade" id="feedbackModal" tabindex="-1" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel3">Feedback</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="text-feedback" class="row mb-3">
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-label-secondary waves-effect"
-                        data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
     <div class="container-fluid d-flex mt-5 justify-content-center">
         <div class="col-12">
             <div class="card">
@@ -217,6 +196,42 @@
                         </span>
                     @endif
                 </div>
+                {{-- modal detail --}}
+                <div class="modal fade" id="detailpresentasi" tabindex="-1" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel3">Feedback</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                    <label for="judulPresentasi">Judul Presentasi:</label>
+                                    <span id="judulPresentasi">Judul Presentasi A</span>
+                                </div>
+                                <div>
+                                    <label for="tanggalPresentasi">Tanggal Presentasi:</label>
+                                    <span id="tanggalPresentasi">01 Januari 2022</span>
+                                </div>
+                                <div>
+                                    <label for="jadwalPresentasi">Jadwal Presentasi:</label>
+                                    <span id="jadwalPresentasi">Jumat, 08:00 - 10:00</span>
+                                </div>
+                                <div>
+                                    <label for="feedback">Feedback:</label>
+                                    <textarea id="feedback" rows="4" readonly></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-label-secondary waves-effect"
+                                    data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- modal detail --}}
+
                 {{-- Modal Ajukan presentasi --}}
                 <input type="hidden" id="activeTab" name="active_tab" value="senin">
                 <div class="modal fade" id="ajukanPresentasi" tabindex="-1" style="display: none;" aria-hidden="true">
@@ -249,7 +264,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="senin" role="tabpanel">
                                         <form id="formAjukanPresentasi_1"
-                                            @if ($cekJadwalSenin !== null) action="{{ route('update-presentasi', $presentID) }}" method="post" 
+                                            @if ($cekJadwalSenin !== null) action="{{ route('update-presentasi', $presentID) }}" method="post"
                                             @else
                                             action="{{ route('ajukan-presentasi', $tim->code) }}" method="post" @endif>
                                             @csrf
@@ -270,11 +285,11 @@
 
                                                     <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                         <label
-                                                            class="card card-jadwal {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota()->latest()->first()->tim_id ? 'bg-label-primary' : '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}">
+                                                            class="card card-jadwal {{ $cekJadwalSenin !== null && $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota()->latest()->first()->tim_id ? 'bg-label-primary' : '' }} {{ $cekJadwalSenin !== null && $cekJadwal ? 'bg-label-secondary' : '' }}">
                                                             <input name="plan" class="radio" type="radio"
                                                                 value="{{ $data->id }}"
-                                                                {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota()->latest()->first()->tim_id ? 'checked' : '' }}
-                                                                {{ $cekJadwal ? 'disabled' : '' }}>
+                                                                {{$cekJadwalSenin !== null && $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota()->latest()->first()->tim_id ? 'checked' : '' }}
+                                                                {{ $cekJadwalSenin !== null && $cekJadwal ? 'disabled' : '' }}>
                                                             <span class="plan-details text-center">
                                                                 <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
                                                                     {{ $data->jadwal_ke }}
@@ -333,7 +348,7 @@
                                     </div>
                                     <div class="tab-pane" id="selasa" role="tabpanel">
                                         <form id="formAjukanPresentasi_2"
-                                            @if ($cekJadwalSelasa !== null) action="{{ route('update-presentasi', $presentID) }}" method="post" 
+                                            @if ($cekJadwalSelasa !== null) action="{{ route('update-presentasi', $presentID) }}" method="post"
                                             @else
                                             action="{{ route('ajukan-presentasi', $tim->code) }}" method="post" @endif>
                                             @csrf
@@ -413,7 +428,7 @@
                                     </div>
                                     <div class="tab-pane" id="rabu" role="tabpanel">
                                         <form id="formAjukanPresentasi_3"
-                                            @if ($cekJadwalRabu !== null) action="{{ route('update-presentasi', $presentID) }}" method="post" 
+                                            @if ($cekJadwalRabu !== null) action="{{ route('update-presentasi', $presentID) }}" method="post"
                                             @else
                                             action="{{ route('ajukan-presentasi', $tim->code) }}" method="post" @endif>
                                             @csrf
@@ -497,7 +512,7 @@
                                     </div>
                                     <div class="tab-pane" id="kamis" role="tabpanel">
                                         <form id="formAjukanPresentasi_4"
-                                            @if ($cekJadwalKamis !== null) action="{{ route('update-presentasi', $presentID) }}" method="post" 
+                                            @if ($cekJadwalKamis !== null) action="{{ route('update-presentasi', $presentID) }}" method="post"
                                             @else
                                             action="{{ route('ajukan-presentasi', $tim->code) }}" method="post" @endif>
                                             @csrf
@@ -580,8 +595,8 @@
                                         </form>
                                     </div>
                                     <div class="tab-pane" id="jumat" role="tabpanel">
-                                        <form id="formAjukanPresentasi_"5
-                                            @if ($cekJadwalJumat !== null) action="{{ route('update-presentasi', $presentID) }}" method="post" 
+                                        <form id="formAjukanPresentasi_5"
+                                            @if ($cekJadwalJumat !== null) action="{{ route('update-presentasi', $presentID) }}" method="post"
                                             @else
                                             action="{{ route('ajukan-presentasi', $tim->code) }}" method="post" @endif>
                                             @csrf
@@ -676,17 +691,18 @@
                         <thead class="bg-primary">
                             <tr>
                                 <th class="text-white">No</th>
+                                <th class="text-white">Judul</th>
                                 <th class="text-white">Tanggal</th>
                                 <th class="text-white">Status Presentasi</th>
                                 <th class="text-white">Jadwal</th>
-                                <th class="text-white">Dikonfirmasi oleh</th>
-                                <th class="text-white">Feedback</th>
+                                <th class="text-white">Detail</th>
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
                             @forelse ($presentasi as $i=> $data)
                                 <tr>
                                     <td><span class="fw-medium">{{ $loop->iteration }}</span></td>
+                                    <td>{{ $data->judul }}</td>
                                     <td>{{ $jadwal[$i] }}</td>
                                     <td>
                                         @if ($data->status_presentasi === 'menunggu')
@@ -705,37 +721,13 @@
                                     <td>
                                         {{ $data->jadwal_ke }}
                                     </td>
-                                    <td class="d-flex align-items-center justify-content-center">
-                                        @if ($data->user_approval_id === null)
-                                            <span class="badge bg-label-warning me-1">menunggu</span>
-                                        @else
-                                            <div data-bs-toggle="tooltip" data-popup="tooltip-custom"
-                                                data-bs-placement="top" title="{{ $data->user_approval->username }}"
-                                                class="avatar avatar-sm pull-up">
-                                                <img class="rounded-circle"
-                                                    src="{{ $data->user_approval->avatar ? asset('storage/' . $data->user_approval->avatar) : asset('assets/img/avatars/1.png') }}"
-                                                    alt="Avatar">
-                                            </div>
-                                        @endif
-                                    </td>
-                                    <td class="text-center">
-                                        @if ($data->feedback !== null || $data->status_presentasi === 'ditolak')
-                                            <button class=" border-0 text-secondary bg-transparent btn-feedback-modal"
-                                                data-bs-toggle="modal" data-bs-target="#feedbackModal"
-                                                data-feedback="{{ $data->feedback }}">
-                                                <i class="ti ti-eye me-1 text-warning"></i>
-                                            </button>
-                                            {{-- @elseIf(($data->status_pengajuan === 'menunggu' || $data->status_presentasi === 'menunggu') && $data->feedback === null)
-                                            <button onclick="handleBelumDisetujuiFeedback()"
-                                                class=" border-0 text-secondary bg-transparent btn-feedback-modal">
-                                                <i class="ti ti-eye me-1 text-warning"></i>
-                                            </button> --}}
-                                        @elseIf(($data->status_pengajuan === 'disetujui' || $data->status_presentasi === 'selesai') && $data->feedback === null)
-                                            <button onclick="handleDitolakFeedback()"
-                                                class=" border-0 text-secondary bg-transparent btn-feedback-modal">
-                                                <i class="ti ti-eye me-1 text-warning"></i>
-                                            </button>
-                                        @endif
+                                    <td>
+                                        <a data-bs-toggle="modal" data-bs-target="#presentasidetail"
+                                            class="cursor-pointer detail-btn" data-judul="{{ $data->judul }}"
+                                            data-jadwal="{{ $data->jadwal_ke }}" data-hari="{{ $data->hari }}"
+                                            data-mulai="{{ $data->mulai }}" data-akhir="{{ $data->akhir }}"
+                                            data-feedback="{{ $data->feedback }}"><i
+                                                class="ti ti-eye text-warning"></i></a>
                                     </td>
                                 </tr>
                             @empty
