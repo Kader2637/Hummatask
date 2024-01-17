@@ -85,7 +85,6 @@ class catatanController extends Controller
 
             return redirect()->back()->with('success', 'Catatan berhasil dibuat!');
         } catch (\Throwable $th) {
-            dd($th);
             return redirect()->back()->with('error', 'Catatan gagal dibuat!');
         }
     }
@@ -148,7 +147,6 @@ class catatanController extends Controller
 
             return redirect()->back()->with('success', 'Catatan berhasil diperbarui.');
         } catch (\Throwable $th) {
-            dd($th);
             return redirect()->back()->with('error', 'Catatan gagal diupdate!');
         }
     }
@@ -175,7 +173,4 @@ class catatanController extends Controller
         }
     }
 
-    // protected function catatanUpdate(Request $request)
-    // {
-    // }
 }
