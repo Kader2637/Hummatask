@@ -72,6 +72,8 @@
                   <th scope="col">NAMA TIM</th>
                   <th scope="col">STATUS TIM</th>
                   <th scope="col">HARI/TANGGAL</th>
+                  <th scope="col">STATUS PRESENTASI</th>
+                  <th scope="col">STATUS REVISI</th>
                 </tr>
               </thead>
               <tbody>
@@ -91,6 +93,20 @@
                       @endif
                     </td>
                     <td>{{ \Carbon\Carbon::now()->translatedFormat('l, j F Y') }}</td>
+                    <td>
+                      @if ($item->status_presentasi === 'tidak_selesai')
+                        <span class="badge bg-label-danger">Tidak Selesai</span>
+                      @elseif ($item->status_presentasi === 'selesai')
+                        <span class="badge bg-label-success">Selesai</span>
+                      @endif
+                    </td>
+                    <td>
+                      @if ($item->status_revisi === 'tidak_selesai')
+                        <span class="badge bg-label-danger">Tidak Selesai</span>
+                      @elseif ($item->status_revisi === 'selesai')
+                        <span class="badge bg-label-success">Selesai</span>
+                      @endif
+                    </td>
                   </tr>
                 @endforeach
               </tbody>

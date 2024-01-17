@@ -10,7 +10,7 @@ class PresentasiDivisiRequest extends FormRequest
     {
         return [
             'day' => 'required',
-            'limit' => 'required|numeric|min:1',
+            'limit' => 'required|numeric|min:1|max:10',
             // 'mulai' => 'required|array',
             // 'mulai.*' => 'required',
             // 'akhir' => 'array',
@@ -24,6 +24,7 @@ class PresentasiDivisiRequest extends FormRequest
             'day.required' => 'Kolom hari diperlukan.',
             'limit.required' => 'Limit tidak boleh kosong',
             'limit.min' => 'Limit harus lebih dari 1',
+            'limit.max' => 'Limit maksimal 10',
             'mulai.required' => 'Setiap nilai di kolom mulai diperlukan.',
             'mulai.*.required' => 'Setiap nilai di kolom mulai harus diisi.',
             'akhir.required' => 'Setiap nilai di kolom dari diperlukan.',

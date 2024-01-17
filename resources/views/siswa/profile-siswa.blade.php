@@ -576,8 +576,9 @@
             } else {
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Error',
-                    text: 'Silahkan pilih file gambar!'
+                    title: 'Peringatan',
+                    text: 'Silahkan pilih file gambar!',
+                    showConfirmButton: false
                 });
             }
         }

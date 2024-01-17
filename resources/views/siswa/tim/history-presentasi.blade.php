@@ -245,24 +245,24 @@
                             <div class="modal-body">
                                 <ul class="nav nav-pills bg-light rounded mb-3" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" data-bs-toggle="tab" href="#senin"
+                                        <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Monday' || \Carbon\Carbon::now()->format('l') === 'Saturday' || \Carbon\Carbon::now()->format('l') === 'Sunday' ? 'active' : '' }}" data-bs-toggle="tab" href="#senin"
                                             role="tab">Senin</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" data-bs-toggle="tab" href="#selasa" role="tab">Selasa</a>
+                                        <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Tuesday' ? 'show active' : '' }}" data-bs-toggle="tab" href="#selasa" role="tab">Selasa</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" data-bs-toggle="tab" href="#rabu" role="tab">Rabu</a>
+                                        <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Wednesday' ? 'show active' : '' }}" data-bs-toggle="tab" href="#rabu" role="tab">Rabu</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" data-bs-toggle="tab" href="#kamis" role="tab">Kamis</a>
+                                        <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Thursday' ? 'show active' : '' }}" data-bs-toggle="tab" href="#kamis" role="tab">Kamis</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" data-bs-toggle="tab" href="#jumat" role="tab">Jumat</a>
+                                        <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Friday' ? 'show active' : '' }}" data-bs-toggle="tab" href="#jumat" role="tab">Jumat</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
-                                    <div class="tab-pane active" id="senin" role="tabpanel">
+                                    <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Monday' || \Carbon\Carbon::now()->format('l') === 'Saturday' || \Carbon\Carbon::now()->format('l') === 'Sunday' ? 'show active' : '' }}" id="senin" role="tabpanel">
                                         <form id="formAjukanPresentasi_1"
                                             @if ($cekJadwalSenin !== null) action="{{ route('update-presentasi', $presentID) }}" method="post"
                                             @else
@@ -340,7 +340,7 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="tab-pane" id="selasa" role="tabpanel">
+                                    <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Tuesday' ? 'show active' : '' }}" id="selasa" role="tabpanel">
                                         <form id="formAjukanPresentasi_2"
                                             @if ($cekJadwalSelasa !== null) action="{{ route('update-presentasi', $presentID) }}" method="post"
                                             @else
@@ -420,7 +420,7 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="tab-pane" id="rabu" role="tabpanel">
+                                    <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Wednesday' ? 'show active' : '' }}" id="rabu" role="tabpanel">
                                         <form id="formAjukanPresentasi_3"
                                             @if ($cekJadwalRabu !== null) action="{{ route('update-presentasi', $presentID) }}" method="post"
                                             @else
@@ -429,8 +429,13 @@
                                             @if ($cekJadwalRabu !== null)
                                                 @method('PUT')
                                             @endif
+                                            @if ($cekJadwalRabu)
+                                            <label for="judul" class="form-label">Judul Presentasi</label>
+                                            <input type="text" name="judul" value="{{ $cekJadwalRabu->judul }}" class="form-control">    
+                                            @else
                                             <label for="judul" class="form-label">Judul Presentasi</label>
                                             <input type="text" name="judul" class="form-control">
+                                            @endif
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_rabu as $data)
@@ -469,8 +474,13 @@
                                                             class="img-fluid">
                                                     </div>
                                                 @endforelse
+                                                @if ($cekJadwalRabu)
+                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalRabu->deskripsi }}</textarea>
+                                                @else
                                                 <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
                                                 <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                @endif
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
@@ -504,7 +514,7 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="tab-pane" id="kamis" role="tabpanel">
+                                    <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Thursday' ? 'show active' : '' }}" id="kamis" role="tabpanel">
                                         <form id="formAjukanPresentasi_4"
                                             @if ($cekJadwalKamis !== null) action="{{ route('update-presentasi', $presentID) }}" method="post"
                                             @else
@@ -588,7 +598,7 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="tab-pane" id="jumat" role="tabpanel">
+                                    <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Friday' ? 'show active' : '' }}" id="jumat" role="tabpanel">
                                         <form id="formAjukanPresentasi_5"
                                             @if ($cekJadwalJumat !== null) action="{{ route('update-presentasi', $presentID) }}" method="post"
                                             @else
@@ -784,17 +794,29 @@
         function validateForm(formId) {
             $(formId).on('submit', function(event) {
                 var checkbox = $(this).find('[name="plan"]:checked').length > 0;
+                var judul = $(this).find('input[name="judul"]').val();
 
                 if (!checkbox) {
                     swal.fire({
                         title: 'Peringatan',
-                        text: 'Silahkan pilih data terlebih dahulu',
+                        text: 'Silahkan pilih jadwal terlebih dahulu',
                         icon: 'warning',
                         showConfirmButton: false,
                         timer: 2000
                     });
                     event.preventDefault();
-                }
+                };
+
+                if (!judul) {
+                    swal.fire({
+                        title: 'Peringatan',
+                        text: 'Silahkan isi judul terlebih dahulu',
+                        icon: 'warning',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                    event.preventDefault();
+                };
             });
         }
 
@@ -895,6 +917,7 @@
                                 console.log('User memilih jadwal dengan ID:', jadwalId);
                                 radio.checked = true;
                             } else if (result.isDismissed) {
+                                radio.checked = initialCheckedStatus[cardId];
                                 console.log(radio.checked);
                             }
                         });

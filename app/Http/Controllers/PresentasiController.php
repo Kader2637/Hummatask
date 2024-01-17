@@ -42,9 +42,14 @@ class PresentasiController extends Controller
 
         $userID = Auth::user()->id;
 
-        $presentasiSelesai = Presentasi::where('status_presentasi', 'selesai')
-            ->where('hari', $hariIni)
-            ->get();
+        $presentasiSelesai = Presentasi::where(function ($query) use ($hariIni) {
+            $query->where('status_presentasi', 'selesai')
+                ->orWhere('status_presentasi', 'tidak_selesai')
+                ->where('divisi_id', Auth()->user()->divisi_id);
+        })
+        ->where('hari', $hariIni)
+        ->get();
+        // dd($presentasiSelesai);
 
         $tidakPresentasi = Tim::where('sudah_presentasi', 0)
             ->where('divisi_id', Auth()->user()->divisi_id)
@@ -53,7 +58,8 @@ class PresentasiController extends Controller
             })
             ->get();
         
-        $tidakPresentasiMingguan = TidakPresentasiMingguan::query()->get();    
+        $tidakPresentasiMingguan = TidakPresentasiMingguan::query()
+        ->get();    
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
         return view('mentor.history-presentasi', compact('notifikasi', 'presentasiSelesai','tidakPresentasiMingguan', 'tidakPresentasi', 'hariIni'));
     }
@@ -187,23 +193,31 @@ class PresentasiController extends Controller
             ->with('success', 'Berhasil mengajukan presentasi');
     }
 
-    protected function updatePresentasi(Request $request, $id){
+    protected function updatePresentasi(Request $request, $id)
+    {
         $jadwalQuery = LimitPresentasiDevisi::find($request->plan);
-        // dd($jadwalQuery);
-        if($jadwalQuery === null){
-            return redirect()->back()->with('error', 'Silahkan Pilih Jadwal, jika ingin mengupdate');
+    
+        $presentasi = Presentasi::find($id);
+    
+        if ($request->filled('judul')) {
+            $presentasi->judul = $request->judul;
         }
-        $presentasi = Presentasi::query()
-            ->where('id', $id)
-            ->update([
-                'jadwal_ke' => $jadwalQuery->jadwal_ke,
-                'mulai' => $jadwalQuery->mulai,
-                'akhir' => $jadwalQuery->akhir,
-            ]);
-        // dd($request, $presentasiID);
-        return redirect()->back()->with('success', 'Berhasil Merubah Jadwal');
+    
+        if ($request->filled('deskripsi')) {
+            $presentasi->deskripsi = $request->deskripsi;
+        }
+    
+        if ($jadwalQuery) {
+            $presentasi->jadwal_ke = $jadwalQuery->jadwal_ke;
+            $presentasi->mulai = $jadwalQuery->mulai;
+            $presentasi->akhir = $jadwalQuery->akhir;
+        }
+    
+        $presentasi->save();
+    
+        return redirect()->back()->with('success', 'Berhasil Memperbarui Presentasi');
     }
-
+    
     protected function sendNotificationToMentor($mentorId, $title, $message, $jenisNotifikasi)
     {
         Notifikasi::create([
