@@ -241,6 +241,9 @@ class timController extends Controller
                 $cekJadwalSelasa = Presentasi::where('presentasi_divisi_id', $selasa->presentasi_divisi_id)
                     ->where('tim_id', auth()->user()->anggota->tim_id)
                     ->where('divisi_id', auth()->user()->divisi_id)
+                    ->whereHas('tim.anggota', function ($query) {
+                        $query->where('status', 'active');
+                    })
                     ->first();
             }
             
@@ -254,6 +257,9 @@ class timController extends Controller
                 $cekJadwalRabu = Presentasi::where('presentasi_divisi_id', $rabu->presentasi_divisi_id)
                     ->where('divisi_id', auth()->user()->divisi_id)
                     ->where('tim_id', auth()->user()->anggota->tim_id)
+                    ->whereHas('tim.anggota', function ($query) {
+                        $query->where('status', 'active');
+                    })
                     ->first();
             }
 
@@ -266,6 +272,10 @@ class timController extends Controller
             foreach ($sesi_kamis as $kamis) {
                 $cekJadwalKamis = Presentasi::where('presentasi_divisi_id', $kamis->presentasi_divisi_id)
                     ->where('divisi_id', auth()->user()->divisi_id)
+                    ->where('tim_id', auth()->user()->anggota->tim_id)
+                    ->whereHas('tim.anggota', function ($query) {
+                        $query->where('status', 'active');
+                    })
                     ->first();
             }
 
@@ -278,6 +288,10 @@ class timController extends Controller
             foreach ($sesi_jumat as $jumat) {
                 $cekJadwalJumat = Presentasi::where('presentasi_divisi_id', $jumat->presentasi_divisi_id)
                     ->where('divisi_id', auth()->user()->divisi_id)
+                    ->where('tim_id', auth()->user()->anggota->tim_id)
+                    ->whereHas('tim.anggota', function ($query) {
+                        $query->where('status', 'active');
+                    })
                     ->first();
             }
 
