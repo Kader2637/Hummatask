@@ -56,7 +56,7 @@ class timController extends Controller
             ->get();
         $code = $tim->code;
 
-        return view('siswa.tim.board', compact( 'catatan','title', 'tim', 'anggota', 'tugas_baru', 'tugas_dikerjakan', 'tugas_revisi', 'tugas_selesai', 'project', 'notifikasi', 'code'));
+        return view('siswa.tim.board', compact('catatan', 'title', 'tim', 'anggota', 'tugas_baru', 'tugas_dikerjakan', 'tugas_revisi', 'tugas_selesai', 'project', 'notifikasi', 'code'));
     }
 
     protected function ubahStatus(Request $request)
@@ -204,11 +204,21 @@ class timController extends Controller
 
     protected function historyPresentasiPage($code)
     {
+
         $title = 'Tim/presentasi';
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
         $tim = Tim::where('code', $code)->firstOrFail();
         $tim_id = $tim->id;
+        $user = User::find(Auth::user()->id);
+
+        $now = Carbon::now();
+        $startofweek = $now->startOfWeek();
+        $seninThisWeek = $now->startOfWeek()->format('Y-m-d');
+        $selasaThisWeek = $startofweek->copy()->addDays(1)->format('Y-m-d');
+        $rabuThisWeek = $startofweek->copy()->addDays(2)->format('Y-m-d');
+        $kamisThisWeek = $startofweek->copy()->addDays(3)->format('Y-m-d');
+        $jumatThisWeek = $startofweek->copy()->addDays(4)->format('Y-m-d');
 
         $allSessions = LimitPresentasiDevisi::query()
             ->whereRelation('presentasiDivisi', 'divisi_id', '=', Auth::user()->divisi_id)
@@ -220,88 +230,93 @@ class timController extends Controller
                 return $session->presentasiDivisi->day === DayEnum::MONDAY->value;
             })
             ->sortBy('mulai');
-            $cekJadwalSenin = null;
-            foreach ($sesi_senin as $senin) {
-                $cekJadwalSenin = Presentasi::where('presentasi_divisi_id', $senin->presentasi_divisi_id)
-                    ->where('tim_id', Auth::user()->anggota()->latest()->first()->tim_id)
-                    ->where('divisi_id', auth()->user()->divisi_id)
-                    ->whereHas('tim.anggota', function ($query) {
-                        $query->where('status', 'active');
-                    })
-                    ->first();
-            }
-        
+        $cekJadwalSenin = null;
+        foreach ($sesi_senin as $senin) {
+            $cekJadwalSenin = Presentasi::where('presentasi_divisi_id', $senin->presentasi_divisi_id)
+                ->where('tim_id', $user->anggota()->latest()->first()->tim_id)
+                ->where('divisi_id', auth()->user()->divisi_id)
+                ->whereHas('tim.anggota', function ($query) {
+                    $query->where('status', 'active');
+                })
+                ->whereDate('jadwal', $seninThisWeek)
+                ->first();
+        }
+
         $sesi_selasa = $allSessions
             ->filter(function ($session) {
                 return $session->presentasiDivisi->day === DayEnum::TUESDAY->value;
             })
             ->sortBy('mulai');
-            $cekJadwalSelasa = null;
-            foreach ($sesi_selasa as $selasa) {
-                $cekJadwalSelasa = Presentasi::where('presentasi_divisi_id', $selasa->presentasi_divisi_id)
-                    ->where('tim_id', Auth::user()->anggota()->latest()->first()->tim_id)
-                    ->where('divisi_id', auth()->user()->divisi_id)
-                    ->whereHas('tim.anggota', function ($query) {
-                        $query->where('status', 'active');
-                    })
-                    ->first();
-            }
-            
+        $cekJadwalSelasa = null;
+        foreach ($sesi_selasa as $selasa) {
+            $cekJadwalSelasa = Presentasi::where('presentasi_divisi_id', $selasa->presentasi_divisi_id)
+                ->where('tim_id', $user->anggota()->latest()->first()->tim_id)
+                ->where('divisi_id', auth()->user()->divisi_id)
+                ->whereHas('tim.anggota', function ($query) {
+                    $query->where('status', 'active');
+                })
+                ->whereDate('jadwal', $selasaThisWeek)
+                ->first();
+        }
+
         $sesi_rabu = $allSessions
             ->filter(function ($session) {
                 return $session->presentasiDivisi->day === DayEnum::WEDNESDAY->value;
             })
             ->sortBy('mulai');
-            $cekJadwalRabu = null;
-            foreach ($sesi_rabu as $rabu) {
-                $cekJadwalRabu = Presentasi::where('presentasi_divisi_id', $rabu->presentasi_divisi_id)
-                    ->where('divisi_id', auth()->user()->divisi_id)
-                    ->where('tim_id', Auth::user()->anggota()->latest()->first()->tim_id)
-                    ->whereHas('tim.anggota', function ($query) {
-                        $query->where('status', 'active');
-                    })
-                    ->first();
-            }
+        $cekJadwalRabu = null;
+        foreach ($sesi_rabu as $rabu) {
+            $cekJadwalRabu = Presentasi::where('presentasi_divisi_id', $rabu->presentasi_divisi_id)
+                ->where('divisi_id', auth()->user()->divisi_id)
+                ->where('tim_id', $user->anggota()->latest()->first()->tim_id)
+                ->whereHas('tim.anggota', function ($query) {
+                    $query->where('status', 'active');
+                })
+                ->whereDate('jadwal', $rabuThisWeek)
+                ->first();
+        }
 
         $sesi_kamis = $allSessions
             ->filter(function ($session) {
                 return $session->presentasiDivisi->day === DayEnum::THURSDAY->value;
             })
             ->sortBy('mulai');
-            $cekJadwalKamis = null;
-            foreach ($sesi_kamis as $kamis) {
-                $cekJadwalKamis = Presentasi::where('presentasi_divisi_id', $kamis->presentasi_divisi_id)
-                    ->where('divisi_id', auth()->user()->divisi_id)
-                    ->where('tim_id', Auth::user()->anggota()->latest()->first()->tim_id)
-                    ->whereHas('tim.anggota', function ($query) {
-                        $query->where('status', 'active');
-                    })
-                    ->first();
-            }
+        $cekJadwalKamis = null;
+        foreach ($sesi_kamis as $kamis) {
+            $cekJadwalKamis = Presentasi::where('presentasi_divisi_id', $kamis->presentasi_divisi_id)
+                ->where('divisi_id', auth()->user()->divisi_id)
+                ->where('tim_id', $user->anggota()->latest()->first()->tim_id)
+                ->whereHas('tim.anggota', function ($query) {
+                    $query->where('status', 'active');
+                })
+                ->whereDate('jadwal', $kamisThisWeek)
+                ->first();
+        }
 
         $sesi_jumat = $allSessions
             ->filter(function ($session) {
                 return $session->presentasiDivisi->day === DayEnum::FRIDAY->value;
             })
             ->sortBy('mulai');
-            $cekJadwalJumat = null;
-            foreach ($sesi_jumat as $jumat) {
-                $cekJadwalJumat = Presentasi::where('presentasi_divisi_id', $jumat->presentasi_divisi_id)
-                    ->where('divisi_id', auth()->user()->divisi_id)
-                    ->where('tim_id', Auth::user()->anggota()->latest()->first()->tim_id)
-                    ->whereHas('tim.anggota', function ($query) {
-                        $query->where('status', 'active');
-                    })
-                    ->first();
-            }
+        $cekJadwalJumat = null;
+        foreach ($sesi_jumat as $jumat) {
+            $cekJadwalJumat = Presentasi::where('presentasi_divisi_id', $jumat->presentasi_divisi_id)
+                ->where('divisi_id', auth()->user()->divisi_id)
+                ->where('tim_id', $user->anggota()->latest()->first()->tim_id)
+                ->whereHas('tim.anggota', function ($query) {
+                    $query->where('status', 'active');
+                })
+                ->whereDate('jadwal', $jumatThisWeek)
+                ->first();
+        }
 
         $cek_present = Presentasi::query()
             ->whereDate('jadwal', now())
             ->where('divisi_id', auth()->user()->divisi_id)
             ->get();
 
-            $validasiPersetujuan = $tim->presentasi->sortByDesc('created_at')->first();
-            
+        $validasiPersetujuan = $tim->presentasi->sortByDesc('created_at')->first();
+
         $project = $tim->project->first();
         if ($project->deskripsi === null) {
             return back()->with('tolak', 'Tolong lengkapi deskripsi proyek terlebih dahulu');
@@ -334,7 +349,7 @@ class timController extends Controller
             $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
         }
 
-        return view('siswa.tim.history-presentasi', compact('cek_present','presentID','presentasiID','validasiPersetujuan','cekJadwalSenin','cekJadwalSelasa','cekJadwalRabu','cekJadwalKamis','cekJadwalJumat', 'jabatan', 'title', 'tim', 'anggota', 'presentasi', 'jadwal', 'hasProjectRelation', 'project', 'notifikasi', 'project', 'sesi_senin', 'sesi_selasa', 'sesi_rabu', 'sesi_kamis', 'sesi_jumat'));
+        return view('siswa.tim.history-presentasi', compact('cek_present', 'presentID', 'presentasiID', 'validasiPersetujuan', 'cekJadwalSenin', 'cekJadwalSelasa', 'cekJadwalRabu', 'cekJadwalKamis', 'cekJadwalJumat', 'jabatan', 'title', 'tim', 'anggota', 'presentasi', 'jadwal', 'hasProjectRelation', 'project', 'notifikasi', 'project', 'sesi_senin', 'sesi_selasa', 'sesi_rabu', 'sesi_kamis', 'sesi_jumat'));
     }
 
     protected function catatanPage($code)
