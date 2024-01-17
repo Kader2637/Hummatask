@@ -143,7 +143,7 @@
                       $('.form-add').append(
                         `<div class="form-catatan-repeater row mb-3">
                           <div class="col-md-11 col-11">
-                            <input name="catatan_text[]" id="catatan-input" type="text" class="form-control">
+                            <input name="catatan_text[]" id="catatan-input-${i}" type="text" class="form-control">
                           </div>
                           <div class="col-md-1 col-1 d-flex justify-content-center">
                             <div id="button-delete">
@@ -269,7 +269,8 @@
                     <h5 class="modal-title">Edit Catatan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
-                  <form action="{{ route('catatan.update', $data->id) }}" id="edit-form" class="row g-2 p-0 m-0" method="POST">
+                  <form action="{{ route('catatan.update', $data->id) }}" id="edit-form" class="row g-2 p-0 m-0"
+                    method="POST">
                     @csrf
                     @method('PATCH')
                     <div class="modal-body">
@@ -285,7 +286,8 @@
                             <div class="form-catatan-repeater row mb-3">
                               <div class="col-md-10 col-10">
                                 <label for="catatan" class="mb-2 form-label">Catatan {{ ++$i }}</label>
-                                <input name="catatan_text[]" id="catatan-input-edit" type="text" value="{{ $item->catatan_text }}" class="form-control">
+                                <input name="catatan_text[]" id="catatan-input-edit" type="text"
+                                  value="{{ $item->catatan_text }}" class="form-control">
                                 <input type="hidden" name="id[]" value="{{ $item->id }}">
                               </div>
                               <div class="col-md-1 col-1 d-flex justify-content-center align-items-end">
@@ -483,6 +485,7 @@
       document.getElementById('catatanPost').addEventListener('submit', function(event) {
         var judulCatatan = document.getElementById('defaultInput').value;
         var catatanInput = document.getElementById('catatan-input').value;
+        var catatanInputs = document.querySelectorAll('[id^="catatan-input-"]');
 
         if (judulCatatan.trim() === '') {
           Swal.fire({
@@ -490,7 +493,7 @@
             title: 'Gagal',
             text: 'Judul catatan tidak boleh kosong!',
             showConfirmButton: false,
-            timer: 4000,
+            timer: 4000
           });
           event.preventDefault();
         } else {}
@@ -501,10 +504,23 @@
             title: 'Gagal',
             text: 'Catatan tidak boleh kosong!',
             showConfirmButton: false,
-            timer: 4000,
+            timer: 4000
           });
           event.preventDefault();
         } else {}
+
+        for (var i = 0; i < catatanInputs.length; i++) {
+          if (catatanInputs[i].value.trim() === '') {
+            Swal.fire({
+              icon: 'warning',
+              title: 'Gagal',
+              text: 'Catatan tidak boleh kosong!',
+              showConfirmButton: false,
+              timer: 4000
+            });
+            event.preventDefault();
+          } else {}
+        }
       });
     });
 
