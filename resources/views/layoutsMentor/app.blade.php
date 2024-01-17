@@ -236,15 +236,16 @@
                             <div>Dashboard</div>
                         </a>
                     </li>
-                    <li class="menu-item">
+                    <li
+                        class="menu-item {{ request()->routeIs('siswa-presentasi.mentor') || request()->routeIs('detail-presentasi.mentor') || request()->routeIs('histori-presentasi.mentor') ? 'active open' : '' }}">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons ti ti-presentation"></i>
                             <div>Presentasi</div>
                         </a>
                         <ul class="menu-sub">
                             <li
-                                class="menu-item {{ (request()->routeIs('siswa-presentasi.mentor') ? 'active' : '' || request()->routeIs('detail-presentasi.mentor')) ? 'active' : '' }}">
-                                <a href="{{ route('siswa-presentasi.mentor') }}" class="menu-link ">
+                                class="menu-item {{ request()->routeIs('siswa-presentasi.mentor') || request()->routeIs('detail-presentasi.mentor') ? 'active' : '' }}">
+                                <a href="{{ route('siswa-presentasi.mentor') }}" class="menu-link">
                                     <div>Siswa Presentasi</div>
                                 </a>
                             </li>
@@ -256,6 +257,7 @@
                             </li>
                         </ul>
                     </li>
+
                     {{-- <li class="menu-item {{ request()->routeIs('presentasi.mentor') ? 'active' : '' }}">
                         <a href="{{ route('presentasi.mentor') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-presentation"></i>
