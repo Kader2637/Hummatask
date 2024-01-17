@@ -180,7 +180,7 @@
                                     @elseif ($item->status_presentasi == 'sedang_presentasi')
                                         <span class="badge bg-label-success text-capitalize">Sedang Presentasi</span>
                                     @endif
-                                    <h5 class="card-title my-2 text-capitalize">{{ $item->judul }}</h5>
+                                    <h5 class="card-title my-2 text-capitalize" data-bs-placement="bottom" data-bs-toggle="tooltip" title="{{ $item->judul }}">{{ Str::limit($item->judul, 20) }}</h5>
                                     <p class="card-text" data-bs-toggle="tooltip" data-popup="tooltip-custom"
                                         data-bs-placement="bottom" title="Jadwal Presentasi">
                                         {{ $item->jadwal_ke }} {{ \Carbon\Carbon::parse($item->mulai)->format('H:i') }} -
