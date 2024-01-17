@@ -256,13 +256,8 @@
                                             @if ($cekJadwalSenin !== null)
                                                 @method('PUT')
                                             @endif
-                                            @if ($cekJadwalSenin !== null)
-                                                <label for="judul" class="form-label" disabled>Judul Presentasi</label>
-                                                <input type="text" name="judul" class="form-control" disabled>
-                                            @else
                                                 <label for="judul" class="form-label">Judul Presentasi</label>
                                                 <input type="text" name="judul" class="form-control">
-                                            @endif
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_senin as $data)
@@ -345,13 +340,8 @@
                                             @if ($cekJadwalSelasa !== null)
                                                 @method('PUT')
                                             @endif
-                                            @if ($cekJadwalSenin !== null)
-                                                <label for="judul" class="form-label" disabled>Judul Presentasi</label>
-                                                <input type="text" name="judul" class="form-control" disabled>
-                                            @else
                                                 <label for="judul" class="form-label">Judul Presentasi</label>
                                                 <input type="text" name="judul" class="form-control">
-                                            @endif
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_selasa as $data)
@@ -430,13 +420,8 @@
                                             @if ($cekJadwalRabu !== null)
                                                 @method('PUT')
                                             @endif
-                                            @if ($cekJadwalSenin !== null)
-                                                <label for="judul" class="form-label" disabled>Judul Presentasi</label>
-                                                <input type="text" name="judul" class="form-control" disabled>
-                                            @else
-                                                <label for="judul" class="form-label">Judul Presentasi</label>
-                                                <input type="text" name="judul" class="form-control">
-                                            @endif
+                                            <label for="judul" class="form-label">Judul Presentasi</label>
+                                            <input type="text" name="judul" class="form-control">
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_rabu as $data)
@@ -519,13 +504,8 @@
                                             @if ($cekJadwalKamis !== null)
                                                 @method('PUT')
                                             @endif
-                                            @if ($cekJadwalSenin !== null)
-                                                <label for="judul" class="form-label" disabled>Judul Presentasi</label>
-                                                <input type="text" name="judul" class="form-control" disabled>
-                                            @else
-                                                <label for="judul" class="form-label">Judul Presentasi</label>
-                                                <input type="text" name="judul" class="form-control">
-                                            @endif
+                                            <label for="judul" class="form-label">Judul Presentasi</label>
+                                            <input type="text" name="judul" class="form-control">
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_kamis as $data)
@@ -608,13 +588,8 @@
                                             @if ($cekJadwalJumat !== null)
                                                 @method('PUT')
                                             @endif
-                                            @if ($cekJadwalSenin !== null)
-                                                <label for="judul" class="form-label" disabled>Judul Presentasi</label>
-                                                <input type="text" name="judul" class="form-control" disabled>
-                                            @else
-                                                <label for="judul" class="form-label">Judul Presentasi</label>
-                                                <input type="text" name="judul" class="form-control">
-                                            @endif
+                                            <label for="judul" class="form-label">Judul Presentasi</label>
+                                            <input type="text" name="judul" class="form-control">
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_jumat as $data)
