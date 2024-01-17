@@ -275,6 +275,7 @@ class timController extends Controller
                 ->whereDate('jadwal', $rabuThisWeek)
                 ->first();
         }
+        // dd($cekJadwalRabu === null);
 
         $sesi_kamis = $allSessions
             ->filter(function ($session) {
