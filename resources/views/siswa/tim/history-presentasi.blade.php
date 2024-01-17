@@ -271,8 +271,13 @@
                                             @if ($cekJadwalSenin !== null)
                                                 @method('PUT')
                                             @endif
+                                            @if ($cekJadwalRabu)
+                                            <label for="judul" class="form-label">Judul Presentasi</label>
+                                            <input type="text" name="judul" value="{{ $cekJadwalRabu->judul }}" class="form-control">    
+                                            @else
                                             <label for="judul" class="form-label">Judul Presentasi</label>
                                             <input type="text" name="judul" class="form-control">
+                                            @endif
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_senin as $data)
@@ -311,8 +316,13 @@
                                                             class="img-fluid">
                                                     </div>
                                                 @endforelse
-                                                    <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
-                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                @if ($cekJadwalSenin)
+                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalSenin->deskripsi }}</textarea>
+                                                @else
+                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                @endif
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
@@ -349,8 +359,13 @@
                                             @if ($cekJadwalSelasa !== null)
                                                 @method('PUT')
                                             @endif
+                                            @if ($cekJadwalRabu)
+                                            <label for="judul" class="form-label">Judul Presentasi</label>
+                                            <input type="text" name="judul" value="{{ $cekJadwalRabu->judul }}" class="form-control">    
+                                            @else
                                             <label for="judul" class="form-label">Judul Presentasi</label>
                                             <input type="text" name="judul" class="form-control">
+                                            @endif
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_selasa as $data)
@@ -391,8 +406,13 @@
                                                             class="img-fluid">
                                                     </div>
                                                 @endforelse
+                                                @if ($cekJadwalSelasa)
+                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalSelasa->deskripsi }}</textarea>
+                                                @else
                                                 <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
                                                 <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                @endif
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
@@ -433,8 +453,13 @@
                                             <label for="judul" class="form-label">Judul Presentasi</label>
                                             <input type="text" name="judul" value="{{ $cekJadwalRabu->judul }}" class="form-control">    
                                             @else
+                                            @if ($cekJadwalRabu)
+                                            <label for="judul" class="form-label">Judul Presentasi</label>
+                                            <input type="text" name="judul" value="{{ $cekJadwalRabu->judul }}" class="form-control">    
+                                            @else
                                             <label for="judul" class="form-label">Judul Presentasi</label>
                                             <input type="text" name="judul" class="form-control">
+                                            @endif
                                             @endif
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
@@ -523,8 +548,13 @@
                                             @if ($cekJadwalKamis !== null)
                                                 @method('PUT')
                                             @endif
+                                            @if ($cekJadwalKamis)
+                                            <label for="judul" class="form-label">Judul Presentasi</label>
+                                            <input type="text" name="judul" value="{{ $cekJadwalKamis->judul }}" class="form-control">    
+                                            @else
                                             <label for="judul" class="form-label">Judul Presentasi</label>
                                             <input type="text" name="judul" class="form-control">
+                                            @endif
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_kamis as $data)
@@ -563,8 +593,13 @@
                                                             class="img-fluid">
                                                     </div>
                                                 @endforelse
+                                                @if ($cekJadwalKamis)
+                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalKamis->deskripsi }}</textarea>
+                                                @else
                                                 <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
                                                 <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                @endif
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
@@ -607,8 +642,13 @@
                                             @if ($cekJadwalJumat !== null)
                                                 @method('PUT')
                                             @endif
+                                            @if ($cekJadwalJumat)
+                                            <label for="judul" class="form-label">Judul Presentasi</label>
+                                            <input type="text" name="judul" value="{{ $cekJadwalJumat->judul }}" class="form-control">    
+                                            @else
                                             <label for="judul" class="form-label">Judul Presentasi</label>
                                             <input type="text" name="judul" class="form-control">
+                                            @endif
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_jumat as $data)
@@ -647,8 +687,13 @@
                                                             class="img-fluid">
                                                     </div>
                                                 @endforelse
+                                                @if ($cekJadwalJumat)
+                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalJumat->deskripsi }}</textarea>
+                                                @else
                                                 <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
                                                 <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                @endif
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
