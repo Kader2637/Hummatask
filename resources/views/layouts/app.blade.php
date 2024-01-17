@@ -502,7 +502,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="reset" class="btn btn-label-secondary waves-effect"
+                                    <button type="button" class="btn btn-label-secondary waves-effect"
                                         data-bs-dismiss="modal" aria-label="Close">Batal</button>
                                     <button type="submit" class="btn btn-primary me-sm-3 me-1">Buat</button>
                                 </div>
@@ -562,6 +562,8 @@
                 const repositoryInput = document.querySelector('input[name="repository"]');
                 const logoInput = document.querySelector('input[name="logo"]');
                 const temaInput = document.querySelector('input[name="temaInput"]');
+
+                console.log(logoInput.files.length)
 
                 // Validasi input kosong
                 if (namaInput.value.trim() === '' || temaInput.value
