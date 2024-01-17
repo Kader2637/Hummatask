@@ -253,6 +253,7 @@ class timController extends Controller
             foreach ($sesi_rabu as $rabu) {
                 $cekJadwalRabu = Presentasi::where('presentasi_divisi_id', $rabu->presentasi_divisi_id)
                     ->where('divisi_id', auth()->user()->divisi_id)
+                    ->where('tim_id', auth()->user()->anggota->tim_id)
                     ->first();
             }
 
@@ -313,7 +314,6 @@ class timController extends Controller
         } else {
             $presentID = null;
         }
-        
         $hasProjectRelation = $tim->project()->exists();
         $jadwal = [];
         foreach ($presentasi as $data) {
