@@ -14,35 +14,41 @@
         <div class="d-flex card flex-md-row align-items-center justify-content-between">
             <div class=" nav nav-pills mb-3 mt-3 d-flex flex-wrap navbar-ul px-3" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-senin"
-                        type="button" role="tab" aria-controls="pills-home" aria-selected="true" data-tab="1"><i
+                    <button
+                        class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Monday' || \Carbon\Carbon::now()->format('l') === 'Saturday' || \Carbon\Carbon::now()->format('l') === 'Sunday' ? 'active' : '' }}"
+                        id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-senin" type="button"
+                        role="tab" aria-controls="pills-home" aria-selected="true" data-tab="1"><i
                             class=""></i>Senin</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-selasa"
-                        type="button" role="tab" aria-controls="pills-profile" aria-selected="false" data-tab="2"><i
+                    <button class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Tuesday' ? 'active' : '' }}"
+                        id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-selasa" type="button"
+                        role="tab" aria-controls="pills-profile" aria-selected="false" data-tab="2"><i
                             class=""></i>Selasa</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-rabu"
-                        type="button" role="tab" aria-controls="pills-profile" aria-selected="false" data-tab="2"><i
+                    <button class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Wednesday' ? 'active' : '' }}"
+                        id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-rabu" type="button"
+                        role="tab" aria-controls="pills-profile" aria-selected="false" data-tab="2"><i
                             class=""></i>Rabu</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-kamis"
-                        type="button" role="tab" aria-controls="pills-profile" aria-selected="false" data-tab="2"><i
+                    <button class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Thursday' ? 'active' : '' }}"
+                        id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-kamis" type="button"
+                        role="tab" aria-controls="pills-profile" aria-selected="false" data-tab="2"><i
                             class=""></i>Kamis</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-jumat"
-                        type="button" role="tab" aria-controls="pills-profile" aria-selected="false" data-tab="2"><i
+                    <button class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Friday' ? 'active' : '' }}"
+                        id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-jumat" type="button"
+                        role="tab" aria-controls="pills-profile" aria-selected="false" data-tab="2"><i
                             class=""></i>Jumat</button>
                 </li>
             </div>
         </div>
         <div class="tab-content px-0 mt-2" id="pills-tabContent">
-            <div class="tab-pane fade show active" id="pills-senin" role="tabpanel" aria-labelledby="pills-home-tab"
-                tabindex="0">
+            <div class="tab-pane fade {{ \Carbon\Carbon::now()->format('l') === 'Monday' || \Carbon\Carbon::now()->format('l') === 'Saturday' || \Carbon\Carbon::now()->format('l') === 'Sunday' ? 'show active' : '' }}"
+                id="pills-senin" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
                 <div class="row">
                     @forelse ($presentasiSenin as $item)
                         <div class="col-md-6 col-lg-4">
@@ -126,8 +132,8 @@
                     @endforelse
                 </div>
             </div>
-            <div class="tab-pane fade" id="pills-selasa" role="tabpanel" aria-labelledby="pills-home-tab"
-                tabindex="0">
+            <div class="tab-pane fade {{ \Carbon\Carbon::now()->format('l') === 'Tuesday' ? 'show active' : '' }}"
+                id="pills-selasa" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
                 <div class="row">
                     @forelse ($presentasiSelasa as $item)
                         <div class="col-md-6 col-lg-4">
@@ -212,7 +218,8 @@
                     @endforelse
                 </div>
             </div>
-            <div class="tab-pane fade" id="pills-rabu" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+            <div class="tab-pane fade {{ \Carbon\Carbon::now()->format('l') === 'Wednesday' ? 'show active' : '' }}"
+                id="pills-rabu" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
                 <div class="row">
                     @forelse ($presentasiRabu as $item)
                         <div class="col-md-6 col-lg-4">
@@ -300,8 +307,8 @@
                     @endforelse
                 </div>
             </div>
-            <div class="tab-pane fade" id="pills-kamis" role="tabpanel" aria-labelledby="pills-home-tab"
-                tabindex="0">
+            <div class="tab-pane fade {{ \Carbon\Carbon::now()->format('l') === 'Thursday' ? 'show active' : '' }}"
+                id="pills-kamis" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
                 <div class="row">
                     @forelse ($presentasiKamis as $item)
                         <div class="col-md-6 col-lg-4">
@@ -388,8 +395,8 @@
                     @endforelse
                 </div>
             </div>
-            <div class="tab-pane fade" id="pills-jumat" role="tabpanel" aria-labelledby="pills-home-tab"
-                tabindex="0">
+            <div class="tab-pane fade {{ \Carbon\Carbon::now()->format('l') === 'Friday' ? 'show active' : '' }}"
+                id="pills-jumat" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
                 <div class="row">
                     @forelse ($presentasiJumat as $item)
                         <div class="col-md-6 col-lg-4">
