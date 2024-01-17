@@ -26,7 +26,8 @@
                 <div class="row">
                     <div class=" jumbotron col-12 d-flex flex-column align-items-center justify-content-center">
                         <p class="fs-5">{{ \Carbon\Carbon::now()->translatedFormat('l, j F Y') }}</p>
-                        <p class="fs-3 text-center">Selamat datang, {{ Auth::user()->username }} divisi {{ Auth::user()->divisi->name ?? ""  }}</p>
+                        <p class="fs-3 text-center">Selamat datang, {{ Auth::user()->username }} divisi
+                            {{ Auth::user()->divisi->name ?? '' }}</p>
                     </div>
                 </div>
                 <div class="row">
@@ -67,11 +68,12 @@
                                         </div>
                                         <div class="avatar-group d-flex align-items-center assigned-avatar">
                                             @foreach ($data->user as $item)
-                                                <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                    aria-label="{{ $item->username }}"
+                                                <div class="avatar avatar-xs" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" aria-label="{{ $item->username }}"
                                                     data-bs-original-title="{{ $item->username }}"><img
-                                                        src="{{ asset('storage/' . $item->avatar) }}" alt="Avatar"
-                                                        class="rounded-circle  pull-up"></div>
+                                                        class="rounded-circle"
+                                                        src="{{ $data->avatar ? asset('storage/' . $data->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                        alt="Avatar" style="object-fit: cover"></div>
                                             @endforeach
                                         </div>
                                     </div>
@@ -124,12 +126,12 @@
                                         </div>
                                         <div class="avatar-group d-flex align-items-center assigned-avatar">
                                             @foreach ($item->user as $data)
-                                                <div class="avatar avatar-xs" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                    aria-label="{{ $data->username }}"
+                                                <div class="avatar avatar-xs" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" aria-label="{{ $data->username }}"
                                                     data-bs-original-title="{{ $data->username }}">
                                                     <img class="rounded-circle"
-                                                    src="{{ $data->avatar ? asset('storage/' . $data->avatar) : asset('assets/img/avatars/1.png') }}"
-                                                    alt="Avatar" style="object-fit: cover">
+                                                        src="{{ $data->avatar ? asset('storage/' . $data->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                        alt="Avatar" style="object-fit: cover">
                                                 </div>
                                             @endforeach
                                         </div>
