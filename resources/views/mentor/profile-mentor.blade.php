@@ -230,7 +230,7 @@
             var fileInput = document.getElementById('image-input3');
             var file = fileInput.files[0];
 
-            if (file) {
+            if (file && file.type.startsWith('image/')) {
                 var reader = new FileReader();
 
                 reader.onload = function(e) {
@@ -238,6 +238,12 @@
                 };
 
                 reader.readAsDataURL(file);
+            } else {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Error',
+                    text: 'Silahkan pilih file gambar!'
+                });
             }
         }
     </script>
@@ -287,8 +293,6 @@
                             $('#' + field + '-error').text(errorMessage);
                         });
 
-
-
                     } else {
                         toastr.error('Terjadi kesalahan: ' + error, 'Kesalahan');
 
@@ -333,20 +337,18 @@
                     if (xhr.status === 422) {
                         var errors = xhr.responseJSON.errors;
 
-                        console.log(errors); // Add this line for debugging
+                        var firstErrorMessage = Object.values(errors)[0][0];
 
-                        $('.text-danger').text('');
-
-                        $.each(errors, function(field, messages) {
-                            var errorMessage = messages[0];
-                            $('#' + field + '-error').text(errorMessage);
-                        });
-
-
+                        if (firstErrorMessage) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Validasi Error',
+                                text: firstErrorMessage,
+                            });
+                        }
 
                     } else {
                         toastr.error('Terjadi kesalahan: ' + error, 'Kesalahan');
-
                     }
                 },
             });
