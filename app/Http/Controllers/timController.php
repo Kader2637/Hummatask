@@ -266,6 +266,7 @@ class timController extends Controller
             foreach ($sesi_kamis as $kamis) {
                 $cekJadwalKamis = Presentasi::where('presentasi_divisi_id', $kamis->presentasi_divisi_id)
                     ->where('divisi_id', auth()->user()->divisi_id)
+                    ->where('tim_id', auth()->user()->anggota->tim_id)
                     ->first();
             }
 
@@ -278,6 +279,7 @@ class timController extends Controller
             foreach ($sesi_jumat as $jumat) {
                 $cekJadwalJumat = Presentasi::where('presentasi_divisi_id', $jumat->presentasi_divisi_id)
                     ->where('divisi_id', auth()->user()->divisi_id)
+                    ->where('tim_id', auth()->user()->anggota->tim_id)
                     ->first();
             }
 
