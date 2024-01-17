@@ -109,7 +109,7 @@
                                                 @method('PATCH')
                                                 <button type="button"
                                                     class="btn btn-primary w-100 confirm-btn-up">Konfirmasi
-                                                    Presentasi
+                                                    Pengajuan
                                                 </button>
                                             </form>
                                         @else
@@ -195,7 +195,7 @@
                                                 @method('PATCH')
                                                 <button type="button"
                                                     class="btn btn-primary w-100 confirm-btn-up">Konfirmasi
-                                                    Presentasi
+                                                    Pengajuan
                                                 </button>
                                             </form>
                                         @else
@@ -283,7 +283,7 @@
                                                 @method('PATCH')
                                                 <button type="button"
                                                     class="btn btn-primary w-100 confirm-btn-up">Konfirmasi
-                                                    Presentasi
+                                                    Pengajuan
                                                 </button>
                                             </form>
                                         @else
@@ -372,7 +372,7 @@
                                                 @method('PATCH')
                                                 <button type="button"
                                                     class="btn btn-primary w-100 confirm-btn-up">Konfirmasi
-                                                    Presentasi
+                                                    Pengajuan
                                                 </button>
                                             </form>
                                         @else
@@ -461,7 +461,7 @@
                                                 @method('PATCH')
                                                 <button type="button"
                                                     class="btn btn-primary w-100 confirm-btn-up">Konfirmasi
-                                                    Presentasi
+                                                    Pengajuan
                                                 </button>
                                             </form>
                                         @else

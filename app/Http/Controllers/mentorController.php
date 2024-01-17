@@ -801,7 +801,7 @@ class mentorController extends Controller
             })
             ->whereIn('status_presentasi', ['menunggu', 'sedang_presentasi'])
             ->orderByRaw("status_presentasi = 'sedang_presentasi' desc")
-            ->orderBy('jadwal_ke', 'desc')
+            ->orderBy('jadwal_ke', 'asc')
             ->get();
 
         $presentasiSenin = $unconfirmedPresentasi->where('hari', 'senin');
