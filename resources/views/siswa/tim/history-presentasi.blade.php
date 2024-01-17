@@ -271,8 +271,8 @@
                                             @if ($cekJadwalSenin !== null)
                                                 @method('PUT')
                                             @endif
-                                                <label for="judul" class="form-label">Judul Presentasi</label>
-                                                <input type="text" name="judul" class="form-control">
+                                            <label for="judul" class="form-label">Judul Presentasi</label>
+                                            <input type="text" name="judul" class="form-control">
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_senin as $data)
@@ -285,10 +285,10 @@
 
                                                     <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                         <label
-                                                            class="card card-jadwal {{ $cekJadwalSenin !== null && $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota()->latest()->first()->tim_id ? 'bg-label-primary' : '' }} {{ $cekJadwalSenin !== null && $cekJadwal ? 'bg-label-secondary' : '' }}">
+                                                            class="card card-jadwal {{ $cekJadwalSenin !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwalSenin === null && $cekJadwal ? 'bg-label-secondary' : '' }}">
                                                             <input name="plan" class="radio" type="radio"
                                                                 value="{{ $data->id }}"
-                                                                {{$cekJadwalSenin !== null && $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota()->latest()->first()->tim_id ? 'checked' : '' }}
+                                                                {{ $cekJadwalSenin !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
                                                                 {{ $cekJadwalSenin !== null && $cekJadwal ? 'disabled' : '' }}>
                                                             <span class="plan-details text-center">
                                                                 <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
@@ -338,9 +338,9 @@
                                                         </div>
                                                     @endif
                                                     <div class="">
-                                                            <button type="submit" class="btn btn-primary">
-                                                                Simpan
-                                                            </button>
+                                                        <button type="submit" class="btn btn-primary">
+                                                            Simpan
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -355,8 +355,8 @@
                                             @if ($cekJadwalSelasa !== null)
                                                 @method('PUT')
                                             @endif
-                                                <label for="judul" class="form-label">Judul Presentasi</label>
-                                                <input type="text" name="judul" class="form-control">
+                                            <label for="judul" class="form-label">Judul Presentasi</label>
+                                            <input type="text" name="judul" class="form-control">
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
                                                 @forelse ($sesi_selasa as $data)
@@ -369,13 +369,13 @@
 
                                                     <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                         <label
-                                                            class="card card-jadwal {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota()->latest()->first()->tim_id ? 'bg-label-primary' : '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}"
+                                                            class="card card-jadwal {{ $cekJadwalSelasa !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwalSelasa === null && $cekJadwal ? 'bg-label-secondary' : '' }}"
                                                             data-jadwal-ke="{{ $cekJadwalSelasa ? $cekJadwalSelasa->jadwal_ke : '' }}"
                                                             id="jadwalCard{{ $data->id }}">
                                                             <input name="plan" class="radio" type="radio"
                                                                 value="{{ $data->id }}"
-                                                                {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota()->latest()->first()->tim_id ? 'checked' : '' }}
-                                                                {{ $cekJadwal ? 'disabled' : '' }}>
+                                                                {{ $cekJadwalSelasa !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
+                                                                {{ $cekJadwalSelasa !== null && $cekJadwal ? 'disabled' : '' }}>
                                                             <span class="plan-details text-center">
                                                                 <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
                                                                     {{ $data->jadwal_ke }}
@@ -418,9 +418,9 @@
                                                         </div>
                                                     @endif
                                                     <div class="">
-                                                            <button type="submit" class="btn btn-primary">
-                                                                Simpan
-                                                            </button>
+                                                        <button type="submit" class="btn btn-primary">
+                                                            Simpan
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -449,11 +449,11 @@
 
                                                     <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                         <label
-                                                            class="card card-jadwal {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota()->latest()->first()->tim_id ? 'bg-label-primary' : '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}">
+                                                            class="card card-jadwal {{ $cekJadwalRabu !== null && $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwalRabu !== null && $cekJadwal ? 'bg-label-secondary' : '' }}">
                                                             <input name="plan" class="radio" type="radio"
                                                                 value="{{ $data->id }}"
-                                                                {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota()->latest()->first()->tim_id ? 'checked' : '' }}
-                                                                {{ $cekJadwal ? 'disabled' : '' }}>
+                                                                {{ $cekJadwalRabu !== null && $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
+                                                                {{ $cekJadwalRabu !== null && $cekJadwal ? 'disabled' : '' }}>
                                                             <span class="plan-details text-center">
                                                                 <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
                                                                     {{ $data->jadwal_ke }}
@@ -533,11 +533,11 @@
 
                                                     <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                         <label
-                                                            class="card card-jadwal {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota()->latest()->first()->tim_id ? 'bg-label-primary' : '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}">
+                                                            class="card card-jadwal {{ $cekJadwalKamis !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwalKamis === null && $cekJadwal ? 'bg-label-secondary' : '' }}">
                                                             <input name="plan" class="radio" type="radio"
                                                                 value="{{ $data->id }}"
-                                                                {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota()->latest()->first()->tim_id ? 'checked' : '' }}
-                                                                {{ $cekJadwal ? 'disabled' : '' }}>
+                                                                {{ $cekJadwalKamis !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
+                                                                {{ $cekJadwalKamis !== null && $cekJadwal ? 'disabled' : '' }}>
                                                             <span class="plan-details text-center">
                                                                 <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
                                                                     {{ $data->jadwal_ke }}
@@ -617,11 +617,11 @@
 
                                                     <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                         <label
-                                                            class="card card-jadwal {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota()->latest()->first()->tim_id ? 'bg-label-primary' : '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}">
+                                                            class="card card-jadwal {{ $cekJadwalJumat !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwalJumat === null && $cekJadwal ? 'bg-label-secondary' : '' }}">
                                                             <input name="plan" class="radio" type="radio"
                                                                 value="{{ $data->id }}"
-                                                                {{ $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota()->latest()->first()->tim_id ? 'checked' : '' }}
-                                                                {{ $cekJadwal ? 'disabled' : '' }}>
+                                                                {{ $cekJadwalJumat !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
+                                                                {{ $cekJadwalJumat !== null && $cekJadwal ? 'disabled' : '' }}>
                                                             <span class="plan-details text-center">
                                                                 <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
                                                                     {{ $data->jadwal_ke }}
@@ -850,23 +850,45 @@
         document.addEventListener('DOMContentLoaded', function() {
             const cards = document.querySelectorAll('.card-jadwal');
             const hariSaatIni = new Date().getDay();
-    
+            console.log(hariSaatIni);
             const initialCheckedStatus = {};
             cards.forEach(card => {
                 const radio = card.querySelector('.radio');
                 initialCheckedStatus[card.id] = radio.checked;
             });
-    
+
             cards.forEach(card => {
                 card.addEventListener('click', function() {
                     const radio = this.querySelector('.radio');
                     const jadwalId = radio.value;
                     const isDisabled = radio.disabled;
-                    if ()
-                    const isJadwalSelected = {{$cekJadwalSenin ? 'true' : 'false' }};
+                    const isJadwalSelected = {{ $cekJadwalKamis ? 'true' : 'false' }};
                     const cardId = this.id;
-                    
-                    if (!isDisabled && isJadwalSelected) {
+
+                    let $cekJadwal;
+
+                    switch (hariSaatIni) {
+                        case 1: // Senin
+                            $cekJadwal = {!! $cekJadwalSenin ? 'true' : 'false' !!};
+                            break;
+                        case 2: // Selasa
+                            $cekJadwal = {!! $cekJadwalSelasa ? 'true' : 'false' !!};
+                            break;
+                        case 3: // Rabu
+                            $cekJadwal = {!! $cekJadwalRabu ? 'true' : 'false' !!};
+                            break;
+                        case 4: // Kamis
+                            $cekJadwal = {!! $cekJadwalKamis ? 'true' : 'false' !!};
+                            break;
+                        case 5: // Jumat
+                            $cekJadwal = {!! $cekJadwalJumat ? 'true' : 'false' !!};
+                            break;
+
+                        default:
+                            $cekJadwal = false;
+                    }
+
+                    if (!isDisabled && $cekJadwal) {
                         Swal.fire({
                             title: 'Konfirmasi',
                             text: 'Apakah Anda yakin ingin mengganti jadwal?',
@@ -879,7 +901,6 @@
                                 console.log('User memilih jadwal dengan ID:', jadwalId);
                                 radio.checked = true;
                             } else if (result.isDismissed) {
-                                radio.checked = initialCheckedStatus[cardId];
                                 console.log(radio.checked);
                             }
                         });
