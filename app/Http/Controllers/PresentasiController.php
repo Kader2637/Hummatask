@@ -27,24 +27,35 @@ class PresentasiController extends Controller
 {
     protected function historiPresentasiPage()
     {
-        $hariIni = Carbon::now()->toDateString();
+        $hariIni = Carbon::now()->format('l');
+        if ($hariIni == 'Monday') {
+            $hariIni = 'senin';
+        } else if ($hariIni == 'Tuesday') {
+            $hariIni = 'selasa';
+        } else if ($hariIni == 'Wednesday') {
+            $hariIni = 'rabu';
+        } else if ($hariIni == 'Thursday') {
+            $hariIni = 'kamis';
+        } else if ($hariIni == 'Friday') {
+            $hariIni = 'jumat';
+        }
 
         $userID = Auth::user()->id;
 
         $presentasiSelesai = Presentasi::where('status_presentasi', 'selesai')
-            ->whereDate('created_at', $hariIni)
+            ->where('hari', $hariIni)
             ->get();
 
         $tidakPresentasi = Tim::where('sudah_presentasi', 0)
-            ->whereDate('created_at', $hariIni)
             ->where('divisi_id', Auth()->user()->divisi_id)
             ->whereDoesntHave('presentasi', function ($query) use ($hariIni) {
-                $query->whereDate('created_at', $hariIni);
+                $query->whereDate('hari', $hariIni);
             })
             ->get();
-        // dd($tidakPresentasi);
+        
+        $tidakPresentasiMingguan = TidakPresentasiMingguan::query()->get();    
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
-        return view('mentor.history-presentasi', compact('notifikasi', 'presentasiSelesai', 'tidakPresentasi', 'hariIni'));
+        return view('mentor.history-presentasi', compact('notifikasi', 'presentasiSelesai','tidakPresentasiMingguan', 'tidakPresentasi', 'hariIni'));
     }
 
     protected function ajukanPresentasi(RequestPengajuanPresentasi $request, $code)
@@ -179,6 +190,9 @@ class PresentasiController extends Controller
     protected function updatePresentasi(Request $request, $id){
         $jadwalQuery = LimitPresentasiDevisi::find($request->plan);
         // dd($jadwalQuery);
+        if($jadwalQuery === null){
+            return redirect()->back()->with('error', 'Silahkan Pilih Jadwal, jika ingin mengupdate');
+        }
         $presentasi = Presentasi::query()
             ->where('id', $id)
             ->update([
