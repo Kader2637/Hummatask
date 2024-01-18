@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\catatan;
 use App\Models\CatatanDetail;
-use App\Models\Penugasan;
 use App\Models\Tim;
 use App\Models\Tugas;
 use App\Models\User;
@@ -66,15 +65,13 @@ class catatanController extends Controller
             $catatan->type_note = $request->type_note;
             $catatan->save();
 
-            $tugasIds = [];
-
             foreach ($request->catatan_text as $item) {
                 $catatanDetail = CatatanDetail::create([
                     'catatan_id' => $catatan->id,
                     'catatan_text' => $item
                 ]);
 
-                $tugas = Tugas::create([
+                Tugas::create([
                     'tim_id' => $tims->id,
                     'code' => Str::uuid(),
                     'nama' => $catatanDetail->catatan_text,
@@ -84,15 +81,6 @@ class catatanController extends Controller
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ]);
-
-                $tugasIds[] = $tugas->id;
-
-                if ($tims->status_tim === 'solo') {
-                    $penugasan = new Penugasan();
-                    $penugasan->tugas_id = $tugas->id; // Menggunakan id tugas yang baru dibuat
-                    $penugasan->user_id = Auth::user()->id;
-                    $penugasan->save();
-                }
             }
 
             return redirect()->back()->with('success', 'Catatan berhasil dibuat!');
@@ -130,15 +118,8 @@ class catatanController extends Controller
                             'status_tugas' => 'tugas_baru',
                             'prioritas' => 'biasa'
                         ]);
-
-                        if ($tugas->wasRecentlyCreated && $catatanDetail->tim->status_tim === 'solo') {
-                            $penugasan = new Penugasan();
-                            $penugasan->tugas_id = $tugas->id;
-                            $penugasan->user_id = Auth::user()->id;
-                            $penugasan->update();
-                        }
                     } else {
-                        $createdTugas = Tugas::create([
+                        Tugas::create([
                             'catatan_detail_id' => $catatanDetail->id,
                             'tim_id' => $request->tim_id,
                             'code' => Str::uuid(),
@@ -146,13 +127,6 @@ class catatanController extends Controller
                             'status_tugas' => 'tugas_baru',
                             'prioritas' => 'biasa'
                         ]);
-
-                        if ($catatanDetail->tim->status_tim === 'solo') {
-                            $penugasan = new Penugasan();
-                            $penugasan->tugas_id = $createdTugas->id;
-                            $penugasan->user_id = Auth::user()->id;
-                            $penugasan->save();
-                        }
                     }
                 } else {
                     $catatanDetail = CatatanDetail::find($id_detail);

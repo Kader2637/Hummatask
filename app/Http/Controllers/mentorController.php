@@ -15,7 +15,6 @@ use App\Models\CatatanDetail;
 use App\Models\Divisi;
 use App\Models\LimitPresentasiDevisi;
 use App\Models\PenglolaMagang;
-use App\Models\Penugasan;
 use App\Models\Presentasi;
 use App\Models\PresentasiDivisi;
 use App\Models\Project;
@@ -448,15 +447,8 @@ class mentorController extends Controller
                             'status_tugas' => 'tugas_baru',
                             'prioritas' => 'biasa'
                         ]);
-
-                        if ($tugas->wasRecentlyCreated && $catatanDetail->tim->status_tim === 'solo') {
-                            $penugasan = new Penugasan();
-                            $penugasan->tugas_id = $tugas->id;
-                            $penugasan->user_id = Auth::user()->id;
-                            $penugasan->update();
-                        }
                     } else {
-                        $createdTugas =  Tugas::create([
+                        Tugas::create([
                             'catatan_detail_id' => $catatanDetail->id,
                             'tim_id' => $request->tim_id,
                             'code' => Str::uuid(),
@@ -464,13 +456,6 @@ class mentorController extends Controller
                             'status_tugas' => 'tugas_baru',
                             'prioritas' => 'biasa'
                         ]);
-
-                        if($catatanDetail->tim->status_tim === 'solo') {
-                            $penugasan = new Penugasan();
-                            $penugasan->tugas_id = $createdTugas->id;
-                            $penugasan->user_id = Auth::user()->id;
-                            $penugasan->save();
-                        }
                     }
                 } else {
                     $catatanDetail = CatatanDetail::find($id_detail);
