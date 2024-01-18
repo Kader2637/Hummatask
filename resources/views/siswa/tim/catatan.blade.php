@@ -136,6 +136,49 @@
                       </div>
                     </div>
                   </div>
+                  <script>
+                    var i = 0;
+                    $('#add-input').click(function() {
+                      ++i;
+                      $('.form-add').append(
+                        `<div class="form-catatan-repeater row mb-3">
+                          <div class="col-md-11 col-11">
+                            <input name="catatan_text[]" id="catatan-input-${i}" type="text" class="form-control">
+                          </div>
+                          <div class="col-md-1 col-1 d-flex justify-content-center">
+                            <div id="button-delete">
+                              <button class="btn btn-icon d-flex justify-content-center align-items-center btn-label-danger mx-2 waves-effect me-3">
+                                <i class="ti ti-trash text-danger"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>`
+                      )
+                    })
+
+                    $(document).on('click', '#button-delete', function(event) {
+                      event.preventDefault();
+                      var $formCatatanRepeater = $(this).parents('.form-catatan-repeater');
+
+                      swal.fire({
+                        title: 'Konfirmasi',
+                        text: 'Apakah Anda yakin ingin menghapus baris catatan ini?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Ya, hapus',
+                        cancelButtonText: 'Batal'
+                      }).then(function(result) {
+                        if (result.isConfirmed) {
+                          $formCatatanRepeater.remove();
+                          swal.fire(
+                            'Terhapus!',
+                            'Elemen berhasil dihapus.',
+                            'success'
+                          );
+                        }
+                      });
+                    });
+                  </script>
                 </div>
               </form>
             </div>
@@ -272,6 +315,88 @@
                       <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                   </form>
+                  <script>
+                    var i = 0;
+                    $('#add-input-edit').click(function() {
+                      ++i;
+                      $('.form-add-edit').append(
+                        `<div class="form-catatan-repeater row mb-3">
+                          <div class="col-md-11 col-11">
+                                <label for="catatan" class="mb-2 form-label">Catatan Baru</label>
+                                <input name="catatan_text[]" id="catatan-input-edit" type="text" class="form-control">
+                                <input type="hidden" name="id[]" value="0">
+                              </div>
+                              <div class="col-md-1 col-1 d-flex justify-content-center align-items-end">
+                                <div id="button-delete">
+                                  <button class="btn btn-icon d-flex justify-content-center align-items-center btn-label-danger mx-2 waves-effect me-3">
+                                    <i class="ti ti-trash text-danger"></i>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>`
+                      );
+                    });
+
+                    $(document).on('click', '#button-delete', function(event) {
+                      event.preventDefault();
+                      var $formCatatanRepeater = $(this).parents('.form-catatan-repeater');
+
+                      swal.fire({
+                        title: 'Konfirmasi',
+                        text: 'Apakah Anda yakin ingin menghapus baris catatan ini?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Ya, hapus',
+                        cancelButtonText: 'Batal'
+                      }).then(function(result) {
+                        if (result.isConfirmed) {
+                          $formCatatanRepeater.remove();
+                          swal.fire(
+                            'Terhapus!',
+                            'Catatan berhasil dihapus.',
+                            'success'
+                          );
+                        }
+                      });
+                    });
+
+                    $(document).on('click', '.btn-delete-catatan', function(event) {
+                      event.preventDefault();
+                      var catatanDetailId = $(this).data('id');
+                      var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                      var $formCatatanRepeater = $(this).parents('.form-catatan-repeater');
+
+                      swal.fire({
+                        title: 'Konfirmasi',
+                        text: 'Apakah Anda yakin ingin menghapus baris catatan ini?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Ya, hapus',
+                        cancelButtonText: 'Batal'
+                      }).then(function(result) {
+                        if (result.isConfirmed) {
+                          $.ajax({
+                            url: '/tim/catatan/delete/input/' + catatanDetailId,
+                            type: 'DELETE',
+                            headers: {
+                              'X-CSRF-TOKEN': csrfToken
+                            },
+                            success: function(response) {
+                              $formCatatanRepeater.remove();
+                              swal.fire(
+                                'Terhapus!',
+                                'Catatan berhasil dihapus.',
+                                'success'
+                              );
+                            },
+                            error: function(error) {
+                              console.log(error.responseJSON.message);
+                            }
+                          });
+                        }
+                      });
+                    });
+                  </script>
                 </div>
               </div>
             </div>
@@ -395,137 +520,6 @@
 
     });
   </script>
-
-  {{-- tambah --}}
-  <script>
-    var i = 0;
-    $('#add-input').click(function() {
-      ++i;
-      $('.form-add').append(
-        `<div class="form-catatan-repeater row mb-3">
-          <div class="col-md-11 col-11">
-            <input name="catatan_text[]" id="catatan-input-${i}" type="text" class="form-control">
-          </div>
-          <div class="col-md-1 col-1 d-flex justify-content-center">
-            <div id="button-delete">
-              <button class="btn btn-icon d-flex justify-content-center align-items-center btn-label-danger mx-2 waves-effect me-3">
-                <i class="ti ti-trash text-danger"></i>
-              </button>
-            </div>
-          </div>
-        </div>`
-      )
-    })
-
-    $(document).on('click', '#button-delete', function(event) {
-      event.preventDefault();
-      var $formCatatanRepeater = $(this).parents('.form-catatan-repeater');
-
-      swal.fire({
-        title: 'Konfirmasi',
-        text: 'Apakah Anda yakin ingin menghapus baris catatan ini?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'Ya, hapus',
-        cancelButtonText: 'Batal'
-      }).then(function(result) {
-        if (result.isConfirmed) {
-          $formCatatanRepeater.remove();
-          swal.fire(
-            'Terhapus!',
-            'Elemen berhasil dihapus.',
-            'success'
-          );
-        }
-      });
-    });
-  </script>
-  {{-- tambah --}}
-
-  {{-- edit --}}
-  <script>
-    var i = 0;
-    $('#add-input-edit').click(function() {
-      ++i;
-      $('.form-add-edit').append(
-        `<div class="form-catatan-repeater row mb-3">
-          <div class="col-md-11 col-11">
-                <label for="catatan" class="mb-2 form-label">Catatan Baru</label>
-                <input name="catatan_text[]" id="catatan-input-edit" type="text" class="form-control">
-                <input type="hidden" name="id[]" value="0">
-              </div>
-              <div class="col-md-1 col-1 d-flex justify-content-center align-items-end">
-                <div id="button-delete">
-                  <button class="btn btn-icon d-flex justify-content-center align-items-center btn-label-danger mx-2 waves-effect me-3">
-                    <i class="ti ti-trash text-danger"></i>
-                  </button>
-                </div>
-              </div>
-            </div>`
-      );
-    });
-
-    $(document).on('click', '#button-delete', function(event) {
-      event.preventDefault();
-      var $formCatatanRepeater = $(this).parents('.form-catatan-repeater');
-
-      swal.fire({
-        title: 'Konfirmasi',
-        text: 'Apakah Anda yakin ingin menghapus baris catatan ini?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'Ya, hapus',
-        cancelButtonText: 'Batal'
-      }).then(function(result) {
-        if (result.isConfirmed) {
-          $formCatatanRepeater.remove();
-          swal.fire(
-            'Terhapus!',
-            'Catatan berhasil dihapus.',
-            'success'
-          );
-        }
-      });
-    });
-
-    $(document).on('click', '.btn-delete-catatan', function(event) {
-      event.preventDefault();
-      var catatanDetailId = $(this).data('id');
-      var csrfToken = $('meta[name="csrf-token"]').attr('content');
-      var $formCatatanRepeater = $(this).parents('.form-catatan-repeater');
-
-      swal.fire({
-        title: 'Konfirmasi',
-        text: 'Apakah Anda yakin ingin menghapus baris catatan ini?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'Ya, hapus',
-        cancelButtonText: 'Batal'
-      }).then(function(result) {
-        if (result.isConfirmed) {
-          $.ajax({
-            url: '/tim/catatan/delete/input/' + catatanDetailId,
-            type: 'DELETE',
-            headers: {
-              'X-CSRF-TOKEN': csrfToken
-            },
-            success: function(response) {
-              $formCatatanRepeater.remove();
-              swal.fire(
-                'Terhapus!',
-                'Catatan berhasil dihapus.',
-                'success'
-              );
-            },
-            error: function(error) {
-              console.log(error.responseJSON.message);
-            }
-          });
-        }
-      });
-    });
-  </script>
-  {{-- edit --}}
   {{-- \] --}}
   <script>
     document.addEventListener('DOMContentLoaded', function() {
