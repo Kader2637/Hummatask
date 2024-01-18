@@ -180,6 +180,14 @@
             white-space: nowrap;
             width: 1px;
         }
+
+        hr {
+            height: 8px;
+            background-image: linear-gradient(90deg, #7367F0, transparent);
+            /* Ganti #007BFF dengan warna primary yang Anda inginkan */
+            border: 0;
+            height: 1px;
+        }
     </style>
 @endsection
 
@@ -214,18 +222,42 @@
                                     <label for="tanggalPresentasi">Tanggal Presentasi:</label>
                                     <span id="tanggalPresentasi">01 Januari 2022</span>
                                 </div>
-                                <div>
-                                    <label for="jadwalPresentasi">Jadwal Presentasi:</label>
-                                    <span id="jadwalPresentasi">Jumat, 08:00 - 10:00</span>
+                                <hr>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="" class="form-label">Tanggal : </label>
+                                        <span id="tanggal-detail">
+                                            Senin, 21 januari 2014
+                                        </span>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label for="feedback">Feedback:</label>
-                                    <textarea id="feedback" rows="4" readonly></textarea>
+                                <hr>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="" class="form-label">Tanggal : </label>
+                                        <span id="sesi-detail">
+                                            Senin, 21 januari 2014
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-label-secondary waves-effect"
-                                    data-bs-dismiss="modal">Close</button>
+                                <hr>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="" class="form-label">Deskripsi : </label>
+                                        <span id="deskripsi-detail">
+                                            Presentasi revisian kemarin
+                                        </span>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="" class="form-label">Feedback dari mentor : </label>
+                                        <span id="feedback-detail">
+                                            Jangan terlalu terburu2 saat presentasi
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -273,7 +305,7 @@
                                             @endif
                                             @if ($cekJadwalRabu)
                                             <label for="judul" class="form-label">Judul Presentasi</label>
-                                            <input type="text" name="judul" value="{{ $cekJadwalRabu->judul }}" class="form-control">    
+                                            <input type="text" name="judul" value="{{ $cekJadwalRabu->judul }}" class="form-control">
                                             @else
                                             <label for="judul" class="form-label">Judul Presentasi</label>
                                             <input type="text" name="judul" class="form-control">
@@ -290,10 +322,10 @@
 
                                                     <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                         <label
-                                                            class="card card-jadwal {{ $cekJadwalSenin !== null && $cekJadwal && $cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwalSenin === null && $cekJadwal ? 'bg-label-secondary' : '' }}">
+                                                            class="card card-jadwal {{ $cekJadwalSenin !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwalSenin === null && $cekJadwal ? 'bg-label-secondary' : '' }}">
                                                             <input name="plan" class="radio" type="radio"
                                                                 value="{{ $data->id }}"
-                                                                {{ $cekJadwalSenin !== null && $cekJadwal && $cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
+                                                                {{ $cekJadwalSenin !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
                                                                 {{ $cekJadwalSenin == null && $cekJadwal ? 'disabled' : '' }}>
                                                             <span class="plan-details text-center">
                                                                 <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
@@ -361,7 +393,7 @@
                                             @endif
                                             @if ($cekJadwalRabu)
                                             <label for="judul" class="form-label">Judul Presentasi</label>
-                                            <input type="text" name="judul" value="{{ $cekJadwalRabu->judul }}" class="form-control">    
+                                            <input type="text" name="judul" value="{{ $cekJadwalRabu->judul }}" class="form-control">
                                             @else
                                             <label for="judul" class="form-label">Judul Presentasi</label>
                                             <input type="text" name="judul" class="form-control">
@@ -378,12 +410,12 @@
 
                                                     <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                         <label
-                                                            class="card card-jadwal {{ $cekJadwalSelasa !== null && $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwalSelasa === null && $cekJadwal ? 'bg-label-secondary' : '' }}"
+                                                            class="card card-jadwal {{ $cekJadwalSelasa !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwalSelasa === null && $cekJadwal ? 'bg-label-secondary' : '' }}"
                                                             data-jadwal-ke="{{ $cekJadwalSelasa ? $cekJadwalSelasa->jadwal_ke : '' }}"
                                                             id="jadwalCard{{ $data->id }}">
                                                             <input name="plan" class="radio" type="radio"
                                                                 value="{{ $data->id }}"
-                                                                {{ $cekJadwalSelasa !== null && $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
+                                                                {{ $cekJadwalSelasa !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
                                                                 {{ $cekJadwalSelasa === null && $cekJadwal ? 'disabled' : '' }}>
                                                             <span class="plan-details text-center">
                                                                 <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
@@ -450,11 +482,18 @@
                                                 @method('PUT')
                                             @endif
                                             @if ($cekJadwalRabu)
-                                            <label for="judul" class="form-label">Judul Presentasi</label>
-                                            <input type="text" name="judul" value="{{ $cekJadwalRabu->judul }}" class="form-control">    
+                                                <label for="judul" class="form-label">Judul Presentasi</label>
+                                                <input type="text" name="judul" value="{{ $cekJadwalRabu->judul }}"
+                                                    class="form-control">
                                             @else
-                                            <label for="judul" class="form-label">Judul Presentasi</label>
-                                            <input type="text" name="judul" class="form-control">
+                                                @if ($cekJadwalRabu)
+                                                    <label for="judul" class="form-label">Judul Presentasi</label>
+                                                    <input type="text" name="judul"
+                                                        value="{{ $cekJadwalRabu->judul }}" class="form-control">
+                                                @else
+                                                    <label for="judul" class="form-label">Judul Presentasi</label>
+                                                    <input type="text" name="judul" class="form-control">
+                                                @endif
                                             @endif
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
@@ -468,10 +507,10 @@
 
                                                     <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                         <label
-                                                            class="card card-jadwal {{ $cekJadwalRabu !== null && $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwalRabu === null && $cekJadwal ? 'bg-label-secondary' : '' }}">
+                                                            class="card card-jadwal {{ $cekJadwalRabu !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwalRabu === null && $cekJadwal ? 'bg-label-secondary' : '' }}">
                                                             <input name="plan" class="radio" type="radio"
                                                                 value="{{ $data->id }}"
-                                                                {{ $cekJadwalRabu !== null && $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota()->latest()->first()->tim_id ? 'checked': '' }}
+                                                                {{ $cekJadwalRabu !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
                                                                 {{ $cekJadwalRabu === null && $cekJadwal ? 'disabled' : '' }}>
                                                             <span class="plan-details text-center">
                                                                 <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
@@ -545,7 +584,7 @@
                                             @endif
                                             @if ($cekJadwalKamis)
                                             <label for="judul" class="form-label">Judul Presentasi</label>
-                                            <input type="text" name="judul" value="{{ $cekJadwalKamis->judul }}" class="form-control">    
+                                            <input type="text" name="judul" value="{{ $cekJadwalKamis->judul }}" class="form-control">
                                             @else
                                             <label for="judul" class="form-label">Judul Presentasi</label>
                                             <input type="text" name="judul" class="form-control">
@@ -562,7 +601,7 @@
 
                                                     <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                         <label
-                                                            class="card card-jadwal {{ $cekJadwalKamis && $cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwalKamis && $cekJadwal ? 'bg-label-secondary' : '' }}">
+                                                            class="card card-jadwal {{ $cekJadwalKamis &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwalKamis && $cekJadwal ? 'bg-label-secondary' : '' }}">
                                                             <input name="plan" class="radio" type="radio"
                                                                 value="{{ $data->id }}"
                                                                 {{ $cekJadwalKamis &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
@@ -639,7 +678,7 @@
                                             @endif
                                             @if ($cekJadwalJumat)
                                             <label for="judul" class="form-label">Judul Presentasi</label>
-                                            <input type="text" name="judul" value="{{ $cekJadwalJumat->judul }}" class="form-control">    
+                                            <input type="text" name="judul" value="{{ $cekJadwalJumat->judul }}" class="form-control">
                                             @else
                                             <label for="judul" class="form-label">Judul Presentasi</label>
                                             <input type="text" name="judul" class="form-control">
@@ -745,7 +784,7 @@
                         <tbody class="table-border-bottom-0">
                             @forelse ($presentasi as $i=> $data)
                                 <tr>
-                                    <td><span class="fw-medium">{{ $loop->iteration }}</span></td>
+                                    <td><span class="fw-medium">{{ $loop->iteration }}.</span></td>
                                     <td>{{ $data->judul }}</td>
                                     <td>{{ $jadwal[$i] }}</td>
                                     <td>
@@ -766,12 +805,16 @@
                                         {{ $data->jadwal_ke }}
                                     </td>
                                     <td>
-                                        <a data-bs-toggle="modal" data-bs-target="#presentasidetail"
-                                            class="cursor-pointer detail-btn" data-judul="{{ $data->judul }}"
-                                            data-jadwal="{{ $data->jadwal_ke }}" data-hari="{{ $data->hari }}"
-                                            data-mulai="{{ $data->mulai }}" data-akhir="{{ $data->akhir }}"
-                                            data-feedback="{{ $data->feedback }}"><i
-                                                class="ti ti-eye text-warning"></i></a>
+                                        <a class="btn-detail cursor-pointer btn btn-warning" data-bs-toggle="modal"
+                                            data-bs-target="#detailpresentasi" class="cursor-pointer detail-btn"
+                                            data-judul="{{ $data->judul }}" data-jadwal="{{ $data->jadwal_ke }}"
+                                            data-hari="{{ $data->hari }}"
+                                            data-mulai="{{ \Carbon\Carbon::parse($data->mulai)->format('H:i') }}"
+                                            data-akhir="{{ \Carbon\Carbon::parse($data->akhir)->format('H:i') }}"
+                                            data-feedback="{{ $data->feedback }}"
+                                            data-deskripsi="{{ $data->deskripsi }}"
+                                            data-jadwal-lengkap="{{ \Carbon\Carbon::parse($data->jadwal)->translatedFormat('l, j F Y') }}"><i
+                                                class="ti ti-eye text-white"></i></a>
                                     </td>
                                 </tr>
                             @empty
