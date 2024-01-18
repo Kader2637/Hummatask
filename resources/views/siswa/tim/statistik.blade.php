@@ -349,7 +349,7 @@
                                     <div class="card-body">
                                         <div class="d-none d-lg-flex vehicles-progress-labels mb-4 ">
                                             <div style="height:30px;"
-                                                class="overflow-hidden label-tugas_baru vehicles-progress-label on-the-way-text">
+                                                class="overflow-hidden label-tugas_baru">
                                                 Tugas Baru
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                     viewBox="0 0 14 14">
@@ -364,7 +364,7 @@
                                                 </svg>
                                             </div>
                                             <div style="height:30px;"
-                                                class="overflow-hidden label-tugas_dikerjakan vehicles-progress-label unloading-text">
+                                                class="overflow-hidden label-tugas_dikerjakan">
                                                 Tugas Dikerjakan
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                     viewBox="0 0 14 14">
@@ -394,7 +394,7 @@
                                                 </svg>
                                             </div>
                                             <div style="height:30px;"
-                                                class="overflow-hidden label-tugas_direvisi vehicles-progress-label waiting-text text-nowrap">
+                                                class="overflow-hidden label-tugas_dire-nowrap">
                                                 Tugas Direvisi
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                     viewBox="0 0 14 14">
