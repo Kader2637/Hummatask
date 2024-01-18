@@ -198,52 +198,34 @@
                 </div>
                 {{-- modal detail --}}
                 <div class="modal fade" id="detailpresentasi" tabindex="-1" style="display: none;" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel3">Detail Presentasi</h5>
+                                <h5 class="modal-title" id="exampleModalLabel3">Feedback</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <label for="" class="form-label">Judul : </label>
-                                        <span id="judul-detail">Presentasi Figma</span>
-                                    </div>
+                                <div>
+                                    <label for="judulPresentasi">Judul Presentasi:</label>
+                                    <span id="judulPresentasi">Judul Presentasi A</span>
                                 </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <label for="" class="form-label">Tanggal : </label>
-                                        <span id="tanggal-detail">
-                                            Senin, 21 januari 2014
-                                        </span>
-                                    </div>
+                                <div>
+                                    <label for="tanggalPresentasi">Tanggal Presentasi:</label>
+                                    <span id="tanggalPresentasi">01 Januari 2022</span>
                                 </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <label for="" class="form-label">Tanggal : </label>
-                                        <span id="sesi-detail">
-                                            Senin, 21 januari 2014
-                                        </span>
-                                    </div>
+                                <div>
+                                    <label for="jadwalPresentasi">Jadwal Presentasi:</label>
+                                    <span id="jadwalPresentasi">Jumat, 08:00 - 10:00</span>
                                 </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <label for="" class="form-label">Deskripsi : </label>
-                                        <span id="deskripsi-detail">
-                                            Presentasi revisian kemarin
-                                        </span>
-                                    </div>
+                                <div>
+                                    <label for="feedback">Feedback:</label>
+                                    <textarea id="feedback" rows="4" readonly></textarea>
                                 </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <label for="" class="form-label">Feedback dari mentor : </label>
-                                        <span id="feedback-detail">
-                                            Jangan terlalu terburu2 saat presentasi
-                                        </span>
-                                    </div>
-                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-label-secondary waves-effect"
+                                    data-bs-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
@@ -263,29 +245,24 @@
                             <div class="modal-body">
                                 <ul class="nav nav-pills bg-light rounded mb-3" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Monday' || \Carbon\Carbon::now()->format('l') === 'Saturday' || \Carbon\Carbon::now()->format('l') === 'Sunday' ? 'active' : '' }}"
-                                            data-bs-toggle="tab" href="#senin" role="tab">Senin</a>
+                                        <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Monday' || \Carbon\Carbon::now()->format('l') === 'Saturday' || \Carbon\Carbon::now()->format('l') === 'Sunday' ? 'active' : '' }}" data-bs-toggle="tab" href="#senin"
+                                            role="tab">Senin</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Tuesday' ? 'show active' : '' }}"
-                                            data-bs-toggle="tab" href="#selasa" role="tab">Selasa</a>
+                                        <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Tuesday' ? 'show active' : '' }}" data-bs-toggle="tab" href="#selasa" role="tab">Selasa</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Wednesday' ? 'show active' : '' }}"
-                                            data-bs-toggle="tab" href="#rabu" role="tab">Rabu</a>
+                                        <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Wednesday' ? 'show active' : '' }}" data-bs-toggle="tab" href="#rabu" role="tab">Rabu</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Thursday' ? 'show active' : '' }}"
-                                            data-bs-toggle="tab" href="#kamis" role="tab">Kamis</a>
+                                        <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Thursday' ? 'show active' : '' }}" data-bs-toggle="tab" href="#kamis" role="tab">Kamis</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Friday' ? 'show active' : '' }}"
-                                            data-bs-toggle="tab" href="#jumat" role="tab">Jumat</a>
+                                        <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Friday' ? 'show active' : '' }}" data-bs-toggle="tab" href="#jumat" role="tab">Jumat</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
-                                    <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Monday' || \Carbon\Carbon::now()->format('l') === 'Saturday' || \Carbon\Carbon::now()->format('l') === 'Sunday' ? 'show active' : '' }}"
-                                        id="senin" role="tabpanel">
+                                    <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Monday' || \Carbon\Carbon::now()->format('l') === 'Saturday' || \Carbon\Carbon::now()->format('l') === 'Sunday' ? 'show active' : '' }}" id="senin" role="tabpanel">
                                         <form id="formAjukanPresentasi_1"
                                             @if ($cekJadwalSenin !== null) action="{{ route('update-presentasi', $presentID) }}" method="post"
                                             @else
@@ -295,12 +272,11 @@
                                                 @method('PUT')
                                             @endif
                                             @if ($cekJadwalRabu)
-                                                <label for="judul" class="form-label">Judul Presentasi</label>
-                                                <input type="text" name="judul" value="{{ $cekJadwalRabu->judul }}"
-                                                    class="form-control">
+                                            <label for="judul" class="form-label">Judul Presentasi</label>
+                                            <input type="text" name="judul" value="{{ $cekJadwalRabu->judul }}" class="form-control">    
                                             @else
-                                                <label for="judul" class="form-label">Judul Presentasi</label>
-                                                <input type="text" name="judul" class="form-control">
+                                            <label for="judul" class="form-label">Judul Presentasi</label>
+                                            <input type="text" name="judul" class="form-control">
                                             @endif
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
@@ -341,11 +317,11 @@
                                                     </div>
                                                 @endforelse
                                                 @if ($cekJadwalSenin)
-                                                    <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
-                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalSenin->deskripsi }}</textarea>
+                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalSenin->deskripsi }}</textarea>
                                                 @else
-                                                    <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
-                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                                                 @endif
                                             </div>
                                             <div class="modal-footer">
@@ -374,8 +350,7 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Tuesday' ? 'show active' : '' }}"
-                                        id="selasa" role="tabpanel">
+                                    <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Tuesday' ? 'show active' : '' }}" id="selasa" role="tabpanel">
                                         <form id="formAjukanPresentasi_2"
                                             @if ($cekJadwalSelasa !== null) action="{{ route('update-presentasi', $presentID) }}" method="post"
                                             @else
@@ -385,12 +360,11 @@
                                                 @method('PUT')
                                             @endif
                                             @if ($cekJadwalRabu)
-                                                <label for="judul" class="form-label">Judul Presentasi</label>
-                                                <input type="text" name="judul" value="{{ $cekJadwalRabu->judul }}"
-                                                    class="form-control">
+                                            <label for="judul" class="form-label">Judul Presentasi</label>
+                                            <input type="text" name="judul" value="{{ $cekJadwalRabu->judul }}" class="form-control">    
                                             @else
-                                                <label for="judul" class="form-label">Judul Presentasi</label>
-                                                <input type="text" name="judul" class="form-control">
+                                            <label for="judul" class="form-label">Judul Presentasi</label>
+                                            <input type="text" name="judul" class="form-control">
                                             @endif
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
@@ -433,11 +407,11 @@
                                                     </div>
                                                 @endforelse
                                                 @if ($cekJadwalSelasa)
-                                                    <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
-                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalSelasa->deskripsi }}</textarea>
+                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalSelasa->deskripsi }}</textarea>
                                                 @else
-                                                    <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
-                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                                                 @endif
                                             </div>
                                             <div class="modal-footer">
@@ -466,8 +440,7 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Wednesday' ? 'show active' : '' }}"
-                                        id="rabu" role="tabpanel">
+                                    <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Wednesday' ? 'show active' : '' }}" id="rabu" role="tabpanel">
                                         <form id="formAjukanPresentasi_3"
                                             @if ($cekJadwalRabu !== null) action="{{ route('update-presentasi', $presentID) }}" method="post"
                                             @else
@@ -478,15 +451,10 @@
                                             @endif
                                             @if ($cekJadwalRabu)
                                             <label for="judul" class="form-label">Judul Presentasi</label>
-                                            <input type="text" name="judul" value="{{ $cekJadwalRabu->judul }}" class="form-control">
-                                            @else
-                                            @if ($cekJadwalRabu)
-                                            <label for="judul" class="form-label">Judul Presentasi</label>
-                                            <input type="text" name="judul" value="{{ $cekJadwalRabu->judul }}" class="form-control">
+                                            <input type="text" name="judul" value="{{ $cekJadwalRabu->judul }}" class="form-control">    
                                             @else
                                             <label for="judul" class="form-label">Judul Presentasi</label>
                                             <input type="text" name="judul" class="form-control">
-                                            @endif
                                             @endif
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
@@ -527,11 +495,11 @@
                                                     </div>
                                                 @endforelse
                                                 @if ($cekJadwalRabu)
-                                                    <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
-                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalRabu->deskripsi }}</textarea>
+                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalRabu->deskripsi }}</textarea>
                                                 @else
-                                                    <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
-                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                                                 @endif
                                             </div>
                                             <div class="modal-footer">
@@ -566,8 +534,7 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Thursday' ? 'show active' : '' }}"
-                                        id="kamis" role="tabpanel">
+                                    <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Thursday' ? 'show active' : '' }}" id="kamis" role="tabpanel">
                                         <form id="formAjukanPresentasi_4"
                                             @if ($cekJadwalKamis !== null) action="{{ route('update-presentasi', $presentID) }}" method="post"
                                             @else
@@ -577,12 +544,11 @@
                                                 @method('PUT')
                                             @endif
                                             @if ($cekJadwalKamis)
-                                                <label for="judul" class="form-label">Judul Presentasi</label>
-                                                <input type="text" name="judul"
-                                                    value="{{ $cekJadwalKamis->judul }}" class="form-control">
+                                            <label for="judul" class="form-label">Judul Presentasi</label>
+                                            <input type="text" name="judul" value="{{ $cekJadwalKamis->judul }}" class="form-control">    
                                             @else
-                                                <label for="judul" class="form-label">Judul Presentasi</label>
-                                                <input type="text" name="judul" class="form-control">
+                                            <label for="judul" class="form-label">Judul Presentasi</label>
+                                            <input type="text" name="judul" class="form-control">
                                             @endif
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
@@ -623,11 +589,11 @@
                                                     </div>
                                                 @endforelse
                                                 @if ($cekJadwalKamis)
-                                                    <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
-                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalKamis->deskripsi }}</textarea>
+                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalKamis->deskripsi }}</textarea>
                                                 @else
-                                                    <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
-                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                                                 @endif
                                             </div>
                                             <div class="modal-footer">
@@ -662,8 +628,7 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Friday' ? 'show active' : '' }}"
-                                        id="jumat" role="tabpanel">
+                                    <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Friday' ? 'show active' : '' }}" id="jumat" role="tabpanel">
                                         <form id="formAjukanPresentasi_5"
                                             @if ($cekJadwalJumat !== null) action="{{ route('update-presentasi', $presentID) }}" method="post"
                                             @else
@@ -673,12 +638,11 @@
                                                 @method('PUT')
                                             @endif
                                             @if ($cekJadwalJumat)
-                                                <label for="judul" class="form-label">Judul Presentasi</label>
-                                                <input type="text" name="judul"
-                                                    value="{{ $cekJadwalJumat->judul }}" class="form-control">
+                                            <label for="judul" class="form-label">Judul Presentasi</label>
+                                            <input type="text" name="judul" value="{{ $cekJadwalJumat->judul }}" class="form-control">    
                                             @else
-                                                <label for="judul" class="form-label">Judul Presentasi</label>
-                                                <input type="text" name="judul" class="form-control">
+                                            <label for="judul" class="form-label">Judul Presentasi</label>
+                                            <input type="text" name="judul" class="form-control">
                                             @endif
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
@@ -719,11 +683,11 @@
                                                     </div>
                                                 @endforelse
                                                 @if ($cekJadwalJumat)
-                                                    <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
-                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalJumat->deskripsi }}</textarea>
+                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalJumat->deskripsi }}</textarea>
                                                 @else
-                                                    <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
-                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                                                 @endif
                                             </div>
                                             <div class="modal-footer">
@@ -763,6 +727,7 @@
                         </div>
                     </div>
                 </div>
+                </form>
                 {{-- Modal Ajukan presentasi --}}
 
                 <div class="container table-responsive card-datatable  text-nowrap">
@@ -801,15 +766,12 @@
                                         {{ $data->jadwal_ke }}
                                     </td>
                                     <td>
-                                        <a class="btn-detail cursor-pointer btn btn-warning" data-bs-toggle="modal" data-bs-target="#detailpresentasi"
+                                        <a data-bs-toggle="modal" data-bs-target="#presentasidetail"
                                             class="cursor-pointer detail-btn" data-judul="{{ $data->judul }}"
                                             data-jadwal="{{ $data->jadwal_ke }}" data-hari="{{ $data->hari }}"
-                                            data-mulai="{{ \Carbon\Carbon::parse($data->mulai)->format('H:i') }}"
-                                            data-akhir="{{ \Carbon\Carbon::parse($data->akhir)->format('H:i') }}"
-                                            data-feedback="{{ $data->feedback }}"
-                                            data-deskripsi="{{ $data->deskripsi }}"
-                                            data-jadwal-lengkap="{{ \Carbon\Carbon::parse($data->jadwal)->translatedFormat('l, j F Y') }}"><i
-                                                class="ti ti-eye text-white"></i></a>
+                                            data-mulai="{{ $data->mulai }}" data-akhir="{{ $data->akhir }}"
+                                            data-feedback="{{ $data->feedback }}"><i
+                                                class="ti ti-eye text-warning"></i></a>
                                     </td>
                                 </tr>
                             @empty
@@ -859,40 +821,14 @@
             })
         }
 
-        $('.btn-detail').on('click', function() {
-            let judul = $(this).data('judul');
-            let jadwal = $(this).data('jadwal');
-            let hari = $(this).data('hari');
-            let mulai = $(this).data('mulai');
-            let akhir = $(this).data('akhir');
-            let feedback = $(this).data('feedback');
-            let deskripsi = $(this).data('deskripsi');
-            let jadwalLengkap = $(this).data('jadwal-lengkap');
-
-            const modal = $('#detailpresentasi');
-
-            modal.find('#judul-detail').text('');
-            modal.find('#tanggal-detail').text('');
-            modal.find('#deskripsi-detail').text('');
-            modal.find('#feedback-detail').text('');
-            modal.find('#sesi-detail').text('');
-
-            modal.find('#judul-detail').text(judul);
-            modal.find('#tanggal-detail').text(jadwalLengkap);
-            modal.find('#sesi-detail').text(jadwal + ' ' + mulai + ' ' + akhir);
-
-            if (deskripsi) {
-                modal.find('#deskripsi-detail').text(deskripsi);
-            } else {
-                modal.find('#deskripsi-detail').text('Anda tidak mengisi deskripsi presentasi');
-            }
-
-            // Set feedback hanya jika feedback tidak kosong
-            if (feedback) {
-                modal.find('#feedback-detail').text(feedback);
-            } else {
-                modal.find('#feedback-detail').text('Mentor tidak atau belum memberi feedback');
-            }
+        $(".btn-feedback-modal").click(function() {
+            const feedback = $(this).data("feedback");
+            console.log(feedback);
+            const text = $("#text-feedback").html(
+                `
+                <p>${feedback}</p>
+                `
+            );
         })
 
         function validateForm(formId) {
@@ -970,7 +906,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const cards = document.querySelectorAll('.card-jadwal');
             const hariSaatIni = new Date().getDay();
-            console.log(hariSaatIni);
+            // console.log(hariSaatIni);
             const initialCheckedStatus = {};
             cards.forEach(card => {
                 const radio = card.querySelector('.radio');
@@ -983,6 +919,7 @@
                     const jadwalId = radio.value;
                     const isDisabled = radio.disabled;
                     const isJadwalSelected = {{ $cekJadwalKamis ? 'true' : 'false' }};
+                    console.log('cardId:', isJadwalSelected);
                     const cardId = this.id;
 
                     let $cekJadwal;

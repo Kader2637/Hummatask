@@ -212,6 +212,10 @@ class PresentasiController extends Controller
             $presentasi->mulai = $jadwalQuery->mulai;
             $presentasi->akhir = $jadwalQuery->akhir;
         }
+
+        if($presentasi->status_presentasi !== 'menunggu'){
+            return redirect()->back()->with('error', 'Anda hanya bisa mengedit jika status Menunggu');
+        }
     
         $presentasi->save();
     
