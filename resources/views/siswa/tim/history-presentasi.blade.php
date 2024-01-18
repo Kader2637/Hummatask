@@ -214,14 +214,13 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <div>
-                                    <label for="judulPresentasi">Judul Presentasi:</label>
-                                    <span id="judulPresentasi">Judul Presentasi A</span>
-                                </div>
-                                <hr>
-                                <div>
-                                    <label for="tanggalPresentasi">Tanggal Presentasi:</label>
-                                    <span id="tanggalPresentasi">01 Januari 2022</span>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="" class="form-label">Judul Presentasi : </label>
+                                        <span id="judul-detail">
+                                            Senin, 21 januari 2014
+                                        </span>
+                                    </div>
                                 </div>
                                 <hr>
                                 <div class="row">
