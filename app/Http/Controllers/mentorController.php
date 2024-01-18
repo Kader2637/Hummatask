@@ -425,17 +425,21 @@ class mentorController extends Controller
         return view('mentor.projekDetail', compact('project', 'notifikasi', 'catatan', 'chartData', 'day', 'board'));
     }
 
-    protected function updateCatatanMentor(Request $request, $code)
+    protected function updateCatatanMentor(Request $request, $id)
     {
-        $catatan = catatan::where('code', $code)->firstOrFail();
+        $catatan = catatan::findOrFail($id);
 
         if ($request->catatan_text) {
             foreach ($request->catatan_text as $index => $catatan_text) {
                 $id_detail = $request->id[$index];
                 if ($catatan_text) {
-                    $tugas = Tugas::where('catatan_detail_id', $id_detail)->first();
+                    $tugas = Tugas::where('catatan_detail_id', $id_detail)
+                        ->whereHas('catatanDetail', function ($query) use ($catatan) {
+                            $query->where('catatan_id', $catatan->id);
+                        })
+                        ->first();
 
-                    $catatanDetail = CatatanDetail::updateOrCreate(
+                    $catatanDetail = CatatanDetail::where('catatan_id', $catatan->id)->updateOrCreate(
                         ['id' => $id_detail],
                         ['catatan_text' => $catatan_text, 'catatan_id' => $catatan->id]
                     );
@@ -465,7 +469,7 @@ class mentorController extends Controller
                             'prioritas' => 'biasa'
                         ]);
 
-                        if($catatan->tim->status_tim === 'solo') {
+                        if ($catatan->tim->status_tim === 'solo') {
                             $penugasan = new Penugasan();
                             $penugasan->tugas_id = $createdTugas->id;
                             $penugasan->user_id = Auth::user()->id;
