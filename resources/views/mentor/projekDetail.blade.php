@@ -263,18 +263,23 @@
                           <div class="form-repeater d-flex flex-column justify-content-center align-items-center">
                             <input type="hidden" name="tim_id" value="{{ $catatanTab->tim_id }}">
                             @forelse ($catatanTab->catatanDetail as $i => $data)
+                              @php
+                                $hideDeleteButton = count($catatanTab->catatanDetail) === 1;
+                              @endphp
                               <div class="form-add row mb-3 w-100">
-                                <div class="col-11 col-md-11">
+                                <div class="col-11 col-md-{{ $hideDeleteButton ? '12' : '11' }}">
                                   <label for="catatan" class="mb-2 form-label">Catatan {{ ++$i }}</label>
                                   <input type="text" value="{{ $data->catatan_text }}" name="catatan_text[]"
                                     class="form-control">
                                   <input type="hidden" name="id[]" value="{{ $data->id }}">
                                 </div>
                                 <div class="col-1 col-md-1 d-flex align-items-end">
-                                  <button data-id="{{ $data->id }}" type="submit"
-                                    class="btn btn-icon btn-danger btn-delete-catatan">
-                                    <i class="ti ti-trash text-white"></i>
-                                  </button>
+                                  @unless ($hideDeleteButton)
+                                    <button type="submit" data-id="{{ $data->id }}"
+                                      class="btn btn-icon btn-delete-catatan d-flex justify-content-center align-items-center btn-label-danger mx-2 waves-effect me-3">
+                                      <i class="ti ti-trash text-danger"></i>
+                                    </button>
+                                  @endunless
                                 </div>
                               </div>
                             @empty

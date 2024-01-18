@@ -282,9 +282,12 @@
                         </div>
                         <div class="form-add-edit">
                           @foreach ($data->catatanDetail as $i => $item)
+                            @php
+                              $hideDeleteButton = count($data->catatanDetail) === 1;
+                            @endphp
                             <input type="hidden" name="tim_id" value="{{ $data->tim_id }}">
                             <div class="form-catatan-repeater row mb-3">
-                              <div class="col-md-10 col-10">
+                              <div class="col-md-{{ $hideDeleteButton ? '12' : '11' }} col-10">
                                 <label for="catatan" class="mb-2 form-label">Catatan {{ ++$i }}</label>
                                 <input name="catatan_text[]" id="catatan-input-edit" type="text"
                                   value="{{ $item->catatan_text }}" class="form-control">
@@ -292,10 +295,12 @@
                               </div>
                               <div class="col-md-1 col-1 d-flex justify-content-center align-items-end">
                                 <div>
-                                  <button type="submit" data-id="{{ $item->id }}"
-                                    class="btn btn-icon btn-delete-catatan d-flex justify-content-center align-items-center btn-label-danger mx-2 waves-effect me-3">
-                                    <i class="ti ti-trash text-danger"></i>
-                                  </button>
+                                  @unless ($hideDeleteButton)
+                                    <button type="submit" data-id="{{ $item->id }}"
+                                      class="btn btn-icon btn-delete-catatan d-flex justify-content-center align-items-center btn-label-danger mx-2 waves-effect me-3">
+                                      <i class="ti ti-trash text-danger"></i>
+                                    </button>
+                                  @endunless
                                 </div>
                               </div>
                             </div>
@@ -316,7 +321,7 @@
                       ++i;
                       $('.form-add-edit').append(
                         `<div class="form-catatan-repeater row mb-3">
-                          <div class="col-md-10 col-10">
+                          <div class="col-md-11 col-11">
                                 <label for="catatan" class="mb-2 form-label">Catatan Baru</label>
                                 <input name="catatan_text[]" id="catatan-input-edit" type="text" class="form-control">
                                 <input type="hidden" name="id[]" value="0">
