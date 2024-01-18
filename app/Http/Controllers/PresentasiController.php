@@ -49,7 +49,6 @@ class PresentasiController extends Controller
         })
         ->where('hari', $hariIni)
         ->get();
-        // dd($presentasiSelesai);
 
         $tidakPresentasi = Tim::where('sudah_presentasi', 0)
             ->where('divisi_id', Auth()->user()->divisi_id)
@@ -59,7 +58,10 @@ class PresentasiController extends Controller
             ->get();
         
         $tidakPresentasiMingguan = TidakPresentasiMingguan::query()
-        ->get();    
+        ->whereHas('tim', function ($query){
+            $query->where('divisi_id', Auth()->user()->divisi_id);
+        })
+        ->get();
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
         return view('mentor.history-presentasi', compact('notifikasi', 'presentasiSelesai','tidakPresentasiMingguan', 'tidakPresentasi', 'hariIni'));
     }
