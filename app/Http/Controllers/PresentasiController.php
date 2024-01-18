@@ -44,11 +44,12 @@ class PresentasiController extends Controller
 
         $presentasiSelesai = Presentasi::where(function ($query) use ($hariIni) {
             $query->where('status_presentasi', 'selesai')
-                ->orWhere('status_presentasi', 'tidak_selesai')
-                ->where('divisi_id', Auth()->user()->divisi_id);
-        })
+                ->orWhere('status_presentasi', 'tidak_selesai');
+            })
+        ->where('divisi_id', Auth()->user()->divisi_id)
         ->where('hari', $hariIni)
         ->get();
+        // dd($presentasiSelesai);
 
         $tidakPresentasi = Tim::where('sudah_presentasi', 0)
             ->where('divisi_id', Auth()->user()->divisi_id)
