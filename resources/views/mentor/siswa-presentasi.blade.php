@@ -74,7 +74,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-center mb-2 gap-2">
-                                        <span class="badge bg-label-warning">
+                                        <span class="badge bg-label-danger">
                                             @if ($item->tim->status_tim == 'solo')
                                                 Solo Project
                                             @elseif ($item->tim->status_tim == 'pre_mini')
@@ -89,7 +89,7 @@
                                             class="badge bg-label-primary text-capitalize">{{ $item->tim->divisi->name }}</span>
                                     </div>
                                     @if ($item->status_presentasi == 'menunggu')
-                                        <span class="badge bg-label-danger text-capitalize">Menunggu Presentasi</span>
+                                        <span class="badge bg-label-warning text-capitalize">Menunggu Presentasi</span>
                                     @elseif ($item->status_presentasi == 'sedang_presentasi')
                                         <span class="badge bg-label-success text-capitalize">Sedang Presentasi</span>
                                     @endif
@@ -160,7 +160,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-center mb-2 gap-2">
-                                        <span class="badge bg-label-warning">
+                                        <span class="badge bg-label-danger">
                                             @if ($item->tim->status_tim == 'solo')
                                                 Solo Project
                                             @elseif ($item->tim->status_tim == 'pre_mini')
@@ -175,7 +175,7 @@
                                             class="badge bg-label-primary text-capitalize">{{ $item->tim->divisi->name }}</span>
                                     </div>
                                     @if ($item->status_presentasi == 'menunggu')
-                                        <span class="badge bg-label-danger text-capitalize">Menunggu Presentasi</span>
+                                        <span class="badge bg-label-warning text-capitalize">Menunggu Presentasi</span>
                                     @elseif ($item->status_presentasi == 'sedang_presentasi')
                                         <span class="badge bg-label-success text-capitalize">Sedang Presentasi</span>
                                     @endif
@@ -248,7 +248,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-center mb-2 gap-2">
-                                        <span class="badge bg-label-warning">
+                                        <span class="badge bg-label-danger">
                                             @if ($item->tim->status_tim == 'solo')
                                                 Solo Project
                                             @elseif ($item->tim->status_tim == 'pre_mini')
@@ -263,10 +263,10 @@
                                             class="badge bg-label-primary text-capitalize">{{ $item->tim->divisi->name }}</span>
                                     </div>
                                     @if ($item->status_presentasi == 'menunggu')
-                                        <span class="badge bg-label-danger text-capitalize">Menunggu
+                                        <span class="badge bg-label-warning text-capitalize">Menunggu
                                             Presentasi</span>
                                     @elseif ($item->status_presentasi == 'sedang_presentasi')
-                                        <span class="badge bg-label-danger text-capitalize">Sedang
+                                        <span class="badge bg-label-success text-capitalize">Sedang
                                             Presentasi</span>
                                     @endif
                                     <h5 class="card-title my-2 text-capitalize">{{ $item->judul }}</h5>
@@ -337,7 +337,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-center mb-2 gap-2">
-                                        <span class="badge bg-label-warning">
+                                        <span class="badge bg-label-danger">
                                             @if ($item->tim->status_tim == 'solo')
                                                 Solo Project
                                             @elseif ($item->tim->status_tim == 'pre_mini')
@@ -352,10 +352,10 @@
                                             class="badge bg-label-primary text-capitalize">{{ $item->tim->divisi->name }}</span>
                                     </div>
                                     @if ($item->status_presentasi == 'menunggu')
-                                        <span class="badge bg-label-danger text-capitalize">Menunggu
+                                        <span class="badge bg-label-warning text-capitalize">Menunggu
                                             Presentasi</span>
                                     @elseif ($item->status_presentasi == 'sedang_presentasi')
-                                        <span class="badge bg-label-danger text-capitalize">Sedang
+                                        <span class="badge bg-label-success text-capitalize">Sedang
                                             Presentasi</span>
                                     @endif
                                     <h5 class="card-title my-2 text-capitalize">{{ $item->judul }}</h5>
@@ -425,7 +425,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-center mb-2 gap-2">
-                                        <span class="badge bg-label-warning">
+                                        <span class="badge bg-label-danger">
                                             @if ($item->tim->status_tim == 'solo')
                                                 Solo Project
                                             @elseif ($item->tim->status_tim == 'pre_mini')
@@ -440,10 +440,10 @@
                                             class="badge bg-label-primary text-capitalize">{{ $item->tim->divisi->name }}</span>
                                     </div>
                                     @if ($item->status_presentasi == 'menunggu')
-                                        <span class="badge bg-label-danger text-capitalize">Menunggu
+                                        <span class="badge bg-label-warning text-capitalize">Menunggu
                                             Presentasi</span>
                                     @elseif ($item->status_presentasi == 'sedang_presentasi')
-                                        <span class="badge bg-label-danger text-capitalize">Sedang
+                                        <span class="badge bg-label-success text-capitalize">Sedang
                                             Presentasi</span>
                                     @endif
                                     <h5 class="card-title my-2 text-capitalize">{{ $item->judul }}
