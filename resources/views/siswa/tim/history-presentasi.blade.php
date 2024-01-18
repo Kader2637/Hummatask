@@ -218,6 +218,7 @@
                                     <label for="judulPresentasi">Judul Presentasi:</label>
                                     <span id="judulPresentasi">Judul Presentasi A</span>
                                 </div>
+                                <hr>
                                 <div>
                                     <label for="tanggalPresentasi">Tanggal Presentasi:</label>
                                     <span id="tanggalPresentasi">01 Januari 2022</span>
