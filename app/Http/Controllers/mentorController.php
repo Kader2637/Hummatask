@@ -449,7 +449,7 @@ class mentorController extends Controller
                             'prioritas' => 'biasa'
                         ]);
 
-                        if ($tugas->wasRecentlyCreated && $catatanDetail->tim->status_tim === 'solo') {
+                        if ($tugas->wasRecentlyCreated && $catatan->tim->status_tim === 'solo') {
                             $penugasan = new Penugasan();
                             $penugasan->tugas_id = $tugas->id;
                             $penugasan->user_id = Auth::user()->id;
@@ -465,7 +465,7 @@ class mentorController extends Controller
                             'prioritas' => 'biasa'
                         ]);
 
-                        if($catatanDetail->tim->status_tim === 'solo') {
+                        if($catatan->tim->status_tim === 'solo') {
                             $penugasan = new Penugasan();
                             $penugasan->tugas_id = $createdTugas->id;
                             $penugasan->user_id = Auth::user()->id;
