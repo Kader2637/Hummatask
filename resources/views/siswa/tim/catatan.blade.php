@@ -280,7 +280,7 @@
                           <input type="text" id="titleUpdate{{ $data->id }}" value="{{ $data->title }}"
                             name="titleUpdate" class="form-control mb-3">
                         </div>
-                        <div class="form-add-edit">
+                        <div class="form-add-edit-{{ $data->id }}">
                           @foreach ($data->catatanDetail as $i => $item)
                             @php
                               $hideDeleteButton = count($data->catatanDetail) === 1;
@@ -306,7 +306,7 @@
                             </div>
                           @endforeach
                         </div>
-                        <div id="add-input-edit" class="btn btn-primary">
+                        <div id="add-input-edit-{{ $data->id }}" class="btn btn-primary">
                           Tambah Catatan Baru
                         </div>
                       </div>
@@ -317,9 +317,9 @@
                   </form>
                   <script>
                     var i = 0;
-                    $('#add-input-edit').click(function() {
+                    $('#add-input-edit-{{ $data->id }}').click(function() {
                       ++i;
-                      $('.form-add-edit').append(
+                      $('.form-add-edit-{{ $data->id }}').append(
                         `<div class="form-catatan-repeater row mb-3">
                           <div class="col-md-11 col-11">
                                 <label for="catatan" class="mb-2 form-label">Catatan Baru</label>
@@ -382,6 +382,16 @@
                               'X-CSRF-TOKEN': csrfToken
                             },
                             success: function(response) {
+                              var remainingForms = $formCatatanRepeater.siblings('.form-catatan-repeater');
+
+                              if (remainingForms.length === 1) {
+                                remainingForms.find('.btn-delete-catatan').remove();
+
+                                let col = remainingForms.find('.col-md-11.col-10');
+                                col.removeClass('col-md-11 col-10');
+                                col.addClass('col-md-12 col-10');
+                              };
+
                               $formCatatanRepeater.remove();
                               swal.fire(
                                 'Terhapus!',
