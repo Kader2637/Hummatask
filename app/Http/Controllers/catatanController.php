@@ -89,7 +89,7 @@ class catatanController extends Controller
 
                 if ($tims->status_tim === 'solo') {
                     $penugasan = new Penugasan();
-                    $penugasan->tugas_id = $tugas->id;
+                    $penugasan->tugas_id = $tugas->id; // Menggunakan id tugas yang baru dibuat
                     $penugasan->user_id = Auth::user()->id;
                     $penugasan->save();
                 }
