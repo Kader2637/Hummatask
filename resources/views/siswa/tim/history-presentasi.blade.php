@@ -298,6 +298,23 @@
                                         </li>
                                     </ul>
                                     <div class="tab-content">
+                                        <div class="row">
+                                            <h5>Informasi</h5>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="alert alert-primary" role="alert">
+                                                            Checked atau sudah dipilih anda
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="alert alert-secondary" role="alert">
+                                                            Disabled atau Sudah dipilih tim lain 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Monday' || \Carbon\Carbon::now()->format('l') === 'Saturday' || \Carbon\Carbon::now()->format('l') === 'Sunday' ? 'show active' : '' }}"
                                             id="senin" role="tabpanel">
                                             <form id="formAjukanPresentasi_1"
