@@ -768,11 +768,27 @@ class mentorController extends Controller
             })
             ->get();
 
-        $historyPresentasi = HistoryPresentasi::query()
-            ->latest()
-            ->paginate(12);
+        $unconfirmedPresentasi = Presentasi::query()
+            ->with(['tim.user', 'tim.project.tema', 'tim.presentasi'])
+            ->whereHas('tim.divisi', function ($query) {
+                $query->where('id', Auth::user()->divisi_id);
+            })
+            ->whereIn('status_presentasi', ['menunggu', 'sedang_presentasi'])
+            ->orderByRaw("status_presentasi = 'sedang_presentasi' desc")
+            ->orderBy('jadwal_ke', 'asc')
+            ->get();
 
-        return response()->view('mentor.siswa-presentasi', compact('notifikasi', 'historyPresentasi'));
+        $presentasiSenin = $unconfirmedPresentasi->where('hari', 'senin');
+
+        $presentasiSelasa = $unconfirmedPresentasi->where('hari', 'selasa');
+
+        $presentasiRabu = $unconfirmedPresentasi->where('hari', 'rabu');
+
+        $presentasiKamis = $unconfirmedPresentasi->where('hari', 'kamis');
+
+        $presentasiJumat = $unconfirmedPresentasi->where('hari', 'jumat');
+
+        return response()->view('mentor.siswa-presentasi', compact('presentasiSenin', 'presentasiSelasa', 'presentasiRabu', 'presentasiKamis', 'presentasiJumat', 'notifikasi'));
     }
 
     protected function detailPresentasiPage(string $code)
