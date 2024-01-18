@@ -200,3 +200,7 @@
                 Route::post('tambah-pengelola', [tambahUsersController::class, 'tambah_pengelola'])->name('tambah.pengelola');
                 Route::post('tambah-role', [tambahUsersController::class, 'tambah_role'])->name('tambah.roles');
             });
+
+            Route::get('dropzone', function() {
+                return view('dropzone');
+            });
