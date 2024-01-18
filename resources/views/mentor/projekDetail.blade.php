@@ -343,12 +343,12 @@
                                                 <span class="col-8">Tugas baru</span>
                                             </div>
                                         </div>
-                                        @foreach ($board['boardTugasBaru'] as $item)
+                                        @forelse ($board['boardTugasBaru'] as $item)
                                             <div class="col-12 d-flex justify-content-center">
                                                 <div class="row d-flex flex-column justify-content-center align-items-center w-100"
                                                     id="tugas_baru">
-                                                    <div id="board-78842ef7-83ab-43da-8404-e0c0cc750daa"
-                                                        class="col-12 p-2 mt-3 card" style="width: 100%;">
+                                                    <div id="board-{{ $item->code }}" class="col-12 p-2 mt-3 card"
+                                                        style="width: 100%;">
                                                         <div>
                                                             <div
                                                                 class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
@@ -452,387 +452,459 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                                <div style="" class="col-lg-3 col-md-6 col-12 py-2   ">
-                                    <div style="max-height: 80vh; overflow:auto; overflow-x:hidden;background-color: #edeaea"
-                                        class="p-2  rounded">
-                                        <div style="width:100%" class="card card-status-tugas">
-                                            <div class="card-body p-2 py-2 row justify-content-between">
-                                                <span class="col-8">Dikerjakan</span>
-                                            </div>
-                                        </div>
-                                        @foreach ($board['boardDikerjakan'] as $item)
-                                            <div class="col-12 d-flex justify-content-center">
-                                                <div class="row d-flex flex-column justify-content-center align-items-center w-100"
-                                                    id="tugas_baru">
-                                                    <div id="board-78842ef7-83ab-43da-8404-e0c0cc750daa"
-                                                        class="col-12 p-2 mt-3 card" style="width: 100%;">
-                                                        <div>
-                                                            <div
-                                                                class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
-                                                                <div class="d-flex align-items-center gap-2">
-                                                                    <div class="item-badges">
-                                                                        @switch($item->prioritas)
-                                                                            @case('mendesak')
-                                                                                <div class="badge rounded-pill bg-label-danger">
-                                                                                    {{ $item->prioritas }}
-                                                                                </div>
-                                                                            @break
-
-                                                                            @case('penting')
-                                                                                <div class="badge rounded-pill bg-label-warning">
-                                                                                    {{ $item->prioritas }}
-                                                                                </div>
-                                                                            @break
-
-                                                                            @case('biasa')
-                                                                                <div class="badge rounded-pill bg-label-info">
-                                                                                    {{ $item->prioritas }}
-                                                                                </div>
-                                                                            @break
-
-                                                                            @case('tambahan')
-                                                                                <div class="badge rounded-pill bg-label-primary">
-                                                                                    {{ $item->prioritas }}
-                                                                                </div>
-                                                                            @break
-
-                                                                            @default
-                                                                                <div class="badge rounded-pill bg-label-secondary">
-                                                                                    {{ $item->prioritas }}
-                                                                                </div>
-                                                                        @endswitch
-                                                                    </div>
-                                                                    @php
-                                                                        $deadline = \Carbon\Carbon::parse($item->deadline);
-                                                                        $now = \Carbon\Carbon::now()->startOfDay();
-                                                                        $diffInDays = $deadline->diffInDays($now);
-                                                                    @endphp
-
-                                                                    @if ($diffInDays == 0)
-                                                                        Hari ini
-                                                                    @elseif ($diffInDays > 0)
-                                                                        {{ $diffInDays }} hari lagi
-                                                                    @else
-                                                                        {{ abs($diffInDays) }} hari terlewat
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                            <span class="kanban-text">{{ $item->nama }}</span>
-                                                            <div
-                                                                class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
-                                                                <div class="d-flex">
-                                                                    <span class="d-flex align-items-center ms-1">
-                                                                        <i class="ti ti-message-dots ti-xs me-1"></i>
-                                                                        <span>{{ $item->comments->count() }}</span>
-                                                                    </span>
-                                                                </div>
+                                            @empty
+                                                <div class="col-12 d-flex justify-content-center">
+                                                    <div class="row d-flex flex-column justify-content-center align-items-center w-100"
+                                                        id="tugas_baru">
+                                                        <div id="board" class="col-12 p-2 mt-3 card"
+                                                            style="width: 100%;">
+                                                            <div>
                                                                 <div
-                                                                    class="avatar-group d-flex align-items-center assigned-avatar">
-                                                                    @if ($project->tim->status_tim !== 'solo')
-                                                                        @foreach ($item->user as $item)
-                                                                            <div class="avatar avatar-xs"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top"
-                                                                                aria-label="{{ $item->username }}"
-                                                                                data-bs-original-title="{{ $item->username }}">
-                                                                                <img style="object-fit: cover;"
-                                                                                    src="{{ $item->avatar ? Storage::url($item->avatar) : asset('assets/img/avatars/1.png') }}"
-                                                                                    alt="Avatar"
-                                                                                    class="rounded-circle pull-up">
-                                                                            </div>
-                                                                        @endforeach
-                                                                    @else
-                                                                        @foreach ($item->user as $item)
-                                                                            <div class="avatar avatar-xs"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top"
-                                                                                aria-label="{{ $item->username }}"
-                                                                                data-bs-original-title="{{ $item->username }}">
-                                                                                <img style="object-fit: cover;"
-                                                                                    src="{{ $item->avatar ? Storage::url($item->avatar) : asset('assets/img/avatars/1.png') }}"
-                                                                                    alt="Avatar"
-                                                                                    class="rounded-circle pull-up">
-                                                                            </div>
-                                                                        @endforeach
-                                                                    @endif
+                                                                    class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
                                                                 </div>
-                                                            </div>
-                                                            <div class="d-flex flex-wrap gap-1">
-                                                                @if ($item->label)
-                                                                    @foreach ($item->label as $item)
-                                                                        <span class="badge"
-                                                                            style="color: {{ $item->warna_text }} ; background-color: {{ $item->warna_bg }} ">{{ $item->text }}</span>
-                                                                    @endforeach
-                                                                @endif
+                                                                <span class="kanban-text">Tidak ada tugas.</span>
+                                                                <div
+                                                                    class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                                <div style="" class="col-lg-3 col-md-6 col-12 py-2   ">
-                                    <div style="max-height: 80vh; overflow:auto; overflow-x:hidden;background-color: #edeaea"
-                                        class="p-2  rounded">
-                                        <div style="width:100%" class="card card-status-tugas">
-                                            <div class="card-body p-2 py-2 row justify-content-between">
-                                                <span class="col-8">Direvisi</span>
-                                            </div>
+                                            @endforelse
                                         </div>
-                                        @foreach ($board['boardRevisi'] as $item)
-                                            <div class="col-12 d-flex justify-content-center">
-                                                <div class="row d-flex flex-column justify-content-center align-items-center w-100"
-                                                    id="tugas_baru">
-                                                    <div id="board-78842ef7-83ab-43da-8404-e0c0cc750daa"
-                                                        class="col-12 p-2 mt-3 card" style="width: 100%;">
-                                                        <div>
-                                                            <div
-                                                                class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
-                                                                <div class="d-flex align-items-center gap-2">
-                                                                    <div class="item-badges">
-                                                                        @switch($item->prioritas)
-                                                                            @case('mendesak')
-                                                                                <div class="badge rounded-pill bg-label-danger">
-                                                                                    {{ $item->prioritas }}
-                                                                                </div>
-                                                                            @break
-
-                                                                            @case('penting')
-                                                                                <div class="badge rounded-pill bg-label-warning">
-                                                                                    {{ $item->prioritas }}
-                                                                                </div>
-                                                                            @break
-
-                                                                            @case('biasa')
-                                                                                <div class="badge rounded-pill bg-label-info">
-                                                                                    {{ $item->prioritas }}
-                                                                                </div>
-                                                                            @break
-
-                                                                            @case('tambahan')
-                                                                                <div class="badge rounded-pill bg-label-primary">
-                                                                                    {{ $item->prioritas }}
-                                                                                </div>
-                                                                            @break
-
-                                                                            @default
-                                                                                <div class="badge rounded-pill bg-label-secondary">
-                                                                                    {{ $item->prioritas }}
-                                                                                </div>
-                                                                        @endswitch
-                                                                    </div>
-                                                                    @php
-                                                                        $deadline = \Carbon\Carbon::parse($item->deadline);
-                                                                        $now = \Carbon\Carbon::now()->startOfDay();
-                                                                        $diffInDays = $deadline->diffInDays($now);
-                                                                    @endphp
-
-                                                                    @if ($diffInDays == 0)
-                                                                        Hari ini
-                                                                    @elseif ($diffInDays > 0)
-                                                                        {{ $diffInDays }} hari lagi
-                                                                    @else
-                                                                        {{ abs($diffInDays) }} hari terlewat
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                            <span class="kanban-text">{{ $item->nama }}</span>
-                                                            <div
-                                                                class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
-                                                                <div class="d-flex">
-                                                                    <span class="d-flex align-items-center ms-1">
-                                                                        <i class="ti ti-message-dots ti-xs me-1"></i>
-                                                                        <span>{{ $item->comments->count() }}</span>
-                                                                    </span>
-                                                                </div>
+                                    </div>
+                                    <div style="" class="col-lg-3 col-md-6 col-12 py-2   ">
+                                        <div style="max-height: 80vh; overflow:auto; overflow-x:hidden;background-color: #edeaea"
+                                            class="p-2  rounded">
+                                            <div style="width:100%" class="card card-status-tugas">
+                                                <div class="card-body p-2 py-2 row justify-content-between">
+                                                    <span class="col-8">Dikerjakan</span>
+                                                </div>
+                                            </div>
+                                            @forelse ($board['boardDikerjakan'] as $item)
+                                                <div class="col-12 d-flex justify-content-center">
+                                                    <div class="row d-flex flex-column justify-content-center align-items-center w-100"
+                                                        id="tugas_baru">
+                                                        <div id="board-78842ef7-83ab-43da-8404-e0c0cc750daa"
+                                                            class="col-12 p-2 mt-3 card" style="width: 100%;">
+                                                            <div>
                                                                 <div
-                                                                    class="avatar-group d-flex align-items-center assigned-avatar">
-                                                                    @if ($project->tim->status_tim !== 'solo')
-                                                                        @foreach ($item->user as $item)
-                                                                            <div class="avatar avatar-xs"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top"
-                                                                                aria-label="{{ $item->username }}"
-                                                                                data-bs-original-title="{{ $item->username }}">
-                                                                                <img style="object-fit: cover;"
-                                                                                    src="{{ $item->avatar ? Storage::url($item->avatar) : asset('assets/img/avatars/1.png') }}"
-                                                                                    alt="Avatar"
-                                                                                    class="rounded-circle pull-up">
-                                                                            </div>
-                                                                        @endforeach
-                                                                    @else
-                                                                        @foreach ($item->user as $item)
-                                                                            <div class="avatar avatar-xs"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top"
-                                                                                aria-label="{{ $item->username }}"
-                                                                                data-bs-original-title="{{ $item->username }}">
-                                                                                <img style="object-fit: cover;"
-                                                                                    src="{{ $item->avatar ? Storage::url($item->avatar) : asset('assets/img/avatars/1.png') }}"
-                                                                                    alt="Avatar"
-                                                                                    class="rounded-circle pull-up">
-                                                                            </div>
+                                                                    class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
+                                                                    <div class="d-flex align-items-center gap-2">
+                                                                        <div class="item-badges">
+                                                                            @switch($item->prioritas)
+                                                                                @case('mendesak')
+                                                                                    <div class="badge rounded-pill bg-label-danger">
+                                                                                        {{ $item->prioritas }}
+                                                                                    </div>
+                                                                                @break
+
+                                                                                @case('penting')
+                                                                                    <div class="badge rounded-pill bg-label-warning">
+                                                                                        {{ $item->prioritas }}
+                                                                                    </div>
+                                                                                @break
+
+                                                                                @case('biasa')
+                                                                                    <div class="badge rounded-pill bg-label-info">
+                                                                                        {{ $item->prioritas }}
+                                                                                    </div>
+                                                                                @break
+
+                                                                                @case('tambahan')
+                                                                                    <div class="badge rounded-pill bg-label-primary">
+                                                                                        {{ $item->prioritas }}
+                                                                                    </div>
+                                                                                @break
+
+                                                                                @default
+                                                                                    <div class="badge rounded-pill bg-label-secondary">
+                                                                                        {{ $item->prioritas }}
+                                                                                    </div>
+                                                                            @endswitch
+                                                                        </div>
+                                                                        @php
+                                                                            $deadline = \Carbon\Carbon::parse($item->deadline);
+                                                                            $now = \Carbon\Carbon::now()->startOfDay();
+                                                                            $diffInDays = $deadline->diffInDays($now);
+                                                                        @endphp
+
+                                                                        @if ($diffInDays == 0)
+                                                                            Hari ini
+                                                                        @elseif ($diffInDays > 0)
+                                                                            {{ $diffInDays }} hari lagi
+                                                                        @else
+                                                                            {{ abs($diffInDays) }} hari terlewat
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                                <span class="kanban-text">{{ $item->nama }}</span>
+                                                                <div
+                                                                    class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
+                                                                    <div class="d-flex">
+                                                                        <span class="d-flex align-items-center ms-1">
+                                                                            <i class="ti ti-message-dots ti-xs me-1"></i>
+                                                                            <span>{{ $item->comments->count() }}</span>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div
+                                                                        class="avatar-group d-flex align-items-center assigned-avatar">
+                                                                        @if ($project->tim->status_tim !== 'solo')
+                                                                            @foreach ($item->user as $item)
+                                                                                <div class="avatar avatar-xs"
+                                                                                    data-bs-toggle="tooltip"
+                                                                                    data-bs-placement="top"
+                                                                                    aria-label="{{ $item->username }}"
+                                                                                    data-bs-original-title="{{ $item->username }}">
+                                                                                    <img style="object-fit: cover;"
+                                                                                        src="{{ $item->avatar ? Storage::url($item->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                                                        alt="Avatar"
+                                                                                        class="rounded-circle pull-up">
+                                                                                </div>
+                                                                            @endforeach
+                                                                        @else
+                                                                            @foreach ($item->user as $item)
+                                                                                <div class="avatar avatar-xs"
+                                                                                    data-bs-toggle="tooltip"
+                                                                                    data-bs-placement="top"
+                                                                                    aria-label="{{ $item->username }}"
+                                                                                    data-bs-original-title="{{ $item->username }}">
+                                                                                    <img style="object-fit: cover;"
+                                                                                        src="{{ $item->avatar ? Storage::url($item->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                                                        alt="Avatar"
+                                                                                        class="rounded-circle pull-up">
+                                                                                </div>
+                                                                            @endforeach
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex flex-wrap gap-1">
+                                                                    @if ($item->label)
+                                                                        @foreach ($item->label as $item)
+                                                                            <span class="badge"
+                                                                                style="color: {{ $item->warna_text }} ; background-color: {{ $item->warna_bg }} ">{{ $item->text }}</span>
                                                                         @endforeach
                                                                     @endif
                                                                 </div>
-                                                            </div>
-                                                            <div class="d-flex flex-wrap gap-1">
-                                                                @if ($item->label)
-                                                                    @foreach ($item->label as $item)
-                                                                        <span class="badge"
-                                                                            style="color: {{ $item->warna_text }} ; background-color: {{ $item->warna_bg }} ">{{ $item->text }}</span>
-                                                                    @endforeach
-                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                                <div style="" class="col-lg-3 col-md-6 col-12 py-2   ">
-                                    <div style="max-height: 80vh; overflow:auto; overflow-x:hidden;background-color: #edeaea"
-                                        class="p-2  rounded">
-                                        <div style="width:100%" class="card card-status-tugas">
-                                            <div class="card-body p-2 py-2 row justify-content-between">
-                                                <span class="col-8">Selesai</span>
-                                            </div>
-                                        </div>
-                                        @foreach ($board['boardSelesai'] as $item)
-                                            <div class="col-12 d-flex justify-content-center">
-                                                <div class="row d-flex flex-column justify-content-center align-items-center w-100"
-                                                    id="tugas_baru">
-                                                    <div id="board-78842ef7-83ab-43da-8404-e0c0cc750daa"
-                                                        class="col-12 p-2 mt-3 card" style="width: 100%;">
-                                                        <div>
-                                                            <div
-                                                                class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
-                                                                <div class="d-flex align-items-center gap-2">
-                                                                    <div class="item-badges">
-                                                                        @switch($item->prioritas)
-                                                                            @case('mendesak')
-                                                                                <div class="badge rounded-pill bg-label-danger">
-                                                                                    {{ $item->prioritas }}
-                                                                                </div>
-                                                                            @break
-
-                                                                            @case('penting')
-                                                                                <div class="badge rounded-pill bg-label-warning">
-                                                                                    {{ $item->prioritas }}
-                                                                                </div>
-                                                                            @break
-
-                                                                            @case('biasa')
-                                                                                <div class="badge rounded-pill bg-label-info">
-                                                                                    {{ $item->prioritas }}
-                                                                                </div>
-                                                                            @break
-
-                                                                            @case('tambahan')
-                                                                                <div class="badge rounded-pill bg-label-primary">
-                                                                                    {{ $item->prioritas }}
-                                                                                </div>
-                                                                            @break
-
-                                                                            @default
-                                                                                <div class="badge rounded-pill bg-label-secondary">
-                                                                                    {{ $item->prioritas }}
-                                                                                </div>
-                                                                        @endswitch
+                                                @empty
+                                                    <div class="col-12 d-flex justify-content-center">
+                                                        <div class="row d-flex flex-column justify-content-center align-items-center w-100"
+                                                            id="tugas_baru">
+                                                            <div id="board" class="col-12 p-2 mt-3 card"
+                                                                style="width: 100%;">
+                                                                <div>
+                                                                    <div
+                                                                        class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
                                                                     </div>
-                                                                    @php
-                                                                        $deadline = \Carbon\Carbon::parse($item->deadline);
-                                                                        $now = \Carbon\Carbon::now()->startOfDay();
-                                                                        $diffInDays = $deadline->diffInDays($now);
-                                                                    @endphp
-
-                                                                    @if ($diffInDays == 0)
-                                                                        Hari ini
-                                                                    @elseif ($diffInDays > 0)
-                                                                        {{ $diffInDays }} hari lagi
-                                                                    @else
-                                                                        {{ abs($diffInDays) }} hari terlewat
-                                                                    @endif
+                                                                    <span class="kanban-text">Tidak ada tugas.</span>
+                                                                    <div
+                                                                        class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <span class="kanban-text">{{ $item->nama }}</span>
-                                                            <div
-                                                                class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
-                                                                <div class="d-flex">
-                                                                    <span class="d-flex align-items-center ms-1">
-                                                                        <i class="ti ti-message-dots ti-xs me-1"></i>
-                                                                        <span>{{ $item->comments->count() }}</span>
-                                                                    </span>
-                                                                </div>
-                                                                <div
-                                                                    class="avatar-group d-flex align-items-center assigned-avatar">
-                                                                    @if ($project->tim->status_tim !== 'solo')
-                                                                        @foreach ($item->user as $item)
-                                                                            <div class="avatar avatar-xs"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top"
-                                                                                aria-label="{{ $item->username }}"
-                                                                                data-bs-original-title="{{ $item->username }}">
-                                                                                <img style="object-fit: cover;"
-                                                                                    src="{{ $item->avatar ? Storage::url($item->avatar) : asset('assets/img/avatars/1.png') }}"
-                                                                                    alt="Avatar"
-                                                                                    class="rounded-circle pull-up">
-                                                                            </div>
-                                                                        @endforeach
-                                                                    @else
-                                                                        @foreach ($item->user as $item)
-                                                                            <div class="avatar avatar-xs"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="top"
-                                                                                aria-label="{{ $item->username }}"
-                                                                                data-bs-original-title="{{ $item->username }}">
-                                                                                <img style="object-fit: cover;"
-                                                                                    src="{{ $item->avatar ? Storage::url($item->avatar) : asset('assets/img/avatars/1.png') }}"
-                                                                                    alt="Avatar"
-                                                                                    class="rounded-circle pull-up">
-                                                                            </div>
-                                                                        @endforeach
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex flex-wrap gap-1">
-                                                                @if ($item->label)
-                                                                    @foreach ($item->label as $item)
-                                                                        <span class="badge"
-                                                                            style="color: {{ $item->warna_text }} ; background-color: {{ $item->warna_bg }} ">{{ $item->text }}</span>
-                                                                    @endforeach
-                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>
+                                                @endforelse
+                                            </div>
+                                        </div>
+                                        <div style="" class="col-lg-3 col-md-6 col-12 py-2   ">
+                                            <div style="max-height: 80vh; overflow:auto; overflow-x:hidden;background-color: #edeaea"
+                                                class="p-2  rounded">
+                                                <div style="width:100%" class="card card-status-tugas">
+                                                    <div class="card-body p-2 py-2 row justify-content-between">
+                                                        <span class="col-8">Direvisi</span>
+                                                    </div>
+                                                </div>
+                                                @forelse ($board['boardRevisi'] as $item)
+                                                    <div class="col-12 d-flex justify-content-center">
+                                                        <div class="row d-flex flex-column justify-content-center align-items-center w-100"
+                                                            id="tugas_baru">
+                                                            <div id="board-78842ef7-83ab-43da-8404-e0c0cc750daa"
+                                                                class="col-12 p-2 mt-3 card" style="width: 100%;">
+                                                                <div>
+                                                                    <div
+                                                                        class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
+                                                                        <div class="d-flex align-items-center gap-2">
+                                                                            <div class="item-badges">
+                                                                                @switch($item->prioritas)
+                                                                                    @case('mendesak')
+                                                                                        <div class="badge rounded-pill bg-label-danger">
+                                                                                            {{ $item->prioritas }}
+                                                                                        </div>
+                                                                                    @break
+
+                                                                                    @case('penting')
+                                                                                        <div class="badge rounded-pill bg-label-warning">
+                                                                                            {{ $item->prioritas }}
+                                                                                        </div>
+                                                                                    @break
+
+                                                                                    @case('biasa')
+                                                                                        <div class="badge rounded-pill bg-label-info">
+                                                                                            {{ $item->prioritas }}
+                                                                                        </div>
+                                                                                    @break
+
+                                                                                    @case('tambahan')
+                                                                                        <div class="badge rounded-pill bg-label-primary">
+                                                                                            {{ $item->prioritas }}
+                                                                                        </div>
+                                                                                    @break
+
+                                                                                    @default
+                                                                                        <div class="badge rounded-pill bg-label-secondary">
+                                                                                            {{ $item->prioritas }}
+                                                                                        </div>
+                                                                                @endswitch
+                                                                            </div>
+                                                                            @php
+                                                                                $deadline = \Carbon\Carbon::parse($item->deadline);
+                                                                                $now = \Carbon\Carbon::now()->startOfDay();
+                                                                                $diffInDays = $deadline->diffInDays($now);
+                                                                            @endphp
+
+                                                                            @if ($diffInDays == 0)
+                                                                                Hari ini
+                                                                            @elseif ($diffInDays > 0)
+                                                                                {{ $diffInDays }} hari lagi
+                                                                            @else
+                                                                                {{ abs($diffInDays) }} hari terlewat
+                                                                            @endif
+                                                                        </div>
+                                                                    </div>
+                                                                    <span class="kanban-text">{{ $item->nama }}</span>
+                                                                    <div
+                                                                        class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
+                                                                        <div class="d-flex">
+                                                                            <span class="d-flex align-items-center ms-1">
+                                                                                <i class="ti ti-message-dots ti-xs me-1"></i>
+                                                                                <span>{{ $item->comments->count() }}</span>
+                                                                            </span>
+                                                                        </div>
+                                                                        <div
+                                                                            class="avatar-group d-flex align-items-center assigned-avatar">
+                                                                            @if ($project->tim->status_tim !== 'solo')
+                                                                                @foreach ($item->user as $item)
+                                                                                    <div class="avatar avatar-xs"
+                                                                                        data-bs-toggle="tooltip"
+                                                                                        data-bs-placement="top"
+                                                                                        aria-label="{{ $item->username }}"
+                                                                                        data-bs-original-title="{{ $item->username }}">
+                                                                                        <img style="object-fit: cover;"
+                                                                                            src="{{ $item->avatar ? Storage::url($item->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                                                            alt="Avatar"
+                                                                                            class="rounded-circle pull-up">
+                                                                                    </div>
+                                                                                @endforeach
+                                                                            @else
+                                                                                @foreach ($item->user as $item)
+                                                                                    <div class="avatar avatar-xs"
+                                                                                        data-bs-toggle="tooltip"
+                                                                                        data-bs-placement="top"
+                                                                                        aria-label="{{ $item->username }}"
+                                                                                        data-bs-original-title="{{ $item->username }}">
+                                                                                        <img style="object-fit: cover;"
+                                                                                            src="{{ $item->avatar ? Storage::url($item->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                                                            alt="Avatar"
+                                                                                            class="rounded-circle pull-up">
+                                                                                    </div>
+                                                                                @endforeach
+                                                                            @endif
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="d-flex flex-wrap gap-1">
+                                                                        @if ($item->label)
+                                                                            @foreach ($item->label as $item)
+                                                                                <span class="badge"
+                                                                                    style="color: {{ $item->warna_text }} ; background-color: {{ $item->warna_bg }} ">{{ $item->text }}</span>
+                                                                            @endforeach
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @empty
+                                                        <div class="col-12 d-flex justify-content-center">
+                                                            <div class="row d-flex flex-column justify-content-center align-items-center w-100"
+                                                                id="tugas_baru">
+                                                                <div id="board" class="col-12 p-2 mt-3 card"
+                                                                    style="width: 100%;">
+                                                                    <div>
+                                                                        <div
+                                                                            class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
+                                                                        </div>
+                                                                        <span class="kanban-text">Tidak ada tugas.</span>
+                                                                        <div
+                                                                            class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endforelse
                                                 </div>
                                             </div>
-                                        @endforeach
+                                            <div style="" class="col-lg-3 col-md-6 col-12 py-2   ">
+                                                <div style="max-height: 80vh; overflow:auto; overflow-x:hidden;background-color: #edeaea"
+                                                    class="p-2  rounded">
+                                                    <div style="width:100%" class="card card-status-tugas">
+                                                        <div class="card-body p-2 py-2 row justify-content-between">
+                                                            <span class="col-8">Selesai</span>
+                                                        </div>
+                                                    </div>
+                                                    @forelse ($board['boardSelesai'] as $item)
+                                                        <div class="col-12 d-flex justify-content-center">
+                                                            <div class="row d-flex flex-column justify-content-center align-items-center w-100"
+                                                                id="tugas_baru">
+                                                                <div id="board-78842ef7-83ab-43da-8404-e0c0cc750daa"
+                                                                    class="col-12 p-2 mt-3 card" style="width: 100%;">
+                                                                    <div>
+                                                                        <div
+                                                                            class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
+                                                                            <div class="d-flex align-items-center gap-2">
+                                                                                <div class="item-badges">
+                                                                                    @switch($item->prioritas)
+                                                                                        @case('mendesak')
+                                                                                            <div class="badge rounded-pill bg-label-danger">
+                                                                                                {{ $item->prioritas }}
+                                                                                            </div>
+                                                                                        @break
+
+                                                                                        @case('penting')
+                                                                                            <div class="badge rounded-pill bg-label-warning">
+                                                                                                {{ $item->prioritas }}
+                                                                                            </div>
+                                                                                        @break
+
+                                                                                        @case('biasa')
+                                                                                            <div class="badge rounded-pill bg-label-info">
+                                                                                                {{ $item->prioritas }}
+                                                                                            </div>
+                                                                                        @break
+
+                                                                                        @case('tambahan')
+                                                                                            <div class="badge rounded-pill bg-label-primary">
+                                                                                                {{ $item->prioritas }}
+                                                                                            </div>
+                                                                                        @break
+
+                                                                                        @default
+                                                                                            <div class="badge rounded-pill bg-label-secondary">
+                                                                                                {{ $item->prioritas }}
+                                                                                            </div>
+                                                                                    @endswitch
+                                                                                </div>
+                                                                                @php
+                                                                                    $deadline = \Carbon\Carbon::parse($item->deadline);
+                                                                                    $now = \Carbon\Carbon::now()->startOfDay();
+                                                                                    $diffInDays = $deadline->diffInDays($now);
+                                                                                @endphp
+
+                                                                                @if ($diffInDays == 0)
+                                                                                    Hari ini
+                                                                                @elseif ($diffInDays > 0)
+                                                                                    {{ $diffInDays }} hari lagi
+                                                                                @else
+                                                                                    {{ abs($diffInDays) }} hari terlewat
+                                                                                @endif
+                                                                            </div>
+                                                                        </div>
+                                                                        <span class="kanban-text">{{ $item->nama }}</span>
+                                                                        <div
+                                                                            class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
+                                                                            <div class="d-flex">
+                                                                                <span class="d-flex align-items-center ms-1">
+                                                                                    <i class="ti ti-message-dots ti-xs me-1"></i>
+                                                                                    <span>{{ $item->comments->count() }}</span>
+                                                                                </span>
+                                                                            </div>
+                                                                            <div
+                                                                                class="avatar-group d-flex align-items-center assigned-avatar">
+                                                                                @if ($project->tim->status_tim !== 'solo')
+                                                                                    @foreach ($item->user as $item)
+                                                                                        <div class="avatar avatar-xs"
+                                                                                            data-bs-toggle="tooltip"
+                                                                                            data-bs-placement="top"
+                                                                                            aria-label="{{ $item->username }}"
+                                                                                            data-bs-original-title="{{ $item->username }}">
+                                                                                            <img style="object-fit: cover;"
+                                                                                                src="{{ $item->avatar ? Storage::url($item->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                                                                alt="Avatar"
+                                                                                                class="rounded-circle pull-up">
+                                                                                        </div>
+                                                                                    @endforeach
+                                                                                @else
+                                                                                    @foreach ($item->user as $item)
+                                                                                        <div class="avatar avatar-xs"
+                                                                                            data-bs-toggle="tooltip"
+                                                                                            data-bs-placement="top"
+                                                                                            aria-label="{{ $item->username }}"
+                                                                                            data-bs-original-title="{{ $item->username }}">
+                                                                                            <img style="object-fit: cover;"
+                                                                                                src="{{ $item->avatar ? Storage::url($item->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                                                                alt="Avatar"
+                                                                                                class="rounded-circle pull-up">
+                                                                                        </div>
+                                                                                    @endforeach
+                                                                                @endif
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="d-flex flex-wrap gap-1">
+                                                                            @if ($item->label)
+                                                                                @foreach ($item->label as $item)
+                                                                                    <span class="badge"
+                                                                                        style="color: {{ $item->warna_text }} ; background-color: {{ $item->warna_bg }} ">{{ $item->text }}</span>
+                                                                                @endforeach
+                                                                            @endif
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @empty
+                                                            <div class="col-12 d-flex justify-content-center">
+                                                                <div class="row d-flex flex-column justify-content-center align-items-center w-100"
+                                                                    id="tugas_baru">
+                                                                    <div id="board" class="col-12 p-2 mt-3 card"
+                                                                        style="width: 100%;">
+                                                                        <div>
+                                                                            <div
+                                                                                class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
+                                                                            </div>
+                                                                            <span class="kanban-text">Tidak ada tugas.</span>
+                                                                            <div
+                                                                                class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endforelse
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
+                @endsection
 
-@section('script')
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                @section('script')
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <script>
-        var i = 0;
-        $('#tambahCatatan').click(function() {
-            ++i;
-            $('.form-repeater').append(
-                `<div class="form-add row mb-3 w-100">
+                    <script>
+                        var i = 0;
+                        $('#tambahCatatan').click(function() {
+                            ++i;
+                            $('.form-repeater').append(
+                                `<div class="form-add row mb-3 w-100">
                 <div class="col-11 col-md-11">
                     <label for="catatan" class="mb-2 form-label">Catatan Baru</label>
                     <input type="text" name="catatan_text[]" class="form-control">
@@ -844,172 +916,172 @@
                 </div>
             </div>
             `)
-        })
+                        })
 
-        $(document).on('click', '.button-delete-repeater', function(event) {
-            event.preventDefault();
-            var $formCatatanRepeater = $(this).closest('.form-add');
-
-            Swal.fire({
-                title: 'Konfirmasi',
-                text: 'Apakah Anda yakin ingin menghapus baris catatan ini?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Ya, hapus',
-                cancelButtonText: 'Batal'
-            }).then(function(result) {
-                if (result.isConfirmed) {
-                    $formCatatanRepeater.remove();
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Terhapus!',
-                        text: 'Catatan berhasil dihapus.',
-                        showConfirmButton: false,
-                        timer: 3000
-                    });
-                }
-            });
-        });
-
-        $(document).on('click', '.btn-delete-catatan', function(event) {
-            event.preventDefault();
-            var catatanDetailId = $(this).data('id');
-            var csrfToken = $('meta[name="csrf-token"]').attr('content');
-            var $formCatatanRepeater = $(this).parents('.form-add');
-
-            swal.fire({
-                title: 'Konfirmasi',
-                text: 'Apakah Anda yakin ingin menghapus baris catatan ini?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Ya, hapus',
-                cancelButtonText: 'Batal'
-            }).then(function(result) {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: '/mentor/catatan/delete/mentor/' + catatanDetailId,
-                        type: 'DELETE',
-                        headers: {
-                            'X-CSRF-TOKEN': csrfToken
-                        },
-                        success: function(response) {
-
-                            var remainingForms = $formCatatanRepeater.siblings('.form-add')
-                                .length;
-
-                            if (remainingForms === 1) {
-                                $('.btn-delete-catatan ').remove();
-                            };
-
-                            $formCatatanRepeater.remove();
-
+                        $(document).on('click', '.button-delete-repeater', function(event) {
+                            event.preventDefault();
+                            var $formCatatanRepeater = $(this).closest('.form-add');
 
                             Swal.fire({
-                                icon: 'success',
-                                title: 'Terhapus!',
-                                text: 'Catatan berhasil dihapus.',
-                                showConfirmButton: false,
-                                timer: 3000
+                                title: 'Konfirmasi',
+                                text: 'Apakah Anda yakin ingin menghapus baris catatan ini?',
+                                icon: 'question',
+                                showCancelButton: true,
+                                confirmButtonText: 'Ya, hapus',
+                                cancelButtonText: 'Batal'
+                            }).then(function(result) {
+                                if (result.isConfirmed) {
+                                    $formCatatanRepeater.remove();
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Terhapus!',
+                                        text: 'Catatan berhasil dihapus.',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    });
+                                }
                             });
-                        },
-                        error: function(error) {
-                            console.log(error.responseJSON.message);
-                        }
-                    });
-                }
-            });
-        });
-    </script>
+                        });
 
-    {{-- pie chart --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const cardColor = 'grey';
-            const headingColor = '#FDAC34';
-            const black = '#fff';
+                        $(document).on('click', '.btn-delete-catatan', function(event) {
+                            event.preventDefault();
+                            var catatanDetailId = $(this).data('id');
+                            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                            var $formCatatanRepeater = $(this).parents('.form-add');
 
-            const doughnutChart = document.getElementById('project');
-            const chartStatus = document.querySelector('.chart-status');
+                            swal.fire({
+                                title: 'Konfirmasi',
+                                text: 'Apakah Anda yakin ingin menghapus baris catatan ini?',
+                                icon: 'question',
+                                showCancelButton: true,
+                                confirmButtonText: 'Ya, hapus',
+                                cancelButtonText: 'Batal'
+                            }).then(function(result) {
+                                if (result.isConfirmed) {
+                                    $.ajax({
+                                        url: '/mentor/catatan/delete/mentor/' + catatanDetailId,
+                                        type: 'DELETE',
+                                        headers: {
+                                            'X-CSRF-TOKEN': csrfToken
+                                        },
+                                        success: function(response) {
 
-            if (doughnutChart) {
-                const processedData = @json($chartData);
+                                            var remainingForms = $formCatatanRepeater.siblings('.form-add')
+                                                .length;
 
-                const labels = processedData.map(data => data[0]);
-                const values = processedData.map(data => data[1]);
+                                            if (remainingForms === 1) {
+                                                $('.btn-delete-catatan ').remove();
+                                            };
 
-                const doughnutChartVar = new Chart(doughnutChart, {
-                    type: 'doughnut',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            data: values,
-                            backgroundColor: [cardColor, '#F9ED69', '#F08A5D', '#B83B5E',
-                                '#6A2C70'
-                            ],
-                            hoverOffset: 4
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        animation: {
-                            duration: 500
-                        },
-                        plugins: {
-                            legend: {
-                                display: false
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        const label = context.label || '';
-                                        const value = context.parsed;
-                                        const output = ' ' + label + ' : ' + value;
-                                        return output;
+                                            $formCatatanRepeater.remove();
+
+
+                                            Swal.fire({
+                                                icon: 'success',
+                                                title: 'Terhapus!',
+                                                text: 'Catatan berhasil dihapus.',
+                                                showConfirmButton: false,
+                                                timer: 3000
+                                            });
+                                        },
+                                        error: function(error) {
+                                            console.log(error.responseJSON.message);
+                                        }
+                                    });
+                                }
+                            });
+                        });
+                    </script>
+
+                    {{-- pie chart --}}
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const cardColor = 'grey';
+                            const headingColor = '#FDAC34';
+                            const black = '#fff';
+
+                            const doughnutChart = document.getElementById('project');
+                            const chartStatus = document.querySelector('.chart-status');
+
+                            if (doughnutChart) {
+                                const processedData = @json($chartData);
+
+                                const labels = processedData.map(data => data[0]);
+                                const values = processedData.map(data => data[1]);
+
+                                const doughnutChartVar = new Chart(doughnutChart, {
+                                    type: 'doughnut',
+                                    data: {
+                                        labels: labels,
+                                        datasets: [{
+                                            data: values,
+                                            backgroundColor: [cardColor, '#F9ED69', '#F08A5D', '#B83B5E',
+                                                '#6A2C70'
+                                            ],
+                                            hoverOffset: 4
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        animation: {
+                                            duration: 500
+                                        },
+                                        plugins: {
+                                            legend: {
+                                                display: false
+                                            },
+                                            tooltip: {
+                                                callbacks: {
+                                                    label: function(context) {
+                                                        const label = context.label || '';
+                                                        const value = context.parsed;
+                                                        const output = ' ' + label + ' : ' + value;
+                                                        return output;
+                                                    }
+                                                },
+                                                backgroundColor: cardColor,
+                                                titleColor: black,
+                                                bodyColor: black,
+                                                borderWidth: 1,
+                                                borderColor: cardColor,
+                                                afterLabel: function(context) {
+                                                    const datasetIndex = context.datasetIndex;
+                                                    const dataIndex = context.dataIndex;
+                                                    const data = doughnutChartVar.data.datasets[datasetIndex].data;
+                                                    const label = doughnutChartVar.data.labels[dataIndex];
+                                                    const value = data[dataIndex];
+
+                                                    // Menampilkan jumlah saat kursor mengarah ke elemen chart
+                                                    return `Jumlah ${label}: ${value}`;
+                                                }
+                                            }
+                                        }
                                     }
-                                },
-                                backgroundColor: cardColor,
-                                titleColor: black,
-                                bodyColor: black,
-                                borderWidth: 1,
-                                borderColor: cardColor,
-                                afterLabel: function(context) {
-                                    const datasetIndex = context.datasetIndex;
-                                    const dataIndex = context.dataIndex;
-                                    const data = doughnutChartVar.data.datasets[datasetIndex].data;
-                                    const label = doughnutChartVar.data.labels[dataIndex];
-                                    const value = data[dataIndex];
+                                });
 
-                                    // Menampilkan jumlah saat kursor mengarah ke elemen chart
-                                    return `Jumlah ${label}: ${value}`;
+                                if (values.slice(1).every(value => value === 0)) {
+
+                                    chartStatus.style.display = 'block';
+                                    doughnutChart.style.display = 'none';
+                                    const img = document.createElement('img');
+                                    img.src = '{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}';
+                                    img.alt = 'Belum Ada Tugas';
+                                    img.style.width = '200px';
+
+                                    const h6Text = 'Tidak Ada Tugas <i class="ti ti-address-book-off"></i>';
+                                    const h6Element = document.createElement('h6');
+                                    h6Element.classList.add('text-center', 'mt-4');
+                                    h6Element.innerHTML = h6Text;
+
+                                    chartStatus.innerHTML = '';
+                                    chartStatus.appendChild(h6Element);
+                                    chartStatus.appendChild(img);
+                                } else {
+                                    chartStatus.style.display = 'none';
+                                    doughnutChart.style.display = 'block';
+                                    chartStatus.textContent = '';
                                 }
                             }
-                        }
-                    }
-                });
-
-                if (values.slice(1).every(value => value === 0)) {
-
-                    chartStatus.style.display = 'block';
-                    doughnutChart.style.display = 'none';
-                    const img = document.createElement('img');
-                    img.src = '{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}';
-                    img.alt = 'Belum Ada Tugas';
-                    img.style.width = '200px';
-
-                    const h6Text = 'Tidak Ada Tugas <i class="ti ti-address-book-off"></i>';
-                    const h6Element = document.createElement('h6');
-                    h6Element.classList.add('text-center', 'mt-4');
-                    h6Element.innerHTML = h6Text;
-
-                    chartStatus.innerHTML = '';
-                    chartStatus.appendChild(h6Element);
-                    chartStatus.appendChild(img);
-                } else {
-                    chartStatus.style.display = 'none';
-                    doughnutChart.style.display = 'block';
-                    chartStatus.textContent = '';
-                }
-            }
-        });
-    </script>
-@endsection
+                        });
+                    </script>
+                @endsection
