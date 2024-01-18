@@ -864,15 +864,41 @@
             })
         }
 
-        $(".btn-feedback-modal").click(function() {
-            const feedback = $(this).data("feedback");
-            console.log(feedback);
-            const text = $("#text-feedback").html(
-                `
-                <p>${feedback}</p>
-                `
-            );
-        })
+        $('.btn-detail').on('click', function() {
+            let judul = $(this).data('judul');
+            let jadwal = $(this).data('jadwal');
+            let hari = $(this).data('hari');
+            let mulai = $(this).data('mulai');
+            let akhir = $(this).data('akhir');
+            let feedback = $(this).data('feedback');
+            let deskripsi = $(this).data('deskripsi');
+            let jadwalLengkap = $(this).data('jadwal-lengkap');
+
+            const modal = $('#detailpresentasi');
+
+            modal.find('#judul-detail').text('');
+            modal.find('#tanggal-detail').text('');
+            modal.find('#deskripsi-detail').text('');
+            modal.find('#feedback-detail').text('');
+            modal.find('#sesi-detail').text('');
+
+            modal.find('#judul-detail').text(judul);
+            modal.find('#tanggal-detail').text(jadwalLengkap);
+            modal.find('#sesi-detail').text(jadwal + ' ' + mulai + ' ' + akhir);
+
+            if (deskripsi) {
+                modal.find('#deskripsi-detail').text(deskripsi);
+            } else {
+                modal.find('#deskripsi-detail').text('Anda tidak mengisi deskripsi presentasi');
+            }
+
+            // Set feedback hanya jika feedback tidak kosong
+            if (feedback) {
+                modal.find('#feedback-detail').text(feedback);
+            } else {
+                modal.find('#feedback-detail').text('Mentor tidak atau belum memberi feedback');
+            }
+        });
 
         function validateForm(formId) {
             $(formId).on('submit', function(event) {
