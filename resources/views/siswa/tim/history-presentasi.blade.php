@@ -277,24 +277,29 @@
                             <div class="modal-body">
                                 <ul class="nav nav-pills bg-light rounded mb-3" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Monday' || \Carbon\Carbon::now()->format('l') === 'Saturday' || \Carbon\Carbon::now()->format('l') === 'Sunday' ? 'active' : '' }}" data-bs-toggle="tab" href="#senin"
-                                            role="tab">Senin</a>
+                                        <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Monday' || \Carbon\Carbon::now()->format('l') === 'Saturday' || \Carbon\Carbon::now()->format('l') === 'Sunday' ? 'active' : '' }}"
+                                            data-bs-toggle="tab" href="#senin" role="tab">Senin</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Tuesday' ? 'show active' : '' }}" data-bs-toggle="tab" href="#selasa" role="tab">Selasa</a>
+                                        <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Tuesday' ? 'show active' : '' }}"
+                                            data-bs-toggle="tab" href="#selasa" role="tab">Selasa</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Wednesday' ? 'show active' : '' }}" data-bs-toggle="tab" href="#rabu" role="tab">Rabu</a>
+                                        <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Wednesday' ? 'show active' : '' }}"
+                                            data-bs-toggle="tab" href="#rabu" role="tab">Rabu</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Thursday' ? 'show active' : '' }}" data-bs-toggle="tab" href="#kamis" role="tab">Kamis</a>
+                                        <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Thursday' ? 'show active' : '' }}"
+                                            data-bs-toggle="tab" href="#kamis" role="tab">Kamis</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Friday' ? 'show active' : '' }}" data-bs-toggle="tab" href="#jumat" role="tab">Jumat</a>
+                                        <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Friday' ? 'show active' : '' }}"
+                                            data-bs-toggle="tab" href="#jumat" role="tab">Jumat</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
-                                    <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Monday' || \Carbon\Carbon::now()->format('l') === 'Saturday' || \Carbon\Carbon::now()->format('l') === 'Sunday' ? 'show active' : '' }}" id="senin" role="tabpanel">
+                                    <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Monday' || \Carbon\Carbon::now()->format('l') === 'Saturday' || \Carbon\Carbon::now()->format('l') === 'Sunday' ? 'show active' : '' }}"
+                                        id="senin" role="tabpanel">
                                         <form id="formAjukanPresentasi_1"
                                             @if ($cekJadwalSenin !== null) action="{{ route('update-presentasi', $presentID) }}" method="post"
                                             @else
@@ -304,11 +309,12 @@
                                                 @method('PUT')
                                             @endif
                                             @if ($cekJadwalRabu)
-                                            <label for="judul" class="form-label">Judul Presentasi</label>
-                                            <input type="text" name="judul" value="{{ $cekJadwalRabu->judul }}" class="form-control">
+                                                <label for="judul" class="form-label">Judul Presentasi</label>
+                                                <input type="text" name="judul" value="{{ $cekJadwalRabu->judul }}"
+                                                    class="form-control">
                                             @else
-                                            <label for="judul" class="form-label">Judul Presentasi</label>
-                                            <input type="text" name="judul" class="form-control">
+                                                <label for="judul" class="form-label">Judul Presentasi</label>
+                                                <input type="text" name="judul" class="form-control">
                                             @endif
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
@@ -349,20 +355,20 @@
                                                     </div>
                                                 @endforelse
                                                 @if ($cekJadwalSenin)
-                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
-                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalSenin->deskripsi }}</textarea>
+                                                    <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalSenin->deskripsi }}</textarea>
                                                 @else
-                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
-                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                    <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                                                 @endif
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
-                                                    @if ($cekJadwalSenin !== null)
+                                                    @if ($cekJadwalSenin && $cekJadwalSenin->status_presentasi !== 'menunggu')
                                                         <div class="">
                                                             <button type="button" data-bs-dismiss="modal"
                                                                 class="btn btn-primary bg-danger waves-effect">
-                                                                Anda hanya dapat merubah Jadwal Presentasi!
+                                                                Anda sudah melakukan presentasi hari Senin
                                                             </button>
                                                         </div>
                                                     @elseif ($cekJadwalSenin === null)
@@ -374,15 +380,26 @@
                                                         </div>
                                                     @endif
                                                     <div class="">
-                                                        <button type="submit" class="btn btn-primary">
-                                                            Simpan
-                                                        </button>
+                                                        @if ($cekJadwalSenin && $cekJadwalSenin->status_presentasi !== 'menunggu')
+                                                            <div class="">
+                                                                <button type="submit" class="btn btn-primary" disabled>
+                                                                    Simpan
+                                                                </button>
+                                                            </div>
+                                                        @else
+                                                            <div class="">
+                                                                <button type="submit" class="btn btn-primary">
+                                                                    Simpan
+                                                                </button>
+                                                            </div>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Tuesday' ? 'show active' : '' }}" id="selasa" role="tabpanel">
+                                    <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Tuesday' ? 'show active' : '' }}"
+                                        id="selasa" role="tabpanel">
                                         <form id="formAjukanPresentasi_2"
                                             @if ($cekJadwalSelasa !== null) action="{{ route('update-presentasi', $presentID) }}" method="post"
                                             @else
@@ -392,11 +409,12 @@
                                                 @method('PUT')
                                             @endif
                                             @if ($cekJadwalRabu)
-                                            <label for="judul" class="form-label">Judul Presentasi</label>
-                                            <input type="text" name="judul" value="{{ $cekJadwalRabu->judul }}" class="form-control">
+                                                <label for="judul" class="form-label">Judul Presentasi</label>
+                                                <input type="text" name="judul" value="{{ $cekJadwalRabu->judul }}"
+                                                    class="form-control">
                                             @else
-                                            <label for="judul" class="form-label">Judul Presentasi</label>
-                                            <input type="text" name="judul" class="form-control">
+                                                <label for="judul" class="form-label">Judul Presentasi</label>
+                                                <input type="text" name="judul" class="form-control">
                                             @endif
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
@@ -439,20 +457,20 @@
                                                     </div>
                                                 @endforelse
                                                 @if ($cekJadwalSelasa)
-                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
-                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalSelasa->deskripsi }}</textarea>
+                                                    <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalSelasa->deskripsi }}</textarea>
                                                 @else
-                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
-                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                    <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                                                 @endif
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
-                                                    @if ($cekJadwalSelasa !== null)
+                                                    @if ($cekJadwalSelasa && $cekJadwalSelasa->status_presentasi !== 'menunggu')
                                                         <div class="">
                                                             <button type="button" data-bs-dismiss="modal"
                                                                 class="btn btn-primary bg-danger waves-effect">
-                                                                Anda hanya dapat merubah Jadwal Presentasi!
+                                                                Anda sudah melakukan presentasi hari Selasa
                                                             </button>
                                                         </div>
                                                     @elseif ($cekJadwalSelasa === null)
@@ -463,16 +481,25 @@
                                                             </button>
                                                         </div>
                                                     @endif
-                                                    <div class="">
-                                                        <button type="submit" class="btn btn-primary">
-                                                            Simpan
-                                                        </button>
-                                                    </div>
+                                                    @if ($cekJadwalSelasa && $cekJadwalSelasa->status_presentasi !== 'menunggu')
+                                                        <div class="">
+                                                            <button type="submit" class="btn btn-primary" disabled>
+                                                                Simpan
+                                                            </button>
+                                                        </div>
+                                                    @else
+                                                        <div class="">
+                                                            <button type="submit" class="btn btn-primary">
+                                                                Simpan
+                                                            </button>
+                                                        </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Wednesday' ? 'show active' : '' }}" id="rabu" role="tabpanel">
+                                    <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Wednesday' ? 'show active' : '' }}"
+                                        id="rabu" role="tabpanel">
                                         <form id="formAjukanPresentasi_3"
                                             @if ($cekJadwalRabu !== null) action="{{ route('update-presentasi', $presentID) }}" method="post"
                                             @else
@@ -534,20 +561,20 @@
                                                     </div>
                                                 @endforelse
                                                 @if ($cekJadwalRabu)
-                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
-                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalRabu->deskripsi }}</textarea>
+                                                    <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalRabu->deskripsi }}</textarea>
                                                 @else
-                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
-                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                    <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                                                 @endif
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
-                                                    @if ($cekJadwalRabu !== null)
+                                                    @if ($cekJadwalRabu && $cekJadwalRabu->status_presentasi !== 'menunggu')
                                                         <div class="">
                                                             <button type="button" data-bs-dismiss="modal"
                                                                 class="btn btn-primary bg-danger waves-effect">
-                                                                Anda hanya dapat merubah Jadwal Presentasi!
+                                                                Anda sudah melakukan presentasi hari Rabu
                                                             </button>
                                                         </div>
                                                     @elseif ($cekJadwalRabu === null)
@@ -559,21 +586,26 @@
                                                         </div>
                                                     @endif
                                                     <div class="">
-                                                        @if ($cekJadwalRabu !== null)
-                                                            <button type="submit" class="btn btn-primary">
-                                                                Update
-                                                            </button>
-                                                        @elseif ($cekJadwalRabu === null)
-                                                            <button type="submit" class="btn btn-primary">
-                                                                Simpan
-                                                            </button>
+                                                        @if ($cekJadwalRabu && $cekJadwalRabu->status_presentasi !== 'menunggu')
+                                                            <div class="">
+                                                                <button type="submit" class="btn btn-primary" disabled>
+                                                                    Simpan
+                                                                </button>
+                                                            </div>
+                                                        @else
+                                                            <div class="">
+                                                                <button type="submit" class="btn btn-primary">
+                                                                    Simpan
+                                                                </button>
+                                                            </div>
                                                         @endif
                                                     </div>
                                                 </div>
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Thursday' ? 'show active' : '' }}" id="kamis" role="tabpanel">
+                                    <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Thursday' ? 'show active' : '' }}"
+                                        id="kamis" role="tabpanel">
                                         <form id="formAjukanPresentasi_4"
                                             @if ($cekJadwalKamis !== null) action="{{ route('update-presentasi', $presentID) }}" method="post"
                                             @else
@@ -583,11 +615,12 @@
                                                 @method('PUT')
                                             @endif
                                             @if ($cekJadwalKamis)
-                                            <label for="judul" class="form-label">Judul Presentasi</label>
-                                            <input type="text" name="judul" value="{{ $cekJadwalKamis->judul }}" class="form-control">
+                                                <label for="judul" class="form-label">Judul Presentasi</label>
+                                                <input type="text" name="judul"
+                                                    value="{{ $cekJadwalKamis->judul }}" class="form-control">
                                             @else
-                                            <label for="judul" class="form-label">Judul Presentasi</label>
-                                            <input type="text" name="judul" class="form-control">
+                                                <label for="judul" class="form-label">Judul Presentasi</label>
+                                                <input type="text" name="judul" class="form-control">
                                             @endif
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
@@ -628,20 +661,20 @@
                                                     </div>
                                                 @endforelse
                                                 @if ($cekJadwalKamis)
-                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
-                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalKamis->deskripsi }}</textarea>
+                                                    <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalKamis->deskripsi }}</textarea>
                                                 @else
-                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
-                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                    <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                                                 @endif
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
-                                                    @if ($cekJadwalKamis !== null)
+                                                    @if ($cekJadwalKamis && $cekJadwalKamis->status_presentasi !== 'menunggu')
                                                         <div class="">
                                                             <button type="button" data-bs-dismiss="modal"
                                                                 class="btn btn-primary bg-danger waves-effect">
-                                                                Anda hanya dapat merubah Jadwal Presentasi!
+                                                                Anda sudah melakukan Presentasi hari Kamis
                                                             </button>
                                                         </div>
                                                     @elseif ($cekJadwalKamis === null)
@@ -653,21 +686,26 @@
                                                         </div>
                                                     @endif
                                                     <div class="">
-                                                        @if ($cekJadwalKamis !== null)
-                                                            <button type="submit" class="btn btn-primary">
-                                                                Update
-                                                            </button>
-                                                        @elseif ($cekJadwalKamis === null)
-                                                            <button type="submit" class="btn btn-primary">
-                                                                Simpan
-                                                            </button>
+                                                        @if ($cekJadwalKamis && $cekJadwalKamis->status_presentasi !== 'menunggu')
+                                                            <div class="">
+                                                                <button type="submit" class="btn btn-primary" disabled>
+                                                                    Simpan
+                                                                </button>
+                                                            </div>
+                                                        @else
+                                                            <div class="">
+                                                                <button type="submit" class="btn btn-primary">
+                                                                    Simpan
+                                                                </button>
+                                                            </div>
                                                         @endif
                                                     </div>
                                                 </div>
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Friday' ? 'show active' : '' }}" id="jumat" role="tabpanel">
+                                    <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Friday' ? 'show active' : '' }}"
+                                        id="jumat" role="tabpanel">
                                         <form id="formAjukanPresentasi_5"
                                             @if ($cekJadwalJumat !== null) action="{{ route('update-presentasi', $presentID) }}" method="post"
                                             @else
@@ -677,11 +715,12 @@
                                                 @method('PUT')
                                             @endif
                                             @if ($cekJadwalJumat)
-                                            <label for="judul" class="form-label">Judul Presentasi</label>
-                                            <input type="text" name="judul" value="{{ $cekJadwalJumat->judul }}" class="form-control">
+                                                <label for="judul" class="form-label">Judul Presentasi</label>
+                                                <input type="text" name="judul"
+                                                    value="{{ $cekJadwalJumat->judul }}" class="form-control">
                                             @else
-                                            <label for="judul" class="form-label">Judul Presentasi</label>
-                                            <input type="text" name="judul" class="form-control">
+                                                <label for="judul" class="form-label">Judul Presentasi</label>
+                                                <input type="text" name="judul" class="form-control">
                                             @endif
                                             <label for="" class="mt-3">Jadwal</label>
                                             <div class="row">
@@ -722,20 +761,20 @@
                                                     </div>
                                                 @endforelse
                                                 @if ($cekJadwalJumat)
-                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
-                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalJumat->deskripsi }}</textarea>
+                                                    <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalJumat->deskripsi }}</textarea>
                                                 @else
-                                                <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
-                                                <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                    <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                                                 @endif
                                             </div>
                                             <div class="modal-footer">
                                                 <div class="d-flex justify-content-end gap-2">
-                                                    @if ($cekJadwalJumat !== null)
+                                                    @if ($cekJadwalJumat && $cekJadwalJumat->status_presentasi !== 'menunggu')
                                                         <div class="">
                                                             <button type="button" data-bs-dismiss="modal"
                                                                 class="btn btn-primary bg-danger waves-effect">
-                                                                Anda hanya dapat merubah Jadwal Presentasi!
+                                                                Anda sudah melakukan presentasi hari Jumat
                                                             </button>
                                                         </div>
                                                     @elseif ($cekJadwalJumat === null)
@@ -747,14 +786,18 @@
                                                         </div>
                                                     @endif
                                                     <div class="">
-                                                        @if ($cekJadwalJumat !== null)
-                                                            <button type="submit" class="btn btn-primary">
-                                                                Update
-                                                            </button>
-                                                        @elseif ($cekJadwalJumat === null)
-                                                            <button type="submit" class="btn btn-primary">
-                                                                Simpan
-                                                            </button>
+                                                        @if ($cekJadwalJumat && $cekJadwalJumat->status_presentasi !== 'menunggu')
+                                                            <div class="">
+                                                                <button type="submit" class="btn btn-primary" disabled>
+                                                                    Simpan
+                                                                </button>
+                                                            </div>
+                                                        @else
+                                                            <div class="">
+                                                                <button type="submit" class="btn btn-primary">
+                                                                    Simpan
+                                                                </button>
+                                                            </div>
                                                         @endif
                                                     </div>
                                                 </div>
