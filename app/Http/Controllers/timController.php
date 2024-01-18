@@ -235,6 +235,7 @@ class timController extends Controller
             $cekJadwalSenin = Presentasi::where('presentasi_divisi_id', $senin->presentasi_divisi_id)
                 ->where('tim_id', $user->anggota()->latest()->first()->tim_id)
                 ->where('divisi_id', auth()->user()->divisi_id)
+                ->where('status_presentasi', 'menunggu')
                 ->whereHas('tim.anggota', function ($query) {
                     $query->where('status', 'active');
                 })
@@ -252,6 +253,7 @@ class timController extends Controller
             $cekJadwalSelasa = Presentasi::where('presentasi_divisi_id', $selasa->presentasi_divisi_id)
                 ->where('tim_id', $user->anggota()->latest()->first()->tim_id)
                 ->where('divisi_id', auth()->user()->divisi_id)
+                ->where('status_presentasi', 'menunggu')
                 ->whereHas('tim.anggota', function ($query) {
                     $query->where('status', 'active');
                 })
@@ -269,6 +271,7 @@ class timController extends Controller
             $cekJadwalRabu = Presentasi::where('presentasi_divisi_id', $rabu->presentasi_divisi_id)
                 ->where('divisi_id', auth()->user()->divisi_id)
                 ->where('tim_id', $user->anggota()->latest()->first()->tim_id)
+                ->where('status_presentasi', 'menunggu')
                 ->whereHas('tim.anggota', function ($query) {
                     $query->where('status', 'active');
                 })
@@ -287,6 +290,7 @@ class timController extends Controller
             $cekJadwalKamis = Presentasi::where('presentasi_divisi_id', $kamis->presentasi_divisi_id)
                 ->where('divisi_id', auth()->user()->divisi_id)
                 ->where('tim_id', $user->anggota()->latest()->first()->tim_id)
+                ->where('status_presentasi', 'menunggu')
                 ->whereHas('tim.anggota', function ($query) {
                     $query->where('status', 'active');
                 })
@@ -304,6 +308,7 @@ class timController extends Controller
             $cekJadwalJumat = Presentasi::where('presentasi_divisi_id', $jumat->presentasi_divisi_id)
                 ->where('divisi_id', auth()->user()->divisi_id)
                 ->where('tim_id', $user->anggota()->latest()->first()->tim_id)
+                ->where('status_presentasi', 'menunggu')
                 ->whereHas('tim.anggota', function ($query) {
                     $query->where('status', 'active');
                 })

@@ -234,7 +234,7 @@
                                     <hr>
                                     <div class="row">
                                         <div class="col">
-                                            <label for="" class="form-label">Tanggal : </label>
+                                            <label for="" class="form-label">Jadwal : </label>
                                             <span id="sesi-detail">
                                                 Senin, 21 januari 2014
                                             </span>
@@ -322,17 +322,18 @@
                                                         @php
                                                             $cekJadwal = \App\Models\Presentasi::where('presentasi_divisi_id', $data->presentasi_divisi_id)
                                                                 ->where('jadwal_ke', $data->jadwal_ke)
+                                                            ->whereDate('jadwal', '>', Carbon\Carbon::now()->startOfWeek())
                                                                 ->where('divisi_id', auth()->user()->divisi_id)
                                                                 ->first();
                                                         @endphp
 
                                                         <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                             <label
-                                                                class="card card-jadwal {{ $cekJadwalSenin !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwalSenin === null && $cekJadwal ? 'bg-label-secondary' : '' }}">
+                                                                class="card card-jadwal {{ $cekJadwalSenin !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}">
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}"
                                                                     {{ $cekJadwalSenin !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
-                                                                    {{ $cekJadwalSenin == null && $cekJadwal ? 'disabled' : '' }}>
+                                                                    {{ $cekJadwal ? 'disabled' : '' }}>
                                                                 <span class="plan-details text-center">
                                                                     <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
                                                                         {{ $data->jadwal_ke }}
@@ -422,19 +423,20 @@
                                                         @php
                                                             $cekJadwal = \App\Models\Presentasi::where('presentasi_divisi_id', $data->presentasi_divisi_id)
                                                                 ->where('jadwal_ke', $data->jadwal_ke)
+                                                            ->whereDate('jadwal', '>', Carbon\Carbon::now()->startOfWeek())
                                                                 ->where('divisi_id', auth()->user()->divisi_id)
                                                                 ->first();
                                                         @endphp
 
                                                         <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                             <label
-                                                                class="card card-jadwal {{ $cekJadwalSelasa !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwalSelasa === null && $cekJadwal ? 'bg-label-secondary' : '' }}"
+                                                                class="card card-jadwal {{ $cekJadwalSelasa !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}"
                                                                 data-jadwal-ke="{{ $cekJadwalSelasa ? $cekJadwalSelasa->jadwal_ke : '' }}"
                                                                 id="jadwalCard{{ $data->id }}">
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}"
                                                                     {{ $cekJadwalSelasa !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
-                                                                    {{ $cekJadwalSelasa === null && $cekJadwal ? 'disabled' : '' }}>
+                                                                    {{ $cekJadwal ? 'disabled' : '' }}>
                                                                 <span class="plan-details text-center">
                                                                     <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
                                                                         {{ $data->jadwal_ke }}
@@ -528,17 +530,18 @@
                                                         @php
                                                             $cekJadwal = \App\Models\Presentasi::where('presentasi_divisi_id', $data->presentasi_divisi_id)
                                                                 ->where('jadwal_ke', $data->jadwal_ke)
+                                                            ->whereDate('jadwal', '>', Carbon\Carbon::now()->startOfWeek())
                                                                 ->where('divisi_id', auth()->user()->divisi_id)
                                                                 ->first();
                                                         @endphp
 
                                                         <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                             <label
-                                                                class="card card-jadwal {{ $cekJadwalRabu !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwalRabu === null && $cekJadwal ? 'bg-label-secondary' : '' }}">
+                                                                class="card card-jadwal {{ $cekJadwalRabu !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}">
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}"
                                                                     {{ $cekJadwalRabu !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
-                                                                    {{ $cekJadwalRabu === null && $cekJadwal ? 'disabled' : '' }}>
+                                                                    {{$cekJadwal ? 'disabled' : '' }}>
                                                                 <span class="plan-details text-center">
                                                                     <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
                                                                         {{ $data->jadwal_ke }}
@@ -628,17 +631,18 @@
                                                         @php
                                                             $cekJadwal = \App\Models\Presentasi::where('presentasi_divisi_id', $data->presentasi_divisi_id)
                                                                 ->where('jadwal_ke', $data->jadwal_ke)
+                                                            ->whereDate('jadwal', '>', Carbon\Carbon::now()->startOfWeek())
                                                                 ->where('divisi_id', auth()->user()->divisi_id)
                                                                 ->first();
                                                         @endphp
 
                                                         <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                             <label
-                                                                class="card card-jadwal {{ $cekJadwalKamis &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwalKamis && $cekJadwal ? 'bg-label-secondary' : '' }}">
+                                                                class="card card-jadwal {{ $cekJadwalKamis !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}">
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}"
-                                                                    {{ $cekJadwalKamis &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
-                                                                    {{ $cekJadwalKamis && $cekJadwal ? 'disabled' : '' }}>
+                                                                    {{ $cekJadwalKamis !== null && $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
+                                                                    {{ $cekJadwal ? 'disabled' : '' }}>
                                                                 <span class="plan-details text-center">
                                                                     <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
                                                                         {{ $data->jadwal_ke }}
@@ -728,17 +732,18 @@
                                                         @php
                                                             $cekJadwal = \App\Models\Presentasi::where('presentasi_divisi_id', $data->presentasi_divisi_id)
                                                                 ->where('jadwal_ke', $data->jadwal_ke)
+                                                            ->whereDate('jadwal', '>', Carbon\Carbon::now()->startOfWeek())
                                                                 ->where('divisi_id', auth()->user()->divisi_id)
                                                                 ->first();
                                                         @endphp
 
                                                         <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                             <label
-                                                                class="card card-jadwal {{ $cekJadwalJumat !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwalJumat === null && $cekJadwal ? 'bg-label-secondary' : '' }}">
+                                                                class="card card-jadwal {{ $cekJadwalJumat !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}">
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}"
                                                                     {{ $cekJadwalJumat !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
-                                                                    {{ $cekJadwalJumat === null && $cekJadwal ? 'disabled' : '' }}>
+                                                                    {{ $cekJadwal ? 'disabled' : '' }}>
                                                                 <span class="plan-details text-center">
                                                                     <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
                                                                         {{ $data->jadwal_ke }}
