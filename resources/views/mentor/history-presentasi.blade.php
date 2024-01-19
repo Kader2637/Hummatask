@@ -10,7 +10,7 @@
         <li class="nav-item" role="presentation">
           <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
             type="button" role="tab" aria-controls="pills-home" aria-selected="true" data-tab="1"><i
-              class="fa-solid fa-calendar-xmark icon-text me-2"></i>Belum Presentasi</button>
+              class="fa-solid fa-user-times icon-text me-2"></i>Belum Presentasi Hari Ini</button>
         </li>
         <li class="nav-item" role="presentation">
           <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
@@ -20,7 +20,7 @@
         <li class="nav-item" role="presentation">
           <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-aduh"
             type="button" role="tab" aria-controls="pills-aduh" aria-selected="false" data-tab="2"><i
-              class="fa-solid fa-person-chalkboard icon-text me-2"></i>Tidak Presentasi Mingguan</button>
+              class="fa-solid fa-calendar-xmark icon-text me-2"></i>Tidak Presentasi Mingguan</button>
         </li>
       </div>
     </div>
@@ -123,11 +123,14 @@
                   <th scope="col">NO</th>
                   <th scope="col">NAMA TIM</th>
                   <th scope="col">STATUS TIM</th>
-                  <th scope="col">HARI/TANGGAL</th>
+                  <th scope="col">MINGGU KE</th>
+                  <th scope="col">BULAN</th>
                 </tr>
               </thead>
               <tbody>
                 @foreach ($tidakPresentasiMingguan as $item)
+                {{ $mingguKe = $item->historyPresentasi->noMinggu; }}
+                {{ $bulan = $item->historyPresentasi->bulan; }}
                   <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->tim->nama }}</td>
@@ -142,7 +145,8 @@
                         <span class="badge bg-label-primary">Big Project</span>
                       @endif
                     </td>
-                    <td>{{ \Carbon\Carbon::now()->translatedFormat('l, j F Y') }}</td>
+                    <td>Minggu Ke-{{ $mingguKe }}</td>
+                    <td>{{ $bulan }}</td>
                   </tr>
                 @endforeach
               </tbody>

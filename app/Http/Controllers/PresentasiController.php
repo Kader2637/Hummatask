@@ -60,6 +60,7 @@ class PresentasiController extends Controller
         ->whereHas('tim', function ($query){
             $query->where('divisi_id', Auth()->user()->divisi_id);
         })
+        ->with(['historyPresentasi:id,noMinggu,bulan'])
         ->get();
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
         return view('mentor.history-presentasi', compact('notifikasi', 'presentasiSelesai','tidakPresentasiMingguan', 'tidakPresentasi', 'hariIni'));
