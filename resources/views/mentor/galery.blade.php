@@ -51,7 +51,7 @@
                     <button class="nav-link active" id="pills-galery-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-galery" type="button" role="tab" aria-controls="pills-galery"
                         aria-selected="true" data-tab="1"><i class="menu-icon ti ti-album album-rounded"></i>
-                        halo wassap ges Dashboard</button>
+                        Dashboard</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
@@ -428,20 +428,18 @@
                     success: function(data) {
                         $('#createGalery').modal('hide');
                         Swal.fire({
-                                icon: 'success',
-                                title: 'Success',
-                                text: 'Berhasil menambahkan data',
-                            })
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Berhasil menambahkan data',
+                            showConfirmButton: false, // Menyembunyikan tombol konfirmasi
+                            timer: 3000, // Menambahkan timer 3000 milidetik (3 detik)
+                        });
 
-                            .then((result) => {
-                                if (result.isConfirmed) {
-                                    loadGalery();
-                                    $('#createGaleryForm')[0].reset();
-                                    // Hapus class overlay yang menutupi halaman
-                                    $('body').removeClass('modal-open');
-                                    $('.modal-backdrop').remove();
-                                }
-                            });
+                        loadGalery();
+                        $('#createGaleryForm')[0].reset();
+                        // Hapus class overlay yang menutupi halaman
+                        $('body').removeClass('modal-open');
+                        $('.modal-backdrop').remove();
                     },
                     error: function(error) {
                         var errorData = response.responseJSON;
@@ -744,15 +742,14 @@
                             icon: 'success',
                             title: 'Success',
                             text: 'Berhasil menambahkan data'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                loadLogo()
-                                $('#createLogoForm')[0].reset();
-                                // Hapus class overlay yang menutupi halaman
-                                $('body').removeClass('modal-open');
-                                $('.modal-backdrop').remove();
-                            }
+                            showConfirmButton: false,
+                            timer: 2000
                         });
+                        loadLogo()
+                        $('#createLogoForm')[0].reset();
+                        // Hapus class overlay yang menutupi halaman
+                        $('body').removeClass('modal-open');
+                        $('.modal-backdrop').remove();
                     },
                     error: function(error) {
                         var errorData = response.responseJSON;
@@ -760,7 +757,7 @@
                             title: 'error',
                             icon: 'Error',
                             text: 'Terjadi kesalahan ' + error,
-                            showConfirmButton: true,
+                            showConfirmButton: false,
                             timer: 2000
                         });
                     },
@@ -983,7 +980,7 @@
                             icon: 'error',
                             title: 'Error',
                             text: 'Terjadi kesalahan' + errorData,
-                            showConfirmButton: true,
+                            showConfirmButton: false,
                             timer: 2000
                         });
                     },
