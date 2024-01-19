@@ -20,7 +20,7 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-present"
                         type="button" role="tab" aria-controls="pills-present" aria-selected="false" data-tab="2"><i
-                            class="fa-solid fa-person-chalkboard icon-text me-2"></i>Sudah Presentasi Minggu Ini</button>
+                            class="fa-solid Example of calendar-check-o fa-calendar-check-o icon-text me-2"></i>Sudah Presentasi Minggu Ini</button>
                 </li>
                 {{-- Keep dulu --}}
                 {{-- <li class="nav-item" role="presentation">
