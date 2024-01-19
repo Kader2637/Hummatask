@@ -311,7 +311,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="alert alert-secondary px-3" role="alert">
-                                                            <strong>Disabled:</strong> Jadwal sudah dipilih oleh tim lain.
+                                                            <strong>Disabled:</strong> Jadwal telah dipilih oleh tim lain.
                                                         </div>
                                                     </div>
                                                 </div>
@@ -375,16 +375,16 @@
                                                                 class="img-fluid">
                                                         </div>
                                                     @endforelse
-                                                    @if ($cekJadwalSenin)
-                                                        <label for="deskripsi" class="form-label">Deskripsi
-                                                            (Opsional)</label>
-                                                        <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalSenin->deskripsi }}</textarea>
-                                                    @else
-                                                        <label for="deskripsi" class="form-label">Deskripsi
-                                                            (Opsional)</label>
-                                                        <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
-                                                    @endif
                                                 </div>
+                                                @if ($cekJadwalSenin)
+                                                    <label for="deskripsi" class="form-label">Deskripsi
+                                                        (Opsional)</label>
+                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalSenin->deskripsi }}</textarea>
+                                                @else
+                                                    <label for="deskripsi" class="form-label">Deskripsi
+                                                        (Opsional)</label>
+                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                @endif
                                                 <div class="modal-footer">
                                                     <div class="d-flex justify-content-end gap-2">
                                                         @if ($cekJadwalSenin && $cekJadwalSenin->status_presentasi !== 'menunggu')
@@ -482,16 +482,16 @@
                                                                 class="img-fluid">
                                                         </div>
                                                     @endforelse
-                                                    @if ($cekJadwalSelasa)
-                                                        <label for="deskripsi" class="form-label">Deskripsi
-                                                            (Opsional)</label>
-                                                        <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalSelasa->deskripsi }}</textarea>
-                                                    @else
-                                                        <label for="deskripsi" class="form-label">Deskripsi
-                                                            (Opsional)</label>
-                                                        <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
-                                                    @endif
                                                 </div>
+                                                @if ($cekJadwalSelasa)
+                                                    <label for="deskripsi" class="form-label">Deskripsi
+                                                        (Opsional)</label>
+                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalSelasa->deskripsi }}</textarea>
+                                                @else
+                                                    <label for="deskripsi" class="form-label">Deskripsi
+                                                        (Opsional)</label>
+                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                @endif
                                                 <div class="modal-footer">
                                                     <div class="d-flex justify-content-end gap-2">
                                                         @if ($cekJadwalSelasa && $cekJadwalSelasa->status_presentasi !== 'menunggu')
@@ -590,16 +590,16 @@
                                                                 class="img-fluid">
                                                         </div>
                                                     @endforelse
-                                                    @if ($cekJadwalRabu)
-                                                        <label for="deskripsi" class="form-label">Deskripsi
-                                                            (Opsional)</label>
-                                                        <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalRabu->deskripsi }}</textarea>
-                                                    @else
-                                                        <label for="deskripsi" class="form-label">Deskripsi
-                                                            (Opsional)</label>
-                                                        <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
-                                                    @endif
                                                 </div>
+                                                @if ($cekJadwalRabu)
+                                                    <label for="deskripsi" class="form-label">Deskripsi
+                                                        (Opsional)</label>
+                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalRabu->deskripsi }}</textarea>
+                                                @else
+                                                    <label for="deskripsi" class="form-label">Deskripsi
+                                                        (Opsional)</label>
+                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                @endif
                                                 <div class="modal-footer">
                                                     <div class="d-flex justify-content-end gap-2">
                                                         @if ($cekJadwalRabu && $cekJadwalRabu->status_presentasi !== 'menunggu')
@@ -695,16 +695,16 @@
                                                                 class="img-fluid">
                                                         </div>
                                                     @endforelse
-                                                    @if ($cekJadwalKamis)
-                                                        <label for="deskripsi" class="form-label">Deskripsi
-                                                            (Opsional)</label>
-                                                        <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalKamis->deskripsi }}</textarea>
-                                                    @else
-                                                        <label for="deskripsi" class="form-label">Deskripsi
-                                                            (Opsional)</label>
-                                                        <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
-                                                    @endif
                                                 </div>
+                                                @if ($cekJadwalKamis)
+                                                    <label for="deskripsi" class="form-label">Deskripsi
+                                                        (Opsional)</label>
+                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalKamis->deskripsi }}</textarea>
+                                                @else
+                                                    <label for="deskripsi" class="form-label">Deskripsi
+                                                        (Opsional)</label>
+                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                @endif
                                                 <div class="modal-footer">
                                                     <div class="d-flex justify-content-end gap-2">
                                                         @if ($cekJadwalKamis && $cekJadwalKamis->status_presentasi !== 'menunggu')
@@ -800,16 +800,16 @@
                                                                 class="img-fluid">
                                                         </div>
                                                     @endforelse
-                                                    @if ($cekJadwalJumat)
-                                                        <label for="deskripsi" class="form-label">Deskripsi
-                                                            (Opsional)</label>
-                                                        <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalJumat->deskripsi }}</textarea>
-                                                    @else
-                                                        <label for="deskripsi" class="form-label">Deskripsi
-                                                            (Opsional)</label>
-                                                        <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
-                                                    @endif
                                                 </div>
+                                                @if ($cekJadwalJumat)
+                                                    <label for="deskripsi" class="form-label">Deskripsi
+                                                        (Opsional)</label>
+                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalJumat->deskripsi }}</textarea>
+                                                @else
+                                                    <label for="deskripsi" class="form-label">Deskripsi
+                                                        (Opsional)</label>
+                                                    <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                @endif
                                                 <div class="modal-footer">
                                                     <div class="d-flex justify-content-end gap-2">
                                                         @if ($cekJadwalJumat && $cekJadwalJumat->status_presentasi !== 'menunggu')
