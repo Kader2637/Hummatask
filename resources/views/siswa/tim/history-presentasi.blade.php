@@ -3,7 +3,8 @@
     @section('link')
         <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}">
+        <link rel="stylesheet"
+            href="{{ asset('assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/vendor/libs/flatpickr/flatpickr.css') }}" />
         <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-rowgroup-bs5/rowgroup.bootstrap5.css') }}">
@@ -195,7 +196,8 @@
         <div class="container-fluid d-flex mt-5 justify-content-center">
             <div class="col-12">
                 <div class="card">
-                    <div class="d-flex flex-row flex-wrap justify-content-between align-content-center px-md-4 px-2 py-3 mb-3">
+                    <div
+                        class="d-flex flex-row flex-wrap justify-content-between align-content-center px-md-4 px-2 py-3 mb-3">
                         <span class="card-header card-header-judul fs-4 p-0">Ajukan Presentasi</span>
                         @if ($anggota === 'active' || $jabatan === 1)
                             <span class="card-header btn-ajukan-presentasi p-0">
@@ -304,12 +306,12 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="alert alert-primary" role="alert">
-                                                            Checked atau sudah dipilih anda
+                                                            <strong>Checked:</strong> Jadwal telah dipilih oleh tim Anda.
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="alert alert-secondary" role="alert">
-                                                            Disabled atau Sudah dipilih tim lain 
+                                                            <strong>Disabled:</strong> Jadwal sudah dipilih oleh tim lain.
                                                         </div>
                                                     </div>
                                                 </div>
@@ -327,8 +329,8 @@
                                                 @endif
                                                 @if ($cekJadwalRabu)
                                                     <label for="judul" class="form-label">Judul Presentasi</label>
-                                                    <input type="text" name="judul" value="{{ $cekJadwalRabu->judul }}"
-                                                        class="form-control">
+                                                    <input type="text" name="judul"
+                                                        value="{{ $cekJadwalRabu->judul }}" class="form-control">
                                                 @else
                                                     <label for="judul" class="form-label">Judul Presentasi</label>
                                                     <input type="text" name="judul" class="form-control">
@@ -339,7 +341,7 @@
                                                         @php
                                                             $cekJadwal = \App\Models\Presentasi::where('presentasi_divisi_id', $data->presentasi_divisi_id)
                                                                 ->where('jadwal_ke', $data->jadwal_ke)
-                                                            ->whereDate('jadwal', '>', Carbon\Carbon::now()->startOfWeek())
+                                                                ->whereDate('jadwal', '>', Carbon\Carbon::now()->startOfWeek())
                                                                 ->where('divisi_id', auth()->user()->divisi_id)
                                                                 ->first();
                                                         @endphp
@@ -352,7 +354,8 @@
                                                                     {{ $cekJadwalSenin !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
                                                                     {{ $cekJadwal ? 'disabled' : '' }}>
                                                                 <span class="plan-details text-center">
-                                                                    <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
+                                                                    <p class="fs-6 mb-2 text-dark"
+                                                                        style="font-weight: 500">
                                                                         {{ $data->jadwal_ke }}
                                                                     </p>
                                                                     <p class="text-primary mb-0">
@@ -373,10 +376,12 @@
                                                         </div>
                                                     @endforelse
                                                     @if ($cekJadwalSenin)
-                                                        <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                        <label for="deskripsi" class="form-label">Deskripsi
+                                                            (Opsional)</label>
                                                         <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalSenin->deskripsi }}</textarea>
                                                     @else
-                                                        <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                        <label for="deskripsi" class="form-label">Deskripsi
+                                                            (Opsional)</label>
                                                         <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                                                     @endif
                                                 </div>
@@ -400,7 +405,8 @@
                                                         <div class="">
                                                             @if ($cekJadwalSenin && $cekJadwalSenin->status_presentasi !== 'menunggu')
                                                                 <div class="">
-                                                                    <button type="submit" class="btn btn-primary" disabled>
+                                                                    <button type="submit" class="btn btn-primary"
+                                                                        disabled>
                                                                         Simpan
                                                                     </button>
                                                                 </div>
@@ -428,8 +434,8 @@
                                                 @endif
                                                 @if ($cekJadwalRabu)
                                                     <label for="judul" class="form-label">Judul Presentasi</label>
-                                                    <input type="text" name="judul" value="{{ $cekJadwalRabu->judul }}"
-                                                        class="form-control">
+                                                    <input type="text" name="judul"
+                                                        value="{{ $cekJadwalRabu->judul }}" class="form-control">
                                                 @else
                                                     <label for="judul" class="form-label">Judul Presentasi</label>
                                                     <input type="text" name="judul" class="form-control">
@@ -440,7 +446,7 @@
                                                         @php
                                                             $cekJadwal = \App\Models\Presentasi::where('presentasi_divisi_id', $data->presentasi_divisi_id)
                                                                 ->where('jadwal_ke', $data->jadwal_ke)
-                                                            ->whereDate('jadwal', '>', Carbon\Carbon::now()->startOfWeek())
+                                                                ->whereDate('jadwal', '>', Carbon\Carbon::now()->startOfWeek())
                                                                 ->where('divisi_id', auth()->user()->divisi_id)
                                                                 ->first();
                                                         @endphp
@@ -455,7 +461,8 @@
                                                                     {{ $cekJadwalSelasa !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
                                                                     {{ $cekJadwal ? 'disabled' : '' }}>
                                                                 <span class="plan-details text-center">
-                                                                    <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
+                                                                    <p class="fs-6 mb-2 text-dark"
+                                                                        style="font-weight: 500">
                                                                         {{ $data->jadwal_ke }}
                                                                     </p>
                                                                     <p class="text-primary mb-0">
@@ -476,10 +483,12 @@
                                                         </div>
                                                     @endforelse
                                                     @if ($cekJadwalSelasa)
-                                                        <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                        <label for="deskripsi" class="form-label">Deskripsi
+                                                            (Opsional)</label>
                                                         <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalSelasa->deskripsi }}</textarea>
                                                     @else
-                                                        <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                        <label for="deskripsi" class="form-label">Deskripsi
+                                                            (Opsional)</label>
                                                         <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                                                     @endif
                                                 </div>
@@ -529,8 +538,8 @@
                                                 @endif
                                                 @if ($cekJadwalRabu)
                                                     <label for="judul" class="form-label">Judul Presentasi</label>
-                                                    <input type="text" name="judul" value="{{ $cekJadwalRabu->judul }}"
-                                                        class="form-control">
+                                                    <input type="text" name="judul"
+                                                        value="{{ $cekJadwalRabu->judul }}" class="form-control">
                                                 @else
                                                     @if ($cekJadwalRabu)
                                                         <label for="judul" class="form-label">Judul Presentasi</label>
@@ -547,7 +556,7 @@
                                                         @php
                                                             $cekJadwal = \App\Models\Presentasi::where('presentasi_divisi_id', $data->presentasi_divisi_id)
                                                                 ->where('jadwal_ke', $data->jadwal_ke)
-                                                            ->whereDate('jadwal', '>', Carbon\Carbon::now()->startOfWeek())
+                                                                ->whereDate('jadwal', '>', Carbon\Carbon::now()->startOfWeek())
                                                                 ->where('divisi_id', auth()->user()->divisi_id)
                                                                 ->first();
                                                         @endphp
@@ -558,9 +567,10 @@
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}"
                                                                     {{ $cekJadwalRabu !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
-                                                                    {{$cekJadwal ? 'disabled' : '' }}>
+                                                                    {{ $cekJadwal ? 'disabled' : '' }}>
                                                                 <span class="plan-details text-center">
-                                                                    <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
+                                                                    <p class="fs-6 mb-2 text-dark"
+                                                                        style="font-weight: 500">
                                                                         {{ $data->jadwal_ke }}
                                                                     </p>
                                                                     <p class="text-primary mb-0">
@@ -581,10 +591,12 @@
                                                         </div>
                                                     @endforelse
                                                     @if ($cekJadwalRabu)
-                                                        <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                        <label for="deskripsi" class="form-label">Deskripsi
+                                                            (Opsional)</label>
                                                         <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalRabu->deskripsi }}</textarea>
                                                     @else
-                                                        <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                        <label for="deskripsi" class="form-label">Deskripsi
+                                                            (Opsional)</label>
                                                         <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                                                     @endif
                                                 </div>
@@ -608,7 +620,8 @@
                                                         <div class="">
                                                             @if ($cekJadwalRabu && $cekJadwalRabu->status_presentasi !== 'menunggu')
                                                                 <div class="">
-                                                                    <button type="submit" class="btn btn-primary" disabled>
+                                                                    <button type="submit" class="btn btn-primary"
+                                                                        disabled>
                                                                         Simpan
                                                                     </button>
                                                                 </div>
@@ -648,7 +661,7 @@
                                                         @php
                                                             $cekJadwal = \App\Models\Presentasi::where('presentasi_divisi_id', $data->presentasi_divisi_id)
                                                                 ->where('jadwal_ke', $data->jadwal_ke)
-                                                            ->whereDate('jadwal', '>', Carbon\Carbon::now()->startOfWeek())
+                                                                ->whereDate('jadwal', '>', Carbon\Carbon::now()->startOfWeek())
                                                                 ->where('divisi_id', auth()->user()->divisi_id)
                                                                 ->first();
                                                         @endphp
@@ -658,10 +671,11 @@
                                                                 class="card card-jadwal {{ $cekJadwalKamis !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}">
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}"
-                                                                    {{ $cekJadwalKamis !== null && $cekJadwal && $cekJadwal->tim->id == Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
+                                                                    {{ $cekJadwalKamis !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
                                                                     {{ $cekJadwal ? 'disabled' : '' }}>
                                                                 <span class="plan-details text-center">
-                                                                    <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
+                                                                    <p class="fs-6 mb-2 text-dark"
+                                                                        style="font-weight: 500">
                                                                         {{ $data->jadwal_ke }}
                                                                     </p>
                                                                     <p class="text-primary mb-0">
@@ -682,10 +696,12 @@
                                                         </div>
                                                     @endforelse
                                                     @if ($cekJadwalKamis)
-                                                        <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                        <label for="deskripsi" class="form-label">Deskripsi
+                                                            (Opsional)</label>
                                                         <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalKamis->deskripsi }}</textarea>
                                                     @else
-                                                        <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                        <label for="deskripsi" class="form-label">Deskripsi
+                                                            (Opsional)</label>
                                                         <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                                                     @endif
                                                 </div>
@@ -709,7 +725,8 @@
                                                         <div class="">
                                                             @if ($cekJadwalKamis && $cekJadwalKamis->status_presentasi !== 'menunggu')
                                                                 <div class="">
-                                                                    <button type="submit" class="btn btn-primary" disabled>
+                                                                    <button type="submit" class="btn btn-primary"
+                                                                        disabled>
                                                                         Simpan
                                                                     </button>
                                                                 </div>
@@ -749,7 +766,7 @@
                                                         @php
                                                             $cekJadwal = \App\Models\Presentasi::where('presentasi_divisi_id', $data->presentasi_divisi_id)
                                                                 ->where('jadwal_ke', $data->jadwal_ke)
-                                                            ->whereDate('jadwal', '>', Carbon\Carbon::now()->startOfWeek())
+                                                                ->whereDate('jadwal', '>', Carbon\Carbon::now()->startOfWeek())
                                                                 ->where('divisi_id', auth()->user()->divisi_id)
                                                                 ->first();
                                                         @endphp
@@ -762,7 +779,8 @@
                                                                     {{ $cekJadwalJumat !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
                                                                     {{ $cekJadwal ? 'disabled' : '' }}>
                                                                 <span class="plan-details text-center">
-                                                                    <p class="fs-6 mb-2 text-dark" style="font-weight: 500">
+                                                                    <p class="fs-6 mb-2 text-dark"
+                                                                        style="font-weight: 500">
                                                                         {{ $data->jadwal_ke }}
                                                                     </p>
                                                                     <p class="text-primary mb-0">
@@ -783,10 +801,12 @@
                                                         </div>
                                                     @endforelse
                                                     @if ($cekJadwalJumat)
-                                                        <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                        <label for="deskripsi" class="form-label">Deskripsi
+                                                            (Opsional)</label>
                                                         <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10">{{ $cekJadwalJumat->deskripsi }}</textarea>
                                                     @else
-                                                        <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                                                        <label for="deskripsi" class="form-label">Deskripsi
+                                                            (Opsional)</label>
                                                         <textarea name="deskripsi" class="form-control" id="" cols="30" rows="10"></textarea>
                                                     @endif
                                                 </div>
@@ -810,7 +830,8 @@
                                                         <div class="">
                                                             @if ($cekJadwalJumat && $cekJadwalJumat->status_presentasi !== 'menunggu')
                                                                 <div class="">
-                                                                    <button type="submit" class="btn btn-primary" disabled>
+                                                                    <button type="submit" class="btn btn-primary"
+                                                                        disabled>
                                                                         Simpan
                                                                     </button>
                                                                 </div>
@@ -1006,14 +1027,14 @@
             jQuery(document).ready(function($) {
                 $('#jstabel').DataTable({
                     "lengthMenu": [
-                        [5, 10, 15, -1],
-                        [5, 10, 15, "All"]
+                        [10, 20, 30, -1],
+                        [10, 20, 30, "All"]
                     ],
                     "pageLength": 5,
 
                     "order": [],
 
-                    "ordering": false,
+                    "ordering": true,
 
                     "language": {
                         "sProcessing": "Sedang memproses...",

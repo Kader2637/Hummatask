@@ -647,89 +647,89 @@
                 });
         }
     </script>
-<script>
-    $(document).ready(function() {
-        function ambilNotifikasi() {
-            $.ajax({
-                url: '/ambil-notifikasi',
-                method: 'GET',
-                success: function(response) {
-                    tampilkanNotifikasi(response.notifikasi);
+    <script>
+        $(document).ready(function() {
+            function ambilNotifikasi() {
+                $.ajax({
+                    url: '/ambil-notifikasi',
+                    method: 'GET',
+                    success: function(response) {
+                        tampilkanNotifikasi(response.notifikasi);
 
-                    var notifikasiLama = JSON.parse(localStorage.getItem('notifikasi')) || [];
-                    var notifikasiBaru = cekNotifikasiBaru(response.notifikasi, notifikasiLama);
+                        var notifikasiLama = JSON.parse(localStorage.getItem('notifikasi')) || [];
+                        var notifikasiBaru = cekNotifikasiBaru(response.notifikasi, notifikasiLama);
 
-                    // Simpan data notifikasi ke dalam local storage
-                    localStorage.setItem('notifikasi', JSON.stringify(response.notifikasi));
+                        // Simpan data notifikasi ke dalam local storage
+                        localStorage.setItem('notifikasi', JSON.stringify(response.notifikasi));
 
-                    // Cek apakah ada data notifikasi baru yang belum ada di local storage
-                    if (notifikasiBaru.length > 0) {
-                        var audio = new Audio('<?php echo asset('notification.mp3'); ?>');
+                        // Cek apakah ada data notifikasi baru yang belum ada di local storage
+                        if (notifikasiBaru.length > 0) {
+                            var audio = new Audio('<?php echo asset('notification.mp3'); ?>');
                             audio.play();
+                        }
+                    },
+                    error: function(error) {
+                        console.log('Error mengambil notifikasi:', error);
                     }
-                },
-                error: function(error) {
-                    console.log('Error mengambil notifikasi:', error);
-                }
-            });
-        }
-
-        function tampilkanNotifikasi(notifikasi) {
-            var daftarNotifikasi = $('#notification-list');
-            var countBadge = $('#notification-count');
-
-            daftarNotifikasi.empty();
-
-            if (notifikasi.length > 0) {
-                countBadge.text(notifikasi.length);
-                countBadge.show();
-            } else {
-                countBadge.hide();
+                });
             }
 
-            notifikasi.reverse();
+            function tampilkanNotifikasi(notifikasi) {
+                var daftarNotifikasi = $('#notification-list');
+                var countBadge = $('#notification-count');
 
-            notifikasi.forEach(function(item) {
-                var waktuNotifikasi = new Date(item.created_at);
-                var waktuSekarang = new Date();
-                var perbedaanWaktu = Math.floor((waktuSekarang - waktuNotifikasi) / 1000);
+                daftarNotifikasi.empty();
 
-                function formatWaktu(detik) {
-                    if (detik < 60) {
-                        return detik + ' detik yang lalu';
-                    } else if (detik < 3600) {
-                        return Math.floor(detik / 60) + ' menit yang lalu';
-                    } else if (detik < 86400) {
-                        return Math.floor(detik / 3600) + ' jam yang lalu';
-                    } else {
-                        return Math.floor(detik / 86400) + ' hari yang lalu';
+                if (notifikasi.length > 0) {
+                    countBadge.text(notifikasi.length);
+                    countBadge.show();
+                } else {
+                    countBadge.hide();
+                }
+
+                notifikasi.reverse();
+
+                notifikasi.forEach(function(item) {
+                    var waktuNotifikasi = new Date(item.created_at);
+                    var waktuSekarang = new Date();
+                    var perbedaanWaktu = Math.floor((waktuSekarang - waktuNotifikasi) / 1000);
+
+                    function formatWaktu(detik) {
+                        if (detik < 60) {
+                            return detik + ' detik yang lalu';
+                        } else if (detik < 3600) {
+                            return Math.floor(detik / 60) + ' menit yang lalu';
+                        } else if (detik < 86400) {
+                            return Math.floor(detik / 3600) + ' jam yang lalu';
+                        } else {
+                            return Math.floor(detik / 86400) + ' hari yang lalu';
+                        }
                     }
-                }
 
-                var jenisClass, icon, textClass;
+                    var jenisClass, icon, textClass;
 
-                switch (item.jenis_notifikasi) {
-                    case 'info':
-                        jenisClass = 'alert-info';
-                        textClass = 'text-info';
-                        icon = '<i class="ti ti-info-circle ti-xs"></i>';
-                        break;
-                    case 'deadline':
-                        jenisClass = 'alert-warning';
-                        textClass = 'text-warning';
-                        icon = '<i class="ti ti-clock ti-xs"></i>';
-                        break;
-                    case 'pemberitahuan':
-                        jenisClass = 'alert-success';
-                        textClass = 'text-success';
-                        icon = '<i class="ti ti-check ti-xs"></i>';
-                        break;
-                    default:
-                        jenisClass = 'bg-secondary';
-                        icon = '<i class="ti ti-alert ti-xs"></i>';
-                }
+                    switch (item.jenis_notifikasi) {
+                        case 'info':
+                            jenisClass = 'alert-info';
+                            textClass = 'text-info';
+                            icon = '<i class="ti ti-info-circle ti-xs"></i>';
+                            break;
+                        case 'deadline':
+                            jenisClass = 'alert-warning';
+                            textClass = 'text-warning';
+                            icon = '<i class="ti ti-clock ti-xs"></i>';
+                            break;
+                        case 'pemberitahuan':
+                            jenisClass = 'alert-success';
+                            textClass = 'text-success';
+                            icon = '<i class="ti ti-check ti-xs"></i>';
+                            break;
+                        default:
+                            jenisClass = 'bg-secondary';
+                            icon = '<i class="ti ti-alert ti-xs"></i>';
+                    }
 
-                var notifikasiBaru = `
+                    var notifikasiBaru = `
                 <li class="list-group-item" id="notification-list-${item.id}">
                     <div class="d-flex mt-2 mb-2 pl-5">
                         <div class="flex-grow-1">
@@ -751,36 +751,36 @@
                     </div>
                 </li>
             `;
-                daftarNotifikasi.append(notifikasiBaru);
-            });
-        }
+                    daftarNotifikasi.append(notifikasiBaru);
+                });
+            }
 
-        function cekNotifikasiBaru(notifikasiBaru, notifikasiLama) {
-            var notifikasiBaruFiltered = [];
+            function cekNotifikasiBaru(notifikasiBaru, notifikasiLama) {
+                var notifikasiBaruFiltered = [];
 
-            notifikasiBaru.forEach(function(item) {
-                var found = false;
-                for (var i = 0; i < notifikasiLama.length; i++) {
-                    if (notifikasiLama[i].id === item.id) {
-                        found = true;
-                        break;
+                notifikasiBaru.forEach(function(item) {
+                    var found = false;
+                    for (var i = 0; i < notifikasiLama.length; i++) {
+                        if (notifikasiLama[i].id === item.id) {
+                            found = true;
+                            break;
+                        }
                     }
-                }
-                if (!found) {
-                    notifikasiBaruFiltered.push(item);
-                }
-            });
+                    if (!found) {
+                        notifikasiBaruFiltered.push(item);
+                    }
+                });
 
-            return notifikasiBaruFiltered;
-        }
+                return notifikasiBaruFiltered;
+            }
 
-        ambilNotifikasi();
+            ambilNotifikasi();
 
-        setInterval(function(){
-    ambilNotifikasi();
-}, 5000);
-    });
-</script>
+            setInterval(function() {
+                ambilNotifikasi();
+            }, 10000);
+        });
+    </script>
 
     @if (session()->has('unauthorize'))
         <script>
