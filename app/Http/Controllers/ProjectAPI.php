@@ -16,7 +16,6 @@ class ProjectAPI extends Controller
             ->leftJoin('projects', 'tims.id', '=', 'projects.tim_id')
             ->with(['project', 'tema', 'tugas', 'catatans', 'divisi', 'user'])
             ->orderByRaw("FIELD(projects.type_project, 'big', 'mini', 'pre_mini', 'solo')")
-            ->orderBy('status_tim', 'desc')
             ->get();
 
         return ResponseHelper::success($data);
@@ -26,8 +25,7 @@ class ProjectAPI extends Controller
     {
         $data = Tim::query()
             ->where('code', $code)
-            ->with(['project', 'tema', 'tugas', 'catatans', 'divisi', 'user', 'anggota'])
-            ->orderBy('status_tim', 'desc')
+            ->with(['project', 'tema', 'tugas', 'catatans.catatanDetail', 'divisi', 'user', 'anggota'])
             ->get();
 
         return ResponseHelper::success($data);
