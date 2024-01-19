@@ -104,6 +104,14 @@ class catatanController extends Controller
     protected function update(Request $request, $id)
     {
         try {
+            $request->validate([
+                'catatan_text.*' => 'required',
+                'catatan_text' => 'required',
+            ], [
+                'catatan_text.*.required' => 'Setidaknya satu catatan harus diisi.',
+                'catatan_text.required' => 'Setidaknya satu catatan harus diisi.',
+            ]);
+
             $catatan = Catatan::findOrFail($id);
             $catatan->title = $request->titleUpdate;
             $catatan->type_note = $catatan->type_note;
@@ -171,7 +179,6 @@ class catatanController extends Controller
 
             return redirect()->back()->with('success', 'Catatan berhasil diperbarui.');
         } catch (\Throwable $th) {
-            dd($th);
             return redirect()->back()->with('error', 'Catatan gagal diupdate!');
         }
     }

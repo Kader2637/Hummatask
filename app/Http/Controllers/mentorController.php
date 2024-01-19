@@ -428,8 +428,14 @@ class mentorController extends Controller
     protected function updateCatatanMentor(Request $request, $id)
     {
         $catatan = catatan::findOrFail($id);
-
         if ($request->catatan_text) {
+            $request->validate([
+                'catatan_text.*' => 'required',
+                'catatan_text' => 'required',
+            ], [
+                'catatan_text.*.required' => 'Setidaknya satu catatan harus diisi.',
+                'catatan_text.required' => 'Setidaknya satu catatan harus diisi.',
+            ]);
             foreach ($request->catatan_text as $index => $catatan_text) {
                 $id_detail = $request->id[$index];
                 if ($catatan_text) {
@@ -492,7 +498,7 @@ class mentorController extends Controller
 
             return redirect()->back()->with('success', 'Catatan berhasil diperbarui.');
         } else {
-            return redirect()->back()->with('error', 'Anda tidak mengubah catatan apapun.');
+            return redirect()->back()->with('error', 'Gagal menyimpan catatan.');
         }
     }
 
