@@ -444,6 +444,7 @@ class mentorController extends Controller
                         ['catatan_text' => $catatan_text, 'catatan_id' => $catatan->id]
                     );
 
+
                     if ($tugas) {
                         $tugas->update([
                             'tim_id' => $request->tim_id,
@@ -456,7 +457,7 @@ class mentorController extends Controller
                         if ($tugas->wasRecentlyCreated && $catatan->tim->status_tim === 'solo') {
                             $penugasan = new Penugasan();
                             $penugasan->tugas_id = $tugas->id;
-                            $penugasan->user_id = Auth::user()->id;
+                            $penugasan->user_id = $tugas->user_id;
                             $penugasan->update();
                         }
                     } else {
@@ -472,7 +473,7 @@ class mentorController extends Controller
                         if ($catatan->tim->status_tim === 'solo') {
                             $penugasan = new Penugasan();
                             $penugasan->tugas_id = $createdTugas->id;
-                            $penugasan->user_id = Auth::user()->id;
+                            $penugasan->user_id = $catatan->tim->user[0]->id;
                             $penugasan->save();
                         }
                     }

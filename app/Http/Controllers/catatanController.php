@@ -176,10 +176,10 @@ class catatanController extends Controller
         }
     }
 
-    protected function delete(string $code)
+    protected function delete(string $id)
     {
         try {
-            $catatan = catatan::where('code', $code)->firstOrFail();
+            $catatan = catatan::where('id', $id)->firstOrFail();
             $tim = $catatan->tim;
 
             $checkResult = $this->checkTeam($tim);
