@@ -25,11 +25,8 @@ class ProjectAPI extends Controller
     public function getTeamDetail(mixed $code)
     {
         $data = Tim::query()
-            ->where('tims.code', $code)
-            ->leftJoin('projects', 'tims.id', '=', 'projects.tim_id')
+            ->where('code', $code)
             ->with(['project', 'tema', 'tugas', 'catatans', 'divisi', 'user'])
-            ->orderByRaw("FIELD(projects.type_project, 'big', 'mini', 'pre_mini', 'solo')")
-            ->orderBy('status_tim', 'desc')
             ->get();
 
         return ResponseHelper::success($data);
