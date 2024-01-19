@@ -24,7 +24,7 @@
           <div class="card w-100    ">
             <div class="d-flex justify-content-between">
               <div class="nav-item w-25" role="presentation">
-                <button type="button" class="nav-link  button-nav" role="tab" data-bs-toggle="tab"
+                <button type="button" class="nav-link active button-nav" role="tab" data-bs-toggle="tab"
                   data-bs-target="#navs-pills-top-home" aria-controls="navs-pills-top-home"
                   aria-selected="true">Project</button>
               </div>
@@ -34,7 +34,7 @@
                   tabindex="-1">Anggota</button>
               </div>
               <div class="nav-item w-25" role="presentation">
-                <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
+                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
                   data-bs-target="#navs-pills-catatan" aria-controls="navs-pills-catatan" aria-selected="false"
                   tabindex="-1">Catatan</button>
               </div>
@@ -48,7 +48,7 @@
         </div>
         <div class="tab-content bg-transparent pb-0" style="box-shadow: none;">
           {{-- Project Tab --}}
-          <div class="tab-pane fade " id="navs-pills-top-home" role="tabpanel">
+          <div class="tab-pane fade show active" id="navs-pills-top-home" role="tabpanel">
             <div class="row">
               <div class="col-lg-4 mb-4">
                 <div class="card">
@@ -112,7 +112,7 @@
                               class="rounded-circle mb-3" style="width: 90px; height: 90px; object-fit: cover">
                           </div>
                           <div class="d-flex flex-column justify-content-center align-items-center">
-                            <span class="d-block text-black fs-5" id="nama-tim">{{ $project->tim->nama }}</span>
+                            <span class="d-block text-black fs-5 text-center" id="nama-tim">{{ $project->tim->nama }}</span>
                           </div>
                         </div>
                         <div class="row w-80 mt-3">
@@ -234,7 +234,7 @@
             </div>
           </div>
           {{-- Catatan Tab --}}
-          <div class="tab-pane fade show active" id="navs-pills-catatan" role="tabpanel">
+          <div class="tab-pane fade" id="navs-pills-catatan" role="tabpanel">
             <div class="w-100 card p-3">
               <div class="d-flex align-items-start w-100">
                 <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"

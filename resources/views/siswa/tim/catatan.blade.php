@@ -233,7 +233,7 @@
                                 data-bs-target="#edit-catatan{{ $item->id }}" data-content="{{ $item->content }}"
                                 data-url="{{ $item->code }}" data-title="{{ $item->title }}"><i
                                   class="ti ti-pencil me-1 text-primary"></i></a>
-                              <form action="{{ route('catatan.delete', $item->code) }}" class="form-delete"
+                              <form action="{{ route('catatan.delete', $item->id) }}" class="form-delete"
                                 method="post">
                                 @csrf
                                 @method('DELETE')
