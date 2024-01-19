@@ -49,21 +49,34 @@ class PresentasiController extends Controller
         ->where('divisi_id', Auth()->user()->divisi_id)
         ->where('hari', $hariIni)
         ->get();
-        // dd($presentasiSelesai);
+
+        $sekarang = Carbon::now();
+        $mingguIni = $sekarang->startOfWeek();
+        $mingguBerikutnya = $mingguIni->copy()->addWeek();
+
+
+        $presentasiSelesaiMingguan = Presentasi::where(function ($query) {
+            $query->where('status_presentasi', 'selesai')
+                ->orWhere('status_presentasi', 'tidak_selesai');
+        })
+        ->where('divisi_id', auth()->user()->divisi_id)
+        ->whereBetween('jadwal', [$mingguIni, $mingguBerikutnya])
+        ->get();
+
         $tidakPresentasi = Tim::where('divisi_id', auth()->user()->divisi_id)
         ->whereDoesntHave('presentasi', function ($query) {
             $query->whereDate('created_at', Carbon::now()->toDateString());
         })
         ->get();
         
-        $tidakPresentasiMingguan = TidakPresentasiMingguan::query()
-        ->whereHas('tim', function ($query){
-            $query->where('divisi_id', Auth()->user()->divisi_id);
-        })
-        ->with(['historyPresentasi:id,noMinggu,bulan'])
-        ->get();
+        // $tidakPresentasiMingguan = TidakPresentasiMingguan::query()
+        // ->whereHas('tim', function ($query){
+        //     $query->where('divisi_id', Auth()->user()->divisi_id);
+        // })
+        // ->get();
+        
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
-        return view('mentor.history-presentasi', compact('notifikasi', 'presentasiSelesai','tidakPresentasiMingguan', 'tidakPresentasi', 'hariIni'));
+        return view('mentor.history-presentasi', compact('notifikasi', 'presentasiSelesaiMingguan', 'presentasiSelesai', 'tidakPresentasi', 'hariIni'));
     }
 
     protected function ajukanPresentasi(RequestPengajuanPresentasi $request, $code)
