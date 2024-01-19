@@ -26,7 +26,8 @@ class ProjectAPI extends Controller
     {
         $data = Tim::query()
             ->where('code', $code)
-            ->with(['project', 'tema', 'tugas', 'catatans', 'divisi', 'user.jabatan'])
+            ->with(['project', 'tema', 'tugas', 'catatans', 'divisi', 'user', 'anggota'])
+            ->orderBy('status_tim', 'desc')
             ->get();
 
         return ResponseHelper::success($data);
