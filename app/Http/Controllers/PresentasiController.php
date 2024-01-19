@@ -50,12 +50,11 @@ class PresentasiController extends Controller
         ->where('hari', $hariIni)
         ->get();
         // dd($presentasiSelesai);
-        $tidakPresentasi = Tim::where('sudah_presentasi', 0)
-            ->whereDoesntHave('presentasi', function ($query) use ($hariIni) {
-                $query->whereDate('hari', $hariIni);
-            })
-            ->where('divisi_id', Auth()->user()->divisi_id)
-            ->get();
+        $tidakPresentasi = Tim::where('divisi_id', auth()->user()->divisi_id)
+        ->whereDoesntHave('presentasi', function ($query) {
+            $query->whereDate('created_at', Carbon::now()->toDateString());
+        })
+        ->get();
         
         $tidakPresentasiMingguan = TidakPresentasiMingguan::query()
         ->whereHas('tim', function ($query){
