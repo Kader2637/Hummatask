@@ -137,7 +137,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($presentasiSelesaiMingguan as $item)
                                     @php
                                         function terjemahkanHari($namaHari)
                                         {
@@ -189,6 +188,7 @@
                                             }
                                         }
                                     @endphp
+                                @foreach ($presentasiSelesaiMingguan as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->tim->nama }}</td>
