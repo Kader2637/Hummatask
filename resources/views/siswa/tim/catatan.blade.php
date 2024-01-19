@@ -634,6 +634,7 @@
       // })
 
       $('.btn-delete').click(function() {
+        var formToDelete = $(this).closest('.form-delete');
         swal.fire({
           title: 'Konfirmasi',
           text: 'Apakah Anda yakin ingin menghapus catatan ini?',
@@ -643,7 +644,7 @@
           cancelButtonText: 'Batal'
         }).then(function(result) {
           if (result.value) {
-            $('.form-delete').submit();
+            formToDelete.submit();
           }
         });
       });
