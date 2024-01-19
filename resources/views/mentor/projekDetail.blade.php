@@ -21,7 +21,7 @@
       </div>
       <div class="nav-align-top d-flex justify-between">
         <div class="nav nav-tabs d-flex justify-content-between my-4" role="tablist">
-          <div class="card w-100    ">
+          <div class="card w-100">
             <div class="d-flex justify-content-between">
               <div class="nav-item w-25" role="presentation">
                 <button type="button" class="nav-link active button-nav" role="tab" data-bs-toggle="tab"
@@ -112,7 +112,8 @@
                               class="rounded-circle mb-3" style="width: 90px; height: 90px; object-fit: cover">
                           </div>
                           <div class="d-flex flex-column justify-content-center align-items-center">
-                            <span class="d-block text-black fs-5 text-center" id="nama-tim">{{ $project->tim->nama }}</span>
+                            <span class="d-block text-black fs-5 text-center"
+                              id="nama-tim">{{ $project->tim->nama }}</span>
                           </div>
                         </div>
                         <div class="row w-80 mt-3">
@@ -288,7 +289,8 @@
                             @endforelse
                           </div>
                           <div style="padding: 0px 11px 0px 11px" class="w-100">
-                            <button type="button" id="tambahCatatan{{ $catatanTab->id }}" class="btn btn-primary me-2">Tambah</button>
+                            <button type="button" id="tambahCatatan{{ $catatanTab->id }}"
+                              class="btn btn-primary me-2">Tambah</button>
                             <button type="submit" class="btn btn-primary">Simpan</button>
                           </div>
                         </form>
@@ -299,7 +301,8 @@
                       <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt="" class="mb-0"
                         style="width: 250px;">
                     </div>
-                    <p class="text-center mb-5 mt-2">Tim ini tidak memiliki catatan ! <i class="ti ti-address-book-off"></i></p>
+                    <p class="text-center mb-5 mt-2">Tim ini tidak memiliki catatan ! <i
+                        class="ti ti-address-book-off"></i></p>
                   @endforelse
                 </div>
               </div>
@@ -823,14 +826,14 @@
 
         @section('script')
           <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+          
           <script>
             var i = 0;
             @foreach ($catatan as $catatanTab)
-            $('#tambahCatatan{{ $catatanTab->id }}').click(function() {
+              $('#tambahCatatan{{ $catatanTab->id }}').click(function() {
                 ++i;
                 $('#v-pills-{{ $catatanTab->id }} .form-repeater').append(
-                `<div class="form-add row mb-3 w-100">
+                  `<div class="form-add row mb-3 w-100">
                     <div class="col-11 col-md-11">
                     <label for="catatan" class="mb-2 form-label">Catatan Baru</label>
                     <input type="text" name="catatan_text[]" class="form-control">
@@ -843,7 +846,7 @@
                     </div>
                 </div>`
                 );
-            });
+              });
             @endforeach
 
             $(document).on('click', '.button-delete-repeater', function(event) {
