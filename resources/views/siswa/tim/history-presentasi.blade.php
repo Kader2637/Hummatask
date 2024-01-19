@@ -311,7 +311,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="alert alert-secondary px-3" role="alert">
-                                                            <strong>Disabled:</strong> Jadwal telah dipilih oleh tim lain.
+                                                            <strong>Disabled:</strong> Jadwal telah dipilih oleh tim yang lain.
                                                         </div>
                                                     </div>
                                                 </div>
