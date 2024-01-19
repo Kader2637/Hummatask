@@ -277,7 +277,7 @@
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <ul class="nav nav-pills bg-light rounded mb-3" role="tablist">
+                                    <ul class="nav nav-pills bg-light rounded mb-3 flex-column flex-sm-row" role="tablist">
                                         <li class="nav-item">
                                             <a class="nav-link {{ \Carbon\Carbon::now()->format('l') === 'Monday' || \Carbon\Carbon::now()->format('l') === 'Saturday' || \Carbon\Carbon::now()->format('l') === 'Sunday' ? 'active' : '' }}"
                                                 data-bs-toggle="tab" href="#senin" role="tab">Senin</a>
@@ -305,12 +305,12 @@
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <div class="alert alert-primary" role="alert">
+                                                        <div class="alert alert-primary px-3" role="alert">
                                                             <strong>Checked:</strong> Jadwal telah dipilih oleh tim Anda.
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <div class="alert alert-secondary" role="alert">
+                                                        <div class="alert alert-secondary px-3" role="alert">
                                                             <strong>Disabled:</strong> Jadwal sudah dipilih oleh tim lain.
                                                         </div>
                                                     </div>
