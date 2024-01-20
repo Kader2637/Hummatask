@@ -297,9 +297,25 @@
                                                 data-popup="tooltip-custom" title="{{ $item->nama }}">
                                         </td>
                                         <td>{{ $item->anggota[0]->user->email }}</td>
-                                        <td>{{ $item->status_tim }}</td>
+                                        <td>
+                                            @if ($item->status_tim === 'solo')
+                                                <span class="badge bg-label-danger">Solo Project</span>
+                                            @elseif ($item->status_tim === 'pre_mini')
+                                                <span class="badge bg-label-warning">Pre Mini Project</span>
+                                            @elseif ($item->status_tim === 'mini')
+                                                <span class="badge bg-label-success">Mini Project</span>
+                                            @else
+                                                <span class="badge bg-label-primary">Big Project</span>
+                                            @endif    
+                                        </td>
                                         <td>{{ $item->project[0]->tema->nama_tema }}</td>
-                                        <td>{{ $item->presentasiSelesai->count() }}</td>
+                                        <td>
+                                            @if ($item->presentasiSelesai->count() == 0)
+                                                Belum Presentasi
+                                            @else
+                                            {{ $item->presentasiSelesai->count() }} Presentasi
+                                            @endif
+                                        </td>
                                     </tr>
                                 @empty
                                 @endforelse
@@ -374,8 +390,24 @@
                                                 @endforeach
                                             </div>
                                         </td>
-                                        <td>{{ $item->status_tim }}</td>
-                                        <td>{{ $item->presentasiSelesai->count() }}</td>
+                                        <td>
+                                            @if ($item->status_tim === 'solo')
+                                                <span class="badge bg-label-danger">Solo Project</span>
+                                            @elseif ($item->status_tim === 'pre_mini')
+                                                <span class="badge bg-label-warning">Pre Mini Project</span>
+                                            @elseif ($item->status_tim === 'mini')
+                                                <span class="badge bg-label-success">Mini Project</span>
+                                            @else
+                                                <span class="badge bg-label-primary">Big Project</span>
+                                            @endif    
+                                        </td>
+                                        <td>
+                                            @if ($item->presentasiSelesai->count() == 0)
+                                                Belum Presentasi
+                                            @else
+                                            {{ $item->presentasiSelesai->count() }} Presentasi
+                                            @endif    
+                                        </td>
                                         <td> <button type="button" class="btn btn-primary btn-detail"
                                                 data-bs-toggle="modal" data-bs-target="#modalCenter"
                                                 data-logo="{{ asset('storage/' . $item->logo) }}"
