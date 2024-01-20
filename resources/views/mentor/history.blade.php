@@ -204,12 +204,6 @@
                         Deadline</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
-                        type="button" role="tab" aria-controls="pills-profile" aria-selected="false" data-tab="2"><i
-                            class="fa-solid fa-person-chalkboard icon-text"></i>Selesai
-                        Presentasi</button>
-                </li>
-                <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact"
                         type="button" role="tab" aria-controls="pills-contact" aria-selected="false" data-tab="3"><i
                             class="fa-solid fa-user icon-text"></i>Solo</button>
@@ -218,11 +212,6 @@
                     <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-team"
                         type="button" role="tab" aria-controls="pills-contact" aria-selected="false" data-tab="4"><i
                             class="fa-solid fa-users icon-text"></i>Team</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-tidak-presentasi"
-                        type="button" role="tab" aria-controls="pills-contact" aria-selected="false" data-tab="5"><i
-                            class="fa-solid fa-users icon-text"></i>Tidak Presentasi Mingguan</button>
                 </li>
             </div>
         </div>
@@ -272,56 +261,6 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
-                tabindex="0">
-                    <div class="alert alert-primary alert-dismissible d-flex align-items-baseline" role="alert">
-                        <span class="alert-icon alert-icon-lg text-primary me-2">
-                            <i class="ti ti-bookmark ti-sm"></i>
-                        </span>
-                        <div class="d-flex flex-column ps-1">
-                            <h5 class="alert-heading mb-2">Tab Selesai Presentasi</h5>
-                            <p class="mb-0">Tab Selesai Presentasi berisi data data tim yang sudah selesai presentasi mingguan</p>
-                            </button>
-                        </div>
-                    </div>
-                <div class="card">
-                    <div class="card-datatable table-responsive">
-                        <table id="jstabel2" class="dt-responsive table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">NO</th>
-                                    <th scope="col">TEAM</th>
-                                    <th scope="col">TANGGAl</th>
-                                    <th scope="col">PROJECT</th>
-                                    <th scope="col">TEMA</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($presentasiSelesai as $item)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}.</td>
-                                        <td>
-                                            <img src="{{asset('storage/'.$item->tim->logo)}}" alt=""
-                                                style="width:30px;height:30px;border-radius:50%;cursor: pointer;"
-                                                data-bs-toggle="tooltip" data-popup="tooltip-custom"
-                                                data-bs-placement="top" title="{{ $item->tim->nama }}">
-                                        </td>
-
-                                            <td>{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('l, j F Y') }}
-                                            </td>
-
-                                        <td>{{ $item->tim->status_tim }}</td>
-                                        @foreach ($item->tim->project as $item)
-                                            <td>{{ $item->tema->nama_tema }}</td>
-                                        @endforeach
-                                    </tr>
-                                @empty
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
             <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"
                 tabindex="0">
                     <div class="alert alert-success alert-dismissible d-flex align-items-baseline" role="alert">
@@ -353,7 +292,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
                                             <img src="{{asset('storage/'.$item->logo)}}" alt=""
-                                                style="width:30px;height:30px;border-radius:50%; cursor: pointer"
+                                                style="width:30px;height:30px;border-radius:50%; cursor: pointer; object-fit:cover;"
                                                 data-bs-toggle="tooltip" data-bs-placement="top"
                                                 data-popup="tooltip-custom" title="{{ $item->nama }}">
                                         </td>
@@ -452,62 +391,6 @@
                                                 data-repo="{{ $item->repository }}">
                                                 Detail
                                             </button></td>
-                                    </tr>
-                                @empty
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="pills-tidak-presentasi" role="tabpanel" aria-labelledby="pills-disabled-tab"
-                tabindex="0">
-                <div class="alert alert-warning alert-dismissible d-flex align-items-baseline" role="alert">
-                    <span class="alert-icon alert-icon-lg text-warning me-2">
-                        <i class="ti ti-bookmark ti-sm"></i>
-                    </span>
-                    <div class="d-flex flex-column ps-1">
-                        <h5 class="alert-heading mb-2">Tab Tidak Presentasi Mingguan</h5>
-                        <p class="mb-0">Tab Tidak Presentasi Mingguan berisi data data siswa magang yang masih belum presentasi setiap minggunya</p>
-                        </button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-datatable table-responsive">
-                        <table id="jstabel5" class="dt-responsive table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">NO</th>
-                                    <th scope="col">NAMA</th>
-                                    <th scope="col">STATUS TIM</th>
-                                    <th scope="col">MINGGU/BULAN/TAHUN</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($tidakPresentasiMingguan as $i => $item)
-                                    <tr>
-                                        <td>{{ ++$i }}</td>
-                                        @if ($item->status_tim === "solo")
-                                            <td>{{ $item->tim->ketuaTim->username }}</td>
-                                        @else
-                                            <td>{{ $item->tim->nama }}</td>
-                                        @endif
-                                        <td>
-                                            @if ($item->tim->status_tim === "solo")
-                                                <span class="badge bg-label-danger">Solo Project</span>
-                                                @elseif ($item->tim->status_tim === "pre_mini")
-                                                <span class="badge bg-label-warning">Pre Mini Project</span>
-                                                @elseif ($item->tim->status_tim === "mini")
-                                                <span class="badge bg-label-success">Mini Project</span>
-                                                @else
-                                                <span class="badge bg-label-primary">Big Project</span>
-
-                                            @endif
-
-                                        </td>
-                                        {{-- @dd($item) --}}
-                                        <td>{{ $item->historyPresentasi->noMinggu }}/{{ $item->historyPresentasi->bulan }}/{{ $item->historyPresentasi->tahun }}</td>
-
                                     </tr>
                                 @empty
                                 @endforelse
