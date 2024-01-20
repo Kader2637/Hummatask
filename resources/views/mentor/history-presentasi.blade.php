@@ -22,12 +22,11 @@
                         type="button" role="tab" aria-controls="pills-present" aria-selected="false" data-tab="2"><i
                             class="fa-solid Example of calendar-check-o fa-calendar-check-o icon-text me-2"></i>Sudah Presentasi Minggu Ini</button>
                 </li>
-                {{-- Keep dulu --}}
-                {{-- <li class="nav-item" role="presentation">
+                <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-aduh"
                         type="button" role="tab" aria-controls="pills-aduh" aria-selected="false" data-tab="2"><i
                             class="fa-solid fa-calendar-xmark icon-text me-2"></i>Tidak Presentasi Mingguan</button>
-                </li> --}}
+                </li>
             </div>
         </div>
         <div class="tab-content px-0 mt-2" id="pills-tabContent">
@@ -234,8 +233,7 @@
                     </div>
                 </div>
             </div>
-            {{-- Keep dulu --}}
-            {{-- <div class="tab-pane fade" id="pills-aduh" role="tabpanel" aria-labelledby="pills-profile-tab"
+            <div class="tab-pane fade" id="pills-aduh" role="tabpanel" aria-labelledby="pills-profile-tab"
                 tabindex="0">
                 <div class="card p-3">
                     <div class="card-datatable table-responsive">
@@ -245,8 +243,7 @@
                                     <th scope="col">NO</th>
                                     <th scope="col">NAMA TIM</th>
                                     <th scope="col">STATUS TIM</th>
-                                    <th scope="col">MINGGU KE</th>
-                                    <th scope="col">BULAN</th>
+                                    <th scope="col">HARI/TANGGAL</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -265,15 +262,17 @@
                                                 <span class="badge bg-label-primary">Big Project</span>
                                             @endif
                                         </td>
-                                        <td>Minggu Ke-{{ $item->minggu_ke }}</td>
-                                        <td>{{ $item->bulan }}</td>
+                                        <td>
+                                            {{ $namaHari }}, {{ $tanggal->format('j') }} {{ $namaBulan }}
+                                            {{ $tanggal->format('Y') }}
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
-            </div> --}}
+            </div>
         </div>
     </div>
 @endsection
@@ -349,7 +348,7 @@
             });
         });
     </script>
-    {{-- <script>
+    <script>
         jQuery.noConflict();
 
         jQuery(document).ready(function($) {
@@ -381,7 +380,7 @@
                 }
             });
         });
-    </script> --}}
+    </script>
     <script>
         jQuery.noConflict();
 

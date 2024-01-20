@@ -69,14 +69,14 @@ class PresentasiController extends Controller
         })
         ->get();
         
-        // $tidakPresentasiMingguan = TidakPresentasiMingguan::query()
-        // ->whereHas('tim', function ($query){
-        //     $query->where('divisi_id', Auth()->user()->divisi_id);
-        // })
-        // ->get();
+        $tidakPresentasiMingguan = TidakPresentasiMingguan::query()
+        ->whereHas('tim', function ($query){
+            $query->where('divisi_id', Auth()->user()->divisi_id);
+        })
+        ->get();
         
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
-        return view('mentor.history-presentasi', compact('notifikasi', 'presentasiSelesaiMingguan', 'presentasiSelesai', 'tidakPresentasi', 'hariIni'));
+        return view('mentor.history-presentasi', compact('notifikasi','tidakPresentasiMingguan' ,'presentasiSelesaiMingguan', 'presentasiSelesai', 'tidakPresentasi', 'hariIni'));
     }
 
     protected function ajukanPresentasi(RequestPengajuanPresentasi $request, $code)
@@ -158,7 +158,7 @@ class PresentasiController extends Controller
         } else if ($jadwalQuery->presentasiDivisi->day == 'friday') {
             $day = 'jumat';
         }
-
+        
         $presentasi = new Presentasi();
         $presentasi->code = Str::uuid();
         $presentasi->judul = $request->judul;
