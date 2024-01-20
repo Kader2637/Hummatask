@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ResponseHelper;
-use App\Models\Project;
 use App\Models\Tim;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class ProjectAPI extends Controller
 {
@@ -26,6 +24,7 @@ class ProjectAPI extends Controller
         $data = Tim::query()
             ->where('code', $code)
             ->with(['project', 'tema', 'tugas', 'catatans.catatanDetail', 'divisi', 'user', 'anggota'])
+            ->orderByRaw("FIELD(anggota.jabatan_id, '1', '2', '3')")
             ->get();
 
         return ResponseHelper::success($data);
