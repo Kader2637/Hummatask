@@ -5,14 +5,22 @@ namespace App\Http\Controllers;
 use App\Helpers\ResponseHelper;
 use App\Models\Tim;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class ProjectAPI extends Controller
 {
-    public function getTeam(): JsonResponse
+    public function getTeam(Request $request): JsonResponse
     {
-        $data = Tim::query()
-            ->with(['project', 'tema', 'tugas', 'catatans', 'divisi', 'user'])
-            ->get();
+        $filter = $request->input('filter');
+
+        $query = Tim::query()
+            ->with(['project', 'tema', 'tugas', 'catatans', 'divisi', 'user']);
+
+        if ($filter) {
+            $query->where('type_project', $filter);
+        }
+
+        $data = $query->get();
 
         return ResponseHelper::success($data);
     }
