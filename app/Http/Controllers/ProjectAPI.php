@@ -11,8 +11,8 @@ class ProjectAPI extends Controller
     public function getTeam(): JsonResponse
     {
         $data = Tim::query()
-            ->leftJoin('projects', 'tims.id', '=', 'projects.tim_id')
             ->with(['project', 'tema', 'tugas', 'catatans', 'divisi', 'user'])
+            ->orderByRaw("FIELD(project.type_project, 'big', 'mini', 'pre_mini', 'solo')")
             ->get();
 
         return ResponseHelper::success($data);
