@@ -12,7 +12,6 @@ class ProjectAPI extends Controller
     {
         $data = Tim::query()
             ->with(['project', 'tema', 'tugas', 'catatans', 'divisi', 'user'])
-            ->orderByRaw("FIELD(project.type_project, 'big', 'mini', 'pre_mini', 'solo')")
             ->get();
 
         return ResponseHelper::success($data);
