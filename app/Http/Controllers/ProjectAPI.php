@@ -14,15 +14,16 @@ class ProjectAPI extends Controller
         $filter = $request->input('filter');
 
         $query = Tim::query()
-            ->with(['project', 'tema', 'tugas', 'catatans', 'divisi', 'user'])
-            ->join('projects', 'projects.tim_id', '=', 'tim.id')
-            ->where('projects.type_project', $filter);
+            ->with(['project', 'tema', 'tugas', 'catatans', 'divisi', 'user']);
+
+        if ($filter) {
+            $query->where('status_tim', $filter);
+        }
 
         $data = $query->get();
 
         return ResponseHelper::success($data);
     }
-
 
     public function getTeamDetail(mixed $code)
     {
