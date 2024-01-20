@@ -12,12 +12,17 @@ class ProjectAPI extends Controller
     public function getTeam(Request $request): JsonResponse
     {
         $filter = $request->input('filter');
+        $nama_tim = $request->input('nama_tim');
 
         $query = Tim::query()
             ->with(['project', 'tema', 'tugas', 'catatans', 'divisi', 'user']);
 
-        if ($filter) {
+        if ($filter && $filter !== 'all') {
             $query->where('status_tim', $filter);
+        }
+
+        if ($nama_tim) {
+            $query->where('nama', 'like', '%' . $nama_tim . '%');
         }
 
         $data = $query->get();
