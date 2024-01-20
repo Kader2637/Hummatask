@@ -13,7 +13,6 @@ class ProjectAPI extends Controller
         $data = Tim::query()
             ->leftJoin('projects', 'tims.id', '=', 'projects.tim_id')
             ->with(['project', 'tema', 'tugas', 'catatans', 'divisi', 'user'])
-            ->orderByRaw("FIELD(projects.type_project, 'big', 'mini', 'pre_mini', 'solo')")
             ->get();
 
         return ResponseHelper::success($data);
