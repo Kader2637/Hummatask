@@ -33,10 +33,10 @@ class ProjectAPI extends Controller
     public function getTeamDetail(mixed $code)
     {
         $data = Tim::query()
-            ->where('code', $code)
-            ->with(['project', 'tema', 'tugas.subPenugasan', 'catatans.catatanDetail', 'divisi', 'user', 'anggota'])
-            ->get();
-
+        ->where('code', $code)
+        ->with(['project', 'tema', 'tugas.subPenugasan.label', 'catatans.catatanDetail', 'divisi', 'user', 'anggota'])
+        ->get();
+            
         return ResponseHelper::success($data);
     }
 }
