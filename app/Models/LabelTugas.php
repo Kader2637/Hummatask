@@ -10,4 +10,9 @@ class LabelTugas extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function label()
+    {
+        return $this->belongsTo(Label::class, 'label_id', 'id');
+    }
 }

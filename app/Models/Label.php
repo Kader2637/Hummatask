@@ -21,4 +21,9 @@ class Label extends Model
     {
         return $this->belongsToMany(Tugas::class, 'label_tugas');
     }
+
+    public function labelTugas()
+    {
+        return $this->hasMany(LabelTugas::class, 'label_id', 'id');
+    }
 }
