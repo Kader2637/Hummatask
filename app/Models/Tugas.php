@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Tugas extends Model
 {
@@ -52,6 +53,15 @@ class Tugas extends Model
     public function penugasan(): BelongsTo
     {
         return $this->belongsTo(Penugasan::class);
+    }
+
+     /**
+     *
+     * @return HasMany
+     */
+    public function subPenugasan(): HasMany
+    {
+        return $this->hasMany(Penugasan::class);
     }
 
     /**
