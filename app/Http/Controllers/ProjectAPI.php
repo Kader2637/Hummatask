@@ -6,7 +6,6 @@ use App\Helpers\ResponseHelper;
 use App\Models\Tim;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\Paginator;
 
 class ProjectAPI extends Controller
 {
@@ -26,14 +25,7 @@ class ProjectAPI extends Controller
             $query->where('nama', 'like', '%' . $nama_tim . '%');
         }
 
-        $perPage = $request->input('perPage', 10);
-        $currentPage = $request->input('page', 1);
-
-        Paginator::currentPageResolver(function () use ($currentPage) {
-            return $currentPage;
-        });
-
-        $data = $query->paginate($perPage);
+        $data = $query->get();
 
         return ResponseHelper::success($data);
     }
@@ -41,9 +33,9 @@ class ProjectAPI extends Controller
     public function getTeamDetail(mixed $code)
     {
         $data = Tim::query()
-            ->where('code', $code)
-            ->with(['project', 'tema', 'tugas.subPenugasan', 'catatans.catatanDetail', 'divisi', 'user', 'anggota', 'tugas.labelTugas.label'])
-            ->get();
+        ->where('code', $code)
+        ->with(['project', 'tema', 'tugas.subPenugasan', 'catatans.catatanDetail', 'divisi', 'user', 'anggota','tugas.labelTugas.label'])
+        ->get();
 
         return ResponseHelper::success($data);
     }
