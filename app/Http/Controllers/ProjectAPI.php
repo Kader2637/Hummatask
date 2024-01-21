@@ -35,7 +35,7 @@ class ProjectAPI extends Controller
 
         $data = $query->paginate($perPage);
 
-        return ResponseHelper::success($data);
+        return ResponseHelper::success(['data' => $data]);
     }
 
     public function getTeamDetail(mixed $code)
@@ -45,6 +45,6 @@ class ProjectAPI extends Controller
             ->with(['project', 'tema', 'tugas.subPenugasan', 'catatans.catatanDetail', 'divisi', 'user', 'anggota', 'tugas.labelTugas.label'])
             ->get();
 
-        return ResponseHelper::success($data);
+        return ResponseHelper::success(['data' => $data]);
     }
 }
