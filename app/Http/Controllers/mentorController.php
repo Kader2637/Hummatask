@@ -41,14 +41,16 @@ class mentorController extends Controller
         $jadwal = [];
         $hari = [];
         $userID = Auth::user()->id;
+        $currentWeekStart = Carbon::now()->startOfWeek();
+        $previousWeekStart = $currentWeekStart->copy()->subWeek();
         $notifikasi = Notifikasi::where('user_id', $userID)
             ->whereHas('user', function ($query) {
                 $query->where('divisi_id', Auth::user()->divisi_id);
             })
             ->get();
-        $presentasi = Presentasi::with('tim')
+            $presentasi = Presentasi::with('tim')
             ->where('status_presentasi', 'selesai')
-            ->whereDate('created_at', now())
+            ->whereBetween('jadwal', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])
             ->latest('created_at')
             ->take(5)
             ->get()
@@ -165,25 +167,30 @@ class mentorController extends Controller
             ->with('limitPresentasiDivisis')
             ->where('day', DayEnum::MONDAY->value)
             ->where('divisi_id', auth()->user()->divisi_id)
+            ->whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])
             ->first();
         $selasa = PresentasiDivisi::query()
             ->with('limitPresentasiDivisis')
             ->where('day', DayEnum::TUESDAY->value)
+            ->whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])
             ->where('divisi_id', auth()->user()->divisi_id)
             ->first();
         $rabu = PresentasiDivisi::query()
             ->with('limitPresentasiDivisis')
             ->where('day', DayEnum::WEDNESDAY->value)
+            ->whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])
             ->where('divisi_id', auth()->user()->divisi_id)
             ->first();
         $kamis = PresentasiDivisi::query()
             ->with('limitPresentasiDivisis')
             ->where('day', DayEnum::THURSDAY->value)
+            ->whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])
             ->where('divisi_id', auth()->user()->divisi_id)
             ->first();
         $jumat = PresentasiDivisi::query()
             ->with('limitPresentasiDivisis')
             ->where('day', DayEnum::FRIDAY->value)
+            ->whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])
             ->where('divisi_id', auth()->user()->divisi_id)
             ->first();
 
