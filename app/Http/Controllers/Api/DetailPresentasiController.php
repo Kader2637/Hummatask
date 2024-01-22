@@ -10,6 +10,7 @@ use App\Models\Tim;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Carbon\CarbonImmutable;
 
 class DetailPresentasiController extends Controller
 {
@@ -29,18 +30,14 @@ class DetailPresentasiController extends Controller
 
         switch ($filterType) {
             case 'Mingguan':
-                $customDateMingguan = str_replace('W', ' ', $customDateMingguan);
-                $yearWeekArray = explode('-W', $customDateMingguan);
+                $yearWeekArray = explode('-W', trim($customDateMingguan));
 
                 if (count($yearWeekArray) == 2) {
                     $year = $yearWeekArray[0];
                     $week = $yearWeekArray[1];
 
-                    // Menghitung tanggal awal minggu
-                    $startOfWeek = Carbon::now()->setISODate($year, $week, 1)->startOfWeek();
-
-                    // Menghitung tanggal akhir minggu
-                    $endOfWeek = Carbon::now()->setISODate($year, $week, 7)->endOfWeek();
+                    $startOfWeek = CarbonImmutable::now()->setISODate($year, $week, 1)->startOfWeek();
+                    $endOfWeek = CarbonImmutable::now()->setISODate($year, $week, 7)->endOfWeek();
 
                     $presentasi->whereBetween('created_at', [$startOfWeek, $endOfWeek]);
                 }
