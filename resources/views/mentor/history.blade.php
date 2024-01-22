@@ -1,6 +1,9 @@
 @extends('layoutsMentor.app')
 @section('style')
     <style>
+        img {
+            object-fit: cover;
+        }
         .avatar-container {
             display: flex;
             flex-direction: column;
@@ -306,7 +309,7 @@
                                                 <span class="badge bg-label-success">Mini Project</span>
                                             @else
                                                 <span class="badge bg-label-primary">Big Project</span>
-                                            @endif    
+                                            @endif
                                         </td>
                                         <td>{{ $item->project[0]->tema->nama_tema }}</td>
                                         <td>
@@ -399,14 +402,14 @@
                                                 <span class="badge bg-label-success">Mini Project</span>
                                             @else
                                                 <span class="badge bg-label-primary">Big Project</span>
-                                            @endif    
+                                            @endif
                                         </td>
                                         <td>
                                             @if ($item->presentasiSelesai->count() == 0)
                                                 Belum Presentasi
                                             @else
                                             {{ $item->presentasiSelesai->count() }} Presentasi
-                                            @endif    
+                                            @endif
                                         </td>
                                         <td> <button type="button" class="btn btn-primary btn-detail"
                                                 data-bs-toggle="modal" data-bs-target="#modalCenter"
@@ -602,7 +605,7 @@
                                                                 <div class="col-12 d-flex justify-content-center">
                                                                     <div class="row d-flex flex-column justify-content-center align-items-center w-100"
                                                                         id="tugas_baru">
-                        
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -615,7 +618,7 @@
                                                                             <span style="font-size: 15px" class="">Dikerjakan</span>
                                                                         </div>
                                                                     </div>
-                        
+
                                                                 </div>
                                                                 <div class="col-12 d-flex justify-content-center">
                                                                     <div class="row row d-flex flex-column justify-content-center align-items-center w-100"
@@ -627,7 +630,7 @@
                                                         <div style="" class="col-lg-3 col-md-6 col-12 py-2">
                                                             <div style="max-height: 80vh; overflow:auto; overflow-x:hidden;background-color: #edeaea" class="p-2  rounded">
                                                                 <div style="width:100%" class="card card-status-tugas">
-                        
+
                                                                     <div class="card-body p-2 py-2 row">
                                                                         <div class="col-8 d-flex align-items-center position-sticky top-0">
                                                                             <span style="font-size: 15px" class="">Direvisi</span>
@@ -637,7 +640,7 @@
                                                                 <div class="col-12 d-flex justify-content-center">
                                                                     <div class="w-100 row d-flex flex-column justify-content-center align-items-center"
                                                                         id="revisi">
-                        
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -650,7 +653,7 @@
                                                                             <span style="font-size: 15px" class="">Selesai</span>
                                                                         </div>
                                                                     </div>
-                        
+
                                                                 </div>
                                                                 <div class="col-12 d-flex justify-content-center">
                                                                     <div class="row d-flex flex-column justify-content-center align-items-center w-100"
