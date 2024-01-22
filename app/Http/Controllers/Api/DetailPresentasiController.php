@@ -25,7 +25,6 @@ class DetailPresentasiController extends Controller
         $tim = Tim::query()->get();
 
         $filterType = $request->input('filter_type');
-        $customDate = $request->input('Harian');
         $customDateMingguan = $request->input('Mingguan');
 
         switch ($filterType) {
@@ -46,16 +45,13 @@ class DetailPresentasiController extends Controller
                 $presentasi->whereMonth('created_at', $parsedDate->month);
                 break;
 
-            case 'Harian':
-                $presentasi->whereDate('created_at', $customDate);
-                break;
-
             default:
-            break;
+                $presentasi->whereDate('created_at', today());
+                break;
         }
 
         $presentasiFilter = $presentasi->with('tim', 'divisi', 'tim.user')
-        ->get();
+            ->get();
 
         return response()->json([
             'presentasi' => $presentasiFilter,
