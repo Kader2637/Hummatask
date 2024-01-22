@@ -341,7 +341,7 @@
                                                         @php
                                                             $cekJadwal = \App\Models\Presentasi::where('presentasi_divisi_id', $data->presentasi_divisi_id)
                                                                 ->where('jadwal_ke', $data->jadwal_ke)
-                                                                ->whereDate('jadwal', '>', Carbon\Carbon::now()->startOfWeek())
+                                                                ->whereDate('jadwal', '>=', Carbon\Carbon::now()->startOfWeek())
                                                                 ->where('divisi_id', auth()->user()->divisi_id)
                                                                 ->first();
                                                         @endphp
@@ -446,7 +446,7 @@
                                                         @php
                                                             $cekJadwal = \App\Models\Presentasi::where('presentasi_divisi_id', $data->presentasi_divisi_id)
                                                                 ->where('jadwal_ke', $data->jadwal_ke)
-                                                                ->whereDate('jadwal', '>', Carbon\Carbon::now()->startOfWeek())
+                                                                ->whereDate('jadwal', '>=', Carbon\Carbon::now()->startOfWeek())
                                                                 ->where('divisi_id', auth()->user()->divisi_id)
                                                                 ->first();
                                                         @endphp
@@ -556,7 +556,7 @@
                                                         @php
                                                             $cekJadwal = \App\Models\Presentasi::where('presentasi_divisi_id', $data->presentasi_divisi_id)
                                                                 ->where('jadwal_ke', $data->jadwal_ke)
-                                                                ->whereDate('jadwal', '>', Carbon\Carbon::now()->startOfWeek())
+                                                                ->whereDate('jadwal', '>=', Carbon\Carbon::now()->startOfWeek())
                                                                 ->where('divisi_id', auth()->user()->divisi_id)
                                                                 ->first();
                                                         @endphp
@@ -661,17 +661,17 @@
                                                         @php
                                                             $cekJadwal = \App\Models\Presentasi::where('presentasi_divisi_id', $data->presentasi_divisi_id)
                                                                 ->where('jadwal_ke', $data->jadwal_ke)
-                                                                ->whereDate('jadwal', '>', Carbon\Carbon::now()->startOfWeek())
+                                                                ->whereDate('jadwal', '>=', Carbon\Carbon::now()->startOfWeek())
                                                                 ->where('divisi_id', auth()->user()->divisi_id)
                                                                 ->first();
                                                         @endphp
 
                                                         <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                             <label
-                                                                class="card card-jadwal {{ $cekJadwalKamis !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}">
+                                                                class="card card-jadwal {{ $cekJadwalKamis !== null && $cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}">
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}"
-                                                                    {{ $cekJadwalKamis !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
+                                                                    {{ $cekJadwalKamis !== null && $cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
                                                                     {{ $cekJadwal ? 'disabled' : '' }}>
                                                                 <span class="plan-details text-center">
                                                                     <p class="fs-6 mb-2 text-dark"
@@ -766,7 +766,7 @@
                                                         @php
                                                             $cekJadwal = \App\Models\Presentasi::where('presentasi_divisi_id', $data->presentasi_divisi_id)
                                                                 ->where('jadwal_ke', $data->jadwal_ke)
-                                                                ->whereDate('jadwal', '>', Carbon\Carbon::now()->startOfWeek())
+                                                                ->whereDate('jadwal', '>=', Carbon\Carbon::now()->startOfWeek())
                                                                 ->where('divisi_id', auth()->user()->divisi_id)
                                                                 ->first();
                                                         @endphp
