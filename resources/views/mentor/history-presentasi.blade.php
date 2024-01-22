@@ -263,6 +263,11 @@
                                             @endif
                                         </td>
                                         <td>
+                                            @php
+                                                $tanggal = $item->created_at;
+                                                $namaHari = terjemahkanHari($tanggal->format('l'));
+                                                $namaBulan = terjemahkanBulan($tanggal->format('F'));
+                                            @endphp
                                             {{ $namaHari }}, {{ $tanggal->format('j') }} {{ $namaBulan }}
                                             {{ $tanggal->format('Y') }}
                                         </td>
