@@ -30,12 +30,20 @@ class DetailPresentasiController extends Controller
         switch ($filterType) {
             case 'Mingguan':
                 $customDateMingguan = str_replace('W', ' ', $customDateMingguan);
-                $customDateMingguan = Carbon::createFromFormat('Y z', $customDateMingguan . ' 1')->startOfWeek();
+                $yearWeekArray = explode('-W', $customDateMingguan);
 
-                $presentasi->whereBetween('created_at', [
-                    $customDateMingguan->startOfWeek(),
-                    $customDateMingguan->endOfWeek(),
-                ]);
+                if (count($yearWeekArray) == 2) {
+                    $year = $yearWeekArray[0];
+                    $week = $yearWeekArray[1];
+
+                    // Menghitung tanggal awal minggu
+                    $startOfWeek = Carbon::now()->setISODate($year, $week, 1)->startOfWeek();
+
+                    // Menghitung tanggal akhir minggu
+                    $endOfWeek = Carbon::now()->setISODate($year, $week, 7)->endOfWeek();
+
+                    $presentasi->whereBetween('created_at', [$startOfWeek, $endOfWeek]);
+                }
                 break;
 
             case 'Bulanan':
