@@ -31,6 +31,7 @@ class DetailPresentasiController extends Controller
             case 'Mingguan':
                 $customDateMingguan = str_replace('W', ' ', $customDateMingguan);
                 $yearWeekArray = explode('-W', $customDateMingguan);
+                dd($yearWeekArray);
 
                 if (count($yearWeekArray) == 2) {
                     $year = $yearWeekArray[0];
