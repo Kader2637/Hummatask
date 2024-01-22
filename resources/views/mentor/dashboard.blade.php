@@ -474,7 +474,7 @@
                                         <td>{{ $no++ }}</td>
                                         <td class=""><img src="{{ asset('storage/' . $item->tim->logo) }}"
                                                 alt=""
-                                                style="width: 40px; height: 40px; ;border-radius:50%; margin-right:5px;">
+                                                style="width: 40px; height: 40px; ;border-radius:50%; margin-right:5px; object-fit: cover">
                                             {{ $item->tim->nama }}
                                         </td>
                                         <td>{{ $jadwal[$i] }}</td>
