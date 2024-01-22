@@ -45,6 +45,9 @@ class DetailPresentasiController extends Controller
                 $presentasi->whereMonth('created_at', $parsedDate->month);
                 break;
 
+            case 'Semua':
+                break;
+
             default:
                 $presentasi->whereDate('created_at', today());
                 break;
