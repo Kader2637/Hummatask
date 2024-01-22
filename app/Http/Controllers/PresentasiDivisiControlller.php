@@ -27,7 +27,7 @@ class PresentasiDivisiControlller extends Controller
         $currentWeekStart = $now->startOfWeek();
         $previousWeekStart = $currentWeekStart->copy()->subWeek();
         $nextWeekStart = $currentWeekStart->copy()->addWeek();
-        $presentasiDivisi = PresentasiDivisi::whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])->get();
+        $presentasiDivisi = PresentasiDivisi::whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])->where('day', $data['day'])->get();
         if ($now->isSameWeek($currentWeekStart) && $presentasiDivisi->count() == 0) {
             PresentasiDivisi::query()->create([
                 'divisi_id' => $data['divisi_id'],
