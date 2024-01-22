@@ -26,10 +26,9 @@ class DetailPresentasiController extends Controller
         $tim = Tim::query()->get();
 
         $filterType = $request->input('filter_type');
-        $customDateMingguan = $request->input('Mingguan');
-
         switch ($filterType) {
             case 'Mingguan':
+                $customDateMingguan = $request->input('Harian');
                 $yearWeekArray = explode('-W', trim($customDateMingguan));
 
                 if (count($yearWeekArray) == 2) {
