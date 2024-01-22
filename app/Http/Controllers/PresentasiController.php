@@ -45,10 +45,10 @@ class PresentasiController extends Controller
         $presentasiSelesai = Presentasi::where(function ($query) use ($hariIni) {
             $query->where('status_presentasi', 'selesai')
                 ->orWhere('status_presentasi', 'tidak_selesai');
-            })
-        ->where('divisi_id', Auth()->user()->divisi_id)
-        ->where('hari', $hariIni)
-        ->get();
+        })
+            ->where('divisi_id', Auth()->user()->divisi_id)
+            ->where('hari', $hariIni)
+            ->get();
 
         $sekarang = Carbon::now();
         $mingguIni = $sekarang->startOfWeek();
@@ -59,24 +59,24 @@ class PresentasiController extends Controller
             $query->where('status_presentasi', 'selesai')
                 ->orWhere('status_presentasi', 'tidak_selesai');
         })
-        ->where('divisi_id', auth()->user()->divisi_id)
-        ->whereBetween('jadwal', [$mingguIni, $mingguBerikutnya])
-        ->get();
+            ->where('divisi_id', auth()->user()->divisi_id)
+            ->whereBetween('jadwal', [$mingguIni, $mingguBerikutnya])
+            ->get();
 
         $tidakPresentasi = Tim::where('divisi_id', auth()->user()->divisi_id)
-        ->whereDoesntHave('presentasi', function ($query) {
-            $query->whereDate('created_at', Carbon::now()->toDateString());
-        })
-        ->get();
-        
+            ->whereDoesntHave('presentasi', function ($query) {
+                $query->whereDate('created_at', Carbon::now()->toDateString());
+            })
+            ->get();
+
         $tidakPresentasiMingguan = TidakPresentasiMingguan::query()
-        ->whereHas('tim', function ($query){
-            $query->where('divisi_id', Auth()->user()->divisi_id);
-        })
-        ->get();
-        
+            ->whereHas('tim', function ($query) {
+                $query->where('divisi_id', Auth()->user()->divisi_id);
+            })
+            ->get();
+
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
-        return view('mentor.history-presentasi', compact('notifikasi','tidakPresentasiMingguan' ,'presentasiSelesaiMingguan', 'presentasiSelesai', 'tidakPresentasi', 'hariIni'));
+        return view('mentor.history-presentasi', compact('notifikasi', 'tidakPresentasiMingguan', 'presentasiSelesaiMingguan', 'presentasiSelesai', 'tidakPresentasi', 'hariIni'));
     }
 
     protected function ajukanPresentasi(RequestPengajuanPresentasi $request, $code)
@@ -158,7 +158,7 @@ class PresentasiController extends Controller
         } else if ($jadwalQuery->presentasiDivisi->day == 'friday') {
             $day = 'jumat';
         }
-        
+
         $presentasi = new Presentasi();
         $presentasi->code = Str::uuid();
         $presentasi->judul = $request->judul;
@@ -186,7 +186,7 @@ class PresentasiController extends Controller
             ->whereDate('jadwal', now())
             ->where('presentasi_divisi_id', $jadwalQuery->presentasi_divisi_id)
             ->get();
-            
+
         foreach ($cek_present as $present) {
             if ($present->jadwal_ke === $jadwalQuery->jadwal_ke) {
                 return redirect()->back()->with('error', 'Jadwal sudah dipilih tim lain');
@@ -211,32 +211,32 @@ class PresentasiController extends Controller
     protected function updatePresentasi(Request $request, $id)
     {
         $jadwalQuery = LimitPresentasiDevisi::find($request->plan);
-    
+
         $presentasi = Presentasi::find($id);
-    
+
         if ($request->filled('judul')) {
             $presentasi->judul = $request->judul;
         }
-    
+
         if ($request->filled('deskripsi')) {
             $presentasi->deskripsi = $request->deskripsi;
         }
-    
+
         if ($jadwalQuery) {
             $presentasi->jadwal_ke = $jadwalQuery->jadwal_ke;
             $presentasi->mulai = $jadwalQuery->mulai;
             $presentasi->akhir = $jadwalQuery->akhir;
         }
 
-        if($presentasi->status_presentasi !== 'menunggu'){
+        if ($presentasi->status_presentasi !== 'menunggu') {
             return redirect()->back()->with('error', 'Anda hanya bisa mengedit jika status Menunggu');
         }
-    
+
         $presentasi->save();
-    
+
         return redirect()->back()->with('success', 'Berhasil Memperbarui Presentasi');
     }
-    
+
     protected function sendNotificationToMentor($mentorId, $title, $message, $jenisNotifikasi)
     {
         Notifikasi::create([
@@ -408,7 +408,7 @@ class PresentasiController extends Controller
 
         if ($presentasi) {
             $presentasiQuery = Presentasi::where('code', $code)->first();
-            if ($presentasiQuery->status_presentasi === 'selesai' || $presentasiQuery->status_revisi === 'tidak_selesai') {
+            if ($presentasiQuery->status_presentasi == 'selesai') {
                 $presentasiQuery->tim->update([
                     'sudah_presentasi' => true,
                 ]);
@@ -425,7 +425,8 @@ class PresentasiController extends Controller
         }
     }
 
-    protected function konfirmasiPengajuanPresentasi(mixed $code) {
+    protected function konfirmasiPengajuanPresentasi(mixed $code)
+    {
         $data = Presentasi::where('code', $code)->first();
 
         if (!$data) {
