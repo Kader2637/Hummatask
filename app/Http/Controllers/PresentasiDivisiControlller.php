@@ -28,6 +28,9 @@ class PresentasiDivisiControlller extends Controller
         $previousWeekStart = $currentWeekStart->copy()->subWeek();
         $nextWeekStart = $currentWeekStart->copy()->addWeek();
         $presentasiDivisi = PresentasiDivisi::whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])->where('day', $data['day'])->get();
+        if (strtolower($data['day']) !== strtolower(Carbon::now()->format('l'))) {
+            return redirect()->back()->with('error', 'Mentor hanya dapat mengajukan presentasi pada hari ini.')->withErrors(['day' => 'Mentor hanya dapat mengajukan presentasi pada hari ini.']);
+        }
         if ($now->isSameWeek($currentWeekStart) && $presentasiDivisi->count() == 0) {
             PresentasiDivisi::query()->create([
                 'divisi_id' => $data['divisi_id'],
@@ -47,13 +50,11 @@ class PresentasiDivisiControlller extends Controller
 
             return redirect()->back()->with('success', 'Berhasil Mengedit jadwal');
         } elseif ($now->isSameWeek($nextWeekStart)) {
-            dd('3');
             PresentasiDivisi::query()
                 ->create(['divisi_id' => $data['divisi_id'], 'day' => $data['day'], 'limit' => $data['limit']]);
 
             return redirect()->back()->with('success', 'Berhasil menambahkan limit baru untuk minggu depan');
         } else {
-            dd('4');
             return redirect()->back()->with('error', 'Tidak dapat membuat atau mengupdate limit pada minggu selanjutnya');
         }
     }
