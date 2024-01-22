@@ -25,7 +25,7 @@ class ProjectAPI extends Controller
             $query->where('nama', 'like', '%' . $nama_tim . '%');
         }
 
-        $data = $query->get();
+        $data = $query->paginate(10);
 
         return ResponseHelper::success($data);
     }
