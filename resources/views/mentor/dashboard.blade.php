@@ -57,8 +57,19 @@
                                     <input type="hidden" name="presentasi_divisi_id" value="{{ $senin->id ?? '' }}">
                                     <div id="form-repeater">
                                         <div class="d-flex justify-content-end mb-2">
-                                            <button class="btn btn-primary" type="button" id="buttonSettings"
+                                            @if ($senin)    
+                                            <div>
+                                                <div class="alert alert-danger" role="alert">
+                                                    Sisa limit anda {{ $sisaLimitSenin }}
+                                                </div>
+                                            </div>
+                                            @else
+                                                
+                                            @endif
+                                            <div class="ms-3">
+                                                <button class="btn btn-primary" type="button" id="buttonSettings"
                                                 data-bs-toggle="modal" data-bs-target="#modalLimit">Setting Limit</button>
+                                            </div>
                                         </div>
                                         @if ($senin)
                                             @for ($i = 0; $i < (int) $senin->limit; $i++)
@@ -107,10 +118,22 @@
                                     @csrf
                                     <input type="hidden" name="presentasi_divisi_id" value="{{ $selasa->id ?? '' }}">
                                     <div id="form-repeater">
+                                        
                                         <div class="d-flex justify-content-end mb-2">
-                                            <button class="btn btn-primary" type="button" id="buttonSettings"
+                                            @if ($selasa)    
+                                            <div>
+                                                <div class="alert alert-danger" role="alert">
+                                                    Sisa limit anda {{ $sisaLimitSelasa }}
+                                                </div>
+                                            </div>
+                                            @else
+                                                
+                                            @endif
+                                            <div class="ms-3">
+                                                <button class="btn btn-primary" type="button" id="buttonSettings"
                                                 data-bs-toggle="modal" data-bs-target="#modalLimitSelasa">Setting
                                                 Limit</button>
+                                            </div>
                                         </div>
                                         @if ($selasa)
                                             @for ($i = 0; $i < (int) $selasa->limit; $i++)
@@ -160,9 +183,20 @@
                                     <input type="hidden" name="presentasi_divisi_id" value="{{ $rabu->id ?? '' }}">
                                     <div id="form-repeater">
                                         <div class="d-flex justify-content-end mb-2">
-                                            <button class="btn btn-primary" type="button" id="buttonSettings"
+                                            @if ($rabu)    
+                                            <div>
+                                                <div class="alert alert-danger" role="alert">
+                                                    Sisa limit anda {{ $sisaLimitRabu }}
+                                                </div>
+                                            </div>
+                                            @else
+                                                
+                                            @endif
+                                            <div class="ms-3">
+                                                <button class="btn btn-primary" type="button" id="buttonSettings"
                                                 data-bs-toggle="modal" data-bs-target="#modalLimitRabu">Setting
                                                 Limit</button>
+                                            </div>
                                         </div>
                                         @if ($rabu)
                                             @for ($i = 0; $i < (int) $rabu->limit; $i++)
@@ -212,6 +246,15 @@
                                     <input type="hidden" name="presentasi_divisi_id" value="{{ $kamis->id ?? '' }}">
                                     <div id="form-repeater">
                                         <div class="d-flex justify-content-end mb-2">
+                                            @if ($kamis)    
+                                                <div>
+                                                    <div class="alert alert-danger" role="alert">
+                                                        Sisa limit anda {{ $sisaLimitKamis }}
+                                                    </div>
+                                                </div>
+                                                @else
+                                                    
+                                                @endif
                                             <button class="btn btn-primary" type="button" id="buttonSettings"
                                                 data-bs-toggle="modal" data-bs-target="#modalLimitKamis">Setting
                                                 Limit</button>
@@ -264,9 +307,20 @@
                                     <input type="hidden" name="presentasi_divisi_id" value="{{ $jumat->id ?? '' }}">
                                     <div id="form-repeater">
                                         <div class="d-flex justify-content-end mb-2">
-                                            <button class="btn btn-primary" type="button" id="buttonSettings"
+                                            @if ($jumat)    
+                                            <div>
+                                                <div class="alert alert-danger" role="alert">
+                                                    Sisa limit anda {{ $sisaLimitJumat }}
+                                                </div>
+                                            </div>
+                                            @else
+                                                
+                                            @endif
+                                            <div class="ms-3">
+                                                <button class="btn btn-primary" type="button" id="buttonSettings"
                                                 data-bs-toggle="modal" data-bs-target="#modalLimitJumat">Setting
                                                 Limit</button>
+                                            </div>
                                         </div>
                                         @if ($jumat)
                                             @for ($i = 0; $i < (int) $jumat->limit; $i++)
