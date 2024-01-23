@@ -26,7 +26,7 @@ class ProjectAPI extends Controller
             $query->where('nama', 'like', '%' . $nama_tim . '%');
         }
 
-        $perPage = 10;
+        $perPage = 8;
         $currentPage = $request->input('page', 1);
         Paginator::currentPageResolver(function () use ($currentPage) {
             return $currentPage;
