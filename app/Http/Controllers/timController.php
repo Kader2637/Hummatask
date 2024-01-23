@@ -226,8 +226,9 @@ class timController extends Controller
             ->get();
 
         $sesi_senin = $allSessions
-            ->filter(function ($session) {
-                return $session->presentasiDivisi->day === DayEnum::MONDAY->value;
+            ->filter(function ($session) use ($seninThisWeek) {
+                return $session->presentasiDivisi->day === DayEnum::MONDAY->value
+                    && $session->created_at->greaterThanOrEqualTo($seninThisWeek);
             })
             ->sortBy('mulai');
         $cekJadwalSenin = null;
@@ -244,11 +245,12 @@ class timController extends Controller
         }
 
         $sesi_selasa = $allSessions
-            ->filter(function ($session) {
-                return $session->presentasiDivisi->day === DayEnum::TUESDAY->value;
+            ->filter(function ($session) use ($selasaThisWeek) {
+                return $session->presentasiDivisi->day === DayEnum::TUESDAY->value
+                    && $session->created_at->greaterThanOrEqualTo($selasaThisWeek);
             })
             ->sortBy('mulai');
-            
+
         $cekJadwalSelasa = null;
         foreach ($sesi_selasa as $selasa) {
             $cekJadwalSelasa = Presentasi::where('presentasi_divisi_id', $selasa->presentasi_divisi_id)
@@ -263,8 +265,9 @@ class timController extends Controller
         }
 
         $sesi_rabu = $allSessions
-            ->filter(function ($session) {
-                return $session->presentasiDivisi->day === DayEnum::WEDNESDAY->value;
+            ->filter(function ($session) use($rabuThisWeek) {
+                return $session->presentasiDivisi->day === DayEnum::WEDNESDAY->value
+                    && $session->created_at->greaterThanOrEqualTo($rabuThisWeek);
             })
             ->sortBy('mulai');
         $cekJadwalRabu = null;
@@ -279,11 +282,11 @@ class timController extends Controller
                 ->whereDate('jadwal', $rabuThisWeek)
                 ->first();
         }
-        // dd($cekJadwalRabu === null);
 
         $sesi_kamis = $allSessions
-            ->filter(function ($session) {
-                return $session->presentasiDivisi->day === DayEnum::THURSDAY->value;
+            ->filter(function ($session) use ($kamisThisWeek) {
+                return $session->presentasiDivisi->day === DayEnum::THURSDAY->value
+                    && $session->created_at->greaterThanOrEqualTo($kamisThisWeek);
             })
             ->sortBy('mulai');
         $cekJadwalKamis = null;
@@ -300,8 +303,9 @@ class timController extends Controller
         }
 
         $sesi_jumat = $allSessions
-            ->filter(function ($session) {
-                return $session->presentasiDivisi->day === DayEnum::FRIDAY->value;
+            ->filter(function ($session) use($jumatThisWeek) {
+                return $session->presentasiDivisi->day === DayEnum::FRIDAY->value
+                    && $session->created_at->greaterThanOrEqualTo($jumatThisWeek);
             })
             ->sortBy('mulai');
         $cekJadwalJumat = null;

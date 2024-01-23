@@ -311,7 +311,8 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="alert alert-secondary px-3" role="alert">
-                                                            <strong>Disabled:</strong> Jadwal telah dipilih oleh tim yang lain.
+                                                            <strong>Disabled:</strong> Jadwal telah dipilih oleh tim yang
+                                                            lain.
                                                         </div>
                                                     </div>
                                                 </div>
@@ -668,10 +669,10 @@
 
                                                         <div class="col-12 col-lg-4 col-xxl-4 my-2">
                                                             <label
-                                                                class="card card-jadwal {{ $cekJadwalKamis !== null && $cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}">
+                                                                class="card card-jadwal {{ $cekJadwalKamis !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}">
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}"
-                                                                    {{ $cekJadwalKamis !== null && $cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
+                                                                    {{ $cekJadwalKamis !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
                                                                     {{ $cekJadwal ? 'disabled' : '' }}>
                                                                 <span class="plan-details text-center">
                                                                     <p class="fs-6 mb-2 text-dark"
@@ -1030,7 +1031,7 @@
                         [10, 20, 30, -1],
                         [10, 20, 30, "All"]
                     ],
-                    "pageLength": 5,
+                    "pageLength": 10,
 
                     "order": [],
 
