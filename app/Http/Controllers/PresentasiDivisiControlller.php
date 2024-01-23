@@ -27,10 +27,11 @@ class PresentasiDivisiControlller extends Controller
         $currentWeekStart = $now->startOfWeek();
         $previousWeekStart = $currentWeekStart->copy()->subWeek();
         $nextWeekStart = $currentWeekStart->copy()->addWeek();
-        $presentasiDivisi = PresentasiDivisi::whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])->where('day', $data['day'])->get();
+        $presentasiDivisi = PresentasiDivisi::whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])->where('day', $data['day'])->where('divisi_id', $data['divisi_id'])->get();
         if (strtolower($data['day']) !== strtolower(Carbon::now()->format('l'))) {
             return redirect()->back()->with('error', 'Mentor hanya dapat mengajukan presentasi pada hari ini.')->withErrors(['day' => 'Mentor hanya dapat mengajukan presentasi pada hari ini.']);
         }
+        
         if ($now->isSameWeek($currentWeekStart) && $presentasiDivisi->count() == 0) {
             PresentasiDivisi::query()->create([
                 'divisi_id' => $data['divisi_id'],
