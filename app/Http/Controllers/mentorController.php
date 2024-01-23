@@ -200,27 +200,47 @@ class mentorController extends Controller
         $divisis = Divisi::all();
 
         $dataPresentasi = [];
-
-        foreach ($divisis as $divisi) {
-            $query = LimitPresentasiDevisi::whereHas('presentasiDivisi', function ($query) use ($divisiId, $day) {
-                if ($divisiId) {
-                    $query->where('divisi_id', $divisiId);
-                }
-                if ($day) {
-                    $query->where('day', $day);
-                }
-            });
-
-            $dataPresentasi[$divisi->id] = $query->get();
-        }
+        $now = Carbon::now()->startOfWeek();
 
         if (!$day && !$divisiId) {
             foreach ($divisis as $divisi) {
-                $query = LimitPresentasiDevisi::whereHas('presentasiDivisi', function ($query) use ($divisi) {
-                    $query->where('divisi_id', $divisi->id);
-                });
+                $dataPresentasi[$divisi->id] = [];
 
-                $dataPresentasi[$divisi->id] = $query->get();
+                // Inner loop for days
+                foreach (DayEnum::cases() as $dayEnumCase) {
+                    $query = LimitPresentasiDevisi::whereHas('presentasiDivisi', function ($query) use ($divisi, $dayEnumCase, $now) {
+                        $query
+                            ->where('divisi_id', $divisi->id)
+                            ->where('day', $dayEnumCase->value)
+                            ->whereBetween('created_at', [$now, $now->copy()->endOfWeek()]);
+                    });
+
+                    $dayName = '';
+
+                    switch ($dayEnumCase->value) {
+                        case 'monday':
+                            $dayName = 'Senin';
+                            break;
+                        case 'tuesday':
+                            $dayName = 'Selasa';
+                            break;
+                        case 'wednesday':
+                            $dayName = 'Rabu';
+                            break;
+                        case 'thursday':
+                            $dayName = 'Kamis';
+                            break;
+                        case 'friday':
+                            $dayName = 'Jumat';
+                            break;
+                            // Handle other cases if needed
+
+                        default:
+                            break;
+                    }
+
+                    $dataPresentasi[$divisi->id][$dayName] = $query->get();
+                }
             }
         }
 
@@ -436,13 +456,16 @@ class mentorController extends Controller
     {
         $catatan = catatan::findOrFail($id);
         if ($request->catatan_text) {
-            $request->validate([
-                'catatan_text.*' => 'required',
-                'catatan_text' => 'required',
-            ], [
-                'catatan_text.*.required' => 'Setidaknya satu catatan harus diisi.',
-                'catatan_text.required' => 'Setidaknya satu catatan harus diisi.',
-            ]);
+            $request->validate(
+                [
+                    'catatan_text.*' => 'required',
+                    'catatan_text' => 'required',
+                ],
+                [
+                    'catatan_text.*.required' => 'Setidaknya satu catatan harus diisi.',
+                    'catatan_text.required' => 'Setidaknya satu catatan harus diisi.',
+                ],
+            );
             foreach ($request->catatan_text as $index => $catatan_text) {
                 $id_detail = $request->id[$index];
                 if ($catatan_text) {
@@ -452,11 +475,7 @@ class mentorController extends Controller
                         })
                         ->first();
 
-                    $catatanDetail = CatatanDetail::where('catatan_id', $catatan->id)->updateOrCreate(
-                        ['id' => $id_detail],
-                        ['catatan_text' => $catatan_text, 'catatan_id' => $catatan->id]
-                    );
-
+                    $catatanDetail = CatatanDetail::where('catatan_id', $catatan->id)->updateOrCreate(['id' => $id_detail], ['catatan_text' => $catatan_text, 'catatan_id' => $catatan->id]);
 
                     if ($tugas) {
                         $tugas->update([
@@ -464,7 +483,7 @@ class mentorController extends Controller
                             'code' => $tugas->code,
                             'nama' => $catatan_text,
                             'status_tugas' => 'tugas_baru',
-                            'prioritas' => 'biasa'
+                            'prioritas' => 'biasa',
                         ]);
 
                         if ($tugas->wasRecentlyCreated && $catatan->tim->status_tim === 'solo') {
@@ -474,13 +493,13 @@ class mentorController extends Controller
                             $penugasan->update();
                         }
                     } else {
-                        $createdTugas =  Tugas::create([
+                        $createdTugas = Tugas::create([
                             'catatan_detail_id' => $catatanDetail->id,
                             'tim_id' => $request->tim_id,
                             'code' => Str::uuid(),
                             'nama' => $catatanDetail->catatan_text,
                             'status_tugas' => 'tugas_baru',
-                            'prioritas' => 'biasa'
+                            'prioritas' => 'biasa',
                         ]);
 
                         if ($catatan->tim->status_tim === 'solo') {
@@ -503,9 +522,13 @@ class mentorController extends Controller
                 }
             }
 
-            return redirect()->back()->with('success', 'Catatan berhasil diperbarui.');
+            return redirect()
+                ->back()
+                ->with('success', 'Catatan berhasil diperbarui.');
         } else {
-            return redirect()->back()->with('error', 'Gagal menyimpan catatan.');
+            return redirect()
+                ->back()
+                ->with('error', 'Gagal menyimpan catatan.');
         }
     }
 

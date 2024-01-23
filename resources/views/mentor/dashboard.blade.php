@@ -337,14 +337,6 @@
                                 <div class="tab-pane {{ $index == 0 ? 'active' : '' }}"
                                     id="{{ str_replace('-', ' ', $slug) }}" role="tabpanel">
                                     <div class="card">
-                                        <select class="form-select" id="filterDayTab{{ $divisi->id }}">
-                                            <option value="all">Semua Hari</option>
-                                            <option value="Senin">Senin</option>
-                                            <option value="Selasa">Selasa</option>
-                                            <option value="Rabu">Rabu</option>
-                                            <option value="Kamis">Kamis</option>
-                                            <option value="Jumat">Jumat</option>
-                                        </select>
                                         <div class="card-body m-0">
                                             @if ($errors->any())
                                                 <script>
@@ -364,55 +356,66 @@
                                                     });
                                                 </script>
                                             @endif
-                                            <div class="table-responsive text-nowrap card-datatable">
-                                                <table class="table" id="table-{{ $divisi->id }}">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>No</th>
-                                                            <th>Hari</th>
-                                                            <th>Mulai</th>
-                                                            <th>Sampai</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody class="table-border-bottom-0"
-                                                        id="tableBody{{ $divisi->id }}">
-                                                        @forelse ($dataPresentasi[$divisi->id] as $index => $data)
-                                                            <tr class="dataRow">
-                                                                <td>{{ $index + 1 }}</td>
-                                                                <td>
-                                                                    @if ($data->presentasiDivisi->day == 'monday')
-                                                                        Senin
-                                                                    @elseif($data->presentasiDivisi->day == 'tuesday')
-                                                                        Selasa
-                                                                    @elseif($data->presentasiDivisi->day == 'wednesday')
-                                                                        Rabu
-                                                                    @elseif($data->presentasiDivisi->day == 'thursday')
-                                                                        Kamis
-                                                                    @elseif($data->presentasiDivisi->day == 'friday')
-                                                                        Jumat
-                                                                    @else
-                                                                        {{ $data->presentasiDivisi->day }}
-                                                                    @endif
-                                                                </td>
-                                                                <td>{{ $data->mulai }}</td>
-                                                                <td>{{ $data->akhir }}</td>
-                                                            </tr>
-                                                        @empty
-                                                            <tr>
-                                                                <td colspan="4">
-                                                                    <div class="d-flex justify-content-evenly">
-                                                                        <img src="{{ asset('assets/img/illustrations/noData2.png') }}"
-                                                                            alt="" class="mb-0"
-                                                                            style="width: 250px;">
-                                                                    </div>
-                                                                    <p class="text-center mb-0 mt-2">Tidak ada Jadwal
-                                                                        Presentasi<i class="ti ti-address-book-off"></i>
-                                                                    </p>
-                                                                </td>
-                                                            </tr>
-                                                        @endforelse
-                                                    </tbody>
-                                                </table>
+                                            <!-- Sub-navtabs for each day -->
+                                            <ul class="nav nav-tabs px-4">
+                                                @foreach (['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'] as $hari)
+                                                    <li class="nav-item">
+                                                        <button class="nav-link {{ $loop->first ? 'active' : '' }}"
+                                                            id="{{ $hari }}-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#{{ $slug }}-{{ strtolower($hari) }}"
+                                                            role="tab">{{ $hari }}</button>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+
+                                            <!-- Tab contents for each day -->
+                                            <div class="tab-content">
+                                                @foreach (['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'] as $hari)
+                                                    <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}"
+                                                        id="{{ $slug }}-{{ strtolower($hari) }}"
+                                                        role="tabpanel">
+                                                        <div class="card-body m-0 p-0 pt-2">
+                                                            <div class="table-responsive text-nowrap card-datatable">
+                                                                <table class="table"
+                                                                    id="table-{{ $divisi->id }}-{{ strtolower($hari) }}">
+                                                                    <thead class="bg-primary">
+                                                                        <tr>
+                                                                            <th class="text-white">No.</th>
+                                                                            <th class="text-white">Mulai</th>
+                                                                            <th class="text-white">Sampai</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody class="table-border-bottom-0"
+                                                                        id="tableBody{{ $divisi->id }}">
+                                                                        @forelse ($dataPresentasi[$divisi->id][$hari] as $index => $data)
+                                                                            <tr class="dataRow">
+                                                                                <td>{{ $loop->iteration }}.</td>
+                                                                                <td>{{ $data->mulai }}</td>
+                                                                                <td>{{ $data->akhir }}</td>
+                                                                            </tr>
+                                                                        @empty
+                                                                            <tr>
+                                                                                <td colspan="4">
+                                                                                    <div
+                                                                                        class="d-flex justify-content-evenly">
+                                                                                        <img src="{{ asset('assets/img/illustrations/noData2.png') }}"
+                                                                                            alt="" class="mb-0"
+                                                                                            style="width: 250px;">
+                                                                                    </div>
+                                                                                    <p class="text-center mb-0 mt-2">Tidak
+                                                                                        ada Jadwal
+                                                                                        Presentasi<i
+                                                                                            class="ti ti-address-book-off"></i>
+                                                                                    </p>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endforelse
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
@@ -422,29 +425,6 @@
                     </div>
                 </div>
             </div>
-
-            <script>
-                $(document).ready(function() {
-                    $('select[id^="filterDayTab"]').on('change', function() {
-                        const divisiId = $(this).attr('id').replace('filterDayTab', '');
-                        const selectedDay = $(this).val();
-
-                        $(`#tableBody${divisiId} .dataRow`).show();
-
-                        if (selectedDay !== 'all') {
-                            $(`#tableBody${divisiId} .dataRow`).filter(function() {
-                                const rowDay = $(this).find('td:eq(1)').text()
-                                    .trim(); // Assuming the day is in the second <td>
-                                return rowDay !== selectedDay;
-                            }).hide();
-                        }
-                    });
-                });
-
-                $.expr[':'].contains = function(a, i, m) {
-                    return $(a).text().toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
-                };
-            </script>
 
             <div class="col-12 col-xl-12">
                 <div class="card">
@@ -673,30 +653,6 @@
                     <div class="card-header header-elements">
                         <h5 class="card-title mb-0">Data Anak Magang</h5>
                         <div class="card-action-element ms-auto py-0">
-                            {{-- <div class="dropdown">
-                                <button type="button" class="btn dropdown-toggle px-0" data-bs-toggle="dropdown"
-                                    aria-expanded="false"><i class="ti ti-calendar"></i></button>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a href="javascript:void(0);"
-                                            class="dropdown-item d-flex align-items-center">Today</a>
-                                    </li>
-                                    <li><a href="javascript:void(0);"
-                                            class="dropdown-item d-flex align-items-center">Yesterday</a></li>
-                                    <li><a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">Last 7
-                                            Days</a></li>
-                                    <li><a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">Last
-                                            30
-                                            Days</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a href="javascript:void(0);"
-                                            class="dropdown-item d-flex align-items-center">Current
-                                            Month</a></li>
-                                    <li><a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">Last
-                                            Month</a></li>
-                                </ul>
-                            </div> --}}
                             <div class="dropdown">
                                 <button type="button" class="btn dropdown-toggle px-0" data-bs-toggle="dropdown"
                                     aria-expanded="false">
@@ -761,6 +717,9 @@
     <script src="{{ asset('assets/vendor/libs/cleavejs/cleave-phone.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/bootstrap-maxlength/bootstrap-maxlength.js') }}"></script>
     <script src="{{ asset('assets/js/form-custome.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 
     <script>
         const cardColor = 'grey';
@@ -953,34 +912,7 @@
 
     <script>
         $(document).ready(function() {
-            @foreach ($divisis as $divisi)
-                $('#table-{{ $divisi->id }}').DataTable({
-                    "lengthMenu": [
-                        [5, 10, 15, -1],
-                        [5, 10, 15, "All"]
-                    ],
-                    "pageLength": 5,
-                    "order": [],
-                    "ordering": true,
-                    "language": {
-                        "sProcessing": "Sedang memproses...",
-                        "sLengthMenu": "Tampilkan _MENU_ data",
-                        "sZeroRecords": "Tidak ditemukan Data",
-                        "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-                        "sInfoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
-                        "sInfoFiltered": "(disaring dari _MAX_ data keseluruhan)",
-                        "sInfoPostFix": "",
-                        "sSearch": "Cari:",
-                        "sUrl": "",
-                        "oPaginate": {
-                            "sFirst": "Pertama",
-                            "sPrevious": "&#8592;",
-                            "sNext": "&#8594;",
-                            "sLast": "Terakhir"
-                        }
-                    }
-                });
-            @endforeach
+
         });
     </script>
 @endsection
