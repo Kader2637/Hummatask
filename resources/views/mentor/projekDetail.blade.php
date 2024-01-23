@@ -709,31 +709,31 @@
                                         <div class="item-badges">
                                           @switch($item->prioritas)
                                             @case('mendesak')
-                                              <div class="badge rounded-pill bg-label-danger">
+                                              <div class="badge rounded-pill bg-label-danger text-capitalize">
                                                 {{ $item->prioritas }}
                                               </div>
                                             @break
 
                                             @case('penting')
-                                              <div class="badge rounded-pill bg-label-warning">
+                                              <div class="badge rounded-pill bg-label-warning text-capitalize">
                                                 {{ $item->prioritas }}
                                               </div>
                                             @break
 
                                             @case('biasa')
-                                              <div class="badge rounded-pill bg-label-info">
+                                              <div class="badge rounded-pill bg-label-info text-capitalize">
                                                 {{ $item->prioritas }}
                                               </div>
                                             @break
 
                                             @case('tambahan')
-                                              <div class="badge rounded-pill bg-label-primary">
+                                              <div class="badge rounded-pill bg-label-primary text-capitalize">
                                                 {{ $item->prioritas }}
                                               </div>
                                             @break
 
                                             @default
-                                              <div class="badge rounded-pill bg-label-secondary">
+                                              <div class="badge rounded-pill bg-label-secondary text-capitalize">
                                                 {{ $item->prioritas }}
                                               </div>
                                           @endswitch

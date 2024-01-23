@@ -403,7 +403,7 @@ class mentorController extends Controller
 
         $selesaiQuery = $tugas->where('status_tugas', 'selesai');
         $revisiQuery = $tugas->where('status_tugas', 'revisi');
-        $tugasBaruQuery = $tugas->where('status_tugas', 'tugas_baru')->sortByDesc('created_at');;
+        $tugasBaruQuery = $tugas->where('status_tugas', 'tugas_baru')->sortByDesc('created_at');
         $dikerjakanQuery = $tugas->where('status_tugas', 'dikerjakan');
 
         $chartData = [['Status Tugas', 'Jumlah'], ['Selesai', $selesaiQuery->count()], ['Revisi', $revisiQuery->count()], ['Dikerjakan', $dikerjakanQuery->count()], ['Tugas Baru', $tugasBaruQuery->count()]];

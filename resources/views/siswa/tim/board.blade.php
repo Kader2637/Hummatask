@@ -542,7 +542,6 @@
                         // let dataEmpty
 
                         const handleAktifitas = (aktifitas, pelaku, status) => {
-                          console.log(aktifitas);
                           const jadwal = formatDate(aktifitas.deadline)
 
                           const avatar = aktifitas.user.avatar === null ? "assets/img/avatars/1.png" : "storage/" + aktifitas.user
@@ -931,11 +930,9 @@
 
                         function bukaKomentar() {
                           $(".form-komentar").removeClass("d-none")
-                          console.log("Buka Komentar");
                         }
 
                         function tutupKomentar() {
-                          console.log("tutup Komentar");
                           $(".form-komentar").addClass("d-none")
                         }
 
@@ -974,7 +971,6 @@
 
                                 let tugaskan = "  ";
                                 userTugaskan = user.filter((element, index) => user.indexOf(element) === index);
-                                console.log(userTugaskan);
 
                                 userTugaskan.forEach(element => {
                                   let avatar = element.avatar ? 'storage/' + element.avatar :
@@ -1041,8 +1037,6 @@
 
                                   labels += handleLabel(label.text, label.warna_text, label.warna_bg);
                                 })
-
-                                console.log(labels);
 
                                 const element = $(`<div>`)
                                   .attr("id", "board-" + tugas.code)
@@ -1143,7 +1137,6 @@
 
                         function editTugas(codeTugas) {
                           bukaCanvasEditTugas()
-                          console.log(codeTugas);
                           $("#select2Primary").empty();
                           $("#formEditTugas").attr("data-codetugas", codeTugas);
                           $("#tambahKomentar").attr("data-codetugas", codeTugas);
@@ -1152,8 +1145,6 @@
 
                           axios.get("data-edit-tugas/" + codeTugas)
                             .then((res) => {
-
-                              console.log("klik edit code " + codeTugas);
                               const data = res.data;
                               // console.log(data);
                               const user = data.tugas.tim.user;
@@ -1166,15 +1157,12 @@
                               $(".tab-aktifitas").empty()
                               $.each(aktifitas, (index, data) => {
 
-                                console.log(data.tugas);
                                 const elements = handleAktifitas(data, data.aktifitas_data_user, data.status);
                                 $(".tab-aktifitas").append(elements)
                               })
 
                               // label
-
                               const label = data.labels;
-
 
                               Object.keys(label).forEach(key => {
                                 const labelOption = label[key];
@@ -1191,11 +1179,6 @@
                                 $("#labels").append(option);
                               });
 
-                              console.log(label);
-
-
-
-
                               const optStatusTugas = document.querySelector("#status");
 
                               optStatusTugas.querySelectorAll('option').forEach(status => {
@@ -1206,8 +1189,6 @@
                                   status.selected = false
                                 }
                               });
-
-
 
                               const optPrioritas = document.querySelector("#newPriority")
 
@@ -1241,13 +1222,11 @@
 
                               $(".list-komentar").empty();
 
-                              console.log(comments);
                               if (comments.length !== 0) {
                                 Object.keys(comments).forEach((keys, i) => {
                                   const jadwal = res.data.komentarTerbuat[i];
 
                                   const komentar = comments[keys];
-                                  console.log(jadwal);
                                   let div = document.createElement("div");
 
 
@@ -1324,7 +1303,6 @@
                           const penugasan = $("#select2Primary").val()
                           const labels = $("#labels").val()
                           let codeTugas = $(this).data('codetugas');
-                          console.log("edit tugas code " + codeTugas);
 
                           axios.put("{{ route('editTugas') }}", {
                               codeTugas,
@@ -1348,8 +1326,6 @@
                               $("#status").trigger('reset')
                               $("#newPrioritas").trigger('reset')
                               $(this).removeData('codetugas');
-                              console.log(codeTugas);
-
                             })
                             .catch((error) => {
                               alertError(error)
@@ -1417,8 +1393,6 @@
                         function cancelEdit() {
                           let komentar_id = $("#tambahKomentar").data("komentar-id");
                           let tugas_code = $("#tambahKomentar").data("codetugas");
-                          console.log("tugas code tercancel" + tugas_code);
-                          console.log("Ini cancel");
                           editTugas(tugas_code);
                           get()
 
@@ -1432,7 +1406,6 @@
                           $("#tambahKomentar").removeAttr("data-komentar-id");
                           $("#tambahKomentar").trigger("reset");
 
-                          console.log(komentar_id);
                         }
 
                         $("#tambahKomentar").submit(function(event) {
@@ -1440,13 +1413,12 @@
                           const text = $(".inp-tambah-komentar").val();
                           const tugas_code = $(this).data("codetugas");
                           let komentar_id = $(this).data("komentar-id");
-                          console.log(komentar_id);
 
                           if (typeof komentar_id == 'undefined') {
                             komentar_id = 0;
-                            console.log(komentar_id);
+
                           } else {
-                            console.log(komentar_id);
+
                           }
 
                           axios.post("tambah-komentar", {
@@ -1455,20 +1427,16 @@
                               komentar_id
                             })
                             .then((res) => {
-                              console.log("komentar =>" + komentar_id);
-                              console.log(komentar_id);
                               editTugas(tugas_code);
                               $("#tambahKomentar").trigger("reset");
                               let komentar_tes_id = $("#tambahKomentar").data("komentar-id");
-                              console.log("kometar tes id 1 =>" + komentar_tes_id);
                               $(".btn-edit-komentar").addClass("d-none");
                               $("#komentar-" + komentar_id).removeClass("border border-primary");
-                              komentar_tes_id = 0; // Menghapus nilai komentar_id
-                              console.log("komentar_tes_id 2 =>" + komentar_tes_id);
+                              komentar_tes_id = 0;
                               $(this).removeData("komentar-id");
                               $(this).removeAttr("data-komentar-id");
                               $(this).removeData('codetugas');
-                              successRes("Berhasil membuat komentar")
+                              // successRes("Berhasil membuat komentar")
                               get();
                             })
                             .catch((error) => {
