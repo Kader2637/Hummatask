@@ -429,7 +429,7 @@
             <div class="col-12 col-xl-12">
                 <div class="card">
                     <div class="d-flex justify-content-between mx-3 mb-1 mt-4">
-                        <h5 class="pb-0">Data Presentasi hari ini</h5>
+                        <h5 class="pb-0">Data Presentasi Terbaru</h5>
                         <a href="{{ route('siswa-presentasi.mentor') }}"
                             class="btn btn-primary d-flex justify-content-end">Detail</a>
                     </div>
@@ -443,7 +443,6 @@
                                     <th>No</th>
                                     <th>Nama</th>
                                     <th>Tanggal</th>
-                                    <th>Hari</th>
                                     <th>Projek</th>
                                     <th>Status</th>
                                 </tr>
@@ -458,7 +457,6 @@
                                             {{ $item->tim->nama }}
                                         </td>
                                         <td>{{ $jadwal[$i] }}</td>
-                                        <td>{{ $hari[$i] }}</td>
                                         <td>{{ $item->tim->status_tim }}</td>
                                         <td><span
                                                 class="badge bg-label-success me-1">{{ $item->status_presentasi }}</span>

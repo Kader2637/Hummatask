@@ -53,8 +53,7 @@ class mentorController extends Controller
             ->whereBetween('jadwal', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])
             ->latest('created_at')
             ->take(5)
-            ->get()
-            ->reverse();
+            ->get();
         foreach ($presentasi as $i => $data) {
             $jadwal[] = Carbon::parse($data->jadwal)->isoFormat('DD MMMM YYYY');
             $hari[] = Carbon::parse($data->jadwal)->isoFormat('dddd');
