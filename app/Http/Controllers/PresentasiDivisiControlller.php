@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notifikasi;
 use App\Http\Requests\LimitPresentasiDivisiRequest;
 use App\Http\Requests\PresentasiDivisiRequest;
+use App\Models\Anggota;
 use App\Models\LimitPresentasiDevisi;
 use App\Models\PresentasiDivisi;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -39,6 +42,21 @@ class PresentasiDivisiControlller extends Controller
                 'limit' => $data['limit']
             ]);
 
+            $Siswa = User::query()
+                ->where('divisi_id', auth()->user()->divisi_id)
+                ->where('peran_id', 1)
+                ->get();
+            
+            foreach ($Siswa as $member) {
+                $userId = $member->user_id;
+                $statusAnggota = Anggota::where('user_id', $userId)->value('status');
+                if ($statusAnggota !== ['kicked', 'expired']) {
+                    if ($member->jabatan_id === 1) {
+                        $this->sendNotificationToTeamMembers($userId, 'Jadwal Baru', 'Mentor sudah menambahkan Jadwal hari ini', 'info');
+                    }
+                }
+            }
+
             return redirect()->back()->with('success', 'Berhasil menambah jadwal');
         } elseif ($now->isSameWeek($currentWeekStart) && $presentasiDivisi->count() > 0) {
             PresentasiDivisi::query()
@@ -69,9 +87,31 @@ class PresentasiDivisiControlller extends Controller
     public function createJam(LimitPresentasiDivisiRequest $request): RedirectResponse
     {
         $data = $request->validated();
+        $now = Carbon::now();
+        $currentWeekStart = $now->startOfWeek();
         $pDivisi = PresentasiDivisi::query()
             ->findOrFail($data['presentasi_divisi_id']);
+        // dd($data);
+        for ($i = 0; $i < (int) $pDivisi->limit; $i++) {
+            $existingSchedule = LimitPresentasiDevisi::query()
+                ->whereHas('presentasiDivisi', function ($query) use ($request){
+                    $query->where('day', $request['day'])
+                    ->whereNot('divisi_id', Auth()->user()->divisi_id);
+                })
+                ->whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])
+                ->where(function ($query) use ($data, $i) {
+                    $query->whereBetween('mulai', [$data['mulai'][$i], $data['akhir'][$i]])
+                        ->orWhereBetween('akhir', [$data['mulai'][$i], $data['akhir'][$i]]);
+                })
+                ->first();
+                // dd($existingSchedule);
+            if ($existingSchedule) {
+                return redirect()->back()->with('error', 'Jadwal bertabrakan dengan jadwal yang sudah ada');
+            }
+        }
+
         $pDivisi->limitPresentasiDivisis()->delete();
+
         for ($i = 0; $i < (int) $pDivisi->limit; $i++) {
             LimitPresentasiDevisi::query()
                 ->create([
@@ -81,9 +121,21 @@ class PresentasiDivisiControlller extends Controller
                     'akhir' => $data['akhir'][$i]
                 ]);
         }
-        return redirect()->back()->with('success', 'Berhasil menambahkan jadwal');
 
+        return redirect()->back()->with('success', 'Berhasil menambahkan jadwal');
     }
+
+    protected function sendNotificationToTeamMembers($userId, $title, $message, $jenisNotifikasi)
+    {
+        Notifikasi::create([
+            'user_id' => $userId,
+            'judul' => $title,
+            'body' => $message,
+            'status' => 'belum_dibaca',
+            'jenis_notifikasi' => $jenisNotifikasi,
+        ]);
+    }
+        
 
     /**
      * destroy

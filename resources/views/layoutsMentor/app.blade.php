@@ -687,6 +687,16 @@
                 timer: 5000,
             });
         </script>
+    @elseif (session()->has('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                text: '{{ session('error') }}', // Teks pesan dari sesi
+                showConfirmButton: false,
+                timer: 5000,
+            });
+        </script>
     @endif
 
 </body>
