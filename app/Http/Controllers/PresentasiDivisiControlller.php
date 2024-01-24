@@ -116,9 +116,9 @@ class PresentasiDivisiControlller extends Controller
         for ($i = 0; $i < $inputCount; $i++) {
             $limitPresentasi = [
                 'presentasi_divisi_id' => $data['presentasi_divisi_id'],
+                'jadwal_ke' => $data['jadwal_ke'][$i],
                 'mulai' => $data['mulai'][$i],
-                'akhir' => $data['akhir'][$i],
-                'jadwal_ke' => $i + 1 
+                'akhir' => $data['akhir'][$i]
             ];
 
             if (isset($existingLimitPresentasiIds[$i])) {
