@@ -220,8 +220,10 @@ class PresentasiController extends Controller
             ->latest()
             ->first();
 
-        $oldJadwal->tim_id = null;
-        $oldJadwal->save();
+        if ($oldJadwal->tim_id != null) {
+            $oldJadwal->tim_id = null;
+            $oldJadwal->save();
+        }
 
         $jadwalQuery = LimitPresentasiDevisi::find($request->plan);
         $jadwalQuery->tim_id = $presentasi->tim_id;
