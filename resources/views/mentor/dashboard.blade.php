@@ -60,7 +60,7 @@
                     <div class="d-flex justify-content-end mb-2">
                       @if ($senin)
                         <div>
-                          <div class="alert alert-danger" role="alert">
+                          <div class="alert alert-danger p-2" role="alert">
                             Sisa limit anda {{ $sisaLimitSenin }}
                           </div>
                         </div>

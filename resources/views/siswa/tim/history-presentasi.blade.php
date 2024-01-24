@@ -328,10 +328,10 @@
                                                 @if ($cekJadwalSenin !== null)
                                                     @method('PUT')
                                                 @endif
-                                                @if ($cekJadwalRabu)
+                                                @if ($cekJadwalSenin)
                                                     <label for="judul" class="form-label">Judul Presentasi</label>
                                                     <input type="text" name="judul"
-                                                        value="{{ $cekJadwalRabu->judul }}" class="form-control">
+                                                        value="{{ $cekJadwalSenin->judul }}" class="form-control">
                                                 @else
                                                     <label for="judul" class="form-label">Judul Presentasi</label>
                                                     <input type="text" name="judul" class="form-control">
