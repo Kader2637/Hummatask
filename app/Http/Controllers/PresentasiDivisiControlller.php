@@ -89,14 +89,14 @@ class PresentasiDivisiControlller extends Controller
         $data = $request->validated();
         $now = Carbon::now();
         $currentWeekStart = $now->startOfWeek();
-        $pDivisi = PresentasiDivisi::query()
-            ->findOrFail($data['presentasi_divisi_id']);
-        // dd($data);
+
+        $pDivisi = PresentasiDivisi::query()->findOrFail($data['presentasi_divisi_id']);
+
         for ($i = 0; $i < (int) $pDivisi->limit; $i++) {
             $existingSchedule = LimitPresentasiDevisi::query()
                 ->whereHas('presentasiDivisi', function ($query) use ($request) {
                     $query->where('day', $request['day'])
-                        ->whereNot('divisi_id', Auth()->user()->divisi_id);
+                        ->where('divisi_id', '<>', Auth()->user()->divisi_id);
                 })
                 ->whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])
                 ->where(function ($query) use ($data, $i) {
@@ -104,22 +104,21 @@ class PresentasiDivisiControlller extends Controller
                         ->orWhereBetween('akhir', [$data['mulai'][$i], $data['akhir'][$i]]);
                 })
                 ->first();
-            // dd($existingSchedule);
+
             if ($existingSchedule) {
                 return redirect()->back()->with('error', 'Jadwal bertabrakan dengan jadwal yang sudah ada');
             }
         }
 
-        $pDivisi = PresentasiDivisi::query()->findOrFail($data['presentasi_divisi_id']);
         $existingLimitPresentasiIds = $pDivisi->limitPresentasiDivisis()->pluck('id')->toArray();
-
         $inputCount = min((int) $pDivisi->limit, count($data['mulai']));
 
         for ($i = 0; $i < $inputCount; $i++) {
             $limitPresentasi = [
                 'presentasi_divisi_id' => $data['presentasi_divisi_id'],
                 'mulai' => $data['mulai'][$i],
-                'akhir' => $data['akhir'][$i]
+                'akhir' => $data['akhir'][$i],
+                'jadwal_ke' => $i + 1 
             ];
 
             if (isset($existingLimitPresentasiIds[$i])) {
