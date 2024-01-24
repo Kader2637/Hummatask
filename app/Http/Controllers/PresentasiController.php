@@ -143,6 +143,7 @@ class PresentasiController extends Controller
 
         $jadwalQuery = LimitPresentasiDevisi::findOrFail($request->plan);
         $jadwalQuery->tim_id = $tim->id;
+        $jadwalQuery->save();
 
         if ($jadwalQuery->presentasiDivisi->day == 'monday') {
             $day = 'senin';
