@@ -95,10 +95,6 @@ class PresentasiController extends Controller
             return back()->with('error', 'Pengajuan Presentasi dimulai pukul 08:00');
         }
 
-        // if (Carbon::now()->isoFormat('dddd') === 'Minggu' || Carbon::now()->isoFormat('dddd') === 'Sabtu') {
-        //     return back()->with('error', 'Pengajuan Presentasi hanya bisa dilakuakn dijam kantor');
-        // }
-
         if (!$request->judul) {
             return back()->with('warning', 'Mohon isi judul presentasi!');
         }
@@ -145,7 +141,8 @@ class PresentasiController extends Controller
                 ->with('error', 'Timmu tidak ditemukan');
         }
 
-        $jadwalQuery = LimitPresentasiDevisi::find($request->plan);
+        $jadwalQuery = LimitPresentasiDevisi::findOrFail($request->plan);
+        $jadwalQuery->tim_id = $tim->id;
 
         if ($jadwalQuery->presentasiDivisi->day == 'monday') {
             $day = 'senin';
@@ -210,9 +207,22 @@ class PresentasiController extends Controller
 
     protected function updatePresentasi(Request $request, $id)
     {
-        $jadwalQuery = LimitPresentasiDevisi::find($request->plan);
-
         $presentasi = Presentasi::find($id);
+
+        $oldJadwal = LimitPresentasiDevisi::query()
+            ->whereHas('tim', function ($query) use ($presentasi) {
+                $query->where('id', $presentasi->tim_id);
+            })
+            ->latest()
+            ->first();
+
+        $oldJadwal->tim_id = null;
+        $oldJadwal->save();
+
+        $jadwalQuery = LimitPresentasiDevisi::find($request->plan);
+        $jadwalQuery->tim_id = $presentasi->tim_id;
+        $jadwalQuery->save();
+
 
         if ($request->filled('judul')) {
             $presentasi->judul = $request->judul;

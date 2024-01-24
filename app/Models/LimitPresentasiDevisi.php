@@ -18,7 +18,7 @@ class LimitPresentasiDevisi extends Model
      * presentasiDivisi
      *
      * @return BelongsTo
-     */ 
+     */
     public function presentasiDivisi(): BelongsTo
     {
         return $this->belongsTo(PresentasiDivisi::class, 'presentasi_divisi_id');
@@ -32,5 +32,10 @@ class LimitPresentasiDevisi extends Model
     public function presentasi(): HasMany
     {
         return $this->hasMany(presentasi::class, 'limit_presentasi_devisi_id');
+    }
+
+    public function tim(): BelongsTo
+    {
+        return $this->belongsTo(Tim::class);
     }
 }

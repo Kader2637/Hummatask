@@ -46,7 +46,7 @@ class PresentasiDivisiControlller extends Controller
                 ->where('divisi_id', auth()->user()->divisi_id)
                 ->where('peran_id', 1)
                 ->get();
-            
+
             foreach ($Siswa as $member) {
                 $userId = $member->user_id;
                 $statusAnggota = Anggota::where('user_id', $userId)->value('status');
@@ -94,9 +94,9 @@ class PresentasiDivisiControlller extends Controller
         // dd($data);
         for ($i = 0; $i < (int) $pDivisi->limit; $i++) {
             $existingSchedule = LimitPresentasiDevisi::query()
-                ->whereHas('presentasiDivisi', function ($query) use ($request){
+                ->whereHas('presentasiDivisi', function ($query) use ($request) {
                     $query->where('day', $request['day'])
-                    ->whereNot('divisi_id', Auth()->user()->divisi_id);
+                        ->whereNot('divisi_id', Auth()->user()->divisi_id);
                 })
                 ->whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])
                 ->where(function ($query) use ($data, $i) {
@@ -104,22 +104,38 @@ class PresentasiDivisiControlller extends Controller
                         ->orWhereBetween('akhir', [$data['mulai'][$i], $data['akhir'][$i]]);
                 })
                 ->first();
-                // dd($existingSchedule);
+            // dd($existingSchedule);
             if ($existingSchedule) {
                 return redirect()->back()->with('error', 'Jadwal bertabrakan dengan jadwal yang sudah ada');
             }
         }
 
-        $pDivisi->limitPresentasiDivisis()->delete();
+        $pDivisi = PresentasiDivisi::query()->findOrFail($data['presentasi_divisi_id']);
+        $existingLimitPresentasiIds = $pDivisi->limitPresentasiDivisis()->pluck('id')->toArray();
 
-        for ($i = 0; $i < (int) $pDivisi->limit; $i++) {
+        $inputCount = min((int) $pDivisi->limit, count($data['mulai']));
+
+        for ($i = 0; $i < $inputCount; $i++) {
+            $limitPresentasi = [
+                'presentasi_divisi_id' => $data['presentasi_divisi_id'],
+                'mulai' => $data['mulai'][$i],
+                'akhir' => $data['akhir'][$i]
+            ];
+
+            if (isset($existingLimitPresentasiIds[$i])) {
+                LimitPresentasiDevisi::query()
+                    ->where('id', $existingLimitPresentasiIds[$i])
+                    ->update($limitPresentasi);
+            } else {
+                LimitPresentasiDevisi::query()->create($limitPresentasi);
+            }
+        }
+
+        // Hapus entri yang berlebih jika ada
+        if (count($existingLimitPresentasiIds) > $inputCount) {
             LimitPresentasiDevisi::query()
-                ->create([
-                    'presentasi_divisi_id' => $data['presentasi_divisi_id'],
-                    'jadwal_ke' => $data['jadwal_ke'][$i],
-                    'mulai' => $data['mulai'][$i],
-                    'akhir' => $data['akhir'][$i]
-                ]);
+                ->whereIn('id', array_slice($existingLimitPresentasiIds, $inputCount))
+                ->delete();
         }
 
         return redirect()->back()->with('success', 'Berhasil menambahkan jadwal');
@@ -135,7 +151,7 @@ class PresentasiDivisiControlller extends Controller
             'jenis_notifikasi' => $jenisNotifikasi,
         ]);
     }
-        
+
 
     /**
      * destroy
@@ -144,8 +160,8 @@ class PresentasiDivisiControlller extends Controller
      * @return RedirectResponse
      */
     public function destroy(PresentasiDivisi $presentasi_divisi): RedirectResponse
-{
-    $presentasi_divisi->delete();
-    return redirect()->back()->with('success', 'Berhasil menghapus divisi');
-}
+    {
+        $presentasi_divisi->delete();
+        return redirect()->back()->with('success', 'Berhasil menghapus divisi');
+    }
 }

@@ -222,8 +222,16 @@ class timController extends Controller
 
         $allSessions = LimitPresentasiDevisi::query()
             ->whereRelation('presentasiDivisi', 'divisi_id', '=', Auth::user()->divisi_id)
-            ->with('presentasiDivisi')
+            ->with('presentasiDivisi', 'tim')
             ->get();
+
+        $allSessions = $allSessions->map(function ($session) {
+            if ($session->tim != null) {
+                $checkRelation = $session->tim->user->contains(Auth::user()->id);
+                $session->cek_tim = $checkRelation;
+            }
+            return $session;
+        });
 
         $sesi_senin = $allSessions
             ->filter(function ($session) use ($seninThisWeek) {
@@ -265,7 +273,7 @@ class timController extends Controller
         }
 
         $sesi_rabu = $allSessions
-            ->filter(function ($session) use($rabuThisWeek) {
+            ->filter(function ($session) use ($rabuThisWeek) {
                 return $session->presentasiDivisi->day === DayEnum::WEDNESDAY->value
                     && $session->created_at->greaterThanOrEqualTo($rabuThisWeek);
             })
@@ -303,7 +311,7 @@ class timController extends Controller
         }
 
         $sesi_jumat = $allSessions
-            ->filter(function ($session) use($jumatThisWeek) {
+            ->filter(function ($session) use ($jumatThisWeek) {
                 return $session->presentasiDivisi->day === DayEnum::FRIDAY->value
                     && $session->created_at->greaterThanOrEqualTo($jumatThisWeek);
             })

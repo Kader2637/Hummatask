@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('limit_presentasi_devisis', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tim_id')->nullable()->constrained('tims')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('presentasi_divisi_id')->constrained('presentasi_divisis')->cascadeOnDelete()->cascadeOnUpdate();
             $table->time('mulai');
             $table->time('akhir');

@@ -362,6 +362,41 @@
                                                                     <p class="text-primary mb-0">
                                                                         {{ $data->mulai }} - {{ $data->akhir }}
                                                                     </p>
+                                                                    @if ($data->tim != null)
+                                                                        @if ($data->cek_tim == true)
+                                                                            <ul
+                                                                                class="justify-content-center list-unstyled d-flex align-items-center avatar-group mb-0 pt-2 w-100">
+                                                                                <span
+                                                                                    class="bg-primary w-100 d-flex rounded align-items-center justify-content-center"
+                                                                                    style="padding-block: 8px;">
+                                                                                    <p class="fw-medium text-capitalize m-0 text-white text-truncate d-block"
+                                                                                        style="letter-spacing: 1px; max-width: 140px"
+                                                                                        data-bs-toggle="tooltip"
+                                                                                        data-popup="tooltip-custom"
+                                                                                        data-bs-placement="bottom"
+                                                                                        title="Tim Anda">
+                                                                                        Tim Anda
+                                                                                    </p>
+                                                                                </span>
+                                                                            </ul>
+                                                                        @else
+                                                                            <ul
+                                                                                class="justify-content-center list-unstyled d-flex align-items-center avatar-group mb-0 pt-2 w-100">
+                                                                                <span
+                                                                                    class="bg-primary d-flex w-100 rounded align-items-center justify-content-center"
+                                                                                    style="padding-block: 8px;">
+                                                                                    <p class="fw-medium text-capitalize m-0 text-white text-truncate d-block"
+                                                                                        style="letter-spacing: 1px; max-width: 140px"
+                                                                                        data-bs-toggle="tooltip"
+                                                                                        data-popup="tooltip-custom"
+                                                                                        data-bs-placement="bottom"
+                                                                                        title="{{ $data->tim->nama }}">
+                                                                                        {{ Str::limit($data->tim->nama, 20) }}
+                                                                                    </p>
+                                                                                </span>
+                                                                            </ul>
+                                                                        @endif
+                                                                    @endif
                                                                 </span>
                                                             </label>
                                                         </div>
@@ -426,17 +461,18 @@
                                         <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Tuesday' ? 'show active' : '' }}"
                                             id="selasa" role="tabpanel">
                                             <form id="formAjukanPresentasi_2"
-                                                @if ($cekJadwalSelasa !== null) action="{{ route('update-presentasi', $presentID) }}" method="post"
+                                                @if ($cekJadwalSelasa !== null)
+                                                 action="{{ route('update-presentasi', $presentID) }}" method="post"
                                                 @else
                                                 action="{{ route('ajukan-presentasi', $tim->code) }}" method="post" @endif>
                                                 @csrf
                                                 @if ($cekJadwalSelasa !== null)
                                                     @method('PUT')
                                                 @endif
-                                                @if ($cekJadwalRabu)
+                                                @if ($cekJadwalSelasa)
                                                     <label for="judul" class="form-label">Judul Presentasi</label>
                                                     <input type="text" name="judul"
-                                                        value="{{ $cekJadwalRabu->judul }}" class="form-control">
+                                                        value="{{ $cekJadwalSelasa->judul }}" class="form-control">
                                                 @else
                                                     <label for="judul" class="form-label">Judul Presentasi</label>
                                                     <input type="text" name="judul" class="form-control">
@@ -469,6 +505,41 @@
                                                                     <p class="text-primary mb-0">
                                                                         {{ $data->mulai }} - {{ $data->akhir }}
                                                                     </p>
+                                                                    @if ($data->tim != null)
+                                                                        @if ($data->cek_tim == true)
+                                                                            <ul
+                                                                                class="justify-content-center list-unstyled d-flex align-items-center avatar-group mb-0 pt-2 w-100">
+                                                                                <span
+                                                                                    class="bg-primary w-100 d-flex rounded align-items-center justify-content-center"
+                                                                                    style="padding-block: 8px;">
+                                                                                    <p class="fw-medium text-capitalize m-0 text-white text-truncate d-block"
+                                                                                        style="letter-spacing: 1px; max-width: 140px"
+                                                                                        data-bs-toggle="tooltip"
+                                                                                        data-popup="tooltip-custom"
+                                                                                        data-bs-placement="bottom"
+                                                                                        title="Tim Anda">
+                                                                                        Tim Anda
+                                                                                    </p>
+                                                                                </span>
+                                                                            </ul>
+                                                                        @else
+                                                                            <ul
+                                                                                class="justify-content-center list-unstyled d-flex align-items-center avatar-group mb-0 pt-2 w-100">
+                                                                                <span
+                                                                                    class="bg-primary d-flex w-100 rounded align-items-center justify-content-center"
+                                                                                    style="padding-block: 8px;">
+                                                                                    <p class="fw-medium text-capitalize m-0 text-white text-truncate d-block"
+                                                                                        style="letter-spacing: 1px; max-width: 140px"
+                                                                                        data-bs-toggle="tooltip"
+                                                                                        data-popup="tooltip-custom"
+                                                                                        data-bs-placement="bottom"
+                                                                                        title="{{ $data->tim->nama }}">
+                                                                                        {{ Str::limit($data->tim->nama, 20) }}
+                                                                                    </p>
+                                                                                </span>
+                                                                            </ul>
+                                                                        @endif
+                                                                    @endif
                                                                 </span>
                                                             </label>
                                                         </div>
@@ -563,13 +634,15 @@
                                                         @endphp
 
                                                         <div class="col-12 col-lg-4 col-xxl-4 my-2">
-                                                            <label
+                                                            <label style=" height:100%;"
                                                                 class="card card-jadwal {{ $cekJadwalRabu !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}">
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}"
                                                                     {{ $cekJadwalRabu !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
                                                                     {{ $cekJadwal ? 'disabled' : '' }}>
-                                                                <span class="plan-details text-center">
+                                                                <span
+                                                                    class="plan-details text-center  d-flex align-items-center justify-content-center flex-column "
+                                                                    style=" height:100%;">
                                                                     <p class="fs-6 mb-2 text-dark"
                                                                         style="font-weight: 500">
                                                                         {{ $data->jadwal_ke }}
@@ -577,6 +650,41 @@
                                                                     <p class="text-primary mb-0">
                                                                         {{ $data->mulai }} - {{ $data->akhir }}
                                                                     </p>
+                                                                    @if ($data->tim != null)
+                                                                        @if ($data->cek_tim == true)
+                                                                            <ul
+                                                                                class="justify-content-center list-unstyled d-flex align-items-center avatar-group mb-0 pt-2 w-100">
+                                                                                <span
+                                                                                    class="bg-primary w-100 d-flex rounded align-items-center justify-content-center"
+                                                                                    style="padding-block: 8px;">
+                                                                                    <p class="fw-medium text-capitalize m-0 text-white text-truncate d-block"
+                                                                                        style="letter-spacing: 1px; max-width: 140px"
+                                                                                        data-bs-toggle="tooltip"
+                                                                                        data-popup="tooltip-custom"
+                                                                                        data-bs-placement="bottom"
+                                                                                        title="Tim Anda">
+                                                                                        Tim Anda
+                                                                                    </p>
+                                                                                </span>
+                                                                            </ul>
+                                                                        @else
+                                                                            <ul
+                                                                                class="justify-content-center list-unstyled d-flex align-items-center avatar-group mb-0 pt-2 w-100">
+                                                                                <span
+                                                                                    class="bg-primary d-flex w-100 rounded align-items-center justify-content-center"
+                                                                                    style="padding-block: 8px;">
+                                                                                    <p class="fw-medium text-capitalize m-0 text-white text-truncate d-block"
+                                                                                        style="letter-spacing: 1px; max-width: 140px"
+                                                                                        data-bs-toggle="tooltip"
+                                                                                        data-popup="tooltip-custom"
+                                                                                        data-bs-placement="bottom"
+                                                                                        title="{{ $data->tim->nama }}">
+                                                                                        {{ Str::limit($data->tim->nama, 20) }}
+                                                                                    </p>
+                                                                                </span>
+                                                                            </ul>
+                                                                        @endif
+                                                                    @endif
                                                                 </span>
                                                             </label>
                                                         </div>
@@ -682,6 +790,41 @@
                                                                     <p class="text-primary mb-0">
                                                                         {{ $data->mulai }} - {{ $data->akhir }}
                                                                     </p>
+                                                                    @if ($data->tim != null)
+                                                                        @if ($data->cek_tim == true)
+                                                                            <ul
+                                                                                class="justify-content-center list-unstyled d-flex align-items-center avatar-group mb-0 pt-2 w-100">
+                                                                                <span
+                                                                                    class="bg-primary w-100 d-flex rounded align-items-center justify-content-center"
+                                                                                    style="padding-block: 8px;">
+                                                                                    <p class="fw-medium text-capitalize m-0 text-white text-truncate d-block"
+                                                                                        style="letter-spacing: 1px; max-width: 140px"
+                                                                                        data-bs-toggle="tooltip"
+                                                                                        data-popup="tooltip-custom"
+                                                                                        data-bs-placement="bottom"
+                                                                                        title="Tim Anda">
+                                                                                        Tim Anda
+                                                                                    </p>
+                                                                                </span>
+                                                                            </ul>
+                                                                        @else
+                                                                            <ul
+                                                                                class="justify-content-center list-unstyled d-flex align-items-center avatar-group mb-0 pt-2 w-100">
+                                                                                <span
+                                                                                    class="bg-primary d-flex w-100 rounded align-items-center justify-content-center"
+                                                                                    style="padding-block: 8px;">
+                                                                                    <p class="fw-medium text-capitalize m-0 text-white text-truncate d-block"
+                                                                                        style="letter-spacing: 1px; max-width: 140px"
+                                                                                        data-bs-toggle="tooltip"
+                                                                                        data-popup="tooltip-custom"
+                                                                                        data-bs-placement="bottom"
+                                                                                        title="{{ $data->tim->nama }}">
+                                                                                        {{ Str::limit($data->tim->nama, 20) }}
+                                                                                    </p>
+                                                                                </span>
+                                                                            </ul>
+                                                                        @endif
+                                                                    @endif
                                                                 </span>
                                                             </label>
                                                         </div>
@@ -787,6 +930,41 @@
                                                                     <p class="text-primary mb-0">
                                                                         {{ $data->mulai }} - {{ $data->akhir }}
                                                                     </p>
+                                                                    @if ($data->tim != null)
+                                                                        @if ($data->cek_tim == true)
+                                                                            <ul
+                                                                                class="justify-content-center list-unstyled d-flex align-items-center avatar-group mb-0 pt-2 w-100">
+                                                                                <span
+                                                                                    class="bg-primary w-100 d-flex rounded align-items-center justify-content-center"
+                                                                                    style="padding-block: 8px;">
+                                                                                    <p class="fw-medium text-capitalize m-0 text-white text-truncate d-block"
+                                                                                        style="letter-spacing: 1px; max-width: 140px"
+                                                                                        data-bs-toggle="tooltip"
+                                                                                        data-popup="tooltip-custom"
+                                                                                        data-bs-placement="bottom"
+                                                                                        title="Tim Anda">
+                                                                                        Tim Anda
+                                                                                    </p>
+                                                                                </span>
+                                                                            </ul>
+                                                                        @else
+                                                                            <ul
+                                                                                class="justify-content-center list-unstyled d-flex align-items-center avatar-group mb-0 pt-2 w-100">
+                                                                                <span
+                                                                                    class="bg-primary d-flex w-100 rounded align-items-center justify-content-center"
+                                                                                    style="padding-block: 8px;">
+                                                                                    <p class="fw-medium text-capitalize m-0 text-white text-truncate d-block"
+                                                                                        style="letter-spacing: 1px; max-width: 140px"
+                                                                                        data-bs-toggle="tooltip"
+                                                                                        data-popup="tooltip-custom"
+                                                                                        data-bs-placement="bottom"
+                                                                                        title="{{ $data->tim->nama }}">
+                                                                                        {{ Str::limit($data->tim->nama, 20) }}
+                                                                                    </p>
+                                                                                </span>
+                                                                            </ul>
+                                                                        @endif
+                                                                    @endif
                                                                 </span>
                                                             </label>
                                                         </div>
