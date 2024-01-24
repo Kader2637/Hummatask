@@ -209,6 +209,10 @@ class PresentasiController extends Controller
     {
         $presentasi = Presentasi::find($id);
 
+        if ($presentasi->status_presentasi !== 'menunggu') {
+            return redirect()->back()->with('error', 'Anda hanya bisa mengedit jika status Menunggu');
+        }
+
         $oldJadwal = LimitPresentasiDevisi::query()
             ->whereHas('tim', function ($query) use ($presentasi) {
                 $query->where('id', $presentasi->tim_id);
@@ -236,10 +240,6 @@ class PresentasiController extends Controller
             $presentasi->jadwal_ke = $jadwalQuery->jadwal_ke;
             $presentasi->mulai = $jadwalQuery->mulai;
             $presentasi->akhir = $jadwalQuery->akhir;
-        }
-
-        if ($presentasi->status_presentasi !== 'menunggu') {
-            return redirect()->back()->with('error', 'Anda hanya bisa mengedit jika status Menunggu');
         }
 
         $presentasi->save();
