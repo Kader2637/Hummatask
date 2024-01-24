@@ -220,7 +220,7 @@ class PresentasiController extends Controller
             ->latest()
             ->first();
 
-        if ($oldJadwal->tim_id != null) {
+        if ($oldJadwal) {
             $oldJadwal->tim_id = null;
             $oldJadwal->save();
         }
