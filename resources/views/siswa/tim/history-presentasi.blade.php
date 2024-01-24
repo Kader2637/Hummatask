@@ -383,7 +383,7 @@
                                                                             <ul
                                                                                 class="justify-content-center list-unstyled d-flex align-items-center avatar-group mb-0 pt-2 w-100">
                                                                                 <span
-                                                                                    class="bg-primary d-flex w-100 rounded align-items-center justify-content-center"
+                                                                                    class="bg-secondary d-flex w-100 rounded align-items-center justify-content-center"
                                                                                     style="padding-block: 8px;">
                                                                                     <p class="fw-medium text-capitalize m-0 text-white text-truncate d-block"
                                                                                         style="letter-spacing: 1px; max-width: 140px"
@@ -461,8 +461,7 @@
                                         <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Tuesday' ? 'show active' : '' }}"
                                             id="selasa" role="tabpanel">
                                             <form id="formAjukanPresentasi_2"
-                                                @if ($cekJadwalSelasa !== null)
-                                                 action="{{ route('update-presentasi', $presentID) }}" method="post"
+                                                @if ($cekJadwalSelasa !== null) action="{{ route('update-presentasi', $presentID) }}" method="post"
                                                 @else
                                                 action="{{ route('ajukan-presentasi', $tim->code) }}" method="post" @endif>
                                                 @csrf
@@ -526,7 +525,7 @@
                                                                             <ul
                                                                                 class="justify-content-center list-unstyled d-flex align-items-center avatar-group mb-0 pt-2 w-100">
                                                                                 <span
-                                                                                    class="bg-primary d-flex w-100 rounded align-items-center justify-content-center"
+                                                                                    class="bg-secondary d-flex w-100 rounded align-items-center justify-content-center"
                                                                                     style="padding-block: 8px;">
                                                                                     <p class="fw-medium text-capitalize m-0 text-white text-truncate d-block"
                                                                                         style="letter-spacing: 1px; max-width: 140px"
@@ -671,7 +670,7 @@
                                                                             <ul
                                                                                 class="justify-content-center list-unstyled d-flex align-items-center avatar-group mb-0 pt-2 w-100">
                                                                                 <span
-                                                                                    class="bg-primary d-flex w-100 rounded align-items-center justify-content-center"
+                                                                                    class="bg-secondary d-flex w-100 rounded align-items-center justify-content-center"
                                                                                     style="padding-block: 8px;">
                                                                                     <p class="fw-medium text-capitalize m-0 text-white text-truncate d-block"
                                                                                         style="letter-spacing: 1px; max-width: 140px"
@@ -811,7 +810,7 @@
                                                                             <ul
                                                                                 class="justify-content-center list-unstyled d-flex align-items-center avatar-group mb-0 pt-2 w-100">
                                                                                 <span
-                                                                                    class="bg-primary d-flex w-100 rounded align-items-center justify-content-center"
+                                                                                    class="bg-secondary d-flex w-100 rounded align-items-center justify-content-center"
                                                                                     style="padding-block: 8px;">
                                                                                     <p class="fw-medium text-capitalize m-0 text-white text-truncate d-block"
                                                                                         style="letter-spacing: 1px; max-width: 140px"
@@ -951,7 +950,7 @@
                                                                             <ul
                                                                                 class="justify-content-center list-unstyled d-flex align-items-center avatar-group mb-0 pt-2 w-100">
                                                                                 <span
-                                                                                    class="bg-primary d-flex w-100 rounded align-items-center justify-content-center"
+                                                                                    class="bg-secondary d-flex w-100 rounded align-items-center justify-content-center"
                                                                                     style="padding-block: 8px;">
                                                                                     <p class="fw-medium text-capitalize m-0 text-white text-truncate d-block"
                                                                                         style="letter-spacing: 1px; max-width: 140px"
