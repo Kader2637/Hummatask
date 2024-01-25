@@ -164,6 +164,7 @@
                 Route::post('presentasi-divisi/jadwalcreate', [PresentasiDivisiControlller::class, 'createJam'])->name('presentasi-divisi-create-jam.store');
                 Route::post('tampil-detail-presentasi/{code}', [PresentasiController::class, 'tampilkanDetailPresentasi']);
                 Route::post('update-deadline/{id}', [mentorController::class, 'updateDeadline']);
+                Route::post('status-update/tim/{id}', [mentorController::class, 'updateStatusKeberhasilan']);
                 Route::put('persetujuan-presentasi/{code}', [PresentasiController::class, 'persetujuanPresentasi']);
                 Route::put('penolakan-presentasi/{code}', [PresentasiController::class, 'penolakanPresentasi']);
                 Route::put('atur-jadwal-presentasi/{code}', [PresentasiController::class, 'aturJadwal']);
