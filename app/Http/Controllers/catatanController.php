@@ -114,7 +114,7 @@ class catatanController extends Controller
 
             $catatan = Catatan::findOrFail($id);
             $catatan->title = $request->titleUpdate;
-            $catatan->type_note = $catatan->type_note;
+            $catatan->type_note = $request->type_note;
 
             if (!$request->catatan_text || count($request->catatan_text) === 0) {
                 return redirect()->back()->with('error', 'Catatan harus diisi!');
@@ -194,11 +194,8 @@ class catatanController extends Controller
                 return $checkResult;
             }
 
-            if ($catatan->type_note == 'revisi') {
-                return back()->with('error', 'Jenis catatan ini tidak bisa di hapus');
-            } else {
-                $catatan->delete();
-            }
+            $catatan->delete();
+
             return redirect()->back()->with('success', 'Catatan berhasil dihapus!');
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Catatan gagal dihapus!');

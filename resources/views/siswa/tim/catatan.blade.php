@@ -84,8 +84,7 @@
                           <input name="type_note" class="form-check-input" type="radio" value="private"
                             id="customRadioTemp1" checked />
                           <span class="custom-option-header">
-                            <span class="h6 mb-0">Catatan Tim <span class="text-warning">(Bisa kamu edit sesuka
-                                hati)</span></span>
+                            <span class="h6 mb-0">Catatan Tim</span></span>
                           </span>
                         </label>
                       </div>
@@ -96,8 +95,7 @@
                           <input name="type_note" class="form-check-input" type="radio" value="revisi"
                             id="customRadioTemp2" />
                           <span class="custom-option-header">
-                            <span class="h6 mb-0">Catatan Revisi <span class="text-warning">(Tidak bisa di edit atau
-                                hapus)</span></span>
+                            <span class="h6 mb-0">Catatan Revisi</span>
                           </span>
                         </label>
                       </div>
@@ -222,35 +220,25 @@
                                 Catatan Revisi</span>
                             @endif
                           </td>
-                          @if ($item->type_note === 'private')
-                            <td class="d-flex flex-wrap flex-row gap-1">
-                              <a class="d-block cursor-pointer btn-show" id="show-button" data-bs-toggle="modal"
-                                data-bs-target="#modal-show{{ $item->id }}" data-content="{{ $item->content }}"
-                                data-title="{{ $item->title }}">
-                                <i class="ti ti-eye me-1 text-warning"></i>
+                          <td class="d-flex flex-wrap flex-row gap-1">
+                            <a class="d-block cursor-pointer btn-show" id="show-button" data-bs-toggle="modal"
+                              data-bs-target="#modal-show{{ $item->id }}" data-content="{{ $item->content }}"
+                              data-title="{{ $item->title }}">
+                              <i class="ti ti-eye me-1 text-warning"></i>
+                            </a>
+                            <a class="d-block cursor-pointer btn-edit" data-bs-toggle="modal"
+                              data-bs-target="#edit-catatan{{ $item->id }}" data-content="{{ $item->content }}"
+                              data-url="{{ $item->code }}" data-title="{{ $item->title }}"><i
+                                class="ti ti-pencil me-1 text-primary"></i></a>
+                            <form action="{{ route('catatan.delete', $item->id) }}" class="form-delete"
+                              method="post">
+                              @csrf
+                              @method('DELETE')
+                              <a class="d-block cursor-pointer btn-delete" id="delete-button">
+                                <i class="ti ti-trash me-1 text-danger"></i>
                               </a>
-                              <a class="d-block cursor-pointer btn-edit" data-bs-toggle="modal"
-                                data-bs-target="#edit-catatan{{ $item->id }}" data-content="{{ $item->content }}"
-                                data-url="{{ $item->code }}" data-title="{{ $item->title }}"><i
-                                  class="ti ti-pencil me-1 text-primary"></i></a>
-                              <form action="{{ route('catatan.delete', $item->id) }}" class="form-delete"
-                                method="post">
-                                @csrf
-                                @method('DELETE')
-                                <a class="d-block cursor-pointer btn-delete" id="delete-button">
-                                  <i class="ti ti-trash me-1 text-danger"></i>
-                                </a>
-                              </form>
-                            </td>
-                          @else
-                            <td>
-                              <a class="d-block cursor-pointer btn-show" id="show-button" data-bs-toggle="modal"
-                                data-bs-target="#modal-show{{ $item->id }}" data-content="{{ $item->content }}"
-                                data-title="{{ $item->title }}">
-                                <i class="ti ti-eye me-1 text-warning"></i>
-                              </a>
-                            </td>
-                          @endif
+                            </form>
+                          </td>
                         </tr>
                       @endforeach
                     </tbody>
@@ -279,6 +267,29 @@
                           <label for="titleUpdate" class="form-label">Judul</label>
                           <input type="text" id="titleUpdate{{ $data->id }}" value="{{ $data->title }}"
                             name="titleUpdate" class="form-control mb-3">
+                        </div>
+                        <label for="" class="form-label">Tipe Catatan</label>
+                        <div class="row mb-2">
+                          <div class="col-md mb-md-0 mb-2">
+                            <div class="form-check custom-option custom-option-basic">
+                              <label class="form-check-label custom-option-content" for="customRadioTemp1edit">
+                                <input name="type_note" class="form-check-input" type="radio" value="private" id="customRadioTemp1edit" {{ $data->type_note === 'private' ? 'checked' : ''  }}/>
+                                <span class="custom-option-header">
+                                  <span class="h6 mb-0">Catatan Tim</span></span>
+                                </span>
+                              </label>
+                            </div>
+                          </div>
+                          <div class="col-md">
+                            <div class="form-check custom-option custom-option-basic">
+                              <label class="form-check-label custom-option-content" for="customRadioTemp2edit">
+                                <input name="type_note" class="form-check-input" type="radio" value="revisi" id="customRadioTemp2edit" {{ $data->type_note === 'revisi' ? 'checked' : ''  }}/>
+                                <span class="custom-option-header">
+                                  <span class="h6 mb-0">Catatan Revisi</span>
+                                </span>
+                              </label>
+                            </div>
+                          </div>
                         </div>
                         <div class="form-add-edit-{{ $data->id }}">
                           @foreach ($data->catatanDetail as $i => $item)
