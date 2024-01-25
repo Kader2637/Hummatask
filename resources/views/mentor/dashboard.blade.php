@@ -59,11 +59,14 @@
                   <div id="form-repeater">
                     <div class="d-flex justify-content-end mb-2">
                       @if ($senin)
-                        <div>
-                          <div class="alert alert-danger p-2" role="alert">
-                            Sisa limit anda {{ $sisaLimitSenin }}
-                          </div>
+                      <div class="d-flex">
+                        <div class="alert alert-success" role="alert">
+                          Jadwal anda {{ $limitSenin }}
                         </div>
+                        <div class="alert alert-danger ms-2" role="alert">
+                          Sisa jadwal anda {{ $sisaJadwalSenin }}
+                        </div>
+                      </div>
                       @else
                       @endif
                       <div class="ms-3">
@@ -121,11 +124,14 @@
 
                     <div class="d-flex justify-content-end mb-2">
                       @if ($selasa)
-                        <div>
-                          <div class="alert alert-danger" role="alert">
-                            Sisa limit anda {{ $sisaLimitSelasa }}
-                          </div>
+                      <div class="d-flex">
+                        <div class="alert alert-success" role="alert">
+                          Jadwal anda {{ $limitSelasa }}
                         </div>
+                        <div class="alert alert-danger ms-2" role="alert">
+                          Sisa jadwal anda {{ $sisaJadwalSelasa }}
+                        </div>
+                      </div>
                       @else
                       @endif
                       <div class="ms-3">
@@ -183,11 +189,14 @@
                   <div id="form-repeater">
                     <div class="d-flex justify-content-end mb-2">
                       @if ($rabu)
-                        <div>
-                          <div class="alert alert-danger" role="alert">
-                            Sisa limit anda {{ $sisaLimitRabu }}
-                          </div>
+                      <div class="d-flex">
+                        <div class="alert alert-success" role="alert">
+                          Jadwal anda {{ $limitRabu }}
                         </div>
+                        <div class="alert alert-danger ms-2" role="alert">
+                          Sisa jadwal anda {{ $sisaJadwalRabu }}
+                        </div>
+                      </div>
                       @else
                       @endif
                       <div class="ms-3">
@@ -245,16 +254,21 @@
                   <div id="form-repeater">
                     <div class="d-flex justify-content-end mb-2">
                       @if ($kamis)
-                        <div>
-                          <div class="alert alert-danger" role="alert">
-                            Sisa limit anda {{ $sisaLimitKamis }}
+                        <div class="d-flex">
+                          <div class="alert alert-success" role="alert">
+                            Jadwal anda {{ $limitKamis }}
+                          </div>
+                          <div class="alert alert-danger ms-2" role="alert">
+                            Sisa jadwal anda {{ $sisaJadwalKamis }}
                           </div>
                         </div>
                       @else
                       @endif
-                      <button class="btn btn-primary" type="button" id="buttonSettings" data-bs-toggle="modal"
+                      <div class="ms-3">
+                        <button class="btn btn-primary" type="button" id="buttonSettings" data-bs-toggle="modal"
                         data-bs-target="#modalLimitKamis">Setting
                         Limit</button>
+                      </div>
                     </div>
                     @if ($kamis)
                       @for ($i = 0; $i < (int) $kamis->limit; $i++)
@@ -305,11 +319,14 @@
                   <div id="form-repeater">
                     <div class="d-flex justify-content-end mb-2">
                       @if ($jumat)
-                        <div>
-                          <div class="alert alert-danger" role="alert">
-                            Sisa limit anda {{ $sisaLimitJumat }}
-                          </div>
+                      <div class="d-flex">
+                        <div class="alert alert-success" role="alert">
+                          Jadwal anda {{ $limitJumat }}
                         </div>
+                        <div class="alert alert-danger ms-2" role="alert">
+                          Sisa jadwal anda {{ $sisaJadwalJumat }}
+                        </div>
+                      </div>
                       @else
                       @endif
                       <div class="ms-3">

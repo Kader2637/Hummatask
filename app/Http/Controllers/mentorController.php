@@ -168,33 +168,57 @@ class mentorController extends Controller
             ->where('divisi_id', auth()->user()->divisi_id)
             ->whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])
             ->first();
+            $limitSenin = null;
             $sisaLimitSenin = null;
-        if ($senin) {
-            $sisaLimitSenin = 10 - $senin->limit;
-            $limitSeninMu = $senin->limit;
-        }
+            $sisaJadwalSenin = null;
+
+            if ($senin) {
+                $limitPresentasiDivisis = $senin->limitPresentasiDivisis;
+                $sisaLimitSenin = $limitPresentasiDivisis->whereNotNull('tim_id')->count();
+            
+                $limitSenin = LimitPresentasiDevisi::query()
+                    ->where('presentasi_divisi_id', $senin->id)
+                    ->count();
+                }
+                $sisaJadwalSenin = $limitSenin - $sisaLimitSenin;
         $selasa = PresentasiDivisi::query()
             ->with('limitPresentasiDivisis')
             ->where('day', DayEnum::TUESDAY->value)
             ->whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])
             ->where('divisi_id', auth()->user()->divisi_id)
             ->first();
+            $limitSelasa = null;
             $sisaLimitSelasa = null;
-        if ($selasa) {
-            $sisaLimitSelasa = 10 - $selasa->limit;
-            $limitSelasaMu = $selasa->limit;
-        }
+            $sisaJadwalSelasa = null;
+
+            if ($selasa) {
+                $limitPresentasiDivisis = $selasa->limitPresentasiDivisis;
+                $sisaLimitSelasa = $limitPresentasiDivisis->whereNotNull('tim_id')->count();
+            
+                $limitSelasa = LimitPresentasiDevisi::query()
+                    ->where('presentasi_divisi_id', $selasa->id)
+                    ->count();
+                }
+                $sisaJadwalSelasa = $limitSelasa - $sisaLimitSelasa;
         $rabu = PresentasiDivisi::query()
             ->with('limitPresentasiDivisis')
             ->where('day', DayEnum::WEDNESDAY->value)
             ->whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])
             ->where('divisi_id', auth()->user()->divisi_id)
             ->first();
+            $limitRabu = null;
             $sisaLimitRabu = null;
-        if ($rabu) {
-            $sisaLimitRabu = 10 - $rabu->limit;
-            $limitRabuMu = $rabu->limit;
-        }
+            $sisaJadwalRabu = null;
+
+            if ($rabu) {
+                $limitPresentasiDivisis = $rabu->limitPresentasiDivisis;
+                $sisaLimitRabu = $limitPresentasiDivisis->whereNotNull('tim_id')->count();
+            
+                $limitRabu = LimitPresentasiDevisi::query()
+                    ->where('presentasi_divisi_id', $rabu->id)
+                    ->count();
+                }
+                $sisaJadwalRabu = $limitRabu - $sisaLimitRabu;
         
         $kamis = PresentasiDivisi::query()
             ->with('limitPresentasiDivisis')
@@ -202,22 +226,39 @@ class mentorController extends Controller
             ->whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])
             ->where('divisi_id', auth()->user()->divisi_id)
             ->first();
+            $limitKamis = null;
             $sisaLimitKamis = null;
-        if ($kamis) {
-            $sisaLimitKamis = 10 - $kamis->limit;
-            $limitKamisMu = $kamis->limit;
-        }
+            $sisaJadwalKamis = null;
+
+            if ($kamis) {
+                $limitPresentasiDivisis = $kamis->limitPresentasiDivisis;
+                $sisaLimitKamis = $limitPresentasiDivisis->whereNotNull('tim_id')->count();
+            
+                $limitKamis = LimitPresentasiDevisi::query()
+                    ->where('presentasi_divisi_id', $kamis->id)
+                    ->count();
+                }
+                $sisaJadwalKamis = $limitKamis - $sisaLimitKamis;
+
         $jumat = PresentasiDivisi::query()
             ->with('limitPresentasiDivisis')
             ->where('day', DayEnum::FRIDAY->value)
             ->whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])
             ->where('divisi_id', auth()->user()->divisi_id)
             ->first();
+            $limitJumat = null;
             $sisaLimitJumat = null;
-        if ($jumat) {
-            $sisaLimitJumat = 10 - $jumat->limit;
-            $limitJumatMu = $jumat->limit;
-        }
+            $sisaJadwalJumat = null;
+
+            if ($jumat) {
+                $limitPresentasiDivisis = $jumat->limitPresentasiDivisis;
+                $sisaLimitJumat = $limitPresentasiDivisis->whereNotNull('tim_id')->count();
+            
+                $limitJumat = LimitPresentasiDevisi::query()
+                    ->where('presentasi_divisi_id', $jumat->id)
+                    ->count();
+                }
+                $sisaJadwalJumat = $limitJumat - $sisaLimitJumat;
 
         $day = $request->query('day');
         $divisiId = $request->query('divisi_id');
@@ -269,7 +310,7 @@ class mentorController extends Controller
             }
         }
 
-        return response()->view('mentor.dashboard', compact('sisaLimitSenin','sisaLimitSelasa','sisaLimitRabu','sisaLimitKamis','sisaLimitJumat','divisis', 'dataPresentasi', 'year', 'currentYear', 'processedData', 'presentasi', 'chartData', 'jadwal', 'hari', 'chart', 'notifikasi', 'senin', 'selasa', 'rabu', 'kamis', 'jumat'));
+        return response()->view('mentor.dashboard', compact('sisaJadwalSenin','limitSenin','sisaJadwalSelasa','limitSelasa','sisaJadwalRabu','limitRabu','sisaJadwalKamis','limitKamis','sisaJadwalJumat','limitJumat','divisis', 'dataPresentasi', 'year', 'currentYear', 'processedData', 'presentasi', 'chartData', 'jadwal', 'hari', 'chart', 'notifikasi', 'senin', 'selasa', 'rabu', 'kamis', 'jumat'));
     }
 
     protected function pengguna()
