@@ -29,73 +29,6 @@
     <script src="{{ asset('assets/lib/lightbox/js/galery.min.js') }}"></script>
     <script src="{{ asset('assets/lib/owlcarousel/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
-
-    <style>
-        /* Customize Dropzone appearance */
-        .dropzone {
-            border: 2px dashed #0087F7;
-            background: #F0F8FF;
-            border-radius: 8px;
-            margin: 20px;
-            min-height: 150px;
-            padding: 20px;
-        }
-
-        .dz-message {
-            font-size: 20px;
-        }
-
-        .dz-preview {
-            margin: 10px;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .dz-image img {
-            width: 100%;
-            height: auto;
-        }
-
-        .dz-details {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .dz-filename {
-            font-weight: bold;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .dz-progress {
-            height: 10px;
-            margin: 10px 0;
-            background: #D3D3D3;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-
-        .dz-upload {
-            background: #0087F7;
-            width: 0;
-            height: 100%;
-            border-radius: 5px;
-            transition: width 0.3s ease-in-out;
-        }
-
-        .dz-success-mark,
-        .dz-error-mark {
-            display: none;
-        }
-
-        .dz-error-message {
-            margin: 10px;
-            color: #FF0000;
-        }
-    </style>
 @endsection
 
 @section('content')
@@ -118,7 +51,7 @@
                     <button class="nav-link active" id="pills-galery-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-galery" type="button" role="tab" aria-controls="pills-galery"
                         aria-selected="true" data-tab="1"><i class="menu-icon ti ti-album album-rounded"></i>
-                        Dashboard</button>
+                        halo wassap ges Dashboard</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
@@ -271,11 +204,10 @@
                             <label for="recipient-name" class="control-label">Judul :</label>
                             <input type="text" class="form-control" name="judulLogo">
                         </div>
-                        <form id="" class="my-dropzone dropzone">
-                            <div class="fallback">
-                                <input name="file" type="file" multiple />
-                            </div>
-                        </form>
+                        <div class="mb-3">
+                            <label for="message-text" class="control-label">Foto :</label>
+                            <input type="file" class="form-control" name="fotoLogo" id="previewImage">
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light-danger text-danger font-medium"
@@ -315,11 +247,10 @@
                             <label for="" class="control-label">Keterangan :</label>
                             <textarea name="keterangan" class="form-control" cols="5" rows="3"></textarea>
                         </div>
-                        <form id="" class="my-dropzone dropzone">
-                            <div class="fallback">
-                                <input name="file" type="file" multiple />
-                            </div>
-                        </form>
+                        <div class="mb-3">
+                            <label for="" class="control-label">Foto :</label>
+                            <input type="file" class="form-control" accept="image/*" name="foto" id="img">
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light-danger text-danger font-medium"
@@ -360,11 +291,10 @@
                             <label for="" class="control-label">Keterangan :</label>
                             <textarea name="keterangan" class="form-control" cols="5" rows="3" value="keterangan"></textarea>
                         </div>
-                        <form id="" class="my-dropzone dropzone">
-                            <div class="fallback">
-                                <input name="file" type="file" multiple />
-                            </div>
-                        </form>
+                        <div class="mb-3">
+                            <label for="" class="control-label">Foto :</label>
+                            <input type="file" class="form-control" name="foto" id="logogalery" value="foto">
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light-danger text-danger font-medium"
@@ -400,11 +330,10 @@
                             <label for="recipient-name" class="control-label">Judul :</label>
                             <input type="text" class="form-control" name="judul" id="judulLogo" value="judulLogo">
                         </div>
-                        <form id="" class="my-dropzone dropzone">
-                            <div class="fallback">
-                                <input name="file" type="file" multiple />
-                            </div>
-                        </form>
+                        <div class="mb-3">
+                            <label for="message-text" class="control-label">Foto :</label>
+                            <input type="file" class="form-control" name="foto" id="logos" value="fotoLogo">
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light-danger text-danger font-medium"
@@ -422,41 +351,6 @@
     {{-- modal edit logo --}}
 
     {{-- js get & create galery --}}
-    <script>
-        // Dropzone configuration
-        Dropzone.autoDiscover = false;
-
-        $(document).ready(function() {
-            // Initialize Dropzone
-            var myDropzone = new Dropzone(".my-dropzone", {
-                url: "/upload", // Replace with your server-side upload endpoint
-                paramName: "file", // The name that will be used to transfer the file
-                maxFilesize: 5, // MB
-                maxFiles: 5, // Maximum number of files
-                acceptedFiles: ".jpeg,.jpg,.png", // Allowed file types
-                dictDefaultMessage: "Drop files here or click to upload",
-                addRemoveLinks: true,
-                init: function() {
-                    this.on("success", function(file, response) {
-                        // Handle successful uploads
-                        console.log("File uploaded:", file);
-                        console.log("Server response:", response);
-                    });
-
-                    this.on("removedfile", function(file) {
-                        // Handle file removal
-                        console.log("File removed:", file);
-                    });
-
-                    this.on("error", function(file, errorMessage) {
-                        // Handle errors during the upload
-                        console.error("Error uploading file:", file, errorMessage);
-                    });
-                }
-            });
-        });
-    </script>
-
     <script>
         $(document).ready(function() {
             var isSubmitting = false; // Flag untuk menandakan apakah sedang melakukan pengiriman data
@@ -534,18 +428,20 @@
                     success: function(data) {
                         $('#createGalery').modal('hide');
                         Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: 'Berhasil menambahkan data',
-                            showConfirmButton: false, // Menyembunyikan tombol konfirmasi
-                            timer: 3000, // Menambahkan timer 3000 milidetik (3 detik)
-                        });
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Berhasil menambahkan data',
+                            })
 
-                        loadGalery();
-                        $('#createGaleryForm')[0].reset();
-                        // Hapus class overlay yang menutupi halaman
-                        $('body').removeClass('modal-open');
-                        $('.modal-backdrop').remove();
+                            .then((result) => {
+                                if (result.isConfirmed) {
+                                    loadGalery();
+                                    $('#createGaleryForm')[0].reset();
+                                    // Hapus class overlay yang menutupi halaman
+                                    $('body').removeClass('modal-open');
+                                    $('.modal-backdrop').remove();
+                                }
+                            });
                     },
                     error: function(error) {
                         var errorData = response.responseJSON;
@@ -848,14 +744,15 @@
                             icon: 'success',
                             title: 'Success',
                             text: 'Berhasil menambahkan data'
-                            showConfirmButton: false,
-                            timer: 2000
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                loadLogo()
+                                $('#createLogoForm')[0].reset();
+                                // Hapus class overlay yang menutupi halaman
+                                $('body').removeClass('modal-open');
+                                $('.modal-backdrop').remove();
+                            }
                         });
-                        loadLogo()
-                        $('#createLogoForm')[0].reset();
-                        // Hapus class overlay yang menutupi halaman
-                        $('body').removeClass('modal-open');
-                        $('.modal-backdrop').remove();
                     },
                     error: function(error) {
                         var errorData = response.responseJSON;
@@ -863,7 +760,7 @@
                             title: 'error',
                             icon: 'Error',
                             text: 'Terjadi kesalahan ' + error,
-                            showConfirmButton: false,
+                            showConfirmButton: true,
                             timer: 2000
                         });
                     },
@@ -1086,7 +983,7 @@
                             icon: 'error',
                             title: 'Error',
                             text: 'Terjadi kesalahan' + errorData,
-                            showConfirmButton: false,
+                            showConfirmButton: true,
                             timer: 2000
                         });
                     },
