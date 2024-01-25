@@ -67,8 +67,9 @@ class PresentasiController extends Controller
             ->get();
 
         $tidakPresentasi = Tim::where('divisi_id', auth()->user()->divisi_id)
-            ->whereDoesntHave('presentasi', function ($query) {
-                $query->whereDate('created_at', Carbon::now()->toDateString());
+            ->whereDoesntHave('presentasi', function ($query) use ($currentWeekStart) {
+                $query->whereDate('created_at', Carbon::now()->toDateString())
+                ->whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()]);
             })
             ->get();
 
