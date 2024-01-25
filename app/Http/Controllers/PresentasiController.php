@@ -41,6 +41,8 @@ class PresentasiController extends Controller
         }
 
         $userID = Auth::user()->id;
+        $currentWeekStart = Carbon::now()->startOfWeek();
+        $previousWeekStart = $currentWeekStart->copy()->subWeek();
 
         $presentasiSelesai = Presentasi::where(function ($query) use ($hariIni) {
             $query->where('status_presentasi', 'selesai')
@@ -48,6 +50,7 @@ class PresentasiController extends Controller
         })
             ->where('divisi_id', Auth()->user()->divisi_id)
             ->where('hari', $hariIni)
+            ->whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])
             ->get();
 
         $sekarang = Carbon::now();
