@@ -13,7 +13,7 @@
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <p class="fs-4 mb-0">Detail Project Tim {{ Str::limit($project->tim->nama, 15) }}</p>
+                    <p class="fs-4 mb-0">Detail Project Tim {{ $project->tim->nama }}</p>
                 </div>
                 <div>
                     <a href="{{ url()->previous() }}" class="btn btn-primary">Kembali</a>
