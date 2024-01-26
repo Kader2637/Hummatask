@@ -11,6 +11,36 @@
   <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/editor.css') }}" />
 
   <style>
+    .bg-custome-primary {
+      background: linear-gradient(72.47deg, #7367f0 22.16%, rgba(115, 103, 240, .7) 76.47%);
+    }
+
+    hr {
+      background-image: linear-gradient(90deg, #7367F0, #938bf3);
+      border: 0;
+      height: 1px;
+    }
+
+    .custome-card-scroller {
+      overflow-y: auto;
+      overflow-x: hidden;
+      max-height: 300px;
+    }
+
+    .custome-card-scroller::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .custome-card-scroller::-webkit-scrollbar-track {
+      background-color: #e4e4e4;
+      border-radius: 100px;
+    }
+
+    .custome-card-scroller::-webkit-scrollbar-thumb {
+      background-color: #7367F0;
+      border-radius: 100px;
+    }
+
     @media (min-width: 500px) and (max-width: 768px) {
       .navbar-ul li {
         font-size: 14px;
@@ -272,8 +302,9 @@
                         <div class="row mb-2">
                           <div class="col-md mb-md-0 mb-2">
                             <div class="form-check custom-option custom-option-basic">
-                              <label class="form-check-label custom-option-content" for="customRadioTemp1edit">
-                                <input name="type_note" class="form-check-input" type="radio" value="private" id="customRadioTemp1edit" {{ $data->type_note === 'private' ? 'checked' : ''  }}/>
+                              <label class="form-check-label custom-option-content" for="catatanTim{{ $data->id }}InputID">
+                                <input name="type_note" class="form-check-input" type="radio" value="private"
+                                  id="catatanTim{{ $data->id }}InputID" {{ $data->type_note === 'private' ? 'checked' : '' }} />
                                 <span class="custom-option-header">
                                   <span class="h6 mb-0">Catatan Tim</span></span>
                                 </span>
@@ -282,8 +313,9 @@
                           </div>
                           <div class="col-md">
                             <div class="form-check custom-option custom-option-basic">
-                              <label class="form-check-label custom-option-content" for="customRadioTemp2edit">
-                                <input name="type_note" class="form-check-input" type="radio" value="revisi" id="customRadioTemp2edit" {{ $data->type_note === 'revisi' ? 'checked' : ''  }}/>
+                              <label class="form-check-label custom-option-content" for="catatan{{ $data->id }}RevisiInputID">
+                                <input name="type_note" class="form-check-input" type="radio" value="revisi"
+                                  id="catatan{{ $data->id }}RevisiInputID" {{ $data->type_note === 'revisi' ? 'checked' : '' }} />
                                 <span class="custom-option-header">
                                   <span class="h6 mb-0">Catatan Revisi</span>
                                 </span>
@@ -422,7 +454,6 @@
               </div>
             </div>
           @endforeach
-
           @foreach ($catatanTeam as $data)
             {{-- Modal Show --}}
             <div class="modal fade" id="modal-show{{ $data->id }}" tabindex="-1" aria-hidden="true">
@@ -434,18 +465,20 @@
                   </div>
                   <div class="modal-body">
                     <div class="container">
-                      <div class="mb-3">
-                        <label for="titleEdit" class="form-label">Judul</label>
-                        <input type="text" id="titleEdit" value="{{ $data->title }}" name="titleEdit"
-                          class="form-control mb-3" readonly>
+                      <div class="mb-3 text-center">
+                        <p class="mb-1" style="font-weight: 500; font-size: 14px;">Judul</p>
+                        <h4>{{ $data->title }}</h4>
+                        <hr>
                       </div>
-                      @foreach ($data->catatanDetail as $i => $item)
-                        <div class="form-catatan-repeater mb-3">
-                          <label>Catatan {{ ++$i }}</label>
-                          <input name="catatan_text[]" value="{{ $item->catatan_text }}" type="text"
-                            class="form-control" readonly>
-                        </div>
-                      @endforeach
+                      <div class="card px-3 pt-1 custome-card-scroller">
+                        @foreach ($data->catatanDetail as $i => $item)
+                          <div class="form-catatan-repeater">
+                            <label class="mb-2 bg-custome-primary px-3 py-1 rounded text-white" style="font-size: 12px">Catatan {{ ++$i }}</label>
+                            <p>{{ $item->catatan_text }}</p>
+                            <hr>
+                          </div>
+                        @endforeach
+                      </div>
                     </div>
                   </div>
                   <!-- Modal footer -->

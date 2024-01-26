@@ -185,7 +185,6 @@
             hr {
                 height: 8px;
                 background-image: linear-gradient(90deg, #7367F0, transparent);
-                /* Ganti #007BFF dengan warna primary yang Anda inginkan */
                 border: 0;
                 height: 1px;
             }
@@ -348,13 +347,12 @@
                                                         @endphp
 
                                                         <div class="col-12 col-lg-4 col-xxl-4 my-2">
-                                                            <label
-                                                                class="card card-jadwal {{ $cekJadwalSenin !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}">
+                                                            <label style="height: 140px" class="card card-jadwal {{ $cekJadwalSenin !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}">
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}"
                                                                     {{ $cekJadwalSenin !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
                                                                     {{ $cekJadwal ? 'disabled' : '' }}>
-                                                                <span class="plan-details text-center">
+                                                                <span class="plan-details text-center d-flex flex-column justify-content-center align-items-center" style="height: 140px" >
                                                                     <p class="fs-6 mb-2 text-dark"
                                                                         style="font-weight: 500">
                                                                         {{ $data->jadwal_ke }}
@@ -488,15 +486,14 @@
                                                         @endphp
 
                                                         <div class="col-12 col-lg-4 col-xxl-4 my-2">
-                                                            <label
-                                                                class="card card-jadwal {{ $cekJadwalSelasa !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}"
+                                                            <label style="height: 140px;" class="card card-jadwal {{ $cekJadwalSelasa !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}"
                                                                 data-jadwal-ke="{{ $cekJadwalSelasa ? $cekJadwalSelasa->jadwal_ke : '' }}"
                                                                 id="jadwalCard{{ $data->id }}">
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}"
                                                                     {{ $cekJadwalSelasa !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
                                                                     {{ $cekJadwal ? 'disabled' : '' }}>
-                                                                <span class="plan-details text-center">
+                                                                <span class="plan-details text-center d-flex flex-column justify-content-center align-items-center" style="height: 140px;">
                                                                     <p class="fs-6 mb-2 text-dark"
                                                                         style="font-weight: 500">
                                                                         {{ $data->jadwal_ke }}
@@ -633,15 +630,15 @@
                                                         @endphp
 
                                                         <div class="col-12 col-lg-4 col-xxl-4 my-2">
-                                                            <label style=" height:100%;"
+                                                            <label style="height: 140%;"
                                                                 class="card card-jadwal {{ $cekJadwalRabu !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}">
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}"
                                                                     {{ $cekJadwalRabu !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
                                                                     {{ $cekJadwal ? 'disabled' : '' }}>
                                                                 <span
-                                                                    class="plan-details text-center  d-flex align-items-center justify-content-center flex-column "
-                                                                    style=" height:100%;">
+                                                                    class="plan-details text-center d-flex align-items-center justify-content-center flex-column"
+                                                                    style="height: 140%;">
                                                                     <p class="fs-6 mb-2 text-dark"
                                                                         style="font-weight: 500">
                                                                         {{ $data->jadwal_ke }}
@@ -745,8 +742,7 @@
                                                 </div>
                                             </form>
                                         </div>
-                                        <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Thursday' ? 'show active' : '' }}"
-                                            id="kamis" role="tabpanel">
+                                        <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Thursday' ? 'show active' : '' }}" id="kamis" role="tabpanel">
                                             <form id="formAjukanPresentasi_4"
                                                 @if ($cekJadwalKamis !== null) action="{{ route('update-presentasi', $presentID) }}" method="post"
                                                 @else
@@ -775,13 +771,12 @@
                                                         @endphp
 
                                                         <div class="col-12 col-lg-4 col-xxl-4 my-2">
-                                                            <label
-                                                                class="card card-jadwal {{ $cekJadwalKamis !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}">
+                                                            <label style="height: 140px" class="card card-jadwal {{ $cekJadwalKamis !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}">
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}"
                                                                     {{ $cekJadwalKamis !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
                                                                     {{ $cekJadwal ? 'disabled' : '' }}>
-                                                                <span class="plan-details text-center">
+                                                                <span class="plan-details text-center text-center d-flex flex-column align-items-center justify-content-center" style="height: 140px">
                                                                     <p class="fs-6 mb-2 text-dark"
                                                                         style="font-weight: 500">
                                                                         {{ $data->jadwal_ke }}
@@ -885,8 +880,7 @@
                                                 </div>
                                             </form>
                                         </div>
-                                        <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Friday' ? 'show active' : '' }}"
-                                            id="jumat" role="tabpanel">
+                                        <div class="tab-pane {{ \Carbon\Carbon::now()->format('l') === 'Friday' ? 'show active' : '' }}" id="jumat" role="tabpanel">
                                             <form id="formAjukanPresentasi_5"
                                                 @if ($cekJadwalJumat !== null) action="{{ route('update-presentasi', $presentID) }}" method="post"
                                                 @else
@@ -915,13 +909,12 @@
                                                         @endphp
 
                                                         <div class="col-12 col-lg-4 col-xxl-4 my-2">
-                                                            <label
-                                                                class="card card-jadwal {{ $cekJadwalJumat !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}">
+                                                            <label style="height: 140px;" class="card card-jadwal {{ $cekJadwalJumat !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}">
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}"
                                                                     {{ $cekJadwalJumat !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'checked': '' }}
                                                                     {{ $cekJadwal ? 'disabled' : '' }}>
-                                                                <span class="plan-details text-center">
+                                                                <span class="plan-details text-center d-flex flex-column align-items-center justify-content-center" style="height: 140px;">
                                                                     <p class="fs-6 mb-2 text-dark"
                                                                         style="font-weight: 500">
                                                                         {{ $data->jadwal_ke }}
