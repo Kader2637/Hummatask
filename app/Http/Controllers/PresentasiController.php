@@ -75,7 +75,8 @@ class PresentasiController extends Controller
 
         $tidakPresentasiMingguan = TidakPresentasiMingguan::query()
             ->whereHas('tim', function ($query) {
-                $query->where('divisi_id', Auth()->user()->divisi_id);
+                $query->where('divisi_id', Auth()->user()->divisi_id)
+                ->where('kadaluwarsa', 0);
             })
             ->get();
 
@@ -514,13 +515,11 @@ class PresentasiController extends Controller
             $deadline[] = Carbon::parse($data->tim->project[0]->deadline)->isoFormat('DD MMMM YYYY');
             $dataPresentasiTim[] = $data->tim->presentasi;
         }
-
         // dd(Carbon::parse($history->created_at)->weekOfYear);
 
         $tim_belum_presentasi = TidakPresentasiMingguan::with('tim.project.tema', 'tim.user')
             ->where('history_presentasi_id', $history->id)
             ->get();
-
         // dd($tim_belum_presentasi);
 
         $data = [
