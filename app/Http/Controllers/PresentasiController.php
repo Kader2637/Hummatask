@@ -219,20 +219,7 @@ class PresentasiController extends Controller
             return redirect()->back()->with('error', 'Anda hanya bisa mengedit jika status Menunggu');
         }
 
-        $oldJadwal = LimitPresentasiDevisi::query()
-            ->whereHas('tim', function ($query) use ($presentasi) {
-                $query->where('id', $presentasi->tim_id);
-            })
-            ->latest()
-            ->first();
-
-        if ($oldJadwal) {
-            $oldJadwal->tim_id = null;
-            $oldJadwal->save();
-        }
-
         $jadwalQuery = LimitPresentasiDevisi::find($request->plan);
-
 
         if ($request->filled('judul')) {
             $presentasi->judul = $request->judul;
@@ -240,6 +227,18 @@ class PresentasiController extends Controller
 
         if ($request->filled('deskripsi')) {
             $presentasi->deskripsi = $request->deskripsi;
+        }
+
+        $oldJadwal = LimitPresentasiDevisi::query()
+            ->whereHas('tim', function ($query) use ($presentasi) {
+                $query->where('id', $presentasi->tim_id);
+            })
+            ->latest()
+            ->first();
+
+        if ($oldJadwal && $jadwalQuery) {
+            $oldJadwal->tim_id = null;
+            $oldJadwal->save();
         }
 
         if ($jadwalQuery) {
