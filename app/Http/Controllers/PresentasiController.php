@@ -69,14 +69,14 @@ class PresentasiController extends Controller
         $tidakPresentasi = Tim::where('divisi_id', auth()->user()->divisi_id)
             ->whereDoesntHave('presentasi', function ($query) use ($currentWeekStart) {
                 $query->whereDate('created_at', Carbon::now()->toDateString())
-                ->whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()]);
+                    ->whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()]);
             })
             ->get();
 
         $tidakPresentasiMingguan = TidakPresentasiMingguan::query()
             ->whereHas('tim', function ($query) {
                 $query->where('divisi_id', Auth()->user()->divisi_id)
-                ->where('kadaluwarsa', 0);
+                    ->where('kadaluwarsa', 0);
             })
             ->get();
 
@@ -232,8 +232,6 @@ class PresentasiController extends Controller
         }
 
         $jadwalQuery = LimitPresentasiDevisi::find($request->plan);
-        $jadwalQuery->tim_id = $presentasi->tim_id;
-        $jadwalQuery->save();
 
 
         if ($request->filled('judul')) {
@@ -248,6 +246,8 @@ class PresentasiController extends Controller
             $presentasi->jadwal_ke = $jadwalQuery->jadwal_ke;
             $presentasi->mulai = $jadwalQuery->mulai;
             $presentasi->akhir = $jadwalQuery->akhir;
+            $jadwalQuery->tim_id = $presentasi->tim_id;
+            $jadwalQuery->save();
         }
 
         $presentasi->save();
