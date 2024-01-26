@@ -154,6 +154,7 @@
                 Route::get('pieproject/{timId}', [mentorController::class, 'pieproject'])->name('piechart');
                 Route::get('galeri', [mentorController::class, 'galery'])->name('galery');
                 Route::get('get-galeri', [mentorController::class, 'getGalery'])->name('get.galery');
+                Route::get('create-galery-page/{type}', [mentorController::class, 'createGaleryPage'])->name('create-galery-page');
                 Route::get('siswa-presentasi', [mentorController::class, 'siswaPresentasiPage'])->name('siswa-presentasi.mentor');
                 Route::get('histori-presentasi', [PresentasiController::class, 'historiPresentasiPage'])->name('histori-presentasi.mentor');
                 Route::get('detail-presentasi/{code}', [mentorController::class, 'detailPresentasiPage'])->name('detail-presentasi.mentor');
@@ -201,6 +202,6 @@
                 Route::post('tambah-role', [tambahUsersController::class, 'tambah_role'])->name('tambah.roles');
             });
 
-            Route::get('dropzone', function() {
-                return view('dropzone');
-            });
+        Route::get('dropzone', function () {
+            return view('dropzone');
+        });

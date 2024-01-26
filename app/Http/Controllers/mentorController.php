@@ -168,77 +168,77 @@ class mentorController extends Controller
             ->where('divisi_id', auth()->user()->divisi_id)
             ->whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])
             ->first();
-            $limitSenin = null;
-            $sisaLimitSenin = null;
-            $sisaJadwalSenin = null;
+        $limitSenin = null;
+        $sisaLimitSenin = null;
+        $sisaJadwalSenin = null;
 
-            if ($senin) {
-                $limitPresentasiDivisis = $senin->limitPresentasiDivisis;
-                $sisaLimitSenin = $limitPresentasiDivisis->whereNotNull('tim_id')->count();
-            
-                $limitSenin = LimitPresentasiDevisi::query()
-                    ->where('presentasi_divisi_id', $senin->id)
-                    ->count();
-                }
-                $sisaJadwalSenin = $limitSenin - $sisaLimitSenin;
+        if ($senin) {
+            $limitPresentasiDivisis = $senin->limitPresentasiDivisis;
+            $sisaLimitSenin = $limitPresentasiDivisis->whereNotNull('tim_id')->count();
+
+            $limitSenin = LimitPresentasiDevisi::query()
+                ->where('presentasi_divisi_id', $senin->id)
+                ->count();
+        }
+        $sisaJadwalSenin = $limitSenin - $sisaLimitSenin;
         $selasa = PresentasiDivisi::query()
             ->with('limitPresentasiDivisis')
             ->where('day', DayEnum::TUESDAY->value)
             ->whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])
             ->where('divisi_id', auth()->user()->divisi_id)
             ->first();
-            $limitSelasa = null;
-            $sisaLimitSelasa = null;
-            $sisaJadwalSelasa = null;
+        $limitSelasa = null;
+        $sisaLimitSelasa = null;
+        $sisaJadwalSelasa = null;
 
-            if ($selasa) {
-                $limitPresentasiDivisis = $selasa->limitPresentasiDivisis;
-                $sisaLimitSelasa = $limitPresentasiDivisis->whereNotNull('tim_id')->count();
-            
-                $limitSelasa = LimitPresentasiDevisi::query()
-                    ->where('presentasi_divisi_id', $selasa->id)
-                    ->count();
-                }
-                $sisaJadwalSelasa = $limitSelasa - $sisaLimitSelasa;
+        if ($selasa) {
+            $limitPresentasiDivisis = $selasa->limitPresentasiDivisis;
+            $sisaLimitSelasa = $limitPresentasiDivisis->whereNotNull('tim_id')->count();
+
+            $limitSelasa = LimitPresentasiDevisi::query()
+                ->where('presentasi_divisi_id', $selasa->id)
+                ->count();
+        }
+        $sisaJadwalSelasa = $limitSelasa - $sisaLimitSelasa;
         $rabu = PresentasiDivisi::query()
             ->with('limitPresentasiDivisis')
             ->where('day', DayEnum::WEDNESDAY->value)
             ->whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])
             ->where('divisi_id', auth()->user()->divisi_id)
             ->first();
-            $limitRabu = null;
-            $sisaLimitRabu = null;
-            $sisaJadwalRabu = null;
+        $limitRabu = null;
+        $sisaLimitRabu = null;
+        $sisaJadwalRabu = null;
 
-            if ($rabu) {
-                $limitPresentasiDivisis = $rabu->limitPresentasiDivisis;
-                $sisaLimitRabu = $limitPresentasiDivisis->whereNotNull('tim_id')->count();
-            
-                $limitRabu = LimitPresentasiDevisi::query()
-                    ->where('presentasi_divisi_id', $rabu->id)
-                    ->count();
-                }
-                $sisaJadwalRabu = $limitRabu - $sisaLimitRabu;
-        
+        if ($rabu) {
+            $limitPresentasiDivisis = $rabu->limitPresentasiDivisis;
+            $sisaLimitRabu = $limitPresentasiDivisis->whereNotNull('tim_id')->count();
+
+            $limitRabu = LimitPresentasiDevisi::query()
+                ->where('presentasi_divisi_id', $rabu->id)
+                ->count();
+        }
+        $sisaJadwalRabu = $limitRabu - $sisaLimitRabu;
+
         $kamis = PresentasiDivisi::query()
             ->with('limitPresentasiDivisis')
             ->where('day', DayEnum::THURSDAY->value)
             ->whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])
             ->where('divisi_id', auth()->user()->divisi_id)
             ->first();
-            $limitKamis = null;
-            $sisaLimitKamis = null;
-            $sisaJadwalKamis = null;
+        $limitKamis = null;
+        $sisaLimitKamis = null;
+        $sisaJadwalKamis = null;
 
-            if ($kamis) {
-                $limitPresentasiDivisis = $kamis->limitPresentasiDivisis;
-                $sisaLimitKamis = $limitPresentasiDivisis->whereNotNull('tim_id')->count();
-            
-                $limitKamis = LimitPresentasiDevisi::query()
-                    ->where('presentasi_divisi_id', $kamis->id)
-                    ->count();
-                }
-                $sisaJadwalKamis = $limitKamis - $sisaLimitKamis;
+        if ($kamis) {
+            $limitPresentasiDivisis = $kamis->limitPresentasiDivisis;
+            $sisaLimitKamis = $limitPresentasiDivisis->whereNotNull('tim_id')->count();
+
+            $limitKamis = LimitPresentasiDevisi::query()
+                ->where('presentasi_divisi_id', $kamis->id)
+                ->count();
+        }
+        $sisaJadwalKamis = $limitKamis - $sisaLimitKamis;
 
         $jumat = PresentasiDivisi::query()
             ->with('limitPresentasiDivisis')
@@ -246,19 +246,19 @@ class mentorController extends Controller
             ->whereBetween('created_at', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])
             ->where('divisi_id', auth()->user()->divisi_id)
             ->first();
-            $limitJumat = null;
-            $sisaLimitJumat = null;
-            $sisaJadwalJumat = null;
+        $limitJumat = null;
+        $sisaLimitJumat = null;
+        $sisaJadwalJumat = null;
 
-            if ($jumat) {
-                $limitPresentasiDivisis = $jumat->limitPresentasiDivisis;
-                $sisaLimitJumat = $limitPresentasiDivisis->whereNotNull('tim_id')->count();
-            
-                $limitJumat = LimitPresentasiDevisi::query()
-                    ->where('presentasi_divisi_id', $jumat->id)
-                    ->count();
-                }
-                $sisaJadwalJumat = $limitJumat - $sisaLimitJumat;
+        if ($jumat) {
+            $limitPresentasiDivisis = $jumat->limitPresentasiDivisis;
+            $sisaLimitJumat = $limitPresentasiDivisis->whereNotNull('tim_id')->count();
+
+            $limitJumat = LimitPresentasiDevisi::query()
+                ->where('presentasi_divisi_id', $jumat->id)
+                ->count();
+        }
+        $sisaJadwalJumat = $limitJumat - $sisaLimitJumat;
 
         $day = $request->query('day');
         $divisiId = $request->query('divisi_id');
@@ -310,7 +310,7 @@ class mentorController extends Controller
             }
         }
 
-        return response()->view('mentor.dashboard', compact('sisaJadwalSenin','limitSenin','sisaJadwalSelasa','limitSelasa','sisaJadwalRabu','limitRabu','sisaJadwalKamis','limitKamis','sisaJadwalJumat','limitJumat','divisis', 'dataPresentasi', 'year', 'currentYear', 'processedData', 'presentasi', 'chartData', 'jadwal', 'hari', 'chart', 'notifikasi', 'senin', 'selasa', 'rabu', 'kamis', 'jumat'));
+        return response()->view('mentor.dashboard', compact('sisaJadwalSenin', 'limitSenin', 'sisaJadwalSelasa', 'limitSelasa', 'sisaJadwalRabu', 'limitRabu', 'sisaJadwalKamis', 'limitKamis', 'sisaJadwalJumat', 'limitJumat', 'divisis', 'dataPresentasi', 'year', 'currentYear', 'processedData', 'presentasi', 'chartData', 'jadwal', 'hari', 'chart', 'notifikasi', 'senin', 'selasa', 'rabu', 'kamis', 'jumat'));
     }
 
     protected function pengguna()
@@ -798,40 +798,56 @@ class mentorController extends Controller
         return response()->json(['notifikasi' => $notifikasi, 'galery' => $galery, 'logo' => $logo]);
     }
 
-    protected function createLogo(RequestCreateLogo $request)
+    protected function createLogo(Request $request)
     {
-        $foto = $request->file('fotoLogo');
-        $img = $foto->hashName();
-        $foto->storeAs('logo', $img);
+        $files = $request->file('file');
 
-        $logo = new Galery([
-            'judul' => $request->input('judulLogo'),
-            'foto' => $img,
-            'status' => 'logo',
-        ]);
+        foreach ($files as $file) {
+            $img = $file->hashName();
+            $file->storeAs('logo', $img);
 
-        $logo->save();
+            $galery = new Galery([
+                'judul' => $request->input('judul'),
+                'keterangan' => $request->input('keterangan'),
+                'foto' => $img,
+                'status' => 'logo',
+            ]);
 
-        return response()->json(['logo' => $logo]);
+            $galery->save();
+
+        }
+
+        return response()->json(['success' => 'Berhasil menambahkan logo'], 200);
     }
 
-    protected function createGalery(RequestCreateGalery $request)
+    protected function createGalery(Request $request)
     {
-        $foto = $request->file('foto');
-        $img = $foto->hashName();
-        // Ganti cara penyimpanan file
-        $foto->storeAs('logo', $img);
+        $files = $request->file('file');
 
-        $galery = new Galery([
-            'judul' => $request->input('judul'),
-            'keterangan' => $request->input('keterangan'),
-            'foto' => $img,
-            'status' => 'album',
-        ]);
+        foreach ($files as $file) {
+            $img = $file->hashName();
+            $file->storeAs('logo', $img);
 
-        $galery->save();
+            $galery = new Galery([
+                'judul' => $request->input('judul'),
+                'keterangan' => $request->input('keterangan'),
+                'foto' => $img,
+                'status' => 'album',
+            ]);
 
-        return response()->json(['galery' => $galery]);
+            $galery->save();
+        }
+
+        return response()->json(['success' => 'Berhasil'], 200);
+    }
+
+    public function createGaleryPage()
+    {
+        $notifikasi = Notifikasi::where('user_id', Auth::user()->id)
+            ->whereHas('user', function ($query) {
+                $query->where('divisi_id', Auth::user()->divisi_id);
+            });
+        return view('mentor.create-galery-page', compact('notifikasi'));
     }
 
     protected function updateGalery(RequestEditGalery $request, $id)

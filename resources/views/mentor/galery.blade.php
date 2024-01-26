@@ -51,7 +51,7 @@
                     <button class="nav-link active" id="pills-galery-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-galery" type="button" role="tab" aria-controls="pills-galery"
                         aria-selected="true" data-tab="1"><i class="menu-icon ti ti-album album-rounded"></i>
-                        halo wassap ges Dashboard</button>
+                        Dashboard</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
@@ -65,9 +65,9 @@
                 tabindex="0">
                 <div class="container-fluid">
                     <div class="container d-flex justify-content-center mb-2 mt-3">
-                        <button id="" class="btn btn-outline-primary py-2 px-4 d-xl-inline-block rounded"
-                            data-bs-toggle="modal" data-bs-target="#createGalery">Tambah
-                            Foto</button>
+                        <a href="{{ route('create-galery-page', ['type' => 'album']) }}" id=""
+                            class="btn btn-outline-primary py-2 px-4 d-xl-inline-block rounded">Tambah
+                            Foto</a>
                     </div>
                 </div>
                 <!-- Navbar End -->
@@ -101,8 +101,7 @@
                                                 </div>
                                                 <div class="col-md-6 col-lg-3">
                                                     <div class="event-img position-relative">
-                                                        <img class="img-fluid rounded w-100" src=""
-                                                            alt="">
+                                                        <img class="img-fluid rounded w-100" src="" alt="">
                                                         <div class="event-overlay d-flex flex-column p-4">
                                                             <h4 class="me-auto">Cocktail</h4>
                                                             <a href="" data-lightbox="event-13" class="my-auto"><i
@@ -124,9 +123,9 @@
                 tabindex="0">
                 <div class="container-fluid">
                     <div class="container d-flex justify-content-center mb-2 mt-3">
-                        <button id="" class="btn btn-outline-primary py-2 px-4 d-xl-inline-block rounded"
-                            data-bs-toggle="modal" data-bs-target="#createLogo">Tambah
-                            Logo</button>
+                        <a href="href="{{ route('create-galery-page', ['type' => 'album']) }} id=""
+                            class="btn btn-outline-primary py-2 px-4 d-xl-inline-block rounded">Tambah
+                            Logo</a>
                     </div>
                 </div>
                 <!-- Navbar End -->
