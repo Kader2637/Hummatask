@@ -145,12 +145,18 @@
                   <div class="d-flex justify-content-between mt-3">
                     <span>Status :</span>
                     <div>
-                      @if ($item->status_keberhasilan === 'belum_selesai')
+                      @if ($item->status_keberhasilan === 'belum_selesai' && $item->tim->kadaluwarsa == 1)
                         <span class="badge bg-label-danger">Belum Selesai</span>
-                      @elseif ($item->status_keberhasilan === 'selesai')
+                      @elseif ($item->status_keberhasilan === 'selesai' && $item->tim->kadaluwarsa == 1)
                         <span class="badge bg-label-primary">Selesai</span>
-                      @else
-                      <button type="button" data-bs-toggle="modal" data-bs-target="#modalPanduan" class="btn btn-xs bg-label-warning" style="font-size: 11px;">Belum Ada <span class="alert-icon text-warning"><i class="ti ti-info-circle ti-xs ms-1"></i></span></button>
+                      @elseif (
+                          ($item->status_keberhasilan === '' ||
+                              $item->status_keberhasilan === 'selesai' ||
+                              $item->status_keberhasilan === 'belum_selesai') &&
+                              $item->tim->kadaluwarsa == 0)
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#modalPanduan"
+                          class="btn btn-xs bg-label-warning" style="font-size: 11px;">Belum Ada <span
+                            class="alert-icon text-warning"><i class="ti ti-info-circle ti-xs ms-1"></i></span></button>
                       @endif
                     </div>
                   </div>
@@ -201,10 +207,13 @@
           </div>
           <div class="deskripsi">
             <div class="penjelasan-1 card d-flex align-items-center justify-content-center mb-2 p-3">
-              <p class="mb-0">Status digunakan untuk memberikan tanda bahwa projectnya sudah <span class="fw-medium">Selesai</span> / <span class="fw-medium">Belum Selesai</span> pada saat tim tersebut sudah <span class="fw-medium">Expired</span></p>
+              <p class="mb-0">Status digunakan untuk memberikan tanda bahwa projectnya sudah <span
+                  class="fw-medium">Selesai</span> / <span class="fw-medium">Belum Selesai</span> pada saat tim tersebut
+                sudah <span class="fw-medium">Expired</span></p>
             </div>
             <div class="penjelasan-2 card d-flex align-items-center justify-content-center p-3">
-              <p class="mb-0">Button untuk <span class="fw-medium">Mengatur Status</span> akan muncul ketika kondisi tim sudah <span class="fw-medium">Expired / Kadaluwarsa</span></p>
+              <p class="mb-0">Button untuk <span class="fw-medium">Mengatur Status</span> akan muncul ketika kondisi
+                tim sudah <span class="fw-medium">Expired / Kadaluwarsa</span></p>
             </div>
           </div>
         </div>
