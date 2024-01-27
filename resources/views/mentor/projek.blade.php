@@ -142,12 +142,36 @@
                       title="{{ $item->tema->nama_tema }}">
                       {{ Str::limit($item->tema->nama_tema, $limit = 20, $end = '...') }}</div>
                   </div>
+                  <div class="d-flex justify-content-between mt-3">
+                    <span>Status :</span>
+                    <div>
+                      @if ($item->status_keberhasilan === 'belum_selesai')
+                        <span class="badge bg-label-danger">Belum Selesai</span>
+                      @elseif ($item->status_keberhasilan === 'selesai')
+                        <span class="badge bg-label-primary">Selesai</span>
+                      @else
+                      <button type="button" data-bs-toggle="modal" data-bs-target="#modalPanduan" class="btn btn-xs bg-label-warning" style="font-size: 11px;">Belum Ada <span class="alert-icon text-warning"><i class="ti ti-info-circle ti-xs ms-1"></i></span></button>
+                      @endif
+                    </div>
+                  </div>
                 </div>
                 <div class="d-flex gap-2">
-                  <a class="btn btn-primary w-50" href="{{ route('projek.detail', $item->code) }}">Detail</a>
-                  <a data-bs-target="#editModal" data-bs-toggle="modal" data-expired="{{ $item->deadline }}"
-                    data-url="/mentor/update-deadline/{{ $item->id }}" data-nama="{{ $item->tim->nama }}"
-                    class="w-50 btn btn-primary btn-edit"><span class="text-white">Extend</span></a>
+                  @if ($item->tim->kadaluwarsa == 1)
+                    <a class="btn btn-primary w-100" href="{{ route('projek.detail', $item->code) }}">Detail</a>
+                    <a data-bs-target="#editModal" data-bs-toggle="modal" data-expired="{{ $item->deadline }}"
+                      data-url="/mentor/update-deadline/{{ $item->id }}" data-nama="{{ $item->tim->nama }}"
+                      class="w-100 btn btn-primary btn-edit"><span class="text-white">Extend</span></a>
+                    <a data-bs-target="#statusModal" data-bs-toggle="modal"
+                      data-keberhasilan="{{ $item->status_keberhasilan }}"
+                      data-urlStatus="/mentor/status-update/tim/{{ $item->id }}"
+                      data-namaTimStatus="{{ $item->tim->nama }}" class="w-100 btn btn-primary btn-status-tims"><span
+                        class="text-white">Status</span></a>
+                  @else
+                    <a class="btn btn-primary w-100" href="{{ route('projek.detail', $item->code) }}">Detail</a>
+                    <a data-bs-target="#editModal" data-bs-toggle="modal" data-sk="{{ $item->status_keberhasilan }}"
+                      data-url="/mentor/update-deadline/{{ $item->id }}" data-nama="{{ $item->tim->nama }}"
+                      class="w-100 btn btn-primary btn-edit"><span class="text-white">Extend</span></a>
+                  @endif
                 </div>
               </div>
             </div>
@@ -165,6 +189,59 @@
       </div>
     </div>
   </div>
+
+  {{-- modal status --}}
+  <div class="modal fade" id="modalPanduan" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-simple modal-add-new-cc">
+      <div class="modal-content p-3 p-md-5">
+        <div class="modal-body">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="text-center mb-4">
+            <h3 class="mb-2">Panduan Status</h3>
+          </div>
+          <div class="deskripsi">
+            <div class="penjelasan-1 card d-flex align-items-center justify-content-center mb-2 p-3">
+              <p class="mb-0">Status digunakan untuk memberikan tanda bahwa projectnya sudah <span class="fw-medium">Selesai</span> / <span class="fw-medium">Belum Selesai</span> pada saat tim tersebut sudah <span class="fw-medium">Expired</span></p>
+            </div>
+            <div class="penjelasan-2 card d-flex align-items-center justify-content-center p-3">
+              <p class="mb-0">Button untuk <span class="fw-medium">Mengatur Status</span> akan muncul ketika kondisi tim sudah <span class="fw-medium">Expired / Kadaluwarsa</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{-- modal status end --}}
+
+  {{-- modal status --}}
+  <div class="modal fade" id="statusModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-simple modal-add-new-cc">
+      <div class="modal-content p-3 p-md-5">
+        <div class="modal-body">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="text-center mb-4">
+            <h3 class="mb-2">Status Tim</h3>
+            <h5 id="nama-tim-status"></h5>
+          </div>
+          <form class="row g-3" id="updateStatus">
+            <div class="col-12">
+              <label class="form-label w-100" for="modalAddCard">Status</label>
+              <div class="input-group">
+                <select id="status_keb" name="status_keberhasilan" class="form-select">
+                  <option id="selected" selected>Pilih Status</option>
+                  <option id="selesai-value" value="selesai">Selesai</option>
+                  <option id="belum-value" value="belum_selesai">Belum Selesai</option>
+                </select>
+              </div>
+              <button type="submit" class="w-100 btn btn-primary mt-4">Simpan</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{-- modal status end --}}
+
   {{-- modal edit --}}
   <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-simple modal-add-new-cc">
@@ -212,34 +289,58 @@
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="{{ asset('assets/vendor/libs/chartjs/chartjs.js') }}"></script>
   <script>
-    $('.btn-edit').on('click', function() {
-      var url = $(this).data('url');
-      var exp = $(this).data('expired');
-      var nama = $(this).data('nama');
-      $('#updateTimForm').attr('action', url);
-      $('#deadline').val(exp);
-      $('#nama-tim-suka-suka').text(nama);
-      var tomorrowDate = new Date();
-      tomorrowDate.setDate(tomorrowDate.getDate() + 1);
-      var tomorrow = tomorrowDate.toISOString().slice(0, 10);
+    $(document).ready(function() {
+      $('.btn-edit').on('click', function() {
+        var url = $(this).data('url');
+        var exp = $(this).data('expired');
+        var nama = $(this).data('nama');
+        $('#updateTimForm').attr('action', url);
+        $('#deadline').val(exp);
+        $('#nama-tim-suka-suka').text(nama);
+        var tomorrowDate = new Date();
+        tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+        var tomorrow = tomorrowDate.toISOString().slice(0, 10);
 
-      if (exp > tomorrow) {
-        $('#tanggal').flatpickr({
-          defaultDate: exp,
-          minDate: tomorrow,
-          altInput: true,
-          altFormat: 'F j, Y',
-          dateFormat: 'Y-m-d',
-        });
-      } else {
-        $('#tanggal').flatpickr({
-          defaultDate: exp,
-          minDate: exp,
-          altInput: true,
-          altFormat: 'F j, Y',
-          dateFormat: 'Y-m-d',
-        });
-      };
+        if (exp > tomorrow) {
+          $('#tanggal').flatpickr({
+            defaultDate: exp,
+            minDate: tomorrow,
+            altInput: true,
+            altFormat: 'F j, Y',
+            dateFormat: 'Y-m-d',
+          });
+        } else {
+          $('#tanggal').flatpickr({
+            defaultDate: exp,
+            minDate: exp,
+            altInput: true,
+            altFormat: 'F j, Y',
+            dateFormat: 'Y-m-d',
+          });
+        };
+      });
+    });
+
+    $(document).ready(function() {
+      $('.btn-status-tims').on('click', function() {
+        var namaTims = $(this).data('namatimstatus');
+        console.log('namaTims:', namaTims);
+        var url = $(this).data('urlstatus');
+        console.log('url:', url);
+        var sk = $(this).data('keberhasilan');
+        console.log('status:', sk);
+        $('#updateStatus').attr('action', url);
+        $('#nama-tim-status').text(namaTims);
+        var selectForm = $('#select_keb');
+
+        if (sk === '') {
+          $('#selected').attr('selected', 'selected');
+        } else if (sk === 'selesai') {
+          $('#selesai-value').attr('selected', 'selected');
+        } else {
+          $('#belum-value').attr('selected', 'selected');
+        }
+      });
     });
   </script>
 
@@ -280,6 +381,47 @@
                 icon: 'error',
                 title: 'Error!',
                 text: 'Deadline harus setelah tanggal awal proyek',
+              });
+            }
+          }
+        });
+      });
+    });
+
+    $(document).ready(function() {
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+      $('#updateStatus').submit(function(e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+        $.ajax({
+          type: 'POST',
+          url: $('#updateStatus').attr('action'),
+          data: formData,
+          success: function(data) {
+            Swal.fire({
+              title: 'Sukses',
+              text: 'Status berhasil diperbarui.',
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 1700,
+            }).then(() => {
+              $('#statusModal').modal('hide');
+
+              window.location.reload();
+            });
+          },
+          error: function(xhr, status, errors) {
+            console.log('Response:', xhr.responseText);
+
+            if (xhr.status === 422) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'Status gagal diperbarui',
               });
             }
           }

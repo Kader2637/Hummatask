@@ -433,6 +433,22 @@ class mentorController extends Controller
         return response()->view('mentor.detail-pengajuan', compact('projects'));
     }
 
+    function updateStatusKeberhasilan(Request $request, $id)
+    {
+        $project = Project::findOrFail($id);
+
+        $request->validate([
+            'status_keberhasilan' => 'required|in:selesai,belum_selesai',
+        ], [
+            'status_keberhasilan.required' => 'Status harus Diisi.',
+            'status_keberhasilan.in' => 'Data status tidak valid.'
+        ]);
+
+        $project->update(['status_keberhasilan' => $request->status_keberhasilan]);
+
+        return response()->json(['success' => 'Berhasil update status tim'], 200);
+    }
+
     // Return view projek mentor
     protected function projekPage(Request $request)
     {
@@ -609,6 +625,7 @@ class mentorController extends Controller
         }
 
         $projek->deadline = $deadline;
+        $projek->status_keberhasilan = null;
         $projek->save();
 
         return response()->json(['success' => 'Berhasil update tim'], 200);

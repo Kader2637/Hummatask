@@ -264,8 +264,7 @@
                             <div>Presentasi</div>
                         </a>
                     </li> --}}
-                    <li
-                        class="menu-item {{ request()->routeIs('tim') || request()->routeIs('cari_tim') || request()->routeIs('tim.filter') ? 'active' : '' }}">
+                    <li class="menu-item {{ request()->routeIs('tim') || request()->routeIs('cari_tim') || request()->routeIs('tim.filter') ? 'active' : '' }}">
                         <a href="{{ route('tim') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-users-group"></i>
                             <div>Tim</div>
@@ -277,7 +276,7 @@
                             <div>Pengajuan Project</div>
                         </a>
                     </li>
-                    <li class="menu-item {{ request()->routeIs('projek', 'detail-projek') ? 'active' : '' }}">
+                    <li class="menu-item {{ request()->routeIs('projek', 'detail-projek') || request()->routeIs('projek.detail') ? 'active' : '' }}">
                         <a href="{{ route('projek') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-folder-cog"></i>
                             <div>Project</div>

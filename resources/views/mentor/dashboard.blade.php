@@ -390,7 +390,7 @@
                   $slug = preg_replace('/[^a-zA-Z0-9]+/', '', strtolower($divisi->name));
                 @endphp
                 <li class="nav-item">
-                  <a class="nav-link {{ $index == 0 ? 'active' : '' }}" data-bs-toggle="tab"
+                  <a class="nav-link text-capitalize {{ $index == 0 ? 'active' : '' }}" data-bs-toggle="tab"
                     href="#{{ str_replace('-', ' ', $slug) }}" role="tab">{{ $divisi->name }}</a>
                 </li>
               @endforeach
@@ -425,7 +425,7 @@
                       <!-- Sub-navtabs for each day -->
                       <ul class="nav nav-tabs px-4">
                         @foreach (['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'] as $hari)
-                          <li class="nav-item">
+                          <li class="nav-item w-20">
                             <button class="nav-link {{ $loop->first ? 'active' : '' }}" id="{{ $hari }}-tab"
                               data-bs-toggle="tab" data-bs-target="#{{ $slug }}-{{ strtolower($hari) }}"
                               role="tab">{{ $hari }}</button>
