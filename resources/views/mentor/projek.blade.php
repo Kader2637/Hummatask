@@ -149,6 +149,8 @@
                         <span class="badge bg-label-danger">Belum Selesai</span>
                       @elseif ($item->status_keberhasilan === 'selesai' && $item->tim->kadaluwarsa == 1)
                         <span class="badge bg-label-primary">Selesai</span>
+                      @elseif ($item->status_keberhasilan === '' && item->tim->kadaluwarsa == 1)
+                        <span class="badge bg-label-info">Atur Status Tim</span>
                       @elseif (
                           ($item->status_keberhasilan === null ||
                               $item->status_keberhasilan === 'selesai' ||
