@@ -145,16 +145,16 @@
                   <div class="d-flex justify-content-between mt-3">
                     <span>Status :</span>
                     <div>
-                      @if ($item->status_keberhasilan === 'belum_selesai' && $item->tim->kadaluwarsa == 1)
+                      @if ($item->status_keberhasilan == 'belum_selesai' && $item->tim->kadaluwarsa == 1)
                         <span class="badge bg-label-danger">Belum Selesai</span>
-                      @elseif ($item->status_keberhasilan === 'selesai' && $item->tim->kadaluwarsa == 1)
+                      @elseif ($item->status_keberhasilan == 'selesai' && $item->tim->kadaluwarsa == 1)
                         <span class="badge bg-label-primary">Selesai</span>
-                      @elseif ($item->status_keberhasilan === '' && item->tim->kadaluwarsa == 1)
+                      @elseif ($item->status_keberhasilan == '' ||  && item->tim->kadaluwarsa == 1)
                         <span class="badge bg-label-info">Atur Status Tim</span>
                       @elseif (
-                          ($item->status_keberhasilan === null ||
-                              $item->status_keberhasilan === 'selesai' ||
-                              $item->status_keberhasilan === 'belum_selesai') &&
+                          ($item->status_keberhasilan == '' ||
+                              $item->status_keberhasilan == 'selesai' ||
+                              $item->status_keberhasilan == 'belum_selesai') &&
                               $item->tim->kadaluwarsa == 0)
                         <button type="button" data-bs-toggle="modal" data-bs-target="#modalPanduan"
                           class="btn btn-xs bg-label-warning" style="font-size: 11px;">Belum Ada <span
