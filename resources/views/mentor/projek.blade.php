@@ -324,11 +324,11 @@
     $(document).ready(function() {
       $('.btn-status-tims').on('click', function() {
         var namaTims = $(this).data('namatimstatus');
-        console.log('namaTims:', namaTims);
+        // console.log('namaTims:', namaTims);
         var url = $(this).data('urlstatus');
-        console.log('url:', url);
+        // console.log('url:', url);
         var sk = $(this).data('keberhasilan');
-        console.log('status:', sk);
+        // console.log('status:', sk);
         $('#updateStatus').attr('action', url);
         $('#nama-tim-status').text(namaTims);
         var selectForm = $('#select_keb');
