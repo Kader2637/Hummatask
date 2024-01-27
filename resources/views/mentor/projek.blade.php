@@ -150,7 +150,7 @@
                       @elseif ($item->status_keberhasilan === 'selesai' && $item->tim->kadaluwarsa == 1)
                         <span class="badge bg-label-primary">Selesai</span>
                       @elseif (
-                          ($item->status_keberhasilan === '' ||
+                          ($item->status_keberhasilan === null ||
                               $item->status_keberhasilan === 'selesai' ||
                               $item->status_keberhasilan === 'belum_selesai') &&
                               $item->tim->kadaluwarsa == 0)
