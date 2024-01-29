@@ -8,7 +8,6 @@
         <div class="card-header fs-5 mb-3 d-flex justify-content-between">
             <span> Daftar Presentasi Siswa Magang Hummatech
             </span>
-            <a class="btn btn-primary" href="{{ url()->previous() }}">Kembali</a>
         </div>
         <div class="d-flex card flex-md-row align-items-center justify-content-between">
             <div class=" nav nav-pills mb-3 mt-3 d-flex flex-wrap navbar-ul px-3" id="pills-tab" role="tablist">
