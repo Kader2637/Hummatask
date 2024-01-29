@@ -121,6 +121,10 @@
             margin-top: -95px;
         }
 
+        .custom-small {
+            font-size: 9px;
+        }
+
         @keyframes loading {
 
             0% {
@@ -276,13 +280,31 @@
                             @forelse ($tims as $item)
                                 <li class="menu-item">
                                     <a href="{{ route('tim.project', $item->code) }}"
-                                        class="menu-link d-flex align-items-center gap-2">
+                                        class="menu-link d-flex align-items-center gap-1">
                                         <img width="30" height="30"
                                             style="width: 30px;height:30px;object-fit: cover"
                                             class="rounded-circle border border-primary"
                                             src="{{ asset('storage/' . $item->logo) }}" alt="">
-                                        <div class="">{{ Str::limit($item->nama, 15) }}</div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="ps-1">
+                                                    <span>{{ Str::limit($item->nama, 15) }}</span>
+                                                </div>
+                                                <div>
+                                                    @if ($item->kadaluwarsa == 1)
+                                                        <span class="mx-1 badge bg-label-danger custom-small">Expired
+                                                            Team</span>
+                                                    @elseif ($item->kadaluwarsa == 0)
+                                                        <span class="mx-1 badge bg-label-success custom-small">Active
+                                                            Team</span>
+                                                    @endif
+                                                    <span
+                                                        class="badge bg-label-primary text-capitalize custom-small">{{ $item->divisi->name }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </a>
+
                                 </li>
                             @empty
                                 <li class="menu-item">

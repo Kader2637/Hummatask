@@ -32,6 +32,7 @@ class siswaController extends Controller
         $tims = User::find($userID)
             ->tim()
             ->latest()
+            ->orderBy('status', 'desc')
             ->get();
 
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
