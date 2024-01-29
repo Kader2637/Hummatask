@@ -438,11 +438,22 @@ class mentorController extends Controller
         $project = Project::findOrFail($id);
 
         $request->validate([
-            'status_keberhasilan' => 'required|in:selesai,belum_selesai',
+            'status_keberhasilan' => 'required|in:selesai,tidak_selesai',
         ], [
             'status_keberhasilan.required' => 'Status harus Diisi.',
             'status_keberhasilan.in' => 'Data status tidak valid.'
         ]);
+
+        $project->tim->update(['kadaluwarsa' => true]);
+
+        if ($request->status_keberhasilan == 'tidak_selesai') {
+            $deadline = \Carbon\Carbon::parse($project->deadline)->translatedFormat('Y-m-d');
+            $dayLeft = \Carbon\Carbon::parse($deadline)->diffInDays(\Carbon\Carbon::now()->startOfDay());
+
+            $project->update([
+                'late_last_deadline' => $dayLeft
+            ]);
+        }
 
         $project->update(['status_keberhasilan' => $request->status_keberhasilan]);
 
@@ -831,7 +842,6 @@ class mentorController extends Controller
             ]);
 
             $galery->save();
-
         }
 
         return response()->json(['success' => 'Berhasil menambahkan logo'], 200);

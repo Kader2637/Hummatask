@@ -179,6 +179,23 @@
                                                                 hari
                                                                 lagi</span>
                                                         </div>
+                                                    @elseif ($project->status_keberhasilan == 'tidak_selesai' && $project->late_last_deadline != null)
+                                                        <div class="alert alert-danger d-flex align-items-center"
+                                                            role="alert">
+                                                            <span class="alert-icon text-danger me-2">
+                                                                <i class="ti ti-ban ti-xs"></i>
+                                                            </span>
+                                                            Project ini berstatus tidak selesai dan sebelumnya telah melewati
+                                                            deadline selama {{ $project->late_last_deadline }} hari.
+                                                        </div>
+                                                    @elseif ($project->status_keberhasilan == 'selesai')
+                                                        <div class="alert alert-success d-flex align-items-center"
+                                                            role="alert">
+                                                            <span class="alert-icon text-success me-2">
+                                                                <i class="ti ti-ban ti-xs"></i>
+                                                            </span>
+                                                            Project ini telah berstatus selesai.
+                                                        </div>
                                                     @else
                                                         <div class="alert alert-danger d-flex align-items-center"
                                                             role="alert">

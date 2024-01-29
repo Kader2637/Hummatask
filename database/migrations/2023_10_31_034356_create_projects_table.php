@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('status_project', ['notapproved', 'approved']);
             $table->enum('status_keberhasilan', ['selesai', 'belum_selesai'])->nullable();
             $table->enum('type_project', ['solo', 'pre_mini', 'mini', 'big']);
+            $table->integer('late_last_deadline')->nullable();
             $table->text('deskripsi')->nullable();
             $table->date('deadline')->nullable();
             $table->integer('total_presentasi_mingguan')->nullable();

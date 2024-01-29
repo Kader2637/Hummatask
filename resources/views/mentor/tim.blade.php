@@ -36,7 +36,7 @@
                                 </select>
                                 <input type="hidden" name="nama_tim" value="{{ request('nama_tim') }}">
                             </form>
-        
+
                         </div>
                         <div class="filter col-lg-3 col-md-3 col-sm-3">
                             <label for="select2Basic" class="form-label">Cari</label>
@@ -102,7 +102,7 @@
                             <h5 class="card-title">{{ $tim->nama }}</h5>
                             <p class="card-text" data-bs-toggle="tooltip" data-popup="tooltip-custom"
                                 data-bs-placement="bottom" title="Deadline Project">
-                                {{ $tim->project->isNotEmpty() && isset($tim->project[0]) ? \Carbon\Carbon::parse($tim->project[0]->deadline)->translatedFormat('l j F Y') : 'Tim ini belum memiliki project' }}
+                                {{ $tim->project->isNotEmpty() && isset($tim->project[0]) ? \Carbon\Carbon::parse($tim->project[0]->deadline)->translatedFormat('l, j F Y') : 'Tim ini belum memiliki project' }}
                             </p>
                             <div class="d-flex justify-content-center">
                                 @if ($tim->status_tim == 'solo')
