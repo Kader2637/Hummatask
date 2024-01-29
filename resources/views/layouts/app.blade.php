@@ -290,7 +290,7 @@
                                                 <div class="ps-1">
                                                     <span>{{ Str::limit($item->nama, 15) }}</span>
                                                 </div>
-                                                <div>
+                                                <div class="d-flex">
                                                     @if ($item->kadaluwarsa == 1)
                                                         <span class="mx-1 badge bg-label-danger custom-small">Expired
                                                             Team</span>
