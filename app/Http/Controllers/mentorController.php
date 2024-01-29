@@ -49,7 +49,10 @@ class mentorController extends Controller
             })
             ->get();
         $presentasi = Presentasi::with('tim')
-            ->where('status_presentasi', 'selesai')
+            ->where([
+                'status_presentasi' => 'selesai',
+                'divisi_id' => Auth::user()->divisi_id,
+            ])
             ->whereBetween('jadwal', [$currentWeekStart, $currentWeekStart->copy()->endOfWeek()])
             ->latest('created_at')
             ->take(5)
@@ -299,7 +302,7 @@ class mentorController extends Controller
                         case 'friday':
                             $dayName = 'Jumat';
                             break;
-                            // Handle other cases if needed
+                        // Handle other cases if needed
 
                         default:
                             break;
@@ -437,12 +440,15 @@ class mentorController extends Controller
     {
         $project = Project::findOrFail($id);
 
-        $request->validate([
-            'status_keberhasilan' => 'required|in:selesai,tidak_selesai',
-        ], [
-            'status_keberhasilan.required' => 'Status harus Diisi.',
-            'status_keberhasilan.in' => 'Data status tidak valid.'
-        ]);
+        $request->validate(
+            [
+                'status_keberhasilan' => 'required|in:selesai,tidak_selesai',
+            ],
+            [
+                'status_keberhasilan.required' => 'Status harus Diisi.',
+                'status_keberhasilan.in' => 'Data status tidak valid.',
+            ],
+        );
 
         $project->tim->update(['kadaluwarsa' => true]);
 
@@ -451,7 +457,7 @@ class mentorController extends Controller
             $dayLeft = \Carbon\Carbon::parse($deadline)->diffInDays(\Carbon\Carbon::now()->startOfDay());
 
             $project->update([
-                'late_last_deadline' => $dayLeft
+                'late_last_deadline' => $dayLeft,
             ]);
         }
 
@@ -870,10 +876,9 @@ class mentorController extends Controller
 
     public function createGaleryPage()
     {
-        $notifikasi = Notifikasi::where('user_id', Auth::user()->id)
-            ->whereHas('user', function ($query) {
-                $query->where('divisi_id', Auth::user()->divisi_id);
-            });
+        $notifikasi = Notifikasi::where('user_id', Auth::user()->id)->whereHas('user', function ($query) {
+            $query->where('divisi_id', Auth::user()->divisi_id);
+        });
         return view('mentor.create-galery-page', compact('notifikasi'));
     }
 
