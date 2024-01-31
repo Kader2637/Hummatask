@@ -630,7 +630,7 @@
                                                         @endphp
 
                                                         <div class="col-12 col-lg-4 col-xxl-4 my-2">
-                                                            <label style="height: 140%;"
+                                                            <label style="height: 140px;"
                                                                 class="card card-jadwal {{ $cekJadwalRabu !== null &&$cekJadwal &&$cekJadwal->tim->id ==Auth::user()->anggota()->latest()->first()->tim_id? 'bg-label-primary': '' }} {{ $cekJadwal ? 'bg-label-secondary' : '' }}">
                                                                 <input name="plan" class="radio" type="radio"
                                                                     value="{{ $data->id }}"
@@ -638,7 +638,7 @@
                                                                     {{ $cekJadwal ? 'disabled' : '' }}>
                                                                 <span
                                                                     class="plan-details text-center d-flex align-items-center justify-content-center flex-column"
-                                                                    style="height: 140%;">
+                                                                    style="height: 140px;">
                                                                     <p class="fs-6 mb-2 text-dark"
                                                                         style="font-weight: 500">
                                                                         {{ $data->jadwal_ke }}

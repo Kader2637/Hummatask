@@ -259,6 +259,7 @@ class PengajuanTimController extends Controller
             }
 
             foreach ($uniqueDaftarAnggota as $anggota) {
+                User::find($anggota)->update(['divisi_id' => Auth()->user()->divisi_id]);
                 $anggotaModel = new Anggota;
                 $anggotaModel->tim_id = $tim->id;
                 if ($anggota === $request->ketuaKelompok) {
@@ -392,6 +393,7 @@ class PengajuanTimController extends Controller
             }
 
             if (!$existingAnggota) {
+                User::find($anggota)->update(['divisi_id' => Auth()->user()->divisi_id]);
                 $newAnggota = new Anggota();
                 $newAnggota->user_id = $anggota;
                 $newAnggota->tim_id = $timId->id;
