@@ -380,29 +380,6 @@
                       );
                     });
 
-                    $(document).on('click', '#button-delete', function(event) {
-                      event.preventDefault();
-                      var $formCatatanRepeater = $(this).parents('.form-catatan-repeater');
-
-                      swal.fire({
-                        title: 'Konfirmasi',
-                        text: 'Apakah Anda yakin ingin menghapus baris catatan ini?',
-                        icon: 'question',
-                        showCancelButton: true,
-                        confirmButtonText: 'Ya, hapus',
-                        cancelButtonText: 'Batal'
-                      }).then(function(result) {
-                        if (result.isConfirmed) {
-                          $formCatatanRepeater.remove();
-                          swal.fire(
-                            'Terhapus!',
-                            'Catatan berhasil dihapus.',
-                            'success'
-                          );
-                        }
-                      });
-                    });
-
                     $(document).on('click', '.btn-delete-catatan', function(event) {
                       event.preventDefault();
                       var catatanDetailId = $(this).data('id');
@@ -449,6 +426,29 @@
                         }
                       });
                     });
+
+                    // $(document).on('click', '#button-delete', function(event) {
+                    //   event.preventDefault();
+                    //   var $formCatatanRepeater = $(this).parents('.form-catatan-repeater');
+
+                    //   swal.fire({
+                    //     title: 'Konfirmasi',
+                    //     text: 'Apakah Anda yakin ingin menghapus baris catatan ini?',
+                    //     icon: 'question',
+                    //     showCancelButton: true,
+                    //     confirmButtonText: 'Ya, hapus',
+                    //     cancelButtonText: 'Batal'
+                    //   }).then(function(result) {
+                    //     if (result.isConfirmed) {
+                    //       $formCatatanRepeater.remove();
+                    //       swal.fire(
+                    //         'Terhapus!',
+                    //         'Catatan berhasil dihapus.',
+                    //         'success'
+                    //       );
+                    //     }
+                    //   });
+                    // });
                   </script>
                 </div>
               </div>
