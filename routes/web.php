@@ -33,7 +33,6 @@
                 Route::get('/auth/facebook', 'redirectToFacebook')->name('facebook.register');
                 Route::get('/auth/facebook/callback', 'handleFacebookCallback')->name('facebook.callback');
                 Route::get('/reset-password/{token}', 'resetPage')->name('password.reset');
-
                 // Process
                 Route::post('login', 'login')->name('login');
                 Route::post('register', 'register')->name('register.store');
@@ -76,7 +75,7 @@
                     Route::get('catatan/{code}', 'catatanPage')->name('tim.catatan');
                     Route::get('statistik/{code}', 'statistikPage')->name('tim.history');
                     Route::get('history-presentasi/{code}', 'historyPresentasiPage')->name('tim.historyPresentasi');
-                    Route::get('history-catatan/{code}', 'historyCatatanPage')->name('tim.historyCatatan');
+                    Route::get('history-catatan/{code}  ', 'historyCatatanPage')->name('tim.historyCatatan');
 
                     Route::patch('/ubah-status', 'ubahStatus')->name('ubahStatus');
                     Route::delete('/delete-tugas', 'hapusTugas')->name('delete.tugas');
