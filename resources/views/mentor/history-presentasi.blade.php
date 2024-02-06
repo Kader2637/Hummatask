@@ -140,19 +140,10 @@
             var id = $(this).data('id');
             var statuspresentasi = $(this).data('status');
             var statusrevisi = $(this).data('statusr');
+            $('#form-update').attr('action', '/tim/' + id);
             $('#modal-update').modal('show');
         });
     </script>
-    {{-- function openEditModal(id) {
-    // Mengatur nilai data-id pada modal
-    $('#form-update').attr('data-id', id);
-
-    // Mengatur action form sesuai dengan URL yang sesuai dengan id
-    $('#form-update').attr('action', '/tim/' + id);
-
-    // Menampilkan modal
-    $('#modal-update').modal('show');
-    } --}}
 
     <script>
         // Fungsi untuk menampilkan modal dan mengatur nilai pada modal
