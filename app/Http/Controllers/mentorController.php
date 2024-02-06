@@ -525,6 +525,7 @@ class mentorController extends Controller
         $tugasBaruQuery = $tugas->where('status_tugas', 'tugas_baru')->sortByDesc('created_at');
         $dikerjakanQuery = $tugas->where('status_tugas', 'dikerjakan');
         $revisiMentorQuery = $tugas->where('status_tugas', 'revisi_mentor');
+        $statusCatatanQuery = $tugas->where('status_catatan','revisi_mentor');
 
         $chartData = [['Status Tugas', 'Jumlah'], ['Selesai', $selesaiQuery->count()], ['Revisi', $revisiQuery->count()], ['Dikerjakan', $dikerjakanQuery->count()], ['Tugas Baru', $tugasBaruQuery->count()]];
 
@@ -547,10 +548,11 @@ class mentorController extends Controller
             'boardRevisi' => $revisiQuery,
             'boardRevisiMentor' => $revisiMentorQuery,
             'boardDikerjakan' => $dikerjakanQuery,
-            'boardSelesai' => $selesaiQuery,
+            'selesaiQuery' => $selesaiQuery,
+            'boardStatusCatatan' => $statusCatatanQuery
         ];
 
-        return view('mentor.projekDetail', compact('project', 'notifikasi', 'catatan', 'chartData', 'day', 'board'));
+        return view('mentor.projekDetail', compact('project', 'notifikasi', 'catatan', 'chartData', 'day', 'board','selesaiQuery'));
     }
 
     protected function updateCatatanMentor(Request $request, $id)
@@ -583,8 +585,9 @@ class mentorController extends Controller
                             'tim_id' => $request->tim_id,
                             'code' => $tugas->code,
                             'nama' => $catatan_text,
-                            'status_tugas' => 'tugas_baru',
+                            'status_tugas' => 'revisi_mentor',
                             'prioritas' => 'biasa',
+                            'status_catatan' => 'revisi_mentor',
                         ]);
 
                         if ($tugas->wasRecentlyCreated && $catatan->tim->status_tim === 'solo') {
@@ -601,6 +604,7 @@ class mentorController extends Controller
                             'nama' => $catatanDetail->catatan_text,
                             'status_tugas' => 'revisi_mentor',
                             'prioritas' => 'biasa',
+                            'status_catatan' => 'revisi_mentor',
                         ]);
 
                         if ($catatan->tim->status_tim === 'solo') {

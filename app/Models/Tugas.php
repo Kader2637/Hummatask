@@ -13,7 +13,7 @@ class Tugas extends Model
     use HasFactory;
 
     protected $guarded = [];
-    protected $fillable = ['tim_id', 'code', 'status_tugas', 'nama', 'prioritas', 'catatan_detail_id'];
+    protected $fillable = ['tim_id', 'code', 'status_tugas', 'nama', 'prioritas', 'catatan_detail_id', 'status_catatan'];
 
     /**
      * tim

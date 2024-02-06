@@ -185,7 +185,8 @@
                                                             <span class="alert-icon text-danger me-2">
                                                                 <i class="ti ti-ban ti-xs"></i>
                                                             </span>
-                                                            Project ini berstatus tidak selesai dan sebelumnya telah melewati
+                                                            Project ini berstatus tidak selesai dan sebelumnya telah
+                                                            melewati
                                                             deadline selama {{ $project->late_last_deadline }} hari.
                                                         </div>
                                                     @elseif ($project->status_keberhasilan == 'selesai')
@@ -481,6 +482,30 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="d-flex flex-wrap gap-1">
+                                                                    @if ($item->status_catatan == 'revisi_mentor')
+                                                                        <span
+                                                                            style="
+                                                                                   --bs-badge-padding-x: 1em;
+                                                                                   --bs-badge-padding-y: 0.49em;
+                                                                                   --bs-badge-font-size: 0.81em;
+                                                                                   --bs-badge-font-weight: 500;
+                                                                                   --bs-badge-color: #fff;
+                                                                                   --bs-badge-border-radius: 0.25rem;
+                                                                                   border-radius: var(--bs-badge-border-radius);
+                                                                                   background: linear-gradient(72.47deg,#7367f0 22.16%,rgba(115,103,240,.7) 76.47%);
+                                                                                   color: #fff!important;
+                                                                                   display: inline-block;
+                                                                                   font-size: var(--bs-badge-font-size);
+                                                                                   font-weight: var(--bs-badge-font-weight);
+                                                                                   line-height: 1;
+                                                                                   padding: var(--bs-badge-padding-y) var(--bs-badge-padding-x);
+                                                                                   text-align: center;
+                                                                                   vertical-align: baseline;
+                                                                                   white-space: nowrap;
+                                                                                   ">
+                                                                            Revisi mentor
+                                                                        </span>
+                                                                    @endif
                                                                     @if ($item->label)
                                                                         @foreach ($item->label as $item)
                                                                             <span class="badge"
@@ -623,6 +648,30 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="d-flex flex-wrap gap-1">
+                                                                        @if ($item->status_catatan == 'revisi_mentor')
+                                                                            <span
+                                                                                style="
+                                                                                   --bs-badge-padding-x: 1em;
+                                                                                   --bs-badge-padding-y: 0.49em;
+                                                                                   --bs-badge-font-size: 0.81em;
+                                                                                   --bs-badge-font-weight: 500;
+                                                                                   --bs-badge-color: #fff;
+                                                                                   --bs-badge-border-radius: 0.25rem;
+                                                                                   border-radius: var(--bs-badge-border-radius);
+                                                                                   background: linear-gradient(72.47deg,#7367f0 22.16%,rgba(115,103,240,.7) 76.47%);
+                                                                                   color: #fff!important;
+                                                                                   display: inline-block;
+                                                                                   font-size: var(--bs-badge-font-size);
+                                                                                   font-weight: var(--bs-badge-font-weight);
+                                                                                   line-height: 1;
+                                                                                   padding: var(--bs-badge-padding-y) var(--bs-badge-padding-x);
+                                                                                   text-align: center;
+                                                                                   vertical-align: baseline;
+                                                                                   white-space: nowrap;
+                                                                                   ">
+                                                                                Revisi mentor
+                                                                            </span>
+                                                                        @endif
                                                                         @if ($item->label)
                                                                             @foreach ($item->label as $item)
                                                                                 <span class="badge"
@@ -765,6 +814,30 @@
                                                                             </div>
                                                                         </div>
                                                                         <div class="d-flex flex-wrap gap-1">
+                                                                            @if ($item->status_catatan == 'revisi_mentor')
+                                                                                <span
+                                                                                    style="
+                                                                                   --bs-badge-padding-x: 1em;
+                                                                                   --bs-badge-padding-y: 0.49em;
+                                                                                   --bs-badge-font-size: 0.81em;
+                                                                                   --bs-badge-font-weight: 500;
+                                                                                   --bs-badge-color: #fff;
+                                                                                   --bs-badge-border-radius: 0.25rem;
+                                                                                   border-radius: var(--bs-badge-border-radius);
+                                                                                   background: linear-gradient(72.47deg,#7367f0 22.16%,rgba(115,103,240,.7) 76.47%);
+                                                                                   color: #fff!important;
+                                                                                   display: inline-block;
+                                                                                   font-size: var(--bs-badge-font-size);
+                                                                                   font-weight: var(--bs-badge-font-weight);
+                                                                                   line-height: 1;
+                                                                                   padding: var(--bs-badge-padding-y) var(--bs-badge-padding-x);
+                                                                                   text-align: center;
+                                                                                   vertical-align: baseline;
+                                                                                   white-space: nowrap;
+                                                                                   ">
+                                                                                    Revisi mentor
+                                                                                </span>
+                                                                            @endif
                                                                             @if ($item->label)
                                                                                 @foreach ($item->label as $item)
                                                                                     <span class="badge"
@@ -795,17 +868,7 @@
                                                                 </div>
                                                             </div>
                                                         @endforelse
-                                                    </div>
-                                                </div>
-                                                <div style="" class="col-lg-3 col-md-6 col-12 py-2   ">
-                                                    <div style="max-height: 80vh; overflow:auto; overflow-x:hidden;background-color: #edeaea"
-                                                        class="p-2  rounded">
-                                                        <div style="width:100%" class="card card-status-tugas">
-                                                            <div class="card-body p-2 py-2 row justify-content-between">
-                                                                <span class="col-8">Selesai</span>
-                                                            </div>
-                                                        </div>
-                                                        @forelse ($board['boardSelesai'] as $item)
+                                                        @forelse ($board['boardRevisiMentor'] as $item)
                                                             <div class="col-12 d-flex justify-content-center">
                                                                 <div class="row d-flex flex-column justify-content-center align-items-center w-100"
                                                                     id="tugas_baru">
@@ -819,35 +882,34 @@
                                                                                         @switch($item->prioritas)
                                                                                             @case('mendesak')
                                                                                                 <div
-                                                                                                    class="badge rounded-pill bg-label-danger text-capitalize">
+                                                                                                    class="badge rounded-pill bg-label-danger">
                                                                                                     {{ $item->prioritas }}
                                                                                                 </div>
                                                                                             @break
 
                                                                                             @case('penting')
                                                                                                 <div
-                                                                                                    class="badge rounded-pill bg-label-warning text-capitalize">
+                                                                                                    class="badge rounded-pill bg-label-warning">
                                                                                                     {{ $item->prioritas }}
                                                                                                 </div>
                                                                                             @break
 
                                                                                             @case('biasa')
-                                                                                                <div
-                                                                                                    class="badge rounded-pill bg-label-info text-capitalize">
+                                                                                                <div class="badge rounded-pill bg-label-info">
                                                                                                     {{ $item->prioritas }}
                                                                                                 </div>
                                                                                             @break
 
                                                                                             @case('tambahan')
                                                                                                 <div
-                                                                                                    class="badge rounded-pill bg-label-primary text-capitalize">
+                                                                                                    class="badge rounded-pill bg-label-primary">
                                                                                                     {{ $item->prioritas }}
                                                                                                 </div>
                                                                                             @break
 
                                                                                             @default
                                                                                                 <div
-                                                                                                    class="badge rounded-pill bg-label-secondary text-capitalize">
+                                                                                                    class="badge rounded-pill bg-label-secondary">
                                                                                                     {{ $item->prioritas }}
                                                                                                 </div>
                                                                                         @endswitch
@@ -914,6 +976,28 @@
                                                                                             style="color: {{ $item->warna_text }} ; background-color: {{ $item->warna_bg }} ">{{ $item->text }}</span>
                                                                                     @endforeach
                                                                                 @endif
+                                                                                @if ($item->status_catatan)
+                                                                                    <span
+                                                                                        style="
+                                                                                    --bs-badge-padding-x: 1em;
+                                                                                    --bs-badge-padding-y: 0.49em;
+                                                                                    --bs-badge-font-size: 0.81em;
+                                                                                    --bs-badge-font-weight: 500;
+                                                                                    --bs-badge-color: #fff;
+                                                                                    --bs-badge-border-radius: 0.25rem;
+                                                                                    border-radius: var(--bs-badge-border-radius);
+                                                                                    background: linear-gradient(72.47deg,#7367f0 22.16%,rgba(115,103,240,.7) 76.47%);
+                                                                                    color: #fff!important;
+                                                                                    display: inline-block;
+                                                                                    font-size: var(--bs-badge-font-size);
+                                                                                    font-weight: var(--bs-badge-font-weight);
+                                                                                    line-height: 1;
+                                                                                    padding: var(--bs-badge-padding-y) var(--bs-badge-padding-x);
+                                                                                    text-align: center;
+                                                                                    vertical-align: baseline;
+                                                                                    white-space: nowrap;">Revisi
+                                                                                        mentor</span>
+                                                                                @endif
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -940,34 +1024,202 @@
                                                             @endforelse
                                                         </div>
                                                     </div>
-                                                </div>
+                                                    <div style="" class="col-lg-3 col-md-6 col-12 py-2   ">
+                                                        <div style="max-height: 80vh; overflow:auto; overflow-x:hidden;background-color: #edeaea"
+                                                            class="p-2  rounded">
+                                                            <div style="width:100%" class="card card-status-tugas">
+                                                                <div class="card-body p-2 py-2 row justify-content-between">
+                                                                    <span class="col-8">Selesai</span>
+                                                                </div>
+                                                            </div>
+                                                            @forelse ($selesaiQuery as $item)
+                                                                <div class="col-12 d-flex justify-content-center">
+                                                                    <div class="row d-flex flex-column justify-content-center align-items-center w-100"
+                                                                        id="tugas_baru">
+                                                                        <div id="board-78842ef7-83ab-43da-8404-e0c0cc750daa"
+                                                                            class="col-12 p-2 mt-3 card" style="width: 100%;">
+                                                                            <div>
+                                                                                <div
+                                                                                    class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
+                                                                                    <div class="d-flex align-items-center gap-2">
+                                                                                        <div class="item-badges">
+                                                                                            @switch($item->prioritas)
+                                                                                                @case('mendesak')
+                                                                                                    <div
+                                                                                                        class="badge rounded-pill bg-label-danger text-capitalize">
+                                                                                                        {{ $item->prioritas }}
+                                                                                                    </div>
+                                                                                                @break
+
+                                                                                                @case('penting')
+                                                                                                    <div
+                                                                                                        class="badge rounded-pill bg-label-warning text-capitalize">
+                                                                                                        {{ $item->prioritas }}
+                                                                                                    </div>
+                                                                                                @break
+
+                                                                                                @case('biasa')
+                                                                                                    <div
+                                                                                                        class="badge rounded-pill bg-label-info text-capitalize">
+                                                                                                        {{ $item->prioritas }}
+                                                                                                    </div>
+                                                                                                @break
+
+                                                                                                @case('tambahan')
+                                                                                                    <div
+                                                                                                        class="badge rounded-pill bg-label-primary text-capitalize">
+                                                                                                        {{ $item->prioritas }}
+                                                                                                    </div>
+                                                                                                @break
+
+                                                                                                @default
+                                                                                                    <div
+                                                                                                        class="badge rounded-pill bg-label-secondary text-capitalize">
+                                                                                                        {{ $item->prioritas }}
+                                                                                                    </div>
+                                                                                            @endswitch
+                                                                                        </div>
+                                                                                        @php
+                                                                                            $deadline = \Carbon\Carbon::parse($item->deadline);
+                                                                                            $now = \Carbon\Carbon::now()->startOfDay();
+                                                                                            $diffInDays = $deadline->diffInDays($now);
+                                                                                        @endphp
+
+                                                                                        @if ($diffInDays == 0)
+                                                                                            Hari ini
+                                                                                        @elseif ($diffInDays > 0)
+                                                                                            {{ $diffInDays }} hari lagi
+                                                                                        @else
+                                                                                            {{ abs($diffInDays) }} hari terlewat
+                                                                                        @endif
+                                                                                    </div>
+                                                                                </div>
+                                                                                <span class="kanban-text">{{ $item->nama }}</span>
+                                                                                <div
+                                                                                    class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
+                                                                                    <div class="d-flex">
+                                                                                        <span class="d-flex align-items-center ms-1">
+                                                                                            <i class="ti ti-message-dots ti-xs me-1"></i>
+                                                                                            <span>{{ $item->comments->count() }}</span>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="avatar-group d-flex align-items-center assigned-avatar">
+                                                                                        @if ($project->tim->status_tim !== 'solo')
+                                                                                            @foreach ($item->user as $item)
+                                                                                                <div class="avatar avatar-xs"
+                                                                                                    data-bs-toggle="tooltip"
+                                                                                                    data-bs-placement="top"
+                                                                                                    aria-label="{{ $item->username }}"
+                                                                                                    data-bs-original-title="{{ $item->username }}">
+                                                                                                    <img style="object-fit: cover;"
+                                                                                                        src="{{ $item->avatar ? Storage::url($item->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                                                                        alt="Avatar"
+                                                                                                        class="rounded-circle pull-up">
+                                                                                                </div>
+                                                                                            @endforeach
+                                                                                        @else
+                                                                                            @foreach ($item->user as $item)
+                                                                                                <div class="avatar avatar-xs"
+                                                                                                    data-bs-toggle="tooltip"
+                                                                                                    data-bs-placement="top"
+                                                                                                    aria-label="{{ $item->username }}"
+                                                                                                    data-bs-original-title="{{ $item->username }}">
+                                                                                                    <img style="object-fit: cover;"
+                                                                                                        src="{{ $item->avatar ? Storage::url($item->avatar) : asset('assets/img/avatars/1.png') }}"
+                                                                                                        alt="Avatar"
+                                                                                                        class="rounded-circle pull-up">
+                                                                                                </div>
+                                                                                            @endforeach
+                                                                                        @endif
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="d-flex flex-wrap gap-1">
+                                                                                    @if ($item->status_catatan == 'revisi_mentor')
+                                                                                        <span
+                                                                                            style="
+                                                                                   --bs-badge-padding-x: 1em;
+                                                                                   --bs-badge-padding-y: 0.49em;
+                                                                                   --bs-badge-font-size: 0.81em;
+                                                                                   --bs-badge-font-weight: 500;
+                                                                                   --bs-badge-color: #fff;
+                                                                                   --bs-badge-border-radius: 0.25rem;
+                                                                                   border-radius: var(--bs-badge-border-radius);
+                                                                                   background: linear-gradient(72.47deg,#7367f0 22.16%,rgba(115,103,240,.7) 76.47%);
+                                                                                   color: #fff!important;
+                                                                                   display: inline-block;
+                                                                                   font-size: var(--bs-badge-font-size);
+                                                                                   font-weight: var(--bs-badge-font-weight);
+                                                                                   line-height: 1;
+                                                                                   padding: var(--bs-badge-padding-y) var(--bs-badge-padding-x);
+                                                                                   text-align: center;
+                                                                                   vertical-align: baseline;
+                                                                                   white-space: nowrap;
+                                                                                   ">
+                                                                                            Revisi mentor
+                                                                                        </span>
+                                                                                    @endif
+                                                                                    @if ($item->label)
+                                                                                        @foreach ($item->label as $item)
+                                                                                            <span class="badge"
+                                                                                                style="color: {{ $item->warna_text }} ; background-color: {{ $item->warna_bg }} ">{{ $item->text }}</span>
+                                                                                        @endforeach
+                                                                                    @endif
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                @empty
+                                                                    <div class="col-12 d-flex justify-content-center">
+                                                                        <div class="row d-flex flex-column justify-content-center align-items-center w-100"
+                                                                            id="tugas_baru">
+                                                                            <div id="board" class="col-12 p-2 mt-3 card"
+                                                                                style="width: 100%;">
+                                                                                <div>
+                                                                                    <div
+                                                                                        class="d-flex justify-content-between flex-wrap align-items-center mb-2 pb-1">
+                                                                                    </div>
+                                                                                    <span class="kanban-text">Tidak ada tugas.</span>
+                                                                                    <div
+                                                                                        class="d-flex justify-content-between align-items-center flex-wrap mt-2 pt-1">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                @endforelse
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            </div>
                                         </div>
                                     </div>
+                                @else
+                                    <div class="d-flex justify-content-evenly">
+                                        <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt="" class="mb-0"
+                                            style="width: 250px;">
+                                    </div>
+                                    <p class="text-center mb-5 mt-2">Tim ini belum membuat tugas diboard ! <i
+                                            class="ti ti-address-book-off"></i>
+                                    </p>
                                 </div>
-                            @else
-                                <div class="d-flex justify-content-evenly">
-                                    <img src="{{ asset('assets/img/illustrations/noData2.png') }}" alt="" class="mb-0"
-                                        style="width: 250px;">
-                                </div>
-                                <p class="text-center mb-5 mt-2">Tim ini belum membuat tugas diboard ! <i
-                                        class="ti ti-address-book-off"></i>
-                                </p>
+                                @endif
                             </div>
-                            @endif
                         </div>
-                    </div>
-                @endsection
+                    @endsection
 
-                @section('script')
-                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    @section('script')
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-                    <script>
-                        var i = 0;
-                        @foreach ($catatan as $catatanTab)
-                            $('#tambahCatatan{{ $catatanTab->id }}').click(function() {
-                                ++i;
-                                $('#v-pills-{{ $catatanTab->id }} .form-repeater').append(
-                                    `<div class="form-add row mb-3 w-100">
+                        <script>
+                            var i = 0;
+                            @foreach ($catatan as $catatanTab)
+                                $('#tambahCatatan{{ $catatanTab->id }}').click(function() {
+                                    ++i;
+                                    $('#v-pills-{{ $catatanTab->id }} .form-repeater').append(
+                                        `<div class="form-add row mb-3 w-100">
                     <div class="col-11 col-md-11">
                     <label for="catatan" class="mb-2 form-label">Catatan Baru</label>
                     <input type="text" name="catatan_text[]" class="form-control">
@@ -979,172 +1231,172 @@
                     </button>
                     </div>
                 </div>`
-                                );
+                                    );
+                                });
+                            @endforeach
+
+                            $(document).on('click', '.button-delete-repeater', function(event) {
+                                event.preventDefault();
+                                var $formCatatanRepeater = $(this).closest('.form-add');
+
+                                Swal.fire({
+                                    title: 'Konfirmasi',
+                                    text: 'Apakah Anda yakin ingin menghapus baris catatan ini?',
+                                    icon: 'question',
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Ya, hapus',
+                                    cancelButtonText: 'Batal'
+                                }).then(function(result) {
+                                    if (result.isConfirmed) {
+                                        $formCatatanRepeater.remove();
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Terhapus!',
+                                            text: 'Catatan berhasil dihapus.',
+                                            showConfirmButton: false,
+                                            timer: 3000
+                                        });
+                                    }
+                                });
                             });
-                        @endforeach
 
-                        $(document).on('click', '.button-delete-repeater', function(event) {
-                            event.preventDefault();
-                            var $formCatatanRepeater = $(this).closest('.form-add');
+                            $(document).on('click', '.btn-delete-catatan', function(event) {
+                                event.preventDefault();
+                                var catatanDetailId = $(this).data('id');
+                                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                                var $formCatatanRepeater = $(this).parents('.form-add');
 
-                            Swal.fire({
-                                title: 'Konfirmasi',
-                                text: 'Apakah Anda yakin ingin menghapus baris catatan ini?',
-                                icon: 'question',
-                                showCancelButton: true,
-                                confirmButtonText: 'Ya, hapus',
-                                cancelButtonText: 'Batal'
-                            }).then(function(result) {
-                                if (result.isConfirmed) {
-                                    $formCatatanRepeater.remove();
-                                    Swal.fire({
-                                        icon: 'success',
-                                        title: 'Terhapus!',
-                                        text: 'Catatan berhasil dihapus.',
-                                        showConfirmButton: false,
-                                        timer: 3000
-                                    });
-                                }
-                            });
-                        });
-
-                        $(document).on('click', '.btn-delete-catatan', function(event) {
-                            event.preventDefault();
-                            var catatanDetailId = $(this).data('id');
-                            var csrfToken = $('meta[name="csrf-token"]').attr('content');
-                            var $formCatatanRepeater = $(this).parents('.form-add');
-
-                            swal.fire({
-                                title: 'Konfirmasi',
-                                text: 'Apakah Anda yakin ingin menghapus baris catatan ini?',
-                                icon: 'question',
-                                showCancelButton: true,
-                                confirmButtonText: 'Ya, hapus',
-                                cancelButtonText: 'Batal'
-                            }).then(function(result) {
-                                if (result.isConfirmed) {
-                                    $.ajax({
-                                        url: '/mentor/catatan/delete/mentor/' + catatanDetailId,
-                                        type: 'DELETE',
-                                        headers: {
-                                            'X-CSRF-TOKEN': csrfToken
-                                        },
-                                        success: function(response) {
-                                            var remainingForms = $formCatatanRepeater.siblings('.form-add')
-                                                .length;
-
-                                            if (remainingForms === 1) {
-                                                $('.btn-delete-catatan').remove();
-                                            };
-
-                                            $formCatatanRepeater.remove();
-
-                                            Swal.fire({
-                                                icon: 'success',
-                                                title: 'Terhapus!',
-                                                text: 'Catatan berhasil dihapus.',
-                                                showConfirmButton: false,
-                                                timer: 3000
-                                            });
-                                        },
-                                        error: function(error) {
-                                            console.log(error.responseJSON.message);
-                                        }
-                                    });
-                                }
-                            });
-                        });
-                    </script>
-
-                    {{-- pie chart --}}
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            const cardColor = 'grey';
-                            const headingColor = '#FDAC34';
-                            const black = '#fff';
-
-                            const doughnutChart = document.getElementById('project');
-                            const chartStatus = document.querySelector('.chart-status');
-
-                            if (doughnutChart) {
-                                const processedData = @json($chartData);
-
-                                const labels = processedData.map(data => data[0]);
-                                const values = processedData.map(data => data[1]);
-
-                                const doughnutChartVar = new Chart(doughnutChart, {
-                                    type: 'doughnut',
-                                    data: {
-                                        labels: labels,
-                                        datasets: [{
-                                            data: values,
-                                            backgroundColor: [cardColor, '#F9ED69', '#F08A5D', '#B83B5E',
-                                                '#6A2C70'
-                                            ],
-                                            hoverOffset: 4
-                                        }]
-                                    },
-                                    options: {
-                                        responsive: true,
-                                        animation: {
-                                            duration: 500
-                                        },
-                                        plugins: {
-                                            legend: {
-                                                display: false
+                                swal.fire({
+                                    title: 'Konfirmasi',
+                                    text: 'Apakah Anda yakin ingin menghapus baris catatan ini?',
+                                    icon: 'question',
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Ya, hapus',
+                                    cancelButtonText: 'Batal'
+                                }).then(function(result) {
+                                    if (result.isConfirmed) {
+                                        $.ajax({
+                                            url: '/mentor/catatan/delete/mentor/' + catatanDetailId,
+                                            type: 'DELETE',
+                                            headers: {
+                                                'X-CSRF-TOKEN': csrfToken
                                             },
-                                            tooltip: {
-                                                callbacks: {
-                                                    label: function(context) {
-                                                        const label = context.label || '';
-                                                        const value = context.parsed;
-                                                        const output = ' ' + label + ' : ' + value;
-                                                        return output;
-                                                    }
-                                                },
-                                                backgroundColor: cardColor,
-                                                titleColor: black,
-                                                bodyColor: black,
-                                                borderWidth: 1,
-                                                borderColor: cardColor,
-                                                afterLabel: function(context) {
-                                                    const datasetIndex = context.datasetIndex;
-                                                    const dataIndex = context.dataIndex;
-                                                    const data = doughnutChartVar.data.datasets[datasetIndex].data;
-                                                    const label = doughnutChartVar.data.labels[dataIndex];
-                                                    const value = data[dataIndex];
+                                            success: function(response) {
+                                                var remainingForms = $formCatatanRepeater.siblings('.form-add')
+                                                    .length;
 
-                                                    // Menampilkan jumlah saat kursor mengarah ke elemen chart
-                                                    return `Jumlah ${label}: ${value}`;
+                                                if (remainingForms === 1) {
+                                                    $('.btn-delete-catatan').remove();
+                                                };
+
+                                                $formCatatanRepeater.remove();
+
+                                                Swal.fire({
+                                                    icon: 'success',
+                                                    title: 'Terhapus!',
+                                                    text: 'Catatan berhasil dihapus.',
+                                                    showConfirmButton: false,
+                                                    timer: 3000
+                                                });
+                                            },
+                                            error: function(error) {
+                                                console.log(error.responseJSON.message);
+                                            }
+                                        });
+                                    }
+                                });
+                            });
+                        </script>
+
+                        {{-- pie chart --}}
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const cardColor = 'grey';
+                                const headingColor = '#FDAC34';
+                                const black = '#fff';
+
+                                const doughnutChart = document.getElementById('project');
+                                const chartStatus = document.querySelector('.chart-status');
+
+                                if (doughnutChart) {
+                                    const processedData = @json($chartData);
+
+                                    const labels = processedData.map(data => data[0]);
+                                    const values = processedData.map(data => data[1]);
+
+                                    const doughnutChartVar = new Chart(doughnutChart, {
+                                        type: 'doughnut',
+                                        data: {
+                                            labels: labels,
+                                            datasets: [{
+                                                data: values,
+                                                backgroundColor: [cardColor, '#F9ED69', '#F08A5D', '#B83B5E',
+                                                    '#6A2C70'
+                                                ],
+                                                hoverOffset: 4
+                                            }]
+                                        },
+                                        options: {
+                                            responsive: true,
+                                            animation: {
+                                                duration: 500
+                                            },
+                                            plugins: {
+                                                legend: {
+                                                    display: false
+                                                },
+                                                tooltip: {
+                                                    callbacks: {
+                                                        label: function(context) {
+                                                            const label = context.label || '';
+                                                            const value = context.parsed;
+                                                            const output = ' ' + label + ' : ' + value;
+                                                            return output;
+                                                        }
+                                                    },
+                                                    backgroundColor: cardColor,
+                                                    titleColor: black,
+                                                    bodyColor: black,
+                                                    borderWidth: 1,
+                                                    borderColor: cardColor,
+                                                    afterLabel: function(context) {
+                                                        const datasetIndex = context.datasetIndex;
+                                                        const dataIndex = context.dataIndex;
+                                                        const data = doughnutChartVar.data.datasets[datasetIndex].data;
+                                                        const label = doughnutChartVar.data.labels[dataIndex];
+                                                        const value = data[dataIndex];
+
+                                                        // Menampilkan jumlah saat kursor mengarah ke elemen chart
+                                                        return `Jumlah ${label}: ${value}`;
+                                                    }
                                                 }
                                             }
                                         }
+                                    });
+
+                                    if (values.slice(1).every(value => value === 0)) {
+
+                                        chartStatus.style.display = 'block';
+                                        doughnutChart.style.display = 'none';
+                                        const img = document.createElement('img');
+                                        img.src = '{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}';
+                                        img.alt = 'Belum Ada Tugas';
+                                        img.style.width = '200px';
+
+                                        const h6Text = 'Tidak Ada Tugas <i class="ti ti-address-book-off"></i>';
+                                        const h6Element = document.createElement('h6');
+                                        h6Element.classList.add('text-center', 'mt-4');
+                                        h6Element.innerHTML = h6Text;
+
+                                        chartStatus.innerHTML = '';
+                                        chartStatus.appendChild(h6Element);
+                                        chartStatus.appendChild(img);
+                                    } else {
+                                        chartStatus.style.display = 'none';
+                                        doughnutChart.style.display = 'block';
+                                        chartStatus.textContent = '';
                                     }
-                                });
-
-                                if (values.slice(1).every(value => value === 0)) {
-
-                                    chartStatus.style.display = 'block';
-                                    doughnutChart.style.display = 'none';
-                                    const img = document.createElement('img');
-                                    img.src = '{{ asset('assets/img/illustrations/page-misc-under-maintenance.png') }}';
-                                    img.alt = 'Belum Ada Tugas';
-                                    img.style.width = '200px';
-
-                                    const h6Text = 'Tidak Ada Tugas <i class="ti ti-address-book-off"></i>';
-                                    const h6Element = document.createElement('h6');
-                                    h6Element.classList.add('text-center', 'mt-4');
-                                    h6Element.innerHTML = h6Text;
-
-                                    chartStatus.innerHTML = '';
-                                    chartStatus.appendChild(h6Element);
-                                    chartStatus.appendChild(img);
-                                } else {
-                                    chartStatus.style.display = 'none';
-                                    doughnutChart.style.display = 'block';
-                                    chartStatus.textContent = '';
                                 }
-                            }
-                        });
-                    </script>
-                @endsection
+                            });
+                        </script>
+                    @endsection
