@@ -1,27 +1,29 @@
 @extends('layoutsMentor.app')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 @section('content')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-3">
-            <span class="text-muted fw-light"></span> History
+            <span class="text-muted fw-light">History</span>
         </h4>
-        <div class="d-flex card flex-md-row align-items-center justify-content-between">
-            <div class="nav nav-pills mb-3 mt-3 d-flex flex-wrap navbar-ul px-3" id="pills-tab" role="tablist">
+        <div class="d-flex card flex-md-row align-items-center justify-content-between pb-3">
+            <div class="filter col-lg-3 col-md-3 col-sm-3">
+                <label for="select2Basic" class="form-label">Filter</label>
                 <form id="filterForm" action="{{ route('tim') }}" method="get">
-                    <select id="select2Basic" name="status_tim" class="form-select select2" data-allow-clear="true">
-                        <option value="" disabled selected>Pilih Data</option>
-                        <option value="belum_presentasi">Belum Presentasi Hari
+                    <select id="select2Basic" name="status_tim" class="form-select select2" data-allow-clear="true"
+                        onchange="filterProjek(this)">
+                        <option value="all" selected {{ request('status_presentasi') == 'all' ? 'selected' : '' }}>Semua
                         </option>
-                        <option value="selesai_presentasi">Selesai Presentasi Hari Ini Project</option>
-                        <option value="sudah_presentasi">Sudah
-                            Presentasi Minggu Ini
+                        <option value="solo" {{ request('status_presentasi') == 'solo' ? 'selected' : '' }}>Solo Project
                         </option>
-                        <option value="tidak_presentasi">Tidak Presentasi Mingguan
+                        <option value="pre_mini" {{ request('status_presentasi') == 'pre_mini' ? 'selected' : '' }}>Pre-mini
+                            Project</option>
+                        <option value="mini" {{ request('status_presentasi') == 'mini' ? 'selected' : '' }}>Mini Project
+                        </option>
+                        <option value="big" {{ request('status_presentasi') == 'big' ? 'selected' : '' }}>Big Project
                         </option>
                     </select>
+                    <input type="hidden" name="nama_tim" value="{{ request('nama_tim') }}">
                 </form>
             </div>
         </div>
@@ -33,6 +35,8 @@
                             <th scope="col">NO</th>
                             <th scope="col">NAMA TIM</th>
                             <th scope="col">STATUS TIM</th>
+                            <th scope="col">STATUS PRESENTASI</th>
+                            <th scope="col">STATUS REVISI</th>
                             <th scope="col">HARI/TANGGAL</th>
                             <th scope="col">AKSI</th>
                         </tr>
@@ -53,9 +57,30 @@
                                         <span class="badge bg-label-primary">Big Project</span>
                                     @endif
                                 </td>
+                                <td>
+                                    @if ($item->status_presentasi === 'menunggu')
+                                        <span class="badge bg-label-warning">Menunggu</span>
+                                    @elseif ($item->status_presentasi === 'sedang_presentasi')
+                                        <span class="badge bg-label-primary">Sedang Presentasi</span>
+                                    @elseif ($item->status_presentasi === 'tidak_selesai')
+                                        <span class="badge bg-label-danger">Tidak Selesai</span>
+                                    @else
+                                        <span class="badge bg-label-success">Selesai</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($item->status_revisi === 'tidak_selesai')
+                                        <span class="badge bg-label-danger">Tidak Selesai</span>
+                                    @else
+                                        <span class="badge bg-label-success">Selesai</span>
+                                    @endif
+                                </td>
                                 <td>{{ \Carbon\Carbon::now()->translatedFormat('l, j F Y') }}</td>
                                 <td>
-                                    <button class="btn btn-warning btn-edit" data-bs-toogle="modal" id="btn-edit-{{ $item->id }}" data-id="{{ $item->id }}" style="padding: 10px;"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button class="btn btn-warning btn-edit" data-id="{{ $item->tim->id }}"
+                                        data-status="{{ $item->status_presentasi }}"
+                                        data-statusr="{{ $item->status_revisi }}" style="padding: 10px;"><i
+                                            class="fa-solid fa-pen-to-square"></i></button>
                                 </td>
                             </tr>
                         @endforeach
@@ -64,8 +89,7 @@
             </div>
         </div>
 
-        {{-- Modal Buat Tim --}}
-        {{-- <form action="{{ route('pembuatan.tim') }}" id="createForm" method="post"> --}}
+        {{-- Modal Edit Status --}}
         <div class="modal fade" id="modal-update" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -73,41 +97,165 @@
                         <h5 class="modal-title" id="modalCenterTitle">Edit Status Presentasi</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form id="form-update" method="post"></form>
-                    @csrf
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col mb-3">
-                                <label for="status_tim" class="form-label">Status Presentasi</label>
-                                <select id="status_tim" name="status_tim" class="select2 form-select form-select-lg"
-                                    data-allow-clear="true">
-                                    <option value="" selected>Presentasi</option>
-                                    <option value="">Tidak Presentasi</option>
-                                </select>
-                                {{-- @error('status_tim')
+                    <form id="form-update" method="post">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="status_tim" class="form-label">Status Presentasi</label>
+                                    <select id="status_tim" name="status_tim" class="select2 form-select form-select-lg"
+                                        data-allow-clear="true">
+                                        <option value="" selected>Presentasi</option>
+                                        <option value="">Tidak Presentasi</option>
+                                    </select>
+                                    {{-- @error('status_tim')
                                         <p class="text-danger">{{ $message }}</p>
                                     @enderror --}}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
-                        <button type="submit" class="btn btn-primary" id="createButton">Simpan</button>
-                    </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Kembali</button>
+                            <button type="submit" class="btn btn-primary" id="createButton">Simpan</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        {{-- </form> --}}
-        {{-- Modal Buat Tim --}}
+        {{-- Modal Edit Status --}}
     </div>
 @endsection
 @section('script')
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script>
-        $('.btn-edit').click(function() {
-            const formData = $(this).data('id');
-            alert($(this).data('id'));
-        });
+        //         $(document).ready(function(){
+        //             alert('test')
+
+
+        //             $('.btn-edit').click(function() {
+
+        // const id = $(this).data('id');
+        // const status = $(this).data('status');
+        // const statusRevisi = $(this).data('statusRevisi');
+
+        // $('#modal-update').find('#status_tim').val(status);
+
+        // $('#modal-update').find('#form-update').attr('action', '/tim/' + id);
+
+        // // $('#modal-update').modal('show');
+        // });
+        //         })
+
+
+
+
+
+        // $('.btn-edit').click(function() {
+        //     // Ambil data dari atribut data pada tombol yang diklik
+        //     const formData = $(this).data('id');
+        //     const status = $(this).data('status');
+
+        //     // Atur nilai pada modal berdasarkan data yang diperoleh
+        //     $('#status_tim').val(status); // Atur nilai select sesuai status yang diberikan
+        //     $('#form-update').attr('action', '/tim/' +
+        //     formData); // Atur action form sesuai dengan URL yang sesuai dengan formData
+
+        //     // Tampilkan modal
+        //     $('#modal-update').modal('show');
+        // });
+    </script>
+    {{-- function openEditModal(id) {
+    // Mengatur nilai data-id pada modal
+    $('#form-update').attr('data-id', id);
+
+    // Mengatur action form sesuai dengan URL yang sesuai dengan id
+    $('#form-update').attr('action', '/tim/' + id);
+
+    // Menampilkan modal
+    $('#modal-update').modal('show');
+    } --}}
+
+    <script>
+        // Fungsi untuk menampilkan modal dan mengatur nilai pada modal
+        // function openEditModal(id, status) {
+        //     $('#status_tim').val(status); // Atur nilai select sesuai status yang diberikan
+        //     $('#form-update').attr('action', '/tim/' + id); // Atur action form sesuai dengan URL yang sesuai dengan id
+        //     $('#modal-update').modal('show'); // Tampilkan modal
+        // }
+
+        // Fungsi untuk menangani submit formulir modal
+        // $(document).on('submit', '#form-update', function(event) {
+        //     event.preventDefault();
+        //     var form = $(this);
+        //     var formData = form.serialize();
+
+        //     $.ajax({
+        //         url: form.attr('action'),
+        //         type: 'POST',
+        //         data: formData,
+        //         success: function(response) {
+        //             // Tambahkan logika untuk menanggapi respons
+        //             console.log(response);
+        //             $('#modal-update').modal('hide');
+        //         },
+        //         error: function(error) {
+        //             console.log(error.responseJSON.message);
+        //         }
+        //     });
+        // });
+
+        // Fungsi untuk menangani klik pada tombol edit
+        // $(document).on('click', '.btn-edit', function(event) {
+        //     event.preventDefault();
+        //     var id = $(this).data('id');
+        //     var status = $(this).data('status');
+
+        //     openEditModal(id, status);
+        // });
+    </script>
+    <script>
+        function filterProjek(selectObject) {
+            var selectedValue = selectObject.value;
+            var url = "{{ route('tim') }}" + "?status_tim=" + selectedValue;
+            $('.btn-edit').on('click', function() {
+                        var id = $(this).data('id');
+                        var statuspresentasi = $(this).data('status');
+                        var statusrevisi = $(this).data('statusr');
+                        $('#modal-update').modal('show');
+                    });
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    // Perbarui tabel dengan data yang difilter
+                    // Misalnya, dengan mengganti isi tabel dengan data yang baru
+                    $('#jstabel1 tbody').html('');
+
+                    $.each(data.presentasi, function(index, item) {
+                        var statusLabel = getStatusLabel(item.tim.status_tim);
+                        var row = '<tr>' +
+                            '<td>' + (index + 1) + '</td>' +
+                            '<td>' + item.tim.nama + '</td>' +
+                            '<td>' + statusLabel + '</td>' +
+                            '<td>' + item.created_at + '</td>' +
+                            '<td>' +
+                            '<button class="btn btn-warning btn-edit" data-bs-toogle="modal" id="btn-edit-' +
+                            item.id + '" data-id="' + item.id + '" data-status="' + item
+                            .status_presentasi +
+                            '" style="padding: 10px;"><i class="fa-solid fa-pen-to-square"></i></button>' +
+                            '</td>' +
+                            '</tr>';
+
+                        $('#jstabel1 tbody').append(row);
+                    });
+                    
+                },
+                error: function(xhr, status, error) {
+                    console.error("Terjadi kesalahan: " + error);
+                }
+            });
+        }
     </script>
     <script>
         jQuery.noConflict();
