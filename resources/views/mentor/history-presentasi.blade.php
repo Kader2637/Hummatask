@@ -127,42 +127,21 @@
 @endsection
 @section('script')
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
     <script>
-        //         $(document).ready(function(){
-        //             alert('test')
-
-
-        //             $('.btn-edit').click(function() {
-
-        // const id = $(this).data('id');
-        // const status = $(this).data('status');
-        // const statusRevisi = $(this).data('statusRevisi');
-
-        // $('#modal-update').find('#status_tim').val(status);
-
-        // $('#modal-update').find('#form-update').attr('action', '/tim/' + id);
-
-        // // $('#modal-update').modal('show');
-        // });
-        //         })
-
-
-
-
-
-        // $('.btn-edit').click(function() {
-        //     // Ambil data dari atribut data pada tombol yang diklik
-        //     const formData = $(this).data('id');
-        //     const status = $(this).data('status');
-
-        //     // Atur nilai pada modal berdasarkan data yang diperoleh
-        //     $('#status_tim').val(status); // Atur nilai select sesuai status yang diberikan
-        //     $('#form-update').attr('action', '/tim/' +
-        //     formData); // Atur action form sesuai dengan URL yang sesuai dengan formData
-
-        //     // Tampilkan modal
-        //     $('#modal-update').modal('show');
-        // });
+        $('.btn-edit').on('click', function() {
+            var id = $(this).data('id');
+            var statuspresentasi = $(this).data('status');
+            var statusrevisi = $(this).data('statusr');
+            $('#modal-update').modal('show');
+        });
     </script>
     {{-- function openEditModal(id) {
     // Mengatur nilai data-id pada modal
@@ -217,12 +196,6 @@
         function filterProjek(selectObject) {
             var selectedValue = selectObject.value;
             var url = "{{ route('tim') }}" + "?status_tim=" + selectedValue;
-            $('.btn-edit').on('click', function() {
-                        var id = $(this).data('id');
-                        var statuspresentasi = $(this).data('status');
-                        var statusrevisi = $(this).data('statusr');
-                        $('#modal-update').modal('show');
-                    });
             $.ajax({
                 url: url,
                 type: "GET",
@@ -249,7 +222,7 @@
 
                         $('#jstabel1 tbody').append(row);
                     });
-                    
+
                 },
                 error: function(xhr, status, error) {
                     console.error("Terjadi kesalahan: " + error);
