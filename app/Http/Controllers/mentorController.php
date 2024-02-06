@@ -302,7 +302,7 @@ class mentorController extends Controller
                         case 'friday':
                             $dayName = 'Jumat';
                             break;
-                        // Handle other cases if needed
+                            // Handle other cases if needed
 
                         default:
                             break;
@@ -524,6 +524,7 @@ class mentorController extends Controller
         $revisiQuery = $tugas->where('status_tugas', 'revisi');
         $tugasBaruQuery = $tugas->where('status_tugas', 'tugas_baru')->sortByDesc('created_at');
         $dikerjakanQuery = $tugas->where('status_tugas', 'dikerjakan');
+        $revisiMentorQuery = $tugas->where('status_tugas', 'revisi_mentor');
 
         $chartData = [['Status Tugas', 'Jumlah'], ['Selesai', $selesaiQuery->count()], ['Revisi', $revisiQuery->count()], ['Dikerjakan', $dikerjakanQuery->count()], ['Tugas Baru', $tugasBaruQuery->count()]];
 
@@ -544,6 +545,7 @@ class mentorController extends Controller
         $board = [
             'boardTugasBaru' => $tugasBaruQuery,
             'boardRevisi' => $revisiQuery,
+            'boardRevisiMentor' => $revisiMentorQuery,
             'boardDikerjakan' => $dikerjakanQuery,
             'boardSelesai' => $selesaiQuery,
         ];
@@ -597,7 +599,7 @@ class mentorController extends Controller
                             'tim_id' => $request->tim_id,
                             'code' => Str::uuid(),
                             'nama' => $catatanDetail->catatan_text,
-                            'status_tugas' => 'tugas_baru',
+                            'status_tugas' => 'revisi_mentor',
                             'prioritas' => 'biasa',
                         ]);
 
@@ -944,9 +946,21 @@ class mentorController extends Controller
                 $query->where('id', Auth::user()->divisi_id);
             })
             ->whereIn('status_presentasi', ['menunggu', 'sedang_presentasi'])
+            ->where('created_at', '>=', Carbon::now()->startOfWeek(Carbon::MONDAY))
+            ->where('created_at', '<=', Carbon::now()->endOfWeek(Carbon::FRIDAY))
             ->orderByRaw("status_presentasi = 'sedang_presentasi' desc")
             ->orderBy('jadwal_ke', 'asc')
             ->get();
+
+        $startWeek = Carbon::now()->subWeek()->startOfWeek();
+        $endWeek = Carbon::now()->subWeek()->endOfWeek();
+        Presentasi::query()
+            ->whereIn('status_presentasi', ['menunggu', 'sedang_presentasi'])
+            ->whereBetween('created_at', [$startWeek, $endWeek])
+            ->update([
+                'status_presentasi' => 'tidak_selesai',
+                'status_revisi' => 'tidak_selesai',
+            ]);
 
         $presentasiSenin = $unconfirmedPresentasi->where('hari', 'senin');
 
