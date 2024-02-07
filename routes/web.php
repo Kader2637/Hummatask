@@ -159,6 +159,7 @@
                 Route::get('detail-presentasi/{code}', [mentorController::class, 'detailPresentasiPage'])->name('detail-presentasi.mentor');
 
                 // Process`
+                Route::put('update-histori-presentasi', [PresentasiController::class, 'updateStatus'])->name('update-status-presentasi.mentor');
                 Route::post('presentasi-divisi', [PresentasiDivisiControlller::class, 'store'])->name('presentasi-divisi.store');
                 Route::delete('presentasi-divisi/{presentasi_divisi}', [PresentasiDivisiControlller::class, 'destroy'])->name('presentasi-divisi.destroy');
                 Route::post('presentasi-divisi/jadwalcreate', [PresentasiDivisiControlller::class, 'createJam'])->name('presentasi-divisi-create-jam.store');

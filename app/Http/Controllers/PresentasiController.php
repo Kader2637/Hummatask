@@ -25,13 +25,49 @@ use Illuminate\Support\Str;
 
 class PresentasiController extends Controller
 {
-    protected function historiPresentasiPage()
+    protected function historiPresentasiPage(Request $request)
     {
-        $presentasi = Presentasi::all();
         $userID = Auth::user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
-        return view('mentor.history-presentasi', compact('notifikasi' , 'presentasi'));
+        if ($request->status_presentasi == 'all') {
+            $presentasi = Presentasi::all();
+            $status_presentasi = $request->input('status_presentasi', 'all');
+        } elseif ($request->status_presentasi == 'presentasi') {
+            $presentasi = Presentasi::where('status_presentasi', 'selesai')
+                ->whereDate('jadwal', Carbon::today()->toDateString())
+                ->get();
+            $status_presentasi = $request->input('status_presentasi', 'presentasi');
+        } elseif ($request->status_presentasi == 'unpresentasi') {
+            $presentasi = Presentasi::where('status_presentasi', 'menunggu')
+                ->get();
+            $status_presentasi = $request->input('status_presentasi', 'unpresentasi');
+        } elseif ($request->status_presentasi == 'weekpresentasi') {
+            $presentasi = Presentasi::where('status_presentasi', 'selesai')
+                ->whereDate('jadwal', '>=', Carbon::now()->startOfWeek()->toDateString())
+                ->whereDate('jadwal', '<=', Carbon::now()->endOfWeek()->toDateString())
+                ->get();
+            $status_presentasi = $request->input('status_presentasi', 'weekpresentasi');
+        } else {
+            $presentasi = Presentasi::whereIn('status_presentasi', ['menunggu', 'sedang_presentasi', 'tidak_presentasi'])->get();
+            $status_presentasi = $request->input('status_presentasi', 'unpresentasi');
+        }
+
+        return view('mentor.history-presentasi', compact('notifikasi', 'presentasi', 'status_presentasi'));
     }
+
+    public function updateStatus(Request $request)
+    {
+        $id = $request->input('id');
+        $presentasi = Presentasi::findOrFail($id);
+
+        $presentasi->update([
+            'status_presentasi' => $request->status_presentasi,
+            'status_revisi' => $request->status_revisi
+        ]);
+
+        return back()->with('success', 'Berhasil Merubah data');
+    }
+
 
     protected function ajukanPresentasi(RequestPengajuanPresentasi $request, $code)
     {
