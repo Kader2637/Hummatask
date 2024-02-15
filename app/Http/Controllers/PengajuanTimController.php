@@ -151,7 +151,9 @@ class PengajuanTimController extends Controller
             ]
         ]);
 
-        return redirect()->back()->with('success', 'Berhasil membuat tim solo project');
+        if (!$tim || !$logo || !$tema) {
+            return redirect()->back()->with('error', 'Gagal membuat tim solo project');
+        } return redirect()->back()->with('success', 'Berhasil membuat tim solo project');
     }
 
 

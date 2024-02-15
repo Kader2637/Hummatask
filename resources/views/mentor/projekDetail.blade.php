@@ -364,7 +364,7 @@
                         </div>
                     </div>
                     {{-- Board Tab --}}
-                    <div class="tab-pane fade" id="navs-pills-board" role="tabpanel">
+                    {{-- <div class="tab-pane fade" id="navs-pills-board" role="tabpanel">
                         <div style="height: 80vh" class="container-fluid mt-2">
                             @if (
                                 $board['boardTugasBaru']->isNotEmpty() ||
@@ -1207,7 +1207,7 @@
                                 </div>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
                     @endsection
 
                     @section('script')
