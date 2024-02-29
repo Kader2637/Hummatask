@@ -61,5 +61,6 @@ Route::post('storeCvs', [PenggunaController::class, 'storeCsv']);
 //Route Menu Mentor PKL Hummatech
 Route::controller(ProjectAPI::class)->group(function () {
     Route::get('get-team', 'getTeam');
+    Route::get('get-mentors-team', 'getTeamBaseOnMentorStudent');
     Route::get('get-team-detail/{code}', 'getTeamDetail');
 });
