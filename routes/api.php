@@ -64,3 +64,5 @@ Route::controller(ProjectAPI::class)->group(function () {
     Route::get('get-mentors-team', 'getTeamBaseOnMentorStudent');
     Route::get('get-team-detail/{code}', 'getTeamDetail');
 });
+
+Route::get('profile', [UserController::class, 'user']);
