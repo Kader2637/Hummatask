@@ -12,6 +12,6 @@ class NotificationController extends Controller
 {
     public function index(): JsonResponse
     {
-        return ResponseHelper::success(Notifikasi::query()->where('user_id', auth()->user()->id));
+        return ResponseHelper::success(Notifikasi::query()->where('user_id', auth()->user()->id)->get());
     }
 }
