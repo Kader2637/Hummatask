@@ -17,7 +17,6 @@ class UserController extends Controller
      */
     public function user(): JsonResponse
     {
-        dd(auth()->user());
         return ResponseHelper::success(UserResource::make(auth()->user()));
     }
 }
