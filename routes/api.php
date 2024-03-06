@@ -33,6 +33,7 @@ Route::post('forgot', [LoginController::class, 'forgot']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [UserController::class, 'user']);
     Route::post('presentasi-divisi', [PresentasiDivisiController::class, 'store']);
+    Route::get('profile', [UserController::class, 'user']);
 
     Route::get('siswa', [siswaController::class, 'list']);
 });
@@ -64,5 +65,3 @@ Route::controller(ProjectAPI::class)->group(function () {
     Route::get('get-mentors-team', 'getTeamBaseOnMentorStudent');
     Route::get('get-team-detail/{code}', 'getTeamDetail');
 });
-
-Route::get('profile', [UserController::class, 'user']);
