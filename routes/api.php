@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\DetailPresentasiController;
 use App\Http\Controllers\Api\LoginController;
+use App\Http\Controllers\Api\NotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DivisiController;
@@ -34,7 +35,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [UserController::class, 'user']);
     Route::post('presentasi-divisi', [PresentasiDivisiController::class, 'store']);
     Route::get('profile', [UserController::class, 'user']);
-
+    Route::get('notification', [NotificationController::class, 'index']);
     Route::get('siswa', [siswaController::class, 'list']);
 });
 
