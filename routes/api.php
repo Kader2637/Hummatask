@@ -42,6 +42,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('tims', [ApiTimController::class, 'index']);
 
     Route::get('project/{code}', [ProjectController::class, 'show']);
+    Route::get('anggota-project/{code}', [ProjectController::class, 'anggota']);
 });
 
 Route::get('division', [DivisiController::class, 'index']);

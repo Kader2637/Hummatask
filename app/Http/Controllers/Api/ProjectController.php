@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProjectMemberResource;
 use App\Models\Notifikasi;
 use App\Models\Tim;
 use Illuminate\Http\Request;
@@ -41,7 +42,6 @@ class ProjectController extends Controller
     public function show($code)
     {
         $tim = Tim::where('code', $code)->firstOrFail();
-        $userID = Auth::user()->id;
         $anggota = $tim
             ->anggota()
             ->orderBy('jabatan_id')
@@ -58,6 +58,16 @@ class ProjectController extends Controller
             'tema' => $project->tema->nama_tema,
             'anggotas' =>  $anggota,
         ]);
+    }
+
+    public function anggota(string $code)
+    {
+        $tim = Tim::where('code', $code)->firstOrFail();
+        $anggota = $tim
+            ->anggota()
+            ->orderBy('jabatan_id')
+            ->get();
+        return ResponseHelper::success(ProjectMemberResource::collection($anggota));
     }
 
     /**
