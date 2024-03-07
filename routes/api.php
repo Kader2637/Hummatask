@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\PenggunaController;
 use App\Http\Controllers\Api\PresentasiDivisiController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PresentasiController;
+use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\TimController as ApiTimController;
 use App\Http\Controllers\mentorController;
 use App\Http\Controllers\PengajuanPresentasiController;
@@ -39,6 +40,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('notification', [NotificationController::class, 'index']);
     Route::get('siswa', [siswaController::class, 'list']);
     Route::get('tims', [ApiTimController::class, 'index']);
+
+    Route::get('project/{code}', [ProjectController::class, 'show']);
 });
 
 Route::get('division', [DivisiController::class, 'index']);
