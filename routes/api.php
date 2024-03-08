@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\DetailPresentasiController;
+use App\Http\Controllers\Api\HistoryPresentation;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\NotificationController;
 use Illuminate\Http\Request;
@@ -42,6 +43,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('tims', [ApiTimController::class, 'index']);
 
     Route::get('project/{code}', [ProjectController::class, 'show']);
+    Route::get('history-presentation/{code}', [HistoryPresentation::class, 'history']);
     Route::get('anggota-project/{code}', [ProjectController::class, 'anggota']);
 });
 
