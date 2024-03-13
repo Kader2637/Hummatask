@@ -20,7 +20,6 @@ use App\Http\Controllers\mentorController;
 use App\Http\Controllers\PengajuanPresentasiController;
 use App\Http\Controllers\ProjectAPI;
 use App\Http\Controllers\siswaController;
-use App\Http\Controllers\timController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +48,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('history-presentation/{code}', [HistoryPresentation::class, 'history']);
     Route::get('anggota-project/{code}', [ProjectController::class, 'anggota']);
     Route::get('catatan/{code}', [CatatanController::class, 'index']);
+    Route::get('active-tim', [ApiTimController::class, 'activeTeam']);
 });
 
 Route::get('division', [DivisiController::class, 'index']);

@@ -19,4 +19,14 @@ class TimController extends Controller
             ->get();
         return ResponseHelper::success(TimResource::collection($tims));
     }
+
+    /**
+     * activeTeam
+     *
+     * @return JsonResponse
+     */
+    public function activeTeam(): JsonResponse
+    {
+        return ResponseHelper::success(User::find(auth()->user()->id)->tim()->where('kadaluwarsa', 0)->first());
+    }
 }
