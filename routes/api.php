@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\BoardController;
+use App\Http\Controllers\Api\CatatanController;
 use App\Http\Controllers\Api\DetailPresentasiController;
 use App\Http\Controllers\Api\HistoryPresentation;
 use App\Http\Controllers\Api\LoginController;
@@ -47,6 +48,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('project/{code}', [ProjectController::class, 'show']);
     Route::get('history-presentation/{code}', [HistoryPresentation::class, 'history']);
     Route::get('anggota-project/{code}', [ProjectController::class, 'anggota']);
+    Route::get('catatan/{code}', [CatatanController::class, 'index']);
 });
 
 Route::get('division', [DivisiController::class, 'index']);
