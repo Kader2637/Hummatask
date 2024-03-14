@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
-use App\Models\Anggota;
-use App\Models\catatan;
+use App\Models\Aktifitas;
+use Illuminate\Support\Str;
 use App\Models\Tim;
+use App\Models\Tugas;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BoardController extends Controller
 {
@@ -45,5 +48,33 @@ class BoardController extends Controller
             'tugas_selesai' => $tugas_selesai,
         ];
         return ResponseHelper::success($dataResponse);
+    }
+
+    /**
+     * createTask
+     *
+     * @param  mixed $request
+     * @return JsonResponse
+     */
+    public function createTask(Request $request, string $code): JsonResponse
+    {
+        $tim = Tim::where('code', $code)->first();
+        $user = User::where('id', Auth::user()->id)->first();
+        $tugas = new Tugas();
+        $tugas->tim_id = $tim->id;
+        $tugas->code = Str::uuid();
+        $tugas->nama = $request->nama;
+        $tugas->catatan_detail_id = null;
+        $tugas->save();
+        Aktifitas::create([
+            'tugas_id' => $tugas->id,
+            'pelaku_id' => Auth::user()->id,
+            'judul' => $tugas->nama,
+            'status_tugas' => 'tugas_baru',
+            'prioritas' => 'biasa',
+            'status' => 'create',
+        ]);
+
+        return ResponseHelper::success(null, "Berhasil menambah");
     }
 }
