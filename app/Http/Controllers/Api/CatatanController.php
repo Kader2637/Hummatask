@@ -24,6 +24,7 @@ class CatatanController extends Controller
 
         $project = $tim->project->first();
         if ($project->deskripsi === null) {
+
             return back()->with('tolak', 'Tolong lengkapi deskripsi proyek terlebih dahulu');
         }
         $anggota = $tim->user()->get();

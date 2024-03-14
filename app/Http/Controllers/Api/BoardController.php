@@ -64,6 +64,7 @@ class BoardController extends Controller
         $tugas->tim_id = $tim->id;
         $tugas->code = Str::uuid();
         $tugas->nama = $request->nama;
+
         $tugas->catatan_detail_id = null;
         $tugas->save();
         Aktifitas::create([
