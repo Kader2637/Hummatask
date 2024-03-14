@@ -15,7 +15,10 @@ class CatatanController extends Controller
     public function index(string $code): JsonResponse
     {
         $tim = Tim::where('code', $code)->firstOrFail();
-        $catatans = catatan::where('tim_id', $tim->id)->get();
+        $catatans = catatan::query()
+            ->with('catatanDetail')
+            ->where('tim_id', $tim->id)
+            ->get();
         $userID = auth()->user()->id;
         $notifikasi = Notifikasi::where('user_id', $userID)->get();
 
