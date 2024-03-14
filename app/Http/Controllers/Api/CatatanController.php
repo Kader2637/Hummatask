@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\NoteResource;
 use App\Models\catatan;
 use App\Models\Notifikasi;
 use App\Models\Tim;
@@ -24,7 +25,6 @@ class CatatanController extends Controller
 
         $project = $tim->project->first();
         if ($project->deskripsi === null) {
-
             return back()->with('tolak', 'Tolong lengkapi deskripsi proyek terlebih dahulu');
         }
         $anggota = $tim->user()->get();
@@ -38,6 +38,8 @@ class CatatanController extends Controller
         ->with('catatanDetail')
         ->get();
 
-        return ResponseHelper::success($catatans);
+
+
+        return ResponseHelper::success(NoteResource::collection($catatans));
     }
 }
