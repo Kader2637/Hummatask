@@ -24,9 +24,9 @@ jobs:
         # ftp server
         server: ftp.mischool.online
         # ftp username
-        username: hummatask@hummatask.hummatech.com
+        username: task@task.hummatech.com
         # ftp password
-        password: hummatask
+        password: Bismillahlaunching
         # Server port to connect to (read your web hosts docs)
         port: 21
         # protocol to deploy with - ftp, ftps, or ftps-legacy
