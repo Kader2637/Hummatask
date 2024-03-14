@@ -37,6 +37,7 @@ Route::post('forgot', [LoginController::class, 'forgot']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [UserController::class, 'user']);
+    Route::put('profile', [UserController::class, 'updateProfile']);
     Route::post('presentasi-divisi', [PresentasiDivisiController::class, 'store']);
     Route::get('profile', [UserController::class, 'user']);
     Route::get('notification', [NotificationController::class, 'index']);
